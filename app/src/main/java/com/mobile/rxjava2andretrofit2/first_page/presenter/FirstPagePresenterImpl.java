@@ -42,7 +42,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                         .responseString(model.firstPageData(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
-//                                LogManager.i(TAG, "success*****" + success);
+                                LogManager.i(TAG, "success*****" + success);
                                 firstPageView.firstPageDataSuccess(success);
                                 firstPageView.hideLoading();
                             }

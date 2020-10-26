@@ -139,7 +139,7 @@ public class ReadAndWriteManager {
      * @throws IOException
      */
     public static String readExternal(String filename) throws IOException {
-        StringBuilder sb = new StringBuilder("");
+        StringBuilder stringBuilder = new StringBuilder("");
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             filename = MineApplication.getInstance().getExternalCacheDir().getAbsolutePath() + File.separator + filename;
             //打开文件输入流
@@ -149,7 +149,7 @@ public class ReadAndWriteManager {
             int len = inputStream.read(buffer);
             //读取文件内容
             while (len > 0) {
-                sb.append(new String(buffer, 0, len));
+                stringBuilder.append(new String(buffer, 0, len));
 
                 //继续将数据放到buffer中
                 len = inputStream.read(buffer);
@@ -157,7 +157,7 @@ public class ReadAndWriteManager {
             //关闭输入流
             inputStream.close();
         }
-        return sb.toString();
+        return stringBuilder.toString();
     }
 
     private boolean isSubscribe() {
