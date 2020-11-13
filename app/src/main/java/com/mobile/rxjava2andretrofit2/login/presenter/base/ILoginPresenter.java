@@ -13,7 +13,9 @@ import java.util.Map;
 
 public interface ILoginPresenter {
 
-    void login(String requestData);
+    void login(Map<String, String> bodyParams);
+
+    void register(Map<String, String> bodyParams);
 
     void addShop(Map<String, String> bodyParams, Map<String, File> fileMap, Map<String, List<File>> filesMap);
 }

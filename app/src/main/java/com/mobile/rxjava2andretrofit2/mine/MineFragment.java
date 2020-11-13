@@ -28,12 +28,10 @@ public class MineFragment extends BaseMvpFragment<IBaseView, MinePresenterImpl>
         implements IMineView {
 
     private static final String TAG = "MineFragment";
-    @BindView(R.id.status_bar_view)
-    View statusBarView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tev_mine)
-    TextView tevMine;
+    @BindView(R.id.tev_title)
+    TextView tevTitle;
     @BindView(R.id.loadView)
     QMUILoadingView loadView;
     Unbinder unbinder;
@@ -120,11 +118,11 @@ public class MineFragment extends BaseMvpFragment<IBaseView, MinePresenterImpl>
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tev_mine})
+    @OnClick({R.id.tev_title})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tev_mine:
-                LogManager.i(TAG, "tev_mine");
+            case R.id.tev_title:
+                LogManager.i(TAG, "tev_title");
                 initMine();
                 break;
         }

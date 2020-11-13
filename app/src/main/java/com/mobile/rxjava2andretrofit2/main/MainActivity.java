@@ -34,7 +34,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     @BindView(R.id.tev_mine)
     TextView tevMine;
 
-    private List<Fragment> fragmentsList;
+    private List<Fragment> fragmentList;
     private TabFragmentsPagerAdapter fragmentsPagerAdapter;
 
     @Override
@@ -49,9 +49,9 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
 
     @Override
     protected void initData() {
-        fragmentsList = new ArrayList<>();
-        fragmentsList.add(new FirstPageFragment());
-        fragmentsList.add(new MineFragment());
+        fragmentList = new ArrayList<>();
+        fragmentList.add(new FirstPageFragment());
+        fragmentList.add(new MineFragment());
     }
 
     @Override
@@ -59,7 +59,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
         addContentView(loadView, layoutParams);
         setToolbar(true, R.color.color_FFFFFFFF);
 
-        fragmentsPagerAdapter = new TabFragmentsPagerAdapter(getSupportFragmentManager(), fragmentsList);
+        fragmentsPagerAdapter = new TabFragmentsPagerAdapter(getSupportFragmentManager(), fragmentList);
         mineViewPager.setAdapter(fragmentsPagerAdapter);
         mineViewPager.setOnPageChangeListener(new LazyViewPager.OnPageChangeListener() {
             @Override
@@ -75,10 +75,10 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                         tevFirstPage.setTextColor(getResources().getColor(R.color.color_FFE066FF));
                         tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
 
-
                         ImmersionBar.with(MainActivity.this)
                                 .keyboardEnable(false)
                                 .statusBarDarkFont(false)
+                                .statusBarColor(R.color.color_FFE066FF)
                                 .navigationBarColor(R.color.color_FFE066FF).init();
                         break;
                     case 1:
@@ -89,7 +89,8 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                         ImmersionBar.with(MainActivity.this)
                                 .keyboardEnable(false)
                                 .statusBarDarkFont(false)
-                                .navigationBarColor(R.color.color_FFFFFFFF).init();
+                                .statusBarColor(R.color.color_FF198CFF)
+                                .navigationBarColor(R.color.color_FF198CFF).init();
                         break;
                     default:
                         break;
@@ -101,6 +102,12 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
 
             }
         });
+
+        ImmersionBar.with(MainActivity.this)
+                .keyboardEnable(false)
+                .statusBarDarkFont(false)
+                .statusBarColor(R.color.color_FFE066FF)
+                .navigationBarColor(R.color.color_FFE066FF).init();
     }
 
     @Override

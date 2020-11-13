@@ -6,18 +6,13 @@
     <!-- 允许访问网络的权限 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- WIFI网络状态信息权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 网络状态权限 用于断网/联网状态下，界面不同的展示 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 读取SD卡，用于更换头像，取SD卡取照片 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 读取SD卡，用于更换头像，取SD卡取照片 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 允许读取手机状态的权限 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 定位权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许读取手机状态的权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 定位权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 拍照权限，用于更换头像的拍照 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 拍照权限，用于更换头像的拍照 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 在SDCard中创建与删除文件权限 -->
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -33,21 +28,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
         <!-- 沉浸式状态栏适配 -->
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" />
-        <!-- 适配华为（huawei）刘海屏 -->
+            android:value="2.4" /> <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" />
-        <!-- 适配小米（xiaomi）刘海屏 -->
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="notch.config"
-            android:value="portrait|landscape" />
-
-        <!-- 适配android7.0及其以上 -->
+            android:value="portrait|landscape" /> <!-- 适配android7.0及其以上 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -59,19 +49,18 @@
         </provider>
 
         <activity android:name=".login.ui.LoginActivity">
+
+        </activity>
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity">
-
-        </activity>
+        <activity android:name=".login.ui.RegisterActivity" />
         <activity android:name=".login.ui.AddShopActivity" />
-        <activity android:name=".mine.ui.FeedbackActivity">
-
-        </activity>
+        <activity android:name=".mine.ui.FeedbackActivity" />
     </application>
 
 </manifest>

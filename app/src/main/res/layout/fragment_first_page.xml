@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_FFE066FF"
     android:orientation="vertical">
 
     <LinearLayout
@@ -27,22 +26,21 @@
             android:orientation="vertical"
             app:contentInsetStart="0dp">
 
-        </androidx.appcompat.widget.Toolbar>
+            <TextView
+                android:id="@+id/tev_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:gravity="center"
+                android:text="@string/first_page"
+                android:textColor="@color/color_FF198CFF"
+                android:textSize="@dimen/sp_20" />
 
-        <TextView
-            android:id="@+id/tev_first_page"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:background="@color/color_FF198CFF"
-            android:gravity="center"
-            android:text="@string/first_page"
-            android:textColor="@color/color_FFE066FF"
-            android:textSize="@dimen/sp_20" />
+        </androidx.appcompat.widget.Toolbar>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_FFFFFFFF"/>
+            android:background="@color/color_FFFFFFFF" />
     </LinearLayout>
 
     <com.qmuiteam.qmui.widget.QMUILoadingView

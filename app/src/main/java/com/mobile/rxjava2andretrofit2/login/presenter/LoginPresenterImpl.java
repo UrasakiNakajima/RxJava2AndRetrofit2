@@ -11,6 +11,7 @@ import com.mobile.rxjava2andretrofit2.login.model.LoginModelImpl;
 import com.mobile.rxjava2andretrofit2.login.presenter.base.ILoginPresenter;
 import com.mobile.rxjava2andretrofit2.login.view.ILoginView;
 import com.mobile.rxjava2andretrofit2.login.view.IAddShopView;
+import com.mobile.rxjava2andretrofit2.login.view.IRegisterView;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.base.BaseResponse;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
@@ -41,16 +42,14 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void login(String requestData) {
+    public void login(Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof ILoginView) {
                 ILoginView loginView = (ILoginView) baseView;
                 loginView.showLoading();
-                RequestBody requestBody = RetrofitManager.getInstance()
-                        .jsonStringBody(requestData);
                 disposable = RetrofitManager.getInstance()
-                        .responseString(model.login(requestBody), new OnCommonSingleParamCallback<String>() {
+                        .responseString(model.login(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
@@ -109,6 +108,44 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
 //                                loginView.hideLoading();
 //                            }
 //                        });
+            }
+        }
+    }
+
+    @Override
+    public void register(Map<String, String> bodyParams) {
+        IBaseView baseView = obtainView();
+        if (baseView != null) {
+            if (baseView instanceof IRegisterView) {
+                IRegisterView registerView = (IRegisterView) baseView;
+                registerView.showLoading();
+                disposable = RetrofitManager.getInstance()
+                        .responseString(model.register(bodyParams), new OnCommonSingleParamCallback<String>() {
+                            @Override
+                            public void onSuccess(String success) {
+                                LogManager.i(TAG, "success*****" + success);
+                                BaseResponse baseResponse = JSON.parseObject(success, BaseResponse.class);
+                                if (baseResponse.getCode() == 200) {
+//                                    LoginResponse loginResponse = JSON.parseObject(success, LoginResponse.class);
+//                                    MineApplication mineApplication = MineApplication.getInstance();
+//                                    mineApplication.setShopId(loginResponse.getData().getShopId() + "");
+//                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
+                                    registerView.registerSuccess(success);
+                                } else {
+                                    registerView.registerError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+                                }
+                                registerView.hideLoading();
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                LogManager.i(TAG, "error*****" + error);
+                                // 异常处理
+                                registerView.registerError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                                registerView.hideLoading();
+                            }
+                        });
+                disposableList.add(disposable);
             }
         }
     }

@@ -5,6 +5,8 @@ import com.mobile.rxjava2andretrofit2.login.model.base.ILoginModel;
 import com.mobile.rxjava2andretrofit2.login.request.LoginRequest;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -24,10 +26,17 @@ public class LoginModelImpl implements ILoginModel {
     }
 
     @Override
-    public Observable<ResponseBody> login(RequestBody requestBody) {
+    public Observable<ResponseBody> login(Map<String, String> bodyParams) {
         return RetrofitManager.getInstance().getRetrofit()
                 .create(LoginRequest.class)
-                .getLoginData(requestBody);
+                .getLoginData(bodyParams);
+    }
+
+    @Override
+    public Observable<ResponseBody> register(Map<String, String> bodyParams) {
+        return RetrofitManager.getInstance().getRetrofit()
+                .create(LoginRequest.class)
+                .getRegisterData(bodyParams);
     }
 
     @Override

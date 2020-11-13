@@ -1,5 +1,9 @@
 package com.mobile.rxjava2andretrofit2.manager;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.alibaba.fastjson.JSONObject;
 import com.mobile.rxjava2andretrofit2.MineApplication;
 import com.mobile.rxjava2andretrofit2.R;
@@ -13,15 +17,20 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -35,12 +44,18 @@ public class RetrofitManager {
     private static RetrofitManager manager;
     private Retrofit retrofit;
 
+    Cache cache = new Cache(new File(MineApplication.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
+
     /**
      * 初始化必要对象和参数
      */
     private RetrofitManager() {
         // 初始化okhttp
         OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(5 * 1000, TimeUnit.MILLISECONDS)
+                .readTimeout(5 * 1000, TimeUnit.MILLISECONDS)
+                .writeTimeout(5 * 1000, TimeUnit.MILLISECONDS)
+                .cache(cache)
                 .addInterceptor(new AddCookiesInterceptor(MineApplication.getInstance()))
                 .addInterceptor(new ReceivedCookiesInterceptor(MineApplication.getInstance()))
                 .addInterceptor(new LogInterceptor())
@@ -195,32 +210,58 @@ public class RetrofitManager {
                         LogManager.i(TAG, "responseString*****" + responseString);
                         onCommonSingleParamCallback.onSuccess(responseString);
 
-                        ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
-                        manager.writeExternal("mineLog.txt",
-                                responseString,
-                                new OnCommonSingleParamCallback<Boolean>() {
-                                    @Override
-                                    public void onSuccess(Boolean success) {
-                                        LogManager.i(TAG, "success*****" + success);
-                                        manager.unSubscribe();
-                                    }
-
-                                    @Override
-                                    public void onError(String error) {
-                                        LogManager.i(TAG, "error*****" + error);
-                                        manager.unSubscribe();
-                                    }
-                                });
-
+//                        ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
+//                        manager.writeExternal("mineLog.txt",
+//                                responseString,
+//                                new OnCommonSingleParamCallback<Boolean>() {
+//                                    @Override
+//                                    public void onSuccess(Boolean success) {
+//                                        LogManager.i(TAG, "success*****" + success);
+//                                        manager.unSubscribe();
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(String error) {
+//                                        LogManager.i(TAG, "error*****" + error);
+//                                        manager.unSubscribe();
+//                                    }
+//                                });
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        LogManager.i(TAG, "throwable*****" + throwable.getMessage());
+                        LogManager.i(TAG, "throwable*****" + throwable.toString());
+                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
                         // 异常处理
                         onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
                     }
                 });
         return disposable;
     }
+
+    /**
+     * 判断网络是否可用
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            //如果仅仅是用来判断网络连接
+            //connectivityManager.getActiveNetworkInfo().isAvailable();
+            NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
+//            LogManager.i(TAG, "isNetworkAvailable*****" + info.toString());
+            if (info != null) {
+                for (int i = 0; i < info.length; i++) {
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 }

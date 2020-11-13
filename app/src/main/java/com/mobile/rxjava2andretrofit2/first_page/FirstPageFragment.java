@@ -32,8 +32,8 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     View statusBarView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tev_first_page)
-    TextView tevFirstPage;
+    @BindView(R.id.tev_title)
+    TextView tevTitle;
     @BindView(R.id.loadView)
     QMUILoadingView loadView;
     Unbinder unbinder;
@@ -123,11 +123,11 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
         unbinder.unbind();
     }
 
-    @OnClick(R.id.tev_first_page)
+    @OnClick(R.id.tev_title)
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tev_first_page:
-                LogManager.i(TAG, "tev_first_page");
+            case R.id.tev_title:
+                LogManager.i(TAG, "tev_title");
                 initFirstPage();
                 break;
         }

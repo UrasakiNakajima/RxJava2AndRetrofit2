@@ -9,22 +9,24 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.login.bean.LoginResponse;
 import com.mobile.rxjava2andretrofit2.login.presenter.LoginPresenterImpl;
 import com.mobile.rxjava2andretrofit2.login.view.ILoginView;
-import com.mobile.rxjava2andretrofit2.main.MainActivity;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
 
 import java.util.ArrayList;
@@ -37,8 +39,20 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
         implements ILoginView {
 
     private static final String TAG = "LoginActivity";
+    @BindView(R.id.imv_back)
+    ImageView imvBack;
+    @BindView(R.id.layout_back)
+    FrameLayout layoutBack;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.edt_user_name)
+    EditText edtUserName;
+    @BindView(R.id.edt_password)
+    EditText edtPassword;
     @BindView(R.id.tev_login)
     TextView tevLogin;
+    @BindView(R.id.tev_jump_to_register)
+    TextView tevJumpToRegister;
 
     private String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -65,6 +79,8 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
 
     @Override
     protected void initData() {
+        edtUserName.setText("13510001000");
+        edtPassword.setText("12345678");
         initPermissions();
     }
 
@@ -223,23 +239,25 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
 
     private void initLogin() {
         bodyParams.clear();
-        bodyParams.put("userName", "13513313214");
-        bodyParams.put("password", "12345678");
+        bodyParams.put("username", edtUserName.getText().toString());
+        bodyParams.put("password", edtPassword.getText().toString());
 //        String data = MapManager.mapToJsonStr(bodyParams);
-        String requestData = JSONObject.toJSONString(bodyParams);
-        LogManager.i(TAG, "requestData*****" + requestData);
-        presenter.login(requestData);
+//        String requestData = JSONObject.toJSONString(bodyParams);
+//        LogManager.i(TAG, "requestData*****" + requestData);
+        presenter.login(bodyParams);
     }
 
-    @OnClick(R.id.tev_login)
+    @OnClick({R.id.layout_back, R.id.tev_login, R.id.tev_jump_to_register})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.layout_back:
+                break;
             case R.id.tev_login:
-//                initLogin();
-                startActivity(MainActivity.class);
-                finish();
+                initLogin();
+                break;
+            case R.id.tev_jump_to_register:
+                startActivity(RegisterActivity.class);
                 break;
         }
     }
-
 }

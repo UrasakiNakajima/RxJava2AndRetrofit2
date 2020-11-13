@@ -2,6 +2,8 @@ package com.mobile.rxjava2andretrofit2.login.model.base;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -15,7 +17,9 @@ import okhttp3.ResponseBody;
 
 public interface ILoginModel {
 
-    Observable<ResponseBody> login(RequestBody requestBody);
+    Observable<ResponseBody> login(Map<String, String> bodyParams);
+
+    Observable<ResponseBody> register(Map<String, String> bodyParams);
 
     Observable<ResponseBody> addShop(RequestBody requestBody);
 

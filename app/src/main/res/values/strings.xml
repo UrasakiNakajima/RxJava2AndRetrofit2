@@ -17,5 +17,12 @@
     <string name="select_photos6">选择照片6</string>
     <string name="add_shop">添加店铺</string>
 
+    <string name="register">注册</string>
+    <string name="user_name">用户名</string>
+    <string name="password">密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="please_check_the_network_connection">请检查网络连接</string>
+    <string name="jump_to_register">跳转到注册</string>
+    jump_register
 
 </resources>

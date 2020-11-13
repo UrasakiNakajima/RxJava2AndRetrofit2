@@ -15,16 +15,17 @@ public class Url {
 
     //正式地址
     public static final String BASE_URL = "http://is.snssdk.com";
+//    public static final String BASE_URL = "http://wanandroid.com";
 
 
-    public static final String LOGIN_URL = BASE_URL + "passport/login";
+    public static final String LOGIN_URL = "/user/login";
+    public static final String REGISTER_URL = "/user/register";
     public static final String ADD_SHOP_URL = BASE_URL + "shop/register";
 
     public static final String SUBMIT_FEEDBACK_URL = BASE_URL + "problem/addProblem";
 
-
-
-
+    public static final String FIRST_PAGE_URL = "/wenda/v1/question/brow/?iid=10344168417&device_id=36394312781";
+    public static final String MINE_URL = "/wenda/v1/question/brow/?iid=10344168417&device_id=36394312781";
 
 
 }
