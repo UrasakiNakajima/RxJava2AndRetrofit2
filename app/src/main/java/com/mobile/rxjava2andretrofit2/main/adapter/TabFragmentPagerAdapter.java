@@ -16,18 +16,18 @@ import java.util.List;
  * introduce :
  */
 
-public class TabFragmentsPagerAdapter extends FragmentPagerAdapter {
+public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    private static final String TAG = TabFragmentsPagerAdapter.class.getSimpleName();
-    private List<Fragment> fragmentsList;
+    private static final String TAG = TabFragmentPagerAdapter.class.getSimpleName();
+    private List<Fragment> fragmentList;
 
-    public TabFragmentsPagerAdapter(FragmentManager fm) {
+    public TabFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public TabFragmentsPagerAdapter(FragmentManager fm, List<Fragment> fragmentsList) {
+    public TabFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
         super(fm);
-        this.fragmentsList = fragmentsList;
+        this.fragmentList = fragmentList;
     }
 
     public void addFragment(Fragment fragment){
@@ -35,12 +35,12 @@ public class TabFragmentsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return fragmentsList.get(position);
+        return fragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return fragmentsList.size();
+        return fragmentList.size();
     }
 
     @NonNull

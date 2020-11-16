@@ -12,7 +12,7 @@ import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.custom_view.LazyViewPager;
 import com.mobile.rxjava2andretrofit2.first_page.FirstPageFragment;
-import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentsPagerAdapter;
+import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentPagerAdapter;
 import com.mobile.rxjava2andretrofit2.main.presenter.MainPresenterImpl;
 import com.mobile.rxjava2andretrofit2.main.view.IMainView;
 import com.mobile.rxjava2andretrofit2.mine.MineFragment;
@@ -35,7 +35,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     TextView tevMine;
 
     private List<Fragment> fragmentList;
-    private TabFragmentsPagerAdapter fragmentsPagerAdapter;
+    private TabFragmentPagerAdapter fragmentsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
         addContentView(loadView, layoutParams);
         setToolbar(true, R.color.color_FFFFFFFF);
 
-        fragmentsPagerAdapter = new TabFragmentsPagerAdapter(getSupportFragmentManager(), fragmentList);
+        fragmentsPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
         mineViewPager.setAdapter(fragmentsPagerAdapter);
         mineViewPager.setOnPageChangeListener(new LazyViewPager.OnPageChangeListener() {
             @Override
