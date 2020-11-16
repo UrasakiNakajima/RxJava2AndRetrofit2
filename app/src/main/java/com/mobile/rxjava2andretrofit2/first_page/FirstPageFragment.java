@@ -28,8 +28,6 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
         implements IFirstPageView {
 
     private static final String TAG = "FirstPageFragment";
-    @BindView(R.id.status_bar_view)
-    View statusBarView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tev_title)
