@@ -207,7 +207,7 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
         }
     }
 
-    public boolean isInMainThread() {
+    public boolean isOnMainThread() {
         return Looper.getMainLooper().getThread().getId() == Thread.currentThread().getId();
     }
 

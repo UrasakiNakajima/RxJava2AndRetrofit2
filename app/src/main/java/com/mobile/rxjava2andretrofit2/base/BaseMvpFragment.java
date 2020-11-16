@@ -43,8 +43,6 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
     private Bundle bundle;
 
     protected View rootView;
-    protected View statusBarView;
-    protected Toolbar toolbar;
 
     @Nullable
     @Override
@@ -59,8 +57,6 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 //        }
 
         rootView = inflater.inflate(initLayoutId(), container, false);
-        statusBarView = rootView.findViewById(R.id.status_bar_view);
-        toolbar = rootView.findViewById(R.id.toolbar);
         return rootView;
     }
 
@@ -94,14 +90,6 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
      * @return
      */
     protected abstract T attachPresenter();
-
-    protected void fitsLayoutOverlap() {
-        if (statusBarView != null) {
-            ImmersionBar.setStatusBarView(activity, statusBarView);
-        } else {
-            ImmersionBar.setTitleBar(activity, toolbar);
-        }
-    }
 
     protected void showToast(String message, boolean isLongToast) {
 //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
@@ -169,13 +157,6 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
         } else {
             return true;
         }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        //旋转屏幕为什么要重新设置布局与状态栏重叠呢？因为旋转屏幕有可能使状态栏高度不一样，如果你是使用的静态方法修复的，所以要重新调用修复
-        fitsLayoutOverlap();
     }
 
     protected void detachPresenter() {

@@ -203,7 +203,7 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 //        }
     }
 
-    public boolean isInMainThread() {
+    public boolean isOnMainThread() {
         return Looper.getMainLooper().getThread().getId() == Thread.currentThread().getId();
     }
 
