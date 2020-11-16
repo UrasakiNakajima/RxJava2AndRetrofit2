@@ -35,7 +35,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     TextView tevMine;
 
     private List<Fragment> fragmentList;
-    private TabFragmentPagerAdapter fragmentsPagerAdapter;
+    private TabFragmentPagerAdapter fragmentPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +57,10 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     @Override
     protected void initViews() {
         addContentView(loadView, layoutParams);
-        setToolbar(true, R.color.color_FFFFFFFF);
+//        setToolbar(true, R.color.color_FFFFFFFF);
 
-        fragmentsPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
-        mineViewPager.setAdapter(fragmentsPagerAdapter);
+        fragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
+        mineViewPager.setAdapter(fragmentPagerAdapter);
         mineViewPager.setOnPageChangeListener(new LazyViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
