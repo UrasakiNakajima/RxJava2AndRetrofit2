@@ -56,8 +56,12 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
 
     @Override
     protected void initViews() {
+        ImmersionBar.with(MainActivity.this)
+                .keyboardEnable(false)
+                .statusBarDarkFont(false)
+                .statusBarColor(R.color.color_FFE066FF)
+                .navigationBarColor(R.color.color_FFE066FF).init();
         addContentView(loadView, layoutParams);
-//        setToolbar(true, R.color.color_FFFFFFFF);
 
         fragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
         mineViewPager.setAdapter(fragmentPagerAdapter);
@@ -102,12 +106,6 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
 
             }
         });
-
-        ImmersionBar.with(MainActivity.this)
-                .keyboardEnable(false)
-                .statusBarDarkFont(false)
-                .statusBarColor(R.color.color_FFE066FF)
-                .navigationBarColor(R.color.color_FFE066FF).init();
     }
 
     @Override

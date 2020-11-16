@@ -257,7 +257,6 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        SoftKeyboardManager.hideSoftKeyboard(this);
         ActivityPageManager.getInstance().removeActivity(this);
         super.onDestroy();
     }

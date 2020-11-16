@@ -274,7 +274,6 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
             bodyParams.clear();
             bodyParams = null;
         }
-        SoftKeyboardManager.hideSoftKeyboard(this);
         ActivityPageManager.getInstance().removeActivity(this);
         super.onDestroy();
     }
