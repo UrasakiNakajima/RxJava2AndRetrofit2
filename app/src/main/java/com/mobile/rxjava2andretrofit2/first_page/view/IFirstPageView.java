@@ -2,6 +2,9 @@ package com.mobile.rxjava2andretrofit2.first_page.view;
 
 
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
+import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
+
+import java.util.List;
 
 /**
  * author    : xxxxxxxxxxx
@@ -13,7 +16,7 @@ import com.mobile.rxjava2andretrofit2.base.IBaseView;
 
 public interface IFirstPageView extends IBaseView {
 
-    void firstPageDataSuccess(String success);
+    void firstPageDataSuccess(List<FirstPageResponse.AnsListBean> success);
 
     void firstPageDataError(String error);
 }

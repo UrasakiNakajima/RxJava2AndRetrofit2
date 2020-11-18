@@ -23,6 +23,21 @@
     <string name="confirm_password">确认密码</string>
     <string name="please_check_the_network_connection">请检查网络连接</string>
     <string name="jump_to_register">跳转到注册</string>
-    jump_register
+
+    <string name="first_page_details">首页详情</string>
+
+
+    <!--真正用于解析的属性-->
+    <declare-styleable name="RCAttrs">
+        <attr name="round_as_circle" />
+        <attr name="round_corner" />
+        <attr name="round_corner_top_left" />
+        <attr name="round_corner_top_right" />
+        <attr name="round_corner_bottom_left" />
+        <attr name="round_corner_bottom_right" />
+        <attr name="stroke_color" />
+        <attr name="stroke_width" />
+        <attr name="clip_background" />
+    </declare-styleable>
 
 </resources>

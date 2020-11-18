@@ -1,12 +1,10 @@
 package com.mobile.rxjava2andretrofit2.mine.presenter;
 
-import com.alibaba.fastjson.JSON;
-import com.mobile.rxjava2andretrofit2.MineApplication;
-import com.mobile.rxjava2andretrofit2.R;
+import com.alibaba.fastjson.JSONObject;
 import com.mobile.rxjava2andretrofit2.base.BasePresenter;
-import com.mobile.rxjava2andretrofit2.base.BaseResponse;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
+import com.mobile.rxjava2andretrofit2.mine.bean.MineResponse;
 import com.mobile.rxjava2andretrofit2.mine.model.MineModelImpl;
 import com.mobile.rxjava2andretrofit2.mine.presenter.base.IMinePresenter;
 import com.mobile.rxjava2andretrofit2.mine.view.IFeedbackView;
@@ -14,6 +12,8 @@ import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 import com.mobile.rxjava2andretrofit2.mine.view.IMineView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,7 +47,12 @@ public class MinePresenterImpl extends BasePresenter<IBaseView>
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
-                                mineView.mineDataSuccess(success);
+                                if (!success.isEmpty()) {
+                                    MineResponse response = JSONObject.parseObject(success, MineResponse.class);
+                                    mineView.mineDataSuccess(response.getAns_list());
+                                } else {
+                                    mineView.mineDataError("加载失败");
+                                }
                                 mineView.hideLoading();
                             }
 

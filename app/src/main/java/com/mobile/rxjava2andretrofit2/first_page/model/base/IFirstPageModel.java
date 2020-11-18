@@ -15,4 +15,9 @@ import okhttp3.ResponseBody;
 public interface IFirstPageModel {
 
     Observable<ResponseBody> firstPageData(Map<String, String> bodyParams);
+
+//    Observable<FirstPageResponse.QuestionBean> firstPageData(Map<String, String> bodyParams);
+
+
+
 }

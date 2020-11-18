@@ -9,15 +9,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.base.BaseMvpFragment;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
+import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener;
+import com.mobile.rxjava2andretrofit2.first_page.adapter.FirstPageAdapter;
+import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.FirstPagePresenterImpl;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
 import com.mobile.rxjava2andretrofit2.main.MainActivity;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,15 +40,24 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
         implements IFirstPageView {
 
     private static final String TAG = "FirstPageFragment";
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.tev_title)
     TextView tevTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.rcv_data)
+    RecyclerView rcvData;
+    @BindView(R.id.refresh_layout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.loadView)
     QMUILoadingView loadView;
     Unbinder unbinder;
 
     private MainActivity mainActivity;
+
+    private List<FirstPageResponse.AnsListBean> ansListBeanList;
+    private FirstPageAdapter firstPageAdapter;
+    private LinearLayoutManager linearLayoutManager;
+    private boolean isRefresh;
 
     @Nullable
     @Override
@@ -50,8 +71,6 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mainActivity = (MainActivity) activity;
     }
 
     @Override
@@ -61,17 +80,53 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 
     @Override
     protected void initData() {
-
+        ansListBeanList = new ArrayList<>();
+        mainActivity = (MainActivity) activity;
+        isRefresh = true;
     }
 
     @Override
     protected void initViews() {
 
+        initAdapter();
+    }
+
+    private void initAdapter() {
+        linearLayoutManager = new LinearLayoutManager(mainActivity);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        rcvData.setLayoutManager(linearLayoutManager);
+        rcvData.setItemAnimator(new DefaultItemAnimator());
+
+        firstPageAdapter = new FirstPageAdapter(mainActivity);
+        firstPageAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
+            @Override
+            public void onItemClickListener(int position, View view) {
+//                startActivity();
+            }
+        });
+        rcvData.setAdapter(firstPageAdapter);
+        firstPageAdapter.clearData();
+        firstPageAdapter.addAllData(ansListBeanList);
+
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                LogManager.i(TAG, "onLoadMore");
+                isRefresh = false;
+                initFirstPage();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                isRefresh = true;
+                initFirstPage();
+            }
+        });
     }
 
     @Override
     protected void initLoadData() {
-
+        refreshLayout.autoRefresh();
     }
 
     @Override
@@ -96,13 +151,33 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     }
 
     @Override
-    public void firstPageDataSuccess(String success) {
-        showToast(success, true);
+    public void firstPageDataSuccess(List<FirstPageResponse.AnsListBean> success) {
+//        showToast(success, true);
+
+        if (!mainActivity.isFinishing()) {
+            if (isRefresh) {
+                ansListBeanList.clear();
+                ansListBeanList.addAll(success);
+                firstPageAdapter.addAllData(ansListBeanList);
+                refreshLayout.finishRefresh();
+            } else {
+                ansListBeanList.addAll(success);
+                firstPageAdapter.addAllData(ansListBeanList);
+                refreshLayout.finishLoadMore();
+            }
+        }
     }
 
     @Override
     public void firstPageDataError(String error) {
-        showToast(error, true);
+        if (!mainActivity.isFinishing()) {
+            showToast(error, true);
+            if (isRefresh) {
+                refreshLayout.finishRefresh();
+            } else {
+                refreshLayout.finishLoadMore();
+            }
+        }
     }
 
     private void initFirstPage() {
@@ -111,7 +186,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 //        bodyParams.put("userId", mineApplication.getUserId());
 
 
-        bodyParams.put("qid", "6761573827886448907");
+        bodyParams.put("qid", "6855150375201390856");
         presenter.firstPageData(bodyParams);
     }
 

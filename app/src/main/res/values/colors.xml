@@ -10,4 +10,13 @@
     <color name="color_80000000">#80000000</color>
     <color name="color_FFFFFFFF">#FFFFFFFF</color>
     <color name="color_FF198CFF">#FF198CFF</color>
+
+    <color name="Grey300">#E0E0E0</color>
+
+    <color name="White">#FFFFFF</color>
+    <color name="viewBackground">@android:color/white</color>
+    <color name="line_divider">@color/Grey300</color>
+    <color name="Grey500">#9e9e9e</color>
+    <color name="textColorPrimary">#616161</color>
+
 </resources>

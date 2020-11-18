@@ -1,8 +1,10 @@
 package com.mobile.rxjava2andretrofit2.first_page.presenter;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mobile.rxjava2andretrofit2.base.BasePresenter;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
+import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
 import com.mobile.rxjava2andretrofit2.first_page.model.FirstPageModelImpl;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.base.IFirstPagePresenter;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
@@ -43,7 +45,12 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
-                                firstPageView.firstPageDataSuccess(success);
+                                if (!success.isEmpty()) {
+                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
+                                    firstPageView.firstPageDataSuccess(response.getAns_list());
+                                } else {
+                                    firstPageView.firstPageDataError("加载失败");
+                                }
                                 firstPageView.hideLoading();
                             }
 

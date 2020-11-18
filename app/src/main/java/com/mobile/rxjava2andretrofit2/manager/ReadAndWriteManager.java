@@ -40,7 +40,6 @@ public class ReadAndWriteManager {
     private Disposable disposable;
 
     private ReadAndWriteManager() {
-        disposableList = new ArrayList<>();
     }
 
     public static ReadAndWriteManager getInstance() {
@@ -86,6 +85,7 @@ public class ReadAndWriteManager {
 
         LogManager.i(TAG, "writeExternal");
 
+        disposableList = new ArrayList<>();
         disposable = Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(@NonNull ObservableEmitter<Boolean> e) throws Exception {

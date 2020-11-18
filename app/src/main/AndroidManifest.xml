@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mobile.rxjava2andretrofit2">
-
     <!-- 允许访问网络的权限 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- WIFI网络状态信息权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 网络状态权限 用于断网/联网状态下，界面不同的展示 -->
@@ -28,6 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".first_page.ui.FirstPageDetailsActivity"></activity>
         <!-- 沉浸式状态栏适配 -->
         <meta-data
             android:name="android.max_aspect"
@@ -48,9 +48,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".login.ui.LoginActivity">
-
-        </activity>
+        <activity android:name=".login.ui.LoginActivity"></activity>
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
