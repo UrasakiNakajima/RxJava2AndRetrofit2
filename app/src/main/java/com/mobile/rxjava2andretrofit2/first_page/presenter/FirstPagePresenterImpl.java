@@ -1,12 +1,16 @@
 package com.mobile.rxjava2andretrofit2.first_page.presenter;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mobile.rxjava2andretrofit2.MineApplication;
+import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.base.BasePresenter;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
+import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageDetailsResponse;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
 import com.mobile.rxjava2andretrofit2.first_page.model.FirstPageModelImpl;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.base.IFirstPagePresenter;
+import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageDetailsView;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
@@ -33,7 +37,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void firstPageData(Map<String, String> bodyParams) {
+    public void firstPage(Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IFirstPageView) {
@@ -41,7 +45,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                 firstPageView.showLoading();
 
                 disposable = RetrofitManager.getInstance()
-                        .responseString(model.firstPageData(bodyParams), new OnCommonSingleParamCallback<String>() {
+                        .responseString(model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
@@ -49,7 +53,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                     FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
                                     firstPageView.firstPageDataSuccess(response.getAns_list());
                                 } else {
-                                    firstPageView.firstPageDataError("加载失败");
+                                    firstPageView.firstPageDataError(MineApplication.getInstance().getResources().getString(R.string.loading_failed));
                                 }
                                 firstPageView.hideLoading();
                             }
@@ -89,6 +93,40 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 //                                firstPageView.hideLoading();
 //                            }
 //                        });
+            }
+        }
+    }
+
+    @Override
+    public void firstPageDetails(Map<String, String> bodyParams) {
+        IBaseView baseView = obtainView();
+        if (baseView != null) {
+            if (baseView instanceof IFirstPageDetailsView) {
+                IFirstPageDetailsView firstPageDetailsView = (IFirstPageDetailsView) baseView;
+                firstPageDetailsView.showLoading();
+
+                disposable = RetrofitManager.getInstance()
+                        .responseString(model.firstPageDetails(bodyParams), new OnCommonSingleParamCallback<String>() {
+                            @Override
+                            public void onSuccess(String success) {
+                                LogManager.i(TAG, "success*****" + success);
+                                if (!success.isEmpty()) {
+                                    FirstPageDetailsResponse response = JSONObject.parseObject(success, FirstPageDetailsResponse.class);
+                                    firstPageDetailsView.firstPageDetailsSuccess(response.getData());
+                                } else {
+                                    firstPageDetailsView.firstPageDetailsError(MineApplication.getInstance().getResources().getString(R.string.loading_failed));
+                                }
+                                firstPageDetailsView.hideLoading();
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                LogManager.i(TAG, "error*****" + error);
+                                firstPageDetailsView.firstPageDetailsError(error);
+                                firstPageDetailsView.hideLoading();
+                            }
+                        });
+                disposableList.add(disposable);
             }
         }
     }

@@ -20,6 +20,7 @@ import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener;
 import com.mobile.rxjava2andretrofit2.first_page.adapter.FirstPageAdapter;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.FirstPagePresenterImpl;
+import com.mobile.rxjava2andretrofit2.first_page.ui.FirstPageDetailsActivity;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
 import com.mobile.rxjava2andretrofit2.main.MainActivity;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
@@ -101,7 +102,9 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
         firstPageAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
             @Override
             public void onItemClickListener(int position, View view) {
-//                startActivity();
+                bodyParams.clear();
+                bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
+                startActivityCarryParams(FirstPageDetailsActivity.class, bodyParams);
             }
         });
         rcvData.setAdapter(firstPageAdapter);
@@ -187,7 +190,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 
 
         bodyParams.put("qid", "6855150375201390856");
-        presenter.firstPageData(bodyParams);
+        presenter.firstPage(bodyParams);
     }
 
     @Override

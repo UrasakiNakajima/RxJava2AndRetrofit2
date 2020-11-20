@@ -184,7 +184,7 @@ public class MineFragment extends BaseMvpFragment<IBaseView, MinePresenterImpl>
     private void initMine() {
         bodyParams.clear();
 
-        bodyParams.put("qid", "6828409504091078920");
+        bodyParams.put("qid", "6463093341545300238");
 //        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
         presenter.mineData(bodyParams);
     }

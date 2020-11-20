@@ -39,8 +39,8 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
     protected Map<String, String> bodyParams;
     protected MineApplication mineApplication;
     protected Activity activity;
-    private Intent intent;
-    private Bundle bundle;
+    protected Intent intent;
+    protected Bundle bundle;
 
     protected View rootView;
 

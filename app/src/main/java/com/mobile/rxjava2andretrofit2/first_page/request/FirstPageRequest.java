@@ -16,10 +16,10 @@ public interface FirstPageRequest {
 
     @FormUrlEncoded
     @POST(Url.FIRST_PAGE_URL)
-    Observable<ResponseBody> getFirstPageData(@FieldMap Map<String, String> bodyParams);
+    Observable<ResponseBody> getFirstPage(@FieldMap Map<String, String> bodyParams);
 
-//    @GET(Url.FIRST_PAGE_URL)
-//    Observable<ResponseBody> getFirstPageData(@QueryMap Map<String, String> bodyParams);
+    @GET(Url.FIRST_PAGE_DETAILS_URL)
+    Observable<ResponseBody> getFirstPageDetails(@QueryMap Map<String, String> bodyParams);
 
 //    @FormUrlEncoded
 //    @POST(Url.FIRST_PAGE_URL)

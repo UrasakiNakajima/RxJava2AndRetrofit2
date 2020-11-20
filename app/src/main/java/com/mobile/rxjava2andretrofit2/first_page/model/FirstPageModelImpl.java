@@ -24,10 +24,17 @@ public class FirstPageModelImpl implements IFirstPageModel {
     }
 
     @Override
-    public Observable<ResponseBody> firstPageData(Map<String, String> bodyParams) {
+    public Observable<ResponseBody> firstPage(Map<String, String> bodyParams) {
         return RetrofitManager.getInstance().getRetrofit()
                 .create(FirstPageRequest.class)
-                .getFirstPageData(bodyParams);
+                .getFirstPage(bodyParams);
+    }
+
+    @Override
+    public Observable<ResponseBody> firstPageDetails(Map<String, String> bodyParams) {
+        return RetrofitManager.getInstance().getRetrofit()
+                .create(FirstPageRequest.class)
+                .getFirstPageDetails(bodyParams);
     }
 
 //    @Override

@@ -35,7 +35,7 @@ public class BasePresenter<T> {
                 modelView.get() != null;
     }
 
-    public void detachView() {
+    protected void detachView() {
         if (isAttach()) {
             modelView.clear();
             modelView = null;

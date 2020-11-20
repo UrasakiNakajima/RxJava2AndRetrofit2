@@ -27,6 +27,7 @@ import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.login.bean.LoginResponse;
 import com.mobile.rxjava2andretrofit2.login.presenter.LoginPresenterImpl;
 import com.mobile.rxjava2andretrofit2.login.view.ILoginView;
+import com.mobile.rxjava2andretrofit2.main.MainActivity;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
 
 import java.util.ArrayList;
@@ -140,7 +141,11 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
             //申请权限
             if (mPermissionList.size() > 0) {//有权限没有通过，需要申请
                 ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
+            }else {
+                startActivity(MainActivity.class);
             }
+        }else {
+            startActivity(MainActivity.class);
         }
     }
 
@@ -177,6 +182,8 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
                         }
                     }
                 }
+            }else {
+                startActivity(MainActivity.class);
             }
         }
     }

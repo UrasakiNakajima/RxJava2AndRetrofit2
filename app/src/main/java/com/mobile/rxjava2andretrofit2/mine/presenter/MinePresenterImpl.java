@@ -1,6 +1,8 @@
 package com.mobile.rxjava2andretrofit2.mine.presenter;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mobile.rxjava2andretrofit2.MineApplication;
+import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.base.BasePresenter;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
@@ -51,7 +53,7 @@ public class MinePresenterImpl extends BasePresenter<IBaseView>
                                     MineResponse response = JSONObject.parseObject(success, MineResponse.class);
                                     mineView.mineDataSuccess(response.getAns_list());
                                 } else {
-                                    mineView.mineDataError("加载失败");
+                                    mineView.mineDataError(MineApplication.getInstance().getResources().getString(R.string.loading_failed));
                                 }
                                 mineView.hideLoading();
                             }

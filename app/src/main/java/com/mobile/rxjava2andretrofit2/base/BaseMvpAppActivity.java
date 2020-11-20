@@ -44,8 +44,8 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
 
     protected String url;
     protected Map<String, String> bodyParams;
-    private Intent intent;
-    private Bundle bundle;
+    protected Intent intent;
+    protected Bundle bundle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
