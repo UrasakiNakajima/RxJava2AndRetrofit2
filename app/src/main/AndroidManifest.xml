@@ -28,17 +28,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
-        <activity android:name=".first_page.ui.VideoListActivity"></activity>
-        <activity android:name=".first_page.ui.FirstPageDetailsActivity" /> <!-- 沉浸式状态栏适配 -->
+
+        <!-- 沉浸式状态栏适配 -->
+        <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" /> <!-- 适配华为（huawei）刘海屏 -->
+            android:value="2.4" />
+        <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
+            android:value="true" />
+        <!-- 适配android7.0及其以上 -->
         <meta-data
             android:name="notch.config"
-            android:value="portrait|landscape" /> <!-- 适配android7.0及其以上 -->
+            android:value="portrait|landscape" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -49,17 +52,41 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".login.ui.LoginActivity">
+        <!-- 发射页 -->
+        <activity android:name=".login.ui.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity"></activity>
-        <activity android:name=".login.ui.RegisterActivity" />
-        <activity android:name=".login.ui.AddShopActivity" />
-        <activity android:name=".mine.ui.FeedbackActivity" />
+        <activity
+            android:name=".main.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.ui.RegisterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.ui.AddShopActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.ui.FeedbackActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".first_page.ui.VideoListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".first_page.ui.FirstPageDetailsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity android:name=".login.ui.LoginActivity">
+
+        </activity>
     </application>
 
 </manifest>

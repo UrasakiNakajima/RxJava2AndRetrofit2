@@ -6,6 +6,7 @@ import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.base.BasePresenter;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
+import com.mobile.rxjava2andretrofit2.common.Url;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageDetailsResponse;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
 import com.mobile.rxjava2andretrofit2.first_page.model.FirstPageModelImpl;
@@ -13,6 +14,7 @@ import com.mobile.rxjava2andretrofit2.first_page.presenter.base.IFirstPagePresen
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageDetailsView;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
+import com.mobile.rxjava2andretrofit2.manager.Okhttp3Manager;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 
 import java.util.Map;
@@ -104,7 +106,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
             if (baseView instanceof IFirstPageDetailsView) {
                 IFirstPageDetailsView firstPageDetailsView = (IFirstPageDetailsView) baseView;
                 firstPageDetailsView.showLoading();
-
+                //rxjava2+retrofit2请求（响应速度更快）
                 disposable = RetrofitManager.getInstance()
                         .responseString(model.firstPageDetails(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
@@ -127,6 +129,23 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                             }
                         });
                 disposableList.add(disposable);
+
+                //okhttp3请求（响应速度稍慢，可改进）
+                Okhttp3Manager.getInstance()
+                        .postAsyncKeyValuePairsOkhttp3(Url.BASE_URL + Url.FIRST_PAGE_DETAILS_URL,
+                                bodyParams,
+                                new OnCommonSingleParamCallback<String>() {
+                                    @Override
+                                    public void onSuccess(String success) {
+                                        LogManager.i(TAG, "success2*****" + success);
+                                    }
+
+                                    @Override
+                                    public void onError(String error) {
+                                        LogManager.i(TAG, "error2*****" + error);
+                                    }
+                                });
+
             }
         }
     }

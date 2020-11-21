@@ -14,6 +14,7 @@ import com.mobile.rxjava2andretrofit2.interceptor.LogInterceptor;
 import com.mobile.rxjava2andretrofit2.interceptor.ReceivedCookiesInterceptor;
 
 import java.io.File;
+import java.net.Proxy;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -56,6 +57,7 @@ public class RetrofitManager {
                 .addInterceptor(new AddCookiesInterceptor(MineApplication.getInstance()))
                 .addInterceptor(new ReceivedCookiesInterceptor(MineApplication.getInstance()))
                 .addInterceptor(new LogInterceptor())
+                .proxy(Proxy.NO_PROXY)
                 .build();
 
         // 初始化Retrofit
