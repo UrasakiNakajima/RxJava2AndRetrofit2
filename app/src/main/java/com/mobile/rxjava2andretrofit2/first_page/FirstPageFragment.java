@@ -102,9 +102,15 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
         firstPageAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
             @Override
             public void onItemClickListener(int position, View view) {
-                bodyParams.clear();
-                bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
-                startActivityCarryParams(FirstPageDetailsActivity.class, bodyParams);
+                switch (view.getId()) {
+                    case R.id.tev_data:
+                        bodyParams.clear();
+                        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
+                        startActivityCarryParams(FirstPageDetailsActivity.class, bodyParams);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
         rcvData.setAdapter(firstPageAdapter);

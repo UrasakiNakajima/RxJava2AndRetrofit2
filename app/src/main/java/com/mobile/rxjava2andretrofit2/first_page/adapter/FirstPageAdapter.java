@@ -60,7 +60,7 @@ public class FirstPageAdapter extends RecyclerView.Adapter {
             contentHolder.tevData.setText(ansListBeanList.get(position).getContent_abstract().getText());
 
 
-            contentHolder.tevAnsid.setOnClickListener(new View.OnClickListener() {
+            contentHolder.tevData.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     rcvOnItemViewClickListener.onItemClickListener(position, v);
