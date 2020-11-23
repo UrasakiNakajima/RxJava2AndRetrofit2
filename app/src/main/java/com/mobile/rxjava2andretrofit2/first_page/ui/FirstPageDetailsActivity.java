@@ -2,6 +2,8 @@ package com.mobile.rxjava2andretrofit2.first_page.ui;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +16,6 @@ import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener;
-import com.mobile.rxjava2andretrofit2.first_page.adapter.FirstPageAdapter;
 import com.mobile.rxjava2andretrofit2.first_page.adapter.FirstPageDetailsAdapter;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageDetailsResponse;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.FirstPagePresenterImpl;
@@ -28,11 +29,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, FirstPagePresenterImpl>
         implements IFirstPageDetailsView {
 
     private static final String TAG = "FirstPageDetailsActivity";
+    @BindView(R.id.imv_back)
+    ImageView imvBack;
+    @BindView(R.id.layout_back)
+    FrameLayout layoutBack;
     @BindView(R.id.tev_title)
     TextView tevTitle;
     @BindView(R.id.toolbar)
@@ -72,8 +78,9 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
 
     @Override
     protected void initViews() {
+        setToolbar(false, R.color.color_FFE066FF);
         addContentView(loadView, layoutParams);
-        setToolbar(true, R.color.color_FFE066FF);
+        imvBack.setColorFilter(getResources().getColor(R.color.color_FFFFFFFF));
 
         initAdapter();
     }
@@ -182,6 +189,15 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
             } else {
                 refreshLayout.finishLoadMore();
             }
+        }
+    }
+
+    @OnClick(R.id.layout_back)
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.layout_back:
+                finish();
+                break;
         }
     }
 }

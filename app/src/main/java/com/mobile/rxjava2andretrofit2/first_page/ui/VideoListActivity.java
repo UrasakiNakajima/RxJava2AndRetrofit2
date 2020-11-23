@@ -2,9 +2,10 @@ package com.mobile.rxjava2andretrofit2.first_page.ui;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,20 +15,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
-import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener;
 import com.mobile.rxjava2andretrofit2.first_page.adapter.VideoListAdapter;
 import com.mobile.rxjava2andretrofit2.first_page.bean.VideoListBean;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.FirstPagePresenterImpl;
 import com.mobile.rxjava2andretrofit2.first_page.view.IVideoListView;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * author    : Urasaki
@@ -39,6 +38,10 @@ public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
         implements IVideoListView {
 
     private static final String TAG = "VideoListActivity";
+    @BindView(R.id.imv_back)
+    ImageView imvBack;
+    @BindView(R.id.layout_back)
+    FrameLayout layoutBack;
     @BindView(R.id.tev_title)
     TextView tevTitle;
     @BindView(R.id.toolbar)
@@ -80,8 +83,9 @@ public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
 
     @Override
     protected void initViews() {
+        setToolbar(false, R.color.color_FFE066FF);
         addContentView(loadView, layoutParams);
-        setToolbar(true, R.color.color_FFE066FF);
+        imvBack.setColorFilter(getResources().getColor(R.color.color_FFFFFFFF));
 
         initAdapter();
     }
@@ -157,4 +161,12 @@ public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
         }
     }
 
+    @OnClick(R.id.layout_back)
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.layout_back:
+                finish();
+                break;
+        }
+    }
 }

@@ -53,7 +53,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- 发射页 -->
+        <!-- Launch页 -->
         <activity android:name=".login.ui.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
