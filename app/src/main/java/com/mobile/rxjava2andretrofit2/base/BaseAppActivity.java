@@ -59,7 +59,6 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 //        setToolbar();
         initData();
         initViews();
-        initLoadData();
     }
 
     @Override
@@ -169,8 +168,6 @@ public abstract class BaseAppActivity extends AppCompatActivity {
     protected abstract void initData();
 
     protected abstract void initViews();
-
-    protected abstract void initLoadData();
 
     protected void showToast(String message, boolean isLongToast) {
 //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();

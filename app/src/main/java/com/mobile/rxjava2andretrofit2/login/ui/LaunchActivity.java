@@ -61,11 +61,6 @@ public class LaunchActivity extends BaseAppActivity {
 
     }
 
-    @Override
-    protected void initLoadData() {
-
-    }
-
     private void initPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mPermissionList.clear();//清空没有通过的权限
