@@ -52,7 +52,7 @@ public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
     private List<VideoListBean.LargeImageListBean> videoListBeanList;
     private VideoListAdapter videoListAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private boolean isRefresh;
+//    private boolean isRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
 
     @Override
     protected void initData() {
+//        isRefresh = true;
         intent = getIntent();
         bundle = intent.getExtras();
         data = bundle.getString("data");
@@ -75,7 +76,6 @@ public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
         for (int i = 0; i < 15; i++) {
             videoListBeanList.add(videoListBean.getLarge_image_list().get(0));
         }
-        isRefresh = true;
     }
 
     @Override
