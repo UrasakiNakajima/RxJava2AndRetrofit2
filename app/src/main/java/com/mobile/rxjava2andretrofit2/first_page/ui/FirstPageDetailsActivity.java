@@ -21,6 +21,7 @@ import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageDetailsResponse;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.FirstPagePresenterImpl;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageDetailsView;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
+import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
@@ -122,18 +123,22 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
     }
 
     private void initFirstPageDetails() {
-        if (isFirstLoad) {
-            isFirstLoad = false;
-        } else {
-            max_behot_time = System.currentTimeMillis() / 1000 + "";
-        }
+        if (RetrofitManager.isNetworkAvailable(this)) {
+            if (isFirstLoad) {
+                isFirstLoad = false;
+            } else {
+                max_behot_time = System.currentTimeMillis() / 1000 + "";
+            }
 
 //        max_behot_time = 1605844009 + "";
 //        max_behot_time = 1605844868 + "";
-        bodyParams.clear();
-        bodyParams.put("category", "video");
-        bodyParams.put("max_behot_time", max_behot_time);
-        presenter.firstPageDetails(bodyParams);
+            bodyParams.clear();
+            bodyParams.put("category", "video");
+            bodyParams.put("max_behot_time", max_behot_time);
+            presenter.firstPageDetails(bodyParams);
+        } else {
+            showToast(getResources().getString(R.string.please_check_the_network_connection), true);
+        }
     }
 
     @Override
