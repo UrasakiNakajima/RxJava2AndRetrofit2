@@ -341,7 +341,7 @@ public class Okhttp3Manager {
                     @Override
                     public void onSuccess() {
 //                        if (!isEmpty(data)) {
-                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+//                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
