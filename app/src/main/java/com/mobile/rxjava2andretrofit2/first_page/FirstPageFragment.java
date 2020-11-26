@@ -201,6 +201,11 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
             presenter.firstPage(bodyParams);
         } else {
             showToast(getResources().getString(R.string.please_check_the_network_connection), true);
+            if (isRefresh) {
+                refreshLayout.finishRefresh();
+            } else {
+                refreshLayout.finishLoadMore();
+            }
         }
     }
 
