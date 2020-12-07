@@ -31,6 +31,13 @@ public class MineModelImpl implements IMineModel {
     }
 
     @Override
+    public Observable<ResponseBody> mineDetails(Map<String, String> bodyParams) {
+        return RetrofitManager.getInstance().getRetrofit()
+                .create(MineRequest.class)
+                .getMineDetails(bodyParams);
+    }
+
+    @Override
     public Observable<ResponseBody> submitFeedback(Map<String, String> bodyParams) {
         return RetrofitManager.getInstance().getRetrofit()
                 .create(MineRequest.class)

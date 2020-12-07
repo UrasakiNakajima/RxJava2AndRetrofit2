@@ -61,7 +61,7 @@ public class MineAdapter extends RecyclerView.Adapter {
             contentHolder.tevAnsid.setText(list.get(position).getAnsid());
             contentHolder.tevData.setText(list.get(position).getContent_abstract().getText());
 
-            contentHolder.tevAnsid.setOnClickListener(new View.OnClickListener() {
+            contentHolder.tevData.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     rcvOnItemViewClickListener.onItemClickListener(position, v);

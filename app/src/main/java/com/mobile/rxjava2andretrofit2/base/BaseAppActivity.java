@@ -36,8 +36,8 @@ public abstract class BaseAppActivity extends AppCompatActivity {
     protected MineApplication mineApplication;
     public QMUILoadingView loadView;
     protected FrameLayout.LayoutParams layoutParams;
-    private Intent intent;
-    private Bundle bundle;
+    protected Intent intent;
+    protected Bundle bundle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

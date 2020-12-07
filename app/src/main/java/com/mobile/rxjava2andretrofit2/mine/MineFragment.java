@@ -22,6 +22,7 @@ import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.mine.adapter.MineAdapter;
 import com.mobile.rxjava2andretrofit2.mine.bean.MineResponse;
 import com.mobile.rxjava2andretrofit2.mine.presenter.MinePresenterImpl;
+import com.mobile.rxjava2andretrofit2.mine.ui.MineDetailsActivity;
 import com.mobile.rxjava2andretrofit2.mine.view.IMineView;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -99,11 +100,16 @@ public class MineFragment extends BaseMvpFragment<IBaseView, MinePresenterImpl>
         rcvData.setItemAnimator(new DefaultItemAnimator());
 
         mineAdapter = new MineAdapter(activity);
-        mineAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
-            @Override
-            public void onItemClickListener(int position, View view) {
-
-            }
+//        mineAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
+//            @Override
+//            public void onItemClickListener(int position, View view) {
+//                startActivity(MineDetailsActivity.class);
+//            }
+//        });
+        mineAdapter.setRcvOnItemViewClickListener((position, view) -> {
+            bodyParams.clear();
+            bodyParams.put("max_behot_time", "1000");
+            startActivityCarryParams(MineDetailsActivity.class, bodyParams);
         });
         rcvData.setAdapter(mineAdapter);
         mineAdapter.clearData();

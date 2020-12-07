@@ -28,20 +28,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
-
+        <activity android:name=".mine.ui.MineDetailsActivity"></activity>
         <!-- 沉浸式状态栏适配 -->
         <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" />
-        <!-- 适配小米（xiaomi）刘海屏 -->
+            android:value="2.4" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" />
-        <!-- 适配android7.0及其以上 -->
+            android:value="true" /> <!-- 适配android7.0及其以上 -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -50,16 +49,20 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-        <!-- 发射页 -->
-        <activity android:name=".login.ui.LaunchActivity">
+        </provider> <!-- 发射页 -->
+        <activity
+            android:name=".login.ui.LaunchActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".login.ui.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
@@ -84,9 +87,6 @@
             android:name=".first_page.ui.FirstPageDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".login.ui.LoginActivity">
-
-        </activity>
     </application>
 
 </manifest>

@@ -13,6 +13,8 @@ public interface IMinePresenter {
 
     void mineData(Map<String, String> bodyParams);
 
+    void mineDetails(Map<String, String> bodyParams);
+
     void submitFeedback(Map<String, String> bodyParams);
 
 }

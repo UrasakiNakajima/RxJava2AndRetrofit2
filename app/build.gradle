@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 28
@@ -10,6 +12,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -82,4 +85,5 @@ dependencies {
     implementation 'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
     implementation 'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
     implementation 'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
