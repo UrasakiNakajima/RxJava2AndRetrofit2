@@ -10,6 +10,7 @@ import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity
 import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.first_page.adapter.FirstPageDetailsAdapter
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageDetailsResponse
+import com.mobile.rxjava2andretrofit2.first_page.ui.VideoListActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.mine.presenter.MinePresenterImpl
 import com.mobile.rxjava2andretrofit2.mine.view.IMineDetailsView
@@ -49,7 +50,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
 
     override fun initViews() {
         addContentView(loadView, layoutParams)
-        setToolbar(true, R.color.color_FF198CFF)
+        setToolbar(false, R.color.color_FF198CFF)
 
         initAdapter()
     }
@@ -64,7 +65,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
             val data: String = dataBeanList!!.get(position).getContent()
             bodyParams.clear()
             bodyParams.put("data", data)
-//            startActivityCarryParams(VideoListActivity.class,bodyParams)
+            startActivityCarryParams(VideoListActivity::class.java, bodyParams)
         }
         rcv_data.adapter = mineDetailsAdapter
         mineDetailsAdapter!!.clearData()
