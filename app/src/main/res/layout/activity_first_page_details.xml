@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".first_page.ui.FirstPageDetailsActivity">
+    tools:context=".java.first_page.ui.FirstPageDetailsActivity">
 
 
     <androidx.appcompat.widget.Toolbar

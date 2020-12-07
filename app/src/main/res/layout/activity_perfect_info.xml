@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".login.ui.AddShopActivity">
+    tools:context=".java.login.ui.AddShopActivity">
 
     <View
         android:layout_width="match_parent"

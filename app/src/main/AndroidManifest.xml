@@ -18,7 +18,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name=".MineApplication"
+        android:name=".java.MineApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
@@ -55,7 +55,7 @@
         </provider>
 
         <!-- Launch页 -->
-        <activity android:name=".login.ui.LaunchActivity">
+        <activity android:name=".java.login.ui.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,34 +63,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login.ui.LoginActivity"
+            android:name=".java.login.ui.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.MainActivity"
+            android:name=".java.main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".login.ui.RegisterActivity"
+            android:name=".java.login.ui.RegisterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".login.ui.AddShopActivity"
+            android:name=".java.login.ui.AddShopActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".mine.ui.FeedbackActivity"
+            android:name="com.mobile.rxjava2andretrofit2.java.mine.ui.FeedbackActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".first_page.ui.VideoListActivity"
+            android:name=".java.first_page.ui.VideoListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".first_page.ui.FirstPageDetailsActivity"
+            android:name=".java.first_page.ui.FirstPageDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".mine.ui.MineDetailsActivity"></activity>
+        <activity android:name="com.mobile.rxjava2andretrofit2.kotlin.mine.MineDetailsActivity"></activity>
     </application>
 
 </manifest>
