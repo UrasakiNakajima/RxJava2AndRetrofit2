@@ -92,38 +92,6 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
                 initFirstPageDetails()
             }
         })
-//        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-//        rcvData.setLayoutManager(linearLayoutManager);
-//        rcvData.setItemAnimator(new DefaultItemAnimator ());
-//
-//        mineDetailsAdapter = new FirstPageDetailsAdapter (this);
-//        mineDetailsAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener () {
-//            @Override
-//            public void onItemClickListener(int position, View view) {
-//                String data = dataBeanList . get (position).getContent();
-//                bodyParams.clear();
-//                bodyParams.put("data", data);
-//                startActivityCarryParams(VideoListActivity.class, bodyParams);
-//            }
-//        });
-//        rcvData.setAdapter(mineDetailsAdapter);
-//        mineDetailsAdapter.clearData();
-//        mineDetailsAdapter.addAllData(dataBeanList);
-//
-//        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener () {
-//            @Override
-//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-//                LogManager.i(TAG, "onLoadMore");
-//                isRefresh = false;
-//                initFirstPageDetails();
-//            }
-//
-//            @Override
-//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-//                isRefresh = true;
-//                initFirstPageDetails();
-//            }
-//        });
     }
 
     override fun initLoadData() {
