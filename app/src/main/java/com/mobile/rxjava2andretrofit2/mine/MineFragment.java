@@ -19,6 +19,7 @@ import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener;
 import com.mobile.rxjava2andretrofit2.main.MainActivity;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
+import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 import com.mobile.rxjava2andretrofit2.mine.adapter.MineAdapter;
 import com.mobile.rxjava2andretrofit2.mine.bean.MineResponse;
 import com.mobile.rxjava2andretrofit2.mine.presenter.MinePresenterImpl;
@@ -188,11 +189,20 @@ public class MineFragment extends BaseMvpFragment<IBaseView, MinePresenterImpl>
     }
 
     private void initMine() {
-        bodyParams.clear();
+        if (RetrofitManager.isNetworkAvailable(mainActivity)) {
+            bodyParams.clear();
 
-        bodyParams.put("qid", "6463093341545300238");
+            bodyParams.put("qid", "6463093341545300238");
 //        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
-        presenter.mineData(bodyParams);
+            presenter.mineData(bodyParams);
+        } else {
+            showToast(getResources().getString(R.string.please_check_the_network_connection), true);
+            if (isRefresh) {
+                refreshLayout.finishRefresh();
+            } else {
+                refreshLayout.finishLoadMore();
+            }
+        }
     }
 
     @Override

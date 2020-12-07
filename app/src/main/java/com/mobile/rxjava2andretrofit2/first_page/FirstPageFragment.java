@@ -24,6 +24,7 @@ import com.mobile.rxjava2andretrofit2.first_page.ui.FirstPageDetailsActivity;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
 import com.mobile.rxjava2andretrofit2.main.MainActivity;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
+import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -190,13 +191,22 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     }
 
     private void initFirstPage() {
-        bodyParams.clear();
+        if (RetrofitManager.isNetworkAvailable(mainActivity)) {
+            bodyParams.clear();
 //        bodyParams.put("shopId", mineApplication.getShopId());
 //        bodyParams.put("userId", mineApplication.getUserId());
 
 
-        bodyParams.put("qid", "6855150375201390856");
-        presenter.firstPage(bodyParams);
+            bodyParams.put("qid", "6855150375201390856");
+            presenter.firstPage(bodyParams);
+        } else {
+            showToast(getResources().getString(R.string.please_check_the_network_connection), true);
+            if (isRefresh) {
+                refreshLayout.finishRefresh();
+            } else {
+                refreshLayout.finishLoadMore();
+            }
+        }
     }
 
     @Override

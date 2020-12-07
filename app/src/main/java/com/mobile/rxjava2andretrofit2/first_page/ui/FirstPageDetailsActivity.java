@@ -2,6 +2,8 @@ package com.mobile.rxjava2andretrofit2.first_page.ui;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,12 +16,12 @@ import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener;
-import com.mobile.rxjava2andretrofit2.first_page.adapter.FirstPageAdapter;
 import com.mobile.rxjava2andretrofit2.first_page.adapter.FirstPageDetailsAdapter;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageDetailsResponse;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.FirstPagePresenterImpl;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageDetailsView;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
+import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
@@ -28,11 +30,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, FirstPagePresenterImpl>
         implements IFirstPageDetailsView {
 
     private static final String TAG = "FirstPageDetailsActivity";
+    @BindView(R.id.imv_back)
+    ImageView imvBack;
+    @BindView(R.id.layout_back)
+    FrameLayout layoutBack;
     @BindView(R.id.tev_title)
     TextView tevTitle;
     @BindView(R.id.toolbar)
@@ -72,8 +79,9 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
 
     @Override
     protected void initViews() {
+        setToolbar(false, R.color.color_FFE066FF);
         addContentView(loadView, layoutParams);
-        setToolbar(true, R.color.color_FFE066FF);
+        imvBack.setColorFilter(getResources().getColor(R.color.color_FFFFFFFF));
 
         initAdapter();
     }
@@ -115,18 +123,27 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
     }
 
     private void initFirstPageDetails() {
-        if (isFirstLoad) {
-            isFirstLoad = false;
-        } else {
-            max_behot_time = System.currentTimeMillis() / 1000 + "";
-        }
+        if (RetrofitManager.isNetworkAvailable(this)) {
+            if (isFirstLoad) {
+                isFirstLoad = false;
+            } else {
+                max_behot_time = System.currentTimeMillis() / 1000 + "";
+            }
 
 //        max_behot_time = 1605844009 + "";
 //        max_behot_time = 1605844868 + "";
-        bodyParams.clear();
-        bodyParams.put("category", "video");
-        bodyParams.put("max_behot_time", max_behot_time);
-        presenter.firstPageDetails(bodyParams);
+            bodyParams.clear();
+            bodyParams.put("category", "video");
+            bodyParams.put("max_behot_time", max_behot_time);
+            presenter.firstPageDetails(bodyParams);
+        } else {
+            showToast(getResources().getString(R.string.please_check_the_network_connection), true);
+            if (isRefresh) {
+                refreshLayout.finishRefresh();
+            } else {
+                refreshLayout.finishLoadMore();
+            }
+        }
     }
 
     @Override
@@ -182,6 +199,15 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
             } else {
                 refreshLayout.finishLoadMore();
             }
+        }
+    }
+
+    @OnClick(R.id.layout_back)
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.layout_back:
+                finish();
+                break;
         }
     }
 }

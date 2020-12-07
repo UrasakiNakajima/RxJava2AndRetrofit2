@@ -77,6 +77,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initLoadData();
 
+
     protected void showToast(String message, boolean isLongToast) {
 //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         if (!activity.isFinishing()) {

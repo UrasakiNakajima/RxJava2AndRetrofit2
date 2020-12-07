@@ -53,7 +53,7 @@ public class LaunchActivity extends BaseAppActivity {
 
     @Override
     protected void initData() {
-        initPermissions();
+
     }
 
     @Override
@@ -63,7 +63,7 @@ public class LaunchActivity extends BaseAppActivity {
 
     @Override
     protected void initLoadData() {
-
+        initPermissions();
     }
 
     private void initPermissions() {
@@ -79,11 +79,11 @@ public class LaunchActivity extends BaseAppActivity {
             //申请权限
             if (mPermissionList.size() > 0) {//有权限没有通过，需要申请
                 ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
-            }else {
+            } else {
                 startActivity(MainActivity.class);
                 finish();
             }
-        }else {
+        } else {
             startActivity(MainActivity.class);
             finish();
         }
@@ -122,7 +122,7 @@ public class LaunchActivity extends BaseAppActivity {
                         }
                     }
                 }
-            }else {
+            } else {
                 startActivity(MainActivity.class);
                 finish();
             }
