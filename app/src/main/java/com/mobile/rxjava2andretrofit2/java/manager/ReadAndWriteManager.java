@@ -81,7 +81,6 @@ public class ReadAndWriteManager {
 //        }
 
         LogManager.i(TAG, "writeExternal");
-
         disposableList = new ArrayList<>();
         disposable = Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override

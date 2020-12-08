@@ -226,15 +226,15 @@ public class RetrofitManager {
                                            });
                                }
                            }
-                        , new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                LogManager.i(TAG, "throwable*****" + throwable.toString());
-                                LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
-                                // 异常处理
-                                onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-                            }
-                        }
+//                        , new Consumer<Throwable>() {
+//                            @Override
+//                            public void accept(Throwable throwable) throws Exception {
+//                                LogManager.i(TAG, "throwable*****" + throwable.toString());
+//                                LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+//                                // 异常处理
+//                                onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+//                            }
+//                        }
                 );
         return disposable;
     }

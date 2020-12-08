@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FirstPageDetailsAdapter extends RecyclerView.Adapter {
+public class FirstPageDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = "FirstPageDetailsAdapter";
     private Context context;
