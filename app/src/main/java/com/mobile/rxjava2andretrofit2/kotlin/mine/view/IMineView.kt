@@ -1,11 +1,11 @@
 package com.mobile.rxjava2andretrofit2.kotlin.mine.view
 
 import com.mobile.rxjava2andretrofit2.java.base.IBaseView
-import com.mobile.rxjava2andretrofit2.java.mine.bean.MineResponse
+import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
 
 interface IMineView : IBaseView {
 
-    fun mineDataSuccess(success: List<MineResponse.AnsListBean>)
+    fun mineDataSuccess(success: List<Ans>)
 
     fun mineDataError(error: String?)
 

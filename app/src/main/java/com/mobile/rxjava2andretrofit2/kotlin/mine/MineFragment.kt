@@ -14,9 +14,9 @@ import com.mobile.rxjava2andretrofit2.java.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.java.main.MainActivity
 import com.mobile.rxjava2andretrofit2.java.manager.LogManager
 import com.mobile.rxjava2andretrofit2.java.manager.RetrofitManager
-import com.mobile.rxjava2andretrofit2.java.mine.bean.MineResponse
-import com.mobile.rxjava2andretrofit2.java.mine.presenter.MinePresenterImpl
 import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineAdapter
+import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
+import com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.MinePresenterImpl
 import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
 import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineView
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -25,10 +25,10 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 
 class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView {
 
-    val TAG: String = "MineFragment"
+    private val TAG: String = "MineFragment"
     private var mainActivity: MainActivity? = null
 
-    private var ansListBeanList: MutableList<MineResponse.AnsListBean>? = null
+    private var ansListBeanList: MutableList<Ans>? = null
     private var mineAdapter: MineAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private var isRefresh: Boolean? = null
@@ -59,12 +59,12 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     }
 
     private fun initAdapter() {
-        linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager = LinearLayoutManager(mainActivity)
         linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
         rcv_data.layoutManager = (linearLayoutManager)
         rcv_data.itemAnimator = DefaultItemAnimator()
 
-        mineAdapter = MineAdapter(activity)
+        mineAdapter = MineAdapter(mainActivity!!)
         mineAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
@@ -113,7 +113,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         }
     }
 
-    override fun mineDataSuccess(success: List<MineResponse.AnsListBean>) {
+    override fun mineDataSuccess(success: List<Ans>) {
         if (!mainActivity!!.isFinishing()) {
             if (isRefresh!!) {
                 ansListBeanList!!.clear()

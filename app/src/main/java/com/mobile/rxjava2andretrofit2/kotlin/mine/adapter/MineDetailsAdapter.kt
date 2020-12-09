@@ -16,7 +16,11 @@ class MineDetailsAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVi
     val TAG: String = "MineDetailsAdapter";
     //    private var context: Context? = null
     //    private var dataBeanList = MutableList<MineDetailsResponse.List<Data>>?=null
-    private var dataBeanList: MutableList<Data> = mutableListOf()
+    private var dataBeanList: MutableList<Data>? = null
+
+    init {
+        dataBeanList = mutableListOf()
+    }
 
 //    fun MineDetailsAdapter(context: Context) {
 //        this.context = context
@@ -28,12 +32,12 @@ class MineDetailsAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVi
 //    }
 
     fun clearData() {
-        this.dataBeanList.clear()
+        this.dataBeanList!!.clear()
         notifyDataSetChanged()
     }
 
     fun addAllData(dataBeanList: MutableList<Data>) {
-        this.dataBeanList.addAll(dataBeanList)
+        this.dataBeanList!!.addAll(dataBeanList)
         notifyDataSetChanged()
     }
 
@@ -43,13 +47,13 @@ class MineDetailsAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVi
     }
 
     override fun getItemCount(): Int {
-        return dataBeanList.size
+        return dataBeanList!!.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ContentHolder) {
-            holder.tevCode!!.text = dataBeanList.get(position).code
-            val data = dataBeanList.get(position).content
+            holder.tevCode!!.text = dataBeanList!!.get(position).code
+            val data = dataBeanList!!.get(position).content
             LogManager.i(TAG, "onBindViewHolder data*****$data")
             holder.tevData!!.text = data
             holder.tevData!!.setOnClickListener(View.OnClickListener { v -> rcvOnItemViewClickListener!!.onItemClickListener(position, v) })

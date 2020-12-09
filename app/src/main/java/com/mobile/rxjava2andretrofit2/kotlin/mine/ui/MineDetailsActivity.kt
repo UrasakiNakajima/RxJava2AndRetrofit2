@@ -11,9 +11,9 @@ import com.mobile.rxjava2andretrofit2.java.base.IBaseView
 import com.mobile.rxjava2andretrofit2.java.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.java.first_page.ui.VideoListActivity
 import com.mobile.rxjava2andretrofit2.java.manager.LogManager
-import com.mobile.rxjava2andretrofit2.java.mine.presenter.MinePresenterImpl
 import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineDetailsAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Data
+import com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.MinePresenterImpl
 import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineDetailsView
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener

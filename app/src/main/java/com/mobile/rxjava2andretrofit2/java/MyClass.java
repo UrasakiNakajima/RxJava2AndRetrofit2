@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.java.mine;
+package com.mobile.rxjava2andretrofit2.java;
 
 import com.mobile.rxjava2andretrofit2.kotlin.Test1Class;
 
