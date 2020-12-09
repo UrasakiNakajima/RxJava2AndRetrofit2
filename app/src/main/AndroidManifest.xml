@@ -82,7 +82,9 @@
             android:name=".java.first_page.ui.FirstPageDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name="com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity"></activity>
+        <activity android:name="com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity">
+
+        </activity>
     </application>
 
 </manifest>
