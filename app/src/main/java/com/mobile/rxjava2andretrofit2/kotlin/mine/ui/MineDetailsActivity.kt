@@ -12,9 +12,9 @@ import com.mobile.rxjava2andretrofit2.java.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.java.first_page.ui.VideoListActivity
 import com.mobile.rxjava2andretrofit2.java.manager.LogManager
 import com.mobile.rxjava2andretrofit2.java.mine.presenter.MinePresenterImpl
-import com.mobile.rxjava2andretrofit2.java.mine.view.IMineDetailsView
-import com.mobile.rxjava2andretrofit2.kotlin.mine.MineDetailsAdapter
+import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineDetailsAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Data
+import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineDetailsView
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.activity_mine_details.*
@@ -23,11 +23,11 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
 
     private val TAG: String = "MineDetailsActivity"
     private var max_behot_time: String? = null
-    private var dataBeanList: MutableList<Data> = mutableListOf()
+    private var dataBeanList: MutableList<Data>? = null
     private var mineDetailsAdapter: MineDetailsAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var isRefresh: Boolean = true;
-    private var isFirstLoad: Boolean = true;
+    private var isRefresh: Boolean? = null;
+    private var isFirstLoad: Boolean? = null;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +44,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
         max_behot_time = bundle.getString("max_behot_time")
         LogManager.i(TAG, "max_behot_time*****$max_behot_time")
 
+        dataBeanList = mutableListOf()
         isRefresh = true
         isFirstLoad = true
     }
@@ -51,15 +52,22 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
     override fun initViews() {
         addContentView(loadView, layoutParams)
         setToolbar(false, R.color.color_FF198CFF)
+        imv_back.setColorFilter(resources.getColor(R.color.color_FFFFFFFF))
 
+        layout_back.setOnClickListener(object : View.OnClickListener {
+
+            override fun onClick(v: View?) {
+                finish()
+            }
+        })
         initAdapter()
     }
 
     private fun initAdapter() {
-        linearLayoutManager = LinearLayoutManager(this);
-        linearLayoutManager!!.orientation = RecyclerView.VERTICAL;
+        linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager!!.orientation = RecyclerView.VERTICAL
         rcv_data.layoutManager = linearLayoutManager
-        rcv_data.itemAnimator = DefaultItemAnimator()
+        rcv_data.itemAnimator = DefaultItemAnimator() as RecyclerView.ItemAnimator?
         mineDetailsAdapter = MineDetailsAdapter(this)
 //        mineDetailsAdapter!!.setRcvOnItemViewClickListener { position, view ->
 //            val data: String = dataBeanList!!.get(position).content
@@ -70,7 +78,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
         mineDetailsAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
-                val data: String = dataBeanList[position].content!!
+                val data: String = dataBeanList!![position].content
                 bodyParams.clear()
                 bodyParams.put("data", data)
                 startActivityCarryParams(VideoListActivity::class.java, bodyParams)
@@ -78,7 +86,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
         })
         rcv_data.adapter = mineDetailsAdapter
         mineDetailsAdapter!!.clearData()
-        mineDetailsAdapter!!.addAllData(dataBeanList)
+        mineDetailsAdapter!!.addAllData(dataBeanList!!)
         refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
 
             override fun onLoadMore(refreshLayout: RefreshLayout) {
@@ -126,16 +134,16 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
         }
     }
 
-    override fun mineDetailsSuccess(success: MutableList<Data>) {
+    override fun mineDetailsSuccess(success: List<Data>) {
         if (!this.isFinishing()) {
-            if (isRefresh) {
-                dataBeanList.clear()
-                dataBeanList.addAll(success)
-                mineDetailsAdapter!!.addAllData(dataBeanList)
+            if (isRefresh!!) {
+                dataBeanList!!.clear()
+                dataBeanList!!.addAll(success)
+                mineDetailsAdapter!!.addAllData(dataBeanList!!)
                 refresh_layout.finishRefresh()
             } else {
-                dataBeanList.addAll(success)
-                mineDetailsAdapter!!.addAllData(dataBeanList)
+                dataBeanList!!.addAll(success)
+                mineDetailsAdapter!!.addAllData(dataBeanList!!)
                 refresh_layout.finishLoadMore()
             }
         }
@@ -144,7 +152,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
     override fun mineDetailsError(error: String?) {
         if (!this.isFinishing()) {
             showToast(error, true)
-            if (isRefresh) {
+            if (isRefresh!!) {
                 refresh_layout.finishRefresh()
             } else {
                 refresh_layout.finishLoadMore()
@@ -153,7 +161,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
     }
 
     private fun initFirstPageDetails() {
-        if (isFirstLoad) {
+        if (isFirstLoad!!) {
             isFirstLoad = false
         } else {
             max_behot_time = "${System.currentTimeMillis() / 1000}"

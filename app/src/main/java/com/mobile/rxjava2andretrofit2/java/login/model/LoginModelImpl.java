@@ -38,11 +38,4 @@ public class LoginModelImpl implements ILoginModel {
                 .getRegisterData(bodyParams);
     }
 
-    @Override
-    public Observable<ResponseBody> addShop(RequestBody requestBody) {
-        return RetrofitManager.getInstance().getRetrofit()
-                .create(LoginRequest.class)
-                .addShopResult(requestBody);
-    }
-
 }

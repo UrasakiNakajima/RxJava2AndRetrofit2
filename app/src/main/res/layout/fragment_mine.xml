@@ -58,7 +58,7 @@
     </LinearLayout>
 
     <com.qmuiteam.qmui.widget.QMUILoadingView
-        android:id="@+id/loadView"
+        android:id="@+id/load_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

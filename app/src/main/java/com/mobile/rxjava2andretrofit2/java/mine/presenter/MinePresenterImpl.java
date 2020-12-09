@@ -1,23 +1,20 @@
 package com.mobile.rxjava2andretrofit2.java.mine.presenter;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import com.mobile.rxjava2andretrofit2.java.MineApplication;
 import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.java.base.BasePresenter;
 import com.mobile.rxjava2andretrofit2.java.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.java.callback.OnCommonSingleParamCallback;
-import com.mobile.rxjava2andretrofit2.java.common.Url;
-import com.mobile.rxjava2andretrofit2.java.first_page.bean.FirstPageDetailsResponse;
-import com.mobile.rxjava2andretrofit2.java.manager.Okhttp3Manager;
 import com.mobile.rxjava2andretrofit2.java.mine.bean.MineResponse;
 import com.mobile.rxjava2andretrofit2.java.mine.model.MineModelImpl;
 import com.mobile.rxjava2andretrofit2.java.mine.presenter.base.IMinePresenter;
-import com.mobile.rxjava2andretrofit2.java.mine.view.IFeedbackView;
 import com.mobile.rxjava2andretrofit2.java.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.java.manager.RetrofitManager;
-import com.mobile.rxjava2andretrofit2.java.mine.view.IMineDetailsView;
-import com.mobile.rxjava2andretrofit2.java.mine.view.IMineView;
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.MineDetailsResponse;
+import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineDetailsView;
+import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineView;
 
 import java.util.Map;
 
@@ -87,7 +84,9 @@ public class MinePresenterImpl extends BasePresenter<IBaseView>
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
                                 if (!success.isEmpty()) {
-                                    MineDetailsResponse response = JSONObject.parseObject(success, MineDetailsResponse.class);
+//                                    MineDetailsResponse response = JSONObject.parseObject(success, MineDetailsResponse.class);
+                                    Gson gson = new Gson();
+                                    MineDetailsResponse response = gson.fromJson(success, MineDetailsResponse.class);
                                     LogManager.i(TAG, "success data*****" + response.getData().toString());
                                     mineDetailsView.mineDetailsSuccess(response.getData());
                                 } else {
@@ -121,61 +120,6 @@ public class MinePresenterImpl extends BasePresenter<IBaseView>
 //                                    }
 //                                });
 
-            }
-        }
-    }
-
-    @Override
-    public void submitFeedback(Map<String, String> bodyParams) {
-        IBaseView baseView = obtainView();
-        if (baseView != null) {
-            if (baseView instanceof IFeedbackView) {
-                IFeedbackView feedbackView = (IFeedbackView) baseView;
-                feedbackView.showLoading();
-                disposable = RetrofitManager.getInstance()
-                        .responseString(model.submitFeedback(bodyParams), new OnCommonSingleParamCallback<String>() {
-                            @Override
-                            public void onSuccess(String success) {
-                                LogManager.i(TAG, "success*****" + success);
-                                feedbackView.submitFeedbackSuccess(success);
-                                feedbackView.hideLoading();
-                            }
-
-                            @Override
-                            public void onError(String error) {
-                                LogManager.i(TAG, "error*****" + error);
-                                feedbackView.submitFeedbackError(error);
-                                feedbackView.hideLoading();
-                            }
-                        });
-                disposableList.add(disposable);
-
-//                disposable = model.submitFeedback(bodyParams)
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(new Consumer<JSONObject>() {
-//                            @Override
-//                            public void accept(JSONObject jsonObject) throws Exception {
-//                                String responseString = jsonObject.toJSONString();
-//                                LogManager.i(TAG, "responseString*****" + responseString);
-//                                BaseResponse baseResponse = JSON.parseObject(responseString, BaseResponse.class);
-//                                if (baseResponse.getCode() == 200) {
-//
-////                                    feedbackView.submitFeedbackSuccess(feedbackResponse.getData());
-//                                } else {
-//                                    feedbackView.submitFeedbackError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
-//                                }
-//                                feedbackView.hideLoading();
-//                            }
-//                        }, new Consumer<Throwable>() {
-//                            @Override
-//                            public void accept(Throwable throwable) throws Exception {
-//                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
-//                                // 异常处理
-//                                feedbackView.submitFeedbackError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-//                                feedbackView.hideLoading();
-//                            }
-//                        });
             }
         }
     }

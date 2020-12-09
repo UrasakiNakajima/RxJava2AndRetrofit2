@@ -15,7 +15,7 @@ import com.mobile.rxjava2andretrofit2.java.first_page.FirstPageFragment;
 import com.mobile.rxjava2andretrofit2.java.main.adapter.TabFragmentPagerAdapter;
 import com.mobile.rxjava2andretrofit2.java.main.presenter.MainPresenterImpl;
 import com.mobile.rxjava2andretrofit2.java.main.view.IMainView;
-import com.mobile.rxjava2andretrofit2.java.mine.MineFragment;
+import com.mobile.rxjava2andretrofit2.kotlin.mine.MineFragment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,6 +15,7 @@ import com.mobile.rxjava2andretrofit2.java.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.java.login.bean.LoginResponse;
 import com.mobile.rxjava2andretrofit2.java.login.presenter.LoginPresenterImpl;
 import com.mobile.rxjava2andretrofit2.java.login.view.ILoginView;
+import com.mobile.rxjava2andretrofit2.java.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -89,7 +90,7 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
     @Override
     public void loginSuccess(LoginResponse.DataBean success) {
         showToast(success.getUserName(), true);
-        startActivity(AddShopActivity.class);
+        startActivity(MainActivity.class);
     }
 
     @Override

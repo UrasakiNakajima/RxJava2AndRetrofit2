@@ -10,7 +10,6 @@ import com.mobile.rxjava2andretrofit2.java.login.bean.LoginResponse;
 import com.mobile.rxjava2andretrofit2.java.login.model.LoginModelImpl;
 import com.mobile.rxjava2andretrofit2.java.login.presenter.base.ILoginPresenter;
 import com.mobile.rxjava2andretrofit2.java.login.view.ILoginView;
-import com.mobile.rxjava2andretrofit2.java.login.view.IAddShopView;
 import com.mobile.rxjava2andretrofit2.java.login.view.IRegisterView;
 import com.mobile.rxjava2andretrofit2.java.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.java.base.BaseResponse;
@@ -146,123 +145,6 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                             }
                         });
                 disposableList.add(disposable);
-            }
-        }
-    }
-
-    @Override
-    public void addShop(Map<String, String> bodyParams, Map<String, File> fileMap, Map<String, List<File>> filesMap) {
-        IBaseView baseView = obtainView();
-        if (baseView != null) {
-            if (baseView instanceof IAddShopView) {
-                IAddShopView addShopView = (IAddShopView) baseView;
-                addShopView.showLoading();
-
-                //构建请求体
-                RequestBody requestBody = RetrofitManager.getInstance()
-                        .multipartBody2(bodyParams, fileMap, filesMap);
-                disposable = RetrofitManager.getInstance()
-                        .responseString(model.addShop(requestBody), new OnCommonSingleParamCallback<String>() {
-                            @Override
-                            public void onSuccess(String success) {
-                                LogManager.i(TAG, "success*****" + success);
-                                BaseResponse baseResponse = JSON.parseObject(success, BaseResponse.class);
-                                if (baseResponse.getCode() == 200) {
-//                                    LoginResponse loginResponse = JSON.parseObject(responseString, LoginResponse.class);
-//                                    MineApplication mineApplication = MineApplication.getInstance();
-//                                    mineApplication.setShopId(loginResponse.getData().getShopId() + "");
-//                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
-//                                    addShopView.addShopSuccess(loginResponse.getData());
-                                } else {
-                                    addShopView.addShopError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
-                                }
-                                addShopView.hideLoading();
-                            }
-
-                            @Override
-                            public void onError(String error) {
-                                LogManager.i(TAG, "error*****" + error);
-                                // 异常处理
-                                addShopView.addShopError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-                                addShopView.hideLoading();
-                            }
-                        });
-                disposableList.add(disposable);
-
-//                MediaType MEDIA_TYPE = MediaType.parse("image/*");
-//                // form 表单形式上传
-//                MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-//                //1.添加请求参数
-//                //遍历map中所有参数到builder
-//                if (bodyParams != null && bodyParams.size() > 0) {
-//                    for (String key : bodyParams.keySet()) {
-//                        if (bodyParams.get(key) != null && !"".equals(bodyParams.get(key))) {//如果参数不是null，才把参数传给后台
-//                            multipartBodyBuilder.addFormDataPart(key, bodyParams.get(key));
-//                        }
-//                    }
-//                }
-//
-//                //遍历fileMap中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
-//                if (fileMap != null && fileMap.size() > 0) {
-//                    for (String key : fileMap.keySet()) {
-//                        File file = fileMap.get(key);
-//                        if (file != null && file.exists()) {//如果参数不是null，才把参数传给后台
-//                            multipartBodyBuilder.addFormDataPart(key, file.getName(), RequestBody.create(MEDIA_TYPE, file));
-//
-//                            LogManager.i(TAG, "file.getName()*****" + file.getName());
-//                        }
-//                    }
-//                }
-//
-//                //遍历filesMap中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
-//                if (filesMap != null && filesMap.size() > 0) {
-//                    for (String key : filesMap.keySet()) {
-//                        List<File> files = filesMap.get(key);
-//                        if (files != null) {//如果参数不是null，才把参数传给后台
-//                            if (files != null && files.size() > 0) {
-//                                for (int i = 0; i < files.size(); i++) {
-//                                    if (files.get(i) != null && files.get(i).exists()) {
-//                                        multipartBodyBuilder.addFormDataPart(key, files.get(i).getName(), RequestBody.create(MEDIA_TYPE, files.get(i)));
-//
-//                                        LogManager.i(TAG, "files.get(i).getName()*****" + files.get(i).getName());
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//
-//                //构建请求体
-//                RequestBody requestBody = multipartBodyBuilder.build();
-//                disposable = model.addShop(requestBody)
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(new Consumer<JSONObject>() {
-//                            @Override
-//                            public void accept(JSONObject jsonObject) throws Exception {
-//                                String responseString = jsonObject.toJSONString();
-//                                LogManager.i(TAG, "responseString*****" + responseString);
-//                                BaseResponse baseResponse = JSON.parseObject(responseString, BaseResponse.class);
-//                                if (baseResponse.getCode() == 200) {
-////                                    LoginResponse loginResponse = JSON.parseObject(responseString, LoginResponse.class);
-////                                    MineApplication mineApplication = MineApplication.getInstance();
-////                                    mineApplication.setShopId(loginResponse.getData().getShopId() + "");
-////                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
-////                                    addShopView.addShopSuccess(loginResponse.getData());
-//                                } else {
-//                                    addShopView.addShopError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
-//                                }
-//                                addShopView.hideLoading();
-//                            }
-//                        }, new Consumer<Throwable>() {
-//                            @Override
-//                            public void accept(Throwable throwable) throws Exception {
-//                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
-//                                // 异常处理
-//                                addShopView.addShopError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-//                                addShopView.hideLoading();
-//                            }
-//                        });
             }
         }
     }

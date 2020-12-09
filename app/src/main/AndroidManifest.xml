@@ -75,14 +75,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".java.login.ui.AddShopActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.mobile.rxjava2andretrofit2.java.mine.ui.FeedbackActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".java.first_page.ui.VideoListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

@@ -17,5 +17,4 @@ public interface ILoginPresenter {
 
     void register(Map<String, String> bodyParams);
 
-    void addShop(Map<String, String> bodyParams, Map<String, File> fileMap, Map<String, List<File>> filesMap);
 }

@@ -19,6 +19,4 @@ public interface ILoginModel {
 
     Observable<ResponseBody> register(Map<String, String> bodyParams);
 
-    Observable<ResponseBody> addShop(RequestBody requestBody);
-
 }

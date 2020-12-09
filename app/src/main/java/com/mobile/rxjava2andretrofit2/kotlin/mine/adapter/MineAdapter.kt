@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.mine
+package com.mobile.rxjava2andretrofit2.kotlin.mine.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.java.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.java.mine.bean.MineResponse
@@ -33,7 +31,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         notifyDataSetChanged()
     }
 
-    fun addAllData(list: List<MineResponse.AnsListBean>) {
+    fun addAllData(list: MutableList<MineResponse.AnsListBean>) {
         this.list.addAll(list)
         notifyDataSetChanged()
     }

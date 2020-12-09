@@ -18,6 +18,4 @@ public interface IMineModel {
 
     Observable<ResponseBody> mineDetails(Map<String, String> bodyParams);
 
-    Observable<ResponseBody> submitFeedback(Map<String, String> bodyParams);
-
 }
