@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.java.base.BaseMvpAppActivity
-import com.mobile.rxjava2andretrofit2.java.base.IBaseView
-import com.mobile.rxjava2andretrofit2.java.callback.RcvOnItemViewClickListener
-import com.mobile.rxjava2andretrofit2.java.first_page.ui.VideoListActivity
-import com.mobile.rxjava2andretrofit2.java.manager.LogManager
+import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity
+import com.mobile.rxjava2andretrofit2.base.IBaseView
+import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
+import com.mobile.rxjava2andretrofit2.first_page.ui.VideoListActivity
+import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineDetailsAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Data
 import com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.MinePresenterImpl
@@ -67,7 +67,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
         linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager!!.orientation = RecyclerView.VERTICAL
         rcv_data.layoutManager = linearLayoutManager
-        rcv_data.itemAnimator = DefaultItemAnimator() as RecyclerView.ItemAnimator?
+        rcv_data.itemAnimator = DefaultItemAnimator()
         mineDetailsAdapter = MineDetailsAdapter(this)
 //        mineDetailsAdapter!!.setRcvOnItemViewClickListener { position, view ->
 //            val data: String = dataBeanList!!.get(position).content

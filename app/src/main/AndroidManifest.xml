@@ -18,7 +18,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name=".java.MineApplication"
+        android:name=".MineApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
@@ -55,7 +55,7 @@
         </provider>
 
         <!-- Launch页 -->
-        <activity android:name=".java.login.ui.LaunchActivity">
+        <activity android:name=".login.ui.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,23 +63,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".java.login.ui.LoginActivity"
+            android:name=".login.ui.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".java.main.MainActivity"
+            android:name=".main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".java.login.ui.RegisterActivity"
+            android:name=".login.ui.RegisterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".java.first_page.ui.VideoListActivity"
+            android:name=".first_page.ui.VideoListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".java.first_page.ui.FirstPageDetailsActivity"
+            android:name=".first_page.ui.FirstPageDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name="com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity">

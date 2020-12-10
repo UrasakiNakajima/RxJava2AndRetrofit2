@@ -1,6 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin
 
-import com.mobile.rxjava2andretrofit2.java.manager.LogManager
+import com.mobile.rxjava2andretrofit2.manager.LogManager
 import java.lang.Integer.parseInt
 
 open class Test1Class {

@@ -1,6 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin.mine.model.base
 
-import com.mobile.rxjava2andretrofit2.java.manager.RetrofitManager
+import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.kotlin.mine.request.MineRequest
 import io.reactivex.Observable
 import okhttp3.ResponseBody

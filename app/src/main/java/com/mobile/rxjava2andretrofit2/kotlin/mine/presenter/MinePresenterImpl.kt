@@ -2,12 +2,12 @@ package com.mobile.rxjava2andretrofit2.kotlin.mine.presenter
 
 import com.google.gson.Gson
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.java.MineApplication
-import com.mobile.rxjava2andretrofit2.java.base.BasePresenter
-import com.mobile.rxjava2andretrofit2.java.base.IBaseView
-import com.mobile.rxjava2andretrofit2.java.callback.OnCommonSingleParamCallback
-import com.mobile.rxjava2andretrofit2.java.manager.LogManager
-import com.mobile.rxjava2andretrofit2.java.manager.RetrofitManager
+import com.mobile.rxjava2andretrofit2.MineApplication
+import com.mobile.rxjava2andretrofit2.base.BasePresenter
+import com.mobile.rxjava2andretrofit2.base.IBaseView
+import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback
+import com.mobile.rxjava2andretrofit2.manager.LogManager
+import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.MineDetailsResponse
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.MineResponse
 import com.mobile.rxjava2andretrofit2.kotlin.mine.model.base.MineModelImpl

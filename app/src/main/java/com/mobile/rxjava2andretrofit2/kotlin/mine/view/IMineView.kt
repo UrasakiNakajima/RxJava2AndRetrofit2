@@ -1,6 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin.mine.view
 
-import com.mobile.rxjava2andretrofit2.java.base.IBaseView
+import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
 
 interface IMineView : IBaseView {

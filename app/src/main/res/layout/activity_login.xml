@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:background="@color/color_FFFFFFFF"
     android:orientation="vertical"
-    tools:context=".java.login.ui.LoginActivity">
+    tools:context=".login.ui.LoginActivity">
 
-    <com.mobile.rxjava2andretrofit2.java.custom_view.ImmerseGroup
+    <com.mobile.rxjava2andretrofit2.custom_view.ImmerseGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
@@ -46,7 +46,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-    </com.mobile.rxjava2andretrofit2.java.custom_view.ImmerseGroup>
+    </com.mobile.rxjava2andretrofit2.custom_view.ImmerseGroup>
 
     <View
         android:layout_width="match_parent"

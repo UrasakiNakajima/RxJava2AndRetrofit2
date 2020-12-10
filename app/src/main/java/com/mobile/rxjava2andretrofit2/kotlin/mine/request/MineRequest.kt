@@ -1,6 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin.mine.request
 
-import com.mobile.rxjava2andretrofit2.java.common.Url
+import com.mobile.rxjava2andretrofit2.common.Url
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.*

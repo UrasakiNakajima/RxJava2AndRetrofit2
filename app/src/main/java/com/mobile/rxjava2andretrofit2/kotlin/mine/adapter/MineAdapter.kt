@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.java.callback.RcvOnItemViewClickListener
+import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
 
 class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
