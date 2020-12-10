@@ -59,7 +59,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         return list!!.size
     }
 
-    internal class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    protected class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var tevAnsid: TextView? = null
         var tevData: TextView? = null

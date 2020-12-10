@@ -13,7 +13,7 @@ import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Data
 
 class MineDetailsAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val TAG: String = "MineDetailsAdapter";
+    private val TAG: String = "MineDetailsAdapter";
     //    private var context: Context? = null
     //    private var dataBeanList = MutableList<MineDetailsResponse.List<Data>>?=null
     private var dataBeanList: MutableList<Data>? = null
@@ -61,7 +61,7 @@ class MineDetailsAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVi
     }
 
 
-    internal class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    protected class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var tevCode: TextView? = null
         var tevData: TextView? = null
