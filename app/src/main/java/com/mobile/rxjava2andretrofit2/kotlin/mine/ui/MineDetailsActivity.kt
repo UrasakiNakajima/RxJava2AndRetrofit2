@@ -78,7 +78,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
         mineDetailsAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
-                val data: String = dataBeanList!![position].content
+                val data: String = dataBeanList!![position].content!!
                 bodyParams.clear()
                 bodyParams.put("data", data)
                 startActivityCarryParams(VideoListActivity::class.java, bodyParams)

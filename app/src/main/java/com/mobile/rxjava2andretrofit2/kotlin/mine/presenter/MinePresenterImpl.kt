@@ -1,5 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin.mine.presenter
 
+import com.alibaba.fastjson.JSONObject
 import com.google.gson.Gson
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.MineApplication
@@ -67,11 +68,13 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
                                 if (!success.isEmpty()) {
-                                    //                                    MineDetailsResponse response = JSONObject.parseObject(success, MineDetailsResponse.class);
-                                    val gson = Gson()
-                                    val response = gson.fromJson(success, MineDetailsResponse::class.java)
+//                                    MineDetailsResponse response = JSONObject.parseObject(success, MineDetailsResponse.class);
+
+                                    val response: MineDetailsResponse = JSONObject.parseObject(success, MineDetailsResponse::class.java);
+//                                    val gson = Gson()
+//                                    val response = gson.fromJson(success, MineDetailsResponse::class.java)
                                     LogManager.i(TAG, "success data*****$response")
-                                    baseView.mineDetailsSuccess(response.data)
+                                    baseView.mineDetailsSuccess(response.data!!)
                                 } else {
                                     baseView.mineDetailsError(MineApplication.getInstance().resources.getString(R.string.loading_failed))
                                 }

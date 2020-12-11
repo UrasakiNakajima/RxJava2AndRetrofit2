@@ -1,6 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin.mine.bean
 
-data class MineDetailsResponse(
+class MineDetailsResponse() {
 
 //    // 空参的构造方法
 //    constructor()
@@ -11,42 +11,42 @@ data class MineDetailsResponse(
 //        this.age = age
 //    }
 
-        val action_to_last_stick: Int,
-        val api_base_info: Any,
-        val data: List<Data>,
-        val feed_flag: Int,
-        val get_offline_pool: Boolean,
-        val has_more: Boolean,
-        val has_more_to_refresh: Boolean,
-        val is_use_bytedance_stream: Boolean,
-        val last_response_extra: LastResponseExtra,
-        val location: Any,
-        val login_status: Int,
-        val message: String,
-        val post_content_hint: String,
-        val show_et_status: Int,
-        val show_last_read: Boolean,
-        val tips: Tips,
-        val total_number: Int
-)
+    var action_to_last_stick: Int? = null
+    var api_base_info: Any? = null
+    var data: List<Data>? = null
+    var feed_flag: Int? = null
+    var get_offline_pool: Boolean? = null
+    var has_more: Boolean? = null
+    var has_more_to_refresh: Boolean? = null
+    var is_use_bytedance_stream: Boolean? = null
+    var last_response_extra: LastResponseExtra? = null
+    var location: Any? = null
+    var login_status: Int? = null
+    var message: String? = null
+    var post_content_hint: String? = null
+    var show_et_status: Int? = null
+    var show_last_read: Boolean? = null
+    var tips: Tips? = null
+    var total_number: Int? = null
+}
 
-data class Data(
-        val code: String,
-        val content: String
-)
+class Data() {
+    var code: String? = null
+    var content: String? = null
+}
 
-data class LastResponseExtra(
-        val data: String
-)
+class LastResponseExtra() {
+    var data: String? = null
+}
 
-data class Tips(
-        val app_name: String,
-        val display_duration: Int,
-        val display_info: String,
-        val display_template: String,
-        val download_url: String,
-        val open_url: String,
-        val package_name: String,
-        val type: String,
-        val web_url: String
-)
+class Tips() {
+    var app_name: String? = null
+    var display_duration: Int? = null
+    var display_info: String? = null
+    var display_template: String? = null
+    var download_url: String? = null
+    var open_url: String? = null
+    var package_name: String? = null
+    var type: String? = null
+    var web_url: String? = null
+}
