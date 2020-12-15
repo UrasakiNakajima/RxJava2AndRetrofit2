@@ -11,7 +11,8 @@ import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.MineDetailsResponse
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.MineResponse
-import com.mobile.rxjava2andretrofit2.kotlin.mine.model.base.MineModelImpl
+import com.mobile.rxjava2andretrofit2.kotlin.mine.model.MineModelImpl
+import com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.base.IMinePresenter
 import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineDetailsView
 import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineView
 

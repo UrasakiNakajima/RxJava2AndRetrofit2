@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.mine.presenter
+package com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.base
 
 interface IMinePresenter {
 
