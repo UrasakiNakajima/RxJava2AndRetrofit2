@@ -19,6 +19,7 @@ import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
 import com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.MinePresenterImpl
 import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
 import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineView
+import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_mine.*
@@ -130,7 +131,11 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
 
     override fun mineDataError(error: String?) {
         if (!mainActivity!!.isFinishing()) {
-            showToast(error!!, true)
+//            showToast(error!!, true)
+            showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
+                    ScreenManager.dipTopx(activity, 38f), resources.getColor(R.color.white),
+                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
+                    ScreenManager.dipTopx(activity, 48f), error!!)
             if (isRefresh!!) {
                 refresh_layout.finishRefresh(false)
             } else {

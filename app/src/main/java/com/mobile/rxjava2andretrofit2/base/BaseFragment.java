@@ -2,12 +2,15 @@ package com.mobile.rxjava2andretrofit2.base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -73,7 +76,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initLoadData();
 
-
     protected void showToast(String message, boolean isLongToast) {
 //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         if (!activity.isFinishing()) {
@@ -88,6 +90,34 @@ public abstract class BaseFragment extends Fragment {
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
+    }
+
+    protected void showCustomToast(int left, int right,
+                                   int textSize, int textColor,
+                                   int bgColor, int height,
+                                   int roundRadius, String message) {
+        FrameLayout frameLayout = new FrameLayout(activity);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        frameLayout.setLayoutParams(layoutParams);
+        TextView textView = new TextView(activity);
+        FrameLayout.LayoutParams layoutParams1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height);
+        textView.setLayoutParams(layoutParams1);
+        textView.setPadding(left, 0, right, 0);
+        textView.setTextSize(textSize);
+        textView.setTextColor(textColor);
+        textView.setGravity(Gravity.CENTER);
+        textView.setIncludeFontPadding(false);
+        GradientDrawable gradientDrawable = new GradientDrawable();//创建drawable
+        gradientDrawable.setColor(bgColor);
+        gradientDrawable.setCornerRadius(roundRadius);
+        textView.setBackground(gradientDrawable);
+        textView.setText(message);
+        frameLayout.addView(textView);
+
+        Toast toast = new Toast(activity);
+        toast.setView(frameLayout);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.show();
     }
 
     public boolean isOnMainThread() {
