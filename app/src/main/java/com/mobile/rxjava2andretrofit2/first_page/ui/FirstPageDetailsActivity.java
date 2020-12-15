@@ -195,9 +195,9 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
         if (!this.isFinishing()) {
             showToast(error, true);
             if (isRefresh) {
-                refreshLayout.finishRefresh();
+                refreshLayout.finishRefresh(false);
             } else {
-                refreshLayout.finishLoadMore();
+                refreshLayout.finishLoadMore(false);
             }
         }
     }

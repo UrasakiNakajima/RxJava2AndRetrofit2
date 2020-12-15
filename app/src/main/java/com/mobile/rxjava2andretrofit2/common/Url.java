@@ -15,7 +15,7 @@ public class Url {
 
     //正式地址
     public static final String BASE_URL = "http://is.snssdk.com";
-//    public static final String BASE_URL = "http://wanandroid.com";
+//    public static final String BASE_URL = "http://baobab.kaiyanapp.com/api/";
 
 
     public static final String LOGIN_URL = "/user/login";

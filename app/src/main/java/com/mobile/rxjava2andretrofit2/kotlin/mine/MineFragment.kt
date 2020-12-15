@@ -132,9 +132,9 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         if (!mainActivity!!.isFinishing()) {
             showToast(error!!, true)
             if (isRefresh!!) {
-                refresh_layout.finishRefresh()
+                refresh_layout.finishRefresh(false)
             } else {
-                refresh_layout.finishLoadMore()
+                refresh_layout.finishLoadMore(false)
             }
         }
     }

@@ -183,9 +183,9 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
         if (!mainActivity.isFinishing()) {
             showToast(error, true);
             if (isRefresh) {
-                refreshLayout.finishRefresh();
+                refreshLayout.finishRefresh(false);
             } else {
-                refreshLayout.finishLoadMore();
+                refreshLayout.finishLoadMore(false);
             }
         }
     }
