@@ -22,6 +22,9 @@ import com.mobile.rxjava2andretrofit2.MineApplication;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * author    : xxxxxxxxxxx
  * e-mail    : xxxxxxxxxxx@qq.com
@@ -42,6 +45,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
     protected Bundle bundle;
 
     protected View rootView;
+    private Unbinder unbinder;
 
     @Nullable
     @Override
@@ -56,6 +60,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 //        }
 
         rootView = inflater.inflate(initLayoutId(), container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -202,6 +207,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
             bodyParams = null;
         }
         super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override

@@ -52,7 +52,6 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.loadView)
     QMUILoadingView loadView;
-    Unbinder unbinder;
 
     private MainActivity mainActivity;
 
@@ -66,7 +65,6 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -212,7 +210,6 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     @OnClick(R.id.tev_title)

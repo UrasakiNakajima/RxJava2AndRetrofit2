@@ -71,8 +71,8 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //fastjson(阿里云json解析框架导入)
-//    implementation 'com.alibaba:fastjson:1.2.61'
-    implementation 'com.alibaba:fastjson:1.1.61.android'
+    implementation 'com.alibaba:fastjson:1.2.61'
+//    implementation 'com.alibaba:fastjson:1.1.61.android'
 
     //图片和视频选择框架导入（这个框架的手机拍照功能有bug，不要使用）
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
