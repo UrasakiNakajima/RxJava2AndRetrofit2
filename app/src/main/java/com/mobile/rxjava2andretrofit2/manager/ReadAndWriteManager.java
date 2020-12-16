@@ -36,6 +36,9 @@ public class ReadAndWriteManager {
     private List<Disposable> disposableList;
     private Disposable disposable;
 
+    /**
+     * 私有构造器 无法外部创建
+     */
     private ReadAndWriteManager() {
     }
 

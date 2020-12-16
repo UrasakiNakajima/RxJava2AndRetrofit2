@@ -26,7 +26,7 @@ public class ActivityPageManager {
     /**
      * Activity堆栈 Stack:线程安全
      */
-    public Stack<Activity> mActivityStack = new Stack<>();
+    private Stack<Activity> mActivityStack = new Stack<>();
 
     /**
      * 私有构造器 无法外部创建

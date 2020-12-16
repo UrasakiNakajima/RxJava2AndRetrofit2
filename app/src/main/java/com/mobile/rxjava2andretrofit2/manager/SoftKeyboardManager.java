@@ -22,7 +22,7 @@ public class SoftKeyboardManager {
 
     private static final String TAG = "SoftKeyboardManager";
     private View rootView;//activity的根视图
-    int rootViewVisibleHeight;//纪录根视图的显示高度
+    private int rootViewVisibleHeight;//纪录根视图的显示高度
     private OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener;
 
     public SoftKeyboardManager(Activity activity) {

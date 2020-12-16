@@ -41,6 +41,7 @@ public class RetrofitManager {
     private Cache cache;
 
     /**
+     * 私有构造器 无法外部创建
      * 初始化必要对象和参数
      */
     private RetrofitManager() {

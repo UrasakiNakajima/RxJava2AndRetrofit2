@@ -34,7 +34,7 @@ public class UpdateFileNameManager {
      * @param filesList 文件列表
      * @throws IOException
      */
-    public static List<File> updateFilesListNames(Context context, List<File> filesList) throws IOException {
+    public static List<File> updateFileListName(Context context, List<File> filesList) throws IOException {
         WeakReference<Context> modelContext = new WeakReference<>(context);
 
         List<File> files = new ArrayList<>();

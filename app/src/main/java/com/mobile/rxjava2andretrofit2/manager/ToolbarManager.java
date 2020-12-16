@@ -20,7 +20,7 @@ public class ToolbarManager {
 
     private static final String TAG = "ToolbarManager";
     private View rootView;//activity的根视图
-    int rootViewVisibleHeight;//纪录根视图的显示高度
+    private int rootViewVisibleHeight;//纪录根视图的显示高度
     private OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener;
 
     public static void assistActivity(View content) {
@@ -112,7 +112,6 @@ public class ToolbarManager {
                 onSoftKeyBoardChangeListener.keyBoardHide(visibleHeight - rootViewVisibleHeight);
             }
             rootViewVisibleHeight = visibleHeight;
-            return;
         }
     }
 
