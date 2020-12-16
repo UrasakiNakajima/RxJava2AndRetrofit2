@@ -1,9 +1,6 @@
-package com.mobile.rxjava2andretrofit2.kotlin.mine
+package com.mobile.rxjava2andretrofit2.kotlin.resources
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,24 +8,22 @@ import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseMvpFragment
 import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
+import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineAdapter
+import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
+import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
+import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.ResourcesPresenterImpl
+import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IResourcesView
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
-import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineAdapter
-import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
-import com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.MinePresenterImpl
-import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.ResourcesPresenterImpl
-import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
-import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineView
-import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IResourcesView
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_mine.*
 
-class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView {
+class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), IResourcesView {
 
-    private val TAG: String = "MineFragment"
+    private val TAG: String = "ResourcesFragment"
     private var mainActivity: MainActivity? = null
 
     private var ansListBeanList: MutableList<Ans>? = null
@@ -36,12 +31,8 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     private var linearLayoutManager: LinearLayoutManager? = null
     private var isRefresh: Boolean? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     override fun initLayoutId(): Int {
-        return R.layout.fragment_mine
+        return R.layout.fragment_resources
     }
 
     override fun initData() {
@@ -54,7 +45,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         tev_title.setOnClickListener(object : View.OnClickListener {
 
             override fun onClick(v: View?) {
-                initMine()
+                initResources()
             }
         })
 
@@ -84,12 +75,12 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
             override fun onLoadMore(refresh_layout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
                 isRefresh = false
-                initMine()
+                initResources()
             }
 
             override fun onRefresh(refresh_layout: RefreshLayout) {
                 isRefresh = true
-                initMine()
+                initResources()
             }
         })
     }
@@ -98,8 +89,8 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         refresh_layout.autoRefresh()
     }
 
-    override fun attachPresenter(): MinePresenterImpl {
-        return MinePresenterImpl(this)
+    override fun attachPresenter(): ResourcesPresenterImpl {
+        return ResourcesPresenterImpl(this)
     }
 
     override fun showLoading() {
@@ -116,7 +107,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         }
     }
 
-    override fun mineDataSuccess(success: List<Ans>) {
+    override fun resourcesDataSuccess(success: List<Ans>) {
         if (!mainActivity!!.isFinishing()) {
             if (isRefresh!!) {
                 ansListBeanList!!.clear()
@@ -131,7 +122,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         }
     }
 
-    override fun mineDataError(error: String?) {
+    override fun resourcesDataError(error: String?) {
         if (!mainActivity!!.isFinishing()) {
 //            showToast(error!!, true)
             showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
@@ -146,13 +137,13 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         }
     }
 
-    private fun initMine() {
+    private fun initResources() {
         if (RetrofitManager.isNetworkAvailable(mainActivity)) {
             bodyParams.clear()
 
-            bodyParams["qid"] = "6463093341545300238"
+            bodyParams.put("", "");
             //        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
-            presenter.mineData(bodyParams)
+            presenter.resourcesData()
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh!!) {

@@ -19,7 +19,7 @@ import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineView
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
     private val TAG: String = "MinePresenterImpl"
-    //    private IMineView feedbackView;//P需要与V 交互，所以需要持有V的引用
+    //    private IResourcesView feedbackView;//P需要与V 交互，所以需要持有V的引用
     private var model: MineModelImpl? = null;
 
     init {

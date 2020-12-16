@@ -21,7 +21,7 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
         implements IMainPresenter {
 
     private static final String TAG = "FirstPagePresenterImpl";
-    //    private IMineView mainView;//P需要与V 交互，所以需要持有V的引用
+    //    private IResourcesView mainView;//P需要与V 交互，所以需要持有V的引用
     private MainModelImpl model;
 
     public MainPresenterImpl(IBaseView baseView) {

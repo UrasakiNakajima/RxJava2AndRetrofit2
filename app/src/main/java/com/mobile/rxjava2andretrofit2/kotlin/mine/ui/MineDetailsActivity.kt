@@ -15,6 +15,7 @@ import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineDetailsAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Data
 import com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.MinePresenterImpl
 import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineDetailsView
+import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.ResourcesPresenterImpl
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -103,12 +104,12 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
             override fun onLoadMore(refreshLayout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
                 isRefresh = false
-                initFirstPageDetails()
+                initMineDetails()
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout) {
                 isRefresh = true
-                initFirstPageDetails()
+                initMineDetails()
             }
         })
     }
@@ -165,7 +166,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
         }
     }
 
-    private fun initFirstPageDetails() {
+    private fun initMineDetails() {
         if (isFirstLoad!!) {
             isFirstLoad = false
         } else {

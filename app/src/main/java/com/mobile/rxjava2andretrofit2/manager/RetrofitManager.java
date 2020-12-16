@@ -8,6 +8,7 @@ import com.mobile.rxjava2andretrofit2.MineApplication;
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
 import com.mobile.rxjava2andretrofit2.common.Url;
 import com.mobile.rxjava2andretrofit2.interceptor.AddCookiesInterceptor;
+import com.mobile.rxjava2andretrofit2.interceptor.BaseUrlManagerInterceptor;
 import com.mobile.rxjava2andretrofit2.interceptor.LogInterceptor;
 import com.mobile.rxjava2andretrofit2.interceptor.ReceivedCookiesInterceptor;
 
@@ -56,6 +57,7 @@ public class RetrofitManager {
                 .addInterceptor(new AddCookiesInterceptor(MineApplication.getInstance()))
                 .addInterceptor(new ReceivedCookiesInterceptor(MineApplication.getInstance()))
                 .addInterceptor(new LogInterceptor())
+                .addInterceptor(new BaseUrlManagerInterceptor())
                 .proxy(Proxy.NO_PROXY)
                 .build();
 
