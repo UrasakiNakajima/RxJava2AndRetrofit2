@@ -8,12 +8,12 @@ import retrofit2.http.*
 
 interface MineRequest {
 
-//    @Headers({"urlname:${ConstantData.TO_FIRST_PAGR_FLAG}"})
+    @Headers("urlname:${ConstantData.TO_MINE_FLAG}")
     @FormUrlEncoded
     @POST(Url.MINE_URL)
     fun getMineData(@FieldMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
-    @Headers(ConstantData.TO_MINE_FLAG)
+    @Headers("urlname:${ConstantData.TO_MINE_FLAG}")
     @GET(Url.FIRST_PAGE_DETAILS_URL)
     fun getMineDetails(@QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
 

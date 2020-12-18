@@ -18,7 +18,7 @@ import okhttp3.ResponseBody;
 
 public class MainModelImpl implements IMainModel {
 
-    private static final String TAG = "FirstPageModelImpl";
+    private static final String TAG = "MainModelImpl";
 
     public MainModelImpl() {
     }

@@ -17,10 +17,8 @@ import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
 import com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.MinePresenterImpl
-import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.ResourcesPresenterImpl
 import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
 import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineView
-import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IResourcesView
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener

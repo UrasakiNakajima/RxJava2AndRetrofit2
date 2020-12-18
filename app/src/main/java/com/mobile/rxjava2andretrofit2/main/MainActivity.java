@@ -12,11 +12,11 @@ import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.custom_view.LazyViewPager;
 import com.mobile.rxjava2andretrofit2.first_page.FirstPageFragment;
+import com.mobile.rxjava2andretrofit2.kotlin.mine.MineFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.resources.ResourcesFragment;
 import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentPagerAdapter;
 import com.mobile.rxjava2andretrofit2.main.presenter.MainPresenterImpl;
 import com.mobile.rxjava2andretrofit2.main.view.IMainView;
-import com.mobile.rxjava2andretrofit2.kotlin.mine.MineFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,8 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     LazyViewPager mineViewPager;
     @BindView(R.id.tev_first_page)
     TextView tevFirstPage;
+    @BindView(R.id.tev_resources)
+    TextView tevResources;
     @BindView(R.id.tev_mine)
     TextView tevMine;
 
@@ -163,16 +165,19 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
             case R.id.tev_first_page:
                 mineViewPager.setCurrentItem(0);
                 tevFirstPage.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                tevResources.setTextColor(getResources().getColor(R.color.color_FF999999));
                 tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
                 break;
             case R.id.tev_resources:
                 mineViewPager.setCurrentItem(1);
-                tevFirstPage.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevResources.setTextColor(getResources().getColor(R.color.color_FFE066FF));
                 tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
                 break;
             case R.id.tev_mine:
                 mineViewPager.setCurrentItem(2);
                 tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevResources.setTextColor(getResources().getColor(R.color.color_FF999999));
                 tevMine.setTextColor(getResources().getColor(R.color.color_FFE066FF));
                 break;
         }

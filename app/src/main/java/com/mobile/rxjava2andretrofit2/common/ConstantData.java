@@ -7,7 +7,7 @@ public class ConstantData {
     public static final String TO_MINE_FLAG = "MINE_FLAG";
 
     public static final String TO_FIRST_PAGR_URL = Url.BASE_URL;
-    public static final String TO_RESOURCES_URL = "http://gank.io/api/data";
+    public static final String TO_RESOURCES_URL = Url.BASE_URL2;
     public static final String TO_MINE_URL =  Url.BASE_URL;
 
 }

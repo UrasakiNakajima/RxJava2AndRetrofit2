@@ -63,9 +63,9 @@ public class BaseUrlManagerInterceptor implements Interceptor {
                         .host(baseURL.host())//主机地址
                         .port(baseURL.port())//端口
                         .build();
-                LogManager.i(TAG, "intercept:------scheme---- " + baseURL.scheme());
+                LogManager.i(TAG, "intercept:------scheme----" + baseURL.scheme());
                 LogManager.i(TAG, "intercept:-----host-----" + baseURL.host());
-                LogManager.i(TAG, "intercept:-----port----- " + baseURL.port());
+                LogManager.i(TAG, "intercept:-----port-----" + baseURL.port());
                 //获取处理后的新newRequest
                 Request newRequest = builder.url(newHttpUrl).build();
                 return chain.proceed(newRequest);

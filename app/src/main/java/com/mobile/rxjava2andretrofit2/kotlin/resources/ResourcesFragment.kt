@@ -11,8 +11,9 @@ import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
 import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
+import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.Result
 import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.ResourcesPresenterImpl
-import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IResourcesView
+import com.mobile.rxjava2andretrofit2.kotlin.resources.view.IResourcesView
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
@@ -26,9 +27,9 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
     private val TAG: String = "ResourcesFragment"
     private var mainActivity: MainActivity? = null
 
-    private var ansListBeanList: MutableList<Ans>? = null
-    private var mineAdapter: MineAdapter? = null
-    private var linearLayoutManager: LinearLayoutManager? = null
+    private var resultList: MutableList<Result>? = null
+//    private var mineAdapter: MineAdapter? = null
+//    private var linearLayoutManager: LinearLayoutManager? = null
     private var isRefresh: Boolean? = null
 
     override fun initLayoutId(): Int {
@@ -36,7 +37,7 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
     }
 
     override fun initData() {
-        ansListBeanList = mutableListOf()
+        resultList = mutableListOf()
         mainActivity = activity as MainActivity
         isRefresh = true
     }
@@ -49,41 +50,41 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
             }
         })
 
-        initAdapter()
+//        initAdapter()
     }
 
-    private fun initAdapter() {
-        linearLayoutManager = LinearLayoutManager(mainActivity)
-        linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
-        rcv_data.layoutManager = (linearLayoutManager)
-        rcv_data.itemAnimator = DefaultItemAnimator()
-
-        mineAdapter = MineAdapter(mainActivity!!)
-        mineAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
-
-            override fun onItemClickListener(position: Int, view: View?) {
-                bodyParams.clear()
-                bodyParams["max_behot_time"] = "1000"
-                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
-            }
-        })
-        rcv_data.setAdapter(mineAdapter)
-        mineAdapter!!.clearData()
-        mineAdapter!!.addAllData(ansListBeanList!!)
-
-        refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-            override fun onLoadMore(refresh_layout: RefreshLayout) {
-                LogManager.i(TAG, "onLoadMore")
-                isRefresh = false
-                initResources()
-            }
-
-            override fun onRefresh(refresh_layout: RefreshLayout) {
-                isRefresh = true
-                initResources()
-            }
-        })
-    }
+//    private fun initAdapter() {
+//        linearLayoutManager = LinearLayoutManager(mainActivity)
+//        linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
+//        rcv_data.layoutManager = (linearLayoutManager)
+//        rcv_data.itemAnimator = DefaultItemAnimator()
+//
+//        mineAdapter = MineAdapter(mainActivity!!)
+//        mineAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
+//
+//            override fun onItemClickListener(position: Int, view: View?) {
+//                bodyParams.clear()
+//                bodyParams["max_behot_time"] = "1000"
+//                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
+//            }
+//        })
+//        rcv_data.setAdapter(mineAdapter)
+//        mineAdapter!!.clearData()
+//        mineAdapter!!.addAllData(resultList!!)
+//
+//        refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+//            override fun onLoadMore(refresh_layout: RefreshLayout) {
+//                LogManager.i(TAG, "onLoadMore")
+//                isRefresh = false
+//                initResources()
+//            }
+//
+//            override fun onRefresh(refresh_layout: RefreshLayout) {
+//                isRefresh = true
+//                initResources()
+//            }
+//        })
+//    }
 
     override fun initLoadData() {
         refresh_layout.autoRefresh()
@@ -107,16 +108,16 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
         }
     }
 
-    override fun resourcesDataSuccess(success: List<Ans>) {
+    override fun resourcesDataSuccess(success: List<Result>) {
         if (!mainActivity!!.isFinishing()) {
             if (isRefresh!!) {
-                ansListBeanList!!.clear()
-                ansListBeanList!!.addAll(success)
-                mineAdapter!!.addAllData(ansListBeanList!!)
+                resultList!!.clear()
+                resultList!!.addAll(success)
+//                mineAdapter!!.addAllData(resultList!!)
                 refresh_layout.finishRefresh()
             } else {
-                ansListBeanList!!.addAll(success)
-                mineAdapter!!.addAllData(ansListBeanList!!)
+                resultList!!.addAll(success)
+//                mineAdapter!!.addAllData(resultList!!)
                 refresh_layout.finishLoadMore()
             }
         }
@@ -124,11 +125,10 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
 
     override fun resourcesDataError(error: String?) {
         if (!mainActivity!!.isFinishing()) {
-//            showToast(error!!, true)
-            showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
-                    ScreenManager.dipTopx(activity, 38f), resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
-                    ScreenManager.dipTopx(activity, 48f), error!!)
+//            showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
+//                    ScreenManager.dipTopx(activity, 38f), resources.getColor(R.color.white),
+//                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
+//                    ScreenManager.dipTopx(activity, 48f), error!!)
             if (isRefresh!!) {
                 refresh_layout.finishRefresh(false)
             } else {

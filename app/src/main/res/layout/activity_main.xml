@@ -38,8 +38,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/first_page"
-            android:textColor="@color/color_FFE066FF"
+            android:text="@string/resources"
+            android:textColor="@color/color_FF999999"
             android:textSize="@dimen/sp_20" />
 
         <TextView

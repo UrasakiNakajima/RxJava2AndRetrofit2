@@ -8,14 +8,14 @@ import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
-import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.MineResponse
 import com.mobile.rxjava2andretrofit2.kotlin.resources.model.ResourcesModelImpl
 import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.base.IResourcesPresenter
-import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IResourcesView
+import com.mobile.rxjava2andretrofit2.kotlin.resources.view.IResourcesView
+import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.ResourcesBean
 
 class ResourcesPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IResourcesPresenter {
 
-    private val TAG: String = "MinePresenterImpl"
+    private val TAG: String = "ResourcesPresenterImpl"
     //    private IResourcesView feedbackView;//P需要与V 交互，所以需要持有V的引用
     private var model: ResourcesModelImpl? = null;
 
@@ -36,8 +36,8 @@ class ResourcesPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), 
                                 if (!success.isEmpty()) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
                                     val gson = Gson()
-                                    val response = gson.fromJson(success, MineResponse::class.java)
-                                    baseView.resourcesDataSuccess(response.ans_list)
+                                    val response = gson.fromJson(success, ResourcesBean::class.java)
+                                    baseView.resourcesDataSuccess(response.results)
                                 } else {
                                     baseView.resourcesDataError(MineApplication.getInstance().resources.getString(R.string.loading_failed))
                                 }

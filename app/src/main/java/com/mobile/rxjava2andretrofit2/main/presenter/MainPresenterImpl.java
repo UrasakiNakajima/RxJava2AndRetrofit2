@@ -20,7 +20,7 @@ import java.util.Map;
 public class MainPresenterImpl extends BasePresenter<IBaseView>
         implements IMainPresenter {
 
-    private static final String TAG = "FirstPagePresenterImpl";
+    private static final String TAG = "MainPresenterImpl";
     //    private IResourcesView mainView;//P需要与V 交互，所以需要持有V的引用
     private MainModelImpl model;
 
