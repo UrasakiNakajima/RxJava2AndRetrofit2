@@ -1,5 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin.resources.presenter
 
+import android.text.TextUtils
 import com.google.gson.Gson
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.MineApplication
@@ -33,7 +34,7 @@ class ResourcesPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), 
                         .responseString(model!!.resourcesData(), object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
-                                if (!success.isEmpty()) {
+                                if (!TextUtils.isEmpty(success)) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
                                     val gson = Gson()
                                     val response = gson.fromJson(success, ResourcesBean::class.java)

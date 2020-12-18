@@ -1,5 +1,7 @@
 package com.mobile.rxjava2andretrofit2.first_page.presenter;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSONObject;
 import com.mobile.rxjava2andretrofit2.MineApplication;
 import com.mobile.rxjava2andretrofit2.R;
@@ -51,7 +53,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
-                                if (!success.isEmpty()) {
+                                if (!TextUtils.isEmpty(success)) {
                                     FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
                                     firstPageView.firstPageDataSuccess(response.getAns_list());
                                 } else {
@@ -112,7 +114,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
-                                if (!success.isEmpty()) {
+                                if (!TextUtils.isEmpty(success)) {
                                     FirstPageDetailsResponse response = JSONObject.parseObject(success, FirstPageDetailsResponse.class);
                                     firstPageDetailsView.firstPageDetailsSuccess(response.getData());
                                 } else {
@@ -130,21 +132,21 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                         });
                 disposableList.add(disposable);
 
-                //okhttp3请求（响应速度稍慢，可改进）
-                Okhttp3Manager.getInstance()
-                        .postAsyncKeyValuePairsOkhttp3(Url.BASE_URL + Url.FIRST_PAGE_DETAILS_URL,
-                                bodyParams,
-                                new OnCommonSingleParamCallback<String>() {
-                                    @Override
-                                    public void onSuccess(String success) {
-                                        LogManager.i(TAG, "success2*****" + success);
-                                    }
-
-                                    @Override
-                                    public void onError(String error) {
-                                        LogManager.i(TAG, "error2*****" + error);
-                                    }
-                                });
+//                //okhttp3请求（响应速度稍慢，可改进）
+//                Okhttp3Manager.getInstance()
+//                        .postAsyncKeyValuePairsOkhttp3(Url.BASE_URL + Url.FIRST_PAGE_DETAILS_URL,
+//                                bodyParams,
+//                                new OnCommonSingleParamCallback<String>() {
+//                                    @Override
+//                                    public void onSuccess(String success) {
+//                                        LogManager.i(TAG, "success2*****" + success);
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(String error) {
+//                                        LogManager.i(TAG, "error2*****" + error);
+//                                    }
+//                                });
 
             }
         }

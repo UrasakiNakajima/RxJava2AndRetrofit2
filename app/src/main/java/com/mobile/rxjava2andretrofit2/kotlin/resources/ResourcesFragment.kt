@@ -50,10 +50,10 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
             }
         })
 
-//        initAdapter()
+        initAdapter()
     }
 
-//    private fun initAdapter() {
+    private fun initAdapter() {
 //        linearLayoutManager = LinearLayoutManager(mainActivity)
 //        linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
 //        rcv_data.layoutManager = (linearLayoutManager)
@@ -72,19 +72,19 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
 //        mineAdapter!!.clearData()
 //        mineAdapter!!.addAllData(resultList!!)
 //
-//        refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-//            override fun onLoadMore(refresh_layout: RefreshLayout) {
-//                LogManager.i(TAG, "onLoadMore")
-//                isRefresh = false
-//                initResources()
-//            }
-//
-//            override fun onRefresh(refresh_layout: RefreshLayout) {
-//                isRefresh = true
-//                initResources()
-//            }
-//        })
-//    }
+        refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refresh_layout: RefreshLayout) {
+                LogManager.i(TAG, "onLoadMore")
+                isRefresh = false
+                initResources()
+            }
+
+            override fun onRefresh(refresh_layout: RefreshLayout) {
+                isRefresh = true
+                initResources()
+            }
+        })
+    }
 
     override fun initLoadData() {
         refresh_layout.autoRefresh()

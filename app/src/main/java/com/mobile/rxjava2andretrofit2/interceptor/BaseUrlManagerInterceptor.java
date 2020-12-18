@@ -15,7 +15,7 @@ import okhttp3.Response;
 
 public class BaseUrlManagerInterceptor implements Interceptor {
 
-    private static final String TAG = "BaseUrlManagerIntercept";
+    private static final String TAG = "BaseUrlManagerInterceptor";
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -33,7 +33,7 @@ public class BaseUrlManagerInterceptor implements Interceptor {
             builder.removeHeader("urlname");
             //获取头信息中配置的value,如：manage或者mdffx
             String urlname = urlnameList.get(0);
-            LogManager.i(TAG, "intercept:-------urlname------ " + urlname);
+            LogManager.i(TAG, "intercept:-------urlname------" + urlname);
             HttpUrl baseURL = null;
             //根据头信息中配置的value,来匹配新的base_url地址
             if (!TextUtils.isEmpty(urlname)) {

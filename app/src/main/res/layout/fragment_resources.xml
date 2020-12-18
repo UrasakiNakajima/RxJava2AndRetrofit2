@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"
                 android:gravity="center"
-                android:text="@string/mine"
+                android:text="@string/resources"
                 android:textColor="@color/color_FFE066FF"
                 android:textSize="@dimen/sp_20" />
 
