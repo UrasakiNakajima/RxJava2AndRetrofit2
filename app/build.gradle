@@ -87,4 +87,9 @@ dependencies {
     implementation 'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
     implementation 'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'com.mikepenz:iconics-core:2.5.5@aar'
+    implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.1@aar'
+    implementation 'com.mikepenz:fontawesome-typeface:4.5.0.1@aar'
+    implementation 'com.mikepenz:foundation-icons-typeface:3.0.0.1@aar'
 }

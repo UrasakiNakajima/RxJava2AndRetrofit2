@@ -11,6 +11,7 @@ import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
 import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
+import com.mobile.rxjava2andretrofit2.kotlin.resources.adapter.ResourcesAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.Result
 import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.ResourcesPresenterImpl
 import com.mobile.rxjava2andretrofit2.kotlin.resources.view.IResourcesView
@@ -27,19 +28,17 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
     private val TAG: String = "ResourcesFragment"
     private var mainActivity: MainActivity? = null
 
-    private var resultList: MutableList<Result>? = null
-//    private var mineAdapter: MineAdapter? = null
-//    private var linearLayoutManager: LinearLayoutManager? = null
-    private var isRefresh: Boolean? = null
+    private var resultList: MutableList<Result> = mutableListOf()
+        private var resourcesAdapter: ResourcesAdapter? = null
+    private var linearLayoutManager: LinearLayoutManager? = null
+    private var isRefresh: Boolean = true
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_resources
     }
 
     override fun initData() {
-        resultList = mutableListOf()
         mainActivity = activity as MainActivity
-        isRefresh = true
     }
 
     override fun initViews() {
@@ -54,24 +53,24 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
     }
 
     private fun initAdapter() {
-//        linearLayoutManager = LinearLayoutManager(mainActivity)
-//        linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
-//        rcv_data.layoutManager = (linearLayoutManager)
-//        rcv_data.itemAnimator = DefaultItemAnimator()
-//
-//        mineAdapter = MineAdapter(mainActivity!!)
-//        mineAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
-//
-//            override fun onItemClickListener(position: Int, view: View?) {
-//                bodyParams.clear()
-//                bodyParams["max_behot_time"] = "1000"
-//                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
-//            }
-//        })
-//        rcv_data.setAdapter(mineAdapter)
-//        mineAdapter!!.clearData()
-//        mineAdapter!!.addAllData(resultList!!)
-//
+        linearLayoutManager = LinearLayoutManager(mainActivity)
+        linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
+        rcv_data.layoutManager = (linearLayoutManager)
+        rcv_data.itemAnimator = DefaultItemAnimator()
+
+        resourcesAdapter = ResourcesAdapter(mainActivity!!)
+        resourcesAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
+
+            override fun onItemClickListener(position: Int, view: View?) {
+                bodyParams.clear()
+                bodyParams["max_behot_time"] = "1000"
+                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
+            }
+        })
+        rcv_data.setAdapter(resourcesAdapter)
+        resourcesAdapter!!.clearData()
+        resourcesAdapter!!.addAllData(resultList)
+
         refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refresh_layout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
@@ -110,14 +109,14 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
 
     override fun resourcesDataSuccess(success: List<Result>) {
         if (!mainActivity!!.isFinishing()) {
-            if (isRefresh!!) {
-                resultList!!.clear()
-                resultList!!.addAll(success)
-//                mineAdapter!!.addAllData(resultList!!)
+            if (isRefresh) {
+                resultList.clear()
+                resultList.addAll(success)
+                resourcesAdapter!!.addAllData(resultList)
                 refresh_layout.finishRefresh()
             } else {
-                resultList!!.addAll(success)
-//                mineAdapter!!.addAllData(resultList!!)
+                resultList.addAll(success)
+                resourcesAdapter!!.addAllData(resultList)
                 refresh_layout.finishLoadMore()
             }
         }
@@ -125,11 +124,11 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
 
     override fun resourcesDataError(error: String?) {
         if (!mainActivity!!.isFinishing()) {
-//            showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
-//                    ScreenManager.dipTopx(activity, 38f), resources.getColor(R.color.white),
-//                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
-//                    ScreenManager.dipTopx(activity, 48f), error!!)
-            if (isRefresh!!) {
+            showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
+                    ScreenManager.dipTopx(activity, 20f), resources.getColor(R.color.white),
+                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
+                    ScreenManager.dipTopx(activity, 48f), error!!)
+            if (isRefresh) {
                 refresh_layout.finishRefresh(false)
             } else {
                 refresh_layout.finishLoadMore(false)
@@ -146,7 +145,7 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
             presenter.resourcesData()
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
-            if (isRefresh!!) {
+            if (isRefresh) {
                 refresh_layout.finishRefresh()
             } else {
                 refresh_layout.finishLoadMore()

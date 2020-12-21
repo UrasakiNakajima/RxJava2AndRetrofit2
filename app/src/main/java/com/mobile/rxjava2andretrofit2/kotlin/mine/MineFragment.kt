@@ -29,10 +29,10 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     private val TAG: String = "MineFragment"
     private var mainActivity: MainActivity? = null
 
-    private var ansListBeanList: MutableList<Ans>? = null
+    private var ansListBeanList: MutableList<Ans> = mutableListOf()
     private var mineAdapter: MineAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var isRefresh: Boolean? = null
+    private var isRefresh: Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -43,9 +43,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     }
 
     override fun initData() {
-        ansListBeanList = mutableListOf()
         mainActivity = activity as MainActivity
-        isRefresh = true
     }
 
     override fun initViews() {
@@ -76,7 +74,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         })
         rcv_data.setAdapter(mineAdapter)
         mineAdapter!!.clearData()
-        mineAdapter!!.addAllData(ansListBeanList!!)
+        mineAdapter!!.addAllData(ansListBeanList)
 
         refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refresh_layout: RefreshLayout) {
@@ -116,14 +114,14 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
 
     override fun mineDataSuccess(success: List<Ans>) {
         if (!mainActivity!!.isFinishing()) {
-            if (isRefresh!!) {
-                ansListBeanList!!.clear()
-                ansListBeanList!!.addAll(success)
-                mineAdapter!!.addAllData(ansListBeanList!!)
+            if (isRefresh) {
+                ansListBeanList.clear()
+                ansListBeanList.addAll(success)
+                mineAdapter!!.addAllData(ansListBeanList)
                 refresh_layout.finishRefresh()
             } else {
-                ansListBeanList!!.addAll(success)
-                mineAdapter!!.addAllData(ansListBeanList!!)
+                ansListBeanList.addAll(success)
+                mineAdapter!!.addAllData(ansListBeanList)
                 refresh_layout.finishLoadMore()
             }
         }
@@ -133,10 +131,10 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         if (!mainActivity!!.isFinishing()) {
 //            showToast(error!!, true)
             showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
-                    ScreenManager.dipTopx(activity, 38f), resources.getColor(R.color.white),
+                    ScreenManager.dipTopx(activity, 20f), resources.getColor(R.color.white),
                     resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
                     ScreenManager.dipTopx(activity, 48f), error!!)
-            if (isRefresh!!) {
+            if (isRefresh) {
                 refresh_layout.finishRefresh(false)
             } else {
                 refresh_layout.finishLoadMore(false)
@@ -153,7 +151,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
             presenter.mineData(bodyParams)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
-            if (isRefresh!!) {
+            if (isRefresh) {
                 refresh_layout.finishRefresh()
             } else {
                 refresh_layout.finishLoadMore()
