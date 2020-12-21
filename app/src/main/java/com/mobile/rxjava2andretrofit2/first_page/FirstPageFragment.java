@@ -25,6 +25,7 @@ import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
 import com.mobile.rxjava2andretrofit2.main.MainActivity;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
+import com.mobile.rxjava2andretrofit2.manager.ScreenManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -160,8 +161,6 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 
     @Override
     public void firstPageDataSuccess(List<FirstPageResponse.AnsListBean> success) {
-//        showToast(success, true);
-
         if (!mainActivity.isFinishing()) {
             if (isRefresh) {
                 ansListBeanList.clear();
@@ -179,7 +178,11 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     @Override
     public void firstPageDataError(String error) {
         if (!mainActivity.isFinishing()) {
-            showToast(error, true);
+//            showToast(error, true);
+            showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
+                    ScreenManager.dipTopx(activity, 20f), getResources().getColor(R.color.white),
+                    getResources().getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
+                    ScreenManager.dipTopx(activity, 48f), error);
             if (isRefresh) {
                 refreshLayout.finishRefresh(false);
             } else {

@@ -1,6 +1,7 @@
 package com.mobile.rxjava2andretrofit2.kotlin.mine.ui
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,11 +26,11 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
 
     private val TAG: String = "MineDetailsActivity"
     private var max_behot_time: String? = null
-    private var dataBeanList: MutableList<Data>? = null
+    private var dataBeanList: MutableList<Data> = mutableListOf()
     private var mineDetailsAdapter: MineDetailsAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var isRefresh: Boolean? = null;
-    private var isFirstLoad: Boolean? = null;
+    private var isRefresh: Boolean = true;
+    private var isFirstLoad: Boolean = true;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,15 +46,11 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
         bundle = intent.extras
         max_behot_time = bundle.getString("max_behot_time")
         LogManager.i(TAG, "max_behot_time*****$max_behot_time")
-
-        dataBeanList = mutableListOf()
-        isRefresh = true
-        isFirstLoad = true
     }
 
     override fun initViews() {
         addContentView(loadView, layoutParams)
-        setToolbar(false, R.color.color_FF198CFF)
+        setToolbar(false, R.color.color_FFE066FF)
         imv_back.setColorFilter(resources.getColor(R.color.color_FFFFFFFF))
 
         layout_back.setOnClickListener(object : View.OnClickListener {
@@ -80,7 +77,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
         mineDetailsAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
-                val data: String = dataBeanList!![position].content!!
+                val data: String = dataBeanList[position].content!!
                 bodyParams.clear()
                 bodyParams.put("data", data)
                 startActivityCarryParams(VideoListActivity::class.java, bodyParams)
@@ -88,7 +85,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
         })
         rcv_data.adapter = mineDetailsAdapter
         mineDetailsAdapter!!.clearData()
-        mineDetailsAdapter!!.addAllData(dataBeanList!!)
+        mineDetailsAdapter!!.addAllData(dataBeanList)
         refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
 
             override fun onLoadMore(refreshLayout: RefreshLayout) {
@@ -138,14 +135,14 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
 
     override fun mineDetailsSuccess(success: List<Data>) {
         if (!this.isFinishing()) {
-            if (isRefresh!!) {
-                dataBeanList!!.clear()
-                dataBeanList!!.addAll(success)
-                mineDetailsAdapter!!.addAllData(dataBeanList!!)
+            if (isRefresh) {
+                dataBeanList.clear()
+                dataBeanList.addAll(success)
+                mineDetailsAdapter!!.addAllData(dataBeanList)
                 refresh_layout.finishRefresh()
             } else {
-                dataBeanList!!.addAll(success)
-                mineDetailsAdapter!!.addAllData(dataBeanList!!)
+                dataBeanList.addAll(success)
+                mineDetailsAdapter!!.addAllData(dataBeanList)
                 refresh_layout.finishLoadMore()
             }
         }
@@ -153,12 +150,17 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
 
     override fun mineDetailsError(error: String?) {
         if (!this.isFinishing()) {
-            showToast(error, true)
-            showCustomToast(ScreenManager.dipTopx(this, 51f), ScreenManager.dipTopx(this, 51f),
-                    ScreenManager.dipTopx(this, 38f), resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(this, 95f),
-                    ScreenManager.dipTopx(this, 48f), error!!)
-            if (isRefresh!!) {
+            if(TextUtils.isEmpty(error)){
+//            showToast(error, true)
+                showCustomToast(ScreenManager.dipTopx(this, 51f), ScreenManager.dipTopx(this, 51f),
+                        ScreenManager.dipTopx(this, 20f), resources.getColor(R.color.white),
+                        resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(this, 95f),
+                        ScreenManager.dipTopx(this, 48f), error)
+            }else{
+
+            }
+
+            if (isRefresh) {
                 refresh_layout.finishRefresh(false)
             } else {
                 refresh_layout.finishLoadMore(false)
@@ -167,7 +169,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
     }
 
     private fun initMineDetails() {
-        if (isFirstLoad!!) {
+        if (isFirstLoad) {
             isFirstLoad = false
         } else {
             max_behot_time = "${System.currentTimeMillis() / 1000}"

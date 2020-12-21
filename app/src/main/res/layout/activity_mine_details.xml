@@ -13,7 +13,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
-        android:background="@color/color_FF198CFF"
+        android:background="@color/color_FFE066FF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
         app:contentInsetStart="0dp">
@@ -45,7 +45,7 @@
                 android:layout_height="@dimen/dp_50"
                 android:gravity="center"
                 android:text="@string/mine_details"
-                android:textColor="@color/color_FFE066FF"
+                android:textColor="@color/color_FF198CFF"
                 android:textSize="@dimen/sp_20" />
 
         </FrameLayout>

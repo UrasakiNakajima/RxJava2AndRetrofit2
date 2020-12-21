@@ -22,11 +22,10 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
 
     private static final String TAG = "MainPresenterImpl";
     //    private IResourcesView mainView;//P需要与V 交互，所以需要持有V的引用
-    private MainModelImpl model;
+    private MainModelImpl model = new MainModelImpl();
 
     public MainPresenterImpl(IBaseView baseView) {
         attachView(baseView);
-        model = new MainModelImpl();
     }
 
     @Override

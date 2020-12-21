@@ -80,7 +80,8 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                 switch (position) {
                     case 0:
                         mineViewPager.setCurrentItem(0);
-                        tevFirstPage.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                        tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF198CFF));
+                        tevResources.setTextColor(getResources().getColor(R.color.color_FF999999));
                         tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
 
                         ImmersionBar.with(MainActivity.this)
@@ -92,7 +93,8 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                     case 1:
                         mineViewPager.setCurrentItem(1);
                         tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
-                        tevMine.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                        tevResources.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                        tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
 
                         ImmersionBar.with(MainActivity.this)
                                 .keyboardEnable(false)
@@ -103,13 +105,14 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                     case 2:
                         mineViewPager.setCurrentItem(2);
                         tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
-                        tevMine.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                        tevResources.setTextColor(getResources().getColor(R.color.color_FF999999));
+                        tevMine.setTextColor(getResources().getColor(R.color.color_FF198CFF));
 
                         ImmersionBar.with(MainActivity.this)
                                 .keyboardEnable(false)
                                 .statusBarDarkFont(false)
-                                .statusBarColor(R.color.color_FF198CFF)
-                                .navigationBarColor(R.color.color_FF198CFF).init();
+                                .statusBarColor(R.color.color_FFE066FF)
+                                .navigationBarColor(R.color.color_FFE066FF).init();
                         break;
                     default:
                         break;

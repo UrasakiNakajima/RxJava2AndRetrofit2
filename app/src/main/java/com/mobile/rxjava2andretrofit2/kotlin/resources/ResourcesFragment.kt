@@ -1,5 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin.resources
 
+import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +30,7 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
     private var mainActivity: MainActivity? = null
 
     private var resultList: MutableList<Result> = mutableListOf()
-        private var resourcesAdapter: ResourcesAdapter? = null
+    private var resourcesAdapter: ResourcesAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private var isRefresh: Boolean = true
 
@@ -124,10 +125,15 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
 
     override fun resourcesDataError(error: String?) {
         if (!mainActivity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
-                    ScreenManager.dipTopx(activity, 20f), resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
-                    ScreenManager.dipTopx(activity, 48f), error!!)
+            if (TextUtils.isEmpty(error)) {
+                showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
+                        ScreenManager.dipTopx(activity, 20f), resources.getColor(R.color.white),
+                        resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
+                        ScreenManager.dipTopx(activity, 48f), error!!)
+            } else {
+
+            }
+
             if (isRefresh) {
                 refresh_layout.finishRefresh(false)
             } else {

@@ -18,11 +18,10 @@ class ResourcesPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), 
 
     private val TAG: String = "ResourcesPresenterImpl"
     //    private IResourcesView feedbackView;//P需要与V 交互，所以需要持有V的引用
-    private var model: ResourcesModelImpl? = null;
+    private var model: ResourcesModelImpl = ResourcesModelImpl();
 
     init {
         attachView(baseView)
-        model = ResourcesModelImpl()
     }
 
     override fun resourcesData() {
@@ -31,7 +30,7 @@ class ResourcesPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), 
             if (baseView is IResourcesView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(model!!.resourcesData(), object : OnCommonSingleParamCallback<String> {
+                        .responseString(model.resourcesData(), object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {

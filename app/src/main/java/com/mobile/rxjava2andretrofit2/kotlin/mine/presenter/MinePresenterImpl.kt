@@ -21,11 +21,10 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 
     private val TAG: String = "MinePresenterImpl"
     //    private IResourcesView feedbackView;//P需要与V 交互，所以需要持有V的引用
-    private var model: MineModelImpl? = null;
+    private var model: MineModelImpl = MineModelImpl();
 
     init {
         attachView(baseView)
-        model = MineModelImpl()
     }
 
     override fun mineData(bodyParams: Map<String, String>) {
@@ -34,7 +33,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             if (baseView is IMineView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(model!!.mineData(bodyParams), object : OnCommonSingleParamCallback<String> {
+                        .responseString(model.mineData(bodyParams), object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
@@ -66,10 +65,10 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                 baseView.showLoading()
                 //rxjava2+retrofit2请求（响应速度更快）
                 disposable = RetrofitManager.getInstance()
-                        .responseString(model!!.mineDetails(bodyParams), object : OnCommonSingleParamCallback<String> {
+                        .responseString(model.mineDetails(bodyParams), object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
-                                if (!success.isEmpty()) {
+                                if (!TextUtils.isEmpty(success)) {
 //                                    MineDetailsResponse response = JSONObject.parseObject(success, MineDetailsResponse.class);
 
                                     val response: MineDetailsResponse = JSONObject.parseObject(success, MineDetailsResponse::class.java);
