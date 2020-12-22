@@ -24,13 +24,13 @@ class ResourcesPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), 
         attachView(baseView)
     }
 
-    override fun resourcesData() {
+    override fun resourcesData(type: String, pageSize: String, currentPage: String) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IResourcesView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(model.resourcesData(), object : OnCommonSingleParamCallback<String> {
+                        .responseString(model.resourcesData(type, pageSize, currentPage), object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {

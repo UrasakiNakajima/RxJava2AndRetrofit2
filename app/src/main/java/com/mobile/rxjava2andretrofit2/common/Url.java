@@ -28,6 +28,6 @@ public class Url {
     public static final String FIRST_PAGE_DETAILS_URL = "/api/news/feed/v62/?iid=5034850950&device_id=6096495334&refer=1&count=20&aid=13";
 
 
-    public static final String RESOURCES_URL = "api/data/all/20/1";
+    public static final String RESOURCES_URL = "api/data/";
 
 }

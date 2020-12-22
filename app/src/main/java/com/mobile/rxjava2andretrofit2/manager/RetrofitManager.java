@@ -29,6 +29,7 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -39,14 +40,15 @@ public class RetrofitManager {
     private static RetrofitManager manager;
     private Retrofit retrofit;
 
-    private Cache cache;
-
     /**
      * 私有构造器 无法外部创建
      * 初始化必要对象和参数
      */
     private RetrofitManager() {
-        cache = new Cache(new File(MineApplication.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
+        Cache cache = new Cache(new File(MineApplication.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        // 包含header、body数据
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         // 初始化okhttp
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(5 * 1000, TimeUnit.MILLISECONDS)
@@ -56,8 +58,9 @@ public class RetrofitManager {
 //                .addInterceptor(new CacheControlInterceptor(MineApplication.getInstance()))
                 .addInterceptor(new AddCookiesInterceptor(MineApplication.getInstance()))
                 .addInterceptor(new ReceivedCookiesInterceptor(MineApplication.getInstance()))
-                .addInterceptor(new LogInterceptor())
                 .addInterceptor(new BaseUrlManagerInterceptor())
+//                .addInterceptor(new LogInterceptor())
+                .addInterceptor(loggingInterceptor)
                 .proxy(Proxy.NO_PROXY)
                 .build();
 

@@ -10,10 +10,12 @@ class ResourcesModelImpl : IResourcesModel {
 
     private val TAG = "ResourcesModelImpl"
 
-    override fun resourcesData(): Observable<ResponseBody> {
+    override fun resourcesData(type: String,
+                               pageSize: String,
+                               currentPage: String): Observable<ResponseBody> {
         return RetrofitManager.getInstance().retrofit
                 .create(ResourcesRequest::class.java)
-                .getResourcesData()
+                .getResourcesData(type, pageSize, currentPage)
     }
 
 }

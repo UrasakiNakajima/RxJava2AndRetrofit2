@@ -10,7 +10,10 @@ interface ResourcesRequest {
 
     @Headers("urlname:${ConstantData.TO_RESOURCES_FLAG}")
 //    @FormUrlEncoded
-    @GET(Url.RESOURCES_URL)
-    fun getResourcesData(): Observable<ResponseBody>
+    @GET(Url.RESOURCES_URL + "{type}/{pageSize}/{currentPage}")
+    fun getResourcesData(
+            @Path("type") type: String,
+            @Path("pageSize") pageSize: String,
+            @Path("currentPage") currentPage: String): Observable<ResponseBody>
 
 }

@@ -33,6 +33,9 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
     private var resourcesAdapter: ResourcesAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private var isRefresh: Boolean = true
+    private var type: String = "all"
+    private val pageSize: String = "20";
+    private var currentPage: Int = 1;
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_resources
@@ -46,7 +49,8 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
         tev_title.setOnClickListener(object : View.OnClickListener {
 
             override fun onClick(v: View?) {
-                initResources()
+                currentPage = 1;
+                initResources(type, pageSize, currentPage.toString())
             }
         })
 
@@ -76,12 +80,14 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
             override fun onLoadMore(refresh_layout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
                 isRefresh = false
-                initResources()
+                initResources(type, pageSize, currentPage.toString())
             }
 
             override fun onRefresh(refresh_layout: RefreshLayout) {
+                LogManager.i(TAG, "onRefresh")
                 isRefresh = true
-                initResources()
+                currentPage = 1;
+                initResources(type, pageSize, currentPage.toString())
             }
         })
     }
@@ -120,6 +126,9 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
                 resourcesAdapter!!.addAllData(resultList)
                 refresh_layout.finishLoadMore()
             }
+            if (success != null && success.size > 0) {
+                currentPage++;
+            }
         }
     }
 
@@ -142,13 +151,12 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
         }
     }
 
-    private fun initResources() {
+    private fun initResources(type: String, pageSize: String, currentPage: String) {
         if (RetrofitManager.isNetworkAvailable(mainActivity)) {
-            bodyParams.clear()
-
-            bodyParams.put("", "");
+//            bodyParams.clear()
+//            bodyParams.put("", "");
             //        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
-            presenter.resourcesData()
+            presenter.resourcesData(type, pageSize, currentPage)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {
