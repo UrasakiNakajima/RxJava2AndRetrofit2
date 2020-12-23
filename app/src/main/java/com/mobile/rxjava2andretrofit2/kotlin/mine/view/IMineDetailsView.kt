@@ -7,5 +7,5 @@ interface IMineDetailsView : IBaseView {
 
     fun mineDetailsSuccess(success: List<Data>);
 
-    fun mineDetailsError(error: String?);
+    fun mineDetailsError(error: String);
 }

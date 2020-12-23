@@ -22,6 +22,7 @@ import com.mobile.rxjava2andretrofit2.first_page.presenter.FirstPagePresenterImp
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageDetailsView;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
+import com.mobile.rxjava2andretrofit2.manager.ScreenManager;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
@@ -193,7 +194,11 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
     @Override
     public void firstPageDetailsError(String error) {
         if (!this.isFinishing()) {
-            showToast(error, true);
+//            showToast(error, true);
+            showCustomToast(ScreenManager.dipTopx(this, 51f), ScreenManager.dipTopx(this, 51f),
+                    20, getResources().getColor(R.color.white),
+                    getResources().getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(this, 95f),
+                    ScreenManager.dipTopx(this, 48f), error);
             if (isRefresh) {
                 refreshLayout.finishRefresh(false);
             } else {

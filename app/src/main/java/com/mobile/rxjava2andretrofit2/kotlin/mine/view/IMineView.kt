@@ -7,6 +7,6 @@ interface IMineView : IBaseView {
 
     fun mineDataSuccess(success: List<Ans>)
 
-    fun mineDataError(error: String?)
+    fun mineDataError(error: String)
 
 }

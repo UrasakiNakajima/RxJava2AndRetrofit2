@@ -49,7 +49,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
             if (baseView instanceof IFirstPageView) {
                 IFirstPageView firstPageView = (IFirstPageView) baseView;
                 firstPageView.showLoading();
-
+                //rxjava2+retrofit2请求（响应速度更快）
                 disposable = RetrofitManager.getInstance()
                         .responseString(model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
@@ -58,7 +58,12 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                 if (!TextUtils.isEmpty(success)) {
 //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
                                     FirstPageResponse response = GsonManager.getInstance().convert(success, FirstPageResponse.class);
-                                    firstPageView.firstPageDataSuccess(response.getAns_list());
+
+                                    if (response.getAns_list() != null && response.getAns_list().size() > 0) {
+                                        firstPageView.firstPageDataSuccess(response.getAns_list());
+                                    } else {
+                                        firstPageView.firstPageDataError(MineApplication.getInstance().getResources().getString(R.string.no_data_available));
+                                    }
                                 } else {
                                     firstPageView.firstPageDataError(MineApplication.getInstance().getResources().getString(R.string.loading_failed));
                                 }
@@ -74,6 +79,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                         });
                 disposableList.add(disposable);
 
+////                rxjava2+retrofit2请求（响应速度更快）
 //                disposable = model.firstPageData(bodyParams)
 //                        .subscribeOn(Schedulers.io())
 //                        .observeOn(AndroidSchedulers.mainThread())
@@ -120,7 +126,12 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                 if (!TextUtils.isEmpty(success)) {
 //                                    FirstPageDetailsResponse response = JSONObject.parseObject(success, FirstPageDetailsResponse.class);
                                     FirstPageDetailsResponse response = GsonManager.getInstance().convert(success, FirstPageDetailsResponse.class);
-                                    firstPageDetailsView.firstPageDetailsSuccess(response.getData());
+
+                                    if (response.getData() != null && response.getData().size() > 0) {
+                                        firstPageDetailsView.firstPageDetailsSuccess(response.getData());
+                                    } else {
+                                        firstPageDetailsView.firstPageDetailsError(MineApplication.getInstance().getResources().getString(R.string.no_data_available));
+                                    }
                                 } else {
                                     firstPageDetailsView.firstPageDetailsError(MineApplication.getInstance().getResources().getString(R.string.loading_failed));
                                 }

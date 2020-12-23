@@ -133,22 +133,16 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
                 resourcesAdapter!!.addAllData(resultList)
                 refresh_layout.finishLoadMore()
             }
-            if (success != null && success.size > 0) {
-                currentPage++;
-            }
+            currentPage++;
         }
     }
 
-    override fun resourcesDataError(error: String?) {
+    override fun resourcesDataError(error: String) {
         if (!mainActivity!!.isFinishing()) {
-            if (TextUtils.isEmpty(error)) {
-                showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
-                        20, resources.getColor(R.color.white),
-                        resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
-                        ScreenManager.dipTopx(activity, 48f), error!!)
-            } else {
-
-            }
+            showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
+                    20, resources.getColor(R.color.white),
+                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
+                    ScreenManager.dipTopx(activity, 48f), error!!)
 
             if (isRefresh) {
                 refresh_layout.finishRefresh(false)

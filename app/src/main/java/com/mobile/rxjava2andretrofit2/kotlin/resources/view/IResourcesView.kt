@@ -8,6 +8,6 @@ interface IResourcesView : IBaseView {
 
     fun resourcesDataSuccess(success: List<Result>)
 
-    fun resourcesDataError(error: String?)
+    fun resourcesDataError(error: String)
 
 }

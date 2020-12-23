@@ -35,6 +35,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     private var isRefresh: Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // TODO: inflate a fragment view
         rootView = super.onCreateView(inflater, container, savedInstanceState)
         return rootView
     }
@@ -128,7 +129,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         }
     }
 
-    override fun mineDataError(error: String?) {
+    override fun mineDataError(error: String) {
         if (!mainActivity!!.isFinishing()) {
 //            showToast(error!!, true)
             showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),

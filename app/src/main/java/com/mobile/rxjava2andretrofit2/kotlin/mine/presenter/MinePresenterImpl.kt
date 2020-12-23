@@ -41,7 +41,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
                                     val response = GsonManager.getInstance().convert(success, MineResponse::class.java)
-                                    baseView.mineDataSuccess(response.ans_list)
+                                    if (response.ans_list != null && response.ans_list.size > 0) {
+                                        baseView.mineDataSuccess(response.ans_list)
+                                    } else {
+                                        baseView.mineDataError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
+                                    }
                                 } else {
                                     baseView.mineDataError(MineApplication.getInstance().resources.getString(R.string.loading_failed))
                                 }
@@ -72,7 +76,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                 if (!TextUtils.isEmpty(success)) {
                                     val response: MineDetailsResponse = JSONObject.parseObject(success, MineDetailsResponse::class.java);
                                     LogManager.i(TAG, "success data*****$response")
-                                    baseView.mineDetailsSuccess(response.data!!)
+                                    if (response.data != null && response.data!!.size > 0) {
+                                        baseView.mineDetailsSuccess(response.data!!)
+                                    } else {
+                                        baseView.mineDetailsError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
+                                    }
                                 } else {
                                     baseView.mineDetailsError(MineApplication.getInstance().resources.getString(R.string.loading_failed))
                                 }
