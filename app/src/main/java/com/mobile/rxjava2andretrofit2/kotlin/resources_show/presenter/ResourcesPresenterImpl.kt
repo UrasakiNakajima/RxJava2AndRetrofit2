@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources.presenter
+package com.mobile.rxjava2andretrofit2.kotlin.resources_show.presenter
 
 import android.text.TextUtils
 import com.mobile.rxjava2andretrofit2.R
@@ -8,10 +8,10 @@ import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
-import com.mobile.rxjava2andretrofit2.kotlin.resources.model.ResourcesModelImpl
-import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.base.IResourcesPresenter
-import com.mobile.rxjava2andretrofit2.kotlin.resources.view.IResourcesView
-import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.ResourcesBean
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.model.ResourcesModelImpl
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.presenter.base.IResourcesPresenter
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean.ResourcesBean
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.view.IResourcesView
 import com.mobile.rxjava2andretrofit2.manager.GsonManager
 
 class ResourcesPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IResourcesPresenter {

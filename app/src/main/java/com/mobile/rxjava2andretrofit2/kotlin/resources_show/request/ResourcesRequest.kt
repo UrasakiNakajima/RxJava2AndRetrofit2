@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources.request
+package com.mobile.rxjava2andretrofit2.kotlin.resources_show.request
 
 import com.mobile.rxjava2andretrofit2.common.ConstantData
 import com.mobile.rxjava2andretrofit2.common.Url

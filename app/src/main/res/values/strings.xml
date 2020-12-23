@@ -30,6 +30,15 @@
     <string name="loading_failed">加载失败</string>
     <string name="no_data_available">暂无数据</string>
 
+    <string name="all_resources">全部资源</string>
+    <string name="all">全部</string>
+    <string name="beautiful_woman">福利</string>
+    <string name="android">Android</string>
+    <string name="ios">IOS</string>
+    <string name="video">视频</string>
+    <string name="app">App</string>
+
+
 
     <!--真正用于解析的属性-->
     <declare-styleable name="RCAttrs">

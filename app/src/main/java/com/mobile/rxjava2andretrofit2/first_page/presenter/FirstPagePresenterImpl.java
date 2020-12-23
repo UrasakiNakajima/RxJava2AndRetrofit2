@@ -2,23 +2,19 @@ package com.mobile.rxjava2andretrofit2.first_page.presenter;
 
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mobile.rxjava2andretrofit2.MineApplication;
 import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.base.BasePresenter;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
-import com.mobile.rxjava2andretrofit2.common.Url;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageDetailsResponse;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
 import com.mobile.rxjava2andretrofit2.first_page.model.FirstPageModelImpl;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.base.IFirstPagePresenter;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageDetailsView;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
-import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.ResourcesBean;
 import com.mobile.rxjava2andretrofit2.manager.GsonManager;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
-import com.mobile.rxjava2andretrofit2.manager.Okhttp3Manager;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 
 import java.util.Map;

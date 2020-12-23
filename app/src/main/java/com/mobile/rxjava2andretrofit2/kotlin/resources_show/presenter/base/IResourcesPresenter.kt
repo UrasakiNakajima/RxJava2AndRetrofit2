@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.base
+package com.mobile.rxjava2andretrofit2.kotlin.resources_show.presenter.base
 
 interface IResourcesPresenter {
 

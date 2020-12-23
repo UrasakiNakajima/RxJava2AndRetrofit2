@@ -1,8 +1,7 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources.view
+package com.mobile.rxjava2andretrofit2.kotlin.resources_show.view
 
 import com.mobile.rxjava2andretrofit2.base.IBaseView
-import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
-import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.Result
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean.Result
 
 interface IResourcesView : IBaseView {
 

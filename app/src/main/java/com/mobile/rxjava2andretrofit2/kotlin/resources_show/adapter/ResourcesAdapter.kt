@@ -1,6 +1,5 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources.adapter
+package com.mobile.rxjava2andretrofit2.kotlin.resources_show.adapter
 
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.text.Html
 import android.text.method.LinkMovementMethod
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.ThemeUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mikepenz.fontawesome_typeface_library.FontAwesome
@@ -19,10 +17,9 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.custom_view.ColorTextView
-import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.Result
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean.Result
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.mobile.rxjava2andretrofit2.manager.ThemeManager
-import java.security.AccessController.getContext
 
 class ResourcesAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

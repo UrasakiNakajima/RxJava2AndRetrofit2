@@ -11,9 +11,10 @@ import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity;
 import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.custom_view.LazyViewPager;
+import com.mobile.rxjava2andretrofit2.custom_view.MineLazyViewPager;
 import com.mobile.rxjava2andretrofit2.first_page.FirstPageFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.mine.MineFragment;
-import com.mobile.rxjava2andretrofit2.kotlin.resources.ResourcesFragment;
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.ResourcesShowFragment;
 import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentPagerAdapter;
 import com.mobile.rxjava2andretrofit2.main.presenter.MainPresenterImpl;
 import com.mobile.rxjava2andretrofit2.main.view.IMainView;
@@ -29,7 +30,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
 
     private static final String TAG = "MainActivity";
     @BindView(R.id.mine_view_pager)
-    LazyViewPager mineViewPager;
+    MineLazyViewPager mineViewPager;
     @BindView(R.id.tev_first_page)
     TextView tevFirstPage;
     @BindView(R.id.tev_resources)
@@ -37,7 +38,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     @BindView(R.id.tev_mine)
     TextView tevMine;
 
-    private List<Fragment> fragmentList;
+    private List<Fragment> fragmentList = new ArrayList<>();
     private TabFragmentPagerAdapter fragmentPagerAdapter;
 
     @Override
@@ -52,9 +53,8 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
 
     @Override
     protected void initData() {
-        fragmentList = new ArrayList<>();
         fragmentList.add(new FirstPageFragment());
-        fragmentList.add(new ResourcesFragment());
+        fragmentList.add(new ResourcesShowFragment());
         fragmentList.add(new MineFragment());
     }
 

@@ -1,7 +1,6 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources
+package com.mobile.rxjava2andretrofit2.kotlin.resources_show.resources
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,21 +12,21 @@ import com.mobile.rxjava2andretrofit2.base.BaseMvpFragment
 import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
-import com.mobile.rxjava2andretrofit2.kotlin.resources.adapter.ResourcesAdapter
-import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.Result
-import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.ResourcesPresenterImpl
-import com.mobile.rxjava2andretrofit2.kotlin.resources.view.IResourcesView
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.adapter.ResourcesAdapter
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean.Result
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.presenter.ResourcesPresenterImpl
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.view.IResourcesView
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import kotlinx.android.synthetic.main.fragment_mine.*
+import kotlinx.android.synthetic.main.fragment_resources.*
 
 class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), IResourcesView {
 
-    private val TAG: String = "ResourcesFragment"
+    private val TAG: String = "ResourcesFragment";
     private var mainActivity: MainActivity? = null
 
     private var resultList: MutableList<Result> = mutableListOf()
@@ -39,9 +38,17 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
     private var currentPage: Int = 1;
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // TODO: inflate a fragment view
-        rootView = super.onCreateView(inflater, container, savedInstanceState)
-        return rootView
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    companion object {
+        fun getInstance(type: String): ResourcesFragment {
+            val fragment = ResourcesFragment()
+            val bundle = Bundle()
+            bundle.putString("type", type)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun initLayoutId(): Int {
@@ -50,17 +57,25 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
 
     override fun initData() {
         mainActivity = activity as MainActivity
+
+        bundle = arguments
+        type = bundle.getString("type")!!
+//        if (resources.getString(R.string.all_resources).equals(type)) {
+//
+//        } else if (resources.getString(R.string.beautiful_woman).equals(type)) {
+//
+//        } else if (resources.getString(R.string.android).equals(type)) {
+//
+//        } else if (resources.getString(R.string.ios).equals(type)) {
+//
+//        } else if (resources.getString(R.string.video).equals(type)) {
+//
+//        } else if (resources.getString(R.string.app).equals(type)) {
+//
+//        }
     }
 
     override fun initViews() {
-        tev_title.setOnClickListener(object : View.OnClickListener {
-
-            override fun onClick(v: View?) {
-                currentPage = 1;
-                initResources(type, pageSize, currentPage.toString())
-            }
-        })
-
         initAdapter()
     }
 
@@ -144,7 +159,7 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
             showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
                     20, resources.getColor(R.color.white),
                     resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
-                    ScreenManager.dipTopx(activity, 48f), error!!)
+                    ScreenManager.dipTopx(activity, 48f), error)
 
             if (isRefresh) {
                 refresh_layout.finishRefresh(false)

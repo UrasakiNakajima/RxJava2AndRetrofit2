@@ -1,7 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin.mine.ui
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineDetailsAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Data
 import com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.MinePresenterImpl
 import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineDetailsView
-import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.ResourcesPresenterImpl
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
