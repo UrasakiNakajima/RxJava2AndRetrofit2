@@ -126,10 +126,12 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
             if (isRefresh) {
                 resultList.clear()
                 resultList.addAll(success)
+                resourcesAdapter!!.clearData();
                 resourcesAdapter!!.addAllData(resultList)
                 refresh_layout.finishRefresh()
             } else {
                 resultList.addAll(success)
+                resourcesAdapter!!.clearData();
                 resourcesAdapter!!.addAllData(resultList)
                 refresh_layout.finishLoadMore()
             }

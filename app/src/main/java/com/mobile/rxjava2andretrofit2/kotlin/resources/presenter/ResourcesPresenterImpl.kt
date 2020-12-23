@@ -39,6 +39,7 @@ class ResourcesPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), 
 //                                    val response = gson.fromJson(success, ResourcesBean::class.java)
                                     val response = GsonManager.getInstance().convert(success, ResourcesBean::class.java)
                                     if (response.results != null && response.results.size > 0) {
+                                        LogManager.i(TAG, "response*****${response.toString()}")
                                         baseView.resourcesDataSuccess(response.results)
                                     } else {
                                         baseView.resourcesDataError(MineApplication.getInstance().resources.getString(R.string.no_data_available))

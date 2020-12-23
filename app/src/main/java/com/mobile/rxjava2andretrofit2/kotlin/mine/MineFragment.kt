@@ -119,10 +119,12 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
             if (isRefresh) {
                 ansListBeanList.clear()
                 ansListBeanList.addAll(success)
+                mineAdapter!!.clearData();
                 mineAdapter!!.addAllData(ansListBeanList)
                 refresh_layout.finishRefresh()
             } else {
                 ansListBeanList.addAll(success)
+                mineAdapter!!.clearData();
                 mineAdapter!!.addAllData(ansListBeanList)
                 refresh_layout.finishLoadMore()
             }

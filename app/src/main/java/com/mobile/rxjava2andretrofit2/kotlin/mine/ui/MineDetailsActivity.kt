@@ -138,10 +138,12 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
             if (isRefresh) {
                 dataBeanList.clear()
                 dataBeanList.addAll(success)
+                mineDetailsAdapter!!.clearData();
                 mineDetailsAdapter!!.addAllData(dataBeanList)
                 refresh_layout.finishRefresh()
             } else {
                 dataBeanList.addAll(success)
+                mineDetailsAdapter!!.clearData();
                 mineDetailsAdapter!!.addAllData(dataBeanList)
                 refresh_layout.finishLoadMore()
             }

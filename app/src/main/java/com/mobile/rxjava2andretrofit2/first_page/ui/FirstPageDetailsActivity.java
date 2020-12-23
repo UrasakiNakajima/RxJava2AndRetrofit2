@@ -181,10 +181,12 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
             if (isRefresh) {
                 dataBeanList.clear();
                 dataBeanList.addAll(success);
+                firstPageDetailsAdapter.clearData();
                 firstPageDetailsAdapter.addAllData(dataBeanList);
                 refreshLayout.finishRefresh();
             } else {
                 dataBeanList.addAll(success);
+                firstPageDetailsAdapter.clearData();
                 firstPageDetailsAdapter.addAllData(dataBeanList);
                 refreshLayout.finishLoadMore();
             }
