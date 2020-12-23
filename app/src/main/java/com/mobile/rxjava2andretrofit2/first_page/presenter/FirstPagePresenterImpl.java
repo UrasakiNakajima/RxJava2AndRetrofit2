@@ -15,6 +15,8 @@ import com.mobile.rxjava2andretrofit2.first_page.model.FirstPageModelImpl;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.base.IFirstPagePresenter;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageDetailsView;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
+import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.ResourcesBean;
+import com.mobile.rxjava2andretrofit2.manager.GsonManager;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.manager.Okhttp3Manager;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
@@ -54,7 +56,8 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
                                 if (!TextUtils.isEmpty(success)) {
-                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
+//                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
+                                    FirstPageResponse response = GsonManager.getInstance().convert(success, FirstPageResponse.class);
                                     firstPageView.firstPageDataSuccess(response.getAns_list());
                                 } else {
                                     firstPageView.firstPageDataError(MineApplication.getInstance().getResources().getString(R.string.loading_failed));
@@ -115,7 +118,8 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
                                 if (!TextUtils.isEmpty(success)) {
-                                    FirstPageDetailsResponse response = JSONObject.parseObject(success, FirstPageDetailsResponse.class);
+//                                    FirstPageDetailsResponse response = JSONObject.parseObject(success, FirstPageDetailsResponse.class);
+                                    FirstPageDetailsResponse response = GsonManager.getInstance().convert(success, FirstPageDetailsResponse.class);
                                     firstPageDetailsView.firstPageDetailsSuccess(response.getData());
                                 } else {
                                     firstPageDetailsView.firstPageDetailsError(MineApplication.getInstance().getResources().getString(R.string.loading_failed));

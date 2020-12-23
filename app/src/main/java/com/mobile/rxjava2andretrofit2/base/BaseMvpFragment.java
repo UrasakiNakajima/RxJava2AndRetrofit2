@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,7 +123,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
         FrameLayout.LayoutParams layoutParams1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height);
         textView.setLayoutParams(layoutParams1);
         textView.setPadding(left, 0, right, 0);
-        textView.setTextSize(textSize);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         textView.setTextColor(textColor);
         textView.setGravity(Gravity.CENTER);
         textView.setIncludeFontPadding(false);

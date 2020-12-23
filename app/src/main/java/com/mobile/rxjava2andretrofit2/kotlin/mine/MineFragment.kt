@@ -35,7 +35,8 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     private var isRefresh: Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        rootView = super.onCreateView(inflater, container, savedInstanceState)
+        return rootView
     }
 
     override fun initLayoutId(): Int {
@@ -131,7 +132,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         if (!mainActivity!!.isFinishing()) {
 //            showToast(error!!, true)
             showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
-                    ScreenManager.dipTopx(activity, 20f), resources.getColor(R.color.white),
+                    20, resources.getColor(R.color.white),
                     resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
                     ScreenManager.dipTopx(activity, 48f), error!!)
             if (isRefresh) {

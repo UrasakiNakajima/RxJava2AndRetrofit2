@@ -153,7 +153,7 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
             if(TextUtils.isEmpty(error)){
 //            showToast(error, true)
                 showCustomToast(ScreenManager.dipTopx(this, 51f), ScreenManager.dipTopx(this, 51f),
-                        ScreenManager.dipTopx(this, 20f), resources.getColor(R.color.white),
+                        20, resources.getColor(R.color.white),
                         resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(this, 95f),
                         ScreenManager.dipTopx(this, 48f), error)
             }else{

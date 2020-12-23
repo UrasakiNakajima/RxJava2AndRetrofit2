@@ -35,9 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePresenterImpl>
         implements IFirstPageView {
@@ -180,7 +178,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
         if (!mainActivity.isFinishing()) {
 //            showToast(error, true);
             showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
-                    ScreenManager.dipTopx(activity, 20f), getResources().getColor(R.color.white),
+                    20, getResources().getColor(R.color.white),
                     getResources().getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
                     ScreenManager.dipTopx(activity, 48f), error);
             if (isRefresh) {

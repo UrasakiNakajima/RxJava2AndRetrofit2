@@ -2,7 +2,6 @@ package com.mobile.rxjava2andretrofit2.kotlin.mine.presenter
 
 import android.text.TextUtils
 import com.alibaba.fastjson.JSONObject
-import com.google.gson.Gson
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.MineApplication
 import com.mobile.rxjava2andretrofit2.base.BasePresenter
@@ -16,6 +15,7 @@ import com.mobile.rxjava2andretrofit2.kotlin.mine.model.MineModelImpl
 import com.mobile.rxjava2andretrofit2.kotlin.mine.presenter.base.IMinePresenter
 import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineDetailsView
 import com.mobile.rxjava2andretrofit2.kotlin.mine.view.IMineView
+import com.mobile.rxjava2andretrofit2.manager.GsonManager
 
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
@@ -38,8 +38,9 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                 LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
-                                    val gson = Gson()
-                                    val response = gson.fromJson(success, MineResponse::class.java)
+//                                    val gson = Gson()
+//                                    val response = gson.fromJson(success, MineResponse::class.java)
+                                    val response = GsonManager.getInstance().convert(success, MineResponse::class.java)
                                     baseView.mineDataSuccess(response.ans_list)
                                 } else {
                                     baseView.mineDataError(MineApplication.getInstance().resources.getString(R.string.loading_failed))
@@ -69,11 +70,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
-//                                    MineDetailsResponse response = JSONObject.parseObject(success, MineDetailsResponse.class);
-
                                     val response: MineDetailsResponse = JSONObject.parseObject(success, MineDetailsResponse::class.java);
-//                                    val gson = Gson()
-//                                    val response = gson.fromJson(success, MineDetailsResponse::class.java)
                                     LogManager.i(TAG, "success data*****$response")
                                     baseView.mineDetailsSuccess(response.data!!)
                                 } else {

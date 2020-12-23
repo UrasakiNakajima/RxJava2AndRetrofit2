@@ -1,7 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin.resources.presenter
 
 import android.text.TextUtils
-import com.google.gson.Gson
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.MineApplication
 import com.mobile.rxjava2andretrofit2.base.BasePresenter
@@ -13,6 +12,7 @@ import com.mobile.rxjava2andretrofit2.kotlin.resources.model.ResourcesModelImpl
 import com.mobile.rxjava2andretrofit2.kotlin.resources.presenter.base.IResourcesPresenter
 import com.mobile.rxjava2andretrofit2.kotlin.resources.view.IResourcesView
 import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.ResourcesBean
+import com.mobile.rxjava2andretrofit2.manager.GsonManager
 
 class ResourcesPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IResourcesPresenter {
 
@@ -35,8 +35,9 @@ class ResourcesPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), 
                                 LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
-                                    val gson = Gson()
-                                    val response = gson.fromJson(success, ResourcesBean::class.java)
+//                                    val gson = Gson()
+//                                    val response = gson.fromJson(success, ResourcesBean::class.java)
+                                    val response = GsonManager.getInstance().convert(success, ResourcesBean::class.java)
                                     baseView.resourcesDataSuccess(response.results)
                                 } else {
                                     baseView.resourcesDataError(MineApplication.getInstance().resources.getString(R.string.loading_failed))

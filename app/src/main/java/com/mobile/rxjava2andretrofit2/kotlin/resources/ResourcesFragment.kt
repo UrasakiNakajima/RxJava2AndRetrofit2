@@ -1,7 +1,10 @@
 package com.mobile.rxjava2andretrofit2.kotlin.resources
 
+import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,8 +12,6 @@ import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseMvpFragment
 import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
-import com.mobile.rxjava2andretrofit2.kotlin.mine.adapter.MineAdapter
-import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
 import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
 import com.mobile.rxjava2andretrofit2.kotlin.resources.adapter.ResourcesAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.resources.bean.Result
@@ -36,6 +37,12 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
     private var type: String = "all"
     private val pageSize: String = "20";
     private var currentPage: Int = 1;
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // TODO: inflate a fragment view
+        rootView = super.onCreateView(inflater, container, savedInstanceState)
+        return rootView
+    }
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_resources
@@ -136,7 +143,7 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
         if (!mainActivity!!.isFinishing()) {
             if (TextUtils.isEmpty(error)) {
                 showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
-                        ScreenManager.dipTopx(activity, 20f), resources.getColor(R.color.white),
+                        20, resources.getColor(R.color.white),
                         resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
                         ScreenManager.dipTopx(activity, 48f), error!!)
             } else {
