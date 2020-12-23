@@ -80,9 +80,6 @@ public class MineApplication extends MultiDexApplication {
 //        }
 //        mRefWatcher = LeakCanary.install(this);
 
-        //初始化okhttp3
-//        Okhttp3Manager.getInstance(this);
-
         mineApplication = this;
         //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
         sp = getSharedPreferences("app", MODE);
@@ -94,6 +91,10 @@ public class MineApplication extends MultiDexApplication {
             date = "0";
         }
 
+        //初始化okhttp3
+//        Okhttp3Manager.getInstance(this);
+
+        //初始化retrofit
         RetrofitManager.getInstance();
     }
 
