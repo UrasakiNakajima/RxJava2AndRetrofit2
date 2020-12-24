@@ -133,11 +133,11 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
 
     override fun mineDataError(error: String) {
         if (!mainActivity!!.isFinishing()) {
-//            showToast(error!!, true)
-            showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
-                    20, resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
-                    ScreenManager.dipTopx(activity, 48f), error!!)
+            showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
+                    18, resources.getColor(R.color.white),
+                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
+                    ScreenManager.dipTopx(activity, 20f), error)
+
             if (isRefresh) {
                 refresh_layout.finishRefresh(false)
             } else {

@@ -137,6 +137,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
         Toast toast = new Toast(activity);
         toast.setView(frameLayout);
         toast.setDuration(Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 

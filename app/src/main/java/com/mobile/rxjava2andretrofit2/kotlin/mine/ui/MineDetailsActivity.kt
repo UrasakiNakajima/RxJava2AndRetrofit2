@@ -151,10 +151,11 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
     override fun mineDetailsError(error: String) {
         if (!this.isFinishing()) {
 //            showToast(error, true)
-            showCustomToast(ScreenManager.dipTopx(this, 51f), ScreenManager.dipTopx(this, 51f),
-                    20, resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(this, 95f),
-                    ScreenManager.dipTopx(this, 48f), error)
+            showCustomToast(ScreenManager.dipTopx(this, 20f), ScreenManager.dipTopx(this, 20f),
+                    18, resources.getColor(R.color.white),
+                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(this, 40f),
+                    ScreenManager.dipTopx(this, 20f), error)
+
             if (isRefresh) {
                 refresh_layout.finishRefresh(false)
             } else {

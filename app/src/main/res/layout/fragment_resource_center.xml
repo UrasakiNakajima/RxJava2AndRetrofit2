@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"
                 android:gravity="center"
-                android:text="@string/resource"
+                android:text="@string/resource_center"
                 android:textColor="@color/color_FFE066FF"
                 android:textSize="@dimen/sp_20" />
 
@@ -100,6 +100,11 @@
                 android:textSize="@dimen/sp_17" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_FF999999"/>
 
         <com.mobile.rxjava2andretrofit2.custom_view.MineLazyViewPager
             android:id="@+id/mine_view_pager"

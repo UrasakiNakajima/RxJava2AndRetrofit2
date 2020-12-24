@@ -11,11 +11,11 @@ import com.mobile.rxjava2andretrofit2.custom_view.LazyViewPager
 import com.mobile.rxjava2andretrofit2.kotlin.resources_show.fragment.ResourceFragment
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentPagerAdapter
-import kotlinx.android.synthetic.main.fragment_resource_show.*
+import kotlinx.android.synthetic.main.fragment_resource_center.*
 
-class ResourceShowFragment : BaseFragment() {
+class ResourceCenterFragment : BaseFragment() {
 
-    private val TAG: String = "ResourceShowFragment"
+    private val TAG: String = "ResourceCenterFragment"
     private var mainActivity: MainActivity? = null
 
     private var fragmentList: MutableList<Fragment> = mutableListOf()
@@ -28,7 +28,7 @@ class ResourceShowFragment : BaseFragment() {
     }
 
     override fun initLayoutId(): Int {
-        return R.layout.fragment_resource_show
+        return R.layout.fragment_resource_center
     }
 
     override fun initData() {

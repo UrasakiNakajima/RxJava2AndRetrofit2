@@ -177,10 +177,10 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     public void firstPageDataError(String error) {
         if (!mainActivity.isFinishing()) {
 //            showToast(error, true);
-            showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
-                    20, getResources().getColor(R.color.white),
-                    getResources().getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 95f),
-                    ScreenManager.dipTopx(activity, 48f), error);
+            showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
+                    18, getResources().getColor(R.color.white),
+                    getResources().getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
+                    ScreenManager.dipTopx(activity, 20f), error);
             if (isRefresh) {
                 refreshLayout.finishRefresh(false);
             } else {

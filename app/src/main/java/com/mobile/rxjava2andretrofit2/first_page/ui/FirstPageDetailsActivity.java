@@ -197,10 +197,10 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
     public void firstPageDetailsError(String error) {
         if (!this.isFinishing()) {
 //            showToast(error, true);
-            showCustomToast(ScreenManager.dipTopx(this, 51f), ScreenManager.dipTopx(this, 51f),
-                    20, getResources().getColor(R.color.white),
-                    getResources().getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(this, 95f),
-                    ScreenManager.dipTopx(this, 48f), error);
+            showCustomToast(ScreenManager.dipTopx(this, 20f), ScreenManager.dipTopx(this, 20f),
+                    16, getResources().getColor(R.color.white),
+                    getResources().getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(this, 40f),
+                    ScreenManager.dipTopx(this, 20f), error);
             if (isRefresh) {
                 refreshLayout.finishRefresh(false);
             } else {

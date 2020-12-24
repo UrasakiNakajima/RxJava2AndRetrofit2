@@ -15,6 +15,11 @@
         android:layout_weight="550"
         android:background="@color/color_FFFFFFFF" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/color_FF999999"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
@@ -33,12 +38,12 @@
             android:textSize="@dimen/sp_20" />
 
         <TextView
-            android:id="@+id/tev_resource"
+            android:id="@+id/tev_resource_center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/resource"
+            android:text="@string/resource_center"
             android:textColor="@color/color_FF999999"
             android:textSize="@dimen/sp_20" />
 
