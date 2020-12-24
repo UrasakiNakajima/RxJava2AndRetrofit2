@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.custom_view;
+package com.mobile.rxjava2andretrofit2.manager;
 
 
 import android.content.res.Resources;
@@ -8,11 +8,13 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mobile.rxjava2andretrofit2.custom_view.ColorUiInterface;
+
 
 /**
- * Created by chengli on 15/6/8.
+ * Created by chengli on 20/12/01.
  */
-public class ViewAttributeUtil {
+public class ViewAttributeManager {
 
     public static int getAttributeValue(AttributeSet attr, int paramInt) {
         int value = -1;

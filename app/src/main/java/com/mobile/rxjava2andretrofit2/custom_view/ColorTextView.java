@@ -8,6 +8,8 @@ import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
+import com.mobile.rxjava2andretrofit2.manager.ViewAttributeManager;
+
 public class ColorTextView extends AppCompatTextView implements ColorUiInterface {
 
 
@@ -22,18 +24,18 @@ public class ColorTextView extends AppCompatTextView implements ColorUiInterface
 
     public ColorTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-//        this.attr_textAppearance = ViewAttributeUtil.getTextApperanceAttribute(attrs);
-        this.attr_drawable = ViewAttributeUtil.getBackgroundAttibute(attrs);
-        this.attr_textColor = ViewAttributeUtil.getTextColorAttribute(attrs);
-        this.attr_textLinkColor = ViewAttributeUtil.getTextLinkColorAttribute(attrs);
+//        this.attr_textAppearance = ViewAttributeManager.getTextApperanceAttribute(attrs);
+        this.attr_drawable = ViewAttributeManager.getBackgroundAttibute(attrs);
+        this.attr_textColor = ViewAttributeManager.getTextColorAttribute(attrs);
+        this.attr_textLinkColor = ViewAttributeManager.getTextLinkColorAttribute(attrs);
     }
 
     public ColorTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-//        this.attr_textAppearance = ViewAttributeUtil.getTextApperanceAttribute(attrs);
-        this.attr_drawable = ViewAttributeUtil.getBackgroundAttibute(attrs);
-        this.attr_textColor = ViewAttributeUtil.getTextColorAttribute(attrs);
-        this.attr_textLinkColor = ViewAttributeUtil.getTextLinkColorAttribute(attrs);
+//        this.attr_textAppearance = ViewAttributeManager.getTextApperanceAttribute(attrs);
+        this.attr_drawable = ViewAttributeManager.getBackgroundAttibute(attrs);
+        this.attr_textColor = ViewAttributeManager.getTextColorAttribute(attrs);
+        this.attr_textLinkColor = ViewAttributeManager.getTextLinkColorAttribute(attrs);
     }
 
     @Override
@@ -45,16 +47,16 @@ public class ColorTextView extends AppCompatTextView implements ColorUiInterface
     public void setTheme(Resources.Theme themeId) {
         Log.d("COLOR", "id = " + getId());
         if (attr_drawable != -1) {
-            ViewAttributeUtil.applyBackgroundDrawable(this, themeId, attr_drawable);
+            ViewAttributeManager.applyBackgroundDrawable(this, themeId, attr_drawable);
         }
 //        if(attr_textAppearance != -1) {
-//            ViewAttributeUtil.applyTextAppearance(this, themeId, attr_textAppearance);
+//            ViewAttributeManager.applyTextAppearance(this, themeId, attr_textAppearance);
 //        }
         if (attr_textColor != -1) {
-            ViewAttributeUtil.applyTextColor(this, themeId, attr_textColor);
+            ViewAttributeManager.applyTextColor(this, themeId, attr_textColor);
         }
         if (attr_textLinkColor != -1) {
-            ViewAttributeUtil.applyTextLinkColor(this, themeId, attr_textLinkColor);
+            ViewAttributeManager.applyTextLinkColor(this, themeId, attr_textLinkColor);
         }
     }
 }
