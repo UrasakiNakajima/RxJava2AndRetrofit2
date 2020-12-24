@@ -185,4 +185,8 @@ class ResourceFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(), IR
         }
     }
 
+    override fun onDestroyView() {
+        resultList.clear()
+        super.onDestroyView()
+    }
 }

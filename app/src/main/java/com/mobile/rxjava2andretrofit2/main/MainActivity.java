@@ -60,11 +60,11 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
 
     @Override
     protected void initViews() {
-        ImmersionBar.with(MainActivity.this)
-                .keyboardEnable(false)
-                .statusBarDarkFont(false)
-                .statusBarColor(R.color.color_FFE066FF)
-                .navigationBarColor(R.color.color_FFE066FF).init();
+//        ImmersionBar.with(MainActivity.this)
+//                .keyboardEnable(false)
+//                .statusBarDarkFont(false)
+//                .statusBarColor(R.color.color_FFE066FF)
+//                .navigationBarColor(R.color.color_FFE066FF).init();
         addContentView(loadView, layoutParams);
 
         fragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
@@ -80,7 +80,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                 switch (position) {
                     case 0:
                         mineViewPager.setCurrentItem(0);
-                        tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF198CFF));
+                        tevFirstPage.setTextColor(getResources().getColor(R.color.color_FFE066FF));
                         tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
                         tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
 
@@ -106,7 +106,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                         mineViewPager.setCurrentItem(2);
                         tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
                         tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
-                        tevMine.setTextColor(getResources().getColor(R.color.color_FF198CFF));
+                        tevMine.setTextColor(getResources().getColor(R.color.color_FFE066FF));
 
                         ImmersionBar.with(MainActivity.this)
                                 .keyboardEnable(false)
@@ -128,7 +128,16 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
 
     @Override
     protected void initLoadData() {
+        mineViewPager.setCurrentItem(0);
+        tevFirstPage.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+        tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
+        tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
 
+        ImmersionBar.with(MainActivity.this)
+                .keyboardEnable(false)
+                .statusBarDarkFont(false)
+                .statusBarColor(R.color.color_FFE066FF)
+                .navigationBarColor(R.color.color_FFE066FF).init();
     }
 
     @Override

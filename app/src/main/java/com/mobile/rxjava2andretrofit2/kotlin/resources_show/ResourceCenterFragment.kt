@@ -39,7 +39,7 @@ class ResourceCenterFragment : BaseFragment() {
         fragmentList.add(ResourceFragment.getInstance("Android"))
         fragmentList.add(ResourceFragment.getInstance("iOS"))
         fragmentList.add(ResourceFragment.getInstance("休息视频"))
-        fragmentList.add(ResourceFragment.getInstance("App"))
+//        fragmentList.add(ResourceFragment.getInstance("App"))
     }
 
     override fun initViews() {
@@ -59,7 +59,7 @@ class ResourceCenterFragment : BaseFragment() {
                         tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
                         tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
                         tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
-                        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
+//                        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
                     }
                     1 -> {
                         mine_view_pager.setCurrentItem(position)
@@ -68,7 +68,7 @@ class ResourceCenterFragment : BaseFragment() {
                         tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
                         tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
                         tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
-                        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
+//                        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
                     }
                     2 -> {
                         mine_view_pager.setCurrentItem(position)
@@ -77,7 +77,7 @@ class ResourceCenterFragment : BaseFragment() {
                         tev_android.setTextColor(resources.getColor(R.color.color_FFE066FF))
                         tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
                         tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
-                        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
+//                        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
                     }
                     3 -> {
                         mine_view_pager.setCurrentItem(position)
@@ -86,7 +86,7 @@ class ResourceCenterFragment : BaseFragment() {
                         tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
                         tev_ios.setTextColor(resources.getColor(R.color.color_FFE066FF))
                         tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
-                        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
+//                        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
                     }
                     4 -> {
                         mine_view_pager.setCurrentItem(position)
@@ -95,17 +95,17 @@ class ResourceCenterFragment : BaseFragment() {
                         tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
                         tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
                         tev_video.setTextColor(resources.getColor(R.color.color_FFE066FF))
-                        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
+//                        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
                     }
-                    5 -> {
-                        mine_view_pager.setCurrentItem(position)
-                        tev_all.setTextColor(resources.getColor(R.color.color_FF999999))
-                        tev_beautiful_woman.setTextColor(resources.getColor(R.color.color_FF999999))
-                        tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
-                        tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
-                        tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
-                        tev_app.setTextColor(resources.getColor(R.color.color_FFE066FF))
-                    }
+//                    5 -> {
+//                        mine_view_pager.setCurrentItem(position)
+//                        tev_all.setTextColor(resources.getColor(R.color.color_FF999999))
+//                        tev_beautiful_woman.setTextColor(resources.getColor(R.color.color_FF999999))
+//                        tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
+//                        tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
+//                        tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
+//                        tev_app.setTextColor(resources.getColor(R.color.color_FFE066FF))
+//                    }
                 }
             }
 
@@ -114,7 +114,7 @@ class ResourceCenterFragment : BaseFragment() {
             }
         })
 
-        tev_all.setOnClickListener(object :View.OnClickListener{
+        tev_all.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 mine_view_pager.setCurrentItem(0)
                 tev_all.setTextColor(resources.getColor(R.color.color_FFE066FF))
@@ -122,10 +122,10 @@ class ResourceCenterFragment : BaseFragment() {
                 tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
                 tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
                 tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
-                tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
+//                tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
             }
         })
-        tev_beautiful_woman.setOnClickListener(object :View.OnClickListener{
+        tev_beautiful_woman.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 mine_view_pager.setCurrentItem(1)
                 tev_all.setTextColor(resources.getColor(R.color.color_FF999999))
@@ -133,10 +133,10 @@ class ResourceCenterFragment : BaseFragment() {
                 tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
                 tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
                 tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
-                tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
+//                tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
             }
         })
-        tev_android.setOnClickListener(object :View.OnClickListener{
+        tev_android.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 mine_view_pager.setCurrentItem(2)
                 tev_all.setTextColor(resources.getColor(R.color.color_FF999999))
@@ -144,10 +144,10 @@ class ResourceCenterFragment : BaseFragment() {
                 tev_android.setTextColor(resources.getColor(R.color.color_FFE066FF))
                 tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
                 tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
-                tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
+//                tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
             }
         })
-        tev_ios.setOnClickListener(object :View.OnClickListener{
+        tev_ios.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 mine_view_pager.setCurrentItem(3)
                 tev_all.setTextColor(resources.getColor(R.color.color_FF999999))
@@ -155,10 +155,10 @@ class ResourceCenterFragment : BaseFragment() {
                 tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
                 tev_ios.setTextColor(resources.getColor(R.color.color_FFE066FF))
                 tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
-                tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
+//                tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
             }
         })
-        tev_video.setOnClickListener(object :View.OnClickListener{
+        tev_video.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 mine_view_pager.setCurrentItem(4)
                 tev_all.setTextColor(resources.getColor(R.color.color_FF999999))
@@ -166,24 +166,34 @@ class ResourceCenterFragment : BaseFragment() {
                 tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
                 tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
                 tev_video.setTextColor(resources.getColor(R.color.color_FFE066FF))
-                tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
+//                tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
             }
         })
-        tev_app.setOnClickListener(object :View.OnClickListener{
-            override fun onClick(v: View?) {
-                mine_view_pager.setCurrentItem(5)
-                tev_all.setTextColor(resources.getColor(R.color.color_FF999999))
-                tev_beautiful_woman.setTextColor(resources.getColor(R.color.color_FF999999))
-                tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
-                tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
-                tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
-                tev_app.setTextColor(resources.getColor(R.color.color_FFE066FF))
-            }
-        })
+//        tev_app.setOnClickListener(object :View.OnClickListener{
+//            override fun onClick(v: View?) {
+//                mine_view_pager.setCurrentItem(5)
+//                tev_all.setTextColor(resources.getColor(R.color.color_FF999999))
+//                tev_beautiful_woman.setTextColor(resources.getColor(R.color.color_FF999999))
+//                tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
+//                tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
+//                tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
+//                tev_app.setTextColor(resources.getColor(R.color.color_FFE066FF))
+//            }
+//        })
     }
 
     override fun initLoadData() {
-        mine_view_pager.currentItem = 0
+        mine_view_pager.setCurrentItem(0)
+        tev_all.setTextColor(resources.getColor(R.color.color_FFE066FF))
+        tev_beautiful_woman.setTextColor(resources.getColor(R.color.color_FF999999))
+        tev_android.setTextColor(resources.getColor(R.color.color_FF999999))
+        tev_ios.setTextColor(resources.getColor(R.color.color_FF999999))
+        tev_video.setTextColor(resources.getColor(R.color.color_FF999999))
+//        tev_app.setTextColor(resources.getColor(R.color.color_FF999999))
     }
 
+    override fun onDestroyView() {
+        fragmentList.clear()
+        super.onDestroyView()
+    }
 }

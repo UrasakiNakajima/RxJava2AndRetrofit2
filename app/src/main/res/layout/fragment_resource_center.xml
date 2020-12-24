@@ -89,15 +89,15 @@
                 android:textColor="@color/color_FF999999"
                 android:textSize="@dimen/sp_17" />
 
-            <TextView
-                android:id="@+id/tev_app"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/app"
-                android:textColor="@color/color_FF999999"
-                android:textSize="@dimen/sp_17" />
+            <!--<TextView-->
+                <!--android:id="@+id/tev_app"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="center"-->
+                <!--android:text="@string/app"-->
+                <!--android:textColor="@color/color_FF999999"-->
+                <!--android:textSize="@dimen/sp_17" />-->
 
         </LinearLayout>
 
@@ -110,7 +110,7 @@
             android:id="@+id/mine_view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_FFFFFFFF" />
+            android:background="@color/white" />
 
     </LinearLayout>
 
