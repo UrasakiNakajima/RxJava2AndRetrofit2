@@ -3,9 +3,9 @@ package com.mobile.rxjava2andretrofit2.kotlin.resources_show.model.base
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 
-interface IResourcesModel {
+interface IResourceModel {
 
-    fun resourcesData(type: String,
+    fun resourceData(type: String,
                       pageSize: String,
                       currentPage: String): Observable<ResponseBody>
 

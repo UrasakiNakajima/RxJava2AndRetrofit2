@@ -3,10 +3,10 @@ package com.mobile.rxjava2andretrofit2.kotlin.resources_show.view
 import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean.Result
 
-interface IResourcesView : IBaseView {
+interface IResourceView : IBaseView {
 
-    fun resourcesDataSuccess(success: List<Result>)
+    fun resourceDataSuccess(success: List<Result>)
 
-    fun resourcesDataError(error: String)
+    fun resourceDataError(error: String)
 
 }

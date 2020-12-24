@@ -6,12 +6,12 @@ import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.*
 
-interface ResourcesRequest {
+interface ResourceRequest {
 
     @Headers("urlname:${ConstantData.TO_RESOURCES_FLAG}")
 //    @FormUrlEncoded
     @GET(Url.RESOURCES_URL + "{type}/{pageSize}/{currentPage}")
-    fun getResourcesData(
+    fun getResourceData(
             @Path("type") type: String,
             @Path("pageSize") pageSize: String,
             @Path("currentPage") currentPage: String): Observable<ResponseBody>

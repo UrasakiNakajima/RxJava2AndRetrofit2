@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources_show.resources
+package com.mobile.rxjava2andretrofit2.kotlin.resources_show.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,25 +12,25 @@ import com.mobile.rxjava2andretrofit2.base.BaseMvpFragment
 import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.adapter.ResourcesAdapter
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.adapter.ResourceAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean.Result
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.presenter.ResourcesPresenterImpl
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.view.IResourcesView
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.presenter.ResourcePresenterImpl
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.view.IResourceView
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import kotlinx.android.synthetic.main.fragment_resources.*
+import kotlinx.android.synthetic.main.fragment_resource.*
 
-class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), IResourcesView {
+class ResourceFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(), IResourceView {
 
-    private val TAG: String = "ResourcesFragment";
+    private val TAG: String = "ResourceFragment";
     private var mainActivity: MainActivity? = null
 
     private var resultList: MutableList<Result> = mutableListOf()
-    private var resourcesAdapter: ResourcesAdapter? = null
+    private var resourceAdapter: ResourceAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private var isRefresh: Boolean = true
     private var type: String = "all"
@@ -42,8 +42,8 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
     }
 
     companion object {
-        fun getInstance(type: String): ResourcesFragment {
-            val fragment = ResourcesFragment()
+        fun getInstance(type: String): ResourceFragment {
+            val fragment = ResourceFragment()
             val bundle = Bundle()
             bundle.putString("type", type)
             fragment.arguments = bundle
@@ -52,7 +52,7 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
     }
 
     override fun initLayoutId(): Int {
-        return R.layout.fragment_resources
+        return R.layout.fragment_resource
     }
 
     override fun initData() {
@@ -85,8 +85,8 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
         rcv_data.layoutManager = (linearLayoutManager)
         rcv_data.itemAnimator = DefaultItemAnimator()
 
-        resourcesAdapter = ResourcesAdapter(mainActivity!!)
-        resourcesAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
+        resourceAdapter = ResourceAdapter(mainActivity!!)
+        resourceAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
                 bodyParams.clear()
@@ -94,22 +94,22 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
                 startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
             }
         })
-        rcv_data.setAdapter(resourcesAdapter)
-        resourcesAdapter!!.clearData()
-        resourcesAdapter!!.addAllData(resultList)
+        rcv_data.setAdapter(resourceAdapter)
+        resourceAdapter!!.clearData()
+        resourceAdapter!!.addAllData(resultList)
 
         refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refresh_layout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
                 isRefresh = false
-                initResources(type, pageSize, currentPage.toString())
+                initResource(type, pageSize, currentPage.toString())
             }
 
             override fun onRefresh(refresh_layout: RefreshLayout) {
                 LogManager.i(TAG, "onRefresh")
                 isRefresh = true
                 currentPage = 1;
-                initResources(type, pageSize, currentPage.toString())
+                initResource(type, pageSize, currentPage.toString())
             }
         })
     }
@@ -118,8 +118,8 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
         refresh_layout.autoRefresh()
     }
 
-    override fun attachPresenter(): ResourcesPresenterImpl {
-        return ResourcesPresenterImpl(this)
+    override fun attachPresenter(): ResourcePresenterImpl {
+        return ResourcePresenterImpl(this)
     }
 
     override fun showLoading() {
@@ -136,25 +136,25 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
         }
     }
 
-    override fun resourcesDataSuccess(success: List<Result>) {
+    override fun resourceDataSuccess(success: List<Result>) {
         if (!mainActivity!!.isFinishing()) {
             if (isRefresh) {
                 resultList.clear()
                 resultList.addAll(success)
-                resourcesAdapter!!.clearData();
-                resourcesAdapter!!.addAllData(resultList)
+                resourceAdapter!!.clearData();
+                resourceAdapter!!.addAllData(resultList)
                 refresh_layout.finishRefresh()
             } else {
                 resultList.addAll(success)
-                resourcesAdapter!!.clearData();
-                resourcesAdapter!!.addAllData(resultList)
+                resourceAdapter!!.clearData();
+                resourceAdapter!!.addAllData(resultList)
                 refresh_layout.finishLoadMore()
             }
             currentPage++;
         }
     }
 
-    override fun resourcesDataError(error: String) {
+    override fun resourceDataError(error: String) {
         if (!mainActivity!!.isFinishing()) {
             showCustomToast(ScreenManager.dipTopx(activity, 51f), ScreenManager.dipTopx(activity, 51f),
                     20, resources.getColor(R.color.white),
@@ -169,12 +169,12 @@ class ResourcesFragment : BaseMvpFragment<IBaseView, ResourcesPresenterImpl>(), 
         }
     }
 
-    private fun initResources(type: String, pageSize: String, currentPage: String) {
+    private fun initResource(type: String, pageSize: String, currentPage: String) {
         if (RetrofitManager.isNetworkAvailable(mainActivity)) {
 //            bodyParams.clear()
 //            bodyParams.put("", "");
             //        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
-            presenter.resourcesData(type, pageSize, currentPage)
+            presenter.resourceData(type, pageSize, currentPage)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {

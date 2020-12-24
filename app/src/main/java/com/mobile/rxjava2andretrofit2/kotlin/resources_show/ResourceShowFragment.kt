@@ -8,14 +8,14 @@ import androidx.fragment.app.Fragment
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseFragment
 import com.mobile.rxjava2andretrofit2.custom_view.LazyViewPager
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.resources.ResourcesFragment
+import com.mobile.rxjava2andretrofit2.kotlin.resources_show.fragment.ResourceFragment
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentPagerAdapter
-import kotlinx.android.synthetic.main.fragment_resources_show.*
+import kotlinx.android.synthetic.main.fragment_resource_show.*
 
-class ResourcesShowFragment : BaseFragment() {
+class ResourceShowFragment : BaseFragment() {
 
-    private val TAG: String = "ResourcesShowFragment"
+    private val TAG: String = "ResourceShowFragment"
     private var mainActivity: MainActivity? = null
 
     private var fragmentList: MutableList<Fragment> = mutableListOf()
@@ -28,18 +28,18 @@ class ResourcesShowFragment : BaseFragment() {
     }
 
     override fun initLayoutId(): Int {
-        return R.layout.fragment_resources_show
+        return R.layout.fragment_resource_show
     }
 
     override fun initData() {
         mainActivity = activity as MainActivity
 
-        fragmentList.add(ResourcesFragment.getInstance("all"))
-        fragmentList.add(ResourcesFragment.getInstance("福利"))
-        fragmentList.add(ResourcesFragment.getInstance("Android"))
-        fragmentList.add(ResourcesFragment.getInstance("iOS"))
-        fragmentList.add(ResourcesFragment.getInstance("休息视频"))
-        fragmentList.add(ResourcesFragment.getInstance("App"))
+        fragmentList.add(ResourceFragment.getInstance("all"))
+        fragmentList.add(ResourceFragment.getInstance("福利"))
+        fragmentList.add(ResourceFragment.getInstance("Android"))
+        fragmentList.add(ResourceFragment.getInstance("iOS"))
+        fragmentList.add(ResourceFragment.getInstance("休息视频"))
+        fragmentList.add(ResourceFragment.getInstance("App"))
     }
 
     override fun initViews() {

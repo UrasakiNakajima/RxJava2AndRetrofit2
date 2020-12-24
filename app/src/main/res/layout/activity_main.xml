@@ -33,12 +33,12 @@
             android:textSize="@dimen/sp_20" />
 
         <TextView
-            android:id="@+id/tev_resources"
+            android:id="@+id/tev_resource"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/resources"
+            android:text="@string/resource"
             android:textColor="@color/color_FF999999"
             android:textSize="@dimen/sp_20" />
 

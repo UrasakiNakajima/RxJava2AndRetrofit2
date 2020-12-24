@@ -21,9 +21,9 @@ import com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean.Result
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.mobile.rxjava2andretrofit2.manager.ThemeManager
 
-class ResourcesAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val TAG = "ResourcesAdapter"
+    private val TAG = "ResourceAdapter"
     private var list: MutableList<Result> = mutableListOf()
 
     fun clearData() {
@@ -51,7 +51,7 @@ class ResourcesAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView
             } else {
                 holder.imvResource.setVisibility(View.GONE)
                 holder.tevResource.setVisibility(View.VISIBLE)
-                holder.tevResource.setLinkTextColor(ThemeManager.getThemeColor(context, R.attr.colorPrimary))
+                holder.tevResource.setLinkTextColor(context.resources.getColor(R.color.color_4876FF))
                 holder.tevResource.setText(Html.fromHtml("<a href=\""
                         + list.get(position).url + "\">"
                         + list.get(position).desc + "</a>"

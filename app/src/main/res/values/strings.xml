@@ -3,7 +3,7 @@
 
 
     <string name="first_page">首页</string>
-    <string name="resources">资源</string>
+    <string name="resource">资源</string>
     <string name="mine">我的</string>
     <string name="data_in_wrong_format">数据格式错误</string>
     <string name="request_was_aborted">请求失败</string>
@@ -30,7 +30,7 @@
     <string name="loading_failed">加载失败</string>
     <string name="no_data_available">暂无数据</string>
 
-    <string name="all_resources">全部资源</string>
+    <string name="all_resource">全部资源</string>
     <string name="all">全部</string>
     <string name="beautiful_woman">福利</string>
     <string name="android">Android</string>
