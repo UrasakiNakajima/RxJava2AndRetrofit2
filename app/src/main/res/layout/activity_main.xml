@@ -18,12 +18,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
-        android:background="@color/color_FF999999"/>
+        android:background="@color/color_FF999999" />
 
     <LinearLayout
+        android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
-        android:background="@color/color_FFFFFFFF"
+        android:background="@color/white"
         android:orientation="horizontal"
         tools:ignore="UselessLeaf">
 

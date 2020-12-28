@@ -2,6 +2,7 @@ package com.mobile.rxjava2andretrofit2.main;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,8 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     private static final String TAG = "MainActivity";
     @BindView(R.id.mine_view_pager)
     MineLazyViewPager mineViewPager;
+    @BindView(R.id.layout_bottom)
+    LinearLayout layoutBottom;
     @BindView(R.id.tev_first_page)
     TextView tevFirstPage;
     @BindView(R.id.tev_resource_center)
@@ -89,6 +92,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                                 .statusBarDarkFont(false)
                                 .statusBarColor(R.color.color_FFE066FF)
                                 .navigationBarColor(R.color.color_FFE066FF).init();
+                        layoutBottom.setBackgroundColor(getResources().getColor(R.color.white));
                         break;
                     case 1:
                         mineViewPager.setCurrentItem(1);
@@ -101,6 +105,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                                 .statusBarDarkFont(false)
                                 .statusBarColor(R.color.color_FF198CFF)
                                 .navigationBarColor(R.color.color_FF198CFF).init();
+                        layoutBottom.setBackgroundColor(getResources().getColor(R.color.white));
                         break;
                     case 2:
                         mineViewPager.setCurrentItem(2);
@@ -113,6 +118,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                                 .statusBarDarkFont(false)
                                 .statusBarColor(R.color.color_FFE066FF)
                                 .navigationBarColor(R.color.color_FFE066FF).init();
+                        layoutBottom.setBackgroundColor(getResources().getColor(R.color.black));
                         break;
                     default:
                         break;
