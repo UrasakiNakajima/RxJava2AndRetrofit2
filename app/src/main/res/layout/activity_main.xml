@@ -36,7 +36,27 @@
             android:gravity="center"
             android:text="@string/first_page"
             android:textColor="@color/color_FFE066FF"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="@dimen/sp_17" />
+
+        <TextView
+            android:id="@+id/tev_project"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/project"
+            android:textColor="@color/color_FF999999"
+            android:textSize="@dimen/sp_17" />
+
+        <TextView
+            android:id="@+id/tev_square"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/square"
+            android:textColor="@color/color_FF999999"
+            android:textSize="@dimen/sp_17" />
 
         <TextView
             android:id="@+id/tev_resource_center"
@@ -44,9 +64,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/resource_center"
+            android:text="@string/resource"
             android:textColor="@color/color_FF999999"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="@dimen/sp_17" />
 
         <TextView
             android:id="@+id/tev_mine"
@@ -56,7 +76,7 @@
             android:gravity="center"
             android:text="@string/mine"
             android:textColor="@color/color_FF999999"
-            android:textSize="@dimen/sp_20" />
+            android:textSize="@dimen/sp_17" />
     </LinearLayout>
 
 </LinearLayout>

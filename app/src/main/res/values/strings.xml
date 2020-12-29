@@ -3,6 +3,9 @@
 
 
     <string name="first_page">首页</string>
+    <string name="project">项目</string>
+    <string name="square">广场</string>
+    <string name="resource">资源</string>
     <string name="resource_center">资源中心</string>
     <string name="mine">我的</string>
     <string name="data_in_wrong_format">数据格式错误</string>

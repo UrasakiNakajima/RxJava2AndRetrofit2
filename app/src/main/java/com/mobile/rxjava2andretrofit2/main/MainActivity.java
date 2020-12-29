@@ -15,7 +15,9 @@ import com.mobile.rxjava2andretrofit2.custom_view.LazyViewPager;
 import com.mobile.rxjava2andretrofit2.custom_view.MineLazyViewPager;
 import com.mobile.rxjava2andretrofit2.first_page.FirstPageFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.mine.MineFragment;
+import com.mobile.rxjava2andretrofit2.kotlin.project.ProjectFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.resources_show.ResourceCenterFragment;
+import com.mobile.rxjava2andretrofit2.kotlin.square.SquareFragment;
 import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentPagerAdapter;
 import com.mobile.rxjava2andretrofit2.main.presenter.MainPresenterImpl;
 import com.mobile.rxjava2andretrofit2.main.view.IMainView;
@@ -36,6 +38,10 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     LinearLayout layoutBottom;
     @BindView(R.id.tev_first_page)
     TextView tevFirstPage;
+    @BindView(R.id.tev_project)
+    TextView tevProject;
+    @BindView(R.id.tev_square)
+    TextView tevSquare;
     @BindView(R.id.tev_resource_center)
     TextView tevResourceCenter;
     @BindView(R.id.tev_mine)
@@ -57,17 +63,14 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     @Override
     protected void initData() {
         fragmentList.add(new FirstPageFragment());
+        fragmentList.add(new ProjectFragment());
+        fragmentList.add(new SquareFragment());
         fragmentList.add(new ResourceCenterFragment());
         fragmentList.add(new MineFragment());
     }
 
     @Override
     protected void initViews() {
-//        ImmersionBar.with(MainActivity.this)
-//                .keyboardEnable(false)
-//                .statusBarDarkFont(false)
-//                .statusBarColor(R.color.color_FFE066FF)
-//                .navigationBarColor(R.color.color_FFE066FF).init();
         addContentView(loadView, layoutParams);
 
         fragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
@@ -84,6 +87,8 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                     case 0:
                         mineViewPager.setCurrentItem(0);
                         tevFirstPage.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                        tevProject.setTextColor(getResources().getColor(R.color.color_FF999999));
+                        tevSquare.setTextColor(getResources().getColor(R.color.color_FF999999));
                         tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
                         tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
 
@@ -97,7 +102,9 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                     case 1:
                         mineViewPager.setCurrentItem(1);
                         tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
-                        tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                        tevProject.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                        tevSquare.setTextColor(getResources().getColor(R.color.color_FF999999));
+                        tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
                         tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
 
                         ImmersionBar.with(MainActivity.this)
@@ -110,6 +117,36 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
                     case 2:
                         mineViewPager.setCurrentItem(2);
                         tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
+                        tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                        tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
+
+                        ImmersionBar.with(MainActivity.this)
+                                .keyboardEnable(false)
+                                .statusBarDarkFont(false)
+                                .statusBarColor(R.color.color_FF198CFF)
+                                .navigationBarColor(R.color.color_FF198CFF).init();
+                        layoutBottom.setBackgroundColor(getResources().getColor(R.color.white));
+                        break;
+                    case 3:
+                        mineViewPager.setCurrentItem(3);
+                        tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
+                        tevProject.setTextColor(getResources().getColor(R.color.color_FF999999));
+                        tevSquare.setTextColor(getResources().getColor(R.color.color_FF999999));
+                        tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                        tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
+
+                        ImmersionBar.with(MainActivity.this)
+                                .keyboardEnable(false)
+                                .statusBarDarkFont(false)
+                                .statusBarColor(R.color.color_FF198CFF)
+                                .navigationBarColor(R.color.color_FF198CFF).init();
+                        layoutBottom.setBackgroundColor(getResources().getColor(R.color.white));
+                        break;
+                    case 4:
+                        mineViewPager.setCurrentItem(4);
+                        tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
+                        tevProject.setTextColor(getResources().getColor(R.color.color_FF999999));
+                        tevSquare.setTextColor(getResources().getColor(R.color.color_FF999999));
                         tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
                         tevMine.setTextColor(getResources().getColor(R.color.color_FFE066FF));
 
@@ -136,6 +173,8 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     protected void initLoadData() {
         mineViewPager.setCurrentItem(0);
         tevFirstPage.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+        tevProject.setTextColor(getResources().getColor(R.color.color_FF999999));
+        tevSquare.setTextColor(getResources().getColor(R.color.color_FF999999));
         tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
         tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
 
@@ -177,24 +216,47 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
         showToast(error, true);
     }
 
-    @OnClick({R.id.tev_first_page, R.id.tev_resource_center, R.id.tev_mine})
+    @OnClick({R.id.tev_first_page, R.id.tev_project, R.id.tev_square,
+            R.id.tev_resource_center, R.id.tev_mine})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tev_first_page:
                 mineViewPager.setCurrentItem(0);
                 tevFirstPage.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                tevProject.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevSquare.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
+                break;
+            case R.id.tev_project:
+                mineViewPager.setCurrentItem(1);
+                tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevProject.setTextColor(getResources().getColor(R.color.color_FFE066FF));
+                tevSquare.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
+                break;
+            case R.id.tev_square:
+                mineViewPager.setCurrentItem(2);
+                tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevProject.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevSquare.setTextColor(getResources().getColor(R.color.color_FFE066FF));
                 tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
                 tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
                 break;
             case R.id.tev_resource_center:
-                mineViewPager.setCurrentItem(1);
+                mineViewPager.setCurrentItem(3);
                 tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevProject.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevSquare.setTextColor(getResources().getColor(R.color.color_FF999999));
                 tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FFE066FF));
                 tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
                 break;
             case R.id.tev_mine:
-                mineViewPager.setCurrentItem(2);
+                mineViewPager.setCurrentItem(4);
                 tevFirstPage.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevProject.setTextColor(getResources().getColor(R.color.color_FF999999));
+                tevSquare.setTextColor(getResources().getColor(R.color.color_FF999999));
                 tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
                 tevMine.setTextColor(getResources().getColor(R.color.color_FFE066FF));
                 break;
