@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources_show.model.base
+package com.mobile.rxjava2andretrofit2.kotlin.resource.model.base
 
 import io.reactivex.Observable
 import okhttp3.ResponseBody

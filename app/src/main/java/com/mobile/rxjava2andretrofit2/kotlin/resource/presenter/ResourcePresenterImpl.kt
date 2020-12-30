@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources_show.presenter
+package com.mobile.rxjava2andretrofit2.kotlin.resource.presenter
 
 import android.text.TextUtils
 import com.mobile.rxjava2andretrofit2.R
@@ -8,16 +8,16 @@ import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.model.ResourceModelImpl
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.presenter.base.IResourcePresenter
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean.ResourcesBean
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.view.IResourceView
+import com.mobile.rxjava2andretrofit2.kotlin.resource.model.ResourceModelImpl
+import com.mobile.rxjava2andretrofit2.kotlin.resource.presenter.base.IResourcePresenter
+import com.mobile.rxjava2andretrofit2.kotlin.resource.bean.ResourcesBean
+import com.mobile.rxjava2andretrofit2.kotlin.resource.view.IResourceChildView
 import com.mobile.rxjava2andretrofit2.manager.GsonManager
 
 class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IResourcePresenter {
 
     private val TAG: String = "ResourcePresenterImpl"
-    //    private IResourceView feedbackView;//P需要与V 交互，所以需要持有V的引用
+    //    private IResourceChildView feedbackView;//P需要与V 交互，所以需要持有V的引用
     private var model: ResourceModelImpl = ResourceModelImpl();
 
     init {
@@ -27,7 +27,7 @@ class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), I
     override fun resourceData(type: String, pageSize: String, currentPage: String) {
         val baseView = obtainView()
         if (baseView != null) {
-            if (baseView is IResourceView) {
+            if (baseView is IResourceChildView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
                         .responseString(model.resourceData(type, pageSize, currentPage), object : OnCommonSingleParamCallback<String> {

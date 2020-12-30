@@ -1,8 +1,8 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources_show.model
+package com.mobile.rxjava2andretrofit2.kotlin.resource.model
 
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.model.base.IResourceModel
+import com.mobile.rxjava2andretrofit2.kotlin.resource.model.base.IResourceModel
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.request.ResourceRequest
+import com.mobile.rxjava2andretrofit2.kotlin.resource.request.ResourceRequest
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 

@@ -14,7 +14,7 @@ class ProjectFragment() : BaseFragment() {
     }
 
     override fun initLayoutId(): Int {
-        return R.layout.fragment_resource_center
+        return R.layout.fragment_resource
     }
 
     override fun initData() {

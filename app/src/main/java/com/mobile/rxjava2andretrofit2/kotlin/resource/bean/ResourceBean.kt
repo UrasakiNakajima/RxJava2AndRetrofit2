@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean
+package com.mobile.rxjava2andretrofit2.kotlin.resource.bean
 
 data class ResourcesBean(
         val error: Boolean,

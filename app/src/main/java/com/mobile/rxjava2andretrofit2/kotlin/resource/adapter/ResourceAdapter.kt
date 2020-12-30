@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources_show.adapter
+package com.mobile.rxjava2andretrofit2.kotlin.resource.adapter
 
 import android.content.Context
 import android.text.Html
@@ -17,9 +17,8 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.custom_view.ColorTextView
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean.Result
+import com.mobile.rxjava2andretrofit2.kotlin.resource.bean.Result
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
-import com.mobile.rxjava2andretrofit2.manager.ThemeManager
 
 class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

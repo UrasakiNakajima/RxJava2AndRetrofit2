@@ -20,7 +20,7 @@ import com.mobile.rxjava2andretrofit2.manager.GsonManager
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
     private val TAG: String = "MinePresenterImpl"
-    //    private IResourceView feedbackView;//P需要与V 交互，所以需要持有V的引用
+    //    private IResourceChildView feedbackView;//P需要与V 交互，所以需要持有V的引用
     private var model: MineModelImpl = MineModelImpl();
 
     init {

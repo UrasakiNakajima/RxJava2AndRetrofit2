@@ -30,7 +30,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
         implements IFirstPagePresenter {
 
     private static final String TAG = "FirstPagePresenterImpl";
-    //    private IResourceView firstPageView;//P需要与V 交互，所以需要持有V的引用
+    //    private IResourceChildView firstPageView;//P需要与V 交互，所以需要持有V的引用
     private FirstPageModelImpl model;
 
     public FirstPagePresenterImpl(IBaseView baseView) {

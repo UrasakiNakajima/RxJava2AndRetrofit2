@@ -41,8 +41,14 @@ public class BaseUrlManagerInterceptor implements Interceptor {
                     case ConstantData.TO_FIRST_PAGR_FLAG:
                         baseURL = HttpUrl.parse(ConstantData.TO_FIRST_PAGR_URL);
                         break;
-                    case ConstantData.TO_RESOURCES_FLAG:
-                        baseURL = HttpUrl.parse(ConstantData.TO_RESOURCES_URL);
+                    case ConstantData.TO_PROJECT_FLAG:
+                        baseURL = HttpUrl.parse(ConstantData.TO_PROJECT_URL);
+                        break;
+//                    case ConstantData.TO_PROJECT_FLAG:
+//                        baseURL = HttpUrl.parse(ConstantData.TO_PROJECT_URL);
+//                        break;
+                    case ConstantData.TO_RESOURCE_FLAG:
+                        baseURL = HttpUrl.parse(ConstantData.TO_RESOURCE_URL);
                         break;
                     case ConstantData.TO_MINE_FLAG:
                         baseURL = HttpUrl.parse(ConstantData.TO_MINE_URL);

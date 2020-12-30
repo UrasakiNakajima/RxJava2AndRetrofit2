@@ -16,7 +16,8 @@ import com.mobile.rxjava2andretrofit2.custom_view.MineLazyViewPager;
 import com.mobile.rxjava2andretrofit2.first_page.FirstPageFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.mine.MineFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.project.ProjectFragment;
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.ResourceCenterFragment;
+import com.mobile.rxjava2andretrofit2.kotlin.project.fragment.ProjectChildFragment;
+import com.mobile.rxjava2andretrofit2.kotlin.resource.ResourceFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.square.SquareFragment;
 import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentPagerAdapter;
 import com.mobile.rxjava2andretrofit2.main.presenter.MainPresenterImpl;
@@ -63,9 +64,9 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     @Override
     protected void initData() {
         fragmentList.add(new FirstPageFragment());
-        fragmentList.add(new ProjectFragment());
+        fragmentList.add(new ProjectChildFragment());
         fragmentList.add(new SquareFragment());
-        fragmentList.add(new ResourceCenterFragment());
+        fragmentList.add(new ResourceFragment());
         fragmentList.add(new MineFragment());
     }
 

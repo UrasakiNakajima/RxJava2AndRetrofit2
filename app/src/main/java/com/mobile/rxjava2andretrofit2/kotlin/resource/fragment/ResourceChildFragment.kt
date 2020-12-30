@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources_show.fragment
+package com.mobile.rxjava2andretrofit2.kotlin.resource.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,21 +12,21 @@ import com.mobile.rxjava2andretrofit2.base.BaseMvpFragment
 import com.mobile.rxjava2andretrofit2.base.IBaseView
 import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.adapter.ResourceAdapter
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.bean.Result
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.presenter.ResourcePresenterImpl
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.view.IResourceView
+import com.mobile.rxjava2andretrofit2.kotlin.resource.adapter.ResourceAdapter
+import com.mobile.rxjava2andretrofit2.kotlin.resource.bean.Result
+import com.mobile.rxjava2andretrofit2.kotlin.resource.presenter.ResourcePresenterImpl
+import com.mobile.rxjava2andretrofit2.kotlin.resource.view.IResourceChildView
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import kotlinx.android.synthetic.main.fragment_resource.*
+import kotlinx.android.synthetic.main.fragment_resource_child.*
 
-class ResourceFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(), IResourceView {
+class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(), IResourceChildView {
 
-    private val TAG: String = "ResourceFragment";
+    private val TAG: String = "ResourceChildFragment";
     private var mainActivity: MainActivity? = null
 
     private var resultList: MutableList<Result> = mutableListOf()
@@ -42,8 +42,8 @@ class ResourceFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(), IR
     }
 
     companion object {
-        fun getInstance(type: String): ResourceFragment {
-            val fragment = ResourceFragment()
+        fun getInstance(type: String): ResourceChildFragment {
+            val fragment = ResourceChildFragment()
             val bundle = Bundle()
             bundle.putString("type", type)
             fragment.arguments = bundle
@@ -52,7 +52,7 @@ class ResourceFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(), IR
     }
 
     override fun initLayoutId(): Int {
-        return R.layout.fragment_resource
+        return R.layout.fragment_resource_child
     }
 
     override fun initData() {

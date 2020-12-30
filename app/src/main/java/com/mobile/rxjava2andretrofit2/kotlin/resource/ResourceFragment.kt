@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.resources_show
+package com.mobile.rxjava2andretrofit2.kotlin.resource
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,14 @@ import androidx.fragment.app.Fragment
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseFragment
 import com.mobile.rxjava2andretrofit2.custom_view.LazyViewPager
-import com.mobile.rxjava2andretrofit2.kotlin.resources_show.fragment.ResourceFragment
+import com.mobile.rxjava2andretrofit2.kotlin.resource.fragment.ResourceChildFragment
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentPagerAdapter
-import kotlinx.android.synthetic.main.fragment_resource_center.*
+import kotlinx.android.synthetic.main.fragment_resource.*
 
-class ResourceCenterFragment : BaseFragment() {
+class ResourceFragment : BaseFragment() {
 
-    private val TAG: String = "ResourceCenterFragment"
+    private val TAG: String = "ResourceFragment"
     private var mainActivity: MainActivity? = null
 
     private var fragmentList: MutableList<Fragment> = mutableListOf()
@@ -28,18 +28,18 @@ class ResourceCenterFragment : BaseFragment() {
     }
 
     override fun initLayoutId(): Int {
-        return R.layout.fragment_resource_center
+        return R.layout.fragment_resource
     }
 
     override fun initData() {
         mainActivity = activity as MainActivity
 
-        fragmentList.add(ResourceFragment.getInstance("all"))
-        fragmentList.add(ResourceFragment.getInstance("福利"))
-        fragmentList.add(ResourceFragment.getInstance("Android"))
-        fragmentList.add(ResourceFragment.getInstance("iOS"))
-        fragmentList.add(ResourceFragment.getInstance("休息视频"))
-//        fragmentList.add(ResourceFragment.getInstance("App"))
+        fragmentList.add(ResourceChildFragment.getInstance("all"))
+        fragmentList.add(ResourceChildFragment.getInstance("福利"))
+        fragmentList.add(ResourceChildFragment.getInstance("Android"))
+        fragmentList.add(ResourceChildFragment.getInstance("iOS"))
+        fragmentList.add(ResourceChildFragment.getInstance("休息视频"))
+//        fragmentList.add(ResourceChildFragment.getInstance("App"))
     }
 
     override fun initViews() {
