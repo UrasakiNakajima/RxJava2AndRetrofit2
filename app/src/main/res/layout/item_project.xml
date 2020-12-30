@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -40,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/item_imgselector"
-                    android:text="置顶"
+                    android:text="@{datax.author}"
                     android:textColor="@color/colorBlack666"
                     android:textSize="@dimen/sp_14" />
 
@@ -52,7 +53,7 @@
                     android:background="@drawable/title_lable_shap"
                     android:paddingLeft="3dp"
                     android:paddingRight="3dp"
-                    android:text="置顶"
+                    android:text="@{String.valueOf(datax.type)}"
                     android:textColor="@android:color/holo_red_light"
                     android:textSize="@dimen/sp_10" />
 
@@ -76,7 +77,7 @@
                     android:background="@drawable/title_lable_shap1"
                     android:paddingLeft="3dp"
                     android:paddingRight="3dp"
-                    android:text="置顶"
+                    android:text="@{String.valueOf(datax.type)}"
                     android:textColor="@android:color/holo_green_dark"
                     android:textSize="@dimen/sp_10" />
 
@@ -90,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="1小时前"
+                    android:text="@{datax.niceDate}"
                     android:textColor="@color/colorBlack666"
                     android:textSize="@dimen/sp_14"
                     tools:text="1小时前" />
@@ -110,8 +111,8 @@
                     android:layout_marginTop="12dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_project_img"
-                    tools:ignore="ContentDescription"
-                    tools:srcCompat="@drawable/default_project_img" />
+                    bind:imageUrl="@{datax.envelopePic}"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/item_project_title"
@@ -122,7 +123,7 @@
                     android:layout_toEndOf="@+id/item_project_imageview"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="1小时前"
+                    android:text="@{datax.title}"
                     android:textColor="@color/colorBlack333"
                     android:textSize="@dimen/sp_14"
                     android:textStyle="bold"
@@ -143,7 +144,7 @@
                     android:includeFontPadding="true"
                     android:lineSpacingMultiplier="1.4"
                     android:maxLines="3"
-                    android:text="1小时前"
+                    android:text="@{datax.desc}"
                     android:textColor="@color/colorBlack666"
                     android:textSize="@dimen/sp_14"
                     tools:text="一个Jetpack结合MVVM的快速开发框架，基于MVVM模式集成谷歌官方推荐的JetPack组件库：LiveData、ViewModel、Lifecycle组件 使用Kotlin语言，添加大量拓展函数，简化代码 加入Retrofit网络请求,协程，帮你简化各种操作，让你快速开发项目" />
@@ -162,7 +163,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp"
-                    android:text="1小时前"
+                    android:text="@{String.valueOf(datax.type)}"
                     android:textColor="@color/colorBlack666"
                     android:textSize="@dimen/sp_14"
                     tools:ignore="RelativeOverlap"

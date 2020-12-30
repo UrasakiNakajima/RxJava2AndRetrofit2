@@ -28,6 +28,7 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
     override fun initData() {
         mainActivity = activity as MainActivity;
         projectViewModel = ProjectViewModelImpl(this)
+//        mDatabind.setVariable()
     }
 
     override fun initViews() {
