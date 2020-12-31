@@ -22,7 +22,7 @@ class ProjectViewModelImpl(baseView: IBaseView) : BaseViewModel() {
         attachView(baseView)
     }
 
-    fun getProjectData(currentPage: String) {
+    fun projectData(currentPage: String) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IProjectChildView) {
@@ -32,7 +32,7 @@ class ProjectViewModelImpl(baseView: IBaseView) : BaseViewModel() {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
-                                    val response = GsonManager.getInstance().convert(success, ProjectBean::class.java)
+                                    val response: ProjectBean = GsonManager.getInstance().convert(success, ProjectBean::class.java)
                                     if (response.data.datas != null && response.data.datas.size > 0) {
                                         LogManager.i(TAG, "response*****${response.toString()}")
 

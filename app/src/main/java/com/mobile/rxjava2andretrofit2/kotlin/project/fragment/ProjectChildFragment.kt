@@ -62,7 +62,7 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
     }
 
     private fun inintProject(currentPage: String) {
-        projectViewModel!!.getProjectData(currentPage)
+        projectViewModel!!.projectData(currentPage)
     }
 
     override fun showLoading() {
