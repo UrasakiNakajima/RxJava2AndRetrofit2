@@ -18,13 +18,13 @@ import kotlinx.android.synthetic.main.fragment_project_child.*
 
 class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectChildBinding>(), IProjectChildView {
 
-    private val TAG: String = "ProjectChildFragment";
-    private var projectViewModel: ProjectViewModelImpl? = null;
-    private var projectAdapter: ProjectAdapter? = null;
+    private val TAG: String = "ProjectChildFragment"
+    private var projectViewModel: ProjectViewModelImpl? = null
+    private var projectAdapter: ProjectAdapter? = null
     private var mainActivity: MainActivity? = null
     private var dataList: MutableList<DataX> = mutableListOf()
     private var isRefresh: Boolean = true
-    private var currentPage: Int = 1;
+    private var currentPage: Int = 1
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_project_child

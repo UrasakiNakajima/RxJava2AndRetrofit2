@@ -16,7 +16,7 @@ import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 class ProjectViewModelImpl(baseView: IBaseView) : BaseViewModel() {
 
     private val TAG: String = "ProjectViewModelImpl"
-    private var model: ProjectModelImpl = ProjectModelImpl();
+    private var model: ProjectModelImpl = ProjectModelImpl()
 
     init {
         attachView(baseView)
