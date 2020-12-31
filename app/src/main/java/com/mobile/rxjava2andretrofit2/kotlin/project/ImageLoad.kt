@@ -11,7 +11,7 @@ class ImageLoad {
         @JvmStatic
         @BindingAdapter("bind:imageUrl")
         fun bindImage(imageView: ImageView, url: String) {
-            Glide.with(imageView.getContext()).load(url).into(imageView)
+            Glide.with(imageView.context).load(url).into(imageView)
         }
     }
 }
