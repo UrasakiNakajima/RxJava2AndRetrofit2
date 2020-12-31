@@ -28,8 +28,6 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//        val view = LayoutInflater.from(context).inflate(R.layout.item_project, parent, false)
-//        return ContentHolder(view)
         val binding = DataBindingUtil.inflate<ItemProjectBinding>(
                 LayoutInflater.from(this.context),
                 R.layout.item_project, parent,

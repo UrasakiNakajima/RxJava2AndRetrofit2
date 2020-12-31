@@ -10,16 +10,21 @@ import com.mobile.rxjava2andretrofit2.kotlin.project.bean.DataX
 import com.mobile.rxjava2andretrofit2.kotlin.project.view.IProjectChildView
 import com.mobile.rxjava2andretrofit2.kotlin.project.view_model.ProjectViewModelImpl
 import com.mobile.rxjava2andretrofit2.main.MainActivity
+import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_project_child.*
 
 class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectChildBinding>(), IProjectChildView {
 
-    private var currentPage: Int = 1;
+    private val TAG: String = "ProjectChildFragment";
     private var projectViewModel: ProjectViewModelImpl? = null;
     private var projectAdapter: ProjectAdapter? = null;
     private var mainActivity: MainActivity? = null
-    private var list: MutableList<DataX> = mutableListOf()
+    private var dataList: MutableList<DataX> = mutableListOf()
+    private var isRefresh: Boolean = true
+    private var currentPage: Int = 1;
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_project_child
@@ -33,12 +38,31 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
 
     override fun initViews() {
         projectAdapter = ProjectAdapter(mainActivity!!);
-        mine_recycler_view.itemAnimator = DefaultItemAnimator()
-        mine_recycler_view.adapter = projectAdapter
+        rcv_data.itemAnimator = DefaultItemAnimator()
+        rcv_data.adapter = projectAdapter
+
+        refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refresh_layout: RefreshLayout) {
+                LogManager.i(TAG, "onLoadMore")
+                isRefresh = false
+                inintProject("$currentPage")
+            }
+
+            override fun onRefresh(refresh_layout: RefreshLayout) {
+                LogManager.i(TAG, "onRefresh")
+                isRefresh = true
+                currentPage = 1;
+                inintProject("$currentPage")
+            }
+        })
     }
 
     override fun initLoadData() {
-        projectViewModel!!.getProjectData("$currentPage")
+        inintProject("$currentPage")
+    }
+
+    private fun inintProject(currentPage: String) {
+        projectViewModel!!.getProjectData(currentPage)
     }
 
     override fun showLoading() {
@@ -56,10 +80,21 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
     }
 
     override fun projectDataSuccess(success: List<DataX>) {
-        list.clear()
-        list.addAll(success)
-        projectAdapter!!.clearData()
-        projectAdapter!!.addAllData(list)
+        if (!mainActivity!!.isFinishing()) {
+            if (isRefresh) {
+                dataList.clear()
+                dataList.addAll(success)
+                projectAdapter!!.clearData();
+                projectAdapter!!.addAllData(dataList)
+                refresh_layout.finishRefresh()
+            } else {
+                dataList.addAll(success)
+                projectAdapter!!.clearData();
+                projectAdapter!!.addAllData(dataList)
+                refresh_layout.finishLoadMore()
+            }
+            currentPage++;
+        }
     }
 
     override fun projectDataError(error: String) {
@@ -69,11 +104,11 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
                     resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
                     ScreenManager.dipTopx(activity, 20f), error)
 
-//            if (isRefresh) {
-//                refresh_layout.finishRefresh(false)
-//            } else {
-//                refresh_layout.finishLoadMore(false)
-//            }
+            if (isRefresh) {
+                refresh_layout.finishRefresh(false)
+            } else {
+                refresh_layout.finishLoadMore(false)
+            }
         }
     }
 
