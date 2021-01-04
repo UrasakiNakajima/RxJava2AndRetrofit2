@@ -111,7 +111,7 @@
                     android:layout_marginTop="12dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_project_img"
-                    bind:imageUrl="@{datax.envelopePic}"
+                    app:imageUrl="@{datax.envelopePic}"
                     tools:ignore="ContentDescription" />
 
                 <TextView

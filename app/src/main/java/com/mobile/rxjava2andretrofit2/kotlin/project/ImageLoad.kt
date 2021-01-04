@@ -13,17 +13,19 @@ import com.bumptech.glide.request.transition.Transition
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 
 
-class ImageLoad {
+object ImageLoad {
 
 
-    companion object {
+//    companion object {
 
         val TAG = "ImageLoad";
 
         @JvmStatic
-        @BindingAdapter("bind:imageUrl")
+        @BindingAdapter("imageUrl")
         fun bindImage(imageView: ImageView, url: String) {
-            Glide.with(imageView.context).load(url).into(imageView)
+//            Glide.with(imageView.context).load(url).into(imageView)
+            var numberOfTimes: Int = 0;
+
             Glide.with(imageView.context).load(url)
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -46,6 +48,10 @@ class ImageLoad {
 
                         override fun onLoadFailed(errorDrawable: Drawable?) {
                             super.onLoadFailed(errorDrawable)
+                            numberOfTimes++;
+                            if (numberOfTimes == 1) {
+                                Glide.with(imageView.context).load(url).into(imageView)
+                            }
                             LogManager.i(TAG, "图片加载失败");
                         }
 
@@ -60,5 +66,5 @@ class ImageLoad {
                         }
                     })
         }
-    }
+//    }
 }
