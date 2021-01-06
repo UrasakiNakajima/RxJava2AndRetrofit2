@@ -1,13 +1,14 @@
 package com.mobile.rxjava2andretrofit2.kotlin.project.fragment
 
+import android.text.TextUtils
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseMvvmFragment
 import com.mobile.rxjava2andretrofit2.databinding.FragmentProjectChildBinding
 import com.mobile.rxjava2andretrofit2.kotlin.project.adapter.ProjectAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.project.bean.DataX
-import com.mobile.rxjava2andretrofit2.kotlin.project.view.IProjectChildView
 import com.mobile.rxjava2andretrofit2.kotlin.project.view_model.ProjectViewModelImpl
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
@@ -16,7 +17,8 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_project_child.*
 
-class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectChildBinding>(), IProjectChildView {
+
+class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectChildBinding>() {
 
     private val TAG: String = "ProjectChildFragment"
     private var projectViewModel: ProjectViewModelImpl? = null
@@ -32,8 +34,26 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
 
     override fun initData() {
         mainActivity = activity as MainActivity;
-        projectViewModel = ProjectViewModelImpl(this)
+        projectViewModel = ProjectViewModelImpl()
 //        mDatabind.setVariable()
+
+        projectViewModel!!.dataxSuccess.observe(this, object : Observer<List<DataX>> {
+            override fun onChanged(t: List<DataX>?) {
+                if (t != null && t.size > 0) {
+                    projectDataSuccess(t);
+                }
+            }
+        })
+
+        projectViewModel!!.dataxError.observe(this, object : Observer<String> {
+            override fun onChanged(t: String?) {
+                if (!TextUtils.isEmpty(t)) {
+                    projectDataError(t!!)
+                } else {
+//                        projectDataError()
+                }
+            }
+        })
     }
 
     override fun initViews() {
@@ -58,28 +78,29 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
     }
 
     override fun initLoadData() {
-        inintProject("$currentPage")
+        refresh_layout.autoRefresh()
     }
 
     private fun inintProject(currentPage: String) {
+        showLoading()
         projectViewModel!!.projectData(currentPage)
     }
 
-    override fun showLoading() {
+    fun showLoading() {
         if (load_view != null && !load_view.isShown()) {
             load_view.setVisibility(View.VISIBLE)
             load_view.start()
         }
     }
 
-    override fun hideLoading() {
+    fun hideLoading() {
         if (load_view != null && load_view.isShown()) {
             load_view.stop()
             load_view.setVisibility(View.GONE)
         }
     }
 
-    override fun projectDataSuccess(success: List<DataX>) {
+    fun projectDataSuccess(success: List<DataX>) {
         if (!mainActivity!!.isFinishing()) {
             if (isRefresh) {
                 dataList.clear()
@@ -95,13 +116,14 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
             }
             currentPage++;
         }
+        hideLoading()
     }
 
-    override fun projectDataError(error: String) {
+    fun projectDataError(error: String) {
         if (!mainActivity!!.isFinishing()) {
             showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
-                    18, resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
+                    18, resources.getColor(com.mobile.rxjava2andretrofit2.R.color.white),
+                    resources.getColor(com.mobile.rxjava2andretrofit2.R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
                     ScreenManager.dipTopx(activity, 20f), error)
 
             if (isRefresh) {
@@ -110,6 +132,7 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
                 refresh_layout.finishLoadMore(false)
             }
         }
+        hideLoading()
     }
 
 

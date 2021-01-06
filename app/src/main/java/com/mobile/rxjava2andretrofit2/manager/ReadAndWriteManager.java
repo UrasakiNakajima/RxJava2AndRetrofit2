@@ -33,7 +33,7 @@ public class ReadAndWriteManager {
 
     private static final String TAG = "ReadAndWriteManager";
     private static ReadAndWriteManager manager;
-    private List<Disposable> disposableList;
+//    private List<Disposable> disposableList;
     private Disposable disposable;
 
     /**
@@ -84,7 +84,7 @@ public class ReadAndWriteManager {
 //        }
 
         LogManager.i(TAG, "writeExternal");
-        disposableList = new ArrayList<>();
+//        disposableList = new ArrayList<>();
         disposable = Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(@NonNull ObservableEmitter<Boolean> e) throws Exception {
@@ -127,7 +127,7 @@ public class ReadAndWriteManager {
                         onCommonSingleParamCallback.onError("写入失败");
                     }
                 });
-        disposableList.add(disposable);
+//        disposableList.add(disposable);
     }
 
     /**
@@ -159,25 +159,25 @@ public class ReadAndWriteManager {
         return stringBuilder.toString();
     }
 
-    private boolean isSubscribe() {
-        if (disposableList != null && disposableList.size() > 0) {
-            return true;
-        }
-        return false;
-    }
+//    private boolean isSubscribe() {
+//        if (disposableList != null && disposableList.size() > 0) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     public void unSubscribe() {
-        if (isSubscribe()) {
-            for (int i = 0; i < disposableList.size(); i++) {
-                disposable = disposableList.get(i);
+//        if (isSubscribe()) {
+//            for (int i = 0; i < disposableList.size(); i++) {
+//                disposable = disposableList.get(i);
                 if (disposable != null && !disposable.isDisposed()) {
                     disposable.dispose();
                     disposable = null;
                 }
-            }
-            disposableList.clear();
-            disposableList = null;
-        }
+//            }
+//            disposableList.clear();
+//            disposableList = null;
+//        }
     }
 
 }

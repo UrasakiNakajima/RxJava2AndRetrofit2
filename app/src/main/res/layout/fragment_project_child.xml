@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="vm"
+            name="viewModel"
             type="com.mobile.rxjava2andretrofit2.kotlin.project.view_model.ProjectViewModelImpl" />
 
     </data>
