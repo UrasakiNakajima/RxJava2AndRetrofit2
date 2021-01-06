@@ -3,6 +3,7 @@ package com.mobile.rxjava2andretrofit2.kotlin.project.fragment
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseMvvmFragment
@@ -33,14 +34,15 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
     }
 
     override fun initData() {
-        mainActivity = activity as MainActivity;
-        projectViewModel = ProjectViewModelImpl()
+        mainActivity = activity as MainActivity
+//        projectViewModel = ProjectViewModelImpl()
+        projectViewModel = ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
 //        mDatabind.setVariable()
 
         projectViewModel!!.dataxSuccess.observe(this, object : Observer<List<DataX>> {
             override fun onChanged(t: List<DataX>?) {
                 if (t != null && t.size > 0) {
-                    projectDataSuccess(t);
+                    projectDataSuccess(t)
                 }
             }
         })
