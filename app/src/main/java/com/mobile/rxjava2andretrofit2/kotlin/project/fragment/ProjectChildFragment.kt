@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
+import com.mobile.rxjava2andretrofit2.MineApplication
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseMvvmFragment
 import com.mobile.rxjava2andretrofit2.databinding.FragmentProjectChildBinding
@@ -43,7 +44,10 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
             override fun onChanged(t: List<DataX>?) {
                 if (t != null && t.size > 0) {
                     projectDataSuccess(t)
+                } else {
+                    projectDataError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
                 }
+                hideLoading()
             }
         })
 
@@ -51,9 +55,8 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
             override fun onChanged(t: String?) {
                 if (!TextUtils.isEmpty(t)) {
                     projectDataError(t!!)
-                } else {
-//                        projectDataError()
                 }
+                hideLoading()
             }
         })
     }
@@ -67,14 +70,14 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
             override fun onLoadMore(refresh_layout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
                 isRefresh = false
-                inintProject("$currentPage")
+                initProject("$currentPage")
             }
 
             override fun onRefresh(refresh_layout: RefreshLayout) {
                 LogManager.i(TAG, "onRefresh")
                 isRefresh = true
                 currentPage = 1;
-                inintProject("$currentPage")
+                initProject("$currentPage")
             }
         })
     }
@@ -83,7 +86,7 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         refresh_layout.autoRefresh()
     }
 
-    private fun inintProject(currentPage: String) {
+    private fun initProject(currentPage: String) {
         showLoading()
         projectViewModel!!.projectData(currentPage)
     }
@@ -118,7 +121,6 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
             }
             currentPage++;
         }
-        hideLoading()
     }
 
     fun projectDataError(error: String) {
@@ -134,7 +136,6 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
                 refresh_layout.finishLoadMore(false)
             }
         }
-        hideLoading()
     }
 
 
