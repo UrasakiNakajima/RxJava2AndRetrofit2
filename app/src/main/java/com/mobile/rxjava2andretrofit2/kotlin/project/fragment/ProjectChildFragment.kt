@@ -149,8 +149,8 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
     }
 
     override fun onDestroyView() {
-        projectViewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
-        projectViewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+        projectViewModel!!.getDataxSuccess().removeObservers(this)
+//        projectViewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
         viewModelStore.clear()
         super.onDestroyView()
     }
