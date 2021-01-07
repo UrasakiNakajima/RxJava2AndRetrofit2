@@ -38,7 +38,6 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
 
     override fun initData() {
         mainActivity = activity as MainActivity
-//        projectViewModel = ProjectViewModelImpl()
         projectViewModel = ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
 //        mDatabind.setVariable()
 
@@ -152,6 +151,7 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
     override fun onDestroyView() {
         projectViewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
         projectViewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+        viewModelStore.clear()
         super.onDestroyView()
     }
 
