@@ -28,7 +28,7 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = DataBindingUtil.inflate<ItemProjectBinding>(
+        val binding: ItemProjectBinding = DataBindingUtil.inflate<ItemProjectBinding>(
                 LayoutInflater.from(this.context),
                 R.layout.item_project, parent,
                 false)
@@ -36,9 +36,14 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val binding = DataBindingUtil.getBinding<ItemProjectBinding>(holder.itemView)
-        binding!!.datax = list.get(position)
+        val binding: ItemProjectBinding = DataBindingUtil.getBinding<ItemProjectBinding>(holder.itemView)!!
+        binding.datax = list.get(position)
         binding.executePendingBindings()
+        if (position == 1) {
+            binding.itemProjectAuthor.setVisibility(View.GONE)
+        } else if (position == 2) {
+            binding.itemProjectAuthor.setText("aaa")
+        }
     }
 
     override fun getItemCount(): Int {
