@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+//kotlin noArg和allOpen插件
+apply plugin: 'kotlin-noarg'
+apply plugin: 'kotlin-allopen'
 
 android {
     compileSdkVersion 28
@@ -34,6 +37,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    noArg{
+        annotation("com.mobile.rxjava2andretrofit2.kotlin.no_arg_open_data.NoArgOpenDataClass")
+    }
+
+    allOpen{
+        annotation("com.mobile.rxjava2andretrofit2.kotlin.no_arg_open_data.NoArgOpenDataClass")
     }
 }
 

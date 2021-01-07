@@ -12,6 +12,7 @@ import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import androidx.lifecycle.MutableLiveData
 import com.mobile.rxjava2andretrofit2.R
+import com.mobile.rxjava2andretrofit2.manager.ReadAndWriteManager
 
 
 class ProjectViewModelImpl() : BaseViewModel() {
@@ -29,9 +30,29 @@ class ProjectViewModelImpl() : BaseViewModel() {
                     override fun onSuccess(success: String) {
                         LogManager.i(TAG, "success*****$success")
                         if (!TextUtils.isEmpty(success)) {
+//                            val response2: ProjectBean = GsonManager.getInstance().convert(success, ProjectBean::class.java)
+//                            response2.data.datas.get(0).author = null
+//                            val jsonString: String = GsonManager.getInstance().toJson(response2)
+//                            LogManager.i(TAG, "jsonString*****${jsonString}")
+//                            val manager: ReadAndWriteManager = ReadAndWriteManager.getInstance()
+//                            manager.writeExternal("mineLog.txt",
+//                                    jsonString,
+//                                    object : OnCommonSingleParamCallback<Boolean> {
+//                                        override fun onSuccess(success: Boolean?) {
+//                                            LogManager.i(TAG, "success*****" + success!!)
+//                                            manager.unSubscribe()
+//                                        }
+//
+//                                        override fun onError(error: String) {
+//                                            LogManager.i(TAG, "error*****$error")
+//                                            manager.unSubscribe()
+//                                        }
+//                                    })
+//                            val response: ProjectBean = GsonManager.getInstance().convert(jsonString, ProjectBean::class.java)
+
                             val response: ProjectBean = GsonManager.getInstance().convert(success, ProjectBean::class.java)
                             if (response.data.datas != null && response.data.datas.size > 0) {
-                                LogManager.i(TAG, "response*****${response.toString()}")
+//                                LogManager.i(TAG, "response*****${response.toString()}")
 
                                 dataxSuccess.value = response.data.datas
                             } else {
@@ -47,6 +68,8 @@ class ProjectViewModelImpl() : BaseViewModel() {
                         dataxError.value = error
                     }
                 })
+
+        disposableList.add(disposable!!)
     }
 
     fun getDataxSuccess(): MutableLiveData<List<DataX>> {

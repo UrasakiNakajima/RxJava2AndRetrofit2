@@ -43,4 +43,14 @@ public class GsonManager {
     public <T> T convert(String json, Class<T> clz) {
         return fromJson(json, clz);
     }
+
+    /**
+     * toJson
+     *
+     * @param src 对象
+     * @return String
+     */
+    public String toJson(Object src) {
+        return gson.toJson(src);
+    }
 }
