@@ -202,7 +202,8 @@ public class RetrofitManager {
      * @return
      */
     public Disposable responseString(Observable<ResponseBody> observable, OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
-        Disposable disposable = observable.subscribeOn(Schedulers.io())
+        Disposable disposable = observable
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override

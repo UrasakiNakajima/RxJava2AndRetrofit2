@@ -29,6 +29,8 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
     private var dataList: MutableList<DataX> = mutableListOf()
     private var isRefresh: Boolean = true
     private var currentPage: Int = 1
+    private var dataxSuccessObserver: Observer<List<DataX>>? = null;
+    private var dataxErrorObserver: Observer<String>? = null;
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_project_child
@@ -40,25 +42,34 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         projectViewModel = ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
 //        mDatabind.setVariable()
 
-        projectViewModel!!.dataxSuccess.observe(this, object : Observer<List<DataX>> {
+        dataxSuccessObserver = object : Observer<List<DataX>> {
             override fun onChanged(t: List<DataX>?) {
                 if (t != null && t.size > 0) {
+                    LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
+//                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                     projectDataSuccess(t)
                 } else {
                     projectDataError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
                 }
                 hideLoading()
             }
-        })
 
-        projectViewModel!!.dataxError.observe(this, object : Observer<String> {
+        }
+
+        dataxErrorObserver = object : Observer<String> {
             override fun onChanged(t: String?) {
                 if (!TextUtils.isEmpty(t)) {
+                    LogManager.i(TAG, "onChanged*****dataxErrorObserver")
                     projectDataError(t!!)
                 }
                 hideLoading()
             }
-        })
+
+        }
+
+        projectViewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
+
+        projectViewModel!!.getDataxError().observe(this, dataxErrorObserver!!)
     }
 
     override fun initViews() {
@@ -138,5 +149,10 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         }
     }
 
+    override fun onDestroyView() {
+        projectViewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
+        projectViewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+        super.onDestroyView()
+    }
 
 }

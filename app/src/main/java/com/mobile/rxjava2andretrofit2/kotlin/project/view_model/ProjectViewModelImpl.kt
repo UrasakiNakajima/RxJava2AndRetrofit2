@@ -18,12 +18,13 @@ class ProjectViewModelImpl() : BaseViewModel() {
 
     private val TAG: String = "ProjectViewModelImpl"
     private var model: ProjectModelImpl = ProjectModelImpl()
-    //1.首先定义一个LiveData的实例
-    val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
-    val dataxError: MutableLiveData<String> = MutableLiveData()
+    //1.首先定义两个MutableLiveData的实例
+    private val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
+    private val dataxError: MutableLiveData<String> = MutableLiveData()
 
     fun projectData(currentPage: String) {
-        disposable = RetrofitManager.getInstance()
+        disposable = RetrofitManager
+                .getInstance()
                 .responseString(model.projectData(currentPage), object : OnCommonSingleParamCallback<String> {
                     override fun onSuccess(success: String) {
                         LogManager.i(TAG, "success*****$success")
@@ -47,5 +48,14 @@ class ProjectViewModelImpl() : BaseViewModel() {
                     }
                 })
     }
+
+    fun getDataxSuccess(): MutableLiveData<List<DataX>> {
+        return dataxSuccess
+    }
+
+    fun getDataxError(): MutableLiveData<String> {
+        return dataxError
+    }
+
 
 }
