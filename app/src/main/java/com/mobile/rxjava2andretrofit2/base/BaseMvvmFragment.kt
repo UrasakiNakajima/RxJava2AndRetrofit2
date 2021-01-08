@@ -32,6 +32,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
 
         activity = getActivity();
         initData()
+        initObservers()
         initViews()
         initLoadData()
     }
@@ -39,6 +40,8 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
     protected abstract fun initLayoutId(): Int
 
     protected abstract fun initData()
+
+    protected abstract fun initObservers()
 
     protected abstract fun initViews()
 

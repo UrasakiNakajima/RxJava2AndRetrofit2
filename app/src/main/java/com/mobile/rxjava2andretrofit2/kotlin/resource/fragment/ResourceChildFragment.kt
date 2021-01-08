@@ -172,8 +172,7 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
     private fun initResource(type: String, pageSize: String, currentPage: String) {
         if (RetrofitManager.isNetworkAvailable(mainActivity)) {
 //            bodyParams.clear()
-//            bodyParams.put("", "");
-            //        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
+//            bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
             presenter.resourceData(type, pageSize, currentPage)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)

@@ -149,9 +149,9 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     private fun initMine() {
         if (RetrofitManager.isNetworkAvailable(mainActivity)) {
             bodyParams.clear()
-
             bodyParams["qid"] = "6463093341545300238"
-            //        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
+//            bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
+
             presenter.mineData(bodyParams)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)

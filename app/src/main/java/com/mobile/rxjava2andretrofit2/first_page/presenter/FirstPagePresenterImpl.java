@@ -44,7 +44,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
         if (baseView != null) {
             if (baseView instanceof IFirstPageView) {
                 IFirstPageView firstPageView = (IFirstPageView) baseView;
-                firstPageView.showLoading();
+//                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
                 disposable = RetrofitManager.getInstance()
                         .responseString(model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {

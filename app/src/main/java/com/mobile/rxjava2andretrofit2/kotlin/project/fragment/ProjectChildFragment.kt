@@ -14,6 +14,7 @@ import com.mobile.rxjava2andretrofit2.kotlin.project.bean.DataX
 import com.mobile.rxjava2andretrofit2.kotlin.project.view_model.ProjectViewModelImpl
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
+import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -40,7 +41,9 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         mainActivity = activity as MainActivity
         projectViewModel = ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
 //        mDatabind.setVariable()
+    }
 
+    override fun initObservers() {
         dataxSuccessObserver = object : Observer<List<DataX>> {
             override fun onChanged(t: List<DataX>?) {
                 if (t != null && t.size > 0) {
@@ -50,7 +53,6 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
                 } else {
                     projectDataError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
                 }
-                hideLoading()
             }
 
         }
@@ -61,7 +63,6 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
                     LogManager.i(TAG, "onChanged*****dataxErrorObserver")
                     projectDataError(t!!)
                 }
-                hideLoading()
             }
 
         }
@@ -96,11 +97,6 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         refresh_layout.autoRefresh()
     }
 
-    private fun initProject(currentPage: String) {
-        showLoading()
-        projectViewModel!!.projectData(currentPage)
-    }
-
     fun showLoading() {
         if (load_view != null && !load_view.isShown()) {
             load_view.setVisibility(View.VISIBLE)
@@ -130,6 +126,7 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
                 refresh_layout.finishLoadMore()
             }
             currentPage++;
+            hideLoading()
         }
     }
 
@@ -145,6 +142,16 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
             } else {
                 refresh_layout.finishLoadMore(false)
             }
+            hideLoading()
+        }
+    }
+
+    private fun initProject(currentPage: String) {
+        showLoading()
+        if (RetrofitManager.isNetworkAvailable(mainActivity)) {
+            projectViewModel!!.projectData(currentPage)
+        } else {
+            projectDataError(MineApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }
     }
 

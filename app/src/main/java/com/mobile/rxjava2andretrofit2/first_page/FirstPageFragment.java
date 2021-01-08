@@ -190,21 +190,14 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     }
 
     private void initFirstPage() {
+        showLoading();
         if (RetrofitManager.isNetworkAvailable(mainActivity)) {
             bodyParams.clear();
-//        bodyParams.put("shopId", mineApplication.getShopId());
-//        bodyParams.put("userId", mineApplication.getUserId());
-
 
             bodyParams.put("qid", "6855150375201390856");
             presenter.firstPage(bodyParams);
         } else {
-            showToast(getResources().getString(R.string.please_check_the_network_connection), true);
-            if (isRefresh) {
-                refreshLayout.finishRefresh();
-            } else {
-                refreshLayout.finishLoadMore();
-            }
+            firstPageDataError(getResources().getString(R.string.please_check_the_network_connection));
         }
     }
 
