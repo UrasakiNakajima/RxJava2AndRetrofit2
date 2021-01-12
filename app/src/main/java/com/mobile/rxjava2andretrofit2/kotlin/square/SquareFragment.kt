@@ -41,7 +41,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         mainActivity = activity as MainActivity
         mDatabind.viewModel = viewModel
 
-//        mDatabind.datax = datax
+        mDatabind.datax = datax
     }
 
     override fun initViews() {
@@ -72,7 +72,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
         }
 
-//        viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
+        viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
 
         viewModel!!.getDataxError().observe(this, dataxErrorObserver!!)
     }
@@ -118,7 +118,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     override fun onDestroyView() {
-//        viewModel!!.getDataxSuccess().removeObservers(this)
+        viewModel!!.getDataxSuccess().removeObservers(this)
         super.onDestroyView()
     }
 
