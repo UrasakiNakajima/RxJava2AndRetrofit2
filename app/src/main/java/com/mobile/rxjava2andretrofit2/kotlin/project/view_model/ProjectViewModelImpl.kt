@@ -17,7 +17,10 @@ import com.mobile.rxjava2andretrofit2.manager.ReadAndWriteManager
 
 class ProjectViewModelImpl() : BaseViewModel() {
 
-    private val TAG: String = "ProjectViewModelImpl"
+    companion object {
+        private val TAG: String = "ProjectViewModelImpl"
+    }
+
     private var model: ProjectModelImpl = ProjectModelImpl()
     //1.首先定义两个MutableLiveData的实例
     private val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()

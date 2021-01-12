@@ -23,8 +23,11 @@ import kotlinx.android.synthetic.main.fragment_project_child.*
 
 class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectChildBinding>() {
 
-    private val TAG: String = "ProjectChildFragment"
-    private var projectViewModel: ProjectViewModelImpl? = null
+    companion object {
+        private val TAG: String = "ProjectChildFragment"
+    }
+
+    private var viewModel: ProjectViewModelImpl? = null
     private var projectAdapter: ProjectAdapter? = null
     private var mainActivity: MainActivity? = null
     private var dataList: MutableList<DataX> = mutableListOf()
@@ -39,7 +42,7 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
 
     override fun initData() {
         mainActivity = activity as MainActivity
-        projectViewModel = ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
+        viewModel = ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
 //        mDatabind.setVariable()
     }
 
@@ -67,9 +70,9 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
 
         }
 
-        projectViewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
+        viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
 
-        projectViewModel!!.getDataxError().observe(this, dataxErrorObserver!!)
+        viewModel!!.getDataxError().observe(this, dataxErrorObserver!!)
     }
 
     override fun initViews() {
@@ -149,15 +152,17 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
     private fun initProject(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(mainActivity)) {
-            projectViewModel!!.projectData(currentPage)
+            viewModel!!.projectData(currentPage)
         } else {
             projectDataError(MineApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }
     }
 
     override fun onDestroyView() {
-        projectViewModel!!.getDataxSuccess().removeObservers(this)
-//        projectViewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+//        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
+//        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+
+        viewModel!!.getDataxSuccess().removeObservers(this)
         viewModelStore.clear()
         super.onDestroyView()
     }

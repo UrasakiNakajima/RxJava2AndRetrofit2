@@ -1,36 +1,27 @@
 package com.mobile.rxjava2andretrofit2.base
 
-import android.app.Activity
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 
-abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment() {
+abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompatActivity() {
+
 
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
-    private var activity: Activity? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mDatabind = DataBindingUtil.setContentView(this, initLayoutId())
         mDatabind.lifecycleOwner = this
-        return mDatabind.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        activity = getActivity();
         initData()
         initObservers()
         initViews()
@@ -51,10 +42,10 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
                                   textSize: Int, textColor: Int,
                                   bgColor: Int, height: Int,
                                   roundRadius: Int, message: String) {
-        val frameLayout = FrameLayout(activity!!)
+        val frameLayout = FrameLayout(this)
         val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
         frameLayout.layoutParams = layoutParams
-        val textView = TextView(activity)
+        val textView = TextView(this)
         val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
         textView.layoutParams = layoutParams1
         textView.setPadding(left, 0, right, 0)
@@ -69,15 +60,15 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
         textView.text = message
         frameLayout.addView(textView)
 
-        val toast = Toast(activity)
+        val toast = Toast(this)
         toast.view = frameLayout
         toast.duration = Toast.LENGTH_LONG
         toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
     }
 
-    override fun onDestroyView() {
+    override fun onDestroy() {
         mDatabind.unbind()
-        super.onDestroyView()
+        super.onDestroy()
     }
 }

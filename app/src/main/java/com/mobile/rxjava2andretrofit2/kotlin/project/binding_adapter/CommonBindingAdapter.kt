@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.project
+package com.mobile.rxjava2andretrofit2.kotlin.project.binding_adapter
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
@@ -13,12 +13,12 @@ import com.bumptech.glide.request.transition.Transition
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 
 
-object ImageLoad {
+object CommonBindingAdapter {
 
 
 //    companion object {
 
-        val TAG = "ImageLoad";
+        val TAG = "CommonBindingAdapter";
 
         @JvmStatic
         @BindingAdapter("imageUrl")
@@ -66,5 +66,7 @@ object ImageLoad {
                         }
                     })
         }
+
+
 //    }
 }
