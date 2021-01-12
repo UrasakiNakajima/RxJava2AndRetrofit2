@@ -34,26 +34,26 @@ class Data {
 //        val total: Int
 
 
-class DataX : BaseObservable() {
+class DataX {
 
     var apkLink: String? = null
     var audit: Int? = null
     var author: String? = null
-        @Bindable
-        get() = field?.toUpperCase()
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.author); //通知系统数据源发生变化，刷新UI界面
-        }
+    //        @Bindable
+//        get() = field?.toUpperCase()
+//        set(value) {
+//            field = value
+//            notifyPropertyChanged(BR.author); //通知系统数据源发生变化，刷新UI界面
+//        }
     var canEdit: Boolean? = null
     var chapterId: Int? = null
     var chapterName: String? = null
-        @Bindable
-        get() = field?.toUpperCase()
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.chapterName); //通知系统数据源发生变化，刷新UI界面
-        }
+    //        @Bindable
+//        get() = field?.toUpperCase()
+//        set(value) {
+//            field = value
+//            notifyPropertyChanged(BR.chapterName); //通知系统数据源发生变化，刷新UI界面
+//        }
     var collect: Boolean? = null
     var courseId: Int? = null
     var desc: String? = null
@@ -63,12 +63,12 @@ class DataX : BaseObservable() {
     var host: String? = null
     var id: Int? = null
     var link: String? = null
-        @Bindable
-        get() = field?.toUpperCase()
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.link); //通知系统数据源发生变化，刷新UI界面
-        }
+    //        @Bindable
+//        get() = field?.toUpperCase()
+//        set(value) {
+//            field = value
+//            notifyPropertyChanged(BR.link); //通知系统数据源发生变化，刷新UI界面
+//        }
     var niceDate: String? = null
     var niceShareDate: String? = null
     var origin: String? = null
@@ -83,12 +83,12 @@ class DataX : BaseObservable() {
     var superChapterName: String? = null
     var tags: List<Any>? = null
     var title: String? = null
-        @Bindable
-        get() = field?.toUpperCase()
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.title); //通知系统数据源发生变化，刷新UI界面
-        }
+    //        @Bindable
+//        get() = field?.toUpperCase()
+//        set(value) {
+//            field = value
+//            notifyPropertyChanged(BR.title); //通知系统数据源发生变化，刷新UI界面
+//        }
     var type: Int? = null
     var userId: Int? = null
     var visible: Int? = null

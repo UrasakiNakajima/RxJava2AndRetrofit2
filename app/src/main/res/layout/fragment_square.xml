@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:text="@={datax.title}"
+                android:text="@={viewModel.dataxSuccess.get(0).title}"
                 android:textColor="@color/color_FFE066FF"
                 android:textSize="@dimen/sp_18" />
 
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@={datax.chapterName}"
+                android:text="@={viewModel.dataxSuccess.get(0).chapterName}"
                 android:textColor="@color/colorBlack333"
                 android:textSize="@dimen/sp_16" />
 
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@={datax.link}"
+                android:text="@={viewModel.dataxSuccess.get(0).link}"
                 android:textColor="@color/colorBlack333"
                 android:textSize="@dimen/sp_16" />
 

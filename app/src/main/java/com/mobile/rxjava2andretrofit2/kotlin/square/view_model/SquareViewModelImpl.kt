@@ -1,6 +1,7 @@
 package com.mobile.rxjava2andretrofit2.kotlin.square.view_model
 
 import android.text.TextUtils
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.mobile.rxjava2andretrofit2.MineApplication
 import com.mobile.rxjava2andretrofit2.R
@@ -16,13 +17,15 @@ import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 class SquareViewModelImpl() : BaseViewModel() {
 
     companion object {
-        private val TAG: String = "ProjectViewModelImpl"
+        private val TAG: String = "SquareViewModelImpl"
     }
 
     private var model: SquareModelImpl = SquareModelImpl()
     //1.首先定义两个MutableLiveData的实例
-    private val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
+//    private val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
     private val dataxError: MutableLiveData<String> = MutableLiveData()
+
+    private val dataxSuccess: ObservableField<List<DataX>> = ObservableField()
 
     fun squareData(currentPage: String) {
         disposable = RetrofitManager
@@ -35,8 +38,8 @@ class SquareViewModelImpl() : BaseViewModel() {
                             if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
 //                                LogManager.i(TAG, "response*****${response.toString()}")
 
-
-                                dataxSuccess.value = response.data!!.datas
+                                dataxSuccess.set(response.data!!.datas!!)
+//                                dataxSuccess.value = response.data!!.datas
                             } else {
                                 dataxError.value = MineApplication.getInstance().resources.getString(R.string.no_data_available)
                             }
@@ -54,7 +57,7 @@ class SquareViewModelImpl() : BaseViewModel() {
         disposableList.add(disposable!!)
     }
 
-    fun getDataxSuccess(): MutableLiveData<List<DataX>> {
+    fun getDataxSuccess(): ObservableField<List<DataX>> {
         return dataxSuccess
     }
 
