@@ -22,7 +22,6 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         private val TAG: String = "SquareFragment"
     }
 
-    private var viewModel: SquareViewModelImpl? = null
     private var mainActivity: MainActivity? = null
     //    private var dataList: MutableList<DataX> = mutableListOf()
     private var currentPage: Int = 1
@@ -34,9 +33,13 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         return R.layout.fragment_square
     }
 
+    override fun initViewModel(): SquareViewModelImpl {
+        return ViewModelProvider(this).get(SquareViewModelImpl::class.java)
+    }
+
     override fun initData() {
         mainActivity = activity as MainActivity
-        viewModel = ViewModelProvider(this).get(SquareViewModelImpl::class.java)
+        mDatabind.viewModel = viewModel
 
         mDatabind.datax = datax
     }
@@ -116,14 +119,13 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
     override fun onDestroyView() {
         viewModel!!.getDataxSuccess().removeObservers(this)
-        viewModelStore.clear()
         super.onDestroyView()
     }
 
     private fun initSquare(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(mainActivity)) {
-            viewModel?.squareData(currentPage)
+            viewModel!!.squareData(currentPage)
         } else {
             squareDataError(MineApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }

@@ -13,9 +13,9 @@ import androidx.databinding.ViewDataBinding
 
 abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompatActivity() {
 
-
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
+    var viewModel: VM? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,12 +23,15 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
         mDatabind.lifecycleOwner = this
 
         initData()
+        viewModel = initViewModel()
         initObservers()
         initViews()
         initLoadData()
     }
 
     protected abstract fun initLayoutId(): Int
+
+    protected abstract fun initViewModel(): VM
 
     protected abstract fun initData()
 

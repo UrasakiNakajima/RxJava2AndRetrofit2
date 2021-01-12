@@ -27,7 +27,6 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         private val TAG: String = "ProjectChildFragment"
     }
 
-    private var viewModel: ProjectViewModelImpl? = null
     private var projectAdapter: ProjectAdapter? = null
     private var mainActivity: MainActivity? = null
     private var dataList: MutableList<DataX> = mutableListOf()
@@ -40,9 +39,12 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         return R.layout.fragment_project_child
     }
 
+    override fun initViewModel(): ProjectViewModelImpl {
+        return ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
+    }
+
     override fun initData() {
         mainActivity = activity as MainActivity
-        viewModel = ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
 //        mDatabind.setVariable()
     }
 
@@ -163,7 +165,6 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
 //        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
 
         viewModel!!.getDataxSuccess().removeObservers(this)
-        viewModelStore.clear()
         super.onDestroyView()
     }
 

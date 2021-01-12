@@ -19,6 +19,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
 
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
+    var viewModel: VM? = null
     private var activity: Activity? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,6 +32,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
         super.onViewCreated(view, savedInstanceState)
 
         activity = getActivity();
+        viewModel = initViewModel()
         initData()
         initObservers()
         initViews()
@@ -38,6 +40,8 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
     }
 
     protected abstract fun initLayoutId(): Int
+
+    protected abstract fun initViewModel(): VM
 
     protected abstract fun initData()
 
@@ -78,6 +82,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
 
     override fun onDestroyView() {
         mDatabind.unbind()
+        viewModelStore.clear()
         super.onDestroyView()
     }
 }
