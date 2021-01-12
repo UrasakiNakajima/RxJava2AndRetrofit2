@@ -49,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:includeFontPadding="false"
                 android:text="@={datax.chapterName}"
                 android:textColor="@color/colorBlack333"
                 android:textSize="@dimen/sp_16" />
@@ -61,6 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:includeFontPadding="false"
                 android:text="@={datax.link}"
                 android:textColor="@color/colorBlack333"
                 android:textSize="@dimen/sp_16" />

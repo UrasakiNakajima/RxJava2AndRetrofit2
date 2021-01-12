@@ -42,6 +42,8 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         mDatabind.viewModel = viewModel
 
         mDatabind.datax = datax
+
+        mDatabind.executePendingBindings()
     }
 
     override fun initViews() {
@@ -118,6 +120,9 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     override fun onDestroyView() {
+        datax.title = null
+        datax.chapterName = null
+        datax.link = null
         viewModel!!.getDataxSuccess().removeObservers(this)
         super.onDestroyView()
     }
