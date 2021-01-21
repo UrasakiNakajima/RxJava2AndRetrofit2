@@ -3,7 +3,6 @@ package com.mobile.rxjava2andretrofit2.kotlin.square.bean
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.mobile.rxjava2andretrofit2.BR
-import kotlin.properties.Delegates
 
 class SquareBean {
 
@@ -93,6 +92,13 @@ class DataX : BaseObservable() {
     var userId: Int? = null
     var visible: Int? = null
     var zan: Int? = null
+//    var isLoading: Boolean? = null
+//        @Bindable
+//        get() = field!!
+//        set(value) {
+//            field = value
+//            notifyPropertyChanged(BR.title); //通知系统数据源发生变化，刷新UI界面
+//        }
 
 }
 
