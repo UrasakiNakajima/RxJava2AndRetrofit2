@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <SurfaceView
+        android:id="@+id/surfaceview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200" />
+
+    <SeekBar
+        android:id="@+id/play_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
+
+    <TextView
+        android:id="@+id/tv_video_time"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_50"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20" />
+
+    <TextView
+        android:id="@+id/btn_play"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20" />
+
+    <LinearLayout
+        android:id="@+id/rela_video"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_video_loading"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20" />
+
+    <ImageView
+        android:id="@+id/iv_videoplayer_cover"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_50"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>
