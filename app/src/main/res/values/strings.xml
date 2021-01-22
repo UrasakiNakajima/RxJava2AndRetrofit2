@@ -42,6 +42,12 @@
     <string name="app">App</string>
 
 
+    <string name="time">time</string>
+    <string name="play">play</string>
+    <string name="pause">pause</string>
+    <string name="stop">stop</string>
+
+
 
     <!--真正用于解析的属性-->
     <declare-styleable name="RCAttrs">

@@ -1,6 +1,7 @@
 package com.mobile.rxjava2andretrofit2.base
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.TypedValue
@@ -21,6 +22,8 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
     lateinit var mDatabind: DB
     var viewModel: VM? = null
     private var activity: Activity? = null
+    protected var intent: Intent? = null
+    protected var bundle: Bundle? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
@@ -78,6 +81,54 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
         toast.duration = Toast.LENGTH_LONG
         toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
+    }
+
+    protected fun startActivity(cls: Class<*>) {
+        intent = Intent(activity, cls)
+        startActivity(intent)
+    }
+
+    protected fun startActivityCarryParams(cls: Class<*>, params: Map<String, String>?) {
+        intent = Intent(activity, cls)
+        bundle = Bundle()
+
+        if (params != null && params.size > 0) {
+            for (key in params.keys) {
+                if (params[key] != null) {//如果参数不是null，才把参数传给后台
+                    bundle!!.putString(key, params[key])
+                }
+            }
+            intent!!.putExtras(bundle)
+        }
+        startActivity(intent)
+    }
+
+    protected fun startActivityForResult(cls: Class<*>, requestCode: Int) {
+        intent = Intent(activity, cls)
+        startActivityForResult(intent, requestCode)
+    }
+
+    protected fun startActivityForResultCarryParams(cls: Class<*>, params: Map<String, String>?, requestCode: Int) {
+        intent = Intent(activity, cls)
+        bundle = Bundle()
+
+        if (params != null && params.size > 0) {
+            for (key in params.keys) {
+                if (params[key] != null) {//如果参数不是null，才把参数传给后台
+                    bundle!!.putString(key, params[key])
+                }
+            }
+            intent!!.putExtras(bundle)
+        }
+        startActivityForResult(intent, requestCode)
+    }
+
+    protected fun isEmpty(dataStr: String?): Boolean {
+        return if (dataStr != null && "" != dataStr) {
+            false
+        } else {
+            true
+        }
     }
 
     override fun onDestroyView() {

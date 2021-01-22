@@ -44,6 +44,7 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
         } else if (position == 2) {
             binding.itemProjectAuthor.setText("aaa")
         }
+        binding.itemProjectImageview.setOnClickListener { v -> rcvOnItemViewClickListener!!.onItemClickListener(position, v) }
     }
 
     override fun getItemCount(): Int {

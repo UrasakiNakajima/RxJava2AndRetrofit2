@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.square.ui
+package com.mobile.rxjava2andretrofit2.kotlin.project.ui
 
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseAppActivity

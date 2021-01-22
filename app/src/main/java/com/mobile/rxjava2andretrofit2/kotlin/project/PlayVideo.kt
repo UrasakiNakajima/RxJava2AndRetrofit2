@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.square
+package com.mobile.rxjava2andretrofit2.kotlin.project
 
 import android.content.Intent
 import android.content.BroadcastReceiver
@@ -28,7 +28,9 @@ class PlayVideo {
     private var isDisplay = true
     private var progressBroadCast: ProgressBroadCast? = null
     private var surfaceView: SurfaceView? = null
-    private var btPlay: TextView? = null
+    private var btnPlay: TextView? = null
+    //    private var btnPause: TextView? = null
+//    private var btnStop: TextView? = null
     private var seekBar: SeekBar? = null
     private var tvTime: TextView? = null
     private var ivCover: ImageView? = null
@@ -63,7 +65,9 @@ class PlayVideo {
 
     private fun initView(view: View) {
         surfaceView = view.findViewById(R.id.surfaceview)
-        btPlay = view.findViewById(R.id.btn_play)
+        btnPlay = view.findViewById(R.id.btn_play)
+//        btnPause = view.findViewById(R.id.btn_pause)
+//        btnStop = view.findViewById(R.id.btn_pause)
         seekBar = view.findViewById(R.id.play_seekbar)
         tvTime = view.findViewById(R.id.tv_video_time)
         relaVideo = view.findViewById(R.id.rela_video)
@@ -71,7 +75,7 @@ class PlayVideo {
         ivCover = view.findViewById(R.id.iv_videoplayer_cover)
         val listener = MyClickListener()
         surfaceView!!.setOnClickListener(listener)
-        btPlay!!.setOnClickListener(listener)
+        btnPlay!!.setOnClickListener(listener)
 
         progressBroadCast = ProgressBroadCast()
         context!!.registerReceiver(progressBroadCast, IntentFilter("play"))
@@ -85,11 +89,17 @@ class PlayVideo {
     private fun event() {
         //seekbar调节进度
         seekBar!!.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {}
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+            }
+
             override fun onStopTrackingTouch(seekBar2: SeekBar) {
-                if (null != mediaPlayer)
+                if (mediaPlayer != null) {
                     mediaPlayer!!.seekTo(seekBar2.progress)
+                }
             }
         })
     }
@@ -121,38 +131,6 @@ class PlayVideo {
                 mHandler.sendMessage(message)
             }
         }.start()
-    }
-
-    internal inner class MyClickListener : View.OnClickListener {
-
-        override fun onClick(v: View) {
-            when (v.getId()) {
-                R.id.surfaceview -> {
-                    if (isDisplay) {
-                        relaVideo!!.visibility = View.GONE
-                    } else {
-                        relaVideo!!.visibility = View.VISIBLE
-                    }
-                    isDisplay = !isDisplay
-                }
-                R.id.btn_play -> if (mediaPlayer == null) {
-                    netWorkState()
-                } else {
-                    //播放和暂停切换
-                    if (mediaPlayer!!.isPlaying()) {
-                        mediaPlayer!!.pause()
-//                        btPlay!!.setBackgroundResource(R.mipmap.video_btn_pause)
-                        btPlay!!.setText("暂停")
-                    } else {
-                        mediaPlayer!!.start()
-                        ivCover!!.setVisibility(View.GONE)
-                        ProgressThread().start()
-//                        btPlay!!.setBackgroundResource(R.mipmap.video_btn_start)
-                        btPlay!!.setText("开始")
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -261,6 +239,38 @@ class PlayVideo {
                     e.printStackTrace()
                 }
 
+            }
+        }
+    }
+
+    internal inner class MyClickListener : View.OnClickListener {
+
+        override fun onClick(v: View) {
+            when (v.getId()) {
+                R.id.surfaceview -> {
+                    if (isDisplay) {
+                        relaVideo!!.visibility = View.GONE
+                    } else {
+                        relaVideo!!.visibility = View.VISIBLE
+                    }
+                    isDisplay = !isDisplay
+                }
+                R.id.btn_play -> if (mediaPlayer == null) {
+                    netWorkState()
+                } else {
+                    //播放和暂停切换
+                    if (mediaPlayer!!.isPlaying()) {
+                        mediaPlayer!!.pause()
+//                        btnPlay!!.setBackgroundResource(R.mipmap.video_btn_pause)
+                        btnPlay!!.setText("暂停")
+                    } else {
+                        mediaPlayer!!.start()
+                        ivCover!!.setVisibility(View.GONE)
+                        ProgressThread().start()
+//                        btnPlay!!.setBackgroundResource(R.mipmap.video_btn_start)
+                        btnPlay!!.setText("开始")
+                    }
+                }
             }
         }
     }

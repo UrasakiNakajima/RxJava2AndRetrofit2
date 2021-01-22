@@ -87,12 +87,15 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".kotlin.square.ui.VideoViewActivity"
+            android:name="com.mobile.rxjava2andretrofit2.kotlin.project.ui.VideoViewActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape">
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.mobile.rxjava2andretrofit2.kotlin.project.ui.SurfaceViewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".kotlin.square.ui.SurfaceViewActivity" />
     </application>
 
 </manifest>

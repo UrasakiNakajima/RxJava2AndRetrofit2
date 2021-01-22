@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.mobile.rxjava2andretrofit2.MineApplication
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseMvvmFragment
+import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.databinding.FragmentProjectChildBinding
 import com.mobile.rxjava2andretrofit2.kotlin.project.adapter.ProjectAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.project.bean.DataX
+import com.mobile.rxjava2andretrofit2.kotlin.project.ui.SurfaceViewActivity
 import com.mobile.rxjava2andretrofit2.kotlin.project.view_model.ProjectViewModelImpl
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
@@ -79,6 +81,13 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
 
     override fun initViews() {
         projectAdapter = ProjectAdapter(mainActivity!!);
+        projectAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
+
+            override fun onItemClickListener(position: Int, view: View?) {
+                startActivity(SurfaceViewActivity::class.java)
+            }
+
+        })
         rcv_data.itemAnimator = DefaultItemAnimator()
         rcv_data.adapter = projectAdapter
 
