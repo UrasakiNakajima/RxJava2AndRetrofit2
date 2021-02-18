@@ -29,17 +29,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
-
         <!-- 沉浸式状态栏适配 -->
         <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" />
-        <!-- 适配小米（xiaomi）刘海屏 -->
+            android:value="2.4" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" />
-        <!-- 适配android7.0及其以上 -->
+            android:value="true" /> <!-- 适配android7.0及其以上 -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
@@ -52,15 +49,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-        <!-- Launch页 -->
+        </provider> <!-- Launch页 -->
         <activity android:name=".login.ui.LaunchActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".login.ui.LoginActivity"
@@ -83,17 +74,27 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity"
+            android:name=".kotlin.mine.ui.MineDetailsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.mobile.rxjava2andretrofit2.kotlin.project.ui.VideoViewActivity"
+            android:name=".kotlin.project.ui.VideoViewActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity
-            android:name="com.mobile.rxjava2andretrofit2.kotlin.project.ui.SurfaceViewActivity"
+            android:name=".kotlin.project.ui.SurfaceViewActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".first_page.ui.VideoView2Activity">
 
         </activity>
     </application>

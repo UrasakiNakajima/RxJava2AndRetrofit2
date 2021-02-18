@@ -2,8 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
 
     <com.mobile.rxjava2andretrofit2.custom_view.MyVideoView
         android:id="@+id/mVideoView"
@@ -11,19 +11,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="center" />
 
-    <ProgressBar
-        android:id="@+id/mCurrentProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_3"
-        android:layout_gravity="bottom"
-        android:max="100" />
-
     <ImageView
         android:id="@+id/placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
+        android:src="@color/color_FFE066FF"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -41,6 +34,7 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
+
     <LinearLayout
         android:id="@+id/lay_playControl"
         android:layout_width="match_parent"
@@ -51,33 +45,39 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_current_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:text="@string/start_time"
-            android:textColor="@color/color_80000000" />
+            android:textColor="@color/white" />
 
         <SeekBar
             android:id="@+id/mSeekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:ignore="InefficientWeight" />
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/tv_total_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:text="@string/start_time"
-            android:textColor="@color/color_80000000" />
-
+            android:textColor="@color/white" />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/mCurrentProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_gravity="bottom"
+        android:max="100" />
 
 </FrameLayout>

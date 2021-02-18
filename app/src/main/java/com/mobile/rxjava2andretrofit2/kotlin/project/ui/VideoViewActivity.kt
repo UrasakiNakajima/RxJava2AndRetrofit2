@@ -1,11 +1,44 @@
 package com.mobile.rxjava2andretrofit2.kotlin.project.ui
 
-import com.mobile.rxjava2andretrofit2.R
+import android.graphics.Bitmap
+import android.media.MediaMetadataRetriever
+import android.media.MediaPlayer
+import android.net.Uri
+import android.os.Build
+import android.os.Handler
+import android.view.View
+import android.widget.SeekBar
+import androidx.annotation.RequiresApi
 import com.mobile.rxjava2andretrofit2.base.BaseAppActivity
+import kotlinx.android.synthetic.main.activity_video_view.*
+import com.mobile.rxjava2andretrofit2.R
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import java.util.*
+
 
 class VideoViewActivity : BaseAppActivity() {
 
-    private val TAG: String = "VideoViewActivity"
+    companion object {
+        private val TAG: String = "VideoViewActivity"
+    }
+
+    /*测试地址*/
+    val url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
+    val VIDEO_TYPE_URI = 1
+    val VIDEO_TYPE_FILE_PATH = 2
+    var VIDEO_TYPE: Int = 0
+    private var isCompletion = false
+    private var downX: Int = 0
+    private var moveX: Int = 0
+    private var left: Boolean = false
+
+    private var isTrackingTouch = false
+
+    private var oldPosition: Int = 0
+    //将长度转换为时间
+    internal var mFormatBuilder = StringBuilder()
+    internal var mFormatter = Formatter(mFormatBuilder, Locale.getDefault())
 
     override fun initLayoutId(): Int {
         return R.layout.activity_video_view
@@ -16,11 +49,285 @@ class VideoViewActivity : BaseAppActivity() {
     }
 
     override fun initViews() {
+        mSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (isTrackingTouch) {
+                    val scale = (progress * 1.0 / 100).toFloat()
+                    val msec = mVideoView.getDuration() * scale
+                    seekTo(msec)
+                }
+            }
+
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                isTrackingTouch = true
+                pause()
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                isTrackingTouch = false
+                start()
+            }
+        })
     }
 
     override fun initLoadData() {
-
+        setData(url, VIDEO_TYPE_URI)
     }
 
+    private val handler = Handler()
+
+    /**
+     * 设置视频源
+     *
+     * @param url
+     */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    fun setData(url: String, TYPE: Int) {
+        this.VIDEO_TYPE = TYPE
+        when (TYPE) {
+            VIDEO_TYPE_FILE_PATH ->
+                /*设置播放源*/
+                mVideoView!!.setVideoPath(url)
+            VIDEO_TYPE_URI ->
+                /*设置播放源*/
+                mVideoView!!.setVideoURI(Uri.parse(url))
+        }
+        getPreviewImage(url)
+        /*准备完成后回调*/
+        mVideoView!!.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
+            override fun onPrepared(mp: MediaPlayer?) {
+                tv_total_time!!.setText(durationTime())
+                sendTime()
+            }
+
+        })
+        /*播放内容监听*/
+        mVideoView!!.setOnInfoListener((object : MediaPlayer.OnInfoListener {
+            override fun onInfo(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
+                if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
+                    if (progress_circular != null) {
+                        progress_circular!!.setVisibility(View.VISIBLE)
+                    }
+                } else {
+                    if (mVideoView!!.isPlaying()) {
+                        if (progress_circular != null) progress_circular!!.setVisibility(View.GONE)
+                        play!!.visibility = View.GONE
+                        lay_playControl!!.visibility = View.VISIBLE
+                    }
+                }
+                return true
+            }
+
+        }))
+        /*播放完成回调*/
+        mVideoView!!.setOnCompletionListener(object : MediaPlayer.OnCompletionListener {
+            override fun onCompletion(mp: MediaPlayer?) {
+                isCompletion = true
+                placeholder!!.visibility = View.VISIBLE
+                reset()
+            }
+
+        })
+
+        mVideoView!!.setOnClickListener(View.OnClickListener {
+            if (mVideoView!!.isPlaying()) {
+                pause()
+            } else {
+                start()
+            }
+        })
+    }
+
+    /**
+     * 开始播放
+     */
+    fun start() {
+        if (!mVideoView!!.isPlaying()) {
+            mVideoView!!.start()
+        }
+        play!!.visibility = View.GONE
+
+//        placeholder!!.visibility = View.VISIBLE
+        progress_circular!!.setVisibility(View.VISIBLE)
+    }
+
+    /**
+     * 暂停播放
+     */
+    fun pause() {
+        if (mVideoView != null && mVideoView!!.isPlaying()) {
+            mVideoView!!.pause()
+        }
+        play!!.visibility = View.VISIBLE
+    }
+
+    /**
+     * 重新播放
+     */
+    fun resetStart() {
+        if (mVideoView != null && isCompletion) {
+            mVideoView!!.seekTo(0)
+            isCompletion = false
+            mVideoView!!.start()
+            play!!.visibility = View.INVISIBLE
+        }
+    }
+
+    /**
+     * 指定位置播放
+     *
+     * @param m
+     */
+    fun seekTo(m: Float) {
+        play!!.setVisibility(View.GONE)
+        if (mVideoView != null) {
+            mVideoView!!.seekTo(m.toInt())
+        }
+    }
+
+    /**
+     * 重置
+     */
+    fun reset() {
+        tv_current_time!!.text = resources.getString(R.string.start_time)
+        mSeekBar!!.progress = 0
+        mCurrentProgressBar.progress = 0
+        seekTo(0f)
+        play!!.visibility = View.VISIBLE
+    }
+
+    /**
+     * 停止播放
+     */
+    fun stop() {
+        mVideoView!!.canPause()
+        mVideoView!!.stopPlayback()
+    }
+
+    /**
+     * 销毁
+     */
+    fun destory() {
+        handler.removeCallbacks(runnable)
+        mVideoView!!.stopPlayback()
+    }
+
+    private val runnable = Runnable {
+        sendTime()
+        val currentPosition = mVideoView!!.getCurrentPosition()
+        if (mVideoView!!.isPlaying()) {
+            tv_current_time!!.text = playCurrentTime()
+            if (currentPosition == oldPosition) {
+                progress_circular!!.setVisibility(View.VISIBLE)
+            } else {
+                progress_circular!!.setVisibility(View.GONE)
+                if (placeholder != null)
+                    placeholder!!.visibility = View.GONE
+            }
+            oldPosition = currentPosition
+        }
+    }
+
+    fun sendTime() {
+        handler.postDelayed(runnable, 200)
+    }
+
+    /**
+     * 显示预览图片
+     *
+     * @param url
+     */
+    fun getPreviewImage(url: String) {
+        Thread(Runnable {
+            val retriever = MediaMetadataRetriever()
+            var bitmap: Bitmap? = null
+            try {
+                //这里要用FileProvider获取的Uri
+                if (url.contains("http")) {
+                    retriever.setDataSource(url, HashMap())
+                } else {
+                    retriever.setDataSource(url)
+                }
+                bitmap = retriever.frameAtTime
+
+                val finalBitmap = bitmap
+                Observable.empty<Any>().subscribeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete { placeholder!!.setImageBitmap(finalBitmap) }.subscribe()
+
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            } finally {
+                try {
+                    retriever.release()
+                } catch (ex: RuntimeException) {
+                    ex.printStackTrace()
+                }
+
+            }
+        }).start()
+    }
+
+    /**
+     * 当前播放进度
+     *
+     * @return
+     */
+    fun playCurrentTime(): String {
+        val CurrentPosition = mVideoView!!.getCurrentPosition()
+        val scale = (CurrentPosition * 1.0 / mVideoView!!.getDuration()).toFloat()
+        mSeekBar!!.progress = (scale * 100).toInt()
+        mCurrentProgressBar!!.progress = (scale * 100).toInt()
+        return stringForTime(CurrentPosition)
+    }
+
+    /**
+     * 视频的总长度
+     *
+     * @return
+     */
+    fun durationTime(): String {
+        return stringForTime(mVideoView!!.getDuration())
+    }
+
+    /**
+     * 将长度转换为时间
+     *
+     * @param timeMs
+     * @return
+     */
+    private fun stringForTime(timeMs: Int): String {
+        val totalSeconds = timeMs / 1000
+        val seconds = totalSeconds % 60
+        val minutes = totalSeconds / 60 % 60
+        val hours = totalSeconds / 3600
+
+        mFormatBuilder.setLength(0)
+        return if (hours > 0) {
+            mFormatter.format("%d:%02d:%02d", hours, minutes, seconds).toString()
+        } else {
+            mFormatter.format("%02d:%02d", minutes, seconds).toString()
+        }
+    }
+
+    override fun onStop() {
+        pause()
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        destory()
+        super.onDestroy()
+    }
+
+    private var onMoveListener: OnMoveListener? = null
+
+    fun setOnMoveListener(onMoveListener: OnMoveListener) {
+        this.onMoveListener = onMoveListener
+    }
+
+    interface OnMoveListener {
+        fun onMove()
+    }
 }

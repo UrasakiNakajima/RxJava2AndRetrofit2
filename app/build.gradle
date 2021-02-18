@@ -48,11 +48,11 @@ android {
         }
     }
 
-    noArg{
+    noArg {
         annotation("com.mobile.rxjava2andretrofit2.kotlin.no_arg_open_data.NoArgOpenDataClass")
     }
 
-    allOpen{
+    allOpen {
         annotation("com.mobile.rxjava2andretrofit2.kotlin.no_arg_open_data.NoArgOpenDataClass")
     }
 }

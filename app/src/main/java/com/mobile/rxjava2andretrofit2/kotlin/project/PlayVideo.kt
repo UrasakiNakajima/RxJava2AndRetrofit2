@@ -39,26 +39,37 @@ class PlayVideo {
     /** 视频播放资源地址  */
     private var mediaUrl: String? = null
 
-    private val mHandler = object : Handler() {
-        override fun handleMessage(msg: Message?) {
-            if (null != msg) {
-                ivCover!!.setImageBitmap(msg!!.obj as Bitmap)
-            }
-        }
-    }
-
     constructor(context: Context, mediaUrl: String) {
         this.context = context
         this.mediaUrl = mediaUrl
-        videoView = LayoutInflater.from(context).inflate(R.layout.custom_videoplayer, null)
+        videoView = LayoutInflater.from(context).inflate(R.layout.custom_video_player, null)
+
         initView(videoView!!)
         event()
     }
 
+//    private val handler: Handler = object : Handler() {
+//        override fun handleMessage(msg: Message?) {
+//            if (msg != null) {
+//                ivCover!!.setImageBitmap(msg!!.obj as Bitmap)
+//            }
+//        }
+//    }
+
+    private val handler = object : Handler(object : Callback {
+
+        override fun handleMessage(msg: Message?): Boolean {
+            if (msg != null) {
+                ivCover!!.setImageBitmap(msg!!.obj as Bitmap)
+            }
+            return false
+        }
+    }) {}
+
 //    fun PlayVideo(context: Context, mediaUrl: String) {
 //        this.context = context
 //        this.mediaUrl = mediaUrl
-//        videoView = LayoutInflater.from(context).inflate(R.layout.custom_videoplayer, null)
+//        videoView = LayoutInflater.from(context).inflate(R.layout.custom_video_player, null)
 //        initView(videoView!!)
 //        event()
 //    }
@@ -87,10 +98,14 @@ class PlayVideo {
     }
 
     private fun event() {
+//        seekBar!!.setProgress(seekBar!!.progress)
         //seekbar调节进度
         seekBar!!.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+//                if (mediaPlayer != null) {
+//                    mediaPlayer!!.seekTo(seekBar.progress)
+//                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -99,6 +114,7 @@ class PlayVideo {
             override fun onStopTrackingTouch(seekBar2: SeekBar) {
                 if (mediaPlayer != null) {
                     mediaPlayer!!.seekTo(seekBar2.progress)
+                    seekBar!!.setProgress(mediaPlayer!!.currentPosition)
                 }
             }
         })
@@ -128,7 +144,7 @@ class PlayVideo {
                 val bitmap = mediaMetadataRetriever.getFrameAtTime(1000, MediaMetadataRetriever.OPTION_CLOSEST)
                 val message = Message()
                 message.obj = bitmap
-                mHandler.sendMessage(message)
+                handler.sendMessage(message)
             }
         }.start()
     }
@@ -272,6 +288,12 @@ class PlayVideo {
                     }
                 }
             }
+        }
+    }
+
+    fun onDestroy() {
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null)
         }
     }
 

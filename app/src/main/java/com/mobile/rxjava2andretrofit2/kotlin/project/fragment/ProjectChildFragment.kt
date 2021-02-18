@@ -13,6 +13,7 @@ import com.mobile.rxjava2andretrofit2.databinding.FragmentProjectChildBinding
 import com.mobile.rxjava2andretrofit2.kotlin.project.adapter.ProjectAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.project.bean.DataX
 import com.mobile.rxjava2andretrofit2.kotlin.project.ui.SurfaceViewActivity
+import com.mobile.rxjava2andretrofit2.kotlin.project.ui.VideoViewActivity
 import com.mobile.rxjava2andretrofit2.kotlin.project.view_model.ProjectViewModelImpl
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
@@ -84,7 +85,8 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         projectAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
-                startActivity(SurfaceViewActivity::class.java)
+//                startActivity(VideoView2Activity::class.java)
+                startActivity(VideoViewActivity::class.java)
             }
 
         })

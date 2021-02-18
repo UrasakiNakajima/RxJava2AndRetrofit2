@@ -37,10 +37,6 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
     private val pageSize: String = "20";
     private var currentPage: Int = 1;
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     companion object {
         fun getInstance(type: String): ResourceChildFragment {
             val fragment = ResourceChildFragment()
