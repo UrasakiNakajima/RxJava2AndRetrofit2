@@ -79,6 +79,26 @@ class VideoViewActivity : BaseAppActivity() {
 
     private val handler = Handler()
 
+    private val runnable = Runnable {
+        sendTime()
+        val currentPosition = mvideo_view!!.currentPosition
+        if (mvideo_view!!.isPlaying()) {
+            tev_current_time!!.text = playCurrentTime()
+            if (currentPosition == oldPosition) {
+                progress_circular!!.setVisibility(View.VISIBLE)
+            } else {
+                progress_circular!!.setVisibility(View.GONE)
+                if (place_holder != null)
+                    place_holder!!.visibility = View.GONE
+            }
+            oldPosition = currentPosition
+        }
+    }
+
+    fun sendTime() {
+        handler.postDelayed(runnable, 200)
+    }
+
     /**
      * 设置视频源
      *
@@ -142,6 +162,18 @@ class VideoViewActivity : BaseAppActivity() {
     }
 
     /**
+     * 指定位置播放
+     *
+     * @param m
+     */
+    fun seekTo(m: Float) {
+        imv_play!!.setVisibility(View.GONE)
+        if (mvideo_view != null) {
+            mvideo_view!!.seekTo(m.toInt())
+        }
+    }
+
+    /**
      * 开始播放
      */
     fun startPlay() {
@@ -177,18 +209,6 @@ class VideoViewActivity : BaseAppActivity() {
     }
 
     /**
-     * 指定位置播放
-     *
-     * @param m
-     */
-    fun seekTo(m: Float) {
-        imv_play!!.setVisibility(View.GONE)
-        if (mvideo_view != null) {
-            mvideo_view!!.seekTo(m.toInt())
-        }
-    }
-
-    /**
      * 重置
      */
     fun resetPlay() {
@@ -213,26 +233,6 @@ class VideoViewActivity : BaseAppActivity() {
     fun destoryPlay() {
         handler.removeCallbacks(runnable)
         mvideo_view!!.stopPlayback()
-    }
-
-    private val runnable = Runnable {
-        sendTime()
-        val currentPosition = mvideo_view!!.currentPosition
-        if (mvideo_view!!.isPlaying()) {
-            tev_current_time!!.text = playCurrentTime()
-            if (currentPosition == oldPosition) {
-                progress_circular!!.setVisibility(View.VISIBLE)
-            } else {
-                progress_circular!!.setVisibility(View.GONE)
-                if (place_holder != null)
-                    place_holder!!.visibility = View.GONE
-            }
-            oldPosition = currentPosition
-        }
-    }
-
-    fun sendTime() {
-        handler.postDelayed(runnable, 200)
     }
 
     /**

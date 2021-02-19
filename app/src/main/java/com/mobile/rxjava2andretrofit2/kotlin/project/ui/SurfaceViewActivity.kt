@@ -106,47 +106,6 @@ class SurfaceViewActivity : BaseAppActivity() {
     }
 
     /**
-     * 开始播放
-     */
-    fun startPlay() {
-        if (!isPlaying) {
-            mediaPlayer!!.start()
-            isPlaying = true
-        }
-        imv_play!!.visibility = View.GONE
-
-//        place_holder.visibility = View.VISIBLE
-        progress_circular.setVisibility(View.VISIBLE)
-    }
-
-//    /**
-//     * 开始播放
-//     */
-//    fun start(msec: Int) {
-//        if (!isPlaying) {
-//            mediaPlayer!!.seekTo(msec)
-//            mediaPlayer!!.start()
-//            isPlaying = true
-//        }
-//        imv_play!!.visibility = View.GONE
-//
-////        place_holder.visibility = View.VISIBLE
-//        progress_circular.setVisibility(View.VISIBLE)
-//    }
-
-    /**
-     * 暂停播放
-     */
-    fun pausePlay() {
-        if (isPlaying) {
-//            playProgress = mediaPlayer!!.currentPosition;
-            mediaPlayer!!.pause()
-            isPlaying = false
-        }
-        imv_play!!.visibility = View.VISIBLE
-    }
-
-    /**
      * 设置视频源
      *
      * @param url
@@ -246,13 +205,45 @@ class SurfaceViewActivity : BaseAppActivity() {
     }
 
     /**
-     * 停止播放
+     * 开始播放
      */
-    fun stopPlay() {
-        mediaPlayer!!.stop()
-        isPlaying = false
+    fun startPlay() {
+        if (!isPlaying) {
+            mediaPlayer!!.start()
+            isPlaying = true
+        }
+        imv_play!!.visibility = View.GONE
+
+//        place_holder.visibility = View.VISIBLE
+        progress_circular.setVisibility(View.VISIBLE)
     }
 
+//    /**
+//     * 开始播放
+//     */
+//    fun start(msec: Int) {
+//        if (!isPlaying) {
+//            mediaPlayer!!.seekTo(msec)
+//            mediaPlayer!!.start()
+//            isPlaying = true
+//        }
+//        imv_play!!.visibility = View.GONE
+//
+////        place_holder.visibility = View.VISIBLE
+//        progress_circular.setVisibility(View.VISIBLE)
+//    }
+
+    /**
+     * 暂停播放
+     */
+    fun pausePlay() {
+        if (isPlaying) {
+//            playProgress = mediaPlayer!!.currentPosition;
+            mediaPlayer!!.pause()
+            isPlaying = false
+        }
+        imv_play!!.visibility = View.VISIBLE
+    }
 
     /**
      * 指定位置播放
@@ -264,6 +255,14 @@ class SurfaceViewActivity : BaseAppActivity() {
         if (mediaPlayer != null) {
             mediaPlayer!!.seekTo(m.toInt())
         }
+    }
+
+    /**
+     * 停止播放
+     */
+    fun stopPlay() {
+        mediaPlayer!!.stop()
+        isPlaying = false
     }
 
     /**
