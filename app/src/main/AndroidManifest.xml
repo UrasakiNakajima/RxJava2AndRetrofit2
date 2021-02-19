@@ -33,10 +33,12 @@
         <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" /> <!-- 适配小米（xiaomi）刘海屏 -->
+            android:value="2.4" />
+        <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" /> <!-- 适配android7.0及其以上 -->
+            android:value="true" />
+        <!-- 适配android7.0及其以上 -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
@@ -49,7 +51,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider> <!-- Launch页 -->
+        </provider>
+
+        <!-- Launch页 -->
         <activity android:name=".login.ui.LaunchActivity">
 
         </activity>

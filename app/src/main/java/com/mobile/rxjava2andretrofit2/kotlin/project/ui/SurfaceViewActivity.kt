@@ -10,7 +10,6 @@ import android.os.Handler
 import android.view.SurfaceHolder
 import android.view.View
 import androidx.annotation.RequiresApi
-import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseAppActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,6 +17,7 @@ import java.util.*
 import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_surface_view.*
 import android.net.Uri
+import com.mobile.rxjava2andretrofit2.R
 
 
 class SurfaceViewActivity : BaseAppActivity() {
@@ -28,8 +28,11 @@ class SurfaceViewActivity : BaseAppActivity() {
 
     /*测试地址*/
 //    val url = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-    val url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
+//    val url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
     //    val url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
+    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/hidden_corner.mp4";
+
+
     val VIDEO_TYPE_URI = 1
     val VIDEO_TYPE_FILE_PATH = 2
     var VIDEO_TYPE: Int = 0
@@ -44,29 +47,19 @@ class SurfaceViewActivity : BaseAppActivity() {
 
     private var mediaPlayer: MediaPlayer? = null
     //0.开始状态。1.正在播放。2.暂停。3.停止。
-    private var isPlaying: Int = 0
+
+    private var isPlaying: Boolean = false
 //    private var playProgress: Int = 0;
 
     override fun initLayoutId(): Int {
-        return com.mobile.rxjava2andretrofit2.R.layout.activity_surface_view
+        return R.layout.activity_surface_view
     }
 
     override fun initData() {
-
+//        playProgress = 0
     }
 
     override fun initViews() {
-        surface_view.setOnClickListener(View.OnClickListener {
-            if (isPlaying == 1) {
-                pause()
-            } else {
-//                if (playProgress != 0) {
-//
-//                }
-                start()
-            }
-        })
-
         surface_view.getHolder().setKeepScreenOn(true)
         surface_view.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
         surface_view.getHolder().addCallback(object : SurfaceHolder.Callback {
@@ -95,14 +88,14 @@ class SurfaceViewActivity : BaseAppActivity() {
     private val runnable = Runnable {
         sendTime()
         val currentPosition = mediaPlayer!!.getCurrentPosition()
-        if (isPlaying == 1) {
-            tv_current_time!!.text = playCurrentTime()
+        if (isPlaying) {
+            tev_current_time!!.text = playCurrentTime()
             if (currentPosition == oldPosition) {
                 progress_circular!!.setVisibility(View.VISIBLE)
             } else {
                 progress_circular!!.setVisibility(View.GONE)
-                if (placeholder != null)
-                    placeholder!!.visibility = View.GONE
+                if (place_holder != null)
+                    place_holder!!.visibility = View.GONE
             }
             oldPosition = currentPosition
         }
@@ -116,38 +109,41 @@ class SurfaceViewActivity : BaseAppActivity() {
      * 开始播放
      */
     fun start() {
-        if (isPlaying != 1) {
+        if (!isPlaying) {
             mediaPlayer!!.start()
-            isPlaying = 1
+            isPlaying = true
         }
-        play!!.visibility = View.GONE
+        imv_play!!.visibility = View.GONE
 
-//        placeholder.visibility = View.VISIBLE
+//        place_holder.visibility = View.VISIBLE
         progress_circular.setVisibility(View.VISIBLE)
     }
+
+//    /**
+//     * 开始播放
+//     */
+//    fun start(msec: Int) {
+//        if (!isPlaying) {
+//            mediaPlayer!!.seekTo(msec)
+//            mediaPlayer!!.start()
+//            isPlaying = true
+//        }
+//        imv_play!!.visibility = View.GONE
+//
+////        place_holder.visibility = View.VISIBLE
+//        progress_circular.setVisibility(View.VISIBLE)
+//    }
 
     /**
      * 暂停播放
      */
     fun pause() {
-        if (isPlaying == 1) {
+        if (isPlaying) {
 //            playProgress = mediaPlayer!!.currentPosition;
             mediaPlayer!!.pause()
-            isPlaying = 2
+            isPlaying = false
         }
-        play!!.visibility = View.VISIBLE
-    }
-
-    /**
-     * 重新播放
-     */
-    fun resetStart() {
-        if (isCompletion) {
-            mediaPlayer!!.seekTo(0)
-            isCompletion = false
-            mediaPlayer!!.start()
-            play!!.visibility = View.INVISIBLE
-        }
+        imv_play!!.visibility = View.VISIBLE
     }
 
     /**
@@ -178,9 +174,8 @@ class SurfaceViewActivity : BaseAppActivity() {
         mediaPlayer!!.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
             override fun onPrepared(mp: MediaPlayer?) {
                 if (mediaPlayer != null) {
-                    tv_total_time!!.setText(durationTime())
+                    tev_total_time!!.setText(durationTime())
                     sendTime()
-//                    start()
                 }
             }
 
@@ -193,11 +188,11 @@ class SurfaceViewActivity : BaseAppActivity() {
                         progress_circular.setVisibility(View.VISIBLE)
                     }
                 } else {
-                    if (isPlaying == 1) {
+                    if (isPlaying) {
                         if (progress_circular != null) {
                             progress_circular.setVisibility(View.GONE)
-                            play!!.visibility = View.GONE
-                            lay_playControl!!.visibility = View.VISIBLE
+                            imv_play!!.visibility = View.GONE
+                            layout_play_control!!.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -209,14 +204,14 @@ class SurfaceViewActivity : BaseAppActivity() {
         mediaPlayer!!.setOnCompletionListener(object : MediaPlayer.OnCompletionListener {
             override fun onCompletion(mp: MediaPlayer?) {
                 isCompletion = true
-                isPlaying = 3
-                placeholder!!.visibility = View.VISIBLE
-                reset()
+                isPlaying = false
+                place_holder!!.visibility = View.VISIBLE
+                resetStart()
             }
         })
 
         surface_view!!.setOnClickListener(View.OnClickListener {
-            if (isPlaying == 1) {
+            if (isPlaying ) {
                 pause()
             } else {
                 start()
@@ -229,7 +224,7 @@ class SurfaceViewActivity : BaseAppActivity() {
      *
      */
     private fun seekBarListener() {
-        mSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mseek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (isTrackingTouch) {
@@ -257,7 +252,7 @@ class SurfaceViewActivity : BaseAppActivity() {
      */
     fun stop() {
         mediaPlayer!!.stop()
-        isPlaying = 3
+        isPlaying = false
     }
 
 
@@ -267,7 +262,7 @@ class SurfaceViewActivity : BaseAppActivity() {
      * @param m
      */
     fun seekTo(m: Float) {
-        play!!.setVisibility(View.GONE)
+        imv_play!!.setVisibility(View.GONE)
         if (mediaPlayer != null) {
             mediaPlayer!!.seekTo(m.toInt())
         }
@@ -276,13 +271,14 @@ class SurfaceViewActivity : BaseAppActivity() {
     /**
      * 重置
      */
-    fun reset() {
-        isPlaying = 0
-        tv_current_time!!.text = resources.getString(com.mobile.rxjava2andretrofit2.R.string.start_time)
-        mSeekBar!!.progress = 0
-        mCurrentProgressBar.progress = 0
+    fun resetStart() {
+        isPlaying = true
+        tev_current_time!!.text = resources.getString(R.string.start_time)
+        mseek_bar!!.progress = 0
+        mcurrent_progress_bar.progress = 0
         seekTo(0f)
-        play!!.visibility = View.VISIBLE
+        mediaPlayer!!.start()
+        imv_play!!.visibility = View.VISIBLE
     }
 
     /**
@@ -290,7 +286,7 @@ class SurfaceViewActivity : BaseAppActivity() {
      */
     fun destory() {
         handler.removeCallbacks(runnable)
-        isPlaying = 0
+        isPlaying = false
         mediaPlayer!!.stop()
         mediaPlayer!!.release()
     }
@@ -315,7 +311,7 @@ class SurfaceViewActivity : BaseAppActivity() {
 
             val finalBitmap = bitmap
             Observable.empty<Any>().subscribeOn(AndroidSchedulers.mainThread())
-                    .doOnComplete { placeholder!!.setImageBitmap(finalBitmap) }.subscribe()
+                    .doOnComplete { place_holder!!.setImageBitmap(finalBitmap) }.subscribe()
 
 //            } catch (ex: Exception) {
 //                ex.printStackTrace()
@@ -338,8 +334,8 @@ class SurfaceViewActivity : BaseAppActivity() {
     fun playCurrentTime(): String {
         val currentPosition = mediaPlayer!!.getCurrentPosition()
         val scale = (currentPosition * 1.0 / mediaPlayer!!.getDuration()).toFloat()
-        mSeekBar!!.progress = (scale * 100).toInt()
-        mCurrentProgressBar!!.progress = (scale * 100).toInt()
+        mseek_bar!!.progress = (scale * 100).toInt()
+        mcurrent_progress_bar!!.progress = (scale * 100).toInt()
         return stringForTime(currentPosition)
     }
 

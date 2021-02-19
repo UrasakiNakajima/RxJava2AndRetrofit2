@@ -9,9 +9,9 @@ import android.os.Handler
 import android.view.View
 import android.widget.SeekBar
 import androidx.annotation.RequiresApi
+import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseAppActivity
 import kotlinx.android.synthetic.main.activity_video_view.*
-import com.mobile.rxjava2andretrofit2.R
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.*
@@ -24,7 +24,8 @@ class VideoViewActivity : BaseAppActivity() {
     }
 
     /*测试地址*/
-    val url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
+//    val url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
+    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/hidden_corner.mp4";
     val VIDEO_TYPE_URI = 1
     val VIDEO_TYPE_FILE_PATH = 2
     var VIDEO_TYPE: Int = 0
@@ -49,12 +50,12 @@ class VideoViewActivity : BaseAppActivity() {
     }
 
     override fun initViews() {
-        mSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mseek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (isTrackingTouch) {
                     val scale = (progress * 1.0 / 100).toFloat()
-                    val msec = mVideoView.getDuration() * scale
+                    val msec = mvideo_view.getDuration() * scale
                     seekTo(msec)
                 }
             }
@@ -89,32 +90,32 @@ class VideoViewActivity : BaseAppActivity() {
         when (TYPE) {
             VIDEO_TYPE_FILE_PATH ->
                 /*设置播放源*/
-                mVideoView!!.setVideoPath(url)
+                mvideo_view!!.setVideoPath(url)
             VIDEO_TYPE_URI ->
                 /*设置播放源*/
-                mVideoView!!.setVideoURI(Uri.parse(url))
+                mvideo_view!!.setVideoURI(Uri.parse(url))
         }
         getPreviewImage(url)
         /*准备完成后回调*/
-        mVideoView!!.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
+        mvideo_view!!.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
             override fun onPrepared(mp: MediaPlayer?) {
-                tv_total_time!!.setText(durationTime())
+                tev_total_time!!.setText(durationTime())
                 sendTime()
             }
 
         })
         /*播放内容监听*/
-        mVideoView!!.setOnInfoListener((object : MediaPlayer.OnInfoListener {
+        mvideo_view!!.setOnInfoListener((object : MediaPlayer.OnInfoListener {
             override fun onInfo(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
                 if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
                     if (progress_circular != null) {
                         progress_circular!!.setVisibility(View.VISIBLE)
                     }
                 } else {
-                    if (mVideoView!!.isPlaying()) {
+                    if (mvideo_view!!.isPlaying()) {
                         if (progress_circular != null) progress_circular!!.setVisibility(View.GONE)
-                        play!!.visibility = View.GONE
-                        lay_playControl!!.visibility = View.VISIBLE
+                        imv_play!!.visibility = View.GONE
+                        layout_play_control!!.visibility = View.VISIBLE
                     }
                 }
                 return true
@@ -122,17 +123,17 @@ class VideoViewActivity : BaseAppActivity() {
 
         }))
         /*播放完成回调*/
-        mVideoView!!.setOnCompletionListener(object : MediaPlayer.OnCompletionListener {
+        mvideo_view!!.setOnCompletionListener(object : MediaPlayer.OnCompletionListener {
             override fun onCompletion(mp: MediaPlayer?) {
                 isCompletion = true
-                placeholder!!.visibility = View.VISIBLE
+                place_holder!!.visibility = View.VISIBLE
                 reset()
             }
 
         })
 
-        mVideoView!!.setOnClickListener(View.OnClickListener {
-            if (mVideoView!!.isPlaying()) {
+        mvideo_view!!.setOnClickListener(View.OnClickListener {
+            if (mvideo_view!!.isPlaying()) {
                 pause()
             } else {
                 start()
@@ -144,12 +145,12 @@ class VideoViewActivity : BaseAppActivity() {
      * 开始播放
      */
     fun start() {
-        if (!mVideoView!!.isPlaying()) {
-            mVideoView!!.start()
+        if (!mvideo_view!!.isPlaying()) {
+            mvideo_view!!.start()
         }
-        play!!.visibility = View.GONE
+        imv_play!!.visibility = View.GONE
 
-//        placeholder!!.visibility = View.VISIBLE
+//        place_holder!!.visibility = View.VISIBLE
         progress_circular!!.setVisibility(View.VISIBLE)
     }
 
@@ -157,21 +158,21 @@ class VideoViewActivity : BaseAppActivity() {
      * 暂停播放
      */
     fun pause() {
-        if (mVideoView != null && mVideoView!!.isPlaying()) {
-            mVideoView!!.pause()
+        if (mvideo_view != null && mvideo_view!!.isPlaying()) {
+            mvideo_view!!.pause()
         }
-        play!!.visibility = View.VISIBLE
+        imv_play!!.visibility = View.VISIBLE
     }
 
     /**
      * 重新播放
      */
     fun resetStart() {
-        if (mVideoView != null && isCompletion) {
-            mVideoView!!.seekTo(0)
+        if (mvideo_view != null && isCompletion) {
+            mvideo_view!!.seekTo(0)
             isCompletion = false
-            mVideoView!!.start()
-            play!!.visibility = View.INVISIBLE
+            mvideo_view!!.start()
+            imv_play!!.visibility = View.INVISIBLE
         }
     }
 
@@ -181,9 +182,9 @@ class VideoViewActivity : BaseAppActivity() {
      * @param m
      */
     fun seekTo(m: Float) {
-        play!!.setVisibility(View.GONE)
-        if (mVideoView != null) {
-            mVideoView!!.seekTo(m.toInt())
+        imv_play!!.setVisibility(View.GONE)
+        if (mvideo_view != null) {
+            mvideo_view!!.seekTo(m.toInt())
         }
     }
 
@@ -191,19 +192,19 @@ class VideoViewActivity : BaseAppActivity() {
      * 重置
      */
     fun reset() {
-        tv_current_time!!.text = resources.getString(R.string.start_time)
-        mSeekBar!!.progress = 0
-        mCurrentProgressBar.progress = 0
+        tev_current_time!!.text = resources.getString(R.string.start_time)
+        mseek_bar!!.progress = 0
+        mcurrent_progress_bar.progress = 0
         seekTo(0f)
-        play!!.visibility = View.VISIBLE
+        imv_play!!.visibility = View.VISIBLE
     }
 
     /**
      * 停止播放
      */
     fun stop() {
-        mVideoView!!.canPause()
-        mVideoView!!.stopPlayback()
+        mvideo_view!!.canPause()
+        mvideo_view!!.stopPlayback()
     }
 
     /**
@@ -211,20 +212,20 @@ class VideoViewActivity : BaseAppActivity() {
      */
     fun destory() {
         handler.removeCallbacks(runnable)
-        mVideoView!!.stopPlayback()
+        mvideo_view!!.stopPlayback()
     }
 
     private val runnable = Runnable {
         sendTime()
-        val currentPosition = mVideoView!!.getCurrentPosition()
-        if (mVideoView!!.isPlaying()) {
-            tv_current_time!!.text = playCurrentTime()
+        val currentPosition = mvideo_view!!.getCurrentPosition()
+        if (mvideo_view!!.isPlaying()) {
+            tev_current_time!!.text = playCurrentTime()
             if (currentPosition == oldPosition) {
                 progress_circular!!.setVisibility(View.VISIBLE)
             } else {
                 progress_circular!!.setVisibility(View.GONE)
-                if (placeholder != null)
-                    placeholder!!.visibility = View.GONE
+                if (place_holder != null)
+                    place_holder!!.visibility = View.GONE
             }
             oldPosition = currentPosition
         }
@@ -254,7 +255,7 @@ class VideoViewActivity : BaseAppActivity() {
 
                 val finalBitmap = bitmap
                 Observable.empty<Any>().subscribeOn(AndroidSchedulers.mainThread())
-                        .doOnComplete { placeholder!!.setImageBitmap(finalBitmap) }.subscribe()
+                        .doOnComplete { place_holder!!.setImageBitmap(finalBitmap) }.subscribe()
 
             } catch (ex: Exception) {
                 ex.printStackTrace()
@@ -275,10 +276,10 @@ class VideoViewActivity : BaseAppActivity() {
      * @return
      */
     fun playCurrentTime(): String {
-        val CurrentPosition = mVideoView!!.getCurrentPosition()
-        val scale = (CurrentPosition * 1.0 / mVideoView!!.getDuration()).toFloat()
-        mSeekBar!!.progress = (scale * 100).toInt()
-        mCurrentProgressBar!!.progress = (scale * 100).toInt()
+        val CurrentPosition = mvideo_view!!.getCurrentPosition()
+        val scale = (CurrentPosition * 1.0 / mvideo_view!!.getDuration()).toFloat()
+        mseek_bar!!.progress = (scale * 100).toInt()
+        mcurrent_progress_bar!!.progress = (scale * 100).toInt()
         return stringForTime(CurrentPosition)
     }
 
@@ -288,7 +289,7 @@ class VideoViewActivity : BaseAppActivity() {
      * @return
      */
     fun durationTime(): String {
-        return stringForTime(mVideoView!!.getDuration())
+        return stringForTime(mvideo_view!!.getDuration())
     }
 
     /**

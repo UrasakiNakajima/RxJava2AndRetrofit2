@@ -6,13 +6,13 @@
     android:orientation="vertical">
 
     <com.mobile.rxjava2andretrofit2.custom_view.MyVideoView
-        android:id="@+id/mVideoView"
+        android:id="@+id/mvideo_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center" />
 
     <ProgressBar
-        android:id="@+id/mCurrentProgressBar"
+        android:id="@+id/mcurrent_progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_3"
@@ -20,14 +20,14 @@
         android:max="100" />
 
     <ImageView
-        android:id="@+id/placeholder"
+        android:id="@+id/place_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
     <ImageView
-        android:id="@+id/play"
+        android:id="@+id/imv_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -42,7 +42,7 @@
         android:visibility="gone" />
 
     <LinearLayout
-        android:id="@+id/lay_playControl"
+        android:id="@+id/layout_play_control"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         android:layout_gravity="bottom"
@@ -54,7 +54,7 @@
         android:visibility="visible">
 
         <TextView
-            android:id="@+id/tv_current_time"
+            android:id="@+id/tev_current_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
@@ -63,14 +63,14 @@
             android:textColor="@color/color_80000000" />
 
         <SeekBar
-            android:id="@+id/mSeekBar"
+            android:id="@+id/mseek_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             tools:ignore="InefficientWeight" />
 
         <TextView
-            android:id="@+id/tv_total_time"
+            android:id="@+id/tev_total_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
