@@ -124,7 +124,7 @@ class SurfaceViewActivity : BaseAppActivity() {
                 /*设置播放源*/
                 mediaPlayer!!.setDataSource(this, uri)
         }
-        mediaPlayer!!.setDisplay(surface_view.getHolder());
+        mediaPlayer!!.setDisplay(surface_view.holder);
         mediaPlayer!!.prepareAsync();
         /*准备完成后回调*/
         mediaPlayer!!.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
