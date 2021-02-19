@@ -98,9 +98,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".first_page.ui.VideoView2Activity">
-
-        </activity>
     </application>
 
 </manifest>
