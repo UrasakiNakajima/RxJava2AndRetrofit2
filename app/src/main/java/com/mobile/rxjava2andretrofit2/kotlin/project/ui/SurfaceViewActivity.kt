@@ -87,7 +87,7 @@ class SurfaceViewActivity : BaseAppActivity() {
 
     private val runnable = Runnable {
         sendTime()
-        val currentPosition = mediaPlayer!!.getCurrentPosition()
+        val currentPosition = mediaPlayer!!.currentPosition
         if (isPlaying) {
             tev_current_time!!.text = playCurrentTime()
             if (currentPosition == oldPosition) {
@@ -108,7 +108,7 @@ class SurfaceViewActivity : BaseAppActivity() {
     /**
      * 开始播放
      */
-    fun start() {
+    fun startPlay() {
         if (!isPlaying) {
             mediaPlayer!!.start()
             isPlaying = true
@@ -137,7 +137,7 @@ class SurfaceViewActivity : BaseAppActivity() {
     /**
      * 暂停播放
      */
-    fun pause() {
+    fun pausePlay() {
         if (isPlaying) {
 //            playProgress = mediaPlayer!!.currentPosition;
             mediaPlayer!!.pause()
@@ -157,8 +157,7 @@ class SurfaceViewActivity : BaseAppActivity() {
         mediaPlayer = MediaPlayer()
         mediaPlayer!!.reset();
         mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        val uri = Uri
-                .parse(url)
+        val uri = Uri.parse(url)
         this.VIDEO_TYPE = TYPE
         when (TYPE) {
             VIDEO_TYPE_FILE_PATH ->
@@ -206,15 +205,15 @@ class SurfaceViewActivity : BaseAppActivity() {
                 isCompletion = true
                 isPlaying = false
                 place_holder!!.visibility = View.VISIBLE
-                resetStart()
+                resetStartPlay()
             }
         })
 
         surface_view!!.setOnClickListener(View.OnClickListener {
             if (isPlaying) {
-                pause()
+                pausePlay()
             } else {
-                start()
+                startPlay()
             }
         })
     }
@@ -236,12 +235,12 @@ class SurfaceViewActivity : BaseAppActivity() {
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 isTrackingTouch = true
-                pause()
+                pausePlay()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 isTrackingTouch = false
-                start()
+                startPlay()
             }
         })
     }
@@ -249,7 +248,7 @@ class SurfaceViewActivity : BaseAppActivity() {
     /**
      * 停止播放
      */
-    fun stop() {
+    fun stopPlay() {
         mediaPlayer!!.stop()
         isPlaying = false
     }
@@ -270,7 +269,7 @@ class SurfaceViewActivity : BaseAppActivity() {
     /**
      * 重置
      */
-    fun resetStart() {
+    fun resetStartPlay() {
         isPlaying = true
         tev_current_time!!.text = resources.getString(R.string.start_time)
         mseek_bar!!.progress = 0
@@ -283,7 +282,7 @@ class SurfaceViewActivity : BaseAppActivity() {
     /**
      * 销毁
      */
-    fun destory() {
+    fun destoryPlay() {
         handler.removeCallbacks(runnable)
         isPlaying = false
         mediaPlayer!!.stop()
@@ -310,13 +309,16 @@ class SurfaceViewActivity : BaseAppActivity() {
 
             val finalBitmap = bitmap
             Observable.empty<Any>().subscribeOn(AndroidSchedulers.mainThread())
-                    .doOnComplete { place_holder!!.setImageBitmap(finalBitmap) }.subscribe()
+                    .doOnComplete {
+                        place_holder!!.setImageBitmap(finalBitmap)
+                        retriever.release()
+                    }.subscribe()
 
 //            } catch (ex: Exception) {
 //                ex.printStackTrace()
 //            } finally {
 //                try {
-            retriever.release()
+
 //                } catch (ex: RuntimeException) {
 //                    ex.printStackTrace()
 //                }
@@ -331,8 +333,8 @@ class SurfaceViewActivity : BaseAppActivity() {
      * @return
      */
     fun playCurrentTime(): String {
-        val currentPosition = mediaPlayer!!.getCurrentPosition()
-        val scale = (currentPosition * 1.0 / mediaPlayer!!.getDuration()).toFloat()
+        val currentPosition = mediaPlayer!!.currentPosition
+        val scale = (currentPosition * 1.0 / mediaPlayer!!.duration).toFloat()
         mseek_bar!!.progress = (scale * 100).toInt()
         mcurrent_progress_bar!!.progress = (scale * 100).toInt()
         return stringForTime(currentPosition)
@@ -345,7 +347,7 @@ class SurfaceViewActivity : BaseAppActivity() {
      * @return
      */
     fun durationTime(): String {
-        return stringForTime(mediaPlayer!!.getDuration())
+        return stringForTime(mediaPlayer!!.duration)
     }
 
     /**
@@ -374,13 +376,13 @@ class SurfaceViewActivity : BaseAppActivity() {
     }
 
     override fun onStop() {
-        pause()
+        pausePlay()
 //        playProgress = mediaPlayer!!.currentPosition;
         super.onStop()
     }
 
     override fun onDestroy() {
-        destory()
+        destoryPlay()
         super.onDestroy()
     }
 

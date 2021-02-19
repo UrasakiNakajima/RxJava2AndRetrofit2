@@ -63,12 +63,12 @@ class VideoViewActivity : BaseAppActivity() {
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 isTrackingTouch = true
-                pause()
+                pausePlay()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 isTrackingTouch = false
-                start()
+                startPlay()
             }
         })
     }
@@ -127,16 +127,16 @@ class VideoViewActivity : BaseAppActivity() {
             override fun onCompletion(mp: MediaPlayer?) {
                 isCompletion = true
                 place_holder!!.visibility = View.VISIBLE
-                reset()
+                resetPlay()
             }
 
         })
 
         mvideo_view!!.setOnClickListener(View.OnClickListener {
             if (mvideo_view!!.isPlaying()) {
-                pause()
+                pausePlay()
             } else {
-                start()
+                startPlay()
             }
         })
     }
@@ -144,7 +144,7 @@ class VideoViewActivity : BaseAppActivity() {
     /**
      * 开始播放
      */
-    fun start() {
+    fun startPlay() {
         if (!mvideo_view!!.isPlaying()) {
             mvideo_view!!.start()
         }
@@ -157,7 +157,7 @@ class VideoViewActivity : BaseAppActivity() {
     /**
      * 暂停播放
      */
-    fun pause() {
+    fun pausePlay() {
         if (mvideo_view != null && mvideo_view!!.isPlaying()) {
             mvideo_view!!.pause()
         }
@@ -167,7 +167,7 @@ class VideoViewActivity : BaseAppActivity() {
     /**
      * 重新播放
      */
-    fun resetStart() {
+    fun resetStartPlay() {
         if (mvideo_view != null && isCompletion) {
             mvideo_view!!.seekTo(0)
             isCompletion = false
@@ -191,7 +191,7 @@ class VideoViewActivity : BaseAppActivity() {
     /**
      * 重置
      */
-    fun reset() {
+    fun resetPlay() {
         tev_current_time!!.text = resources.getString(R.string.start_time)
         mseek_bar!!.progress = 0
         mcurrent_progress_bar.progress = 0
@@ -202,7 +202,7 @@ class VideoViewActivity : BaseAppActivity() {
     /**
      * 停止播放
      */
-    fun stop() {
+    fun stopPlay() {
         mvideo_view!!.canPause()
         mvideo_view!!.stopPlayback()
     }
@@ -210,14 +210,14 @@ class VideoViewActivity : BaseAppActivity() {
     /**
      * 销毁
      */
-    fun destory() {
+    fun destoryPlay() {
         handler.removeCallbacks(runnable)
         mvideo_view!!.stopPlayback()
     }
 
     private val runnable = Runnable {
         sendTime()
-        val currentPosition = mvideo_view!!.getCurrentPosition()
+        val currentPosition = mvideo_view!!.currentPosition
         if (mvideo_view!!.isPlaying()) {
             tev_current_time!!.text = playCurrentTime()
             if (currentPosition == oldPosition) {
@@ -244,29 +244,21 @@ class VideoViewActivity : BaseAppActivity() {
         Thread(Runnable {
             val retriever = MediaMetadataRetriever()
             var bitmap: Bitmap? = null
-            try {
-                //这里要用FileProvider获取的Uri
-                if (url.contains("http")) {
-                    retriever.setDataSource(url, HashMap())
-                } else {
-                    retriever.setDataSource(url)
-                }
-                bitmap = retriever.frameAtTime
 
-                val finalBitmap = bitmap
-                Observable.empty<Any>().subscribeOn(AndroidSchedulers.mainThread())
-                        .doOnComplete { place_holder!!.setImageBitmap(finalBitmap) }.subscribe()
-
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            } finally {
-                try {
-                    retriever.release()
-                } catch (ex: RuntimeException) {
-                    ex.printStackTrace()
-                }
-
+            //这里要用FileProvider获取的Uri
+            if (url.contains("http")) {
+                retriever.setDataSource(url, HashMap())
+            } else {
+                retriever.setDataSource(url)
             }
+            bitmap = retriever.frameAtTime
+
+            val finalBitmap = bitmap
+            Observable.empty<Any>().subscribeOn(AndroidSchedulers.mainThread())
+                    .doOnComplete {
+                        place_holder!!.setImageBitmap(finalBitmap)
+                        retriever.release()
+                    }.subscribe()
         }).start()
     }
 
@@ -276,8 +268,8 @@ class VideoViewActivity : BaseAppActivity() {
      * @return
      */
     fun playCurrentTime(): String {
-        val CurrentPosition = mvideo_view!!.getCurrentPosition()
-        val scale = (CurrentPosition * 1.0 / mvideo_view!!.getDuration()).toFloat()
+        val CurrentPosition = mvideo_view!!.currentPosition
+        val scale = (CurrentPosition * 1.0 / mvideo_view!!.duration).toFloat()
         mseek_bar!!.progress = (scale * 100).toInt()
         mcurrent_progress_bar!!.progress = (scale * 100).toInt()
         return stringForTime(CurrentPosition)
@@ -289,7 +281,7 @@ class VideoViewActivity : BaseAppActivity() {
      * @return
      */
     fun durationTime(): String {
-        return stringForTime(mvideo_view!!.getDuration())
+        return stringForTime(mvideo_view!!.duration)
     }
 
     /**
@@ -313,12 +305,12 @@ class VideoViewActivity : BaseAppActivity() {
     }
 
     override fun onStop() {
-        pause()
+        pausePlay()
         super.onStop()
     }
 
     override fun onDestroy() {
-        destory()
+        destoryPlay()
         super.onDestroy()
     }
 
