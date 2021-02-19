@@ -1,6 +1,5 @@
 package com.mobile.rxjava2andretrofit2.kotlin.project.ui
 
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.media.AudioManager
 import android.media.MediaMetadataRetriever
@@ -37,7 +36,6 @@ class SurfaceViewActivity : BaseAppActivity() {
     val VIDEO_TYPE_FILE_PATH = 2
     var VIDEO_TYPE: Int = 0
     private var isCompletion = false
-
     private var isTrackingTouch = false
 
     private var oldPosition: Int = 0
@@ -369,11 +367,6 @@ class SurfaceViewActivity : BaseAppActivity() {
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-
-    }
-
     override fun onStop() {
         pausePlay()
 //        playProgress = mediaPlayer!!.currentPosition;
@@ -385,13 +378,4 @@ class SurfaceViewActivity : BaseAppActivity() {
         super.onDestroy()
     }
 
-    private var onMoveListener: OnMoveListener? = null
-
-    fun setOnMoveListener(onMoveListener: OnMoveListener) {
-        this.onMoveListener = onMoveListener
-    }
-
-    interface OnMoveListener {
-        fun onMove()
-    }
 }

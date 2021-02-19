@@ -30,10 +30,6 @@ class VideoViewActivity : BaseAppActivity() {
     val VIDEO_TYPE_FILE_PATH = 2
     var VIDEO_TYPE: Int = 0
     private var isCompletion = false
-    private var downX: Int = 0
-    private var moveX: Int = 0
-    private var left: Boolean = false
-
     private var isTrackingTouch = false
 
     private var oldPosition: Int = 0
@@ -314,13 +310,4 @@ class VideoViewActivity : BaseAppActivity() {
         super.onDestroy()
     }
 
-    private var onMoveListener: OnMoveListener? = null
-
-    fun setOnMoveListener(onMoveListener: OnMoveListener) {
-        this.onMoveListener = onMoveListener
-    }
-
-    interface OnMoveListener {
-        fun onMove()
-    }
 }

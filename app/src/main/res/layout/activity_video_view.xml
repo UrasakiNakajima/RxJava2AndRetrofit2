@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         android:layout_gravity="bottom"
-        android:background="@color/color_54000000"
+        android:background="@color/color_54E066FF"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="@dimen/dp_10"
