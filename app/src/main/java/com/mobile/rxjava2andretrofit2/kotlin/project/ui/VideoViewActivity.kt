@@ -55,7 +55,7 @@ class VideoViewActivity : BaseAppActivity() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (isTrackingTouch) {
                     val scale = (progress * 1.0 / 100).toFloat()
-                    val msec = mvideo_view.getDuration() * scale
+                    val msec = mvideo_view.duration * scale
                     seekTo(msec)
                 }
             }

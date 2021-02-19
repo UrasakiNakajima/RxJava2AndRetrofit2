@@ -211,14 +211,13 @@ class SurfaceViewActivity : BaseAppActivity() {
         })
 
         surface_view!!.setOnClickListener(View.OnClickListener {
-            if (isPlaying ) {
+            if (isPlaying) {
                 pause()
             } else {
                 start()
             }
         })
     }
-
 
     /**
      *
@@ -229,7 +228,7 @@ class SurfaceViewActivity : BaseAppActivity() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (isTrackingTouch) {
                     val scale = (progress * 1.0 / 100).toFloat()
-                    val msec = seekBar.progress * scale
+                    val msec = mediaPlayer!!.duration * scale
                     seekTo(msec)
                 }
             }
