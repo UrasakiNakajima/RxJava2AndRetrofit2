@@ -85,17 +85,17 @@
             android:name=".kotlin.project.ui.VideoViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".kotlin.project.ui.SurfaceViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
