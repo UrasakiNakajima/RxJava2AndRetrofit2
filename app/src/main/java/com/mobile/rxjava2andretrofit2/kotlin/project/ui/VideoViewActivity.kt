@@ -5,16 +5,21 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
-import android.os.Handler
 import android.view.View
 import android.widget.SeekBar
 import androidx.annotation.RequiresApi
-import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseAppActivity
+import com.mobile.rxjava2andretrofit2.manager.VideoImageManager
 import kotlinx.android.synthetic.main.activity_video_view.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
 import java.util.*
+import kotlin.concurrent.fixedRateTimer
+import io.reactivex.BackpressureStrategy
+import io.reactivex.FlowableOnSubscribe
+import io.reactivex.Flowable
 
 
 class VideoViewActivity : BaseAppActivity() {
@@ -36,9 +41,10 @@ class VideoViewActivity : BaseAppActivity() {
     //将长度转换为时间
     internal var mFormatBuilder = StringBuilder()
     internal var mFormatter = Formatter(mFormatBuilder, Locale.getDefault())
+    private var timer: Timer? = null
 
     override fun initLayoutId(): Int {
-        return R.layout.activity_video_view
+        return com.mobile.rxjava2andretrofit2.R.layout.activity_video_view
     }
 
     override fun initData() {
@@ -67,33 +73,91 @@ class VideoViewActivity : BaseAppActivity() {
                 startPlay()
             }
         })
+        setVideoParam(url, VIDEO_TYPE_URI)
     }
 
     override fun initLoadData() {
-        setData(url, VIDEO_TYPE_URI)
+
     }
 
-    private val handler = Handler()
+//    private val handler = Handler()
+//
+//    private val runnable = Runnable {
+//        sendTime()
+//        val currentPosition = mvideo_view!!.currentPosition
+//        if (mvideo_view!!.isPlaying()) {
+//            tev_current_time!!.text = playCurrentTime()
+//            if (currentPosition == oldPosition) {
+//                progress_circular!!.setVisibility(View.VISIBLE)
+//            } else {
+//                progress_circular!!.setVisibility(View.GONE)
+//                if (place_holder != null)
+//                    place_holder!!.visibility = View.GONE
+//            }
+//            oldPosition = currentPosition
+//        }
+//    }
+//
+//    fun sendTime() {
+//        handler.postDelayed(runnable, 200)
+//    }
 
-    private val runnable = Runnable {
-        sendTime()
-        val currentPosition = mvideo_view!!.currentPosition
-        if (mvideo_view!!.isPlaying()) {
-            tev_current_time!!.text = playCurrentTime()
-            if (currentPosition == oldPosition) {
-                progress_circular!!.setVisibility(View.VISIBLE)
-            } else {
-                progress_circular!!.setVisibility(View.GONE)
-                if (place_holder != null)
-                    place_holder!!.visibility = View.GONE
-            }
-            oldPosition = currentPosition
+    private fun startTimer() {
+        timer = fixedRateTimer("", false, 0, 200) {
+//            Observable.create(ObservableOnSubscribe<String> { emitter ->
+//                emitter.onNext("1")
+//                emitter.onComplete()
+//            }).subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(object : Consumer<String> {
+//                        @Throws(Exception::class)
+//                        override fun accept(s: String) {
+//                            val currentPosition = mvideo_view!!.currentPosition
+//                            if (mvideo_view!!.isPlaying()) {
+//                                tev_current_time!!.text = playCurrentTime()
+//                                if (currentPosition == oldPosition) {
+//                                    progress_circular!!.setVisibility(View.VISIBLE)
+//                                } else {
+//                                    progress_circular!!.setVisibility(View.GONE)
+//                                    if (place_holder != null)
+//                                        place_holder!!.visibility = View.GONE
+//                                }
+//                                oldPosition = currentPosition
+//                            }
+//                        }
+//                    })
+
+
+            Flowable.create(FlowableOnSubscribe<String> { emitter ->
+                emitter.onNext("1")
+                emitter.onComplete()
+            }, BackpressureStrategy.BUFFER)
+//                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Consumer<String> {
+                        @Throws(Exception::class)
+                        override fun accept(s: String) {
+                            val currentPosition = mvideo_view!!.currentPosition
+                            if (mvideo_view!!.isPlaying()) {
+                                tev_current_time!!.text = playCurrentTime()
+                                if (currentPosition == oldPosition) {
+                                    progress_circular!!.setVisibility(View.VISIBLE)
+                                } else {
+                                    progress_circular!!.setVisibility(View.GONE)
+                                    if (place_holder != null)
+                                        place_holder!!.visibility = View.GONE
+                                }
+                                oldPosition = currentPosition
+                            }
+                        }
+                    })
         }
     }
 
-    fun sendTime() {
-        handler.postDelayed(runnable, 200)
+    private fun stopTimer() {
+        timer!!.cancel()
     }
+
 
     /**
      * 设置视频源
@@ -101,7 +165,9 @@ class VideoViewActivity : BaseAppActivity() {
      * @param url
      */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    fun setData(url: String, TYPE: Int) {
+    fun setVideoParam(url: String, TYPE: Int) {
+        place_holder!!.setImageBitmap(VideoImageManager.getVideoImage(this, url, false))
+//        getPreviewImage(url)
         this.VIDEO_TYPE = TYPE
         when (TYPE) {
             VIDEO_TYPE_FILE_PATH ->
@@ -111,12 +177,13 @@ class VideoViewActivity : BaseAppActivity() {
                 /*设置播放源*/
                 mvideo_view!!.setVideoURI(Uri.parse(url))
         }
-        getPreviewImage(url)
+
         /*准备完成后回调*/
         mvideo_view!!.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
             override fun onPrepared(mp: MediaPlayer?) {
                 tev_total_time!!.setText(durationTime())
-                sendTime()
+//                sendTime()
+                startTimer()
             }
 
         })
@@ -208,11 +275,11 @@ class VideoViewActivity : BaseAppActivity() {
      * 重置
      */
     fun resetPlay() {
-        tev_current_time!!.text = resources.getString(R.string.start_time)
-        mseek_bar!!.progress = 0
+        tev_current_time.text = resources.getString(com.mobile.rxjava2andretrofit2.R.string.start_time)
+        mseek_bar.progress = 0
         mcurrent_progress_bar.progress = 0
+        pausePlay()
         seekTo(0f)
-        imv_play!!.visibility = View.VISIBLE
     }
 
     /**
@@ -227,7 +294,8 @@ class VideoViewActivity : BaseAppActivity() {
      * 销毁
      */
     fun destoryPlay() {
-        handler.removeCallbacks(runnable)
+//        handler.removeCallbacks(runnable)
+        stopTimer()
         mvideo_view!!.stopPlayback()
     }
 

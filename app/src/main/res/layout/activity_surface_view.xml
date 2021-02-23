@@ -19,7 +19,7 @@
         android:max="100" />
 
     <ImageView
-        android:id="@+id/place_holder"
+        android:id="@+id/imv_place_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher_round"
+        android:visibility="gone"
         tools:ignore="ContentDescription" />
 
     <ProgressBar
@@ -50,7 +51,7 @@
         android:orientation="horizontal"
         android:paddingStart="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_10"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tev_current_time"
