@@ -31,9 +31,9 @@ class SurfaceViewActivity : BaseAppActivity() {
 
     /*测试地址*/
 //    val url = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-//    val url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
+    val url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
 //    val url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
-    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/hidden_corner.mp4";
+//    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/hidden_corner.mp4";
 
 
     val VIDEO_TYPE_URI = 1
