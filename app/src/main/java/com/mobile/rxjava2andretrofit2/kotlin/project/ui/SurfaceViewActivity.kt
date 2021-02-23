@@ -31,9 +31,9 @@ class SurfaceViewActivity : BaseAppActivity() {
 
     /*测试地址*/
 //    val url = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-    val url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
+//    val url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
 //    val url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
-//    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/hidden_corner.mp4";
+    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/hidden_corner.mp4";
 
 
     val VIDEO_TYPE_URI = 1
@@ -436,7 +436,11 @@ class SurfaceViewActivity : BaseAppActivity() {
      */
     fun resetStartPlay() {
         if (mediaPlayer != null && isCompletion) {
-            tev_current_time.text = resources.getString(com.mobile.rxjava2andretrofit2.R.string.start_time)
+            if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
+                tev_current_time.text = resources.getString(com.mobile.rxjava2andretrofit2.R.string.start_time)
+            } else {
+                tev_current_time.text = resources.getString(com.mobile.rxjava2andretrofit2.R.string.start_time)
+            }
             mseek_bar.progress = 0
             mcurrent_progress_bar.progress = 0
             pausePlay()
@@ -449,7 +453,11 @@ class SurfaceViewActivity : BaseAppActivity() {
      * 重置
      */
     fun resetVideo() {
-        tev_current_time.text = resources.getString(com.mobile.rxjava2andretrofit2.R.string.start_time)
+        if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
+            tev_current_time.text = resources.getString(com.mobile.rxjava2andretrofit2.R.string.start_time)
+        } else {
+            tev_current_time.text = resources.getString(com.mobile.rxjava2andretrofit2.R.string.start_time)
+        }
         mseek_bar.progress = 0
         mcurrent_progress_bar.progress = 0
         pausePlay()
@@ -506,8 +514,17 @@ class SurfaceViewActivity : BaseAppActivity() {
      *
      * @return
      */
-    fun durationTime(): String {
-        return stringForTime(mediaPlayer!!.duration)
+    fun durationTime(): String? {
+        if (mediaPlayer !== null) {
+            if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
+                tev_current_time.setText(getString(com.mobile.rxjava2andretrofit2.R.string.start_time))
+            } else {
+                tev_current_time.setText(getString(com.mobile.rxjava2andretrofit2.R.string.start_time2))
+            }
+            return stringForTime(mediaPlayer!!.duration)
+        } else {
+            return null;
+        }
     }
 
     /**
