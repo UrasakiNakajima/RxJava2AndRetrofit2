@@ -161,17 +161,13 @@ class SurfaceViewActivity : BaseAppActivity() {
 //
 //                        }))
 
-                        //播放缓冲监听
-                        mediaPlayer!!.setOnBufferingUpdateListener(object : MediaPlayer.OnBufferingUpdateListener {
-                            override fun onBufferingUpdate(mp: MediaPlayer?, percent: Int) {
-                                if (percent < 100) {
-                                    progress_circular.visibility = View.VISIBLE
-                                } else {
-                                    progress_circular.visibility = View.GONE
-                                }
-                            }
-
-                        })
+//                        //播放缓冲监听
+//                        mediaPlayer!!.setOnBufferingUpdateListener(object : MediaPlayer.OnBufferingUpdateListener {
+//                            override fun onBufferingUpdate(mp: MediaPlayer?, percent: Int) {
+//
+//                            }
+//
+//                        })
 
                         //播放完成回调
                         mediaPlayer!!.setOnCompletionListener(object : MediaPlayer.OnCompletionListener {
