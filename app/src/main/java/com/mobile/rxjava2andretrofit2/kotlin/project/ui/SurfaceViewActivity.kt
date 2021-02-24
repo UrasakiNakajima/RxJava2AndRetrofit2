@@ -33,7 +33,8 @@ class SurfaceViewActivity : BaseAppActivity() {
 //    val url = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
 //    val url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
 //    val url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
-    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/hidden_corner.mp4";
+//    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/hidden_corner.mp4";
+    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4"
 
 
     val VIDEO_TYPE_URI = 1
@@ -142,6 +143,7 @@ class SurfaceViewActivity : BaseAppActivity() {
                             }
 
                         })
+
 //                        //播放内容监听
 //                        mediaPlayer!!.setOnInfoListener((object : MediaPlayer.OnInfoListener {
 //                            override fun onInfo(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
@@ -158,6 +160,19 @@ class SurfaceViewActivity : BaseAppActivity() {
 //                            }
 //
 //                        }))
+
+                        //播放缓冲监听
+                        mediaPlayer!!.setOnBufferingUpdateListener(object : MediaPlayer.OnBufferingUpdateListener {
+                            override fun onBufferingUpdate(mp: MediaPlayer?, percent: Int) {
+                                if (percent < 100) {
+                                    progress_circular.visibility = View.VISIBLE
+                                } else {
+                                    progress_circular.visibility = View.GONE
+                                }
+                            }
+
+                        })
+
                         //播放完成回调
                         mediaPlayer!!.setOnCompletionListener(object : MediaPlayer.OnCompletionListener {
                             override fun onCompletion(mp: MediaPlayer?) {
@@ -290,7 +305,7 @@ class SurfaceViewActivity : BaseAppActivity() {
                     })
         }
 
-        timer!!.schedule(timerTask2, 0, 200)
+        timer!!.schedule(timerTask2, 0, 500)
 
 
 //        timer = fixedRateTimer("", false, 0, 200) {
