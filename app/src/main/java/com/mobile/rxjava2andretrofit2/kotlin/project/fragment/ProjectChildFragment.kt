@@ -93,14 +93,14 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         rcv_data.itemAnimator = DefaultItemAnimator()
         rcv_data.adapter = projectAdapter
 
-        refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-            override fun onLoadMore(refresh_layout: RefreshLayout) {
+        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
                 isRefresh = false
                 initProject("$currentPage")
             }
 
-            override fun onRefresh(refresh_layout: RefreshLayout) {
+            override fun onRefresh(refreshLayout: RefreshLayout) {
                 LogManager.i(TAG, "onRefresh")
                 isRefresh = true
                 currentPage = 1;
@@ -110,20 +110,20 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
     }
 
     override fun initLoadData() {
-        refresh_layout.autoRefresh()
+        mDatabind.refreshLayout.autoRefresh()
     }
 
     fun showLoading() {
-        if (load_view != null && !load_view.isShown()) {
-            load_view.setVisibility(View.VISIBLE)
-            load_view.start()
+        if (mDatabind.loadView != null && !mDatabind.loadView.isShown()) {
+            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.start()
         }
     }
 
     fun hideLoading() {
-        if (load_view != null && load_view.isShown()) {
-            load_view.stop()
-            load_view.setVisibility(View.GONE)
+        if (mDatabind.loadView != null && mDatabind.loadView.isShown()) {
+            mDatabind.loadView.stop()
+            mDatabind.loadView.setVisibility(View.GONE)
         }
     }
 
@@ -134,12 +134,12 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
                 dataList.addAll(success)
                 projectAdapter!!.clearData();
                 projectAdapter!!.addAllData(dataList)
-                refresh_layout.finishRefresh()
+                mDatabind.refreshLayout.finishRefresh()
             } else {
                 dataList.addAll(success)
                 projectAdapter!!.clearData();
                 projectAdapter!!.addAllData(dataList)
-                refresh_layout.finishLoadMore()
+                mDatabind.refreshLayout.finishLoadMore()
             }
             currentPage++;
             hideLoading()
@@ -154,9 +154,9 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
                     ScreenManager.dipTopx(activity, 20f), error)
 
             if (isRefresh) {
-                refresh_layout.finishRefresh(false)
+                mDatabind.refreshLayout.finishRefresh(false)
             } else {
-                refresh_layout.finishLoadMore(false)
+                mDatabind.refreshLayout.finishLoadMore(false)
             }
             hideLoading()
         }
