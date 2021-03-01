@@ -85,8 +85,8 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         projectAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
-//                startActivity(VideoView2Activity::class.java)
-                startActivity(VideoViewActivity::class.java)
+//                startActivity(VideoViewActivity::class.java)
+                startActivity(SurfaceViewActivity::class.java)
             }
 
         })
