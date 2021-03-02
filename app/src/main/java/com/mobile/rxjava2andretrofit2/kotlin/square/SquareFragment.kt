@@ -102,8 +102,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
                 datax.title = success.get(0).title
                 datax.chapterName = success.get(0).chapterName
                 datax.link = success.get(0).link
-//                datax.envelopePic = success.get(0).envelopePic
-                mDatabind.imageUrl = success.get(0).envelopePic
+                datax.envelopePic = success.get(0).envelopePic
             }
             hideLoading()
         }

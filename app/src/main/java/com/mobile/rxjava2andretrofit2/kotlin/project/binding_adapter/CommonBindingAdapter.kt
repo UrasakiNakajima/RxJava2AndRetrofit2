@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.binding_adapter
+package com.mobile.rxjava2andretrofit2.kotlin.project.binding_adapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -7,21 +7,18 @@ import com.bumptech.glide.Glide
 
 object CommonBindingAdapter {
 
-
     val TAG = "CommonBindingAdapter"
 
     @JvmStatic
     @BindingAdapter("imageUrl")
     fun bindImage(imageView: ImageView, url: String?) {
-//        var numberOfTimes: Int = 0;
-
         if (url != null) {
             Glide.with(imageView.context)
                     .load(url)
                     .error(Glide.with(imageView.context).load(url))
                     .into(imageView)
 
-
+//        var numberOfTimes: Int = 0;
 //            Glide.with(imageView.context).load(url)
 //                    .listener(object : RequestListener<Drawable> {
 //                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -64,19 +61,5 @@ object CommonBindingAdapter {
 //                    })
         }
     }
-
-
-    @JvmStatic
-    @BindingAdapter("image")
-    fun bindImage2(imageView: ImageView, url: String?) {
-
-        if (url != null) {
-            Glide.with(imageView.context)
-                    .load(url)
-                    .error(Glide.with(imageView.context).load(url))
-                    .into(imageView)
-        }
-    }
-
 
 }

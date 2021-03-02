@@ -14,10 +14,6 @@
             name="datax"
             type="com.mobile.rxjava2andretrofit2.kotlin.square.bean.DataX" />
 
-        <variable
-            name="imageUrl"
-            type="String" />
-
     </data>
 
 
@@ -79,7 +75,7 @@
                 android:layout_gravity="center_horizontal"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_project_img"
-                app:image="@{imageUrl}"
+                app:imageUrl="@{datax.envelopePic}"
                 tools:ignore="ContentDescription" />
 
         </LinearLayout>
