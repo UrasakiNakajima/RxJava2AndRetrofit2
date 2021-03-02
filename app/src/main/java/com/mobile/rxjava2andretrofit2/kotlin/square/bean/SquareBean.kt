@@ -58,6 +58,12 @@ class DataX : BaseObservable() {
     var desc: String? = null
     var descMd: String? = null
     var envelopePic: String? = null
+        @Bindable
+        get() = field?.toUpperCase()
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.envelopePic); //通知系统数据源发生变化，刷新UI界面
+        }
     var fresh: Boolean? = null
     var host: String? = null
     var id: Int? = null

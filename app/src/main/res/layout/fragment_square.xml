@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:binding="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools">
 
 
@@ -15,6 +14,10 @@
             name="datax"
             type="com.mobile.rxjava2andretrofit2.kotlin.square.bean.DataX" />
 
+        <variable
+            name="imageUrl"
+            type="String" />
+
     </data>
 
 
@@ -25,8 +28,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            binding:ignore="UselessLeaf">
+            android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
@@ -70,6 +72,15 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_10" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_project_img"
+                app:image="@{imageUrl}"
+                tools:ignore="ContentDescription" />
 
         </LinearLayout>
 

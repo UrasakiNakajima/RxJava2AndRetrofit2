@@ -40,7 +40,6 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     override fun initData() {
         mainActivity = activity as MainActivity
         mDatabind.viewModel = viewModel
-
         mDatabind.datax = datax
 
         mDatabind.executePendingBindings()
@@ -103,6 +102,8 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
                 datax.title = success.get(0).title
                 datax.chapterName = success.get(0).chapterName
                 datax.link = success.get(0).link
+//                datax.envelopePic = success.get(0).envelopePic
+                mDatabind.imageUrl = success.get(0).envelopePic
             }
             hideLoading()
         }

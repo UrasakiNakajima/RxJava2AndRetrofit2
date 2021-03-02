@@ -11,7 +11,7 @@ interface SquareRequest {
 
     @Headers("urlname:${ConstantData.TO_PROJECT_FLAG}")
 //    @FormUrlEncoded
-    @GET("user_article/list/{currentPage}/json")
+    @GET("article/listproject/{currentPage}/json")
     fun getSquareData(
             @Path("currentPage") currentPage: String): Observable<ResponseBody>
 
