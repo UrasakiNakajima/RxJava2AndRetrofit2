@@ -51,7 +51,12 @@ class DataX : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.chapterName); //通知系统数据源发生变化，刷新UI界面
         }
+    @get:Bindable
     var collect: Boolean? = null
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.collect); //通知系统数据源发生变化，刷新UI界面
+        }
     var courseId: Int? = null
     var desc: String? = null
     var descMd: String? = null
