@@ -37,18 +37,16 @@ class DataX : BaseObservable() {
 
     var apkLink: String? = null
     var audit: Int? = null
+    @get:Bindable
     var author: String? = null
-        @Bindable
-        get() = field?.toUpperCase()
         set(value) {
             field = value
             notifyPropertyChanged(BR.author); //通知系统数据源发生变化，刷新UI界面
         }
     var canEdit: Boolean? = null
     var chapterId: Int? = null
+    @get:Bindable
     var chapterName: String? = null
-        @Bindable
-        get() = field?.toUpperCase()
         set(value) {
             field = value
             notifyPropertyChanged(BR.chapterName); //通知系统数据源发生变化，刷新UI界面
@@ -57,9 +55,8 @@ class DataX : BaseObservable() {
     var courseId: Int? = null
     var desc: String? = null
     var descMd: String? = null
+    @get:Bindable
     var envelopePic: String? = null
-        @Bindable
-        get() = field?.toUpperCase()
         set(value) {
             field = value
             notifyPropertyChanged(BR.envelopePic); //通知系统数据源发生变化，刷新UI界面
@@ -67,9 +64,8 @@ class DataX : BaseObservable() {
     var fresh: Boolean? = null
     var host: String? = null
     var id: Int? = null
+    @get:Bindable
     var link: String? = null
-        @Bindable
-        get() = field?.toUpperCase()
         set(value) {
             field = value
             notifyPropertyChanged(BR.link); //通知系统数据源发生变化，刷新UI界面
@@ -87,9 +83,8 @@ class DataX : BaseObservable() {
     var superChapterId: Int? = null
     var superChapterName: String? = null
     var tags: List<Any>? = null
+    @get:Bindable
     var title: String? = null
-        @Bindable
-        get() = field?.toUpperCase()
         set(value) {
             field = value
             notifyPropertyChanged(BR.title); //通知系统数据源发生变化，刷新UI界面

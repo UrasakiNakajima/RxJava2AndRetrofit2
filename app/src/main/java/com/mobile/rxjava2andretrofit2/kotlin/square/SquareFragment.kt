@@ -99,10 +99,10 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     fun squareDataSuccess(success: List<DataX>) {
         if (!mainActivity!!.isFinishing()) {
             if (success.size > 0) {
-                datax.title = success.get(0).title
-                datax.chapterName = success.get(0).chapterName
-                datax.link = success.get(0).link
-                datax.envelopePic = success.get(0).envelopePic
+                datax.title = success.get(1).title
+                datax.chapterName = success.get(1).chapterName
+                datax.link = success.get(1).link
+                datax.envelopePic = success.get(1).envelopePic
             }
             hideLoading()
         }

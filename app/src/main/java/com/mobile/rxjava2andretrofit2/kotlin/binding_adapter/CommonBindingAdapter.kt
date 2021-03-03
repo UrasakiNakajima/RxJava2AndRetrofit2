@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.project.binding_adapter
+package com.mobile.rxjava2andretrofit2.kotlin.binding_adapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
