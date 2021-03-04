@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mobile.rxjava2andretrofit2.MineApplication;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -216,7 +217,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
     public void onDestroy() {
         super.onDestroy();
 
-//        RefWatcher refWatcher = MineApplication.getRefWatcher(activity);
-//        refWatcher.watch(this);
+        RefWatcher refWatcher = MineApplication.getRefWatcher(activity);
+        refWatcher.watch(this);
     }
 }

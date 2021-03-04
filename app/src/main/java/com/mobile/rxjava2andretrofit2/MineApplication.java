@@ -7,6 +7,8 @@ import androidx.multidex.MultiDexApplication;
 
 import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  * author    : xxxxxxxxxxx
@@ -67,18 +69,14 @@ public class MineApplication extends MultiDexApplication {
     private String businessStatus;
     private static MineApplication mineApplication;
 
-//    private RefWatcher mRefWatcher;
+    private RefWatcher mRefWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
-//        //检测内存泄漏
-//        if (LeakCanary.isInAnalyzerProcess(this)) {
-//            // This process is dedicated to LeakCanary for heap analysis.
-//            // You should not init your app in this process.
-//            return;
-//        }
-//        mRefWatcher = LeakCanary.install(this);
+        //检测内存泄漏
+        mRefWatcher = setupLeakCanary();
+
 
         mineApplication = this;
         //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
@@ -98,10 +96,17 @@ public class MineApplication extends MultiDexApplication {
         RetrofitManager.getInstance();
     }
 
-//    public static RefWatcher getRefWatcher(Context context) {
-//        MineApplication mineApplication = (MineApplication) context.getApplicationContext();
-//        return mineApplication.mRefWatcher;
-//    }
+    private RefWatcher setupLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return RefWatcher.DISABLED;
+        }
+        return LeakCanary.install(this);
+    }
+
+    public static RefWatcher getRefWatcher(Context context) {
+        MineApplication mineApplication = (MineApplication) context.getApplicationContext();
+        return mineApplication.mRefWatcher;
+    }
 
     public static MineApplication getInstance() {
         return mineApplication;

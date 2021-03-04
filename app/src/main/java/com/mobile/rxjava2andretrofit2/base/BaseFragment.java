@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.mobile.rxjava2andretrofit2.MineApplication;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Map;
 
@@ -176,7 +177,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-//        RefWatcher refWatcher = MineApplication.getRefWatcher(activity);
-//        refWatcher.watch(this);
+        RefWatcher refWatcher = MineApplication.getRefWatcher(activity);
+        refWatcher.watch(this);
     }
 }
