@@ -6,6 +6,10 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-noarg'
 apply plugin: 'kotlin-allopen'
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
