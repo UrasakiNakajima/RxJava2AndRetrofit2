@@ -6,10 +6,13 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by Meiji on 2016/12/13.
+ * author    : xxxxxxxxxxx
+ * e-mail    : xxxxxxxxxxx@qq.com
+ * date      : 2021/3/10 9:35
+ * introduce :
  */
 
-public class TimeUtil {
+public class TimeManager {
 
     /**
      * String 转 Data
