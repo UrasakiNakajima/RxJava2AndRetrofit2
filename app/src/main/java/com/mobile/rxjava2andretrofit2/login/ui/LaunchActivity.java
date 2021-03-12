@@ -116,8 +116,10 @@ public class LaunchActivity extends BaseAppActivity {
                         LogManager.i(TAG, "onRequestPermissionsResult shouldShowRequestPermissionRationale*****" + ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i]));
                         if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i])) {
                             showSystemSetupDialog();
+                            break;
                         } else {
                             showPermissionsDialog();
+                            break;
                         }
                     }
                 }

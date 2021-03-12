@@ -15,6 +15,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.mobile.rxjava2andretrofit2.MineApplication
+import com.squareup.leakcanary.RefWatcher
 
 abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment() {
 
@@ -135,5 +137,8 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
         mDatabind.unbind()
         viewModelStore.clear()
         super.onDestroyView()
+
+        val refWatcher: RefWatcher = MineApplication.getRefWatcher(activity)
+        refWatcher.watch(this)
     }
 }
