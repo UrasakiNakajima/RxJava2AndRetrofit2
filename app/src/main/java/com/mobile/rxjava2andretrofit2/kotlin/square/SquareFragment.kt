@@ -14,7 +14,6 @@ import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.manager.ScreenManager
-import kotlinx.android.synthetic.main.fragment_square.*
 
 class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBinding>() {
 
