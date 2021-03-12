@@ -30,11 +30,6 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
     private var isRefresh: Boolean = true;
     private var isFirstLoad: Boolean = true;
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun initLayoutId(): Int {
         return R.layout.activity_mine_details;
     }

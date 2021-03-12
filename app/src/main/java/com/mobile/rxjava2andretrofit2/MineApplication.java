@@ -74,11 +74,10 @@ public class MineApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        mineApplication = this;
         //检测内存泄漏
         mRefWatcher = setupLeakCanary();
 
-
-        mineApplication = this;
         //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
         sp = getSharedPreferences("app", MODE);
         editor = sp.edit();
@@ -103,8 +102,7 @@ public class MineApplication extends MultiDexApplication {
         return LeakCanary.install(this);
     }
 
-    public static RefWatcher getRefWatcher(Context context) {
-        MineApplication mineApplication = (MineApplication) context.getApplicationContext();
+    public static RefWatcher getRefWatcher() {
         return mineApplication.mRefWatcher;
     }
 

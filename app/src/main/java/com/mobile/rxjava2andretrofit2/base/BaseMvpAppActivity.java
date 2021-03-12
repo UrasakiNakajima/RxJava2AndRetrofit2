@@ -54,6 +54,10 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
 
         mineApplication = (MineApplication) getApplication();
         ActivityPageManager.getInstance().addActivity(this);
+        bodyParams = new HashMap<>();
+
+        setContentView(initLayoutId());
+        ButterKnife.bind(this);
 
         loadView = new QMUILoadingView(this);
         loadView.setVisibility(View.GONE);
@@ -63,10 +67,6 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         layoutParams.gravity = Gravity.CENTER;
 
-        bodyParams = new HashMap<>();
-
-        setContentView(initLayoutId());
-        ButterKnife.bind(this);
 //        setToolbar();
         presenter = attachPresenter();
         initData();

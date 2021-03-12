@@ -10,15 +10,22 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.mobile.rxjava2andretrofit2.MineApplication
+import com.mobile.rxjava2andretrofit2.manager.ActivityPageManager
 
 abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompatActivity() {
 
+    protected var mineApplication: MineApplication? = null
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        ActivityPageManager.getInstance().addActivity(this)
+        mineApplication = application as MineApplication
+
         mDatabind = DataBindingUtil.setContentView(this, initLayoutId())
         mDatabind.lifecycleOwner = this
 
@@ -72,6 +79,7 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
 
     override fun onDestroy() {
         mDatabind.unbind()
+        ActivityPageManager.getInstance().removeActivity(this)
         super.onDestroy()
     }
 }

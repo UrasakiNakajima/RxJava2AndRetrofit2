@@ -49,6 +49,9 @@ public abstract class BaseAppActivity extends AppCompatActivity {
         mineApplication = (MineApplication) getApplication();
         ActivityPageManager.getInstance().addActivity(this);
 
+        setContentView(initLayoutId());
+        ButterKnife.bind(this);
+
         loadView = new QMUILoadingView(this);
         loadView.setVisibility(View.GONE);
         loadView.setSize(100);
@@ -57,8 +60,6 @@ public abstract class BaseAppActivity extends AppCompatActivity {
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         layoutParams.gravity = Gravity.CENTER;
 
-        setContentView(initLayoutId());
-        ButterKnife.bind(this);
 //        setToolbar();
         initData();
         initViews();

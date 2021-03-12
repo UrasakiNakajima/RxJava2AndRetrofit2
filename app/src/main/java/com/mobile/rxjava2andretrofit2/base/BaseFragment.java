@@ -177,7 +177,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        RefWatcher refWatcher = MineApplication.getRefWatcher(activity);
+        RefWatcher refWatcher = MineApplication.getRefWatcher();
         refWatcher.watch(this);
     }
 }
