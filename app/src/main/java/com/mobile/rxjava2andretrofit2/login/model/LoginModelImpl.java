@@ -1,6 +1,5 @@
 package com.mobile.rxjava2andretrofit2.login.model;
 
-import com.mobile.rxjava2andretrofit2.login.model.base.ILoginModel;
 import com.mobile.rxjava2andretrofit2.login.request.LoginRequest;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 

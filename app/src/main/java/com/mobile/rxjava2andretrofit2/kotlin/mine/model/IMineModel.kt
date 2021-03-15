@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.mine.model.base
+package com.mobile.rxjava2andretrofit2.kotlin.mine.model
 
 import io.reactivex.Observable
 import okhttp3.ResponseBody

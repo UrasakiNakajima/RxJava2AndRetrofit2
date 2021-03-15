@@ -1,6 +1,5 @@
 package com.mobile.rxjava2andretrofit2.main.model;
 
-import com.mobile.rxjava2andretrofit2.main.model.base.IMainModel;
 import com.mobile.rxjava2andretrofit2.main.request.MainRequest;
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 

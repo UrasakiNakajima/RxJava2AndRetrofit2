@@ -8,7 +8,6 @@ import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
 import com.mobile.rxjava2andretrofit2.login.bean.LoginResponse;
 import com.mobile.rxjava2andretrofit2.login.model.LoginModelImpl;
-import com.mobile.rxjava2andretrofit2.login.presenter.base.ILoginPresenter;
 import com.mobile.rxjava2andretrofit2.login.view.ILoginView;
 import com.mobile.rxjava2andretrofit2.login.view.IRegisterView;
 import com.mobile.rxjava2andretrofit2.manager.LogManager;

@@ -1,7 +1,6 @@
 package com.mobile.rxjava2andretrofit2.first_page.model;
 
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
-import com.mobile.rxjava2andretrofit2.first_page.model.base.IFirstPageModel;
 import com.mobile.rxjava2andretrofit2.first_page.request.FirstPageRequest;
 
 import java.util.Map;

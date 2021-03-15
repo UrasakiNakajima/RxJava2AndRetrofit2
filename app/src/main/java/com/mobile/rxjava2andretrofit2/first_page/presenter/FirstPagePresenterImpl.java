@@ -10,7 +10,6 @@ import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageDetailsResponse;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
 import com.mobile.rxjava2andretrofit2.first_page.model.FirstPageModelImpl;
-import com.mobile.rxjava2andretrofit2.first_page.presenter.base.IFirstPagePresenter;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageDetailsView;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
 import com.mobile.rxjava2andretrofit2.manager.GsonManager;

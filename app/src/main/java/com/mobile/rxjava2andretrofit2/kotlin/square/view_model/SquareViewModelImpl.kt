@@ -13,7 +13,7 @@ import com.mobile.rxjava2andretrofit2.manager.GsonManager
 import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 
-class SquareViewModelImpl() : BaseViewModel() {
+class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 
     companion object {
         private val TAG: String = "SquareViewModelImpl"
@@ -24,7 +24,7 @@ class SquareViewModelImpl() : BaseViewModel() {
     private val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
     private val dataxError: MutableLiveData<String> = MutableLiveData()
 
-    fun squareData(currentPage: String) {
+    override fun squareData(currentPage: String) {
         disposable = RetrofitManager
                 .getInstance()
                 .responseString(model.squareData(currentPage), object : OnCommonSingleParamCallback<String> {
@@ -54,11 +54,11 @@ class SquareViewModelImpl() : BaseViewModel() {
         disposableList.add(disposable!!)
     }
 
-    fun getDataxSuccess(): MutableLiveData<List<DataX>> {
+    override fun getDataxSuccess(): MutableLiveData<List<DataX>> {
         return dataxSuccess
     }
 
-    fun getDataxError(): MutableLiveData<String> {
+    override fun getDataxError(): MutableLiveData<String> {
         return dataxError
     }
 

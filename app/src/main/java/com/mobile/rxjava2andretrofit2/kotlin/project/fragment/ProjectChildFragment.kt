@@ -13,6 +13,7 @@ import com.mobile.rxjava2andretrofit2.databinding.FragmentProjectChildBinding
 import com.mobile.rxjava2andretrofit2.kotlin.project.adapter.ProjectAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.project.bean.DataX
 import com.mobile.rxjava2andretrofit2.kotlin.project.ui.SurfaceViewActivity
+import com.mobile.rxjava2andretrofit2.kotlin.project.view.IProjectChildView
 import com.mobile.rxjava2andretrofit2.kotlin.project.view_model.ProjectViewModelImpl
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
@@ -22,7 +23,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 
-class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectChildBinding>() {
+class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectChildBinding>(), IProjectChildView {
 
     companion object {
         private val TAG: String = "ProjectChildFragment"
@@ -56,8 +57,10 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
                     LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                     projectDataSuccess(t)
+                    hideLoading()
                 } else {
                     projectDataError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
+                    hideLoading()
                 }
             }
 
@@ -111,21 +114,25 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
         mDatabind.refreshLayout.autoRefresh()
     }
 
-    fun showLoading() {
-        if (mDatabind.loadView != null && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.setVisibility(View.VISIBLE)
-            mDatabind.loadView.start()
+    override fun showLoading() {
+        if (!mainActivity!!.isFinishing()) {
+            if (mDatabind.loadView != null && !mDatabind.loadView.isShown()) {
+                mDatabind.loadView.setVisibility(View.VISIBLE)
+                mDatabind.loadView.start()
+            }
         }
     }
 
-    fun hideLoading() {
-        if (mDatabind.loadView != null && mDatabind.loadView.isShown()) {
-            mDatabind.loadView.stop()
-            mDatabind.loadView.setVisibility(View.GONE)
+    override fun hideLoading() {
+        if (!mainActivity!!.isFinishing()) {
+            if (mDatabind.loadView != null && mDatabind.loadView.isShown()) {
+                mDatabind.loadView.stop()
+                mDatabind.loadView.setVisibility(View.GONE)
+            }
         }
     }
 
-    fun projectDataSuccess(success: List<DataX>) {
+    override fun projectDataSuccess(success: List<DataX>) {
         if (!mainActivity!!.isFinishing()) {
             if (isRefresh) {
                 dataList.clear()
@@ -140,11 +147,10 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
                 mDatabind.refreshLayout.finishLoadMore()
             }
             currentPage++;
-            hideLoading()
         }
     }
 
-    fun projectDataError(error: String) {
+    override fun projectDataError(error: String) {
         if (!mainActivity!!.isFinishing()) {
             showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
                     18, resources.getColor(com.mobile.rxjava2andretrofit2.R.color.white),
@@ -156,7 +162,6 @@ class ProjectChildFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProj
             } else {
                 mDatabind.refreshLayout.finishLoadMore(false)
             }
-            hideLoading()
         }
     }
 

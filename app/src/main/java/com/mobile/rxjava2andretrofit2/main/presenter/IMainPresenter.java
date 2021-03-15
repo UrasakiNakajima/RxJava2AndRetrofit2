@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.main.presenter.base;
+package com.mobile.rxjava2andretrofit2.main.presenter;
 
 import java.util.Map;
 

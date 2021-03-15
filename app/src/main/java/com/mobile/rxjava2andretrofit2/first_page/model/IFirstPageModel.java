@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.first_page.model.base;
+package com.mobile.rxjava2andretrofit2.first_page.model;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.login.model.base;
+package com.mobile.rxjava2andretrofit2.login.model;
 
 import java.util.Map;
 

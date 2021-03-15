@@ -12,10 +12,9 @@ import com.mobile.rxjava2andretrofit2.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import androidx.lifecycle.MutableLiveData
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.manager.ReadAndWriteManager
 
 
-class ProjectViewModelImpl() : BaseViewModel() {
+class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
 
     companion object {
         private val TAG: String = "ProjectViewModelImpl"
@@ -26,7 +25,7 @@ class ProjectViewModelImpl() : BaseViewModel() {
     private val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
     private val dataxError: MutableLiveData<String> = MutableLiveData()
 
-    fun projectData(currentPage: String) {
+    override fun projectData(currentPage: String) {
         disposable = RetrofitManager
                 .getInstance()
                 .responseString(model.projectData(currentPage), object : OnCommonSingleParamCallback<String> {
@@ -75,11 +74,11 @@ class ProjectViewModelImpl() : BaseViewModel() {
         disposableList.add(disposable!!)
     }
 
-    fun getDataxSuccess(): MutableLiveData<List<DataX>> {
+    override fun getDataxSuccess(): MutableLiveData<List<DataX>> {
         return dataxSuccess
     }
 
-    fun getDataxError(): MutableLiveData<String> {
+    override fun getDataxError(): MutableLiveData<String> {
         return dataxError
     }
 
