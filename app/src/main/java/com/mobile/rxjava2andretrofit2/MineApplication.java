@@ -32,41 +32,20 @@ public class MineApplication extends MultiDexApplication {
     private String userId;
     //用户昵称
     private String nickName;
-    //    //店铺负责人
-//    private String personInCharge;
-    //用户角色
-    private String userRole;
     //店铺Id
     private String shopId;
-    //密码
-    private String password;
-    //是否绑定皇豆账号
-    private String isBindKingBeans;
-
     private boolean isLogin;
-    private String registrationID;
     private String authorization;
-    private String cookie;
-    //    private String longLat;
     private boolean isCopyDatabase;
     private String date;
     private String alipyQrcode;
 
     private boolean isCreateMineApplication;
-    private boolean isPrizesActivity;
-    private boolean isShop;
 
-    private String province;
-    private String city;
-    private String county;
-    private String address;
     //经度
     private String longitude;
     //纬度
     private String latitude;
-    private boolean insertOrderSearchHistory;
-    //营业状态
-    private String businessStatus;
     private static MineApplication mineApplication;
 
     private RefWatcher mRefWatcher;
@@ -76,7 +55,7 @@ public class MineApplication extends MultiDexApplication {
         super.onCreate();
         mineApplication = this;
         //检测内存泄漏
-        mRefWatcher = setupLeakCanary();
+//        mRefWatcher = setupLeakCanary();
 
         //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
         sp = getSharedPreferences("app", MODE);
@@ -102,9 +81,9 @@ public class MineApplication extends MultiDexApplication {
         return LeakCanary.install(this);
     }
 
-    public static RefWatcher getRefWatcher() {
-        return mineApplication.mRefWatcher;
-    }
+//    public static RefWatcher getRefWatcher() {
+//        return mineApplication.mRefWatcher;
+//    }
 
     public static MineApplication getInstance() {
         return mineApplication;
@@ -176,37 +155,6 @@ public class MineApplication extends MultiDexApplication {
         editor.commit();
     }
 
-//    public String getPersonInCharge() {
-//        personInCharge = sp.getString("personInCharge", "");
-//        LogManager.i(TAG, "getPersonInCharge***" + personInCharge);
-//        return personInCharge;
-//    }
-//
-//    public void setPersonInCharge(String personInCharge) {
-//        LogManager.i(TAG, "setPersonInCharge***" + personInCharge);
-//        editor.putString("personInCharge", personInCharge);
-//        editor.commit();
-//    }
-
-    public String getUserRole() {
-        userRole = sp.getString("userRole", "");
-        LogManager.i(TAG, "getUserRole***" + userRole);
-        return userRole;
-    }
-
-    public void setUserRole(String userRole) {
-        LogManager.i(TAG, "setUserRole***" + userRole);
-        if (!isEmpty(userRole)) {
-            if ("1".equals(userRole)) {
-                setShop(true);
-            } else {
-                setShop(false);
-            }
-            editor.putString("userRole", userRole);
-            editor.commit();
-        }
-    }
-
     public String getShopId() {
         shopId = sp.getString("shopId", "");
         LogManager.i(TAG, "getShopId***" + shopId);
@@ -216,18 +164,6 @@ public class MineApplication extends MultiDexApplication {
     public void setShopId(String shopId) {
         LogManager.i(TAG, "setShopId***" + shopId);
         editor.putString("shopId", shopId);
-        editor.commit();
-    }
-
-    public String getPassword() {
-        password = sp.getString("password", "");
-        LogManager.i(TAG, "getPassword***" + password);
-        return password;
-    }
-
-    public void setPassword(String password) {
-        LogManager.i(TAG, "setPassword***" + password);
-        editor.putString("password", password);
         editor.commit();
     }
 
@@ -246,28 +182,6 @@ public class MineApplication extends MultiDexApplication {
         }
     }
 
-    public String getRegistrationID() {
-        registrationID = sp.getString("registrationID", "");
-        return registrationID;
-    }
-
-    public void setRegistrationID(String registrationID) {
-        LogManager.i(TAG, "setRegistrationID***" + registrationID);
-        editor.putString("registrationID", registrationID);
-        editor.commit();
-    }
-
-    public String getIsBindKingBeans() {
-        isBindKingBeans = sp.getString("isBindKingBeans", "1");
-        return isBindKingBeans;
-    }
-
-    public void setIsBindKingBeans(String isBindKingBeans) {
-        LogManager.i(TAG, "setIsBindKingBeans***" + isBindKingBeans);
-        editor.putString("isBindKingBeans", isBindKingBeans);
-        editor.commit();
-    }
-
     public String getAuthorization() {
         authorization = sp.getString("authorization", "");
         return authorization;
@@ -278,27 +192,6 @@ public class MineApplication extends MultiDexApplication {
         editor.putString("authorization", authorization);
         editor.commit();
     }
-
-    public String getCookie() {
-        cookie = sp.getString("cookie", "");
-        return cookie;
-    }
-
-    public void setCookie(String cookie) {
-        LogManager.i(TAG, "setCookie***" + cookie);
-        editor.putString("cookie", cookie);
-        editor.commit();
-    }
-
-//    public String getLongLat() {
-//        longLat = sp.getString("longLat", "");
-//        return longLat;
-//    }
-//
-//    public void setLongLat(String longLat) {
-//        editor.putString("longLat", longLat);
-//        editor.commit();
-//    }
 
     public boolean isCopyDatabase() {
         isCopyDatabase = sp.getBoolean("isCopyDatabase", false);
@@ -330,62 +223,6 @@ public class MineApplication extends MultiDexApplication {
         editor.commit();
     }
 
-    public boolean isCreateMineApplication() {
-        return isCreateMineApplication;
-    }
-
-    public void setCreateMineApplication(boolean isCreateMineApplication) {
-        this.isCreateMineApplication = isCreateMineApplication;
-    }
-
-    public boolean isPrizesActivity() {
-        return isPrizesActivity;
-    }
-
-    public void setPrizesActivity(boolean prizesActivity) {
-        isPrizesActivity = prizesActivity;
-    }
-
-    public String getProvince() {
-        province = sp.getString("province", "");
-        return province;
-    }
-
-    public void setProvince(String province) {
-        editor.putString("province", province);
-        editor.commit();
-    }
-
-    public String getCity() {
-        city = sp.getString("city", "");
-        return city;
-    }
-
-    public void setCity(String city) {
-        editor.putString("city", city);
-        editor.commit();
-    }
-
-    public String getCounty() {
-        county = sp.getString("county", "");
-        return county;
-    }
-
-    public void setCounty(String county) {
-        editor.putString("county", county);
-        editor.commit();
-    }
-
-    public String getAddress() {
-        address = sp.getString("address", "");
-        return address;
-    }
-
-    public void setAddress(String address) {
-        editor.putString("address", address);
-        editor.commit();
-    }
-
     public String getLongitude() {
         longitude = sp.getString("longitude", "");
         return longitude;
@@ -403,36 +240,6 @@ public class MineApplication extends MultiDexApplication {
 
     public void setLatitude(String latitude) {
         editor.putString("latitude", latitude);
-        editor.commit();
-    }
-
-    public boolean isInsertOrderSearchHistory() {
-        insertOrderSearchHistory = sp.getBoolean("insertOrderSearchHistory", false);
-        return insertOrderSearchHistory;
-    }
-
-    public void setInsertOrderSearchHistory(boolean insertOrderSearchHistory) {
-        editor.putBoolean("insertOrderSearchHistory", insertOrderSearchHistory);
-        editor.commit();
-    }
-
-    public String getBusinessStatus() {
-        businessStatus = sp.getString("businessStatus", "0");
-        return businessStatus;
-    }
-
-    public void setBusinessStatus(String businessStatus) {
-        editor.putString("businessStatus", businessStatus);
-        editor.commit();
-    }
-
-    public boolean isShop() {
-        isShop = sp.getBoolean("isShop", false);
-        return isShop;
-    }
-
-    public void setShop(boolean isShop) {
-        editor.putBoolean("isShop", isShop);
         editor.commit();
     }
 

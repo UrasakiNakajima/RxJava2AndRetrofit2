@@ -138,7 +138,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
         viewModelStore.clear()
         super.onDestroyView()
 
-        val refWatcher: RefWatcher = MineApplication.getRefWatcher()
-        refWatcher.watch(this)
+//        val refWatcher: RefWatcher = MineApplication.getRefWatcher()
+//        refWatcher.watch(this)
     }
 }
