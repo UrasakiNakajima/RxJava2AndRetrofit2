@@ -2,24 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mobile.rxjava2andretrofit2">
-
     <!-- 允许访问网络的权限 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- WIFI网络状态信息权限 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 网络状态权限 用于断网/联网状态下，界面不同的展示 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 读取SD卡，用于更换头像，取SD卡取照片 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- WIFI网络状态信息权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 网络状态权限 用于断网/联网状态下，界面不同的展示 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 读取SD卡，用于更换头像，取SD卡取照片 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 允许读取手机状态的权限 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 定位权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许读取手机状态的权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 定位权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 拍照权限，用于更换头像的拍照 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 拍照权限，用于更换头像的拍照 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 在SDCard中创建与删除文件权限 -->
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -36,16 +28,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
+        <activity android:name=".kotlin.square.ui.SquareDetailsActivity"></activity>
         <!-- 沉浸式状态栏适配 -->
         <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" />
-        <!-- 适配小米（xiaomi）刘海屏 -->
+            android:value="2.4" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" />
-        <!-- 适配android7.0及其以上 -->
+            android:value="true" /> <!-- 适配android7.0及其以上 -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
@@ -58,10 +49,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-
-        <!-- Launch页 -->
+        </provider> <!-- Launch页 -->
         <activity android:name=".login.ui.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

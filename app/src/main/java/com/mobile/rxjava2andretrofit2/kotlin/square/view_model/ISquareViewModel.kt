@@ -10,4 +10,11 @@ interface ISquareViewModel {
     fun getDataxSuccess(): MutableLiveData<List<DataX>>
 
     fun getDataxError(): MutableLiveData<String>
+
+    fun squareDetails(currentPage: String)
+
+    fun getDataxDetailsSuccess(): MutableLiveData<List<DataX>>
+
+    fun getDataxDetailsError(): MutableLiveData<String>
+
 }

@@ -212,22 +212,22 @@ public class RetrofitManager {
                                    LogManager.i(TAG, "responseString*****" + responseString);
                                    onCommonSingleParamCallback.onSuccess(responseString);
 
-                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
-                                   manager.writeExternal("mineLog.txt",
-                                           responseString,
-                                           new OnCommonSingleParamCallback<Boolean>() {
-                                               @Override
-                                               public void onSuccess(Boolean success) {
-                                                   LogManager.i(TAG, "success*****" + success);
-                                                   manager.unSubscribe();
-                                               }
-
-                                               @Override
-                                               public void onError(String error) {
-                                                   LogManager.i(TAG, "error*****" + error);
-                                                   manager.unSubscribe();
-                                               }
-                                           });
+//                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
+//                                   manager.writeExternal("mineLog.txt",
+//                                           responseString,
+//                                           new OnCommonSingleParamCallback<Boolean>() {
+//                                               @Override
+//                                               public void onSuccess(Boolean success) {
+//                                                   LogManager.i(TAG, "success*****" + success);
+//                                                   manager.unSubscribe();
+//                                               }
+//
+//                                               @Override
+//                                               public void onError(String error) {
+//                                                   LogManager.i(TAG, "error*****" + error);
+//                                                   manager.unSubscribe();
+//                                               }
+//                                           });
                                }
                            }
 //                        , new Consumer<Throwable>() {

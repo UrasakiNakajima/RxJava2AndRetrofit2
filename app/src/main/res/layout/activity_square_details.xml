@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".kotlin.square.ui.SquareDetailsActivity">
 
     <data>
 
@@ -11,7 +11,7 @@
             type="com.mobile.rxjava2andretrofit2.kotlin.square.view_model.SquareViewModelImpl" />
 
         <variable
-            name="datax"
+            name="dataxDetails"
             type="com.mobile.rxjava2andretrofit2.kotlin.square.bean.DataX" />
 
         <import type="android.view.View" />
@@ -37,10 +37,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:text="@={datax.title}"
+                android:text="@={dataxDetails.title}"
                 android:textColor="@color/color_FFE066FF"
                 android:textSize="@dimen/sp_18"
-                android:visibility="@{datax.collect? View.GONE:View.VISIBLE}" />
+                android:visibility="@{dataxDetails.collect? View.GONE:View.VISIBLE}" />
 
             <View
                 android:layout_width="match_parent"
@@ -51,10 +51,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:text="@={datax.chapterName}"
+                android:text="@={dataxDetails.chapterName}"
                 android:textColor="@color/colorBlack333"
                 android:textSize="@dimen/sp_16"
-                android:visibility="@{datax.collect? View.GONE:View.VISIBLE}" />
+                android:visibility="@{dataxDetails.collect? View.GONE:View.VISIBLE}" />
 
             <View
                 android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:text="@={datax.link}"
+                android:text="@={dataxDetails.link}"
                 android:textColor="@color/colorBlack333"
                 android:textSize="@dimen/sp_16" />
 
@@ -73,14 +73,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_10" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:text="@={dataxDetails.desc}"
+                android:textColor="@color/colorBlack333"
+                android:textSize="@dimen/sp_16" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_100" />
+
             <ImageView
-                android:id="@+id/imv_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_project_img"
-                app:imageUrl="@{datax.envelopePic}"
+                app:imageUrl="@{dataxDetails.envelopePic}"
                 tools:ignore="ContentDescription" />
 
         </LinearLayout>

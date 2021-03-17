@@ -15,4 +15,10 @@ interface SquareRequest {
     fun getSquareData(
             @Path("currentPage") currentPage: String): Observable<ResponseBody>
 
+    @Headers("urlname:${ConstantData.TO_PROJECT_FLAG}")
+//    @FormUrlEncoded
+    @GET("article/listproject/{currentPage}/json")
+    fun getSquareDetails(
+            @Path("currentPage") currentPage: String): Observable<ResponseBody>
+
 }

@@ -29,8 +29,8 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
         mDatabind = DataBindingUtil.setContentView(this, initLayoutId())
         mDatabind.lifecycleOwner = this
 
-        initData()
         viewModel = initViewModel()
+        initData()
         initObservers()
         initViews()
         initLoadData()
@@ -79,6 +79,7 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
 
     override fun onDestroy() {
         mDatabind.unbind()
+        viewModelStore.clear()
         ActivityPageManager.getInstance().removeActivity(this)
         super.onDestroy()
     }

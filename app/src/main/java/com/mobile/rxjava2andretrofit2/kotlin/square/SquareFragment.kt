@@ -9,6 +9,7 @@ import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.base.BaseMvvmFragment
 import com.mobile.rxjava2andretrofit2.databinding.FragmentSquareBinding
 import com.mobile.rxjava2andretrofit2.kotlin.square.bean.DataX
+import com.mobile.rxjava2andretrofit2.kotlin.square.ui.SquareDetailsActivity
 import com.mobile.rxjava2andretrofit2.kotlin.square.view_model.SquareViewModelImpl
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.manager.LogManager
@@ -45,7 +46,9 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     override fun initViews() {
-
+        mDatabind.imvPic.setOnClickListener {
+            startActivity(SquareDetailsActivity::class.java)
+        }
     }
 
     override fun initObservers() {
@@ -73,7 +76,6 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         }
 
         viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
-
         viewModel!!.getDataxError().observe(this, dataxErrorObserver!!)
     }
 
