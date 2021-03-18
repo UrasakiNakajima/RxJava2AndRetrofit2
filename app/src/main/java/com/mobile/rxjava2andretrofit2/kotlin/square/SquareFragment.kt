@@ -45,12 +45,6 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         mDatabind.executePendingBindings()
     }
 
-    override fun initViews() {
-        mDatabind.imvPic.setOnClickListener {
-            startActivity(SquareDetailsActivity::class.java)
-        }
-    }
-
     override fun initObservers() {
         dataxSuccessObserver = object : Observer<List<DataX>> {
             override fun onChanged(t: List<DataX>?) {
@@ -77,6 +71,12 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
         viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
         viewModel!!.getDataxError().observe(this, dataxErrorObserver!!)
+    }
+
+    override fun initViews() {
+        mDatabind.imvPic.setOnClickListener {
+            startActivity(SquareDetailsActivity::class.java)
+        }
     }
 
     override fun initLoadData() {

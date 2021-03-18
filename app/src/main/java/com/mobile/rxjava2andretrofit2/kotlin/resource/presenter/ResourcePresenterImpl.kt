@@ -56,7 +56,7 @@ class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), I
                                 baseView.hideLoading()
                             }
                         })
-                disposableList.add(disposable)
+                compositeDisposable.add(disposable)
             }
         }
     }

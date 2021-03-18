@@ -5,6 +5,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -18,12 +19,12 @@ import io.reactivex.disposables.Disposable;
 public class BasePresenter<T> {
 
     private WeakReference<T> modelView;
-    protected List<Disposable> disposableList;
+    protected CompositeDisposable compositeDisposable;
     protected Disposable disposable;
 
     protected void attachView(T view) {
         modelView = new WeakReference<T>(view);
-        disposableList = new ArrayList<>();
+        compositeDisposable = new CompositeDisposable();
     }
 
     protected T obtainView() {
@@ -43,25 +44,13 @@ public class BasePresenter<T> {
         unSubscribe();
     }
 
-    private boolean isSubscribe() {
-        if (disposableList != null && disposableList.size() > 0) {
-            return true;
+
+    protected void unSubscribe() {
+        if (compositeDisposable != null && compositeDisposable.size() > 0) {
+            compositeDisposable.clear();
+            compositeDisposable = null;
         }
-        return false;
     }
 
-    private void unSubscribe() {
-        if (isSubscribe()) {
-            for (int i = 0; i < disposableList.size(); i++) {
-                disposable = disposableList.get(i);
-                if (disposable != null && !disposable.isDisposed()) {
-                    disposable.dispose();
-                    disposable = null;
-                }
-            }
-            disposableList.clear();
-            disposableList = null;
-        }
-    }
 
 }

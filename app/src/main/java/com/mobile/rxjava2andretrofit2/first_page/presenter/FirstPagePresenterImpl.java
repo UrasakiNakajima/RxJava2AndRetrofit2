@@ -72,7 +72,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                 firstPageView.hideLoading();
                             }
                         });
-                disposableList.add(disposable);
+                compositeDisposable.add(disposable);
 
 ////                rxjava2+retrofit2请求（响应速度更快）
 //                disposable = model.firstPageData(bodyParams)
@@ -140,7 +140,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                 firstPageDetailsView.hideLoading();
                             }
                         });
-                disposableList.add(disposable);
+                compositeDisposable.add(disposable);
 
 //                //okhttp3请求（响应速度稍慢，可改进）
 //                Okhttp3Manager.getInstance()

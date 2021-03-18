@@ -54,7 +54,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                     }
                 })
 
-        disposableList.add(disposable!!)
+        compositeDisposable.add(disposable!!)
     }
 
     override fun getDataxSuccess(): MutableLiveData<List<DataX>> {
@@ -92,7 +92,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                     }
                 })
 
-        disposableList.add(disposable!!)
+        compositeDisposable.add(disposable!!)
     }
 
     override fun getDataxDetailsSuccess(): MutableLiveData<List<DataX>> {

@@ -203,6 +203,7 @@ public class RetrofitManager {
      */
     public Disposable responseString(Observable<ResponseBody> observable, OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         Disposable disposable = observable
+                .onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResponseBody>() {

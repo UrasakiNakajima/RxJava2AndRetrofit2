@@ -68,7 +68,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                                 loginView.hideLoading();
                             }
                         });
-                disposableList.add(disposable);
+                compositeDisposable.add(disposable);
 
 //                MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
 //                //2.通过RequestBody.create 创建requestBody对象
@@ -139,7 +139,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                                 registerView.hideLoading();
                             }
                         });
-                disposableList.add(disposable);
+                compositeDisposable.add(disposable);
             }
         }
     }

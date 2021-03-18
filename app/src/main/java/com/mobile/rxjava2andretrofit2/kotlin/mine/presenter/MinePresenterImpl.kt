@@ -57,7 +57,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                 baseView.hideLoading()
                             }
                         })
-                disposableList.add(disposable)
+                compositeDisposable.add(disposable)
             }
         }
     }
@@ -92,7 +92,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                 baseView.hideLoading()
                             }
                         })
-                disposableList.add(disposable)
+                compositeDisposable.add(disposable)
 
                 //                //okhttp3请求（响应速度稍慢，可改进）
                 //                Okhttp3Manager.getInstance()

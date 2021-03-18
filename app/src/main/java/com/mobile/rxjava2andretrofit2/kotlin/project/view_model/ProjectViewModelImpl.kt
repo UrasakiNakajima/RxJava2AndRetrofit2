@@ -71,7 +71,7 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
                     }
                 })
 
-        disposableList.add(disposable!!)
+        compositeDisposable.add(disposable!!)
     }
 
     override fun getDataxSuccess(): MutableLiveData<List<DataX>> {
