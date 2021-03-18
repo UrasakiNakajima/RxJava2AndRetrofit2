@@ -5,15 +5,10 @@ import androidx.databinding.Bindable
 import com.mobile.rxjava2andretrofit2.BR
 
 class SquareBean {
-
     var `data`: Data? = null
     var errorCode: Int? = null
     var errorMsg: String? = null
 }
-//    val `data`: Data,
-//    val errorCode: Int,
-//    val errorMsg: String
-
 
 class Data {
     var curPage: Int? = null
@@ -24,17 +19,8 @@ class Data {
     var size: Int? = null
     var total: Int? = null
 }
-//        val curPage: Int,
-//        val datas: List<DataX>,
-//        val offset: Int,
-//        val over: Boolean,
-//        val pageCount: Int,
-//        val size: Int,
-//        val total: Int
-
 
 class DataX : BaseObservable() {
-
     var apkLink: String? = null
     var audit: Int? = null
     @get:Bindable
@@ -103,46 +89,4 @@ class DataX : BaseObservable() {
     var userId: Int? = null
     var visible: Int? = null
     var zan: Int? = null
-//    var isLoading: Boolean? = null
-//        @Bindable
-//        get() = field!!
-//        set(value) {
-//            field = value
-//            notifyPropertyChanged(BR.title); //通知系统数据源发生变化，刷新UI界面
-//        }
-
 }
-
-//val apkLink: String,
-//val audit: Int,
-//val author: String,
-//val canEdit: Boolean,
-//val chapterId: Int,
-//val chapterName: String,
-//val collect: Boolean,
-//val courseId: Int,
-//val desc: String,
-//val descMd: String,
-//val envelopePic: String,
-//val fresh: Boolean,
-//val host: String,
-//val id: Int,
-//val link: String,
-//val niceDate: String,
-//val niceShareDate: String,
-//val origin: String,
-//val prefix: String,
-//val projectLink: String,
-//val publishTime: Long,
-//val realSuperChapterId: Int,
-//val selfVisible: Int,
-//val shareDate: Long,
-//val shareUser: String,
-//val superChapterId: Int,
-//val superChapterName: String,
-//val tags: List<Any>,
-//val title: String,
-//val type: Int,
-//val userId: Int,
-//val visible: Int,
-//val zan: Int
