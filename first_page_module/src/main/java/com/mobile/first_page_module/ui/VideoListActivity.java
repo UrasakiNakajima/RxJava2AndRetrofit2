@@ -16,6 +16,7 @@ import com.mobile.common_library.base.BaseMvpAppActivity;
 import com.mobile.common_library.base.IBaseView;
 import com.mobile.common_library.manager.LogManager;
 import com.mobile.first_page_module.R;
+import com.mobile.first_page_module.R2;
 import com.mobile.first_page_module.adapter.VideoListAdapter;
 import com.mobile.first_page_module.bean.VideoListBean;
 import com.mobile.first_page_module.presenter.FirstPagePresenterImpl;
@@ -26,9 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
-
-import static com.mobile.first_page_module.R2.*;
 
 /**
  * author    : Urasaki
@@ -41,17 +39,17 @@ public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
         implements IVideoListView {
 
     private static final String TAG = "VideoListActivity";
-    @BindView(id.imv_back)
+    @BindView(R2.id.imv_back)
     ImageView imvBack;
-    @BindView(id.layout_back)
+    @BindView(R2.id.layout_back)
     FrameLayout layoutBack;
-    @BindView(id.tev_title)
+    @BindView(R2.id.tev_title)
     TextView tevTitle;
-    @BindView(id.toolbar)
+    @BindView(R2.id.toolbar)
     Toolbar toolbar;
-    @BindView(id.rcv_data)
+    @BindView(R2.id.rcv_data)
     RecyclerView rcvData;
-    @BindView(id.refresh_layout)
+    @BindView(R2.id.refresh_layout)
     SmartRefreshLayout refreshLayout;
 
     private String data;
@@ -90,6 +88,12 @@ public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
         addContentView(loadView, layoutParams);
         imvBack.setColorFilter(getResources().getColor(R.color.color_FFFFFFFF));
 
+        layoutBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         initAdapter();
     }
 
@@ -164,10 +168,4 @@ public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
         }
     }
 
-    @OnClick(id.layout_back)
-    public void onViewClicked(View view) {
-        if (view.getId() == id.layout_back) {
-            finish();
-        }
-    }
 }

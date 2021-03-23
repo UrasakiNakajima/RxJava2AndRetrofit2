@@ -22,6 +22,7 @@ import com.mobile.common_library.manager.LogManager;
 import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.common_library.manager.ScreenManager;
 import com.mobile.first_page_module.R;
+import com.mobile.first_page_module.R2;
 import com.mobile.first_page_module.adapter.FirstPageDetailsAdapter;
 import com.mobile.first_page_module.bean.FirstPageDetailsResponse;
 import com.mobile.first_page_module.presenter.FirstPagePresenterImpl;
@@ -34,26 +35,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
-
-import static com.mobile.first_page_module.R2.*;
 
 @Route(path = "/first_page_module/ui/first_page_details")
 public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, FirstPagePresenterImpl>
         implements IFirstPageDetailsView {
 
     private static final String TAG = "FirstPageDetailsActivity";
-    @BindView(id.imv_back)
+    @BindView(R2.id.imv_back)
     ImageView imvBack;
-    @BindView(id.layout_back)
+    @BindView(R2.id.layout_back)
     FrameLayout layoutBack;
-    @BindView(id.tev_title)
+    @BindView(R2.id.tev_title)
     TextView tevTitle;
-    @BindView(id.toolbar)
+    @BindView(R2.id.toolbar)
     Toolbar toolbar;
-    @BindView(id.rcv_data)
+    @BindView(R2.id.rcv_data)
     RecyclerView rcvData;
-    @BindView(id.refresh_layout)
+    @BindView(R2.id.refresh_layout)
     SmartRefreshLayout refreshLayout;
 
     @Autowired
@@ -93,6 +91,12 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
         addContentView(loadView, layoutParams);
         imvBack.setColorFilter(getResources().getColor(R.color.color_FFFFFFFF));
 
+        layoutBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         initAdapter();
     }
 
@@ -218,10 +222,4 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
         }
     }
 
-    @OnClick(id.layout_back)
-    public void onViewClicked(View view) {
-        if (view.getId() == id.layout_back) {
-            finish();
-        }
-    }
 }
