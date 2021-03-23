@@ -2,19 +2,19 @@ package com.mobile.rxjava2andretrofit2.first_page.presenter;
 
 import android.text.TextUtils;
 
-import com.mobile.rxjava2andretrofit2.MineApplication;
+import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.base.BasePresenter;
+import com.mobile.common_library.base.IBaseView;
+import com.mobile.common_library.callback.OnCommonSingleParamCallback;
+import com.mobile.common_library.manager.GsonManager;
+import com.mobile.common_library.manager.LogManager;
+import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.base.BasePresenter;
-import com.mobile.rxjava2andretrofit2.base.IBaseView;
-import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageDetailsResponse;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
 import com.mobile.rxjava2andretrofit2.first_page.model.FirstPageModelImpl;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageDetailsView;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
-import com.mobile.rxjava2andretrofit2.manager.GsonManager;
-import com.mobile.rxjava2andretrofit2.manager.LogManager;
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 
 import java.util.Map;
 
@@ -144,7 +144,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 
 //                //okhttp3请求（响应速度稍慢，可改进）
 //                Okhttp3Manager.getInstance()
-//                        .postAsyncKeyValuePairsOkhttp3(Url.BASE_URL + Url.FIRST_PAGE_DETAILS_URL,
+//                        .postAsyncKeyValuePairsOkhttp3(ConstantUrl.BASE_URL + ConstantUrl.FIRST_PAGE_DETAILS_URL,
 //                                bodyParams,
 //                                new OnCommonSingleParamCallback<String>() {
 //                                    @Override

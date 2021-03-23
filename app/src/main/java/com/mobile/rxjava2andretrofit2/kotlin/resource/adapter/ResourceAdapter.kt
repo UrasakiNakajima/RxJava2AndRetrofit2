@@ -14,11 +14,11 @@ import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
+import com.mobile.common_library.callback.RcvOnItemViewClickListener
+import com.mobile.common_library.custom_view.ColorTextView
+import com.mobile.common_library.manager.ScreenManager
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
-import com.mobile.rxjava2andretrofit2.custom_view.ColorTextView
 import com.mobile.rxjava2andretrofit2.kotlin.resource.bean.Result
-import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 
 class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

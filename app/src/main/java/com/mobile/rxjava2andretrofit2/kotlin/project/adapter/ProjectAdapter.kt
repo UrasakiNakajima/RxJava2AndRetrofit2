@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.kotlin.project.bean.DataX
 import androidx.databinding.DataBindingUtil
+import com.mobile.common_library.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.R
 import com.mobile.rxjava2andretrofit2.databinding.ItemProjectBinding
 

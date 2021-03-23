@@ -5,10 +5,13 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
-import com.mobile.rxjava2andretrofit2.MineApplication
+import com.mobile.common_library.MineApplication
+import com.mobile.common_library.base.BaseMvvmFragment
+import com.mobile.common_library.callback.RcvOnItemViewClickListener
+import com.mobile.common_library.manager.LogManager
+import com.mobile.common_library.manager.RetrofitManager
+import com.mobile.common_library.manager.ScreenManager
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.base.BaseMvvmFragment
-import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.databinding.FragmentProjectChildBinding
 import com.mobile.rxjava2andretrofit2.kotlin.project.adapter.ProjectAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.project.bean.DataX
@@ -16,9 +19,6 @@ import com.mobile.rxjava2andretrofit2.kotlin.project.ui.SurfaceViewActivity
 import com.mobile.rxjava2andretrofit2.kotlin.project.view.IProjectChildView
 import com.mobile.rxjava2andretrofit2.kotlin.project.view_model.ProjectViewModelImpl
 import com.mobile.rxjava2andretrofit2.main.MainActivity
-import com.mobile.rxjava2andretrofit2.manager.LogManager
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
-import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 

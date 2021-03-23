@@ -1,16 +1,16 @@
 package com.mobile.rxjava2andretrofit2.kotlin.project.view_model
 
 import android.text.TextUtils
-import com.mobile.rxjava2andretrofit2.MineApplication
-import com.mobile.rxjava2andretrofit2.base.BaseViewModel
-import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback
 import com.mobile.rxjava2andretrofit2.kotlin.project.bean.DataX
 import com.mobile.rxjava2andretrofit2.kotlin.project.bean.ProjectBean
 import com.mobile.rxjava2andretrofit2.kotlin.project.model.ProjectModelImpl
-import com.mobile.rxjava2andretrofit2.manager.GsonManager
-import com.mobile.rxjava2andretrofit2.manager.LogManager
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import androidx.lifecycle.MutableLiveData
+import com.mobile.common_library.MineApplication
+import com.mobile.common_library.base.BaseViewModel
+import com.mobile.common_library.callback.OnCommonSingleParamCallback
+import com.mobile.common_library.manager.GsonManager
+import com.mobile.common_library.manager.LogManager
+import com.mobile.common_library.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.R
 
 

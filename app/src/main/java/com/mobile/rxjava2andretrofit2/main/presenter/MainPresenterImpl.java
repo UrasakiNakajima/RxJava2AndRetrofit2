@@ -1,11 +1,11 @@
 package com.mobile.rxjava2andretrofit2.main.presenter;
 
-import com.mobile.rxjava2andretrofit2.base.BasePresenter;
-import com.mobile.rxjava2andretrofit2.base.IBaseView;
-import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
+import com.mobile.common_library.base.BasePresenter;
+import com.mobile.common_library.base.IBaseView;
+import com.mobile.common_library.callback.OnCommonSingleParamCallback;
+import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.rxjava2andretrofit2.main.model.MainModelImpl;
 import com.mobile.rxjava2andretrofit2.main.view.IMainView;
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 
 import java.util.Map;
 

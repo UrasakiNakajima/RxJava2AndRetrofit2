@@ -1,6 +1,6 @@
 package com.mobile.rxjava2andretrofit2.login.request;
 
-import com.mobile.rxjava2andretrofit2.common.Url;
+import com.mobile.common_library.common.ConstantUrl;
 
 import java.util.Map;
 
@@ -15,11 +15,11 @@ import retrofit2.http.POST;
 public interface LoginRequest {
 
     @FormUrlEncoded
-    @POST(Url.LOGIN_URL)
+    @POST(ConstantUrl.LOGIN_URL)
     Observable<ResponseBody> getLoginData(@FieldMap Map<String, String> bodyParams);
 
     @FormUrlEncoded
-    @POST(Url.REGISTER_URL)
+    @POST(ConstantUrl.REGISTER_URL)
     Observable<ResponseBody> getRegisterData(@FieldMap Map<String, String> bodyParams);
 
 //    @Multipart
@@ -27,7 +27,7 @@ public interface LoginRequest {
 //    Observable<JSONObject> addShopResult(@PartMap Map<String, RequestBody> fileMap,
 //                                              @PartMap Map<String, List<RequestBody>> filesMap);
 
-    @POST(Url.ADD_SHOP_URL)
+    @POST(ConstantUrl.ADD_SHOP_URL)
     Observable<ResponseBody> addShopResult(@Body RequestBody requestBody);
 
 

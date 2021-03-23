@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':mine_module', ':common_library', ':square_module', ':first_page_module'

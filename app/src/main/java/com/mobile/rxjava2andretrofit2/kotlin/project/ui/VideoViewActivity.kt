@@ -8,7 +8,7 @@ import android.os.Build
 import android.view.View
 import android.widget.SeekBar
 import androidx.annotation.RequiresApi
-import com.mobile.rxjava2andretrofit2.base.BaseAppActivity
+import com.mobile.common_library.base.BaseAppActivity
 import com.mobile.rxjava2andretrofit2.manager.VideoImageManager
 import kotlinx.android.synthetic.main.activity_video_view.*
 import io.reactivex.Observable

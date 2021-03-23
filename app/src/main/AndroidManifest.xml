@@ -25,7 +25,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name=".MineApplication"
+        android:name="com.mobile.common_library.MineApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
@@ -90,10 +90,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".kotlin.mine.ui.MineDetailsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".kotlin.project.ui.VideoViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
@@ -101,9 +97,6 @@
             android:name=".kotlin.project.ui.SurfaceViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
-        <activity android:name=".kotlin.square.ui.SquareDetailsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

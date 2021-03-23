@@ -8,14 +8,13 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.gyf.immersionbar.ImmersionBar;
+import com.mobile.common_library.base.BaseMvpAppActivity;
+import com.mobile.common_library.base.IBaseView;
+import com.mobile.common_library.custom_view.LazyViewPager;
+import com.mobile.common_library.custom_view.MineLazyViewPager;
 import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity;
-import com.mobile.rxjava2andretrofit2.base.IBaseView;
-import com.mobile.rxjava2andretrofit2.custom_view.LazyViewPager;
-import com.mobile.rxjava2andretrofit2.custom_view.MineLazyViewPager;
 import com.mobile.rxjava2andretrofit2.first_page.FirstPageFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.mine.MineFragment;
-import com.mobile.rxjava2andretrofit2.kotlin.project.ProjectFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.project.fragment.ProjectChildFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.resource.ResourceFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.square.SquareFragment;
@@ -66,6 +65,7 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
         fragmentList.add(new FirstPageFragment());
         fragmentList.add(new ProjectChildFragment());
         fragmentList.add(new SquareFragment());
+//        fragmentList.add(new ResourceFragment());
         fragmentList.add(new ResourceFragment());
         fragmentList.add(new MineFragment());
     }

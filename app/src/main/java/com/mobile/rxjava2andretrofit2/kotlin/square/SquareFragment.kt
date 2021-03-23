@@ -4,17 +4,16 @@ import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.mobile.rxjava2andretrofit2.MineApplication
+import com.mobile.common_library.MineApplication
+import com.mobile.common_library.base.BaseMvvmFragment
+import com.mobile.common_library.manager.LogManager
+import com.mobile.common_library.manager.RetrofitManager
+import com.mobile.common_library.manager.ScreenManager
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.base.BaseMvvmFragment
 import com.mobile.rxjava2andretrofit2.databinding.FragmentSquareBinding
 import com.mobile.rxjava2andretrofit2.kotlin.square.bean.DataX
-import com.mobile.rxjava2andretrofit2.kotlin.square.ui.SquareDetailsActivity
 import com.mobile.rxjava2andretrofit2.kotlin.square.view_model.SquareViewModelImpl
 import com.mobile.rxjava2andretrofit2.main.MainActivity
-import com.mobile.rxjava2andretrofit2.manager.LogManager
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
-import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 
 class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBinding>() {
 
@@ -75,7 +74,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
     override fun initViews() {
         mDatabind.imvPic.setOnClickListener {
-            startActivity(SquareDetailsActivity::class.java)
+//            startActivity(SquareDetailsActivity::class.java)
         }
     }
 
@@ -121,9 +120,6 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     override fun onDestroyView() {
-        datax.title = null
-        datax.chapterName = null
-        datax.link = null
         viewModel!!.getDataxSuccess().removeObservers(this)
         super.onDestroyView()
     }

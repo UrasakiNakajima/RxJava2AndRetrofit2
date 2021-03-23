@@ -1,18 +1,18 @@
 package com.mobile.rxjava2andretrofit2.login.presenter;
 
 import com.alibaba.fastjson.JSON;
-import com.mobile.rxjava2andretrofit2.MineApplication;
+import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.base.BasePresenter;
+import com.mobile.common_library.base.BaseResponse;
+import com.mobile.common_library.base.IBaseView;
+import com.mobile.common_library.callback.OnCommonSingleParamCallback;
+import com.mobile.common_library.manager.LogManager;
+import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.base.BasePresenter;
-import com.mobile.rxjava2andretrofit2.base.IBaseView;
-import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback;
 import com.mobile.rxjava2andretrofit2.login.bean.LoginResponse;
 import com.mobile.rxjava2andretrofit2.login.model.LoginModelImpl;
 import com.mobile.rxjava2andretrofit2.login.view.ILoginView;
 import com.mobile.rxjava2andretrofit2.login.view.IRegisterView;
-import com.mobile.rxjava2andretrofit2.manager.LogManager;
-import com.mobile.rxjava2andretrofit2.base.BaseResponse;
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 
 import java.util.Map;
 

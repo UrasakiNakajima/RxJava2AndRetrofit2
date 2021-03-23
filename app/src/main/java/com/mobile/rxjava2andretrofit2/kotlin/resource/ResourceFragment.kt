@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.mobile.common_library.base.BaseFragment
+import com.mobile.common_library.custom_view.LazyViewPager
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.base.BaseFragment
-import com.mobile.rxjava2andretrofit2.custom_view.LazyViewPager
 import com.mobile.rxjava2andretrofit2.kotlin.resource.fragment.ResourceChildFragment
 import com.mobile.rxjava2andretrofit2.main.MainActivity
 import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentPagerAdapter

@@ -1,18 +1,18 @@
 package com.mobile.rxjava2andretrofit2.kotlin.resource.presenter
 
 import android.text.TextUtils
+import com.mobile.common_library.MineApplication
+import com.mobile.common_library.base.BasePresenter
+import com.mobile.common_library.base.IBaseView
+import com.mobile.common_library.callback.OnCommonSingleParamCallback
+import com.mobile.common_library.manager.GsonManager
+import com.mobile.common_library.manager.LogManager
+import com.mobile.common_library.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.MineApplication
-import com.mobile.rxjava2andretrofit2.base.BasePresenter
-import com.mobile.rxjava2andretrofit2.base.IBaseView
-import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback
-import com.mobile.rxjava2andretrofit2.manager.LogManager
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.kotlin.resource.model.ResourceModelImpl
 import com.mobile.rxjava2andretrofit2.kotlin.resource.presenter.base.IResourcePresenter
 import com.mobile.rxjava2andretrofit2.kotlin.resource.bean.ResourcesBean
 import com.mobile.rxjava2andretrofit2.kotlin.resource.view.IResourceChildView
-import com.mobile.rxjava2andretrofit2.manager.GsonManager
 
 class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IResourcePresenter {
 

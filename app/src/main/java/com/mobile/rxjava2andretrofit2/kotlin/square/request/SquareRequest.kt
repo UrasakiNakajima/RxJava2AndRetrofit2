@@ -1,6 +1,6 @@
 package com.mobile.rxjava2andretrofit2.kotlin.square.request
 
-import com.mobile.rxjava2andretrofit2.common.ConstantData
+import com.mobile.common_library.common.ConstantData
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.GET

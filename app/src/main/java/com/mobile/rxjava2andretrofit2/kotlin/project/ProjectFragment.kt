@@ -1,7 +1,7 @@
 package com.mobile.rxjava2andretrofit2.kotlin.project
 
+import com.mobile.common_library.base.BaseFragment
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.base.BaseFragment
 
 class ProjectFragment() : BaseFragment() {
 

@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mobile.common_library.base.BaseMvpAppActivity;
+import com.mobile.common_library.base.IBaseView;
+import com.mobile.common_library.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity;
-import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.first_page.adapter.VideoListAdapter;
 import com.mobile.rxjava2andretrofit2.first_page.bean.VideoListBean;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.FirstPagePresenterImpl;
 import com.mobile.rxjava2andretrofit2.first_page.view.IVideoListView;
-import com.mobile.rxjava2andretrofit2.manager.LogManager;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;

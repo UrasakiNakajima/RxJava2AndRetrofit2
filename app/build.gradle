@@ -45,6 +45,10 @@ android {
         jvmTarget = "1.8"
     }
 
+    kapt {
+        generateStubs = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -141,4 +145,14 @@ dependencies {
 
     // Optional, if you use support library fragments:
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
+
+    implementation project(path: ':common_library')
+
+    if (isModule.toBoolean()) {
+        //可独立运行的app
+    } else {
+        //被依赖的library
+        implementation project(path: ':square_module')
+        implementation project(path: ':mine_module')
+    }
 }

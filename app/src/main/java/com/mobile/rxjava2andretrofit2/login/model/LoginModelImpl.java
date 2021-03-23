@@ -1,7 +1,7 @@
 package com.mobile.rxjava2andretrofit2.login.model;
 
+import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.rxjava2andretrofit2.login.request.LoginRequest;
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 
 import java.util.Map;
 

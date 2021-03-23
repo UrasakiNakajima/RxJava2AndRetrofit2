@@ -1,0 +1,141 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+//kotlin noArg和allOpen插件
+apply plugin: 'kotlin-noarg'
+apply plugin: 'kotlin-allopen'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    //android 模块下开启DataBinding
+    dataBinding {
+        enabled = true
+    }
+
+    //使用Kotlin实验特性
+    androidExtensions {
+        experimental = true
+    }
+
+    //开启Java1.8 能够使用lambda表达式
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+//    kotlinOptions {
+//        jvmTarget = "1.8"
+//    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
+            java {//移除module包下的代码
+                exclude 'module'
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'androidx.appcompat:appcompat:1.0.2'
+    api 'androidx.core:core-ktx:1.0.1'
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    //Mvvm模式框架导入
+    def lifecycle_version = "2.2.0"
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    //cardview导入
+    api 'androidx.cardview:cardview:1.0.0'
+
+    //apache StringUtils导入
+    api 'org.apache.commons:commons-lang3:3.7'
+    //apache Base64导入
+    api 'commons-codec:commons-codec:1.11'
+
+    //谷歌官方Json字符串解析框架导入
+    api 'com.google.code.gson:gson:2.8.5'
+
+    api 'com.squareup.okhttp3:okhttp:3.12.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    api 'io.reactivex.rxjava2:rxjava:2.0.7'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    kapt 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    //沉浸式状态栏框架导入
+    // 基础依赖包，必须要依赖
+    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+    // fragment快速实现（可选）
+    api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+    api 'com.qmuiteam:qmui:1.2.0'
+    //android函数分包框架导入
+    api 'androidx.multidex:multidex:2.0.1'
+
+    //fastjson(阿里云json解析框架导入)
+    api 'com.alibaba:fastjson:1.2.61'
+//    api 'com.alibaba:fastjson:1.1.61.android'
+
+    //图片和视频选择框架导入（这个框架的手机拍照功能有bug，不要使用）
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+
+    //刷新和加载Layout导入,核心必须依赖
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'
+    api 'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
+    api 'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
+    api 'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
+    api 'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
+    api 'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
+    api 'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
+    api 'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    kapt "com.google.dagger:dagger-compiler:$dagger-version"
+
+    //LeakCanary导入
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
+
+    // Optional, if you use support library fragments:
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
+}

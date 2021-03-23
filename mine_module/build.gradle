@@ -1,0 +1,83 @@
+if (isModule.toBoolean()) {
+    //可独立运行的app
+    apply plugin: 'com.android.application'
+} else {
+    //被依赖的library
+    apply plugin: 'com.android.library'
+}
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+//kotlin noArg和allOpen插件
+apply plugin: 'kotlin-noarg'
+apply plugin: 'kotlin-allopen'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+
+
+    defaultConfig {
+        if (isModule.toBoolean()) {
+            //可独立运行的app
+            applicationId "com.mobile.mine_module"
+        } else {
+            //被依赖的library
+        }
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    //android 模块下开启DataBinding
+    dataBinding {
+        enabled = true
+    }
+
+    //使用Kotlin实验特性
+    androidExtensions {
+        experimental = true
+    }
+
+    //开启Java1.8 能够使用lambda表达式
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    sourceSets {
+        main {
+            if (isModule.toBoolean()) {
+                manifest.srcFile 'src/main/java/module/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
+                java {//移除module包下的代码
+                    exclude 'module'
+                }
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':common_library')
+}

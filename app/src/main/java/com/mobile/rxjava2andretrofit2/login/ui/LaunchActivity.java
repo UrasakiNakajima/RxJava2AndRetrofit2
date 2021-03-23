@@ -15,10 +15,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 
+import com.mobile.common_library.base.BaseAppActivity;
+import com.mobile.common_library.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.base.BaseAppActivity;
 import com.mobile.rxjava2andretrofit2.main.MainActivity;
-import com.mobile.rxjava2andretrofit2.manager.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;

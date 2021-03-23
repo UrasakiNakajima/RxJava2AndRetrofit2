@@ -2,16 +2,16 @@ package com.mobile.rxjava2andretrofit2.kotlin.square.view_model
 
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
-import com.mobile.rxjava2andretrofit2.MineApplication
+import com.mobile.common_library.MineApplication
+import com.mobile.common_library.base.BaseViewModel
+import com.mobile.common_library.callback.OnCommonSingleParamCallback
+import com.mobile.common_library.manager.GsonManager
+import com.mobile.common_library.manager.LogManager
+import com.mobile.common_library.manager.RetrofitManager
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.base.BaseViewModel
-import com.mobile.rxjava2andretrofit2.callback.OnCommonSingleParamCallback
 import com.mobile.rxjava2andretrofit2.kotlin.square.bean.DataX
 import com.mobile.rxjava2andretrofit2.kotlin.square.bean.SquareBean
 import com.mobile.rxjava2andretrofit2.kotlin.square.model.SquareModelImpl
-import com.mobile.rxjava2andretrofit2.manager.GsonManager
-import com.mobile.rxjava2andretrofit2.manager.LogManager
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
 
 class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 

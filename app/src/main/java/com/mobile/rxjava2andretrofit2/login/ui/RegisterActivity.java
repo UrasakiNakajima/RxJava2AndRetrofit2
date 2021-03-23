@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.mobile.common_library.base.BaseMvpAppActivity;
+import com.mobile.common_library.base.IBaseView;
+import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.base.BaseMvpAppActivity;
-import com.mobile.rxjava2andretrofit2.base.IBaseView;
 import com.mobile.rxjava2andretrofit2.login.presenter.LoginPresenterImpl;
 import com.mobile.rxjava2andretrofit2.login.view.IRegisterView;
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager;
 
 import butterknife.BindView;
 import butterknife.OnClick;

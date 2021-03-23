@@ -6,12 +6,12 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.view.SurfaceHolder
 import android.view.View
-import com.mobile.rxjava2andretrofit2.base.BaseAppActivity
 import java.util.*
 import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_surface_view.*
 import android.net.Uri
-import com.mobile.rxjava2andretrofit2.manager.LogManager
+import com.mobile.common_library.base.BaseAppActivity
+import com.mobile.common_library.manager.LogManager
 import com.mobile.rxjava2andretrofit2.manager.VideoImageManager
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable

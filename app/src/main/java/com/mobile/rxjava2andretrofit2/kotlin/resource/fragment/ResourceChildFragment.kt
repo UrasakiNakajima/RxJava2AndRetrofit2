@@ -1,25 +1,22 @@
 package com.mobile.rxjava2andretrofit2.kotlin.resource.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mobile.common_library.base.BaseMvpFragment
+import com.mobile.common_library.base.IBaseView
+import com.mobile.common_library.callback.RcvOnItemViewClickListener
+import com.mobile.common_library.manager.LogManager
+import com.mobile.common_library.manager.RetrofitManager
+import com.mobile.common_library.manager.ScreenManager
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.base.BaseMvpFragment
-import com.mobile.rxjava2andretrofit2.base.IBaseView
-import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
-import com.mobile.rxjava2andretrofit2.kotlin.mine.ui.MineDetailsActivity
 import com.mobile.rxjava2andretrofit2.kotlin.resource.adapter.ResourceAdapter
 import com.mobile.rxjava2andretrofit2.kotlin.resource.bean.Result
 import com.mobile.rxjava2andretrofit2.kotlin.resource.presenter.ResourcePresenterImpl
 import com.mobile.rxjava2andretrofit2.kotlin.resource.view.IResourceChildView
 import com.mobile.rxjava2andretrofit2.main.MainActivity
-import com.mobile.rxjava2andretrofit2.manager.LogManager
-import com.mobile.rxjava2andretrofit2.manager.RetrofitManager
-import com.mobile.rxjava2andretrofit2.manager.ScreenManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_resource_child.*
@@ -85,9 +82,9 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
         resourceAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
-                bodyParams.clear()
-                bodyParams["max_behot_time"] = "1000"
-                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
+//                bodyParams.clear()
+//                bodyParams["max_behot_time"] = "1000"
+//                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
             }
         })
         rcv_data.setAdapter(resourceAdapter)

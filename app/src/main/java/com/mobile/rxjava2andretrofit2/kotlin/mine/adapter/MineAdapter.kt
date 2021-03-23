@@ -6,22 +6,37 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.mobile.common_library.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener
 import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
 
 class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = "MineAdapter"
-    private var list: MutableList<Ans> = mutableListOf()
+    //    private var context: Context? = null
+    //    private var list = MutableList<MineResponse.AnsListBean>? = null
+    private var list: MutableList<Ans>? = null
+
+    init {
+        list = mutableListOf()
+    }
+
+//    fun MineAdapter(context: Context) {
+//        this.context = context
+//    }
+//
+//    fun MineAdapter(context: Context, list: MutableList<MineResponse.AnsListBean>) {
+//        this.context = context
+//        this.list = list
+//    }
 
     fun clearData() {
-        this.list.clear()
+        this.list!!.clear()
         notifyDataSetChanged()
     }
 
     fun addAllData(list: MutableList<Ans>) {
-        this.list.addAll(list)
+        this.list!!.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -32,22 +47,27 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ContentHolder) {
-            holder.tevAnsid.text = list[position].ansid
-            holder.tevData.text = list[position].content_abstract.text
 
-            holder.tevData.setOnClickListener { v -> rcvOnItemViewClickListener!!.onItemClickListener(position, v) }
+            holder.tevAnsid!!.text = list!![position].ansid
+            holder.tevData!!.text = list!![position].content_abstract.text
+
+            holder.tevData!!.setOnClickListener { v -> rcvOnItemViewClickListener!!.onItemClickListener(position, v) }
         }
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return list!!.size
     }
 
     protected class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var tevAnsid: TextView = itemView.findViewById(R.id.tev_ansid)
-        var tevData: TextView = itemView.findViewById(R.id.tev_data)
+        var tevAnsid: TextView? = null
+        var tevData: TextView? = null
 
+        init {
+            tevAnsid = itemView.findViewById(R.id.tev_ansid)
+            tevData = itemView.findViewById(R.id.tev_data)
+        }
     }
 
     private var rcvOnItemViewClickListener: RcvOnItemViewClickListener? = null

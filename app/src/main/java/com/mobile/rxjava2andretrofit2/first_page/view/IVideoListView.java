@@ -1,6 +1,7 @@
 package com.mobile.rxjava2andretrofit2.first_page.view;
 
-import com.mobile.rxjava2andretrofit2.base.IBaseView;
+
+import com.mobile.common_library.base.IBaseView;
 
 public interface IVideoListView extends IBaseView {
 

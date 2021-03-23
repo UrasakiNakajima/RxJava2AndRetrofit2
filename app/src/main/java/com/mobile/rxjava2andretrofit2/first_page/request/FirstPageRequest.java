@@ -1,7 +1,7 @@
 package com.mobile.rxjava2andretrofit2.first_page.request;
 
-import com.mobile.rxjava2andretrofit2.common.ConstantData;
-import com.mobile.rxjava2andretrofit2.common.Url;
+import com.mobile.common_library.common.ConstantData;
+import com.mobile.common_library.common.ConstantUrl;
 
 import java.util.Map;
 
@@ -18,15 +18,15 @@ public interface FirstPageRequest {
 
     @Headers("urlname:" + ConstantData.TO_FIRST_PAGR_FLAG)
     @FormUrlEncoded
-    @POST(Url.FIRST_PAGE_URL)
+    @POST(ConstantUrl.FIRST_PAGE_URL)
     Observable<ResponseBody> getFirstPage(@FieldMap Map<String, String> bodyParams);
 
     @Headers("urlname:" + ConstantData.TO_FIRST_PAGR_FLAG)
-    @GET(Url.FIRST_PAGE_DETAILS_URL)
+    @GET(ConstantUrl.FIRST_PAGE_DETAILS_URL)
     Observable<ResponseBody> getFirstPageDetails(@QueryMap Map<String, String> bodyParams);
 
 //    @FormUrlEncoded
-//    @POST(Url.FIRST_PAGE_URL)
+//    @POST(ConstantUrl.FIRST_PAGE_URL)
 //    Observable<FirstPageResponse.QuestionBean> getFirstPageData(@FieldMap Map<String, String> bodyParams);
 
 

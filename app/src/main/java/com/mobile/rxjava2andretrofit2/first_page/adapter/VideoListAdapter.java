@@ -11,10 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.mobile.common_library.callback.RcvOnItemViewClickListener;
+import com.mobile.common_library.manager.LogManager;
 import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.callback.RcvOnItemViewClickListener;
 import com.mobile.rxjava2andretrofit2.first_page.bean.VideoListBean;
-import com.mobile.rxjava2andretrofit2.manager.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
