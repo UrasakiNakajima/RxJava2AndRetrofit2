@@ -7,7 +7,5 @@ interface ISquareModel {
 
     fun squareData(currentPage: String): Observable<ResponseBody>
 
-    fun squareDetails(currentPage: String): Observable<ResponseBody>
-
 
 }

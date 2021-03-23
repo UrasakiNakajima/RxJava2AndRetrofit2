@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mobile.common_library.callback.RcvOnItemViewClickListener;
 import com.mobile.common_library.manager.LogManager;
 import com.mobile.first_page_module.R;
+import com.mobile.first_page_module.R2;
 import com.mobile.first_page_module.bean.FirstPageDetailsResponse;
 
 import java.util.ArrayList;
@@ -76,9 +77,9 @@ public class FirstPageDetailsAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     protected static class ContentHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tev_code)
+        @BindView(R2.id.tev_code)
         TextView tevCode;
-        @BindView(R.id.tev_data)
+        @BindView(R2.id.tev_data)
         TextView tevData;
 
         public ContentHolder(@NonNull View itemView) {

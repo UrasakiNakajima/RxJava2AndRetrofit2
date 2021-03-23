@@ -21,10 +21,6 @@ public interface FirstPageRequest {
     @POST(ConstantUrl.FIRST_PAGE_URL)
     Observable<ResponseBody> getFirstPage(@FieldMap Map<String, String> bodyParams);
 
-    @Headers("urlname:" + ConstantData.TO_FIRST_PAGR_FLAG)
-    @GET(ConstantUrl.FIRST_PAGE_DETAILS_URL)
-    Observable<ResponseBody> getFirstPageDetails(@QueryMap Map<String, String> bodyParams);
-
 //    @FormUrlEncoded
 //    @POST(ConstantUrl.FIRST_PAGE_URL)
 //    Observable<FirstPageResponse.QuestionBean> getFirstPageData(@FieldMap Map<String, String> bodyParams);

@@ -1,10 +1,12 @@
 package com.mobile.mine_module.ui
 
-import android.content.Intent.getIntent
 import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.mobile.common_library.base.BaseMvpAppActivity
 import com.mobile.common_library.base.IBaseView
 import com.mobile.common_library.callback.RcvOnItemViewClickListener
@@ -19,10 +21,13 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.activity_mine_details.*
 
+@Route(path = "/mine_module/ui/mine_details")
 class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineDetailsView {
 
     private val TAG: String = "MineDetailsActivity"
-    private var max_behot_time: String? = null
+    @Autowired
+    @JvmField
+    var max_behot_time: String? = null
     private var dataBeanList: MutableList<Data> = mutableListOf()
     private var mineDetailsAdapter: MineDetailsAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
@@ -34,11 +39,12 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
     }
 
     override fun initData() {
+        ARouter.getInstance().inject(this)
 //        intent = getIntent()
 //        bundle = intent.extras
 //        max_behot_time = bundle.getString("max_behot_time")
 
-        max_behot_time="1000"
+        max_behot_time = "1000"
         LogManager.i(TAG, "max_behot_time*****$max_behot_time")
     }
 

@@ -28,7 +28,6 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        vectorDrawables.useSupportLibrary = true
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -77,7 +76,17 @@ android {
 
 }
 
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':common_library')
+
+    //Android路由（用于不同app之间的跳转）
+    api 'com.alibaba:arouter-api:1.5.0'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
 }

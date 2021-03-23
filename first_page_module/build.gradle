@@ -11,6 +11,7 @@ apply plugin: 'kotlin-kapt'
 //kotlin noArg和allOpen插件
 apply plugin: 'kotlin-noarg'
 apply plugin: 'kotlin-allopen'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 28
@@ -18,7 +19,13 @@ android {
 
 
     defaultConfig {
-        applicationId "com.mobile.first_page_module"
+        if (isModule.toBoolean()) {
+            //可独立运行的app
+            applicationId "com.mobile.first_page_module"
+        } else {
+            //被依赖的library
+        }
+
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -71,10 +78,21 @@ android {
 
 }
 
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':common_library')
 
     implementation 'com.jakewharton:butterknife:10.0.0'
     kapt 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    //Android路由（用于不同app之间的跳转）
+    api 'com.alibaba:arouter-api:1.5.0'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
+
 }

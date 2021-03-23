@@ -15,9 +15,4 @@ class MineModelImpl : IMineModel {
                 .getMineData(bodyParams)
     }
 
-    override fun mineDetails(bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.getInstance().retrofit
-                .create(MineRequest::class.java)
-                .getMineDetails(bodyParams)
-    }
 }

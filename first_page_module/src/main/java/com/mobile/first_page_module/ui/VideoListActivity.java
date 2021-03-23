@@ -28,27 +28,30 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.mobile.first_page_module.R2.*;
+
 /**
  * author    : Urasaki
  * e-mail    : 1164688204@qq.com
  * date      : 2020/11/19 16:04
  * introduce :
  */
+
 public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePresenterImpl>
         implements IVideoListView {
 
     private static final String TAG = "VideoListActivity";
-    @BindView(R.id.imv_back)
+    @BindView(id.imv_back)
     ImageView imvBack;
-    @BindView(R.id.layout_back)
+    @BindView(id.layout_back)
     FrameLayout layoutBack;
-    @BindView(R.id.tev_title)
+    @BindView(id.tev_title)
     TextView tevTitle;
-    @BindView(R.id.toolbar)
+    @BindView(id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.rcv_data)
+    @BindView(id.rcv_data)
     RecyclerView rcvData;
-    @BindView(R.id.refresh_layout)
+    @BindView(id.refresh_layout)
     SmartRefreshLayout refreshLayout;
 
     private String data;
@@ -161,12 +164,10 @@ public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
         }
     }
 
-    @OnClick(R.id.layout_back)
+    @OnClick(id.layout_back)
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.layout_back:
-                finish();
-                break;
+        if (view.getId() == id.layout_back) {
+            finish();
         }
     }
 }

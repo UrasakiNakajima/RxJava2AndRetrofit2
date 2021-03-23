@@ -10,10 +10,8 @@ import com.mobile.common_library.manager.GsonManager;
 import com.mobile.common_library.manager.LogManager;
 import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageDetailsResponse;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
 import com.mobile.rxjava2andretrofit2.first_page.model.FirstPageModelImpl;
-import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageDetailsView;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
 
 import java.util.Map;
@@ -101,63 +99,6 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 //                                firstPageView.hideLoading();
 //                            }
 //                        });
-            }
-        }
-    }
-
-    @Override
-    public void firstPageDetails(Map<String, String> bodyParams) {
-        IBaseView baseView = obtainView();
-        if (baseView != null) {
-            if (baseView instanceof IFirstPageDetailsView) {
-                IFirstPageDetailsView firstPageDetailsView = (IFirstPageDetailsView) baseView;
-                firstPageDetailsView.showLoading();
-                //rxjava2+retrofit2请求（响应速度更快）
-                disposable = RetrofitManager.getInstance()
-                        .responseString(model.firstPageDetails(bodyParams), new OnCommonSingleParamCallback<String>() {
-                            @Override
-                            public void onSuccess(String success) {
-                                LogManager.i(TAG, "success*****" + success);
-                                if (!TextUtils.isEmpty(success)) {
-//                                    FirstPageDetailsResponse response = JSONObject.parseObject(success, FirstPageDetailsResponse.class);
-                                    FirstPageDetailsResponse response = GsonManager.getInstance().convert(success, FirstPageDetailsResponse.class);
-
-                                    if (response.getData() != null && response.getData().size() > 0) {
-                                        firstPageDetailsView.firstPageDetailsSuccess(response.getData());
-                                    } else {
-                                        firstPageDetailsView.firstPageDetailsError(MineApplication.getInstance().getResources().getString(R.string.no_data_available));
-                                    }
-                                } else {
-                                    firstPageDetailsView.firstPageDetailsError(MineApplication.getInstance().getResources().getString(R.string.loading_failed));
-                                }
-                                firstPageDetailsView.hideLoading();
-                            }
-
-                            @Override
-                            public void onError(String error) {
-                                LogManager.i(TAG, "error*****" + error);
-                                firstPageDetailsView.firstPageDetailsError(error);
-                                firstPageDetailsView.hideLoading();
-                            }
-                        });
-                compositeDisposable.add(disposable);
-
-//                //okhttp3请求（响应速度稍慢，可改进）
-//                Okhttp3Manager.getInstance()
-//                        .postAsyncKeyValuePairsOkhttp3(ConstantUrl.BASE_URL + ConstantUrl.FIRST_PAGE_DETAILS_URL,
-//                                bodyParams,
-//                                new OnCommonSingleParamCallback<String>() {
-//                                    @Override
-//                                    public void onSuccess(String success) {
-//                                        LogManager.i(TAG, "success2*****" + success);
-//                                    }
-//
-//                                    @Override
-//                                    public void onError(String error) {
-//                                        LogManager.i(TAG, "error2*****" + error);
-//                                    }
-//                                });
-
             }
         }
     }

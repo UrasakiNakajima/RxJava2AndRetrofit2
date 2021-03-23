@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.mobile.common_library.base.BaseMvpAppActivity;
 import com.mobile.common_library.base.IBaseView;
 import com.mobile.common_library.callback.RcvOnItemViewClickListener;
@@ -33,24 +36,28 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.mobile.first_page_module.R2.*;
+
+@Route(path = "/first_page_module/ui/first_page_details")
 public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, FirstPagePresenterImpl>
         implements IFirstPageDetailsView {
 
     private static final String TAG = "FirstPageDetailsActivity";
-    @BindView(R.id.imv_back)
+    @BindView(id.imv_back)
     ImageView imvBack;
-    @BindView(R.id.layout_back)
+    @BindView(id.layout_back)
     FrameLayout layoutBack;
-    @BindView(R.id.tev_title)
+    @BindView(id.tev_title)
     TextView tevTitle;
-    @BindView(R.id.toolbar)
+    @BindView(id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.rcv_data)
+    @BindView(id.rcv_data)
     RecyclerView rcvData;
-    @BindView(R.id.refresh_layout)
+    @BindView(id.refresh_layout)
     SmartRefreshLayout refreshLayout;
 
-    private String max_behot_time;
+    @Autowired
+    public String max_behot_time;
     private List<FirstPageDetailsResponse.DataBean> dataBeanList;
     private FirstPageDetailsAdapter firstPageDetailsAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -69,10 +76,11 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
 
     @Override
     protected void initData() {
+        ARouter.getInstance().inject(this);
 //        intent = getIntent();
 //        bundle = intent.getExtras();
 //        max_behot_time = bundle.getString("max_behot_time");
-        max_behot_time = "1000";
+//        max_behot_time = "1000";
         LogManager.i(TAG, "max_behot_time*****" + max_behot_time);
 
         dataBeanList = new ArrayList<>();
@@ -210,12 +218,10 @@ public class FirstPageDetailsActivity extends BaseMvpAppActivity<IBaseView, Firs
         }
     }
 
-    @OnClick(R.id.layout_back)
+    @OnClick(id.layout_back)
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.layout_back:
-                finish();
-                break;
+        if (view.getId() == id.layout_back) {
+            finish();
         }
     }
 }

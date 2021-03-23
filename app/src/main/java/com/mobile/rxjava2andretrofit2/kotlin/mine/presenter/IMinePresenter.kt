@@ -4,6 +4,4 @@ interface IMinePresenter {
 
     fun mineData(bodyParams: Map<String, String>)
 
-//    fun mineDetails(bodyParams: Map<String, String>)
-
 }

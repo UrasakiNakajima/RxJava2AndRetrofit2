@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.mobile.common_library.base.BaseMvpFragment;
 import com.mobile.common_library.base.IBaseView;
 import com.mobile.common_library.callback.RcvOnItemViewClickListener;
@@ -23,7 +24,6 @@ import com.mobile.rxjava2andretrofit2.R;
 import com.mobile.rxjava2andretrofit2.first_page.adapter.FirstPageAdapter;
 import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
 import com.mobile.rxjava2andretrofit2.first_page.presenter.FirstPagePresenterImpl;
-import com.mobile.rxjava2andretrofit2.first_page.ui.FirstPageDetailsActivity;
 import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
 import com.mobile.rxjava2andretrofit2.main.MainActivity;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
@@ -102,9 +102,14 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
             public void onItemClickListener(int position, View view) {
                 switch (view.getId()) {
                     case R.id.tev_data:
-                        bodyParams.clear();
-                        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
-                        startActivityCarryParams(FirstPageDetailsActivity.class, bodyParams);
+//                        bodyParams.clear();
+//                        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
+//                        startActivityCarryParams(FirstPageDetailsActivity.class, bodyParams);
+
+                        //Jump with parameters
+                        ARouter.getInstance().build("/first_page_module/ui/first_page_details")
+                                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                                .navigation();
                         break;
                     default:
                         break;

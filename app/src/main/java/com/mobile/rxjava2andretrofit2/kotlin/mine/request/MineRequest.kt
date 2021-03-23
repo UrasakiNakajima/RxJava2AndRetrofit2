@@ -13,8 +13,4 @@ interface MineRequest {
     @POST(ConstantUrl.MINE_URL)
     fun getMineData(@FieldMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
-    @Headers("urlname:${ConstantData.TO_MINE_FLAG}")
-    @GET(ConstantUrl.FIRST_PAGE_DETAILS_URL)
-    fun getMineDetails(@QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
-
 }

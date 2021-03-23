@@ -65,42 +65,4 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         return dataxError
     }
 
-    override fun squareDetails(currentPage: String) {
-        disposable = RetrofitManager
-                .getInstance()
-                .responseString(model.squareDetails(currentPage), object : OnCommonSingleParamCallback<String> {
-                    override fun onSuccess(success: String) {
-                        LogManager.i(TAG, "success*****$success")
-                        if (!TextUtils.isEmpty(success)) {
-                            val response: SquareBean = GsonManager.getInstance().convert(success, SquareBean::class.java)
-                            if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
-//                                LogManager.i(TAG, "response*****${response.toString()}")
-
-
-                                dataxDetailsSuccess.value = response.data!!.datas
-                            } else {
-                                dataxDetailsError.value = MineApplication.getInstance().resources.getString(R.string.no_data_available)
-                            }
-                        } else {
-                            dataxDetailsError.value = MineApplication.getInstance().resources.getString(R.string.loading_failed)
-                        }
-                    }
-
-                    override fun onError(error: String) {
-                        LogManager.i(TAG, "error*****$error")
-                        dataxDetailsError.value = error
-                    }
-                })
-
-        compositeDisposable.add(disposable!!)
-    }
-
-    override fun getDataxDetailsSuccess(): MutableLiveData<List<DataX>> {
-        return dataxDetailsSuccess
-    }
-
-    override fun getDataxDetailsError(): MutableLiveData<String> {
-        return dataxDetailsError
-    }
-
 }

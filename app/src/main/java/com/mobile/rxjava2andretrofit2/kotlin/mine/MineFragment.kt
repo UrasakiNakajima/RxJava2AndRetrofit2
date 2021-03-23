@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.mobile.common_library.base.BaseMvpFragment
 import com.mobile.common_library.base.IBaseView
 import com.mobile.common_library.callback.RcvOnItemViewClickListener
@@ -71,6 +72,11 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
 //                bodyParams.clear()
 //                bodyParams["max_behot_time"] = "1000"
 //                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
+
+                //Jump with parameters
+                ARouter.getInstance().build("/mine_module/ui/mine_details")
+                        .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())
+                        .navigation()
             }
         })
         rcv_data.setAdapter(mineAdapter)

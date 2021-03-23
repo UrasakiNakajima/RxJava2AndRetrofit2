@@ -16,7 +16,5 @@ public interface IFirstPageModel {
 
     Observable<ResponseBody> firstPage(Map<String, String> bodyParams);
 
-    Observable<ResponseBody> firstPageDetails(Map<String, String> bodyParams);
-
 
 }

@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.mobile.common_library.callback.RcvOnItemViewClickListener;
 import com.mobile.common_library.manager.LogManager;
 import com.mobile.first_page_module.R;
+import com.mobile.first_page_module.R2;
 import com.mobile.first_page_module.bean.VideoListBean;
 
 import java.util.ArrayList;
@@ -74,9 +75,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     protected static class ContentHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tev_id)
+        @BindView(R2.id.tev_id)
         TextView tevId;
-        @BindView(R.id.imv_data)
+        @BindView(R2.id.imv_data)
         ImageView imvData;
 
         protected ContentHolder(@NonNull View itemView) {

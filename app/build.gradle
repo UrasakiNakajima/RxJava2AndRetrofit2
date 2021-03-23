@@ -20,9 +20,10 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
+
     }
 
     //android 模块下开启DataBinding
@@ -65,6 +66,12 @@ android {
     }
 }
 
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -72,6 +79,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation project(path: ':common_library')
+
 
     //Mvvm模式框架导入
     def lifecycle_version = "2.2.0"
@@ -146,12 +155,15 @@ dependencies {
     // Optional, if you use support library fragments:
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
 
-    implementation project(path: ':common_library')
+    //Android路由（用于不同app之间的跳转）
+    implementation 'com.alibaba:arouter-api:1.5.0'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
 
     if (isModule.toBoolean()) {
         //可独立运行的app
     } else {
         //被依赖的library
+        implementation project(path: ':first_page_module')
         implementation project(path: ':square_module')
         implementation project(path: ':mine_module')
     }
