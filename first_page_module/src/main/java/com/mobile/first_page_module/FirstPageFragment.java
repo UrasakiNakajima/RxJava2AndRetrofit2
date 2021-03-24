@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.first_page;
+package com.mobile.first_page_module;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.mobile.common_library.base.BaseMvpFragment;
 import com.mobile.common_library.base.IBaseView;
@@ -20,12 +21,10 @@ import com.mobile.common_library.callback.RcvOnItemViewClickListener;
 import com.mobile.common_library.manager.LogManager;
 import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.common_library.manager.ScreenManager;
-import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.first_page.adapter.FirstPageAdapter;
-import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
-import com.mobile.rxjava2andretrofit2.first_page.presenter.FirstPagePresenterImpl;
-import com.mobile.rxjava2andretrofit2.first_page.view.IFirstPageView;
-import com.mobile.rxjava2andretrofit2.main.MainActivity;
+import com.mobile.first_page_module.adapter.FirstPageAdapter;
+import com.mobile.first_page_module.bean.FirstPageResponse;
+import com.mobile.first_page_module.presenter.FirstPagePresenterImpl;
+import com.mobile.first_page_module.view.IFirstPageView;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -37,22 +36,25 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.mobile.first_page_module.R2.*;
+
+@Route(path = "/first_page_module/first_page")
 public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePresenterImpl>
         implements IFirstPageView {
 
     private static final String TAG = "FirstPageFragment";
-    @BindView(R.id.tev_title)
+    @BindView(id.tev_title)
     TextView tevTitle;
-    @BindView(R.id.toolbar)
+    @BindView(id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.rcv_data)
+    @BindView(id.rcv_data)
     RecyclerView rcvData;
-    @BindView(R.id.refresh_layout)
+    @BindView(id.refresh_layout)
     SmartRefreshLayout refreshLayout;
-    @BindView(R.id.loadView)
+    @BindView(id.loadView)
     QMUILoadingView loadView;
 
-    private MainActivity mainActivity;
+//    private MainActivity mainActivity;
 
     private List<FirstPageResponse.AnsListBean> ansListBeanList;
     private FirstPageAdapter firstPageAdapter;
@@ -80,40 +82,43 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
     @Override
     protected void initData() {
         ansListBeanList = new ArrayList<>();
-        mainActivity = (MainActivity) activity;
+//        mainActivity = (MainActivity) activity;
         isRefresh = true;
     }
 
     @Override
     protected void initViews() {
+        tevTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogManager.i(TAG, "tev_title");
+                initFirstPage();
+            }
+        });
 
         initAdapter();
     }
 
     private void initAdapter() {
-        linearLayoutManager = new LinearLayoutManager(mainActivity);
+        linearLayoutManager = new LinearLayoutManager(activity);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvData.setLayoutManager(linearLayoutManager);
         rcvData.setItemAnimator(new DefaultItemAnimator());
 
-        firstPageAdapter = new FirstPageAdapter(mainActivity);
+        firstPageAdapter = new FirstPageAdapter(activity);
         firstPageAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
             @Override
             public void onItemClickListener(int position, View view) {
-                switch (view.getId()) {
-                    case R.id.tev_data:
-//                        bodyParams.clear();
+//                if (view.getId() == id.tev_data) {
+                    //                        bodyParams.clear();
 //                        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
 //                        startActivityCarryParams(FirstPageDetailsActivity.class, bodyParams);
 
-                        //Jump with parameters
-                        ARouter.getInstance().build("/first_page_module/ui/first_page_details")
-                                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
-                                .navigation();
-                        break;
-                    default:
-                        break;
-                }
+                    //Jump with parameters
+                    ARouter.getInstance().build("/first_page_module/ui/first_page_details")
+                            .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                            .navigation();
+//                }
             }
         });
         rcvData.setAdapter(firstPageAdapter);
@@ -164,7 +169,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 
     @Override
     public void firstPageDataSuccess(List<FirstPageResponse.AnsListBean> success) {
-        if (!mainActivity.isFinishing()) {
+        if (!activity.isFinishing()) {
             if (isRefresh) {
                 ansListBeanList.clear();
                 ansListBeanList.addAll(success);
@@ -180,7 +185,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 
     @Override
     public void firstPageDataError(String error) {
-        if (!mainActivity.isFinishing()) {
+        if (!activity.isFinishing()) {
 //            showToast(error, true);
             showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
                     18, getResources().getColor(R.color.white),
@@ -196,7 +201,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 
     private void initFirstPage() {
         showLoading();
-        if (RetrofitManager.isNetworkAvailable(mainActivity)) {
+        if (RetrofitManager.isNetworkAvailable(activity)) {
             bodyParams.clear();
 
             bodyParams.put("qid", "6855150375201390856");
@@ -211,13 +216,4 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
         super.onDestroyView();
     }
 
-    @OnClick(R.id.tev_title)
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tev_title:
-                LogManager.i(TAG, "tev_title");
-                initFirstPage();
-                break;
-        }
-    }
 }

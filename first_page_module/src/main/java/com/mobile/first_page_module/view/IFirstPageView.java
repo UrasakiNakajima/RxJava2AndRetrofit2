@@ -1,8 +1,8 @@
-package com.mobile.rxjava2andretrofit2.first_page.view;
+package com.mobile.first_page_module.view;
 
 
 import com.mobile.common_library.base.IBaseView;
-import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
+import com.mobile.first_page_module.bean.FirstPageResponse;
 
 import java.util.List;
 

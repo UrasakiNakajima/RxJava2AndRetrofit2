@@ -21,12 +21,12 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.activity_mine_details.*
 
-@Route(path = "/mine_module/ui/mine_details")
+//@Route(path = "/mine_module/ui/mine_details")
 class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineDetailsView {
 
     private val TAG: String = "MineDetailsActivity"
-    @Autowired
-    @JvmField
+//    @Autowired
+//    @JvmField
     var max_behot_time: String? = null
     private var dataBeanList: MutableList<Data> = mutableListOf()
     private var mineDetailsAdapter: MineDetailsAdapter? = null
@@ -39,12 +39,11 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
     }
 
     override fun initData() {
-        ARouter.getInstance().inject(this)
-//        intent = getIntent()
-//        bundle = intent.extras
-//        max_behot_time = bundle.getString("max_behot_time")
+//        ARouter.getInstance().inject(this)
+        intent = getIntent()
+        bundle = intent.extras
+        max_behot_time = bundle.getString("max_behot_time")
 
-        max_behot_time = "1000"
         LogManager.i(TAG, "max_behot_time*****$max_behot_time")
     }
 

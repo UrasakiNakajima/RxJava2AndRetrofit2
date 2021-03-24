@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.first_page.adapter;
+package com.mobile.first_page_module.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,8 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobile.common_library.callback.RcvOnItemViewClickListener;
-import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.first_page.bean.FirstPageResponse;
+import com.mobile.first_page_module.R;
+import com.mobile.first_page_module.R2;
+import com.mobile.first_page_module.bean.FirstPageResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,9 +77,9 @@ public class FirstPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     static class ContentHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tev_ansid)
+        @BindView(R2.id.tev_ansid)
         TextView tevAnsid;
-        @BindView(R.id.tev_data)
+        @BindView(R2.id.tev_data)
         TextView tevData;
 
         private ContentHolder(@NonNull View itemView) {

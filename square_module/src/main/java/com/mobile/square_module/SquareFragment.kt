@@ -1,27 +1,28 @@
-package com.mobile.rxjava2andretrofit2.kotlin.square
+package com.mobile.square_module
 
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.mobile.common_library.MineApplication
 import com.mobile.common_library.base.BaseMvvmFragment
 import com.mobile.common_library.manager.LogManager
 import com.mobile.common_library.manager.RetrofitManager
 import com.mobile.common_library.manager.ScreenManager
-import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.databinding.FragmentSquareBinding
-import com.mobile.rxjava2andretrofit2.kotlin.square.bean.DataX
-import com.mobile.rxjava2andretrofit2.kotlin.square.view_model.SquareViewModelImpl
-import com.mobile.rxjava2andretrofit2.main.MainActivity
+import com.mobile.square_module.bean.DataX
+import com.mobile.square_module.databinding.FragmentSquareBinding
+import com.mobile.square_module.ui.SquareDetailsActivity
+import com.mobile.square_module.view_model.SquareViewModelImpl
 
+@Route(path = "/square_module/square")
 class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBinding>() {
 
     companion object {
         private val TAG: String = "SquareFragment"
     }
 
-    private var mainActivity: MainActivity? = null
+//    private var mainActivity: MainActivity? = null
     //    private var dataList: MutableList<DataX> = mutableListOf()
     private var currentPage: Int = 1
     private var dataxSuccessObserver: Observer<List<DataX>>? = null;
@@ -37,7 +38,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     override fun initData() {
-        mainActivity = activity as MainActivity
+//        mainActivity = activity as MainActivity
         mDatabind.viewModel = viewModel
         mDatabind.datax = datax
 
@@ -74,7 +75,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
     override fun initViews() {
         mDatabind.imvPic.setOnClickListener {
-//            startActivity(SquareDetailsActivity::class.java)
+            startActivity(SquareDetailsActivity::class.java)
         }
     }
 
@@ -97,7 +98,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     fun squareDataSuccess(success: List<DataX>) {
-        if (!mainActivity!!.isFinishing()) {
+        if (!activity!!.isFinishing()) {
             if (success.size > 0) {
                 datax.title = success.get(1).title
                 datax.chapterName = success.get(1).chapterName
@@ -109,10 +110,10 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     fun squareDataError(error: String) {
-        if (!mainActivity!!.isFinishing()) {
+        if (!activity!!.isFinishing()) {
             showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
-                    18, resources.getColor(com.mobile.rxjava2andretrofit2.R.color.white),
-                    resources.getColor(com.mobile.rxjava2andretrofit2.R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
+                    18, resources.getColor(R.color.white),
+                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
                     ScreenManager.dipTopx(activity, 20f), error)
 
             hideLoading()
@@ -126,7 +127,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
     private fun initSquare(currentPage: String) {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable(mainActivity)) {
+        if (RetrofitManager.isNetworkAvailable(activity)) {
             viewModel!!.squareData(currentPage)
         } else {
             squareDataError(MineApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));

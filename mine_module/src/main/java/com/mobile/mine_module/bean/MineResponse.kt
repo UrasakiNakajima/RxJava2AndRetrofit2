@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.mine.bean
+package com.mobile.mine_module.bean
 
 data class MineResponse(
     val ans_list: List<Ans>,

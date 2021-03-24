@@ -4,14 +4,18 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.gyf.immersionbar.ImmersionBar
 import com.mobile.common_library.MineApplication
+import com.mobile.common_library.R
 import com.mobile.common_library.manager.ActivityPageManager
+import com.mobile.common_library.manager.ToolbarManager
 
 abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompatActivity() {
 
@@ -39,6 +43,96 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
     protected abstract fun initLayoutId(): Int
 
     protected abstract fun initViewModel(): VM
+
+    protected fun setToolbar(isDarkFont: Boolean) {
+        if (isDarkFont) {
+            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                    .statusBarDarkFont(isDarkFont)
+                    .statusBarColor(R.color.color_FFFFFFFF)     //状态栏颜色，不写默认透明色
+                    //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                    .keyboardEnable(true)
+                    .init()
+        } else {
+            ImmersionBar.with(this)
+                    .statusBarDarkFont(isDarkFont)
+                    .statusBarColor(R.color.color_FF198CFF)     //状态栏颜色，不写默认透明色
+                    //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                    .keyboardEnable(true)
+                    .init()
+        }
+
+        ToolbarManager.assistActivity(findViewById(android.R.id.content))
+    }
+
+    protected fun setToolbar(isDarkFont: Boolean, isResizeChildOfContent: Boolean) {
+        if (isDarkFont) {
+            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                    .statusBarDarkFont(isDarkFont)
+                    .statusBarColor(R.color.color_FFFFFFFF)     //状态栏颜色，不写默认透明色
+                    //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                    .keyboardEnable(true)
+                    .init()
+        } else {
+            ImmersionBar.with(this)
+                    .statusBarDarkFont(isDarkFont)
+                    .statusBarColor(R.color.color_FF198CFF)     //状态栏颜色，不写默认透明色
+                    //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                    .keyboardEnable(true)
+                    .init()
+        }
+
+        if (isResizeChildOfContent) {
+            ToolbarManager.assistActivity(findViewById(android.R.id.content))
+        }
+    }
+
+    protected fun setToolbar(isDarkFont: Boolean, color: Int) {
+        if (isDarkFont) {
+            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                    .statusBarDarkFont(isDarkFont)
+                    .statusBarColor(color)     //状态栏颜色，不写默认透明色
+                    //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                    .init()
+        } else {
+            ImmersionBar.with(this)
+                    .statusBarDarkFont(isDarkFont)
+                    .statusBarColor(color)     //状态栏颜色，不写默认透明色
+                    //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                    .init()
+        }
+
+        ToolbarManager.assistActivity(findViewById(android.R.id.content))
+    }
+
+    protected fun setToolbar(isDarkFont: Boolean, color: Int, isResizeChildOfContent: Boolean) {
+        if (isDarkFont) {
+            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                    .statusBarDarkFont(isDarkFont)
+                    .statusBarColor(color)     //状态栏颜色，不写默认透明色
+                    //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                    .init()
+        } else {
+            ImmersionBar.with(this)
+                    .statusBarDarkFont(isDarkFont)
+                    .statusBarColor(color)     //状态栏颜色，不写默认透明色
+                    //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                    .init()
+        }
+
+        if (isResizeChildOfContent) {
+            ToolbarManager.assistActivity(findViewById(android.R.id.content))
+        }
+    }
+
+    /**
+     * 初始化沉浸式
+     * Init immersion bar.
+     */
+    protected fun initImmersionBar() {
+        //设置共同沉浸式样式
+        ImmersionBar.with(this)
+                .navigationBarColor(R.color.color_FFE066FF).init()
+    }
 
     protected abstract fun initData()
 

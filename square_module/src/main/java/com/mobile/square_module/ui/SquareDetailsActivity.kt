@@ -69,7 +69,7 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
     }
 
     override fun initViews() {
-
+        setToolbar(false, R.color.white)
     }
 
     override fun initLoadData() {

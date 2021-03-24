@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.kotlin.mine.adapter
+package com.mobile.mine_module.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.common_library.callback.RcvOnItemViewClickListener
-import com.mobile.rxjava2andretrofit2.R
-import com.mobile.rxjava2andretrofit2.kotlin.mine.bean.Ans
+import com.mobile.mine_module.R
+import com.mobile.mine_module.bean.Ans
 
 class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

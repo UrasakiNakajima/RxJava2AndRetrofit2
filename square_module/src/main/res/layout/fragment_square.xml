@@ -8,11 +8,11 @@
 
         <variable
             name="viewModel"
-            type="com.mobile.rxjava2andretrofit2.kotlin.square.view_model.SquareViewModelImpl" />
+            type="com.mobile.square_module.view_model.SquareViewModelImpl" />
 
         <variable
             name="datax"
-            type="com.mobile.rxjava2andretrofit2.kotlin.square.bean.DataX" />
+            type="com.mobile.square_module.bean.DataX" />
 
         <import type="android.view.View" />
 

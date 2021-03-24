@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface IFirstPagePresenter {
 
-//    void firstPage(Map<String, String> bodyParams);
+    void firstPage(Map<String, String> bodyParams);
 
     void firstPageDetails(Map<String, String> bodyParams);
 }

@@ -7,20 +7,21 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.gyf.immersionbar.ImmersionBar;
 import com.mobile.common_library.base.BaseMvpAppActivity;
 import com.mobile.common_library.base.IBaseView;
 import com.mobile.common_library.custom_view.LazyViewPager;
 import com.mobile.common_library.custom_view.MineLazyViewPager;
+import com.mobile.first_page_module.FirstPageFragment;
+import com.mobile.mine_module.MineFragment;
 import com.mobile.rxjava2andretrofit2.R;
-import com.mobile.rxjava2andretrofit2.first_page.FirstPageFragment;
-import com.mobile.rxjava2andretrofit2.kotlin.mine.MineFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.project.fragment.ProjectChildFragment;
 import com.mobile.rxjava2andretrofit2.kotlin.resource.ResourceFragment;
-import com.mobile.rxjava2andretrofit2.kotlin.square.SquareFragment;
 import com.mobile.rxjava2andretrofit2.main.adapter.TabFragmentPagerAdapter;
 import com.mobile.rxjava2andretrofit2.main.presenter.MainPresenterImpl;
 import com.mobile.rxjava2andretrofit2.main.view.IMainView;
+import com.mobile.square_module.SquareFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,12 +63,23 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
 
     @Override
     protected void initData() {
-        fragmentList.add(new FirstPageFragment());
+        //Jump with parameters
+        FirstPageFragment firstPageFragment = (FirstPageFragment) ARouter.getInstance().build("/first_page_module/first_page")
+//                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .navigation();
+        fragmentList.add(firstPageFragment);
         fragmentList.add(new ProjectChildFragment());
-        fragmentList.add(new SquareFragment());
-//        fragmentList.add(new ResourceFragment());
+        //Jump with parameters
+        SquareFragment squareFragment = (SquareFragment) ARouter.getInstance().build("/square_module/square")
+//                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .navigation();
+        fragmentList.add(squareFragment);
         fragmentList.add(new ResourceFragment());
-        fragmentList.add(new MineFragment());
+        //Jump with parameters
+        MineFragment mineFragment = (MineFragment) ARouter.getInstance().build("/mine_module/mine")
+//                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .navigation();
+        fragmentList.add(mineFragment);
     }
 
     @Override

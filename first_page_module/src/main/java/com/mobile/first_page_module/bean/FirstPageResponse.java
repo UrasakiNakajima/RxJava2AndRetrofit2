@@ -1,4 +1,4 @@
-package com.mobile.rxjava2andretrofit2.first_page.bean;
+package com.mobile.first_page_module.bean;
 
 import java.util.List;
 

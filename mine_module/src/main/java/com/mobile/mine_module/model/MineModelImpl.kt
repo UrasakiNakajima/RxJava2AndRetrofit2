@@ -9,6 +9,12 @@ class MineModelImpl : IMineModel {
 
     private val TAG = "MineModelImpl"
 
+    override fun mineData(bodyParams: Map<String, String>): Observable<ResponseBody> {
+        return RetrofitManager.getInstance().retrofit
+                .create(MineRequest::class.java)
+                .getMineData(bodyParams)
+    }
+
     override fun mineDetails(bodyParams: Map<String, String>): Observable<ResponseBody> {
         return RetrofitManager.getInstance().retrofit
                 .create(MineRequest::class.java)
