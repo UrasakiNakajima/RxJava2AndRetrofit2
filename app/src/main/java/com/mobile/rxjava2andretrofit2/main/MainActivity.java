@@ -64,19 +64,19 @@ public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImp
     @Override
     protected void initData() {
         //Jump with parameters
-        FirstPageFragment firstPageFragment = (FirstPageFragment) ARouter.getInstance().build("/first_page_module/first_page")
+        Fragment firstPageFragment = (Fragment) ARouter.getInstance().build("/first_page_module/first_page")
 //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation();
         fragmentList.add(firstPageFragment);
         fragmentList.add(new ProjectChildFragment());
         //Jump with parameters
-        SquareFragment squareFragment = (SquareFragment) ARouter.getInstance().build("/square_module/square")
+        Fragment squareFragment = (Fragment) ARouter.getInstance().build("/square_module/square")
 //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation();
         fragmentList.add(squareFragment);
         fragmentList.add(new ResourceFragment());
         //Jump with parameters
-        MineFragment mineFragment = (MineFragment) ARouter.getInstance().build("/mine_module/mine")
+        Fragment mineFragment = (Fragment) ARouter.getInstance().build("/mine_module/mine")
 //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation();
         fragmentList.add(mineFragment);

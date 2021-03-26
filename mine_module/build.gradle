@@ -24,7 +24,7 @@ android {
         } else {
             //被依赖的library
         }
-        minSdkVersion 19
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

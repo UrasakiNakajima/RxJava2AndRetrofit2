@@ -69,7 +69,11 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.white)
+        setToolbar(false, R.color.color_FF198CFF)
+        mDatabind.imvBack.setColorFilter(resources.getColor(R.color.color_FFFFFFFF))
+        mDatabind.layoutBack.setOnClickListener {
+            finish()
+        }
     }
 
     override fun initLoadData() {

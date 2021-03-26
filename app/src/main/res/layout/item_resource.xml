@@ -14,7 +14,7 @@
         android:orientation="vertical"
         tools:ignore="UseCompoundDrawables">
 
-        <com.mobile.rxjava2andretrofit2.custom_view.ColorTextView
+        <com.mobile.common_library.custom_view.ColorTextView
             android:id="@+id/tev_resource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -98,7 +98,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
                     bundle!!.putString(key, params[key])
                 }
             }
-            intent!!.putExtras(bundle)
+            intent!!.putExtras(bundle!!)
         }
         startActivity(intent)
     }
@@ -118,7 +118,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
                     bundle!!.putString(key, params[key])
                 }
             }
-            intent!!.putExtras(bundle)
+            intent!!.putExtras(bundle!!)
         }
         startActivityForResult(intent, requestCode)
     }

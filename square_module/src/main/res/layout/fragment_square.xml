@@ -28,6 +28,26 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:background="@color/color_FF198CFF"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="vertical"
+                app:contentInsetStart="0dp">
+
+                <TextView
+                    android:id="@+id/tev_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center"
+                    android:text="@string/square"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_20" />
+
+            </androidx.appcompat.widget.Toolbar>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_10" />

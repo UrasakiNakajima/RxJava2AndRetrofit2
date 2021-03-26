@@ -16,14 +16,14 @@ android {
 
     defaultConfig {
         applicationId "com.mobile.rxjava2andretrofit2"
-        minSdkVersion 19
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        generatedDensities = []
     }
 
     //android 模块下开启DataBinding
@@ -48,6 +48,10 @@ android {
 
     kapt {
         generateStubs = true
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
     }
 
     buildTypes {
@@ -111,8 +115,8 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
-    implementation 'com.jakewharton:butterknife:10.0.0'
-    kapt 'com.jakewharton:butterknife-compiler:10.0.0'
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
 
     //沉浸式状态栏框架导入
     // 基础依赖包，必须要依赖
