@@ -1,1 +1,4 @@
+include ':project_module'
+include ':resource_module'
+include ':main_module'
 include ':app', ':mine_module', ':common_library', ':square_module', ':first_page_module'

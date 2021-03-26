@@ -167,8 +167,11 @@ dependencies {
         //可独立运行的app
     } else {
         //被依赖的library
-        implementation project(path: ':first_page_module')
+        implementation project(path: ':main_module')
         implementation project(path: ':square_module')
         implementation project(path: ':mine_module')
+        implementation project(path: ':first_page_module')
+        implementation project(path: ':resource_module')
+        implementation project(path: ':project_module')
     }
 }

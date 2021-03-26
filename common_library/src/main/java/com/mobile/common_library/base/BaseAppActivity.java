@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 public abstract class BaseAppActivity extends AppCompatActivity {
 
     protected MineApplication mineApplication;
-    public QMUILoadingView loadView;
+    protected QMUILoadingView loadView;
     protected FrameLayout.LayoutParams layoutParams;
     protected Intent intent;
     protected Bundle bundle;
