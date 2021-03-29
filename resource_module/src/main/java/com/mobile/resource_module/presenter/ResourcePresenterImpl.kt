@@ -1,7 +1,7 @@
 package com.mobile.resource_module.presenter
 
 import android.text.TextUtils
-import com.mobile.common_library.MineApplication
+import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BasePresenter
 import com.mobile.common_library.base.IBaseView
 import com.mobile.common_library.callback.OnCommonSingleParamCallback
@@ -42,10 +42,10 @@ class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), I
                                         LogManager.i(TAG, "response*****${response.toString()}")
                                         baseView.resourceDataSuccess(response.results)
                                     } else {
-                                        baseView.resourceDataError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
+                                        baseView.resourceDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
                                     }
                                 } else {
-                                    baseView.resourceDataError(MineApplication.getInstance().resources.getString(R.string.loading_failed))
+                                    baseView.resourceDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
                                 }
                                 baseView.hideLoading()
                             }

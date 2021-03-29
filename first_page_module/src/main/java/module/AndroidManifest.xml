@@ -4,7 +4,7 @@
     package="com.mobile.first_page_module">
 
     <application
-        android:name="com.mobile.common_library.MineApplication"
+        android:name="com.mobile.common_library.BaseApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

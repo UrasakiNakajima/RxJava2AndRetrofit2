@@ -2,7 +2,7 @@ package com.mobile.common_library.interceptor;
 
 import androidx.annotation.NonNull;
 
-import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.manager.LogManager;
 
 import java.io.IOException;
@@ -21,11 +21,11 @@ import okhttp3.Response;
 public class AddCookiesInterceptor implements Interceptor {
 
     private static final String TAG = "AddCookiesInterceptor";
-    private MineApplication mineApplication;
+    private BaseApplication baseApplication;
 
-    public AddCookiesInterceptor(MineApplication mineApplication) {
+    public AddCookiesInterceptor(BaseApplication mineApplication) {
         super();
-        this.mineApplication = mineApplication;
+        this.baseApplication = mineApplication;
     }
 
     @NonNull
@@ -34,7 +34,7 @@ public class AddCookiesInterceptor implements Interceptor {
 
         Request.Builder builder = chain.request().newBuilder();
         //添加authorization
-        String authorization = mineApplication.getAuthorization();
+        String authorization = baseApplication.getAuthorization();
         if (authorization != null && !"".equals(authorization)) {
             builder.addHeader("authorization", authorization);
             LogManager.i(TAG, "authorization*****" + authorization);

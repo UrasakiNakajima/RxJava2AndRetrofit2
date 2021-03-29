@@ -1,7 +1,7 @@
 package com.mobile.main_module.login.presenter;
 
 import com.alibaba.fastjson.JSON;
-import com.mobile.common_library.MineApplication;
+import com.mobile.main_module.MineApplication;
 import com.mobile.common_library.base.BasePresenter;
 import com.mobile.common_library.base.BaseResponse;
 import com.mobile.common_library.base.IBaseView;

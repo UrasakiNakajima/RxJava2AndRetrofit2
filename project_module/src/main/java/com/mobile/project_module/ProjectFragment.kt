@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.mobile.common_library.MineApplication
+import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BaseMvvmFragment
 import com.mobile.common_library.callback.RcvOnItemViewClickListener
 import com.mobile.common_library.manager.LogManager
@@ -56,7 +56,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
                     projectDataSuccess(t)
                     hideLoading()
                 } else {
-                    projectDataError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
+                    projectDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
                     hideLoading()
                 }
             }
@@ -167,7 +167,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
         if (RetrofitManager.isNetworkAvailable(activity)) {
             viewModel!!.projectData(currentPage)
         } else {
-            projectDataError(MineApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
+            projectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }
     }
 

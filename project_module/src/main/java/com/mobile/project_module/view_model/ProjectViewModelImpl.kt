@@ -2,7 +2,7 @@ package com.mobile.project_module.view_model
 
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
-import com.mobile.common_library.MineApplication
+import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BaseViewModel
 import com.mobile.common_library.callback.OnCommonSingleParamCallback
 import com.mobile.common_library.manager.GsonManager
@@ -58,10 +58,10 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
 
                                 dataxSuccess.value = response.data.datas
                             } else {
-                                dataxError.value = MineApplication.getInstance().resources.getString(R.string.no_data_available)
+                                dataxError.value = BaseApplication.getInstance().resources.getString(R.string.no_data_available)
                             }
                         } else {
-                            dataxError.value = MineApplication.getInstance().resources.getString(R.string.loading_failed)
+                            dataxError.value = BaseApplication.getInstance().resources.getString(R.string.loading_failed)
                         }
                     }
 

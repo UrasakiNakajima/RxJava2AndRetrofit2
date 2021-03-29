@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gyf.immersionbar.ImmersionBar;
-import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.R;
 import com.mobile.common_library.manager.ActivityPageManager;
 import com.mobile.common_library.manager.ToolbarManager;
@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends AppCompatActivity {
 
-    protected MineApplication mineApplication;
+    protected BaseApplication baseApplication;
     public QMUILoadingView loadView;
     protected FrameLayout.LayoutParams layoutParams;
 
@@ -51,7 +51,7 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mineApplication = (MineApplication) getApplication();
+        baseApplication = (BaseApplication) getApplication();
         ActivityPageManager.getInstance().addActivity(this);
         bodyParams = new HashMap<>();
 

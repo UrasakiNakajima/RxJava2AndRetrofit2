@@ -25,13 +25,14 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
+        android:name=".MineApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:replace="android:allowBackup"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
         <!-- 沉浸式状态栏适配 -->
         <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
@@ -69,12 +70,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.ui.LoginActivity"
+        <activity
+            android:name=".login.ui.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".login.ui.RegisterActivity"
+        <activity
+            android:name=".login.ui.RegisterActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"  />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

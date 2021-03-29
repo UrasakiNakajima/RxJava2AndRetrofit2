@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.manager.LogManager;
 
 import java.io.IOException;
@@ -22,12 +22,12 @@ import okhttp3.Response;
 public class ReceivedCookiesInterceptor implements Interceptor {
 
     private static final String TAG = "ReceivedCookiesInterceptor";
-    private MineApplication mineApplication;
+    private BaseApplication baseApplication;
 
 
     public ReceivedCookiesInterceptor(Context context) {
         super();
-        mineApplication = (MineApplication) context.getApplicationContext();
+        baseApplication = (BaseApplication) context.getApplicationContext();
     }
 
     @NonNull
@@ -39,7 +39,7 @@ public class ReceivedCookiesInterceptor implements Interceptor {
         String authorization = originalResponse.header("authorization");
         LogManager.i(TAG, "originalResponse authorization*****" + authorization);
         if (authorization != null && !"".equals(authorization)) {
-            mineApplication.setAuthorization(authorization);
+            baseApplication.setAuthorization(authorization);
             LogManager.i(TAG, "authorization*****" + authorization);
         }
 //        //这里获取请求返回的cookie

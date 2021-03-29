@@ -1,28 +1,9 @@
 package com.mobile.rxjava2andretrofit2;
 
-import com.mobile.rxjava2andretrofit2.kotlin.Test1Class;
-
-public class MineClass extends Test1Class {
-
-
-    @Override
-    public int getB() {
-        return super.getB();
-    }
-
-    @Override
-    public void setC(int i) {
-        super.setC(i);
-    }
-
-    @Override
-    public int getC() {
-        return super.getC();
-    }
+public class MineClass{
 
     public static void main(String args[]) {
         System.out.println("Hello World");
-
     }
 
 }

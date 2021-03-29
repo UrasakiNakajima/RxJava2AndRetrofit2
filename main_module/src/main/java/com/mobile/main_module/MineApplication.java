@@ -1,14 +1,7 @@
-package com.mobile.common_library;
+package com.mobile.main_module;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
-
-import com.alibaba.android.arouter.launcher.ARouter;
+import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.manager.LogManager;
-import com.mobile.common_library.manager.RetrofitManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -19,13 +12,9 @@ import com.squareup.leakcanary.RefWatcher;
  * introduce :
  */
 
-public class MineApplication extends MultiDexApplication {
+public class MineApplication extends BaseApplication {
 
     private static final String TAG = "MineApplication";
-    //声明 初始化
-    private SharedPreferences sp;
-    private SharedPreferences.Editor editor;
-    public static int MODE = Context.MODE_PRIVATE;
     //用户名
     private String userName;
     //店主真实姓名（负责人）
@@ -37,31 +26,23 @@ public class MineApplication extends MultiDexApplication {
     //店铺Id
     private String shopId;
     private boolean isLogin;
-    private String authorization;
     private boolean isCopyDatabase;
     private String date;
     private String alipyQrcode;
 
     private boolean isCreateMineApplication;
-
     //经度
     private String longitude;
     //纬度
     private String latitude;
-    private static MineApplication mineApplication;
 
-    private RefWatcher mRefWatcher;
+    protected RefWatcher mRefWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mineApplication = this;
         //检测内存泄漏
-//        mRefWatcher = setupLeakCanary();
-
-        //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
-        sp = getSharedPreferences("app", MODE);
-        editor = sp.edit();
+        mRefWatcher = setupLeakCanary();
 
         isCreateMineApplication = false;
         date = getDate();
@@ -71,21 +52,6 @@ public class MineApplication extends MultiDexApplication {
 
         //初始化okhttp3
 //        Okhttp3Manager.getInstance(this);
-
-        //初始化retrofit
-        RetrofitManager.getInstance();
-
-        if (true) {
-            ARouter.openLog();
-            ARouter.openDebug();
-        }
-        ARouter.init(this);
-    }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 
     private RefWatcher setupLeakCanary() {
@@ -100,7 +66,7 @@ public class MineApplication extends MultiDexApplication {
 //    }
 
     public static MineApplication getInstance() {
-        return mineApplication;
+        return (MineApplication) baseApplication;
     }
 
     protected boolean isEmpty(String dataStr) {
@@ -194,17 +160,6 @@ public class MineApplication extends MultiDexApplication {
         if (!isLogin) {
             setLogout();
         }
-    }
-
-    public String getAuthorization() {
-        authorization = sp.getString("authorization", "");
-        return authorization;
-    }
-
-    public void setAuthorization(String authorization) {
-        LogManager.i(TAG, "setAuthorization***" + authorization);
-        editor.putString("authorization", authorization);
-        editor.commit();
     }
 
     public boolean isCopyDatabase() {

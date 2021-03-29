@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.BaseApplication;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +40,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 
     protected String url;
     protected Map<String, String> bodyParams;
-    protected MineApplication mineApplication;
+    protected BaseApplication baseApplication;
     protected Activity activity;
     protected Intent intent;
     protected Bundle bundle;
@@ -71,7 +71,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 
         activity = getActivity();
         if (activity != null) {
-            mineApplication = (MineApplication) activity.getApplication();
+            baseApplication = (BaseApplication) activity.getApplication();
         }
         bodyParams = new HashMap<>();
 

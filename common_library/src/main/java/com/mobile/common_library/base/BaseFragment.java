@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.BaseApplication;
 
 import java.util.Map;
 
@@ -31,7 +31,7 @@ import java.util.Map;
 public abstract class BaseFragment extends Fragment {
 
     private static final String TAG = "BaseFragment";
-    protected MineApplication mineApplication;
+    protected BaseApplication baseApplication;
     protected Activity activity;
     private Intent intent;
     private Bundle bundle;
@@ -60,7 +60,7 @@ public abstract class BaseFragment extends Fragment {
 
         activity = getActivity();
         if (activity != null) {
-            mineApplication = (MineApplication) activity.getApplication();
+            baseApplication = (BaseApplication) activity.getApplication();
         }
 
         initData();

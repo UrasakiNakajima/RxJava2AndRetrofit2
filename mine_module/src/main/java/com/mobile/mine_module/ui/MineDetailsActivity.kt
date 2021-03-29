@@ -25,7 +25,8 @@ import kotlinx.android.synthetic.main.activity_mine_details.*
 class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineDetailsView {
 
     private val TAG: String = "MineDetailsActivity"
-//    @Autowired
+
+    //    @Autowired
 //    @JvmField
     var max_behot_time: String? = null
     private var dataBeanList: MutableList<Data> = mutableListOf()
@@ -41,8 +42,12 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
     override fun initData() {
 //        ARouter.getInstance().inject(this)
         intent = getIntent()
-        bundle = intent.extras
-        max_behot_time = bundle.getString("max_behot_time")
+        if (intent != null) {
+            bundle = intent.extras
+            max_behot_time = bundle.getString("max_behot_time")
+        } else {
+            max_behot_time = "1000"
+        }
 
         LogManager.i(TAG, "max_behot_time*****$max_behot_time")
     }

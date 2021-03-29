@@ -2,7 +2,7 @@ package com.mobile.common_library.manager;
 
 import android.os.Environment;
 
-import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.callback.OnCommonSingleParamCallback;
 
 import java.io.BufferedOutputStream;
@@ -138,7 +138,7 @@ public class ReadAndWriteManager {
     public static String readExternal(String filename) throws IOException {
         StringBuilder stringBuilder = new StringBuilder("");
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            filename = MineApplication.getInstance().getExternalCacheDir().getAbsolutePath() + File.separator + filename;
+            filename = BaseApplication.getInstance().getExternalCacheDir().getAbsolutePath() + File.separator + filename;
             //打开文件输入流
             FileInputStream inputStream = new FileInputStream(filename);
 

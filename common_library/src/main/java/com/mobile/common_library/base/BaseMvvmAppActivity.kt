@@ -4,7 +4,6 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -12,14 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.gyf.immersionbar.ImmersionBar
-import com.mobile.common_library.MineApplication
+import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.R
 import com.mobile.common_library.manager.ActivityPageManager
 import com.mobile.common_library.manager.ToolbarManager
 
 abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompatActivity() {
 
-    protected var mineApplication: MineApplication? = null
+    protected var baseApplication: BaseApplication? = null
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null
@@ -28,7 +27,7 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
         super.onCreate(savedInstanceState)
 
         ActivityPageManager.getInstance().addActivity(this)
-        mineApplication = application as MineApplication
+        baseApplication = application as BaseApplication
 
         mDatabind = DataBindingUtil.setContentView(this, initLayoutId())
         mDatabind.lifecycleOwner = this

@@ -2,7 +2,7 @@ package com.mobile.mine_module.presenter
 
 import android.text.TextUtils
 import com.alibaba.fastjson.JSONObject
-import com.mobile.common_library.MineApplication
+import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BasePresenter
 import com.mobile.common_library.base.IBaseView
 import com.mobile.common_library.callback.OnCommonSingleParamCallback
@@ -43,10 +43,10 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                     if (response.ans_list != null && response.ans_list.size > 0) {
                                         baseView.mineDataSuccess(response.ans_list)
                                     } else {
-                                        baseView.mineDataError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
+                                        baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
                                     }
                                 } else {
-                                    baseView.mineDataError(MineApplication.getInstance().resources.getString(R.string.loading_failed))
+                                    baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
                                 }
                                 baseView.hideLoading()
                             }
@@ -78,10 +78,10 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                     if (response.data != null && response.data!!.size > 0) {
                                         baseView.mineDetailsSuccess(response.data!!)
                                     } else {
-                                        baseView.mineDetailsError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
+                                        baseView.mineDetailsError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
                                     }
                                 } else {
-                                    baseView.mineDetailsError(MineApplication.getInstance().resources.getString(R.string.loading_failed))
+                                    baseView.mineDetailsError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
                                 }
                                 baseView.hideLoading()
                             }

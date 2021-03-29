@@ -4,7 +4,7 @@ import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.mobile.common_library.MineApplication
+import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.manager.LogManager
 import com.mobile.common_library.manager.RetrofitManager
 import com.mobile.common_library.manager.ScreenManager
@@ -48,7 +48,7 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                     squareDetailsSuccess(t)
                 } else {
-                    squareDetailsError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
+                    squareDetailsError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
                 }
             }
 
@@ -123,7 +123,7 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
         if (RetrofitManager.isNetworkAvailable(this)) {
             viewModel!!.squareDetails(currentPage)
         } else {
-            squareDetailsError(MineApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
+            squareDetailsError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }
     }
 

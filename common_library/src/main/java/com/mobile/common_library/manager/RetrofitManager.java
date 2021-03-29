@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.callback.OnCommonSingleParamCallback;
 import com.mobile.common_library.common.ConstantUrl;
 import com.mobile.common_library.interceptor.AddCookiesInterceptor;
@@ -44,7 +44,7 @@ public class RetrofitManager {
      * 初始化必要对象和参数
      */
     private RetrofitManager() {
-        Cache cache = new Cache(new File(MineApplication.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
+        Cache cache = new Cache(new File(BaseApplication.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         // 包含header、body数据
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -54,9 +54,9 @@ public class RetrofitManager {
                 .readTimeout(5 * 1000, TimeUnit.MILLISECONDS)
                 .writeTimeout(5 * 1000, TimeUnit.MILLISECONDS)
                 .cache(cache)
-//                .addInterceptor(new CacheControlInterceptor(MineApplication.getInstance()))
-                .addInterceptor(new AddCookiesInterceptor(MineApplication.getInstance()))
-                .addInterceptor(new ReceivedCookiesInterceptor(MineApplication.getInstance()))
+//                .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
+                .addInterceptor(new AddCookiesInterceptor(BaseApplication.getInstance()))
+                .addInterceptor(new ReceivedCookiesInterceptor(BaseApplication.getInstance()))
                 .addInterceptor(new BaseUrlManagerInterceptor())
                 .addInterceptor(loggingInterceptor)
                 .proxy(Proxy.NO_PROXY)
@@ -237,7 +237,7 @@ public class RetrofitManager {
 //                                LogManager.i(TAG, "throwable*****" + throwable.toString());
 //                                LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
 //                                // 异常处理
-//                                onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+//                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
 //                            }
 //                        }
                 );
@@ -284,7 +284,7 @@ public class RetrofitManager {
 //                        LogManager.i(TAG, "throwable*****" + throwable.toString());
 //                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
 //                        // 异常处理
-//                        onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+//                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
 //                    }
 //                });
 //        return disposable;

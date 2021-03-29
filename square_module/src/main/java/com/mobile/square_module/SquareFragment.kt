@@ -5,7 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.mobile.common_library.MineApplication
+import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BaseMvvmFragment
 import com.mobile.common_library.manager.LogManager
 import com.mobile.common_library.manager.RetrofitManager
@@ -53,7 +53,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                     squareDataSuccess(t)
                 } else {
-                    squareDataError(MineApplication.getInstance().resources.getString(R.string.no_data_available))
+                    squareDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
                 }
             }
 
@@ -130,7 +130,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         if (RetrofitManager.isNetworkAvailable(activity)) {
             viewModel!!.squareData(currentPage)
         } else {
-            squareDataError(MineApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
+            squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }
     }
 

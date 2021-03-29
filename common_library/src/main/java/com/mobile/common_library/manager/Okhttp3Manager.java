@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSON;
-import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.R;
 import com.mobile.common_library.base.BaseResponse;
 import com.mobile.common_library.callback.OnCommonSingleParamCallback;
@@ -58,8 +58,8 @@ public class Okhttp3Manager {
                 .connectTimeout(5000, TimeUnit.MILLISECONDS) //连接超时
                 .readTimeout(5000, TimeUnit.MILLISECONDS) //读取超时
                 .writeTimeout(5000, TimeUnit.MILLISECONDS) //写入超时
-                .addInterceptor(new AddCookiesInterceptor(MineApplication.getInstance())) //拦截器用于设置header
-                .addInterceptor(new ReceivedCookiesInterceptor(MineApplication.getInstance())) //拦截器用于接收并持久化cookie
+                .addInterceptor(new AddCookiesInterceptor(BaseApplication.getInstance())) //拦截器用于设置header
+                .addInterceptor(new ReceivedCookiesInterceptor(BaseApplication.getInstance())) //拦截器用于接收并持久化cookie
                 .proxy(Proxy.NO_PROXY)
                 .build();
     }
@@ -106,7 +106,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
                     }
                 });
                 mainThreadManager.subThreadToUIThread();
@@ -129,7 +129,7 @@ public class Okhttp3Manager {
                                 onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
-                            onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
                     }
                 });
@@ -166,7 +166,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
                     }
                 });
                 mainThreadManager.subThreadToUIThread();
@@ -189,7 +189,7 @@ public class Okhttp3Manager {
                                 onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
-                            onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
                     }
                 });
@@ -237,7 +237,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
                     }
                 });
                 mainThreadManager.subThreadToUIThread();
@@ -260,7 +260,7 @@ public class Okhttp3Manager {
                                 onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
-                            onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
                     }
                 });
@@ -312,7 +312,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
                     }
                 });
                 mainThreadManager.subThreadToUIThread();
@@ -343,7 +343,7 @@ public class Okhttp3Manager {
                                 onCommonSingleParamCallback.onSuccess(data);
 //                            }
 //                        } else {
-//                            onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
 //                        }
                     }
                 });
@@ -395,7 +395,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
                     }
                 });
                 mainThreadManager.subThreadToUIThread();
@@ -423,7 +423,7 @@ public class Okhttp3Manager {
                                 onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
-                            onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
                     }
                 });
@@ -493,7 +493,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
                     }
                 });
                 mainThreadManager.subThreadToUIThread();
@@ -516,7 +516,7 @@ public class Okhttp3Manager {
                                 onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
-                            onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
                     }
                 });
@@ -600,7 +600,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
                     }
                 });
                 mainThreadManager.subThreadToUIThread();
@@ -623,7 +623,7 @@ public class Okhttp3Manager {
                                 onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
-                            onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
                     }
                 });
@@ -698,7 +698,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
                     }
                 });
                 mainThreadManager.subThreadToUIThread();
@@ -721,7 +721,7 @@ public class Okhttp3Manager {
                                 onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
-                            onCommonSingleParamCallback.onError(MineApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
                     }
                 });

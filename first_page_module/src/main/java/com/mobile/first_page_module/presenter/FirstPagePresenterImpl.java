@@ -2,7 +2,7 @@ package com.mobile.first_page_module.presenter;
 
 import android.text.TextUtils;
 
-import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.base.BasePresenter;
 import com.mobile.common_library.base.IBaseView;
 import com.mobile.common_library.callback.OnCommonSingleParamCallback;
@@ -57,10 +57,10 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                     if (response.getAns_list() != null && response.getAns_list().size() > 0) {
                                         firstPageView.firstPageDataSuccess(response.getAns_list());
                                     } else {
-                                        firstPageView.firstPageDataError(MineApplication.getInstance().getResources().getString(R.string.no_data_available));
+                                        firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.no_data_available));
                                     }
                                 } else {
-                                    firstPageView.firstPageDataError(MineApplication.getInstance().getResources().getString(R.string.loading_failed));
+                                    firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.loading_failed));
                                 }
                                 firstPageView.hideLoading();
                             }
@@ -88,7 +88,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 ////                                    FirstPageResponse firstPageResponse = JSON.parse(responseString, FirstPageResponse.class);
 //                                    firstPageView.firstPageDataSuccess(baseResponse.getMessage());
 //                                } else {
-//                                    firstPageView.firstPageDataError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+//                                    firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
 //                                }
 //                                firstPageView.hideLoading();
 //                            }
@@ -97,7 +97,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 //                            public void accept(Throwable throwable) throws Exception {
 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
 //                                // 异常处理
-//                                firstPageView.firstPageDataError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+//                                firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
 //                                firstPageView.hideLoading();
 //                            }
 //                        });
@@ -125,10 +125,10 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                     if (response.getData() != null && response.getData().size() > 0) {
                                         firstPageDetailsView.firstPageDetailsSuccess(response.getData());
                                     } else {
-                                        firstPageDetailsView.firstPageDetailsError(MineApplication.getInstance().getResources().getString(R.string.no_data_available));
+                                        firstPageDetailsView.firstPageDetailsError(BaseApplication.getInstance().getResources().getString(R.string.no_data_available));
                                     }
                                 } else {
-                                    firstPageDetailsView.firstPageDetailsError(MineApplication.getInstance().getResources().getString(R.string.loading_failed));
+                                    firstPageDetailsView.firstPageDetailsError(BaseApplication.getInstance().getResources().getString(R.string.loading_failed));
                                 }
                                 firstPageDetailsView.hideLoading();
                             }

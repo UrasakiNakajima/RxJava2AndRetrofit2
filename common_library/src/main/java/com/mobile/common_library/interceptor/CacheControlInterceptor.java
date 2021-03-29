@@ -2,7 +2,7 @@ package com.mobile.common_library.interceptor;
 
 import androidx.annotation.NonNull;
 
-import com.mobile.common_library.MineApplication;
+import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.manager.RetrofitManager;
 
 import java.io.IOException;
@@ -15,23 +15,23 @@ import okhttp3.Response;
 public class CacheControlInterceptor implements Interceptor {
 
     private static final String TAG = "CacheControlInterceptor";
-    private MineApplication mineApplication;
+    private BaseApplication baseApplication;
 
-    public CacheControlInterceptor(MineApplication mineApplication) {
+    public CacheControlInterceptor(BaseApplication mineApplication) {
         super();
-        this.mineApplication = mineApplication;
+        this.baseApplication = mineApplication;
     }
 
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
-        if (!RetrofitManager.isNetworkAvailable(mineApplication)) {
+        if (!RetrofitManager.isNetworkAvailable(baseApplication)) {
             request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
         }
 
         Response originalResponse = chain.proceed(request);
-        if (RetrofitManager.isNetworkAvailable(mineApplication)) {
+        if (RetrofitManager.isNetworkAvailable(baseApplication)) {
             // 有网络时 设置缓存为默认值
             String cacheControl = request.cacheControl().toString();
             return originalResponse.newBuilder()

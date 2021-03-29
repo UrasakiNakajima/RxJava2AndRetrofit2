@@ -2,7 +2,7 @@ package com.mobile.square_module.view_model
 
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
-import com.mobile.common_library.MineApplication
+import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BaseViewModel
 import com.mobile.common_library.callback.OnCommonSingleParamCallback
 import com.mobile.common_library.manager.GsonManager
@@ -41,10 +41,10 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 
                                 dataxSuccess.value = response.data!!.datas
                             } else {
-                                dataxError.value = MineApplication.getInstance().resources.getString(R.string.no_data_available)
+                                dataxError.value = BaseApplication.getInstance().resources.getString(R.string.no_data_available)
                             }
                         } else {
-                            dataxError.value = MineApplication.getInstance().resources.getString(R.string.loading_failed)
+                            dataxError.value = BaseApplication.getInstance().resources.getString(R.string.loading_failed)
                         }
                     }
 
@@ -79,10 +79,10 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 
                                 dataxDetailsSuccess.value = response.data!!.datas
                             } else {
-                                dataxDetailsError.value = MineApplication.getInstance().resources.getString(R.string.no_data_available)
+                                dataxDetailsError.value = BaseApplication.getInstance().resources.getString(R.string.no_data_available)
                             }
                         } else {
-                            dataxDetailsError.value = MineApplication.getInstance().resources.getString(R.string.loading_failed)
+                            dataxDetailsError.value = BaseApplication.getInstance().resources.getString(R.string.loading_failed)
                         }
                     }
 
