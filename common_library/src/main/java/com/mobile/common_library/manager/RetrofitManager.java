@@ -244,52 +244,6 @@ public class RetrofitManager {
         return disposable;
     }
 
-//    /**
-//     * 返回Disposable，接口回调返回字符串
-//     *
-//     * @param observable
-//     * @param onCommonSingleParamCallback
-//     * @return
-//     */
-//    public Disposable responseData(Observable<FirstPageResponse.QuestionBean> observable, OnCommonSingleParamCallback<FirstPageResponse.QuestionBean> onCommonSingleParamCallback) {
-//        Disposable disposable = observable.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<FirstPageResponse.QuestionBean>() {
-//                    @Override
-//                    public void accept(FirstPageResponse.QuestionBean success) throws Exception {
-////                        String responseString = responseBody.string();
-////                        LogManager.i(TAG, "responseString*****" + responseString);
-//                        onCommonSingleParamCallback.onSuccess(success);
-//
-////                        ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
-////                        manager.writeExternal("mineLog.txt",
-////                                responseString,
-////                                new OnCommonSingleParamCallback<Boolean>() {
-////                                    @Override
-////                                    public void onSuccess(Boolean success) {
-////                                        LogManager.i(TAG, "success*****" + success);
-////                                        manager.unSubscribe();
-////                                    }
-////
-////                                    @Override
-////                                    public void onError(String error) {
-////                                        LogManager.i(TAG, "error*****" + error);
-////                                        manager.unSubscribe();
-////                                    }
-////                                });
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//                        LogManager.i(TAG, "throwable*****" + throwable.toString());
-//                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
-//                        // 异常处理
-//                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-//                    }
-//                });
-//        return disposable;
-//    }
-
     /**
      * 判断网络是否可用
      *
