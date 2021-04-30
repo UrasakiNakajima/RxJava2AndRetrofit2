@@ -47,7 +47,7 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
 
                             }
                         });
-                compositeDisposable.add(disposable);
+//                compositeDisposable.add(disposable);
 
 //                disposable = model.mainData(bodyParams)
 //                        .subscribeOn(Schedulers.io())

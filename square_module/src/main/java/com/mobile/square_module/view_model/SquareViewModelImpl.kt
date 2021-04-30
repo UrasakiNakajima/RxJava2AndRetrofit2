@@ -1,6 +1,7 @@
 package com.mobile.square_module.view_model
 
 import android.text.TextUtils
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BaseViewModel
@@ -20,17 +21,19 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     }
 
     private var model: SquareModelImpl = SquareModelImpl()
+
     //1.首先定义两个MutableLiveData的实例
     private val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
     private val dataxError: MutableLiveData<String> = MutableLiveData()
+
     //1.首先定义两个MutableLiveData的实例
     private val dataxDetailsSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
     private val dataxDetailsError: MutableLiveData<String> = MutableLiveData()
 
-    override fun squareData(currentPage: String) {
+    override fun squareData(fragment: Fragment, currentPage: String) {
         disposable = RetrofitManager
                 .getInstance()
-                .responseString(model.squareData(currentPage), object : OnCommonSingleParamCallback<String> {
+                .responseString(fragment, model.squareData(currentPage), object : OnCommonSingleParamCallback<String> {
                     override fun onSuccess(success: String) {
                         LogManager.i(TAG, "success*****$success")
                         if (!TextUtils.isEmpty(success)) {

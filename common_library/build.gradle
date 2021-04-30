@@ -118,6 +118,9 @@ dependencies {
     api 'io.reactivex.rxjava2:rxjava:2.0.7'
     api 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
+    //AutoDispose解决rxjava导致的内存泄漏的框架
+    api 'com.uber.autodispose:autodispose-android-archcomponents:1.0.0-RC2'
+
     api 'com.github.bumptech.glide:glide:4.8.0'
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
     api 'com.jakewharton:butterknife:10.2.3'

@@ -1,0 +1,1103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.CustomViewActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:ignore="MissingConstraints">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/layout_event_schedule2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dp_23"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:ignore="UselessParent">
+
+                <LinearLayout
+                    android:layout_width="@dimen/dp_75"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="59dp">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="9dp"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:src="@mipmap/icon_time_line_triangle"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="15dp"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="9dp" />
+
+                        <TextView
+                            android:id="@+id/tev_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="23dp"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="0:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="24dp"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="25dp"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="34dp" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="65dp">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="5dp"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="25dp"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="5dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="29dp"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="1:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="30dp"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="25dp"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="40dp" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="2:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="3:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="4:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="5:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="6:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="7:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="8:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="9:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="10:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="11:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="12:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="13:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="14:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="15:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="16:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="17:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="18:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="19:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="20:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="21:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="22:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="23:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/dp_75"
+                        android:layout_height="@dimen/dp_65">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:src="@mipmap/icon_small_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_5" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/dp_29"
+                            android:layout_marginEnd="@dimen/dp_26"
+                            android:includeFontPadding="false"
+                            android:text="24:00" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_10"
+                            android:layout_height="@dimen/dp_10"
+                            android:layout_marginStart="@dimen/dp_53"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:src="@mipmap/icon_major_time_node"
+                            tools:ignore="ContentDescription" />
+
+                        <com.mobile.main_module.custom_view.DottedLineView
+                            android:layout_width="@dimen/dp_4"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_56"
+                            android:layout_marginTop="@dimen/dp_40" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/layout_event_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_24" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

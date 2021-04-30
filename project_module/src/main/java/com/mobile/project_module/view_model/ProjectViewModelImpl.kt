@@ -1,6 +1,7 @@
 package com.mobile.project_module.view_model
 
 import android.text.TextUtils
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BaseViewModel
@@ -21,14 +22,15 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
     }
 
     private var model: ProjectModelImpl = ProjectModelImpl()
+
     //1.首先定义两个MutableLiveData的实例
     private val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
     private val dataxError: MutableLiveData<String> = MutableLiveData()
 
-    override fun projectData(currentPage: String) {
+    override fun projectData(fragment: Fragment, currentPage: String) {
         disposable = RetrofitManager
                 .getInstance()
-                .responseString(model.projectData(currentPage), object : OnCommonSingleParamCallback<String> {
+                .responseString(fragment, model.projectData(currentPage), object : OnCommonSingleParamCallback<String> {
                     override fun onSuccess(success: String) {
                         LogManager.i(TAG, "success*****$success")
                         if (!TextUtils.isEmpty(success)) {

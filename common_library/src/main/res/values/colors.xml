@@ -26,4 +26,12 @@
     <color name="colorBlack666">#666</color>
     <color name="colorBlack333">#333</color>
 
+
+
+
+    <color name="color_FFFF0000">#FFFF0000</color>
+    <color name="color_FF333333">#FF333333</color>
+    <color name="color_FF3258F7">#FF3258F7</color>
+
+    <color name="color_FFD0D6EC">#FFD0D6EC</color>
 </resources>

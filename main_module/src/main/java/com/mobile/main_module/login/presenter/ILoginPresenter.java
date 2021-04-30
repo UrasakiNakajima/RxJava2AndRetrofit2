@@ -2,6 +2,8 @@ package com.mobile.main_module.login.presenter;
 
 import java.util.Map;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * author    : xxxxxxxxxxx
  * e-mail    : xxxxxxxxxxx@qq.com
@@ -10,9 +12,9 @@ import java.util.Map;
  */
 
 public interface ILoginPresenter {
-
-    void login(Map<String, String> bodyParams);
-
-    void register(Map<String, String> bodyParams);
-
+	
+	void login(AppCompatActivity activity, Map<String, String> bodyParams);
+	
+	void register(Map<String, String> bodyParams);
+	
 }

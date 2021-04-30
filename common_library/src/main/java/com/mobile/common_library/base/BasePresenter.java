@@ -1,9 +1,7 @@
 package com.mobile.common_library.base;
 
-
 import java.lang.ref.WeakReference;
 
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -16,13 +14,13 @@ import io.reactivex.disposables.Disposable;
 
 public class BasePresenter<T> {
 
-    private WeakReference<T> modelView;
-    protected CompositeDisposable compositeDisposable;
-    protected Disposable disposable;
+    private   WeakReference<T> modelView;
+//    protected CompositeDisposable compositeDisposable;
+    protected Disposable       disposable;
 
     protected void attachView(T view) {
         modelView = new WeakReference<T>(view);
-        compositeDisposable = new CompositeDisposable();
+//        compositeDisposable = new CompositeDisposable();
     }
 
     protected T obtainView() {
@@ -39,16 +37,15 @@ public class BasePresenter<T> {
             modelView.clear();
             modelView = null;
         }
-        unSubscribe();
+//        unSubscribe();
     }
 
-
-    protected void unSubscribe() {
-        if (compositeDisposable != null && compositeDisposable.size() > 0) {
-            compositeDisposable.clear();
-            compositeDisposable = null;
-        }
-    }
+//    protected void unSubscribe() {
+//        if (compositeDisposable != null && compositeDisposable.size() > 0) {
+//            compositeDisposable.clear();
+//            compositeDisposable = null;
+//        }
+//    }
 
 
 }

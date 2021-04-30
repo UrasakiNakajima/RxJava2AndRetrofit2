@@ -22,7 +22,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         private val TAG: String = "SquareFragment"
     }
 
-//    private var mainActivity: MainActivity? = null
+    //    private var mainActivity: MainActivity? = null
     //    private var dataList: MutableList<DataX> = mutableListOf()
     private var currentPage: Int = 1
     private var dataxSuccessObserver: Observer<List<DataX>>? = null;
@@ -128,7 +128,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     private fun initSquare(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(activity)) {
-            viewModel!!.squareData(currentPage)
+            viewModel!!.squareData(this, currentPage)
         } else {
             squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }

@@ -39,6 +39,7 @@ dependencies {
 
     if (isModule.toBoolean()) {
         //可独立运行的app
+        implementation project(path: ':main_module')
     } else {
         //被依赖的library
         implementation project(path: ':main_module')

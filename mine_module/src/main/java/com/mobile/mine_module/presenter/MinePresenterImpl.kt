@@ -1,6 +1,7 @@
 package com.mobile.mine_module.presenter
 
 import android.text.TextUtils
+import androidx.fragment.app.Fragment
 import com.alibaba.fastjson.JSONObject
 import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BasePresenter
@@ -19,6 +20,7 @@ import com.mobile.mine_module.view.IMineView
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
     private val TAG: String = "MinePresenterImpl"
+
     //    private IResourceChildView feedbackView;//P需要与V 交互，所以需要持有V的引用
     private var model: MineModelImpl = MineModelImpl();
 
@@ -26,13 +28,13 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         attachView(baseView)
     }
 
-    override fun mineData(bodyParams: Map<String, String>) {
+    override fun mineData(fragment: Fragment, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(model.mineData(bodyParams), object : OnCommonSingleParamCallback<String> {
+                        .responseString(fragment, model.mineData(bodyParams), object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
@@ -57,7 +59,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                 baseView.hideLoading()
                             }
                         })
-                compositeDisposable.add(disposable)
+//                compositeDisposable.add(disposable)
             }
         }
     }
@@ -92,7 +94,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                 baseView.hideLoading()
                             }
                         })
-                compositeDisposable.add(disposable)
+//                compositeDisposable.add(disposable)
 
                 //                //okhttp3请求（响应速度稍慢，可改进）
                 //                Okhttp3Manager.getInstance()

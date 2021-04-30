@@ -1,6 +1,7 @@
 package com.mobile.resource_module.presenter
 
 import android.text.TextUtils
+import androidx.fragment.app.Fragment
 import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BasePresenter
 import com.mobile.common_library.base.IBaseView
@@ -17,6 +18,7 @@ import com.mobile.resource_module.view.IResourceChildView
 class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IResourcePresenter {
 
     private val TAG: String = "ResourcePresenterImpl"
+
     //    private IResourceChildView feedbackView;//P需要与V 交互，所以需要持有V的引用
     private var model: ResourceModelImpl = ResourceModelImpl();
 
@@ -24,13 +26,13 @@ class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), I
         attachView(baseView)
     }
 
-    override fun resourceData(type: String, pageSize: String, currentPage: String) {
+    override fun resourceData(fragment: Fragment, type: String, pageSize: String, currentPage: String) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IResourceChildView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(model.resourceData(type, pageSize, currentPage), object : OnCommonSingleParamCallback<String> {
+                        .responseString(fragment, model.resourceData(type, pageSize, currentPage), object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
@@ -56,7 +58,7 @@ class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), I
                                 baseView.hideLoading()
                             }
                         })
-                compositeDisposable.add(disposable)
+//                compositeDisposable.add(disposable)
             }
         }
     }
