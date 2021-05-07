@@ -17,10 +17,11 @@
             android:layout_height="match_parent">
 
             <FrameLayout
-                android:id="@+id/layout_event_schedule2"
+                android:id="@+id/layout_event_schedule"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dp_23"
+                android:layout_marginBottom="@dimen/dp_25"
                 android:visibility="visible" />
 
             <LinearLayout
@@ -1087,12 +1088,6 @@
                     </FrameLayout>
 
                 </LinearLayout>
-
-                <FrameLayout
-                    android:id="@+id/layout_event_schedule"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_24" />
 
             </LinearLayout>
 

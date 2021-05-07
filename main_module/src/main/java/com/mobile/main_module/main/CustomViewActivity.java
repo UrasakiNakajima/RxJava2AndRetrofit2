@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 
 import com.mobile.main_module.R;
 import com.mobile.main_module.bean.EventScheduleListBean;
-import com.mobile.main_module.custom_view.EventSchedule2Layout;
+import com.mobile.main_module.custom_view.EventScheduleLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CustomViewActivity extends AppCompatActivity {
 	
 	private static final String      TAG = "CustomViewActivity";
-	//	private              FrameLayout layoutEventSchedule;
-	private              FrameLayout layoutEventSchedule2;
+	private              FrameLayout layoutEventSchedule;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,22 +66,22 @@ public class CustomViewActivity extends AppCompatActivity {
 		rowsDTOList.add(rowsDTO5);
 		rowsDTOList.add(rowsDTO6);
 		
-		//		EventScheduleLayout eventScheduleLayout = new EventScheduleLayout(this, null, rowsDTOList);
-		//		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-		//			LinearLayout.LayoutParams.MATCH_PARENT,
-		//			LinearLayout.LayoutParams.MATCH_PARENT);
-		//		layoutEventSchedule.addView(eventScheduleLayout, layoutParams);
-		
-		EventSchedule2Layout eventSchedule2Layout = new EventSchedule2Layout(this, null, rowsDTOList);
+		EventScheduleLayout eventScheduleLayout = new EventScheduleLayout(this, null, rowsDTOList);
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.MATCH_PARENT);
-		layoutEventSchedule2.addView(eventSchedule2Layout, layoutParams);
+		layoutEventSchedule.addView(eventScheduleLayout, layoutParams);
+		
+		//		DottedLineView dottedLineView = new DottedLineView(this);
+		//		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+		//			ScreenManager.dipTopx(this, 4),
+		//			LinearLayout.LayoutParams.MATCH_PARENT);
+		//		layoutParams.setMarginStart(ScreenManager.dipTopx(this, 30));
+		//		layoutEventSchedule.addView(dottedLineView, layoutParams);
 	}
 	
 	private void initViews() {
-		//		layoutEventSchedule = (FrameLayout) findViewById(R.id.layout_event_schedule);
-		layoutEventSchedule2 = (FrameLayout) findViewById(R.id.layout_event_schedule2);
+		layoutEventSchedule = (FrameLayout) findViewById(R.id.layout_event_schedule);
 	}
 	
 }
