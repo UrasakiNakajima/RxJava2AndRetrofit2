@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.mobile.common_library.base.BaseMvpFragment;
 import com.mobile.common_library.base.IBaseView;
 import com.mobile.common_library.callback.RcvOnItemViewClickListener;
@@ -17,6 +16,7 @@ import com.mobile.common_library.manager.ScreenManager;
 import com.mobile.first_page_module.adapter.FirstPageAdapter;
 import com.mobile.first_page_module.bean.FirstPageResponse;
 import com.mobile.first_page_module.presenter.FirstPagePresenterImpl;
+import com.mobile.first_page_module.ui.ShowVideoActivity;
 import com.mobile.first_page_module.view.IFirstPageView;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -24,7 +24,9 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,6 +60,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	private FirstPageAdapter                    firstPageAdapter;
 	private LinearLayoutManager                 linearLayoutManager;
 	private boolean                             isRefresh;
+	private Map<String, String>                 paramMap;
 	
 	@Nullable
 	@Override
@@ -80,6 +83,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	@Override
 	protected void initData() {
 		ansListBeanList = new ArrayList<>();
+		paramMap = new HashMap<>();
 		//        mainActivity = (MainActivity) activity;
 		isRefresh = true;
 	}
@@ -107,16 +111,40 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 		firstPageAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
 			@Override
 			public void onItemClickListener(int position, View view) {
-				//                if (view.getId() == id.tev_data) {
+				//                if (view.getId() == R.id.tev_data) {
 				//                        bodyParams.clear();
 				//                        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
 				//                        startActivityCarryParams(FirstPageDetailsActivity.class, bodyParams);
 				
-				//Jump with parameters
-				ARouter.getInstance().build("/first_page_module/ui/first_page_details")
-					.withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
-					.navigation();
+				//				//Jump with parameters
+				//				ARouter.getInstance().build("/first_page_module/ui/first_page_details")
+				//					.withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+				//					.navigation();
+				
 				//                }
+				
+				
+				if (view.getId() == R.id.tev_data) {
+					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
+					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
+					//					fileFullname = mFileDTO.getFName();
+					String[] arr = url.split("\\.");
+					if (arr != null && arr.length > 0) {
+						String fileName = "";
+						StringBuilder stringBuilder = new StringBuilder();
+						for (int i = 0; i < arr.length - 1; i++) {
+							stringBuilder.append(arr[i]);
+						}
+						fileName = stringBuilder.toString();
+						String suffix = arr[arr.length - 1];
+						
+						paramMap.clear();
+						paramMap.put("url", url);
+						paramMap.put("suffix", suffix);
+						startActivityCarryParams(ShowVideoActivity.class, paramMap);
+					}
+					
+				}
 			}
 		});
 		rcvData.setAdapter(firstPageAdapter);

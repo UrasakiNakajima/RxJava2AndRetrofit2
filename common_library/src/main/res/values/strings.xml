@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">common_library</string>
 
-
-
     <string name="first_page">首页</string>
     <string name="project">项目</string>
     <string name="square">广场</string>
@@ -44,7 +42,6 @@
     <string name="video">视频</string>
     <string name="app">App</string>
 
-
     <string name="time">time</string>
     <string name="play">play</string>
     <string name="pause">pause</string>
@@ -52,18 +49,22 @@
     <string name="start_time">00:00:00</string>
     <string name="start_time2">00:00</string>
 
+    <string name="save_to_phone">保存到手机</string>
+    <string name="cancel">取消</string>
+    <string name="saved_successfully">保存成功</string>
+    <string name="failed_to_save_please_try_again">保存失败，请重试</string>
 
     <!--真正用于解析的属性-->
     <declare-styleable name="RCAttrs">
-        <attr name="round_as_circle" format="boolean"/>
-        <attr name="round_corner" format="integer"/>
-        <attr name="round_corner_top_left" format="integer"/>
-        <attr name="round_corner_top_right" format="integer"/>
-        <attr name="round_corner_bottom_left" format="integer"/>
-        <attr name="round_corner_bottom_right" format="integer"/>
-        <attr name="stroke_color" format="color"/>
-        <attr name="stroke_width" format="integer"/>
-        <attr name="clip_background" format="boolean"/>
+        <attr name="round_as_circle" format="boolean" />
+        <attr name="round_corner" format="integer" />
+        <attr name="round_corner_top_left" format="integer" />
+        <attr name="round_corner_top_right" format="integer" />
+        <attr name="round_corner_bottom_left" format="integer" />
+        <attr name="round_corner_bottom_right" format="integer" />
+        <attr name="stroke_color" format="color" />
+        <attr name="stroke_width" format="integer" />
+        <attr name="clip_background" format="boolean" />
     </declare-styleable>
 
 </resources>
