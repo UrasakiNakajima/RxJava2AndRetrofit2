@@ -20,6 +20,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    //android 模块下开启DataBinding（必须添加，即使此module没有用到也要添加）
+    dataBinding {
+        enabled = true
+    }
+
     //开启Java1.8 能够使用lambda表达式
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
