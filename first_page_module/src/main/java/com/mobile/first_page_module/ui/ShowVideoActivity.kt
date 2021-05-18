@@ -65,12 +65,16 @@ class ShowVideoActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        tev_title.setText(resources.getString(R.string.video_play))
         imv_share.setColorFilter(ContextCompat.getColor(this, R.color.color_FF474747))
         setToolbar(true, R.color.white);
 
         dialog = ShowDownloadDialogFragment.newInstance();
         initVideo(url!!)
 
+        layout_back.setOnClickListener {
+            finish()
+        }
         layout_share.setOnClickListener {
             dialog!!.setOnDialogCallback(object : OnDialogCallback<Int> {
 

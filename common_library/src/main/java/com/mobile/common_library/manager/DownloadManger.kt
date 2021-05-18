@@ -77,7 +77,7 @@ class DownloadManger private constructor() {
                     file.createNewFile()
                 }
                 try {
-                    val buf = ByteArray(1024 * 2)
+                    val buf = ByteArray(1024 * 1024 * 2)
                     var len = 0
                     val total = response.body()!!.contentLength()
                     `is` = response.body()!!.byteStream()
