@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.mobile.common_library.base.BaseMvpFragment
 import com.mobile.common_library.base.IBaseView
 import com.mobile.common_library.callback.RcvOnItemViewClickListener
@@ -18,7 +17,7 @@ import com.mobile.common_library.manager.ScreenManager
 import com.mobile.mine_module.adapter.MineAdapter
 import com.mobile.mine_module.bean.Ans
 import com.mobile.mine_module.presenter.MinePresenterImpl
-import com.mobile.mine_module.ui.MineDetailsActivity
+import com.mobile.mine_module.ui.UserDataActivity
 import com.mobile.mine_module.view.IMineView
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -71,10 +70,11 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         mineAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
-                bodyParams.clear()
-                bodyParams["max_behot_time"] = "1000"
-                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
+//                bodyParams.clear()
+//                bodyParams["max_behot_time"] = "1000"
+//                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
 
+                startActivity(UserDataActivity::class.java)
 //                //Jump with parameters
 //                ARouter.getInstance().build("/mine_module/ui/mine_details")
 //                        .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())

@@ -1,6 +1,7 @@
 package com.mobile.mine_module.presenter
 
 import android.text.TextUtils
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.alibaba.fastjson.JSONObject
 import com.mobile.common_library.BaseApplication
@@ -16,6 +17,7 @@ import com.mobile.mine_module.bean.MineResponse
 import com.mobile.mine_module.model.MineModelImpl
 import com.mobile.mine_module.view.IMineDetailsView
 import com.mobile.mine_module.view.IMineView
+import com.mobile.mine_module.view.IUserDataView
 
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
@@ -36,7 +38,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                 disposable = RetrofitManager.getInstance()
                         .responseString(fragment, model.mineData(bodyParams), object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
-                                LogManager.i(TAG, "success*****$success")
+                                LogManager.i(TAG, "mineData success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
@@ -73,7 +75,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                 disposable = RetrofitManager.getInstance()
                         .responseString(model.mineDetails(bodyParams), object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
-                                LogManager.i(TAG, "success*****$success")
+                                LogManager.i(TAG, "mineDetails success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
                                     val response: MineDetailsResponse = JSONObject.parseObject(success, MineDetailsResponse::class.java);
                                     LogManager.i(TAG, "success data*****$response")
@@ -112,6 +114,43 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                 //                                    }
                 //                                });
 
+            }
+        }
+    }
+
+    override fun userData(appCompatActivity: AppCompatActivity, bodyParams: Map<String, String>) {
+        val baseView = obtainView()
+        if (baseView != null) {
+            if (baseView is IUserDataView) {
+                baseView.showLoading()
+                disposable = RetrofitManager.getInstance()
+                        .responseString(appCompatActivity, model.userData(bodyParams), object : OnCommonSingleParamCallback<String> {
+                            override fun onSuccess(success: String) {
+                                LogManager.i(TAG, "userData success*****$success")
+                                if (!TextUtils.isEmpty(success)) {
+//                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
+//                                    val gson = Gson()
+//                                    val response = gson.fromJson(success, MineResponse::class.java)
+//                                    val response = GsonManager.getInstance().convert(success, MineResponse::class.java)
+
+//                                    if (response.ans_list != null && response.ans_list.size > 0) {
+//                                        baseView.mineDataSuccess(response.ans_list)
+//                                    } else {
+//                                        baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+//                                    }
+                                } else {
+                                    baseView.userDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
+                                }
+                                baseView.hideLoading()
+                            }
+
+                            override fun onError(error: String) {
+                                LogManager.i(TAG, "error*****$error")
+                                baseView.userDataError(error)
+                                baseView.hideLoading()
+                            }
+                        })
+//                compositeDisposable.add(disposable)
             }
         }
     }

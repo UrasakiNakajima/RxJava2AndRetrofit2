@@ -9,4 +9,7 @@ interface IMineModel {
 
     fun mineDetails(bodyParams: Map<String, String>): Observable<ResponseBody>
 
+    fun userData(bodyParams: Map<String, String>): Observable<ResponseBody>
+
+
 }
