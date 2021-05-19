@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public interface ILoginPresenter {
 	
-	void login(AppCompatActivity activity, Map<String, String> bodyParams);
+	void getAuthCode(AppCompatActivity activity, Map<String, String> bodyParams);
+	
+	void loginWithAuthCode(AppCompatActivity activity, Map<String, String> bodyParams);
 	
 	void register(Map<String, String> bodyParams);
 	

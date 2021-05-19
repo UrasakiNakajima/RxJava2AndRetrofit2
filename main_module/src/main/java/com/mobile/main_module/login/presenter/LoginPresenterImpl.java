@@ -9,6 +9,7 @@ import com.mobile.common_library.manager.LogManager;
 import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.main_module.MineApplication;
 import com.mobile.main_module.R;
+import com.mobile.main_module.login.bean.GetVerificationCode;
 import com.mobile.main_module.login.bean.LoginResponse;
 import com.mobile.main_module.login.model.LoginModelImpl;
 import com.mobile.main_module.login.view.ILoginView;
@@ -38,26 +39,23 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
 	}
 	
 	@Override
-	public void login(AppCompatActivity activity, Map<String, String> bodyParams) {
+	public void getAuthCode(AppCompatActivity activity, Map<String, String> bodyParams) {
 		IBaseView baseView = obtainView();
 		if (baseView != null) {
 			if (baseView instanceof ILoginView) {
 				ILoginView loginView = (ILoginView) baseView;
 				loginView.showLoading();
 				disposable = RetrofitManager.getInstance()
-								 .responseString(activity, model.login(bodyParams), new OnCommonSingleParamCallback<String>() {
+								 .responseString(activity, model.getAuthCode(bodyParams), new OnCommonSingleParamCallback<String>() {
 									 @Override
 									 public void onSuccess(String success) {
 										 LogManager.i(TAG, "success*****" + success);
 										 BaseResponse baseResponse = JSON.parseObject(success, BaseResponse.class);
-										 if (baseResponse.getCode() == 200) {
-											 LoginResponse loginResponse = JSON.parseObject(success, LoginResponse.class);
-											 MineApplication mineApplication = MineApplication.getInstance();
-											 mineApplication.setShopId(loginResponse.getData().getShopId() + "");
-											 mineApplication.setUserId(loginResponse.getData().getUserId() + "");
-											 loginView.loginSuccess(loginResponse.getData());
+										 if (baseResponse.getCode() == 0) {
+											 GetVerificationCode getVerificationCode = JSON.parseObject(success, GetVerificationCode.class);
+											 loginView.getAuthCodeSuccess(getVerificationCode.getData());
 										 } else {
-											 loginView.loginError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+											 loginView.getAuthCodeError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
 										 }
 										 loginView.hideLoading();
 									 }
@@ -66,11 +64,82 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
 									 public void onError(String error) {
 										 LogManager.i(TAG, "error*****" + error);
 										 // 异常处理
-										 loginView.loginError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+										 loginView.getAuthCodeError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
 										 loginView.hideLoading();
 									 }
 								 });
-//				compositeDisposable.add(disposable);
+				//				compositeDisposable.add(disposable);
+				
+				//                MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
+				//                //2.通过RequestBody.create 创建requestBody对象
+				//                RequestBody requestBody = RequestBody.create(mediaType, requestData);
+				//                disposable = model.login(requestBody)
+				//                        .subscribeOn(Schedulers.io())
+				//                        .observeOn(AndroidSchedulers.mainThread())
+				//                        .subscribe(new Consumer<JSONObject>() {
+				//                            @Override
+				//                            public void accept(JSONObject jsonObject) throws Exception {
+				//                                String responseString = jsonObject.toJSONString();
+				//                                LogManager.i(TAG, "responseString*****" + responseString);
+				//                                BaseResponse baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+				//                                if (baseResponse.getCode() == 200) {
+				//                                    LoginResponse loginResponse = JSON.parseObject(responseString, LoginResponse.class);
+				//                                    MineApplication mineApplication = MineApplication.getInstance();
+				//                                    mineApplication.setShopId(loginResponse.getData().getShopId() + "");
+				//                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
+				//                                    loginView.loginSuccess(loginResponse.getData());
+				//                                } else {
+				//                                    loginView.loginError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+				//                                }
+				//                                loginView.hideLoading();
+				//                            }
+				//                        }, new Consumer<Throwable>() {
+				//                            @Override
+				//                            public void accept(Throwable throwable) throws Exception {
+				//                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
+				//                                // 异常处理
+				//                                loginView.loginError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+				//                                loginView.hideLoading();
+				//                            }
+				//                        });
+			}
+		}
+	}
+	
+	@Override
+	public void loginWithAuthCode(AppCompatActivity activity, Map<String, String> bodyParams) {
+		IBaseView baseView = obtainView();
+		if (baseView != null) {
+			if (baseView instanceof ILoginView) {
+				ILoginView loginView = (ILoginView) baseView;
+				loginView.showLoading();
+				disposable = RetrofitManager.getInstance()
+								 .responseString(activity, model.loginWithAuthCode(bodyParams), new OnCommonSingleParamCallback<String>() {
+									 @Override
+									 public void onSuccess(String success) {
+										 LogManager.i(TAG, "success*****" + success);
+										 BaseResponse baseResponse = JSON.parseObject(success, BaseResponse.class);
+										 if (baseResponse.getCode() == 0) {
+											 LoginResponse loginResponse = JSON.parseObject(success, LoginResponse.class);
+											 MineApplication mineApplication = MineApplication.getInstance();
+											 //											 mineApplication.setUserId(loginResponse.getData().getUserId());
+											 mineApplication.setToken(loginResponse.getData().getToken());
+											 loginView.loginWithAuthCodeSuccess(loginResponse.getData());
+										 } else {
+											 loginView.loginWithAuthCodeError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+										 }
+										 loginView.hideLoading();
+									 }
+						
+									 @Override
+									 public void onError(String error) {
+										 LogManager.i(TAG, "error*****" + error);
+										 // 异常处理
+										 loginView.loginWithAuthCodeError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+										 loginView.hideLoading();
+									 }
+								 });
+				//				compositeDisposable.add(disposable);
 				
 				//                MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
 				//                //2.通过RequestBody.create 创建requestBody对象
@@ -141,7 +210,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
 										 registerView.hideLoading();
 									 }
 								 });
-//				compositeDisposable.add(disposable);
+				//				compositeDisposable.add(disposable);
 			}
 		}
 	}

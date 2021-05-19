@@ -69,7 +69,9 @@
         <activity
             android:name=".login.ui.LoginActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".login.ui.RegisterActivity"
             android:launchMode="singleTask"

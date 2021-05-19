@@ -14,7 +14,6 @@ import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
-import java.net.Proxy;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -61,15 +60,15 @@ public class RetrofitManager {
 								  //                .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
 								  .addInterceptor(new AddCookiesInterceptor(BaseApplication.getInstance()))
 								  .addInterceptor(new ReceivedCookiesInterceptor(BaseApplication.getInstance()))
-								  .addInterceptor(new BaseUrlManagerInterceptor())
+								  .addInterceptor(new BaseUrlManagerInterceptor(BaseApplication.getInstance()))
 								  .addInterceptor(loggingInterceptor)
-								  .proxy(Proxy.NO_PROXY)
+								  //								  .proxy(Proxy.NO_PROXY)
 								  .build();
 		
 		// 初始化Retrofit
 		retrofit = new Retrofit.Builder()
 					   .client(client)
-					   .baseUrl(ConstantUrl.BASE_URL)
+					   .baseUrl(ConstantUrl.BASE_URL0)
 					   .addConverterFactory(GsonConverterFactory.create())
 					   .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 					   .build();

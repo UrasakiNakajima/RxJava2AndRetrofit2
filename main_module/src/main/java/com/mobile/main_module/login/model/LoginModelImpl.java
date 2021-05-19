@@ -16,24 +16,31 @@ import okhttp3.ResponseBody;
  */
 
 public class LoginModelImpl implements ILoginModel {
-
-    private static final String TAG = "LoginModelImpl";
-
-    public LoginModelImpl() {
-    }
-
-    @Override
-    public Observable<ResponseBody> login(Map<String, String> bodyParams) {
-        return RetrofitManager.getInstance().getRetrofit()
-                .create(LoginRequest.class)
-                .getLoginData(bodyParams);
-    }
-
-    @Override
-    public Observable<ResponseBody> register(Map<String, String> bodyParams) {
-        return RetrofitManager.getInstance().getRetrofit()
-                .create(LoginRequest.class)
-                .getRegisterData(bodyParams);
-    }
-
+	
+	private static final String TAG = "LoginModelImpl";
+	
+	public LoginModelImpl() {
+	}
+	
+	@Override
+	public Observable<ResponseBody> getAuthCode(Map<String, String> bodyParams) {
+		return RetrofitManager.getInstance().getRetrofit()
+				   .create(LoginRequest.class)
+				   .getAuthCode(bodyParams);
+	}
+	
+	@Override
+	public Observable<ResponseBody> loginWithAuthCode(Map<String, String> bodyParams) {
+		return RetrofitManager.getInstance().getRetrofit()
+				   .create(LoginRequest.class)
+				   .getLoginWithAuthCodeData(bodyParams);
+	}
+	
+	@Override
+	public Observable<ResponseBody> register(Map<String, String> bodyParams) {
+		return RetrofitManager.getInstance().getRetrofit()
+				   .create(LoginRequest.class)
+				   .getRegisterData(bodyParams);
+	}
+	
 }

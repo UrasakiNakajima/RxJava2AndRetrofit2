@@ -10,33 +10,33 @@ import android.widget.TextView;
 import com.mobile.common_library.base.BaseMvpAppActivity;
 import com.mobile.common_library.base.IBaseView;
 import com.mobile.main_module.R;
-import com.mobile.main_module.R2;
+import com.mobile.main_module.UIUtils;
+import com.mobile.main_module.login.bean.GetVerificationCode;
 import com.mobile.main_module.login.bean.LoginResponse;
 import com.mobile.main_module.login.presenter.LoginPresenterImpl;
 import com.mobile.main_module.login.view.ILoginView;
 import com.mobile.main_module.main.MainActivity;
 
 import androidx.appcompat.widget.Toolbar;
-import butterknife.BindView;
 
 public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterImpl>
 	implements ILoginView {
 	
-	private static final String TAG = "LoginActivity";
-	@BindView(R2.id.imv_back)
-	ImageView   imvBack;
-	@BindView(R2.id.layout_back)
-	FrameLayout layoutBack;
-	@BindView(R2.id.toolbar)
-	Toolbar     toolbar;
-	@BindView(R2.id.edt_user_name)
-	EditText    edtUserName;
-	@BindView(R2.id.edt_password)
-	EditText    edtPassword;
-	@BindView(R2.id.tev_login)
-	TextView    tevLogin;
-	@BindView(R2.id.tev_jump_to_register)
-	TextView    tevJumpToRegister;
+	private static final String      TAG = "LoginActivity";
+	private              Toolbar     toolbar;
+	private              FrameLayout layoutBack;
+	private              ImageView   imvBack;
+	private              EditText    edtAccountNumber;
+	private              EditText    edtPassword;
+	private              FrameLayout layoutVerificationCode;
+	private              EditText    edtVerificationCode;
+	private              TextView    tevGetAuthCode;
+	private              TextView    tevLogin;
+	private              TextView    tevJumpToRegister;
+	
+	private String accountNumber;
+	private String verificationCode;
+	private String phoneDevice;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +50,21 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
 	
 	@Override
 	protected void initData() {
-		edtUserName.setText("13510001000");
-		edtPassword.setText("12345678");
 	}
 	
 	@Override
 	protected void initViews() {
+		toolbar = (Toolbar) findViewById(R.id.toolbar);
+		layoutBack = (FrameLayout) findViewById(R.id.layout_back);
+		imvBack = (ImageView) findViewById(R.id.imv_back);
+		edtAccountNumber = (EditText) findViewById(R.id.edt_account_number);
+		edtPassword = (EditText) findViewById(R.id.edt_password);
+		layoutVerificationCode = (FrameLayout) findViewById(R.id.layout_verification_code);
+		edtVerificationCode = (EditText) findViewById(R.id.edt_verification_code);
+		tevGetAuthCode = (TextView) findViewById(R.id.tev_get_auth_code);
+		tevLogin = (TextView) findViewById(R.id.tev_login);
+		tevJumpToRegister = (TextView) findViewById(R.id.tev_jump_to_register);
+		
 		addContentView(loadView, layoutParams);
 		setToolbar(true, R.color.color_FFFFFFFF);
 		
@@ -65,10 +74,13 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
 				finish();
 			}
 		});
+		tevGetAuthCode.setOnClickListener(view -> {
+			getAuthCode();
+		});
 		tevLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				initLogin();
+				initLoginWithAuthCode();
 			}
 		});
 		tevJumpToRegister.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +93,7 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
 	
 	@Override
 	protected void initLoadData() {
-	
+		edtAccountNumber.setText("13513313214");
 	}
 	
 	@Override
@@ -106,24 +118,48 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
 	}
 	
 	@Override
-	public void loginSuccess(LoginResponse.DataBean success) {
-		showToast(success.getUserName(), true);
-		startActivity(MainActivity.class);
+	public void getAuthCodeSuccess(GetVerificationCode.DataDTO success) {
+		showToast(success.getContent(), true);
 	}
 	
 	@Override
-	public void loginError(String error) {
+	public void getAuthCodeError(String error) {
 		showToast(error, true);
 	}
 	
-	private void initLogin() {
+	@Override
+	public void loginWithAuthCodeSuccess(LoginResponse.DataDTO success) {
+		//		showToast(success.getUserName(), true);
+		startActivity(MainActivity.class);
+		finish();
+	}
+	
+	@Override
+	public void loginWithAuthCodeError(String error) {
+		showToast(error, true);
+	}
+	
+	private void getAuthCode() {
+		accountNumber = edtAccountNumber.getText().toString();
+		//		verificationCode = edtVerificationCode.getText().toString();
+		//		phoneDevice = UIUtils.getDeviceUUid().toString();
+		
 		bodyParams.clear();
-		bodyParams.put("username", edtUserName.getText().toString());
-		bodyParams.put("password", edtPassword.getText().toString());
-		//        String data = MapManager.mapToJsonStr(bodyParams);
-		//        String requestData = JSONObject.toJSONString(bodyParams);
-		//        LogManager.i(TAG, "requestData*****" + requestData);
-		presenter.login(this, bodyParams);
+		bodyParams.put("account", accountNumber);
+		presenter.getAuthCode(this, bodyParams);
+	}
+	
+	private void initLoginWithAuthCode() {
+		accountNumber = edtAccountNumber.getText().toString();
+		verificationCode = edtVerificationCode.getText().toString();
+		phoneDevice = UIUtils.getDeviceUUid().toString();
+		
+		bodyParams.clear();
+		bodyParams.put("account", accountNumber);
+		bodyParams.put("captcha", verificationCode);
+		bodyParams.put("type", "1");//1 APP
+		bodyParams.put("phoneDevice", UIUtils.getDeviceUUid());
+		presenter.loginWithAuthCode(this, bodyParams);
 	}
 	
 }

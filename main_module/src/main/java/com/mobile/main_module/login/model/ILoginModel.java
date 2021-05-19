@@ -13,8 +13,10 @@ import okhttp3.ResponseBody;
  */
 
 public interface ILoginModel {
-
-    Observable<ResponseBody> login(Map<String, String> bodyParams);
+    
+    Observable<ResponseBody> getAuthCode(Map<String, String> bodyParams);
+    
+    Observable<ResponseBody> loginWithAuthCode(Map<String, String> bodyParams);
 
     Observable<ResponseBody> register(Map<String, String> bodyParams);
 

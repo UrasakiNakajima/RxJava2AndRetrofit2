@@ -1,12 +1,14 @@
 package com.mobile.common_library.interceptor;
 
-import androidx.annotation.NonNull;
+import android.text.TextUtils;
+import android.webkit.WebSettings;
 
 import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.manager.LogManager;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -19,37 +21,48 @@ import okhttp3.Response;
  */
 
 public class AddCookiesInterceptor implements Interceptor {
-
-    private static final String TAG = "AddCookiesInterceptor";
-    private BaseApplication baseApplication;
-
-    public AddCookiesInterceptor(BaseApplication mineApplication) {
-        super();
-        this.baseApplication = mineApplication;
-    }
-
-    @NonNull
-    @Override
-    public Response intercept(@NonNull Chain chain) throws IOException {
-
-        Request.Builder builder = chain.request().newBuilder();
-        //添加authorization
-        String authorization = baseApplication.getAuthorization();
-        if (authorization != null && !"".equals(authorization)) {
-            builder.addHeader("authorization", authorization);
-            LogManager.i(TAG, "authorization*****" + authorization);
-        }
-//        //添加cookie
-//        String cookie = mineApplication.getCookie();
-//        if (cookie != null && !"".equals(cookie)) {
-//            builder.addHeader("cookie", cookie);
-//            LogManager.i(TAG, "cookie*****" + cookie);
-//        }
-
-//        //添加用户代理
-//        builder.removeHeader("User-Agent")
-//                .addHeader("User-Agent",
-//                SystemManager.getUserAgent(mineApplication.getApplicationContext())).build();
-        return chain.proceed(builder.build());
-    }
+	
+	private static final String          TAG = "AddCookiesInterceptor";
+	private              BaseApplication baseApplication;
+	
+	public AddCookiesInterceptor(BaseApplication baseApplication) {
+		super();
+		this.baseApplication = baseApplication;
+	}
+	
+	@NonNull
+	@Override
+	public Response intercept(@NonNull Chain chain) throws IOException {
+		
+		Request.Builder builder = chain.request().newBuilder();
+		//		//添加authorization
+		//		String authorization = baseApplication.getAuthorization();
+		//		if (authorization != null && !"".equals(authorization)) {
+		//			builder.addHeader("authorization", authorization);
+		//			LogManager.i(TAG, "authorization*****" + authorization);
+		//		}
+		
+		//添加token
+		String token = baseApplication.getToken();
+		if (!TextUtils.isEmpty(token)) {
+			builder.addHeader("token", token);
+			LogManager.i(TAG, "token*****" + token);
+		}
+		
+		//        //添加cookie
+		//        String cookie = mineApplication.getCookie();
+		//        if (cookie != null && !"".equals(cookie)) {
+		//            builder.addHeader("cookie", cookie);
+		//            LogManager.i(TAG, "cookie*****" + cookie);
+		//        }
+		
+		//        //添加用户代理
+		//        builder.removeHeader("User-Agent")
+		//                .addHeader("User-Agent",
+		//                SystemManager.getUserAgent(mineApplication.getApplicationContext())).build();
+		
+		builder.removeHeader("User-Agent")//移除旧的
+			.addHeader("User-Agent", WebSettings.getDefaultUserAgent(baseApplication));//添加真正的头部
+		return chain.proceed(builder.build());
+	}
 }

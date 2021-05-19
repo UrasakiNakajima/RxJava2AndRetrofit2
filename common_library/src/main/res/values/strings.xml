@@ -23,6 +23,8 @@
     <string name="register">注册</string>
     <string name="user_name">用户名</string>
     <string name="password">密码</string>
+    <string name="verification_code">验证码</string>
+
     <string name="confirm_password">确认密码</string>
     <string name="please_check_the_network_connection">请检查网络连接</string>
     <string name="jump_to_register">跳转到注册</string>
@@ -54,6 +56,8 @@
     <string name="cancel">取消</string>
     <string name="saved_successfully">保存成功</string>
     <string name="failed_to_save_please_try_again">保存失败，请重试</string>
+
+    <string name="get_auth_code">获取验证码</string>
 
     <!--真正用于解析的属性-->
     <declare-styleable name="RCAttrs">
