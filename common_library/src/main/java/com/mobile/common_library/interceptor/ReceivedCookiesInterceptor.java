@@ -44,11 +44,11 @@ public class ReceivedCookiesInterceptor implements Interceptor {
 		//        }
 		
 		//这里获取请求返回的token
-		String token = originalResponse.header("token");
-		LogManager.i(TAG, "originalResponse token*****" + token);
-		if (!TextUtils.isEmpty(token)) {
-			baseApplication.setToken(token);
-			LogManager.i(TAG, "token*****" + token);
+		String appToken = originalResponse.header("appToken");
+		LogManager.i(TAG, "originalResponse token*****" + appToken);
+		if (!TextUtils.isEmpty(appToken)) {
+			baseApplication.setAccessToken(appToken);
+			LogManager.i(TAG, "token*****" + appToken);
 		}
 		
 		//        //这里获取请求返回的cookie

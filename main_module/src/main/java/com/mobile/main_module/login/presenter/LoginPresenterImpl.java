@@ -123,7 +123,8 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
 											 LoginResponse loginResponse = JSON.parseObject(success, LoginResponse.class);
 											 MineApplication mineApplication = MineApplication.getInstance();
 											 //											 mineApplication.setUserId(loginResponse.getData().getUserId());
-											 mineApplication.setToken(loginResponse.getData().getToken());
+											 mineApplication.setAccessToken(loginResponse.getData().getToken());
+											 mineApplication.setLogin(true);
 											 loginView.loginWithAuthCodeSuccess(loginResponse.getData());
 										 } else {
 											 loginView.loginWithAuthCodeError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));

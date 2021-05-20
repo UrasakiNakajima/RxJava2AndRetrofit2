@@ -17,10 +17,13 @@ interface MineRequest {
     @GET(ConstantUrl.FIRST_PAGE_DETAILS_URL)
     fun getMineDetails(@QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
-    @Headers("urlname:${ConstantData.TO_USER_DATA_FLAG}")
+    //    @Headers("urlname:${ConstantData.TO_USER_DATA_FLAG}")
 //    @FormUrlEncoded
     @GET(ConstantUrl.USER_DATA)
     fun getUserData(@QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
+
+    @GET(ConstantUrl.USER_DATA)
+    fun getUserData(@Header("appToken") token: String, @QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
 
 }

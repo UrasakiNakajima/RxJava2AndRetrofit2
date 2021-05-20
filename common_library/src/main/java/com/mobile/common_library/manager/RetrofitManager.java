@@ -9,11 +9,13 @@ import com.mobile.common_library.callback.OnCommonSingleParamCallback;
 import com.mobile.common_library.common.ConstantUrl;
 import com.mobile.common_library.interceptor.AddCookiesInterceptor;
 import com.mobile.common_library.interceptor.BaseUrlManagerInterceptor;
+import com.mobile.common_library.interceptor.CacheControlInterceptor;
 import com.mobile.common_library.interceptor.ReceivedCookiesInterceptor;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
+import java.net.Proxy;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -57,12 +59,12 @@ public class RetrofitManager {
 								  .readTimeout(5 * 1000, TimeUnit.MILLISECONDS)
 								  .writeTimeout(5 * 1000, TimeUnit.MILLISECONDS)
 								  .cache(cache)
-								  //                .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
+								  .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
 								  .addInterceptor(new AddCookiesInterceptor(BaseApplication.getInstance()))
 								  .addInterceptor(new ReceivedCookiesInterceptor(BaseApplication.getInstance()))
 								  .addInterceptor(new BaseUrlManagerInterceptor(BaseApplication.getInstance()))
 								  .addInterceptor(loggingInterceptor)
-								  //								  .proxy(Proxy.NO_PROXY)
+								  .proxy(Proxy.NO_PROXY)
 								  .build();
 		
 		// 初始化Retrofit

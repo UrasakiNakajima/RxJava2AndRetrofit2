@@ -154,4 +154,41 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             }
         }
     }
+
+    override fun userData(appCompatActivity: AppCompatActivity, token: String, bodyParams: Map<String, String>) {
+        val baseView = obtainView()
+        if (baseView != null) {
+            if (baseView is IUserDataView) {
+                baseView.showLoading()
+                disposable = RetrofitManager.getInstance()
+                        .responseString(appCompatActivity, model.userData(token, bodyParams), object : OnCommonSingleParamCallback<String> {
+                            override fun onSuccess(success: String) {
+                                LogManager.i(TAG, "userData success*****$success")
+                                if (!TextUtils.isEmpty(success)) {
+//                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
+//                                    val gson = Gson()
+//                                    val response = gson.fromJson(success, MineResponse::class.java)
+//                                    val response = GsonManager.getInstance().convert(success, MineResponse::class.java)
+
+//                                    if (response.ans_list != null && response.ans_list.size > 0) {
+//                                        baseView.mineDataSuccess(response.ans_list)
+//                                    } else {
+//                                        baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+//                                    }
+                                } else {
+                                    baseView.userDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
+                                }
+                                baseView.hideLoading()
+                            }
+
+                            override fun onError(error: String) {
+                                LogManager.i(TAG, "error*****$error")
+                                baseView.userDataError(error)
+                                baseView.hideLoading()
+                            }
+                        })
+//                compositeDisposable.add(disposable)
+            }
+        }
+    }
 }

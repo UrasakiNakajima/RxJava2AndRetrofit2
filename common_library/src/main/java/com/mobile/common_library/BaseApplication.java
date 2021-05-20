@@ -19,6 +19,7 @@ public class BaseApplication extends MultiDexApplication {
 	protected static     int                      MODE = Context.MODE_PRIVATE;
 	private              String                   authorization;
 	private              String                   token;
+	private              String                   accessToken;
 	
 	protected static BaseApplication baseApplication;
 	
@@ -70,6 +71,17 @@ public class BaseApplication extends MultiDexApplication {
 	public void setToken(String token) {
 		LogManager.i(TAG, "setToken***" + token);
 		editor.putString("token", token);
+		editor.commit();
+	}
+	
+	public String getAccessToken() {
+		accessToken = sp.getString("accessToken", "");
+		return accessToken;
+	}
+	
+	public void setAccessToken(String accessToken) {
+		LogManager.i(TAG, "setAccessToken***" + accessToken);
+		editor.putString("accessToken", accessToken);
 		editor.commit();
 	}
 }

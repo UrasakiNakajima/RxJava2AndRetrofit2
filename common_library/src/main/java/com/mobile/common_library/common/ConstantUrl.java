@@ -20,8 +20,8 @@ public class ConstantUrl {
 	
 	//	public static final String BASE_URL = "https://s2.p5w.net/unifiedlogin/";
 	
-	public static final String LOGIN_WITH_AUTH_CODE_URL  = "api/api/login/sms";//短信登录
-	public static final String GET_VERIFICATION_CODE_URL = "api/api/login/getCaptcha";
+	public static final String GET_VERIFICATION_CODE_URL = "unifiedlogin/api/login/getCaptcha";//获取登录短信验证码
+	public static final String LOGIN_WITH_AUTH_CODE_URL  = "unifiedlogin/api/login/sms";//短信登录
 	public static final String REGISTER_URL              = "user/register";
 	public static final String ADD_SHOP_URL              = BASE_URL + "shop/register";
 	

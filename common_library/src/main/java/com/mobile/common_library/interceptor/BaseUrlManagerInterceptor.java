@@ -27,10 +27,10 @@ public class BaseUrlManagerInterceptor implements Interceptor {
 	
 	@Override
 	public Response intercept(Chain chain) throws IOException {
-		//获取originalRequest的创建者builder
-		Request.Builder builder = chain.request().newBuilder();
 		//获取原始的originalRequest
-		Request originalRequest = builder.build();
+		Request originalRequest = chain.request();
+		//获取originalRequest的创建者builder
+		Request.Builder builder = originalRequest.newBuilder();
 		//获取当前的url
 		HttpUrl oldUrl = originalRequest.url();
 		LogManager.i(TAG, "intercept:------------oldUrl---------->" + oldUrl);
@@ -84,7 +84,7 @@ public class BaseUrlManagerInterceptor implements Interceptor {
 				LogManager.i(TAG, "intercept:------scheme----" + baseURL.scheme());
 				LogManager.i(TAG, "intercept:-----host-----" + baseURL.host());
 				LogManager.i(TAG, "intercept:-----port-----" + baseURL.port());
-				
+			
 				//获取处理后的新newRequest
 				Request.Builder newBuilder = builder.url(newHttpUrl);
 				

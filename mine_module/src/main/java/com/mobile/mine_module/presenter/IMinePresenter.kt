@@ -10,4 +10,6 @@ interface IMinePresenter {
     fun mineDetails(bodyParams: Map<String, String>)
 
     fun userData(appCompatActivity: AppCompatActivity, bodyParams: Map<String, String>)
+
+    fun userData(appCompatActivity: AppCompatActivity, token: String, bodyParams: Map<String, String>)
 }

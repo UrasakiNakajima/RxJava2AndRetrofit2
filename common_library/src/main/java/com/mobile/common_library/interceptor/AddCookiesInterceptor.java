@@ -43,10 +43,10 @@ public class AddCookiesInterceptor implements Interceptor {
 		//		}
 		
 		//添加token
-		String token = baseApplication.getToken();
-		if (!TextUtils.isEmpty(token)) {
-			builder.addHeader("token", token);
-			LogManager.i(TAG, "token*****" + token);
+		String appToken = baseApplication.getAccessToken();
+		if (!TextUtils.isEmpty(appToken)) {
+			builder.addHeader("appToken", appToken);
+			LogManager.i(TAG, "token*****" + appToken);
 		}
 		
 		//        //添加cookie

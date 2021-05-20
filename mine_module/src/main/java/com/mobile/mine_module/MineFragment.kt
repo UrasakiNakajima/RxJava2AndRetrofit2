@@ -53,7 +53,9 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         tev_title.setOnClickListener(object : View.OnClickListener {
 
             override fun onClick(v: View?) {
-                initMine()
+//                initMine()
+                startActivity(UserDataActivity::class.java)
+                activity.finish()
             }
         })
 

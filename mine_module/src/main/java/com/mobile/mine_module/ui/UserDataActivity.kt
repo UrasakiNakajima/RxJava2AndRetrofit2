@@ -61,6 +61,7 @@ class UserDataActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IUs
         bodyParams.put("loginType", "3")
 
         presenter.userData(this, bodyParams)
+//        presenter.userData(this, baseApplication.token, bodyParams)
     }
 
 }
