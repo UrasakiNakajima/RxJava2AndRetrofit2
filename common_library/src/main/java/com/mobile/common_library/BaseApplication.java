@@ -17,8 +17,6 @@ public class BaseApplication extends MultiDexApplication {
 	protected            SharedPreferences        sp;
 	protected            SharedPreferences.Editor editor;
 	protected static     int                      MODE = Context.MODE_PRIVATE;
-	private              String                   authorization;
-	private              String                   token;
 	private              String                   accessToken;
 	
 	protected static BaseApplication baseApplication;
@@ -50,28 +48,6 @@ public class BaseApplication extends MultiDexApplication {
 	
 	public static BaseApplication getInstance() {
 		return baseApplication;
-	}
-	
-	public String getAuthorization() {
-		authorization = sp.getString("authorization", "");
-		return authorization;
-	}
-	
-	public void setAuthorization(String authorization) {
-		LogManager.i(TAG, "setAuthorization***" + authorization);
-		editor.putString("authorization", authorization);
-		editor.commit();
-	}
-	
-	public String getToken() {
-		token = sp.getString("token", "");
-		return token;
-	}
-	
-	public void setToken(String token) {
-		LogManager.i(TAG, "setToken***" + token);
-		editor.putString("token", token);
-		editor.commit();
 	}
 	
 	public String getAccessToken() {
