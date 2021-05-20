@@ -27,9 +27,9 @@ class MineModelImpl : IMineModel {
                 .getUserData(bodyParams)
     }
 
-    override fun userData(token: String, bodyParams: Map<String, String>): Observable<ResponseBody> {
+    override fun userData(accessToken: String, bodyParams: Map<String, String>): Observable<ResponseBody> {
         return RetrofitManager.getInstance().retrofit
                 .create(MineRequest::class.java)
-                .getUserData(token, bodyParams)
+                .getUserData(accessToken, bodyParams)
     }
 }

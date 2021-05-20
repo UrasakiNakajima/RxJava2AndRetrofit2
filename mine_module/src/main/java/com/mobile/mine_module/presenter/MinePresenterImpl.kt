@@ -155,13 +155,13 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun userData(appCompatActivity: AppCompatActivity, token: String, bodyParams: Map<String, String>) {
+    override fun userData(appCompatActivity: AppCompatActivity, accessToken: String, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(appCompatActivity, model.userData(token, bodyParams), object : OnCommonSingleParamCallback<String> {
+                        .responseString(appCompatActivity, model.userData(accessToken, bodyParams), object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "userData success*****$success")
                                 if (!TextUtils.isEmpty(success)) {

@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="white">#FFFFFFFF</color>
     <color name="color_FFE066FF">#FFE066FF</color>
     <color name="color_54E066FF">#54E066FF</color>
     <color name="color_FF999999">#FF999999</color>
@@ -22,7 +23,6 @@
 
     <color name="Grey300">#E0E0E0</color>
 
-    <color name="white">#FFFFFF</color>
     <color name="viewBackground">@android:color/white</color>
     <color name="line_divider">@color/Grey300</color>
     <color name="Grey500">#9e9e9e</color>

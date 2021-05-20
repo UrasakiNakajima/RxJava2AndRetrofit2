@@ -2,7 +2,6 @@ package com.mobile.common_library.interceptor;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.webkit.WebSettings;
 
 import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.manager.LogManager;
@@ -35,20 +34,12 @@ public class ReceivedCookiesInterceptor implements Interceptor {
 	public Response intercept(@NonNull Chain chain) throws IOException {
 		
 		Response originalResponse = chain.proceed(chain.request());
-		//        //这里获取请求返回的authorization
-		//        String authorization = originalResponse.header("authorization");
-		//        LogManager.i(TAG, "originalResponse authorization*****" + authorization);
-		//        if (authorization != null && !"".equals(authorization)) {
-		//            baseApplication.setAuthorization(authorization);
-		//            LogManager.i(TAG, "authorization*****" + authorization);
-		//        }
-		
-		//这里获取请求返回的token
-		String appToken = originalResponse.header("appToken");
-		LogManager.i(TAG, "originalResponse token*****" + appToken);
-		if (!TextUtils.isEmpty(appToken)) {
-			baseApplication.setAccessToken(appToken);
-			LogManager.i(TAG, "token*****" + appToken);
+		//这里获取请求返回的accessToken
+		String accessToken = originalResponse.header("appToken");
+		LogManager.i(TAG, "originalResponse appToken*****" + accessToken);
+		if (!TextUtils.isEmpty(accessToken)) {
+			baseApplication.setAccessToken(accessToken);
+			LogManager.i(TAG, "appToken*****" + accessToken);
 		}
 		
 		//        //这里获取请求返回的cookie
@@ -59,8 +50,6 @@ public class ReceivedCookiesInterceptor implements Interceptor {
 		//        }
 		
 		Response.Builder builder = originalResponse.newBuilder();
-		builder.removeHeader("User-Agent")//移除旧的
-			.addHeader("User-Agent", WebSettings.getDefaultUserAgent(baseApplication));//添加真正的头部
 		return builder.build();
 	}
 }

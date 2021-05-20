@@ -11,7 +11,7 @@ interface IMineModel {
 
     fun userData(bodyParams: Map<String, String>): Observable<ResponseBody>
 
-    fun userData(token: String, bodyParams: Map<String, String>): Observable<ResponseBody>
+    fun userData(accessToken: String, bodyParams: Map<String, String>): Observable<ResponseBody>
 
 
 }

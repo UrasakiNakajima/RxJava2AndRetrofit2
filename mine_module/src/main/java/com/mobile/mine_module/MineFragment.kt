@@ -55,7 +55,6 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
             override fun onClick(v: View?) {
 //                initMine()
                 startActivity(UserDataActivity::class.java)
-                activity.finish()
             }
         })
 
@@ -76,11 +75,12 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
 //                bodyParams["max_behot_time"] = "1000"
 //                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
 
-                startActivity(UserDataActivity::class.java)
 //                //Jump with parameters
 //                ARouter.getInstance().build("/mine_module/ui/mine_details")
 //                        .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())
 //                        .navigation()
+
+                startActivity(UserDataActivity::class.java)
             }
         })
         rcv_data.setAdapter(mineAdapter)

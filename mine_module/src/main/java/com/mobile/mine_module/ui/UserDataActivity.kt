@@ -1,12 +1,14 @@
 package com.mobile.mine_module.ui
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.mobile.common_library.base.BaseMvpAppActivity
 import com.mobile.common_library.base.IBaseView
 import com.mobile.mine_module.R
 import com.mobile.mine_module.bean.Ans
 import com.mobile.mine_module.presenter.MinePresenterImpl
 import com.mobile.mine_module.view.IUserDataView
+import kotlinx.android.synthetic.main.activity_user_data.*
 
 class UserDataActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IUserDataView {
 
@@ -23,7 +25,12 @@ class UserDataActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IUs
     }
 
     override fun initViews() {
+        setToolbar(false, R.color.color_FFE066FF)
+        imv_back.setColorFilter(ContextCompat.getColor(this, R.color.color_FF198CFF))
 
+        layout_back.setOnClickListener {
+            finish()
+        }
     }
 
     override fun initLoadData() {
@@ -61,7 +68,7 @@ class UserDataActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IUs
         bodyParams.put("loginType", "3")
 
         presenter.userData(this, bodyParams)
-//        presenter.userData(this, baseApplication.token, bodyParams)
+//        presenter.userData(this, baseApplication.accessToken, bodyParams)
     }
 
 }

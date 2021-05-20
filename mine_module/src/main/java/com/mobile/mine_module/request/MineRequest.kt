@@ -23,7 +23,7 @@ interface MineRequest {
     fun getUserData(@QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
     @GET(ConstantUrl.USER_DATA)
-    fun getUserData(@Header("appToken") token: String, @QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
+    fun getUserData(@Header("appToken") accessToken: String, @QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
 
 }

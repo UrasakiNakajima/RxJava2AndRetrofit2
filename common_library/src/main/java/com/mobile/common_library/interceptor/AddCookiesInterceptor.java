@@ -1,7 +1,6 @@
 package com.mobile.common_library.interceptor;
 
 import android.text.TextUtils;
-import android.webkit.WebSettings;
 
 import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.manager.LogManager;
@@ -35,18 +34,12 @@ public class AddCookiesInterceptor implements Interceptor {
 	public Response intercept(@NonNull Chain chain) throws IOException {
 		
 		Request.Builder builder = chain.request().newBuilder();
-		//		//添加authorization
-		//		String authorization = baseApplication.getAuthorization();
-		//		if (authorization != null && !"".equals(authorization)) {
-		//			builder.addHeader("authorization", authorization);
-		//			LogManager.i(TAG, "authorization*****" + authorization);
-		//		}
 		
-		//添加token
-		String appToken = baseApplication.getAccessToken();
-		if (!TextUtils.isEmpty(appToken)) {
-			builder.addHeader("appToken", appToken);
-			LogManager.i(TAG, "token*****" + appToken);
+		//添加accessToken
+		String accessToken = baseApplication.getAccessToken();
+		if (!TextUtils.isEmpty(accessToken)) {
+			builder.addHeader("appToken", accessToken);
+			LogManager.i(TAG, "appToken*****" + accessToken);
 		}
 		
 		//        //添加cookie
@@ -61,8 +54,8 @@ public class AddCookiesInterceptor implements Interceptor {
 		//                .addHeader("User-Agent",
 		//                SystemManager.getUserAgent(mineApplication.getApplicationContext())).build();
 		
-		builder.removeHeader("User-Agent")//移除旧的
-			.addHeader("User-Agent", WebSettings.getDefaultUserAgent(baseApplication));//添加真正的头部
+		//		builder.removeHeader("User-Agent")//移除旧的
+		//			.addHeader("User-Agent", WebSettings.getDefaultUserAgent(baseApplication));//添加真正的头部
 		return chain.proceed(builder.build());
 	}
 }

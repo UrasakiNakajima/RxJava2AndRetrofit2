@@ -4,51 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".ui.MineDetailsActivity">
-
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="@dimen/dp_74"
         android:background="@color/color_FFE066FF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
         app:contentInsetStart="0dp">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50">
+            android:layout_height="@dimen/dp_74"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_24" />
 
             <FrameLayout
-                android:id="@+id/layout_back"
-                android:layout_width="@dimen/dp_36"
-                android:layout_height="match_parent"
-                android:gravity="start"
-                tools:ignore="UselessParent">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50">
 
-                <ImageView
-                    android:id="@+id/imv_back"
-                    android:layout_width="@dimen/dp_6"
-                    android:layout_height="@dimen/dp_11"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/icon_arrowhead_left"
-                    tools:ignore="ContentDescription" />
+                <FrameLayout
+                    android:id="@+id/layout_back"
+                    android:layout_width="@dimen/dp_36"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    tools:ignore="UselessParent">
+
+                    <ImageView
+                        android:id="@+id/imv_back"
+                        android:layout_width="@dimen/dp_6"
+                        android:layout_height="@dimen/dp_11"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/icon_arrowhead_left"
+                        tools:ignore="ContentDescription" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tev_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center"
+                    android:text="@string/mine_details"
+                    android:textColor="@color/color_FF198CFF"
+                    android:textSize="@dimen/sp_20" />
 
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/tev_title"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:gravity="center"
-                android:text="@string/mine_details"
-                android:textColor="@color/color_FF198CFF"
-                android:textSize="@dimen/sp_20" />
-
-        </FrameLayout>
+        </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
 

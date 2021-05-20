@@ -15,8 +15,7 @@
         android:id="@+id/mine_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="550"
-        android:background="@color/color_FFFFFFFF" />
+        android:layout_weight="550" />
 
     <View
         android:layout_width="match_parent"

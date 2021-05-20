@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     android:orientation="vertical">
 
     <LinearLayout
@@ -37,7 +36,7 @@
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/black"
             app:srlAccentColor="@android:color/white"
             app:srlEnablePreviewInEditMode="true"
             app:srlPrimaryColor="#444444">
@@ -45,16 +44,17 @@
             <com.scwang.smart.refresh.header.ClassicsHeader
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_data"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
             <com.scwang.smart.refresh.footer.ClassicsFooter
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-
 
     </LinearLayout>
 

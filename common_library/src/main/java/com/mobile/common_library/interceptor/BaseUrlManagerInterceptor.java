@@ -1,7 +1,6 @@
 package com.mobile.common_library.interceptor;
 
 import android.text.TextUtils;
-import android.webkit.WebSettings;
 
 import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.common.ConstantData;
@@ -84,22 +83,16 @@ public class BaseUrlManagerInterceptor implements Interceptor {
 				LogManager.i(TAG, "intercept:------scheme----" + baseURL.scheme());
 				LogManager.i(TAG, "intercept:-----host-----" + baseURL.host());
 				LogManager.i(TAG, "intercept:-----port-----" + baseURL.port());
-			
+				
 				//获取处理后的新newRequest
 				Request.Builder newBuilder = builder.url(newHttpUrl);
 				
-				newBuilder.removeHeader("User-Agent")//移除旧的
-					.addHeader("User-Agent", WebSettings.getDefaultUserAgent(baseApplication));//添加真正的头部
 				Request newRequest = newBuilder.build();
 				return chain.proceed(newRequest);
 			}
-			builder.removeHeader("User-Agent")//移除旧的
-				.addHeader("User-Agent", WebSettings.getDefaultUserAgent(baseApplication));//添加真正的头部
 			originalRequest = builder.build();
 			return chain.proceed(originalRequest);
 		} else {
-			builder.removeHeader("User-Agent")//移除旧的
-				.addHeader("User-Agent", WebSettings.getDefaultUserAgent(baseApplication));//添加真正的头部
 			originalRequest = builder.build();
 			return chain.proceed(originalRequest);
 		}
