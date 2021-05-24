@@ -17,6 +17,7 @@ public class BaseApplication extends MultiDexApplication {
 	protected            SharedPreferences        sp;
 	protected            SharedPreferences.Editor editor;
 	protected static     int                      MODE = Context.MODE_PRIVATE;
+	private              boolean                  isLogin;
 	private              String                   accessToken;
 	
 	protected static BaseApplication baseApplication;
@@ -50,6 +51,21 @@ public class BaseApplication extends MultiDexApplication {
 		return baseApplication;
 	}
 	
+	public boolean isLogin() {
+		isLogin = sp.getBoolean("isLogin", false);
+		LogManager.i(TAG, "isLogin***" + isLogin);
+		return isLogin;
+	}
+	
+	public void setLogin(boolean isLogin) {
+		LogManager.i(TAG, "setLogin***" + isLogin);
+		editor.putBoolean("isLogin", isLogin);
+		editor.commit();
+		if (!isLogin) {
+			setLogout();
+		}
+	}
+	
 	public String getAccessToken() {
 		accessToken = sp.getString("accessToken", "");
 		return accessToken;
@@ -60,4 +76,13 @@ public class BaseApplication extends MultiDexApplication {
 		editor.putString("accessToken", accessToken);
 		editor.commit();
 	}
+	
+	public void setLogout() {
+		LogManager.i(TAG, "setLogout***");
+		//        editor.clear();
+		editor.remove("accessToken");
+		editor.remove("isLogin");
+		editor.commit();
+	}
+	
 }

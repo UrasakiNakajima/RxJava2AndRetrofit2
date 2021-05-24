@@ -1,5 +1,6 @@
 package com.mobile.main_module.login.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -7,8 +8,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.mobile.common_library.base.BaseMvpAppActivity;
 import com.mobile.common_library.base.IBaseView;
+import com.mobile.common_library.manager.ActivityPageManager;
+import com.mobile.common_library.manager.LogManager;
 import com.mobile.main_module.R;
 import com.mobile.main_module.UIUtils;
 import com.mobile.main_module.login.bean.GetVerificationCode;
@@ -19,6 +23,7 @@ import com.mobile.main_module.main.MainActivity;
 
 import androidx.appcompat.widget.Toolbar;
 
+@Route(path = "/main_module/login")
 public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterImpl>
 	implements ILoginView {
 	
@@ -50,6 +55,7 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
 	
 	@Override
 	protected void initData() {
+		ActivityPageManager.getInstance().finishAllActivityExcept(LoginActivity.class);
 	}
 	
 	@Override
@@ -115,6 +121,12 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
 			loadView.stop();
 			loadView.setVisibility(View.GONE);
 		}
+	}
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		LogManager.i(TAG, "onNewIntent");
 	}
 	
 	@Override

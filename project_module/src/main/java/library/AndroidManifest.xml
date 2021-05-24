@@ -12,9 +12,7 @@
         <activity
             android:name=".ui.SurfaceViewActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape">
-
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.VideoViewActivity"
             android:launchMode="singleTask"

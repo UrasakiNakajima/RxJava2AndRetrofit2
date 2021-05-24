@@ -25,7 +25,6 @@ public class MineApplication extends BaseApplication {
     private String nickName;
     //店铺Id
     private String shopId;
-    private boolean isLogin;
     private boolean isCopyDatabase;
     private String date;
     private String alipyQrcode;
@@ -147,21 +146,6 @@ public class MineApplication extends BaseApplication {
         editor.commit();
     }
 
-    public boolean isLogin() {
-        isLogin = sp.getBoolean("isLogin", false);
-        LogManager.i(TAG, "isLogin***" + isLogin);
-        return isLogin;
-    }
-
-    public void setLogin(boolean isLogin) {
-        LogManager.i(TAG, "setLogin***" + isLogin);
-        editor.putBoolean("isLogin", isLogin);
-        editor.commit();
-        if (!isLogin) {
-            setLogout();
-        }
-    }
-
     public boolean isCopyDatabase() {
         isCopyDatabase = sp.getBoolean("isCopyDatabase", false);
         return isCopyDatabase;
@@ -212,7 +196,7 @@ public class MineApplication extends BaseApplication {
         editor.commit();
     }
 
-    public void setLogout() {
+    public void setLogout2() {
         LogManager.i(TAG, "setLogout***");
 //        editor.clear();
         editor.remove("userName");

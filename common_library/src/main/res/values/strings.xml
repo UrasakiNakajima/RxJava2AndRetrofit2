@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">common_library</string>
 
+
     <string name="first_page">首页</string>
     <string name="project">项目</string>
     <string name="square">广场</string>
@@ -10,6 +11,7 @@
     <string name="data_in_wrong_format">数据格式错误</string>
     <string name="request_was_aborted">请求失败</string>
     <string name="login">登录</string>
+    <string name="sign_out">退出登录</string>
     <string name="network_sneak_off">网络开小差了</string>
     <string name="server_sneak_off">服务器开小差了</string>
 

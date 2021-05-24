@@ -12,8 +12,6 @@
         <activity
             android:name=".ui.ResourceDetailsActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

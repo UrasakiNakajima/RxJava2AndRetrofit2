@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 网络状态权限 用于断网/联网状态下，界面不同的展示 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 读取SD卡，用于更换头像，取SD卡取照片 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许读取手机状态的权限 -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" /> <!-- 允许读取手机状态的权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 定位权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 拍照权限，用于更换头像的拍照 -->
@@ -63,7 +65,8 @@
         <activity
             android:name=".login.ui.LoginActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
         </activity>
         <activity
