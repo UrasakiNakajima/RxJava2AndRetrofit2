@@ -167,4 +167,7 @@ dependencies {
     releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
     // Optional, if you use support library fragments:
     debugApi 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
+
+    //工具库
+    implementation 'com.blankj:utilcodex:1.29.0'
 }

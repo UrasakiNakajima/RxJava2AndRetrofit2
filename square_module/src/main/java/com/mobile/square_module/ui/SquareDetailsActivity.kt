@@ -5,14 +5,15 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.mobile.common_library.BaseApplication
+import com.mobile.common_library.base.BaseMvvmAppActivity
 import com.mobile.common_library.manager.LogManager
+import com.mobile.common_library.manager.PictureManager
 import com.mobile.common_library.manager.RetrofitManager
 import com.mobile.common_library.manager.ScreenManager
-import com.mobile.common_library.base.BaseMvvmAppActivity
-import com.mobile.square_module.bean.DataX
-import com.mobile.square_module.view_model.SquareViewModelImpl
 import com.mobile.square_module.R
+import com.mobile.square_module.bean.DataX
 import com.mobile.square_module.databinding.ActivitySquareDetailsBinding
+import com.mobile.square_module.view_model.SquareViewModelImpl
 
 class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivitySquareDetailsBinding>() {
 
@@ -38,6 +39,16 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
         mDatabind.dataxDetails = dataxDetails
 
         mDatabind.executePendingBindings()
+
+
+        //测试专用
+        val resourcesPath: String = "/storage/emulated/0/Pictures/1622037257522.png";
+        val fileName: String = System.currentTimeMillis().toString();
+        val isSuccess: Boolean = PictureManager.copyPublicDirectoryFile(this, resourcesPath, fileName);
+        if (isSuccess) {
+            //            showToast(error, true);
+            showCustomToast("复制成功", true)
+        }
     }
 
     override fun initObservers() {
@@ -112,7 +123,8 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
             showCustomToast(ScreenManager.dipTopx(this, 20f), ScreenManager.dipTopx(this, 20f),
                     18, resources.getColor(R.color.white),
                     resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(this, 40f),
-                    ScreenManager.dipTopx(this, 20f), error)
+                    ScreenManager.dipTopx(this, 20f), error,
+                    true)
 
             hideLoading()
         }

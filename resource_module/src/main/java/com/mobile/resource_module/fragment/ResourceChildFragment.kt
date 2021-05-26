@@ -149,7 +149,8 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
             showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
                     18, resources.getColor(R.color.white),
                     resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
-                    ScreenManager.dipTopx(activity, 20f), error)
+                    ScreenManager.dipTopx(activity, 20f), error,
+                    true)
 
             if (isRefresh) {
                 refresh_layout.finishRefresh(false)
@@ -163,7 +164,7 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
         if (RetrofitManager.isNetworkAvailable(activity)) {
 //            bodyParams.clear()
 //            bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
-            presenter.resourceData(this,type, pageSize, currentPage)
+            presenter.resourceData(this, type, pageSize, currentPage)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {

@@ -8,17 +8,20 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.gyf.immersionbar.ImmersionBar
 import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.R
 import com.mobile.common_library.manager.ActivityPageManager
+import com.mobile.common_library.manager.ScreenManager
 import com.mobile.common_library.manager.ToolbarManager
 
 abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompatActivity() {
 
     protected var baseApplication: BaseApplication? = null
+
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null
@@ -141,10 +144,41 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
 
     protected abstract fun initLoadData()
 
+    protected fun showCustomToast(message: String, isLongToast: Boolean) {
+        val frameLayout = FrameLayout(this)
+        val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+        frameLayout.layoutParams = layoutParams
+        val textView = TextView(this)
+        val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, ScreenManager.dipTopx(this, 40f))
+        textView.layoutParams = layoutParams1
+        textView.setPadding(ScreenManager.dipTopx(this, 20f), 0, ScreenManager.dipTopx(this, 20f), 0)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.toFloat())
+        textView.setTextColor(ContextCompat.getColor(this, R.color.white))
+        textView.gravity = Gravity.CENTER
+        textView.includeFontPadding = false
+        val gradientDrawable = GradientDrawable()//创建drawable
+        gradientDrawable.setColor(ContextCompat.getColor(this, R.color.color_FFE066FF))
+        gradientDrawable.cornerRadius = ScreenManager.dipTopx(this, 20f).toFloat()
+        textView.background = gradientDrawable
+        textView.text = message
+        frameLayout.addView(textView)
+
+        val toast = Toast(this)
+        toast.view = frameLayout
+        if (isLongToast) {
+            toast.duration = Toast.LENGTH_LONG
+        } else {
+            toast.duration = Toast.LENGTH_SHORT
+        }
+        toast.setGravity(Gravity.CENTER, 0, 0)
+        toast.show()
+    }
+
     protected fun showCustomToast(left: Int, right: Int,
                                   textSize: Int, textColor: Int,
                                   bgColor: Int, height: Int,
-                                  roundRadius: Int, message: String) {
+                                  roundRadius: Int, message: String,
+                                  isLongToast: Boolean) {
         val frameLayout = FrameLayout(this)
         val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
         frameLayout.layoutParams = layoutParams
@@ -165,7 +199,11 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
 
         val toast = Toast(this)
         toast.view = frameLayout
-        toast.duration = Toast.LENGTH_LONG
+        if (isLongToast) {
+            toast.duration = Toast.LENGTH_LONG
+        } else {
+            toast.duration = Toast.LENGTH_SHORT
+        }
         toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
     }

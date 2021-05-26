@@ -4,9 +4,6 @@ import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.mobile.common_library.base.BaseMvpAppActivity
 import com.mobile.common_library.base.IBaseView
 import com.mobile.common_library.callback.RcvOnItemViewClickListener
@@ -160,7 +157,8 @@ class MineDetailsActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), 
             showCustomToast(ScreenManager.dipTopx(this, 20f), ScreenManager.dipTopx(this, 20f),
                     18, resources.getColor(R.color.white),
                     resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(this, 40f),
-                    ScreenManager.dipTopx(this, 20f), error)
+                    ScreenManager.dipTopx(this, 20f), error,
+                    true)
 
             if (isRefresh) {
                 refresh_layout.finishRefresh(false)

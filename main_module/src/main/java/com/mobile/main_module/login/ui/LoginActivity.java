@@ -12,9 +12,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.mobile.common_library.base.BaseMvpAppActivity;
 import com.mobile.common_library.base.IBaseView;
 import com.mobile.common_library.manager.ActivityPageManager;
+import com.mobile.common_library.manager.DeviceManager;
 import com.mobile.common_library.manager.LogManager;
 import com.mobile.main_module.R;
-import com.mobile.main_module.UIUtils;
 import com.mobile.main_module.login.bean.GetVerificationCode;
 import com.mobile.main_module.login.bean.LoginResponse;
 import com.mobile.main_module.login.presenter.LoginPresenterImpl;
@@ -164,13 +164,13 @@ public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterI
 	private void initLoginWithAuthCode() {
 		accountNumber = edtAccountNumber.getText().toString();
 		verificationCode = edtVerificationCode.getText().toString();
-		phoneDevice = UIUtils.getDeviceUUid().toString();
+		phoneDevice = DeviceManager.getDeviceUUid();
 		
 		bodyParams.clear();
 		bodyParams.put("account", accountNumber);
 		bodyParams.put("captcha", verificationCode);
 		bodyParams.put("type", "1");//1 APP
-		bodyParams.put("phoneDevice", UIUtils.getDeviceUUid());
+		bodyParams.put("phoneDevice", phoneDevice);
 		presenter.loginWithAuthCode(this, bodyParams);
 	}
 	

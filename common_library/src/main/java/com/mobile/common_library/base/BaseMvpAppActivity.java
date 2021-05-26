@@ -217,7 +217,8 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
 	protected void showCustomToast(int left, int right,
 		int textSize, int textColor,
 		int bgColor, int height,
-		int roundRadius, String message) {
+		int roundRadius, String message,
+		boolean isLongToast) {
 		FrameLayout frameLayout = new FrameLayout(this);
 		FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 		frameLayout.setLayoutParams(layoutParams);
@@ -238,7 +239,11 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
 		
 		Toast toast = new Toast(this);
 		toast.setView(frameLayout);
-		toast.setDuration(Toast.LENGTH_LONG);
+		if (isLongToast) {
+			toast.setDuration(Toast.LENGTH_LONG);
+		} else {
+			toast.setDuration(Toast.LENGTH_SHORT);
+		}
 		toast.show();
 	}
 	

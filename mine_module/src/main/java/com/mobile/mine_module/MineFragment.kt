@@ -151,7 +151,8 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
             showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
                     18, resources.getColor(R.color.white),
                     resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
-                    ScreenManager.dipTopx(activity, 20f), error)
+                    ScreenManager.dipTopx(activity, 20f), error,
+                    true)
 
             if (isRefresh) {
                 refresh_layout.finishRefresh(false)
