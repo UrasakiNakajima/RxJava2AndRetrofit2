@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.mobile.common_library.BaseApplication
 import com.mobile.common_library.base.BaseMvvmAppActivity
 import com.mobile.common_library.manager.LogManager
-import com.mobile.common_library.manager.PictureManager
 import com.mobile.common_library.manager.RetrofitManager
 import com.mobile.common_library.manager.ScreenManager
 import com.mobile.square_module.R
@@ -41,14 +40,14 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
         mDatabind.executePendingBindings()
 
 
-        //测试专用
-        val resourcesPath: String = "/storage/emulated/0/Pictures/1622037257522.png";
-        val fileName: String = System.currentTimeMillis().toString();
-        val isSuccess: Boolean = PictureManager.copyPublicDirectoryFile(this, resourcesPath, fileName);
-        if (isSuccess) {
-            //            showToast(error, true);
-            showCustomToast("复制成功", true)
-        }
+//        //测试专用（只支持到Android 10，在Android 11手机上无效）
+//        val resourcesPath: String = "/storage/emulated/0/Pictures/1622037257522.png";
+//        val fileName: String = System.currentTimeMillis().toString();
+//        val isSuccess: Boolean = PictureManager.copyPublicDirectoryFile(this, resourcesPath, fileName);
+//        if (isSuccess) {
+//            //            showToast(error, true);
+//            showCustomToast("复制成功", true)
+//        }
     }
 
     override fun initObservers() {
