@@ -9,16 +9,13 @@ package com.mobile.common_library.common;
 
 public class ConstantUrl {
 	
-	//    public static final String BASE_URL = "http://192.168.8.111:2602/km/";
+	//正式地址（此地址无效，请替换）
+	public static final String BASE_URL0 = "https://xx.xxx.net/";
 	
-	//正式地址
-	public static final String BASE_URL0 = "https://s2.p5w.net/";
 	public static final String BASE_URL  = "http://is.snssdk.com/";
 	public static final String BASE_URL2 = "http://gank.io/";
 	public static final String BASE_URL3 = "https://wanandroid.com/";
 	//    public static final String BASE_URL = "http://baobab.kaiyanapp.com/api/";
-	
-	//	public static final String BASE_URL = "https://s2.p5w.net/unifiedlogin/";
 	
 	public static final String GET_VERIFICATION_CODE_URL = "unifiedlogin/api/login/getCaptcha";//获取登录短信验证码
 	public static final String LOGIN_WITH_AUTH_CODE_URL  = "unifiedlogin/api/login/sms";//短信登录
