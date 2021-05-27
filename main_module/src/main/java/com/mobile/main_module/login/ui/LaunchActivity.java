@@ -82,7 +82,7 @@ public class LaunchActivity extends BaseAppActivity {
 				if (baseApplication.isLogin()) {
 					startActivity(MainActivity.class);
 				} else {
-					startActivity(LoginActivity.class);
+					startActivity(MainActivity.class);
 				}
 				finish();
 			}
@@ -90,7 +90,7 @@ public class LaunchActivity extends BaseAppActivity {
 			if (baseApplication.isLogin()) {
 				startActivity(MainActivity.class);
 			} else {
-				startActivity(LoginActivity.class);
+				startActivity(MainActivity.class);
 			}
 			finish();
 		}
@@ -135,7 +135,7 @@ public class LaunchActivity extends BaseAppActivity {
 				if (baseApplication.isLogin()) {
 					startActivity(MainActivity.class);
 				} else {
-					startActivity(LoginActivity.class);
+					startActivity(MainActivity.class);
 				}
 				finish();
 			}

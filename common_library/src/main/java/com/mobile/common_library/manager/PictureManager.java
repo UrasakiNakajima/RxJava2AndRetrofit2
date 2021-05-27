@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import androidx.annotation.RequiresApi;
 import okhttp3.ResponseBody;
 
 /**
@@ -248,7 +249,7 @@ public class PictureManager {
 	 */
 	public static boolean copyPublicDirectoryFile(Context context, String resourcesPath, String fileName) {
 		Bitmap bitmap = null;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
 			String fileId = PictureManager.queryFile(context, resourcesPath);
 			if (!TextUtils.isEmpty(fileId)) {
 				Uri uri = PictureManager.getMediaFileUriFromID(fileId);
@@ -262,6 +263,12 @@ public class PictureManager {
 				values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
 				
 				Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+				//				Uri external;
+				//				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+				//									external = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL);
+				//				} else {
+				//									external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+				//				}
 				ContentResolver resolver = context.getContentResolver();
 				Uri insertUri = resolver.insert(external, values);
 				try {
@@ -340,8 +347,9 @@ public class PictureManager {
 	/**
 	 * 查询外部存储所有媒体文件
 	 */
+	@RequiresApi(api = Build.VERSION_CODES.Q)
 	public static String queryFile(Context context, String resourcesPath) {
-		Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri("external"), null, null, null, null);
+		Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL), null, null, null, null);
 		String fileId = null;
 		while (cursor.moveToNext()) {
 			String id = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID));
