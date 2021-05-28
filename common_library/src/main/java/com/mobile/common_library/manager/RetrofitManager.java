@@ -70,7 +70,7 @@ public class RetrofitManager {
 		// 初始化Retrofit
 		retrofit = new Retrofit.Builder()
 					   .client(client)
-					   .baseUrl(ConstantUrl.BASE_URL0)
+					   .baseUrl(ConstantUrl.BASE_URL)
 					   .addConverterFactory(GsonConverterFactory.create())
 					   .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 					   .build();

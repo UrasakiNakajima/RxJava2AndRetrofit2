@@ -10,7 +10,7 @@ package com.mobile.common_library.common;
 public class ConstantUrl {
 	
 	//正式地址（此地址无效，请替换）
-	public static final String BASE_URL0 = "https://xx.xxx.net/";
+	public static final String BASE_URL0 = "https://is.snssdk.net/";
 	
 	public static final String BASE_URL  = "http://is.snssdk.com/";
 	public static final String BASE_URL2 = "http://gank.io/";
