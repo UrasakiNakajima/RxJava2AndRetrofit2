@@ -18,7 +18,6 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
     }
-
 //    subprojects {
 //        project.configurations.all {
 //            resolutionStrategy.eachDependency { details ->
