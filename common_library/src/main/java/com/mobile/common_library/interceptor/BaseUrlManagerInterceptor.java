@@ -67,13 +67,15 @@ public class BaseUrlManagerInterceptor implements Interceptor {
 					default:
 						break;
 				}
-          /*  if ("jeapp".equals(urlname)) {
-                baseURL = HttpUrl.parse(ConstantData.PRE_URL);
-            } else if ("njeapp".equals(urlname)) {
-                baseURL = HttpUrl.parse(ConstantData.PRE_NEW_URL);
-            } else if ("mall".equals(urlname)) {
-                baseURL = HttpUrl.parse(ConstantData.MALL_URL);
-            }*/
+				//				if ("jeapp".equals(urlname)) {
+				//					baseURL = HttpUrl.parse(ConstantData.PRE_URL);
+				//				} else if ("njeapp".equals(urlname)) {
+				//					baseURL = HttpUrl.parse(ConstantData.PRE_NEW_URL);
+				//				} else if ("mall".equals(urlname)) {
+				//					baseURL = HttpUrl.parse(ConstantData.MALL_URL);
+				//				}
+				
+				LogManager.i(TAG, "intercept:-----oldUrl-----" + oldUrl.toString());
 				//重建新的HttpUrl，需要重新设置的url部分
 				HttpUrl newHttpUrl = oldUrl.newBuilder()
 										 .scheme(baseURL.scheme())//http协议如：http或者https
@@ -83,6 +85,7 @@ public class BaseUrlManagerInterceptor implements Interceptor {
 				LogManager.i(TAG, "intercept:------scheme----" + baseURL.scheme());
 				LogManager.i(TAG, "intercept:-----host-----" + baseURL.host());
 				LogManager.i(TAG, "intercept:-----port-----" + baseURL.port());
+				LogManager.i(TAG, "intercept:-----newHttpUrl-----" + newHttpUrl.toString());
 				
 				//获取处理后的新newRequest
 				Request.Builder newBuilder = builder.url(newHttpUrl);
