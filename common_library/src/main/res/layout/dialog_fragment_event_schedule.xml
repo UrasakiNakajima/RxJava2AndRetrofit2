@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_600">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_600"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_56">
+
+            <TextView
+                android:id="@+id/tev_event_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_14"
+                android:layout_marginTop="@dimen/dp_19"
+                android:includeFontPadding="false"
+                android:text="@string/event_schedule"
+                android:textColor="@color/color_FF333333"
+                android:textSize="@dimen/sp_15"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:id="@+id/layout_close_dialog"
+                android:layout_width="@dimen/dp_43"
+                android:layout_height="match_parent"
+                android:layout_gravity="end">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_23"
+                    android:layout_height="@dimen/dp_23"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:src="@mipmap/icon_close_broadcast_voice"
+                    tools:ignore="ContentDescription" />
+
+            </FrameLayout>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nested_scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <FrameLayout
+                    android:id="@+id/layout_event_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/dp_25"
+                    android:visibility="visible" />
+
+            </androidx.core.widget.NestedScrollView>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

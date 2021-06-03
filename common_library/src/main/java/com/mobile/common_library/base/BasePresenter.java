@@ -6,7 +6,7 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2019/3/7 10:55
  * introduce :
  */

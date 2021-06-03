@@ -2,6 +2,7 @@ package com.mobile.project_module
 
 import android.text.TextUtils
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -15,7 +16,7 @@ import com.mobile.common_library.manager.ScreenManager
 import com.mobile.project_module.adapter.ProjectAdapter
 import com.mobile.project_module.bean.DataX
 import com.mobile.project_module.databinding.FragmentProjectBinding
-import com.mobile.project_module.ui.SurfaceViewActivity
+import com.mobile.project_module.ui.EventScheduleActivity
 import com.mobile.project_module.view.IProjectChildView
 import com.mobile.project_module.view_model.ProjectViewModelImpl
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -84,7 +85,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
 
             override fun onItemClickListener(position: Int, view: View?) {
 //                startActivity(VideoViewActivity::class.java)
-                startActivity(SurfaceViewActivity::class.java)
+                startActivity(EventScheduleActivity::class.java)
             }
 
         })
@@ -149,10 +150,10 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
 
     override fun projectDataError(error: String) {
         if (!activity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
-                    18, resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
-                    ScreenManager.dipTopx(activity, 20f), error)
+            showCustomToast(ScreenManager.dipToPx(activity, 20f), ScreenManager.dipToPx(activity, 20f),
+                    18, ContextCompat.getColor(activity!!, R.color.white),
+                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipToPx(activity, 40f),
+                    ScreenManager.dipToPx(activity, 20f), error)
 
             if (isRefresh) {
                 mDatabind.refreshLayout.finishRefresh(false)

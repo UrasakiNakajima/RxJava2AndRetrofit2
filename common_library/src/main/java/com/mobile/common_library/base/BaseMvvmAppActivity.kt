@@ -18,6 +18,13 @@ import com.mobile.common_library.manager.ActivityPageManager
 import com.mobile.common_library.manager.ScreenManager
 import com.mobile.common_library.manager.ToolbarManager
 
+/**
+ * author    : xxxxxxxxxxx
+ * e-mail    : 1164688204@qq.com
+ * date      : 2020/10/15 9:15
+ * introduce :
+ */
+
 abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompatActivity() {
 
     protected var baseApplication: BaseApplication? = null
@@ -149,16 +156,16 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
         val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
         frameLayout.layoutParams = layoutParams
         val textView = TextView(this)
-        val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, ScreenManager.dipTopx(this, 40f))
+        val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, ScreenManager.dipToPx(this, 40f))
         textView.layoutParams = layoutParams1
-        textView.setPadding(ScreenManager.dipTopx(this, 20f), 0, ScreenManager.dipTopx(this, 20f), 0)
+        textView.setPadding(ScreenManager.dipToPx(this, 20f), 0, ScreenManager.dipToPx(this, 20f), 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.toFloat())
         textView.setTextColor(ContextCompat.getColor(this, R.color.white))
         textView.gravity = Gravity.CENTER
         textView.includeFontPadding = false
         val gradientDrawable = GradientDrawable()//创建drawable
         gradientDrawable.setColor(ContextCompat.getColor(this, R.color.color_FFE066FF))
-        gradientDrawable.cornerRadius = ScreenManager.dipTopx(this, 20f).toFloat()
+        gradientDrawable.cornerRadius = ScreenManager.dipToPx(this, 20f).toFloat()
         textView.background = gradientDrawable
         textView.text = message
         frameLayout.addView(textView)

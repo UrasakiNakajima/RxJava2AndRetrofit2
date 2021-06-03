@@ -14,4 +14,5 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
     </application>
+
 </manifest>

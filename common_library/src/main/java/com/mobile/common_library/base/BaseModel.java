@@ -5,7 +5,7 @@ import java.lang.ref.WeakReference;
 
 /**
  * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2019/3/7 11:19
  * introduce :
  */

@@ -1,5 +1,12 @@
 package com.mobile.common_library.base;
 
+/**
+ * author    : xxxxxxxxxxx
+ * e-mail    : 1164688204@qq.com
+ * date      : 2019/10/17 10:51
+ * introduce :
+ */
+
 public class BaseResponse<T> {
 
     private int code;

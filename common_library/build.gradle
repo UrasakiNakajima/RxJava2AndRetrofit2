@@ -122,8 +122,8 @@ dependencies {
     //AutoDispose解决rxjava导致的内存泄漏的框架
     api 'com.uber.autodispose:autodispose-android-archcomponents:1.0.0-RC2'
 
-    api 'com.github.bumptech.glide:glide:4.8.0'
-    kapt 'com.github.bumptech.glide:compiler:4.8.0'
+    api 'com.github.bumptech.glide:glide:4.9.0'
+    kapt 'com.github.bumptech.glide:compiler:4.9.0'
     api 'com.jakewharton:butterknife:10.2.3'
     kapt 'com.jakewharton:butterknife-compiler:10.2.3'
 

@@ -16,6 +16,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
+/**
+ * author    : xxxxxxxxxxx
+ * e-mail    : 1164688204@qq.com
+ * date      : 2020/10/15 11:01
+ * introduce :
+ */
+
 abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment() {
 
     //该类绑定的ViewDataBinding

@@ -111,10 +111,10 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
     fun squareDataError(error: String) {
         if (!activity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
+            showCustomToast(ScreenManager.dipToPx(activity, 20f), ScreenManager.dipToPx(activity, 20f),
                     18, resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
-                    ScreenManager.dipTopx(activity, 20f), error)
+                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipToPx(activity, 40f),
+                    ScreenManager.dipToPx(activity, 20f), error)
 
             hideLoading()
         }

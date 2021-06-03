@@ -12,9 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.gyf.immersionbar.ImmersionBar;
 import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.R;
@@ -24,11 +21,13 @@ import com.qmuiteam.qmui.widget.QMUILoadingView;
 
 import java.util.Map;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 
 /**
  * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2019/3/7 10:11
  * introduce :
  */

@@ -2,6 +2,7 @@ package com.mobile.resource_module.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -146,10 +147,10 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
 
     override fun resourceDataError(error: String) {
         if (!activity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dipTopx(activity, 20f), ScreenManager.dipTopx(activity, 20f),
-                    18, resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipTopx(activity, 40f),
-                    ScreenManager.dipTopx(activity, 20f), error,
+            showCustomToast(ScreenManager.dipToPx(activity, 20f), ScreenManager.dipToPx(activity, 20f),
+                    18, ContextCompat.getColor(activity!!, R.color.white),
+                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipToPx(activity, 40f),
+                    ScreenManager.dipToPx(activity, 20f), error,
                     true)
 
             if (isRefresh) {

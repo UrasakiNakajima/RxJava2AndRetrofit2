@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.EventScheduleActivity"></activity>
         <activity
             android:name=".ui.SurfaceViewActivity"
             android:launchMode="singleTask"
@@ -18,4 +19,5 @@
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
     </application>
+
 </manifest>

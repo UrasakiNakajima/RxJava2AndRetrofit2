@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mikepenz.fontawesome_typeface_library.FontAwesome
@@ -89,9 +90,9 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
     private fun setIconDrawable(view: TextView, icon: IIcon) {
         view.setCompoundDrawablesWithIntrinsicBounds(IconicsDrawable(context)
                 .icon(icon)
-                .color(context.resources.getColor(R.color.color_4876FF))
+                .color(ContextCompat.getColor(context, R.color.color_4876FF))
                 .sizeDp(14), null, null, null)
-        view.compoundDrawablePadding = ScreenManager.dipTopx(context, 5f)
+        view.compoundDrawablePadding = ScreenManager.dipToPx(context, 5f)
     }
 
 }

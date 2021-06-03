@@ -13,17 +13,17 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import com.mobile.common_library.BaseApplication;
 
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 /**
  * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2019/3/7 10:19
  * introduce :
  */

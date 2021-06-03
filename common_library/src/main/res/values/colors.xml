@@ -19,6 +19,8 @@
     <color name="color_FFFFC73B">#FFFFC73B</color>
 
 
+    <color name="default_shadow_color">#2a000000</color>
+    <color name="default_shadowback_color">#fff</color>
     <color name="color_4876FF">#4876FF</color>
 
     <color name="Grey300">#E0E0E0</color>
@@ -36,4 +38,5 @@
     <color name="color_FF3258F7">#FF3258F7</color>
 
     <color name="color_FFD0D6EC">#FFD0D6EC</color>
+    <color name="color_FFCFE9FF">#FFCFE9FF</color>
 </resources>
