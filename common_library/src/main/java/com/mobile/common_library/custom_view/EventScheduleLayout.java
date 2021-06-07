@@ -78,6 +78,7 @@ public class EventScheduleLayout extends LinearLayout {
 		this.addView(layoutEnd, layoutParamsEnd);
 		
 		if (rowsDTOList != null && rowsDTOList.size() > 0) {
+			mRowsDTOList.clear();
 			mRowsDTOList.addAll(rowsDTOList);
 			for (int i = 0; i < mRowsDTOList.size(); i++) {
 				mRowsDTO = mRowsDTOList.get(i);
@@ -326,6 +327,7 @@ public class EventScheduleLayout extends LinearLayout {
 							layoutEnd.addView(mEmptyLayout, mEmptyLayoutParams);
 						}
 						FrameLayout mFrameLayout = new FrameLayout(mContext);
+						mFrameLayout.setBackground(getResources().getDrawable(R.drawable.corners_7_color_ffd0d6ec));
 						
 						TextView tevTime = new TextView(mContext);
 						tevTime.setText(mRowsDTO.getActiveTime());

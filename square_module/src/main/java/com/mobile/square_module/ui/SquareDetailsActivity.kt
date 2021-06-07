@@ -80,7 +80,7 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
 
     override fun initViews() {
         setToolbar(false, R.color.color_FF198CFF)
-        mDatabind.imvBack.setColorFilter(resources.getColor(R.color.color_FFFFFFFF))
+        mDatabind.imvBack.setColorFilter(resources!!.getColor(R.color.color_FFFFFFFF))
         mDatabind.layoutBack.setOnClickListener {
             finish()
         }
@@ -120,8 +120,8 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
     fun squareDetailsError(error: String) {
         if (!this.isFinishing()) {
             showCustomToast(ScreenManager.dipToPx(this, 20f), ScreenManager.dipToPx(this, 20f),
-                    18, resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipToPx(this, 40f),
+                    18, resources!!.getColor(R.color.white),
+                    resources!!.getColor(R.color.color_FFE066FF), ScreenManager.dipToPx(this, 40f),
                     ScreenManager.dipToPx(this, 20f), error,
                     true)
 

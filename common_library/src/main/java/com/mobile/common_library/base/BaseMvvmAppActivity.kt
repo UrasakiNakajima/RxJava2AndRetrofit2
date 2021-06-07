@@ -1,5 +1,7 @@
 package com.mobile.common_library.base
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.TypedValue
@@ -47,6 +49,25 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
         initObservers()
         initViews()
         initLoadData()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        //非默认值
+        if (newConfig.fontScale != 1f) {
+            resources
+        }
+        super.onConfigurationChanged(newConfig)
+    }
+
+    override fun getResources(): Resources? { //还原字体大小
+        val res = super.getResources()
+        //非默认值
+        if (res.configuration.fontScale != 1f) {
+            val newConfig = Configuration()
+            newConfig.setToDefaults() //设置默认
+            res.updateConfiguration(newConfig, res.displayMetrics)
+        }
+        return res
     }
 
     protected abstract fun initLayoutId(): Int

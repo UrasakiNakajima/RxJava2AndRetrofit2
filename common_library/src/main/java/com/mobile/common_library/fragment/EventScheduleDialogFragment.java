@@ -35,11 +35,12 @@ import static android.view.View.VISIBLE;
  */
 public class EventScheduleDialogFragment extends DialogFragment {
 	
-	private static final String           TAG = "EventScheduleDialogFragment";
-	private              TextView         tevEventSchedule;
-	private              FrameLayout      layoutCloseDialog;
-	private              NestedScrollView nestedScrollView;
-	private              FrameLayout      layoutEventSchedule;
+	private static final String                                      TAG         = "EventScheduleDialogFragment";
+	private              TextView                                    tevEventSchedule;
+	private              FrameLayout                                 layoutCloseDialog;
+	private              NestedScrollView                            nestedScrollView;
+	private              FrameLayout                                 layoutEventSchedule;
+	private              List<EventScheduleListBean.DataDTO.RowsDTO> rowsDTOList = new ArrayList<>();
 	
 	@Nullable
 	@Override
@@ -100,20 +101,23 @@ public class EventScheduleDialogFragment extends DialogFragment {
 		rowsDTO.setActiveTime("2021-04-29 07:15-09:20");
 		rowsDTO.setActiveTitle("新活动");
 		rowsDTO.setAuditStatusName("待审核");
+		rowsDTO.setAuditStatus(0);
 		
 		EventScheduleListBean.DataDTO.RowsDTO rowsDTO2 = new EventScheduleListBean.DataDTO.RowsDTO();
 		rowsDTO2.setActiveStartTime("2021-04-29 10:25:00");
 		rowsDTO2.setActiveEndTime("2021-04-29 12:30:00");
 		rowsDTO2.setActiveTime("2021-04-29 10:25-12:30");
 		rowsDTO2.setActiveTitle("新活动2");
-		rowsDTO2.setAuditStatusName("待审核");
+		rowsDTO2.setAuditStatusName("已审核");
+		rowsDTO2.setAuditStatus(2);
 		
 		EventScheduleListBean.DataDTO.RowsDTO rowsDTO3 = new EventScheduleListBean.DataDTO.RowsDTO();
 		rowsDTO3.setActiveStartTime("2021-04-29 14:30:00");
 		rowsDTO3.setActiveEndTime("2021-04-29 17:10:00");
 		rowsDTO3.setActiveTime("2021-04-29 14:30-17:10");
 		rowsDTO3.setActiveTitle("新活动3");
-		rowsDTO3.setAuditStatusName("待审核");
+		rowsDTO3.setAuditStatusName("已审核");
+		rowsDTO3.setAuditStatus(2);
 		
 		EventScheduleListBean.DataDTO.RowsDTO rowsDTO5 = new EventScheduleListBean.DataDTO.RowsDTO();
 		rowsDTO5.setActiveStartTime("2021-04-29 18:10:00");
@@ -121,15 +125,17 @@ public class EventScheduleDialogFragment extends DialogFragment {
 		rowsDTO5.setActiveTime("2021-04-29 18:10-20:10");
 		rowsDTO5.setActiveTitle("新活动5");
 		rowsDTO5.setAuditStatusName("待审核");
+		rowsDTO5.setAuditStatus(0);
 		
 		EventScheduleListBean.DataDTO.RowsDTO rowsDTO6 = new EventScheduleListBean.DataDTO.RowsDTO();
 		rowsDTO6.setActiveStartTime("2021-04-29 21:10:00");
 		rowsDTO6.setActiveEndTime("2021-04-29 23:00:00");
 		rowsDTO6.setActiveTime("2021-04-29 21:10-23:00");
 		rowsDTO6.setActiveTitle("新活动6");
-		rowsDTO6.setAuditStatusName("待审核");
+		rowsDTO6.setAuditStatusName("已审核");
+		rowsDTO6.setAuditStatus(2);
 		
-		List<EventScheduleListBean.DataDTO.RowsDTO> rowsDTOList = new ArrayList<>();
+		rowsDTOList.clear();
 		rowsDTOList.add(rowsDTO);
 		rowsDTOList.add(rowsDTO2);
 		rowsDTOList.add(rowsDTO3);
