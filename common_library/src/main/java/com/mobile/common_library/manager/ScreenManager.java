@@ -70,6 +70,20 @@ public class ScreenManager {
 	}
 	
 	/**
+	 * 获取屏幕高度(px)
+	 */
+	public static int getScreenHeight(Context context) {
+		return context.getResources().getDisplayMetrics().heightPixels;
+	}
+	
+	/**
+	 * 获取屏幕宽度(px)
+	 */
+	public static int getScreenWidth(Context context) {
+		return context.getResources().getDisplayMetrics().widthPixels;
+	}
+	
+	/**
 	 * 计算出来的位置，y方向就在anchorView的上面和下面对齐显示，x方向就是与屏幕右边对齐显示
 	 * 如果anchorView的位置有变化，就可以适当自己额外加入偏移来修正
 	 *
@@ -100,20 +114,6 @@ public class ScreenManager {
 			windowPos[1] = anchorLoc[1] + anchorHeight;
 		}
 		return windowPos;
-	}
-	
-	/**
-	 * 获取屏幕高度(px)
-	 */
-	public static int getScreenHeight(Context context) {
-		return context.getResources().getDisplayMetrics().heightPixels;
-	}
-	
-	/**
-	 * 获取屏幕宽度(px)
-	 */
-	public static int getScreenWidth(Context context) {
-		return context.getResources().getDisplayMetrics().widthPixels;
 	}
 	
 	/**
