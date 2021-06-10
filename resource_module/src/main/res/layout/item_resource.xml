@@ -26,7 +26,9 @@
             android:id="@+id/imv_resource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:visibility="gone"
             tools:ignore="ContentDescription" />
 
