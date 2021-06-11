@@ -27,7 +27,6 @@ public interface FirstPageRequest {
 
 //    @FormUrlEncoded
 //    @POST(ConstantUrl.FIRST_PAGE_URL)
-//    Observable<FirstPageResponse.QuestionBean> getFirstPageData(@FieldMap Map<String, String> bodyParams);
-
+//    Observable<FirstPageResponse.QuestionBean> getFirstPageData(@Body RequestBody requestBody);
 
 }
