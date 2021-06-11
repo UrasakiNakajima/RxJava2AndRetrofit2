@@ -1,6 +1,7 @@
 package com.mobile.resource_module.adapter
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -13,6 +14,10 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
@@ -50,7 +55,19 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
                 holder.layoutPicture.setVisibility(View.VISIBLE)
 //                Picasso.with(context).load(list.get(position).url).placeholder(R.mipmap.ic_launcher_round).into(imvResource)
                 Glide.with(context).load(list.get(position).url)
-                        .error(R.mipmap.ic_launcher)
+                        .placeholder(R.mipmap.picture_miyawaki_sakura)
+                        .listener(object : RequestListener<Drawable> {
+
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                holder.imvResource.visibility = View.VISIBLE
+                                return false
+                            }
+
+                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+
+                                return false
+                            }
+                        })
                         .into(holder.imvResource)
             } else {
                 holder.layoutCardView.setVisibility(View.VISIBLE)

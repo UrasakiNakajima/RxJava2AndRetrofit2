@@ -27,15 +27,15 @@
     <FrameLayout
         android:id="@+id/layout_picture"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_525"
-        android:background="@color/color_54E066FF"
-        android:layout_marginTop="@dimen/dp_10">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/color_54E066FF">
 
         <ImageView
             android:id="@+id/imv_resource"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_525"
-            android:scaleType="fitXY"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:visibility="visible"
             tools:ignore="ContentDescription" />
 
