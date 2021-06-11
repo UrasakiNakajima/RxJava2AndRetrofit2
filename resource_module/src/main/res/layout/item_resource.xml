@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="1dp"
-    app:cardUseCompatPadding="true">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layout_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="UseCompoundDrawables">
+        app:cardCornerRadius="2dp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true">
 
         <com.mobile.common_library.custom_view.ColorTextView
             android:id="@+id/tev_resource"
@@ -20,18 +19,26 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textColorLink="?attr/colorPrimaryDark"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="visible" />
+
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:id="@+id/layout_picture"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_525"
+        android:background="@color/color_54E066FF"
+        android:layout_marginTop="@dimen/dp_10">
 
         <ImageView
             android:id="@+id/imv_resource"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
+            android:layout_height="@dimen/dp_525"
             android:scaleType="fitXY"
-            android:visibility="gone"
+            android:visibility="visible"
             tools:ignore="ContentDescription" />
 
-    </LinearLayout>
+    </FrameLayout>
 
-</androidx.cardview.widget.CardView>
+</FrameLayout>

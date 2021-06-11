@@ -6,8 +6,10 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -44,13 +46,15 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ContentHolder) {
             if (list.get(position).type.equals("福利")) {
-                holder.imvResource.setVisibility(View.VISIBLE)
-                holder.tevResource.setVisibility(View.GONE)
+                holder.layoutCardView.setVisibility(View.GONE)
+                holder.layoutPicture.setVisibility(View.VISIBLE)
 //                Picasso.with(context).load(list.get(position).url).placeholder(R.mipmap.ic_launcher_round).into(imvResource)
-                Glide.with(context).load(list.get(position).url).into(holder.imvResource)
+                Glide.with(context).load(list.get(position).url)
+                        .error(R.mipmap.ic_launcher)
+                        .into(holder.imvResource)
             } else {
-                holder.imvResource.setVisibility(View.GONE)
-                holder.tevResource.setVisibility(View.VISIBLE)
+                holder.layoutCardView.setVisibility(View.VISIBLE)
+                holder.layoutPicture.setVisibility(View.GONE)
                 holder.tevResource.setLinkTextColor(context.resources.getColor(R.color.color_4876FF))
                 holder.tevResource.setText(Html.fromHtml("<a href=\""
                         + list.get(position).url + "\">"
@@ -77,8 +81,10 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
 
     protected class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var tevResource: ColorTextView = itemView.findViewById(R.id.tev_resource)
-        var imvResource: ImageView = itemView.findViewById(R.id.imv_resource)
+        val layoutCardView: CardView = itemView.findViewById(R.id.layout_card_view)
+        val tevResource: ColorTextView = itemView.findViewById(R.id.tev_resource)
+        val layoutPicture: FrameLayout = itemView.findViewById(R.id.layout_picture)
+        val imvResource: ImageView = itemView.findViewById(R.id.imv_resource)
     }
 
     private var rcvOnItemViewClickListener: RcvOnItemViewClickListener? = null

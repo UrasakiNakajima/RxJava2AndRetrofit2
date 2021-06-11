@@ -114,17 +114,17 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
     }
 
     override fun showLoading() {
-        if (load_view != null && !load_view.isShown()) {
-            load_view.setVisibility(View.VISIBLE)
-            load_view.start()
-        }
+//        if (load_view != null && !load_view.isShown()) {
+//            load_view.setVisibility(View.VISIBLE)
+//            load_view.start()
+//        }
     }
 
     override fun hideLoading() {
-        if (load_view != null && load_view.isShown()) {
-            load_view.stop()
-            load_view.setVisibility(View.GONE)
-        }
+//        if (load_view != null && load_view.isShown()) {
+//            load_view.stop()
+//            load_view.setVisibility(View.GONE)
+//        }
     }
 
     override fun resourceDataSuccess(success: List<Result2>) {
