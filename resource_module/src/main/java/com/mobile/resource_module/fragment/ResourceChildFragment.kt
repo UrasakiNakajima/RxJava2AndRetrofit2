@@ -75,6 +75,7 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
         linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
         rcv_data.layoutManager = (linearLayoutManager)
         rcv_data.itemAnimator = DefaultItemAnimator()
+        (rcv_data.itemAnimator as DefaultItemAnimator).changeDuration = 0
 
         resourceAdapter = ResourceAdapter(activity!!)
         resourceAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
@@ -85,6 +86,7 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
 //                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
             }
         })
+        resourceAdapter!!.setHasStableIds(true)
         rcv_data.setAdapter(resourceAdapter)
         resourceAdapter!!.clearData()
         resourceAdapter!!.addAllData(resultList)
@@ -114,17 +116,17 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
     }
 
     override fun showLoading() {
-//        if (load_view != null && !load_view.isShown()) {
-//            load_view.setVisibility(View.VISIBLE)
-//            load_view.start()
-//        }
+        if (load_view != null && !load_view.isShown()) {
+            load_view.setVisibility(View.VISIBLE)
+            load_view.start()
+        }
     }
 
     override fun hideLoading() {
-//        if (load_view != null && load_view.isShown()) {
-//            load_view.stop()
-//            load_view.setVisibility(View.GONE)
-//        }
+        if (load_view != null && load_view.isShown()) {
+            load_view.stop()
+            load_view.setVisibility(View.GONE)
+        }
     }
 
     override fun resourceDataSuccess(success: List<Result2>) {

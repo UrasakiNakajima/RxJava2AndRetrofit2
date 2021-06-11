@@ -14,7 +14,9 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
@@ -54,8 +56,19 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
                 holder.layoutCardView.setVisibility(View.GONE)
                 holder.layoutPicture.setVisibility(View.VISIBLE)
 //                Picasso.with(context).load(list.get(position).url).placeholder(R.mipmap.ic_launcher_round).into(imvResource)
+
+//                Glide.with(context).load(list.get(position).url)
+//                        .placeholder(R.mipmap.picture_miyawaki_sakura)
+//                        .error(R.mipmap.picture_miyawaki_sakura)
+//                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) //自动选择缓存策略
+//                        .priority(Priority.NORMAL)     // 设置加载的优先级
+//                        .into(holder.imvResource)
+
                 Glide.with(context).load(list.get(position).url)
                         .placeholder(R.mipmap.picture_miyawaki_sakura)
+                        .error(R.mipmap.picture_miyawaki_sakura)
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) //自动选择缓存策略
+                        .priority(Priority.NORMAL)     // 设置加载的优先级
                         .listener(object : RequestListener<Drawable> {
 
                             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -64,7 +77,6 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
                             }
 
                             override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-
                                 return false
                             }
                         })
@@ -95,6 +107,9 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
         return list.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
 
     protected class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
