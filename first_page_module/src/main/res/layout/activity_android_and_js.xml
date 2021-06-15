@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.AndroidAndJsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_75"
+        android:background="@color/color_FFE066FF"
+        android:minHeight="?attr/actionBarSize"
+        android:orientation="vertical"
+        app:contentInsetStart="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_75"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_25" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50">
+
+                <FrameLayout
+                    android:id="@+id/layout_back"
+                    android:layout_width="@dimen/dp_36"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    tools:ignore="UselessParent">
+
+                    <ImageView
+                        android:id="@+id/imv_back"
+                        android:layout_width="@dimen/dp_6"
+                        android:layout_height="@dimen/dp_11"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/icon_arrowhead_left"
+                        tools:ignore="ContentDescription" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tev_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center"
+                    android:text="@string/android_and_js"
+                    android:textColor="@color/color_FF198CFF"
+                    android:textSize="@dimen/sp_20" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_300" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20" />
+
+    <TextView
+        android:id="@+id/tev_android_to_js"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_50"
+        android:background="@drawable/corners_25_color_ffe066ff"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_25"
+        android:paddingEnd="@dimen/dp_25"
+        android:text="@string/android_to_js"
+        android:textColor="@color/white" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20" />
+
+    <TextView
+        android:id="@+id/tev_android_to_js2"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_50"
+        android:background="@drawable/corners_25_color_ffe066ff"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_25"
+        android:paddingEnd="@dimen/dp_25"
+        android:text="@string/android_to_js2"
+        android:textColor="@color/white" />
+
+</LinearLayout>

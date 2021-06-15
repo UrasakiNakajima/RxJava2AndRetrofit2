@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.mobile.common_library.base.BaseMvpFragment
 import com.mobile.common_library.base.IBaseView
 import com.mobile.common_library.callback.RcvOnItemViewClickListener
@@ -81,9 +82,11 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
         resourceAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
-//                bodyParams.clear()
-//                bodyParams["max_behot_time"] = "1000"
-//                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
+
+                //Jump with parameters
+                ARouter.getInstance().build("/first_page_module/ui/android_and_js")
+                        .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())
+                        .navigation()
             }
         })
         resourceAdapter!!.setHasStableIds(true)
@@ -91,20 +94,21 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
         resourceAdapter!!.clearData()
         resourceAdapter!!.addAllData(resultList)
 
-        refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-            override fun onLoadMore(refresh_layout: RefreshLayout) {
-                LogManager.i(TAG, "onLoadMore")
-                isRefresh = false
-                initResource(type, pageSize, currentPage.toString())
-            }
+        refresh_layout.setOnRefreshLoadMoreListener(
+                object : OnRefreshLoadMoreListener {
+                    override fun onLoadMore(refresh_layout: RefreshLayout) {
+                        LogManager.i(TAG, "onLoadMore")
+                        isRefresh = false
+                        initResource(type, pageSize, currentPage.toString())
+                    }
 
-            override fun onRefresh(refresh_layout: RefreshLayout) {
-                LogManager.i(TAG, "onRefresh")
-                isRefresh = true
-                currentPage = 1;
-                initResource(type, pageSize, currentPage.toString())
-            }
-        })
+                    override fun onRefresh(refresh_layout: RefreshLayout) {
+                        LogManager.i(TAG, "onRefresh")
+                        isRefresh = true
+                        currentPage = 1;
+                        initResource(type, pageSize, currentPage.toString())
+                    }
+                })
     }
 
     override fun initLoadData() {

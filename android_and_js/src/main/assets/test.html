@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--从assert中加载的中文网页会出现乱码，解决办法就是给html指定编码-->
+    <meta http-equlv="Content-Type" content="text/html;charset=UTF-8">
+<title></title>
+<script type="text/javascript">
+    function sum(a,b){
+    return a+b;
+    }
+    function s(){
+    var result =window.android.back();
+    document.getElementById("p").innerHTML=result;
+    }
+
+    //无参无返回值的方法
+    function show(){
+    //显示helloworld
+    document.getElementById("p").innerHTML="Android to js hello world";
+}
+    </script>
+</head>
+<body>
+<button onclick="s()">js调用android</button>
+<a href="file:///android_asset/test2.html">点击左侧按钮</a>
+<p id="p"></p>
+</body>
+</html>

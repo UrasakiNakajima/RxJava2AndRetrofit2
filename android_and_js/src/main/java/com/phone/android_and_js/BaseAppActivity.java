@@ -1,4 +1,4 @@
-package com.mobile.common_library.base;
+package com.phone.android_and_js;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -7,23 +7,16 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gyf.immersionbar.ImmersionBar;
-import com.mobile.common_library.BaseApplication;
-import com.mobile.common_library.R;
-import com.mobile.common_library.manager.ActivityPageManager;
-import com.mobile.common_library.manager.ToolbarManager;
-import com.qmuiteam.qmui.widget.QMUILoadingView;
 
 import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.ButterKnife;
 
 /**
  * author    : xxxxxxxxxxx
@@ -34,9 +27,6 @@ import butterknife.ButterKnife;
 
 public abstract class BaseAppActivity extends AppCompatActivity {
 	
-	protected BaseApplication          baseApplication;
-	protected QMUILoadingView          loadView;
-	protected FrameLayout.LayoutParams layoutParams;
 	protected Intent                   intent;
 	protected Bundle                   bundle;
 	protected AppCompatActivity        appCompatActivity;
@@ -46,19 +36,8 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		
 		appCompatActivity = this;
-		baseApplication = (BaseApplication) getApplication();
-		ActivityPageManager.getInstance().addActivity(appCompatActivity);
 		
 		setContentView(initLayoutId());
-		ButterKnife.bind(appCompatActivity);
-		
-		loadView = new QMUILoadingView(appCompatActivity);
-		loadView.setVisibility(View.GONE);
-		loadView.setSize(100);
-		loadView.setColor(getResources().getColor(R.color.color_80000000));
-		layoutParams = new FrameLayout.LayoutParams(
-			FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-		layoutParams.gravity = Gravity.CENTER;
 		
 		//        setToolbar();
 		initData();
@@ -93,7 +72,7 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		if (isDarkFont) {
 			ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
 				.statusBarDarkFont(isDarkFont)
-				.statusBarColor(R.color.color_FFFFFFFF)     //状态栏颜色，不写默认透明色
+				.statusBarColor(R.color.white)     //状态栏颜色，不写默认透明色
 				//                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
 				.keyboardEnable(true)
 				.init();
@@ -113,7 +92,7 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		if (isDarkFont) {
 			ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
 				.statusBarDarkFont(isDarkFont)
-				.statusBarColor(R.color.color_FFFFFFFF)     //状态栏颜色，不写默认透明色
+				.statusBarColor(R.color.white)     //状态栏颜色，不写默认透明色
 				//                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
 				.keyboardEnable(true)
 				.init();
@@ -282,7 +261,7 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 	
 	@Override
 	protected void onDestroy() {
-		ActivityPageManager.getInstance().removeActivity(appCompatActivity);
+		
 		super.onDestroy();
 	}
 }

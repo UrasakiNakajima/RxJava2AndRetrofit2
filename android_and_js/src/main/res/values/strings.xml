@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">android_and_js</string>
+
+
+    <string name="android_and_js">android和js</string>
+    <string name="android_to_js">android调用js，有返回值</string>
+    <string name="android_to_js2">android调用js，无返回值</string>
+    <string name="js_to_android">js调用android</string>
+
+</resources>

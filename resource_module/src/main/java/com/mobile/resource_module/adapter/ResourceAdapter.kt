@@ -64,6 +64,9 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
 //                        .priority(Priority.NORMAL)     // 设置加载的优先级
 //                        .into(holder.imvResource)
 
+                holder.layoutPicture.setOnClickListener() {
+                    rcvOnItemViewClickListener!!.onItemClickListener(position, it);
+                }
                 Glide.with(context).load(list.get(position).url)
                         .placeholder(R.mipmap.picture_miyawaki_sakura)
                         .error(R.mipmap.picture_miyawaki_sakura)

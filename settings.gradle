@@ -1,3 +1,4 @@
+include ':android_and_js'
 include ':project_module'
 include ':resource_module'
 include ':main_module'

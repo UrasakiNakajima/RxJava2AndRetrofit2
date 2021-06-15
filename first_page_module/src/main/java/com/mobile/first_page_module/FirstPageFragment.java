@@ -120,7 +120,6 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 				//				ARouter.getInstance().build("/first_page_module/ui/first_page_details")
 				//					.withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
 				//					.navigation();
-				
 				//                }
 				
 				if (view.getId() == R.id.tev_data) {
