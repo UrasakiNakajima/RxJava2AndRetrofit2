@@ -68,7 +68,7 @@ public class AndroidAndJsActivity extends BaseAppActivity {
 				@Override
 				public void onReceiveValue(String value) {
 					LogManager.i(TAG, "js返回的结果是=" + value);
-					showToast("js返回的结果是=" + value, true);
+					showToast("js返回的结果是" + value, true);
 				}
 			});
 		});
