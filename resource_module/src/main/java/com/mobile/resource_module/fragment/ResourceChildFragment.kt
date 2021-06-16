@@ -84,7 +84,7 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
             override fun onItemClickListener(position: Int, view: View?) {
 
                 //Jump with parameters
-                ARouter.getInstance().build("/first_page_module/ui/android_and_js")
+                ARouter.getInstance().build("/common_library/ui/android_and_js")
                         .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())
                         .navigation()
             }

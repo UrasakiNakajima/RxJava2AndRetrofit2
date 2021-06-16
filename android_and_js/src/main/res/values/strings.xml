@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
     <string name="app_name">android_and_js</string>
 
     <string name="android_and_js">android和js</string>
@@ -6,5 +6,6 @@
     <string name="android_to_js2">android调用js，有参数无返回值</string>
     <string name="android_to_js3">android调用js，无参数无返回值</string>
     <string name="js_to_android">js调用android</string>
+    <string name="this_is_the_h5_page">以上是H5页面</string>
 
 </resources>

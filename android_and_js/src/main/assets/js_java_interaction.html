@@ -27,7 +27,7 @@
 
     function s(){
         //调用原生的方法，android是约定的别名，back()是原生的方法
-        var result =window.android.back();
+        var result = window.android.back();
         //将返回结果显示在id为p的控件上
         document.getElementById("p").innerHTML=result;
     }
@@ -35,8 +35,8 @@
     </script>
 </head>
 <body>
-    <button onclick="s()">js调用android</button>
-    <a href="file:///android_asset/js_java_interaction.html">点击跳转到H5重置页面</a>
+    <button onclick="s()">js调用android（点我）</button>
+    <a href="file:///android_asset/js_java_interaction.html">点击重置H5页面</a>
     <p id="p"></p>
 
 </body>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.AndroidAndJsActivity">
+    tools:context="com.mobile.common_library.ui.AndroidAndJsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -64,7 +64,22 @@
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_300" />
+        android:layout_height="@dimen/dp_230" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/color_54E066FF" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_50"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_25"
+        android:paddingEnd="@dimen/dp_25"
+        android:text="@string/this_is_the_h5_page"
+        android:textColor="@color/black" />
 
     <View
         android:layout_width="match_parent"

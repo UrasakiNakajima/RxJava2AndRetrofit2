@@ -2,10 +2,8 @@ package com.phone.android_and_js;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.webkit.JavascriptInterface;
-import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -15,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
@@ -85,36 +82,36 @@ public class MainActivity extends BaseAppActivity {
 		WebSettings webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		webView.setWebViewClient(new WebViewClient());
-		//		//1.直接把js弹框弹出来（第一种方法）
-		//		webView.setWebChromeClient(new WebChromeClient());
+		//1.直接把js弹框弹出来（第一种方法）
+		webView.setWebChromeClient(new WebChromeClient());
 		
-		/**
-		 * 2.js弹框自定义之后弹出来（第二种方法）
-		 *
-		 * 设置响应js 的alert()函数
-		 * 设置需要支持js对话框，webview只是载体，内容的渲染需要使用webviewChromClient类去实现
-		 * 通过设置WebChromeClient对象处理JavaScript的对话框（也就是把js弹框自定义之后弹出来）
-		 */
-		webView.setWebChromeClient(new WebChromeClient() {
-			@Override
-			public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(appCompatActivity);
-				builder.setTitle("Alert");
-				builder.setMessage(message);
-				builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						result.confirm();
-					}
-				});
-				builder.setCancelable(false);
-				builder
-					.create()
-					.show();
-				return true;
-			}
-			
-		});
+		//		/**
+		//		 * 2.js弹框自定义之后弹出来（第二种方法）
+		//		 *
+		//		 * 设置响应js 的alert()函数
+		//		 * 设置需要支持js对话框，webview只是载体，内容的渲染需要使用webviewChromClient类去实现
+		//		 * 通过设置WebChromeClient对象处理JavaScript的对话框（也就是把js弹框自定义之后弹出来）
+		//		 */
+		//		webView.setWebChromeClient(new WebChromeClient() {
+		//			@Override
+		//			public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+		//				AlertDialog.Builder builder = new AlertDialog.Builder(appCompatActivity);
+		//				builder.setTitle("Alert");
+		//				builder.setMessage(message);
+		//				builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+		//					@Override
+		//					public void onClick(DialogInterface dialog, int which) {
+		//						result.confirm();
+		//					}
+		//				});
+		//				builder.setCancelable(false);
+		//				builder
+		//					.create()
+		//					.show();
+		//				return true;
+		//			}
+		//
+		//		});
 		//js调用android
 		webView.addJavascriptInterface(new JsInteration(), "android");
 	}
