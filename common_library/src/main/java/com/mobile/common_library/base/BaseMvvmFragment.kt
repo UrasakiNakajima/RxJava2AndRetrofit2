@@ -17,7 +17,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
 /**
- * author    : xxxxxxxxxxx
+ * author    : Urasaki
  * e-mail    : 1164688204@qq.com
  * date      : 2020/10/15 11:01
  * introduce :

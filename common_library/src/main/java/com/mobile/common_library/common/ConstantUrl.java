@@ -1,8 +1,8 @@
 package com.mobile.common_library.common;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/3/7 9:17
  * introduce :
  */

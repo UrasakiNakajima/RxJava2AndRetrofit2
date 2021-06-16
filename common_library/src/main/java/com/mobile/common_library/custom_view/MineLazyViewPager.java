@@ -5,8 +5,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/3/10 14:12
  * introduce : 禁止左右滑动
  */

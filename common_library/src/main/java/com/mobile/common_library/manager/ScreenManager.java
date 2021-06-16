@@ -13,8 +13,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/3/09 11:35
  * introduce : 屏幕管理类
  */

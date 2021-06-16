@@ -21,7 +21,7 @@ import com.mobile.common_library.manager.ScreenManager
 import com.mobile.common_library.manager.ToolbarManager
 
 /**
- * author    : xxxxxxxxxxx
+ * author    : Urasaki
  * e-mail    : 1164688204@qq.com
  * date      : 2020/10/15 9:15
  * introduce :

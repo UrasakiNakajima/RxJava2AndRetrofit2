@@ -4,8 +4,8 @@ package com.mobile.common_library.callback;
 import android.view.KeyEvent;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/4/7 10:01
  * introduce :
  */

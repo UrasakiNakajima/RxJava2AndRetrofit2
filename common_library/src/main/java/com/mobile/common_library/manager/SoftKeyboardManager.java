@@ -12,8 +12,8 @@ import com.mobile.common_library.callback.OnSoftKeyBoardChangeListener;
 import java.util.List;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/3/11 9:23
  * introduce : 软键盘管理类
  */

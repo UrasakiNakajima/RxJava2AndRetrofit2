@@ -36,8 +36,8 @@ import okhttp3.Response;
 import okio.BufferedSink;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/3/10 9:35
  * introduce : 联网okhttp3管理类
  */

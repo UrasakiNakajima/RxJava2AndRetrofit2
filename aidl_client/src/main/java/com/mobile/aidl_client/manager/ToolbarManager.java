@@ -9,8 +9,8 @@ import android.view.ViewTreeObserver;
 import com.mobile.aidl_client.callback.OnSoftKeyBoardChangeListener;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/3/26 11:12
  * introduce :
  */

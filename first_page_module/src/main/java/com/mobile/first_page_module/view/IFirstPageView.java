@@ -7,8 +7,8 @@ import com.mobile.first_page_module.bean.FirstPageResponse;
 import java.util.List;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/3/7 15:44
  * introduce :
  */

@@ -7,8 +7,8 @@ import android.os.Looper;
 import com.mobile.common_library.callback.OnSubThreadToMainThreadCallback;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/3/7 15:51
  * introduce :
  */

@@ -20,8 +20,8 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2019/3/10 17:04
  * introduce : Presenter登录模块的（一个小模块对应一个Presenter）
  */

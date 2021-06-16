@@ -13,8 +13,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2019/3/10 13:55
  * introduce : 添加Cookies拦截器
  */

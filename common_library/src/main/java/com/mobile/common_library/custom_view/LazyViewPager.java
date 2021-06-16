@@ -17,8 +17,8 @@ package com.mobile.common_library.custom_view;
  *
  *
  *
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/3/9 13:35
  * introduce : 禁止预加载的ViewPager
  */

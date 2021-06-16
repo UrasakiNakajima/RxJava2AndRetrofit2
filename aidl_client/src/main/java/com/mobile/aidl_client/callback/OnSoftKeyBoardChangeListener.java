@@ -2,8 +2,8 @@ package com.mobile.aidl_client.callback;
 
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/4/1 13:26
  * introduce :
  */

@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * author    : xxxxxxxxxxx
+ * author    : Urasaki
  * e-mail    : 1164688204@qq.com
  * date      : 2019/3/7 10:35
  * introduce :

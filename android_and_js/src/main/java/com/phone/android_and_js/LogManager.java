@@ -3,8 +3,8 @@ package com.phone.android_and_js;
 import android.util.Log;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2020/3/7 10:17
  * introduce : 自定义长日志打印
  */

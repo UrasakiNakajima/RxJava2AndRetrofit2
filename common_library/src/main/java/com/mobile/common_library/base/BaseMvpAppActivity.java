@@ -27,7 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 
 /**
- * author    : xxxxxxxxxxx
+ * author    : Urasaki
  * e-mail    : 1164688204@qq.com
  * date      : 2019/3/7 11:37
  * introduce :

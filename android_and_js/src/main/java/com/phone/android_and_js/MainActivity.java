@@ -16,6 +16,13 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      : 2020/6/15 11:10
+ * introduce :
+ */
+
 public class MainActivity extends BaseAppActivity {
 	
 	private static final String      TAG = "MainActivity";

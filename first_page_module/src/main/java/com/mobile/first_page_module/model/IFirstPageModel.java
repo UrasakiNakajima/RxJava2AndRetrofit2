@@ -6,8 +6,8 @@ import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2019/3/10 16:57
  * introduce :
  */

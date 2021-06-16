@@ -5,8 +5,8 @@ import java.util.Map;
 import androidx.fragment.app.Fragment;
 
 /**
- * author    : xxxxxxxxxxx
- * e-mail    : xxxxxxxxxxx@qq.com
+ * author    : Urasaki
+ * e-mail    : Urasaki@qq.com
  * date      : 2019/3/10 16:58
  * introduce :
  */
