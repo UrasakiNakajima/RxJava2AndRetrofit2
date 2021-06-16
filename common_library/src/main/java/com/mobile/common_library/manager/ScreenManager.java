@@ -24,9 +24,9 @@ public class ScreenManager {
 	private static final String TAG = "ScreenManager";
 	
 	/**
-	 * 根据手机的分辨率从 dip 的单位 转成为 px(像素)
+	 * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
 	 */
-	public static int dipToPx(Context context, float dpValue) {
+	public static int dpToPx(Context context, float dpValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (dpValue * scale + 0.5f);
 	}
@@ -34,7 +34,7 @@ public class ScreenManager {
 	/**
 	 * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
 	 */
-	public static int pxToDip(Context context, float pxValue) {
+	public static int pxToDp(Context context, float pxValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (pxValue / scale + 0.5f);
 	}
@@ -59,7 +59,7 @@ public class ScreenManager {
 	 * 拿到资源文件的dp值
 	 */
 	public static int getDimenDp(Context context, int dpValue) {
-		return pxToDip(context, context.getResources().getDimension(dpValue));
+		return pxToDp(context, context.getResources().getDimension(dpValue));
 	}
 	
 	/**
