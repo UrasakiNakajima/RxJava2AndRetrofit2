@@ -119,10 +119,10 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
 
     fun squareDetailsError(error: String) {
         if (!this.isFinishing()) {
-            showCustomToast(ScreenManager.dipToPx(this, 20f), ScreenManager.dipToPx(this, 20f),
+            showCustomToast(ScreenManager.dpToPx(this, 20f), ScreenManager.dpToPx(this, 20f),
                     18, resources!!.getColor(R.color.white),
-                    resources!!.getColor(R.color.color_FFE066FF), ScreenManager.dipToPx(this, 40f),
-                    ScreenManager.dipToPx(this, 20f), error,
+                    resources!!.getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(this, 40f),
+                    ScreenManager.dpToPx(this, 20f), error,
                     true)
 
             hideLoading()

@@ -7,10 +7,10 @@ import android.net.NetworkInfo;
 import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.callback.OnCommonSingleParamCallback;
 import com.mobile.common_library.common.ConstantUrl;
-import com.mobile.common_library.interceptor.AddCookiesInterceptor;
+import com.mobile.common_library.interceptor.AddTokenInterceptor;
 import com.mobile.common_library.interceptor.BaseUrlManagerInterceptor;
 import com.mobile.common_library.interceptor.CacheControlInterceptor;
-import com.mobile.common_library.interceptor.ReceivedCookiesInterceptor;
+import com.mobile.common_library.interceptor.ReceivedTokenInterceptor;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -60,8 +60,8 @@ public class RetrofitManager {
 								  .writeTimeout(5 * 1000, TimeUnit.MILLISECONDS)
 								  .cache(cache)
 								  .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
-								  .addInterceptor(new AddCookiesInterceptor(BaseApplication.getInstance()))
-								  .addInterceptor(new ReceivedCookiesInterceptor(BaseApplication.getInstance()))
+								  .addInterceptor(new AddTokenInterceptor(BaseApplication.getInstance()))
+								  .addInterceptor(new ReceivedTokenInterceptor(BaseApplication.getInstance()))
 								  .addInterceptor(new BaseUrlManagerInterceptor(BaseApplication.getInstance()))
 								  .addInterceptor(loggingInterceptor)
 								  .proxy(Proxy.NO_PROXY)

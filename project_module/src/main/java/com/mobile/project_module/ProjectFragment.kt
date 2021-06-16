@@ -150,10 +150,10 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
 
     override fun projectDataError(error: String) {
         if (!activity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dipToPx(activity, 20f), ScreenManager.dipToPx(activity, 20f),
+            showCustomToast(ScreenManager.dpToPx(activity, 20f), ScreenManager.dpToPx(activity, 20f),
                     18, ContextCompat.getColor(activity!!, R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dipToPx(activity, 40f),
-                    ScreenManager.dipToPx(activity, 20f), error)
+                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(activity, 40f),
+                    ScreenManager.dpToPx(activity, 20f), error)
 
             if (isRefresh) {
                 mDatabind.refreshLayout.finishRefresh(false)

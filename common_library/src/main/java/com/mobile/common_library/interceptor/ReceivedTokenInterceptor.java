@@ -19,12 +19,12 @@ import okhttp3.Response;
  * introduce : 接收Cookies拦截器
  */
 
-public class ReceivedCookiesInterceptor implements Interceptor {
+public class ReceivedTokenInterceptor implements Interceptor {
 	
 	private static final String          TAG = "ReceivedCookiesInterceptor";
 	private              BaseApplication baseApplication;
 	
-	public ReceivedCookiesInterceptor(Context context) {
+	public ReceivedTokenInterceptor(Context context) {
 		super();
 		baseApplication = (BaseApplication) context.getApplicationContext();
 	}
@@ -45,7 +45,7 @@ public class ReceivedCookiesInterceptor implements Interceptor {
 		//        //这里获取请求返回的cookie
 		//        if (!originalResponse.headers("set-cookie").isEmpty()) {
 		//            String cookie = originalResponse.header("set-cookie").split(";")[0];
-		//            mineApplication.setCookie(cookie);
+		//            baseApplication.setCookie(cookie);
 		//            LogManager.i(TAG, "cookie*****" + cookie);
 		//        }
 		

@@ -12,13 +12,13 @@ import androidx.multidex.MultiDexApplication;
 
 public class BaseApplication extends MultiDexApplication {
 	
-	private static final String                   TAG  = "BaseApplication";
+	private static final   String                   TAG  = "BaseApplication";
 	//声明 初始化
-	protected            SharedPreferences        sp;
-	protected            SharedPreferences.Editor editor;
-	protected static     int                      MODE = Context.MODE_PRIVATE;
-	private              boolean                  isLogin;
-	private              String                   accessToken;
+	protected              SharedPreferences        sp;
+	protected              SharedPreferences.Editor editor;
+	protected static final int                      MODE = Context.MODE_PRIVATE;
+	private                boolean                  isLogin;
+	private                String                   accessToken;
 	
 	protected static BaseApplication baseApplication;
 	

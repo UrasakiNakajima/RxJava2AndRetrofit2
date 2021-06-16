@@ -66,10 +66,13 @@
     <string name="checked">已审核</string>
 
     <string name="event_schedule">活动日程</string>
+
     <string name="android_and_js">android和js</string>
-    <string name="android_to_js">android调用js，有返回值</string>
-    <string name="android_to_js2">android调用js，无返回值</string>
+    <string name="android_to_js">android调用js，有参数有返回值</string>
+    <string name="android_to_js2">android调用js，有参数无返回值</string>
+    <string name="android_to_js3">android调用js，无参数无返回值</string>
     <string name="js_to_android">js调用android</string>
+
 
     <!--真正用于解析的属性-->
     <declare-styleable name="RCAttrs">

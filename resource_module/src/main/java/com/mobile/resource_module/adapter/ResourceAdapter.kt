@@ -133,7 +133,7 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
                 .icon(icon)
                 .color(ContextCompat.getColor(context, R.color.color_4876FF))
                 .sizeDp(14), null, null, null)
-        view.compoundDrawablePadding = ScreenManager.dipToPx(context, 5f)
+        view.compoundDrawablePadding = ScreenManager.dpToPx(context, 5f)
     }
 
 }

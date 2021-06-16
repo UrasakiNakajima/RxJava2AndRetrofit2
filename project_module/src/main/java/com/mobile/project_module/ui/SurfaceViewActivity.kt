@@ -4,12 +4,10 @@ import android.graphics.Bitmap
 import android.media.AudioManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
+import android.net.Uri
 import android.view.SurfaceHolder
 import android.view.View
-import java.util.*
 import android.widget.SeekBar
-import kotlinx.android.synthetic.main.activity_surface_view.*
-import android.net.Uri
 import com.mobile.common_library.base.BaseAppActivity
 import com.mobile.common_library.manager.LogManager
 import com.mobile.project_module.R
@@ -21,6 +19,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_surface_view.*
+import java.util.*
 import kotlin.concurrent.timerTask
 
 
@@ -45,6 +45,7 @@ class SurfaceViewActivity : BaseAppActivity() {
     private var isTrackingTouch = false
 
     private var oldPosition: Int = 0
+
     //将长度转换为时间
     internal var mFormatBuilder = StringBuilder()
     internal var mFormatter = Formatter(mFormatBuilder, Locale.getDefault())
@@ -53,12 +54,15 @@ class SurfaceViewActivity : BaseAppActivity() {
     //0.开始状态。1.正在播放。2.暂停。3.停止。
 
     private var isPlaying: Boolean = false
+
     //    private var playProgress: Int = 0;
     private var timer: Timer? = null
     private var timerTask2: TimerTask? = null
+
     //    private var timerImvPlay: Timer? = null
 //    private var timerTaskImvPlay: TimerTask? = null
     private var isShowImvPlay: Boolean = false
+
     //    private var isStopTimerImvPlay: Boolean = false
     private var disposable: Disposable? = null
 
@@ -72,18 +76,19 @@ class SurfaceViewActivity : BaseAppActivity() {
 
     override fun initViews() {
         progress_circular.visibility = View.VISIBLE
-        surface_view.getHolder().setKeepScreenOn(true)
-        surface_view.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
-        surface_view.getHolder().addCallback(object : SurfaceHolder.Callback {
-            override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
+        surface_view.holder.setKeepScreenOn(true)
+        surface_view.holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
+        surface_view.holder.addCallback(object : SurfaceHolder.Callback {
+
+            override fun surfaceChanged(p0: SurfaceHolder?, p1: Int, p2: Int, p3: Int) {
 
             }
 
-            override fun surfaceDestroyed(holder: SurfaceHolder?) {
+            override fun surfaceDestroyed(p0: SurfaceHolder?) {
 
             }
 
-            override fun surfaceCreated(holder: SurfaceHolder?) {
+            override fun surfaceCreated(p0: SurfaceHolder?) {
                 setVideoParam(url, VIDEO_TYPE_URI)
                 seekBarListener()
             }

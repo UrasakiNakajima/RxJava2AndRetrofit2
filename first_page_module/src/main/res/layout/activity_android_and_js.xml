@@ -98,4 +98,20 @@
         android:text="@string/android_to_js2"
         android:textColor="@color/white" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20" />
+
+    <TextView
+        android:id="@+id/tev_android_to_js3"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_50"
+        android:background="@drawable/corners_25_color_ffe066ff"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_25"
+        android:paddingEnd="@dimen/dp_25"
+        android:text="@string/android_to_js3"
+        android:textColor="@color/white" />
+
 </LinearLayout>

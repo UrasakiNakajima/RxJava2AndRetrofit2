@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.phone.android_and_js"
-        minSdkVersion 17
-        targetSdkVersion 30
+        minSdkVersion 21
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -22,6 +22,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    //开启Java1.8 能够使用lambda表达式
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
