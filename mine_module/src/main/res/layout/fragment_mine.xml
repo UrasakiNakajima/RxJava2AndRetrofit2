@@ -32,16 +32,6 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/tev_sign_out"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:background="@color/color_FF198CFF"
-            android:gravity="center"
-            android:text="@string/sign_out"
-            android:textColor="@color/color_FFE066FF"
-            android:textSize="@dimen/sp_20" />
-
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"

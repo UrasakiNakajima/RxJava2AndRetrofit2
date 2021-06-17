@@ -19,12 +19,12 @@ import okhttp3.Response;
  * introduce : 添加Cookies拦截器
  */
 
-public class AddTokenInterceptor implements Interceptor {
+public class AddAccessTokenInterceptor implements Interceptor {
 	
 	private static final String          TAG = "AddCookiesInterceptor";
 	private              BaseApplication baseApplication;
 	
-	public AddTokenInterceptor(BaseApplication baseApplication) {
+	public AddAccessTokenInterceptor(BaseApplication baseApplication) {
 		super();
 		this.baseApplication = baseApplication;
 	}
@@ -32,14 +32,13 @@ public class AddTokenInterceptor implements Interceptor {
 	@NonNull
 	@Override
 	public Response intercept(@NonNull Chain chain) throws IOException {
-		
 		Request.Builder builder = chain.request().newBuilder();
 		
 		//添加accessToken
 		String accessToken = baseApplication.getAccessToken();
 		if (!TextUtils.isEmpty(accessToken)) {
-			builder.addHeader("appToken", accessToken);
-			LogManager.i(TAG, "appToken*****" + accessToken);
+			builder.addHeader("accessToken", accessToken);
+			LogManager.i(TAG, "accessToken*****" + accessToken);
 		}
 		
 		//        //添加cookie
@@ -56,6 +55,7 @@ public class AddTokenInterceptor implements Interceptor {
 		
 		//		builder.removeHeader("User-Agent")//移除旧的
 		//			.addHeader("User-Agent", WebSettings.getDefaultUserAgent(baseApplication));//添加真正的头部
+		
 		return chain.proceed(builder.build());
 	}
 }

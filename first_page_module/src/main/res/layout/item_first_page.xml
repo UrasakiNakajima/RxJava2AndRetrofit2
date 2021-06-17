@@ -1,30 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/news_summary_card_view"
+    app:cardBackgroundColor="@color/white"
+    app:cardElevation="@dimen/dp_2"
+    app:dayNightBackgroundAttr="dayNightBackground">
 
-    <TextView
-        android:id="@+id/tev_ansid"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10"
-        android:text="@string/app_name"
-        android:textColor="@color/color_FFE066FF"
-        android:textSize="@dimen/sp_15" />
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tev_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10"
-        android:text="@string/app_name"
-        android:textColor="@color/color_FFE066FF"
-        android:textSize="@dimen/sp_15" />
+        <TextView
+            android:id="@+id/news_summary_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_margin"
+            android:layout_marginTop="@dimen/item_margin"
+            android:layout_marginRight="@dimen/item_margin"
+            android:singleLine="true"
+            android:textColor="@color/color_FF333333"
+            android:textSize="@dimen/sp_14"
+            tools:text="爽肤水的肤色我热热饭是电风扇的" />
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/news_summary_photo_iv_group"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/news_summary_photo_iv_left"
+                style="@style/news_summary_photo_iv"
+                tools:ignore="ContentDescription"
+                tools:src="@mipmap/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/news_summary_photo_iv_middle"
+                style="@style/news_summary_photo_iv"
+                tools:ignore="ContentDescription"
+                tools:src="@mipmap/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/news_summary_photo_iv_right"
+                style="@style/news_summary_photo_iv"
+                tools:ignore="ContentDescription"
+                tools:src="@mipmap/ic_launcher" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_45"
+            android:layout_below="@id/news_summary_photo_iv_group"
+            tools:ignore="ObsoleteLayoutParam">
+
+            <TextView
+                android:id="@+id/news_summary_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/item_margin"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/sp_15"
+                tools:text="作者名" />
+
+            <TextView
+                android:id="@+id/news_summary_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/item_margin"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/sp_15"
+                tools:ignore="RelativeOverlap"
+                tools:text="2018-08-01" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

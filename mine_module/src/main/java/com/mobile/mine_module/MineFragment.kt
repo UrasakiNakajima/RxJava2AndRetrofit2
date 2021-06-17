@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.mobile.common_library.base.BaseMvpFragment
 import com.mobile.common_library.base.IBaseView
 import com.mobile.common_library.callback.RcvOnItemViewClickListener
@@ -58,11 +57,6 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
                 startActivity(UserDataActivity::class.java)
             }
         })
-        tev_sign_out.setOnClickListener {
-            ARouter.getInstance().build("/main_module/login") //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
-                    .navigation()
-            baseApplication.setLogout()
-        }
 
         initAdapter()
     }

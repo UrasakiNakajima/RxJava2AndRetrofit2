@@ -1,5 +1,6 @@
 package com.mobile.first_page_module;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,9 @@ import com.mobile.common_library.manager.LogManager;
 import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.common_library.manager.ScreenManager;
 import com.mobile.first_page_module.adapter.FirstPageAdapter;
-import com.mobile.first_page_module.bean.FirstPageResponse;
+import com.mobile.first_page_module.bean.JuHeNewsResponse;
 import com.mobile.first_page_module.presenter.FirstPagePresenterImpl;
-import com.mobile.first_page_module.ui.ShowVideoActivity;
+import com.mobile.first_page_module.ui.NewsDetailActivity;
 import com.mobile.first_page_module.view.IFirstPageView;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -54,13 +55,13 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	@BindView(id.loadView)
 	QMUILoadingView    loadView;
 	
-	//    private MainActivity mainActivity;
 	
-	private List<FirstPageResponse.AnsListBean> ansListBeanList;
-	private FirstPageAdapter                    firstPageAdapter;
-	private LinearLayoutManager                 linearLayoutManager;
-	private boolean                             isRefresh;
-	private Map<String, String>                 paramMap;
+	private List<JuHeNewsResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
+	private FirstPageAdapter                               firstPageAdapter;
+	//	private FirstPageAdapter2                              firstPageAdapter;
+	private LinearLayoutManager                            linearLayoutManager;
+	private boolean                                        isRefresh;
+	private Map<String, String>                            paramMap          = new HashMap<>();
 	
 	@Nullable
 	@Override
@@ -82,9 +83,6 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	
 	@Override
 	protected void initData() {
-		ansListBeanList = new ArrayList<>();
-		paramMap = new HashMap<>();
-		//        mainActivity = (MainActivity) activity;
 		isRefresh = true;
 	}
 	
@@ -108,47 +106,43 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 		rcvData.setItemAnimator(new DefaultItemAnimator());
 		
 		firstPageAdapter = new FirstPageAdapter(activity);
+		//		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page);
 		firstPageAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
 			@Override
 			public void onItemClickListener(int position, View view) {
-				//                if (view.getId() == R.id.tev_data) {
-				//                        bodyParams.clear();
-				//                        bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
-				//                        startActivityCarryParams(FirstPageDetailsActivity.class, bodyParams);
+				//				if (view.getId() == R.id.tev_data) {
+				//					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
+				//					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
+				//					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4";
+				//					//					fileFullname = mFileDTO.getFName();
+				//					String[] arr = url.split("\\.");
+				//					if (arr != null && arr.length > 0) {
+				//						String fileName = "";
+				//						StringBuilder stringBuilder = new StringBuilder();
+				//						for (int i = 0; i < arr.length - 1; i++) {
+				//							stringBuilder.append(arr[i]);
+				//						}
+				//						fileName = stringBuilder.toString();
+				//						String suffix = arr[arr.length - 1];
+				//						
+				//						paramMap.clear();
+				//						paramMap.put("url", url);
+				//						paramMap.put("suffix", suffix);
+				//						startActivityCarryParams(ShowVideoActivity.class, paramMap);
+				//					}
+				//					
+				//				}
 				
-				//				//Jump with parameters
-				//				ARouter.getInstance().build("/first_page_module/ui/first_page_details")
-				//					.withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
-				//					.navigation();
-				//                }
-				
-				if (view.getId() == R.id.tev_data) {
-					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
-					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
-					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4";
-					//					fileFullname = mFileDTO.getFName();
-					String[] arr = url.split("\\.");
-					if (arr != null && arr.length > 0) {
-						String fileName = "";
-						StringBuilder stringBuilder = new StringBuilder();
-						for (int i = 0; i < arr.length - 1; i++) {
-							stringBuilder.append(arr[i]);
-						}
-						fileName = stringBuilder.toString();
-						String suffix = arr[arr.length - 1];
-						
-						paramMap.clear();
-						paramMap.put("url", url);
-						paramMap.put("suffix", suffix);
-						startActivityCarryParams(ShowVideoActivity.class, paramMap);
-					}
-					
+				if (view.getId() == R.id.ll_root) {
+					Intent intent = new Intent(activity, NewsDetailActivity.class);
+					intent.putExtra("detailUrl", mJuheNewsBeanList.get(position).getUrl());
+					startActivity(intent);
 				}
 			}
 		});
 		rcvData.setAdapter(firstPageAdapter);
 		firstPageAdapter.clearData();
-		firstPageAdapter.addAllData(ansListBeanList);
+		firstPageAdapter.addAllData(mJuheNewsBeanList);
 		
 		refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
 			@Override
@@ -193,16 +187,16 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	}
 	
 	@Override
-	public void firstPageDataSuccess(List<FirstPageResponse.AnsListBean> success) {
+	public void firstPageDataSuccess(List<JuHeNewsResponse.ResultData.JuheNewsBean> success) {
 		if (!activity.isFinishing()) {
 			if (isRefresh) {
-				ansListBeanList.clear();
-				ansListBeanList.addAll(success);
-				firstPageAdapter.addAllData(ansListBeanList);
+				mJuheNewsBeanList.clear();
+				mJuheNewsBeanList.addAll(success);
+				firstPageAdapter.addAllData(mJuheNewsBeanList);
 				refreshLayout.finishRefresh();
 			} else {
-				ansListBeanList.addAll(success);
-				firstPageAdapter.addAllData(ansListBeanList);
+				mJuheNewsBeanList.addAll(success);
+				firstPageAdapter.addAllData(mJuheNewsBeanList);
 				refreshLayout.finishLoadMore();
 			}
 		}
@@ -230,7 +224,8 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 		if (RetrofitManager.isNetworkAvailable(activity)) {
 			bodyParams.clear();
 			
-			bodyParams.put("qid", "6855150375201390856");
+			bodyParams.put("type", "yule");
+			bodyParams.put("key", "d5cc661633a28f3cf4b1eccff3ee7bae");
 			presenter.firstPage(this, bodyParams);
 		} else {
 			firstPageDataError(getResources().getString(R.string.please_check_the_network_connection));

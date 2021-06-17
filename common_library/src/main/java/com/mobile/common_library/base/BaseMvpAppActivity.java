@@ -45,11 +45,13 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
 	protected Map<String, String> bodyParams;
 	protected Intent              intent;
 	protected Bundle              bundle;
+	protected AppCompatActivity   appCompatActivity;
 	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		appCompatActivity = this;
 		baseApplication = (BaseApplication) getApplication();
 		ActivityPageManager.getInstance().addActivity(this);
 		bodyParams = new HashMap<>();

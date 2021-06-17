@@ -4,7 +4,9 @@ import com.mobile.common_library.common.ConstantData
 import com.mobile.common_library.common.ConstantUrl
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Path
 
 interface ResourceRequest {
 

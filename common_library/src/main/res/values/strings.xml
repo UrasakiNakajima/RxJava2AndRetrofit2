@@ -74,6 +74,9 @@
     <string name="js_to_android">js调用android</string>
     <string name="this_is_the_h5_page">以上是H5页面</string>
 
+    <string name="information_details">资讯详情</string>
+
+
 
     <!--真正用于解析的属性-->
     <declare-styleable name="RCAttrs">

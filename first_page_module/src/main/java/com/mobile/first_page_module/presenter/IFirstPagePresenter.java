@@ -2,6 +2,7 @@ package com.mobile.first_page_module.presenter;
 
 import java.util.Map;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment;
 public interface IFirstPagePresenter {
 	
 	void firstPage(Fragment fragment, Map<String, String> bodyParams);
+	
+	void firstPage(AppCompatActivity appCompatActivity, Map<String, String> bodyParams);
 	
 	void firstPageDetails(Map<String, String> bodyParams);
 }

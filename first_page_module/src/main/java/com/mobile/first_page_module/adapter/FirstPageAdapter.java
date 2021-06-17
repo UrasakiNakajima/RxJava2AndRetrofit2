@@ -4,93 +4,108 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.bumptech.glide.Glide;
 import com.mobile.common_library.callback.RcvOnItemViewClickListener;
 import com.mobile.first_page_module.R;
-import com.mobile.first_page_module.R2;
-import com.mobile.first_page_module.bean.FirstPageResponse;
+import com.mobile.first_page_module.bean.JuHeNewsResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class FirstPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private static final String TAG = "FirstPageAdapter";
-    private Context context;
-    private List<FirstPageResponse.AnsListBean> ansListBeanList = new ArrayList<>();
-
-    public FirstPageAdapter(Context context) {
-        this.context = context;
-    }
-
-    public FirstPageAdapter(Context context, List<FirstPageResponse.AnsListBean> ansListBeanList) {
-        this.context = context;
-        this.ansListBeanList = ansListBeanList;
-    }
-
-    public void clearData() {
-        this.ansListBeanList.clear();
-        notifyDataSetChanged();
-    }
-
-    public void addAllData(List<FirstPageResponse.AnsListBean> ansListBeanList) {
-        this.ansListBeanList.addAll(ansListBeanList);
-        notifyDataSetChanged();
-    }
-
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_first_page, parent, false);
-        return new ContentHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ContentHolder) {
-            ContentHolder contentHolder = (ContentHolder) holder;
-
-            contentHolder.tevAnsid.setText(ansListBeanList.get(position).getAnsid());
-            contentHolder.tevData.setText(ansListBeanList.get(position).getContent_abstract().getText());
-
-
-            contentHolder.tevData.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rcvOnItemViewClickListener.onItemClickListener(position, v);
-                }
-            });
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return ansListBeanList.size();
-    }
-
-    static class ContentHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R2.id.tev_ansid)
-        TextView tevAnsid;
-        @BindView(R2.id.tev_data)
-        TextView tevData;
-
-        private ContentHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
-    private RcvOnItemViewClickListener rcvOnItemViewClickListener;
-
-    public void setRcvOnItemViewClickListener(RcvOnItemViewClickListener rcvOnItemViewClickListener) {
-        this.rcvOnItemViewClickListener = rcvOnItemViewClickListener;
-    }
+public class FirstPageAdapter
+	extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+	
+	private static final String                                         TAG               = "FirstPageAdapter";
+	private              Context                                        mContext;
+	private              List<JuHeNewsResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
+	
+	public FirstPageAdapter(Context context) {
+		mContext = context;
+	}
+	
+	public void clearData() {
+		this.mJuheNewsBeanList.clear();
+		notifyDataSetChanged();
+	}
+	
+	public void addAllData(List<JuHeNewsResponse.ResultData.JuheNewsBean> dataBeanList) {
+		this.mJuheNewsBeanList.addAll(dataBeanList);
+		notifyDataSetChanged();
+	}
+	
+	@NonNull
+	@Override
+	public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+		View view = LayoutInflater.from(mContext).inflate(R.layout.item_first_page, parent, false);
+		return new ContentHolder(view);
+	}
+	
+	@Override
+	public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+		if (holder instanceof ContentHolder) {
+			ContentHolder contentHolder = (ContentHolder) holder;
+			JuHeNewsResponse.ResultData.JuheNewsBean juheNewsBean = mJuheNewsBeanList.get(position);
+			String title = juheNewsBean.getTitle();
+			String author = juheNewsBean.getAuthor_name();
+			String time = juheNewsBean.getDate();
+			String imgSrc = juheNewsBean.getThumbnail_pic_s();
+			String imgMid = juheNewsBean.getThumbnail_pic_s02();
+			String imgRight = juheNewsBean.getThumbnail_pic_s03();
+			
+			contentHolder.newsSummaryTitleTv.setText(title);
+			contentHolder.newsSummaryAuthor.setText(author);
+			contentHolder.newsSummaryTime.setText(time);
+			Glide.with(mContext).load(imgSrc).into(contentHolder.newsSummaryPhotoIvLeft);
+			Glide.with(mContext).load(imgMid).into(contentHolder.newsSummaryPhotoIvMiddle);
+			Glide.with(mContext).load(imgRight).into(contentHolder.newsSummaryPhotoIvRight);
+			
+			contentHolder.llRoot.setOnClickListener(view -> {
+				rcvOnItemViewClickListener.onItemClickListener(position, view);
+			});
+		}
+	}
+	
+	@Override
+	public int getItemCount() {
+		return mJuheNewsBeanList.size();
+	}
+	
+	protected static class ContentHolder extends RecyclerView.ViewHolder {
+		
+		private LinearLayout llRoot;
+		private TextView     newsSummaryTitleTv;
+		private LinearLayout newsSummaryPhotoIvGroup;
+		private ImageView    newsSummaryPhotoIvLeft;
+		private ImageView    newsSummaryPhotoIvMiddle;
+		private ImageView    newsSummaryPhotoIvRight;
+		private TextView     newsSummaryAuthor;
+		private TextView     newsSummaryTime;
+		
+		public ContentHolder(@NonNull View itemView) {
+			super(itemView);
+			
+			llRoot = (LinearLayout) itemView.findViewById(R.id.ll_root);
+			newsSummaryTitleTv = (TextView) itemView.findViewById(R.id.news_summary_title_tv);
+			newsSummaryPhotoIvGroup = (LinearLayout) itemView.findViewById(R.id.news_summary_photo_iv_group);
+			newsSummaryPhotoIvLeft = (ImageView) itemView.findViewById(R.id.news_summary_photo_iv_left);
+			newsSummaryPhotoIvMiddle = (ImageView) itemView.findViewById(R.id.news_summary_photo_iv_middle);
+			newsSummaryPhotoIvRight = (ImageView) itemView.findViewById(R.id.news_summary_photo_iv_right);
+			newsSummaryAuthor = (TextView) itemView.findViewById(R.id.news_summary_author);
+			newsSummaryTime = (TextView) itemView.findViewById(R.id.news_summary_time);
+		}
+	}
+	
+	private RcvOnItemViewClickListener rcvOnItemViewClickListener;
+	
+	public void setRcvOnItemViewClickListener(RcvOnItemViewClickListener rcvOnItemViewClickListener) {
+		this.rcvOnItemViewClickListener = rcvOnItemViewClickListener;
+	}
+	
 }

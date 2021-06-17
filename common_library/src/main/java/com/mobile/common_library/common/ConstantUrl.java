@@ -12,7 +12,7 @@ public class ConstantUrl {
 	//正式地址（此地址无效，请替换）
 	public static final String BASE_URL0 = "https://is.snssdk.net/";
 	
-	public static final String BASE_URL  = "http://is.snssdk.com/";
+	public static final String BASE_URL  = "http://v.juhe.cn/";
 	public static final String BASE_URL2 = "http://gank.io/";
 	public static final String BASE_URL3 = "https://wanandroid.com/";
 	//    public static final String BASE_URL = "http://baobab.kaiyanapp.com/api/";
@@ -22,7 +22,7 @@ public class ConstantUrl {
 	public static final String REGISTER_URL              = "user/register";
 	public static final String ADD_SHOP_URL              = BASE_URL + "shop/register";
 	
-	public static final String FIRST_PAGE_URL = "wenda/v1/question/brow/?iid=10344168417&device_id=36394312781";
+	public static final String FIRST_PAGE_URL = "toutiao/index";
 	public static final String MINE_URL       = "wenda/v1/question/brow/?iid=10344168417&device_id=36394312781";
 	public static final String USER_DATA      = "unifiedlogin/api/user/getDetails";//获取用户数据
 	

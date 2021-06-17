@@ -24,6 +24,7 @@
     <dimen name="cp_overlay_width">100dp</dimen>
     <dimen name="cp_overlay_height">100dp</dimen>
     <dimen name="cp_overlay_text_size">28sp</dimen>
+    <dimen name="item_margin">8dp</dimen>
 
     <dimen name="dp_m_60">-60dp</dimen>
     <dimen name="dp_m_30">-30dp</dimen>

@@ -3,19 +3,21 @@ package com.mobile.common_library.manager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.mobile.common_library.BaseApplication;
 import com.mobile.common_library.callback.OnCommonSingleParamCallback;
 import com.mobile.common_library.common.ConstantUrl;
-import com.mobile.common_library.interceptor.AddTokenInterceptor;
 import com.mobile.common_library.interceptor.BaseUrlManagerInterceptor;
-import com.mobile.common_library.interceptor.CacheControlInterceptor;
-import com.mobile.common_library.interceptor.ReceivedTokenInterceptor;
+import com.mobile.common_library.interceptor.HeaderInterceptor;
+import com.mobile.common_library.interceptor.RewriteCacheControlInterceptor;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
-import java.net.Proxy;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -45,26 +47,49 @@ public class RetrofitManager {
 	private              Retrofit        retrofit;
 	
 	/**
+	 * 设缓存有效期为两天
+	 */
+	public static final  long   CACHE_STALE_SEC     = 60 * 60 * 24 * 2;
+	/**
+	 * 查询缓存的Cache-Control设置，为if-only-cache时只查询缓存而不会请求服务器，max-stale可以配合设置缓存失效时间
+	 * max-stale 指示客户机可以接收超出超时期间的响应消息。如果指定max-stale消息的值，那么客户机可接收超出超时期指定值之内的响应消息。
+	 */
+	private static final String CACHE_CONTROL_CACHE = "only-if-cached, max-stale=" + CACHE_STALE_SEC;
+	/**
+	 * 查询网络的Cache-Control设置，头部Cache-Control设为max-age=0
+	 * (假如请求了服务器并在a时刻返回响应结果，则在max-age规定的秒数内，浏览器将不会发送对应的请求到服务器，数据由缓存直接返回)时则不会使用缓存而请求服务器
+	 */
+	private static final String CACHE_CONTROL_AGE   = "max-age=0";
+	
+	/**
 	 * 私有构造器 无法外部创建
 	 * 初始化必要对象和参数
 	 */
 	private RetrofitManager() {
-		Cache cache = new Cache(new File(BaseApplication.getInstance().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
+		//缓存
+		File cacheFile = new File(BaseApplication.getInstance().getCacheDir(), "cache");
+		Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
+		
 		HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 		// 包含header、body数据
 		loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+		RewriteCacheControlInterceptor rewriteCacheControlInterceptor = new RewriteCacheControlInterceptor();
+		HeaderInterceptor headerInterceptor = new HeaderInterceptor();
 		// 初始化okhttp
 		OkHttpClient client = new OkHttpClient.Builder()
 								  .connectTimeout(5 * 1000, TimeUnit.MILLISECONDS)
 								  .readTimeout(5 * 1000, TimeUnit.MILLISECONDS)
 								  .writeTimeout(5 * 1000, TimeUnit.MILLISECONDS)
-								  .cache(cache)
-								  .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
-								  .addInterceptor(new AddTokenInterceptor(BaseApplication.getInstance()))
-								  .addInterceptor(new ReceivedTokenInterceptor(BaseApplication.getInstance()))
+								  //								  .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
+								  //								  .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance()))
+								  //								  .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance()))
 								  .addInterceptor(new BaseUrlManagerInterceptor(BaseApplication.getInstance()))
+								  .addInterceptor(rewriteCacheControlInterceptor)
+								  .addNetworkInterceptor(rewriteCacheControlInterceptor)
+								  .addInterceptor(headerInterceptor)
 								  .addInterceptor(loggingInterceptor)
-								  .proxy(Proxy.NO_PROXY)
+								  .cache(cache)
+								  //								  .proxy(Proxy.NO_PROXY)
 								  .build();
 		
 		// 初始化Retrofit
@@ -356,6 +381,43 @@ public class RetrofitManager {
 											   //                        }
 									);
 		return disposable;
+	}
+	
+	public static String buildSign(String secret, long time) {
+		//        Map treeMap = new TreeMap(params);// treeMap默认会以key值升序排序
+		StringBuilder sb = new StringBuilder();
+		sb.append(secret);
+		sb.append(time + "");
+		sb.append("1.1.0");
+		sb.append("861875048330495");
+		sb.append("android");
+		Log.d("GlobalConfiguration", "sting:" + sb.toString());
+		MessageDigest md5;
+		byte[] bytes = null;
+		try {
+			md5 = MessageDigest.getInstance("MD5");
+			bytes = md5.digest(sb.toString().getBytes("UTF-8"));// md5加密
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		// 将MD5输出的二进制结果转换为小写的十六进制
+		StringBuilder sign = new StringBuilder();
+		for (int i = 0; i < bytes.length; i++) {
+			String hex = Integer.toHexString(bytes[i] & 0xFF);
+			if (hex.length() == 1) {
+				sign.append("0");
+			}
+			sign.append(hex);
+		}
+		
+		Log.d("GlobalConfiguration", "MD5:" + sign.toString());
+		return sign.toString();
+	}
+	
+	public static String getCacheControl() {
+		return isNetworkAvailable(BaseApplication.getInstance()) ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
 	}
 	
 	/**

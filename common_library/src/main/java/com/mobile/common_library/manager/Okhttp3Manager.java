@@ -13,8 +13,8 @@ import com.mobile.common_library.R;
 import com.mobile.common_library.base.BaseResponse;
 import com.mobile.common_library.callback.OnCommonSingleParamCallback;
 import com.mobile.common_library.callback.OnSubThreadToMainThreadCallback;
-import com.mobile.common_library.interceptor.AddTokenInterceptor;
-import com.mobile.common_library.interceptor.ReceivedTokenInterceptor;
+import com.mobile.common_library.interceptor.AddAccessTokenInterceptor;
+import com.mobile.common_library.interceptor.ReceivedAccessTokenInterceptor;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,8 +58,8 @@ public class Okhttp3Manager {
                 .connectTimeout(5000, TimeUnit.MILLISECONDS) //连接超时
                 .readTimeout(5000, TimeUnit.MILLISECONDS) //读取超时
                 .writeTimeout(5000, TimeUnit.MILLISECONDS) //写入超时
-                .addInterceptor(new AddTokenInterceptor(BaseApplication.getInstance())) //拦截器用于设置header
-                .addInterceptor(new ReceivedTokenInterceptor(BaseApplication.getInstance())) //拦截器用于接收并持久化cookie
+                .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于设置header
+                .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于接收并持久化cookie
                 .proxy(Proxy.NO_PROXY)
                 .build();
     }

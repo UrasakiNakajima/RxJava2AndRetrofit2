@@ -32,6 +32,7 @@
     <color name="background">#d8d8d8</color>
     <color name="colorBlack666">#666</color>
     <color name="colorBlack333">#333</color>
+    <color name="light_gray">#808080</color>
 
     <color name="color_FFFF0000">#FFFF0000</color>
     <color name="color_FF333333">#FF333333</color>

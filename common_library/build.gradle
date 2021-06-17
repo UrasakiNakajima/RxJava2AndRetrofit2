@@ -170,4 +170,7 @@ dependencies {
 
     //工具库
     implementation 'com.blankj:utilcodex:1.29.0'
+
+    //日志打印框架
+    api 'com.orhanobut:logger:2.2.0'
 }
