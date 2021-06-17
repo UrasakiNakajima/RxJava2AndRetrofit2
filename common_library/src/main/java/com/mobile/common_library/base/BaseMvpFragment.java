@@ -1,6 +1,5 @@
 package com.mobile.common_library.base;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -21,6 +20,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -40,12 +40,13 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 	protected String              url;
 	protected Map<String, String> bodyParams;
 	protected BaseApplication     baseApplication;
-	protected Activity            activity;
+	protected AppCompatActivity   appCompatActivity;
 	protected Intent              intent;
 	protected Bundle              bundle;
 	
 	protected View     rootView;
 	private   Unbinder unbinder;
+	protected Fragment fragment;
 	
 	@Nullable
 	@Override
@@ -59,6 +60,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 		//            }
 		//        }
 		
+		fragment = this;
 		rootView = inflater.inflate(initLayoutId(), container, false);
 		unbinder = ButterKnife.bind(this, rootView);
 		return rootView;
@@ -68,9 +70,9 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		activity = getActivity();
-		if (activity != null) {
-			baseApplication = (BaseApplication) activity.getApplication();
+		appCompatActivity = (AppCompatActivity) getActivity();
+		if (appCompatActivity != null) {
+			baseApplication = (BaseApplication) appCompatActivity.getApplication();
 		}
 		bodyParams = new HashMap<>();
 		
@@ -97,7 +99,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 	
 	protected void showToast(String message, boolean isLongToast) {
 		//        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-		if (!activity.isFinishing()) {
+		if (!appCompatActivity.isFinishing()) {
 			Toast toast;
 			int duration;
 			if (isLongToast) {
@@ -105,7 +107,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 			} else {
 				duration = Toast.LENGTH_SHORT;
 			}
-			toast = Toast.makeText(activity, message, duration);
+			toast = Toast.makeText(appCompatActivity, message, duration);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}
@@ -116,10 +118,10 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 		int bgColor, int height,
 		int roundRadius, String message,
 		boolean isLongToast) {
-		FrameLayout frameLayout = new FrameLayout(activity);
+		FrameLayout frameLayout = new FrameLayout(appCompatActivity);
 		FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 		frameLayout.setLayoutParams(layoutParams);
-		TextView textView = new TextView(activity);
+		TextView textView = new TextView(appCompatActivity);
 		FrameLayout.LayoutParams layoutParams1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height);
 		textView.setLayoutParams(layoutParams1);
 		textView.setPadding(left, 0, right, 0);
@@ -134,7 +136,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 		textView.setText(message);
 		frameLayout.addView(textView);
 		
-		Toast toast = new Toast(activity);
+		Toast toast = new Toast(appCompatActivity);
 		toast.setView(frameLayout);
 		if (isLongToast) {
 			toast.setDuration(Toast.LENGTH_LONG);
@@ -150,12 +152,12 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 	}
 	
 	protected void startActivity(Class<?> cls) {
-		intent = new Intent(activity, cls);
+		intent = new Intent(appCompatActivity, cls);
 		startActivity(intent);
 	}
 	
 	protected void startActivityCarryParams(Class<?> cls, Map<String, String> params) {
-		intent = new Intent(activity, cls);
+		intent = new Intent(appCompatActivity, cls);
 		bundle = new Bundle();
 		
 		if (params != null && params.size() > 0) {
@@ -170,12 +172,12 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 	}
 	
 	protected void startActivityForResult(Class<?> cls, int requestCode) {
-		intent = new Intent(activity, cls);
+		intent = new Intent(appCompatActivity, cls);
 		startActivityForResult(intent, requestCode);
 	}
 	
 	protected void startActivityForResultCarryParams(Class<?> cls, Map<String, String> params, int requestCode) {
-		intent = new Intent(activity, cls);
+		intent = new Intent(appCompatActivity, cls);
 		bundle = new Bundle();
 		
 		if (params != null && params.size() > 0) {

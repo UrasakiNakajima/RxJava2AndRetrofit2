@@ -15,7 +15,7 @@ import com.mobile.common_library.manager.LogManager;
 import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.common_library.manager.ScreenManager;
 import com.mobile.first_page_module.adapter.FirstPageAdapter;
-import com.mobile.first_page_module.bean.JuHeNewsResponse;
+import com.mobile.first_page_module.bean.FirstPageResponse;
 import com.mobile.first_page_module.presenter.FirstPagePresenterImpl;
 import com.mobile.first_page_module.ui.NewsDetailActivity;
 import com.mobile.first_page_module.view.IFirstPageView;
@@ -56,12 +56,12 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	QMUILoadingView    loadView;
 	
 	
-	private List<JuHeNewsResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
-	private FirstPageAdapter                               firstPageAdapter;
+	private List<FirstPageResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
+	private FirstPageAdapter                                firstPageAdapter;
 	//	private FirstPageAdapter2                              firstPageAdapter;
-	private LinearLayoutManager                            linearLayoutManager;
-	private boolean                                        isRefresh;
-	private Map<String, String>                            paramMap          = new HashMap<>();
+	private LinearLayoutManager                             linearLayoutManager;
+	private boolean                                         isRefresh;
+	private Map<String, String>                             paramMap          = new HashMap<>();
 	
 	@Nullable
 	@Override
@@ -100,13 +100,13 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	}
 	
 	private void initAdapter() {
-		linearLayoutManager = new LinearLayoutManager(activity);
+		linearLayoutManager = new LinearLayoutManager(appCompatActivity);
 		linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
 		rcvData.setLayoutManager(linearLayoutManager);
 		rcvData.setItemAnimator(new DefaultItemAnimator());
 		
-		firstPageAdapter = new FirstPageAdapter(activity);
-		//		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page);
+		firstPageAdapter = new FirstPageAdapter(appCompatActivity);
+		//		firstPageAdapter = new FirstPageAdapter2(appCompatActivity, R.layout.item_first_page);
 		firstPageAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
 			@Override
 			public void onItemClickListener(int position, View view) {
@@ -134,7 +134,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 				//				}
 				
 				if (view.getId() == R.id.ll_root) {
-					Intent intent = new Intent(activity, NewsDetailActivity.class);
+					Intent intent = new Intent(appCompatActivity, NewsDetailActivity.class);
 					intent.putExtra("detailUrl", mJuheNewsBeanList.get(position).getUrl());
 					startActivity(intent);
 				}
@@ -187,8 +187,8 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	}
 	
 	@Override
-	public void firstPageDataSuccess(List<JuHeNewsResponse.ResultData.JuheNewsBean> success) {
-		if (!activity.isFinishing()) {
+	public void firstPageDataSuccess(List<FirstPageResponse.ResultData.JuheNewsBean> success) {
+		if (!appCompatActivity.isFinishing()) {
 			if (isRefresh) {
 				mJuheNewsBeanList.clear();
 				mJuheNewsBeanList.addAll(success);
@@ -204,12 +204,12 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	
 	@Override
 	public void firstPageDataError(String error) {
-		if (!activity.isFinishing()) {
+		if (!appCompatActivity.isFinishing()) {
 			//            showToast(error, true);
-			showCustomToast(ScreenManager.dpToPx(activity, 20f), ScreenManager.dpToPx(activity, 20f),
+			showCustomToast(ScreenManager.dpToPx(appCompatActivity, 20f), ScreenManager.dpToPx(appCompatActivity, 20f),
 							18, getResources().getColor(R.color.white),
-							getResources().getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(activity, 40f),
-							ScreenManager.dpToPx(activity, 20f), error,
+							getResources().getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(appCompatActivity, 40f),
+							ScreenManager.dpToPx(appCompatActivity, 20f), error,
 							true);
 			if (isRefresh) {
 				refreshLayout.finishRefresh(false);
@@ -221,7 +221,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	
 	private void initFirstPage() {
 		showLoading();
-		if (RetrofitManager.isNetworkAvailable(activity)) {
+		if (RetrofitManager.isNetworkAvailable(appCompatActivity)) {
 			bodyParams.clear();
 			
 			bodyParams.put("type", "yule");

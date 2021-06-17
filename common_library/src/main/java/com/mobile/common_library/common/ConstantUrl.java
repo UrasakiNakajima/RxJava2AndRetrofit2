@@ -23,7 +23,7 @@ public class ConstantUrl {
 	public static final String ADD_SHOP_URL              = BASE_URL + "shop/register";
 	
 	public static final String FIRST_PAGE_URL = "toutiao/index";
-	public static final String MINE_URL       = "wenda/v1/question/brow/?iid=10344168417&device_id=36394312781";
+	public static final String MINE_URL       = "toutiao/index";
 	public static final String USER_DATA      = "unifiedlogin/api/user/getDetails";//获取用户数据
 	
 	public static final String FIRST_PAGE_DETAILS_URL = "api/news/feed/v62/?iid=5034850950&device_id=6096495334&refer=1&count=20&aid=13";

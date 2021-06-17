@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mobile.common_library.callback.RcvOnItemViewClickListener;
 import com.mobile.first_page_module.R;
-import com.mobile.first_page_module.bean.JuHeNewsResponse;
+import com.mobile.first_page_module.bean.FirstPageResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class FirstPageAdapter
 	extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	
-	private static final String                                         TAG               = "FirstPageAdapter";
-	private              Context                                        mContext;
-	private              List<JuHeNewsResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
+	private static final String                                          TAG               = "FirstPageAdapter";
+	private              Context                                         mContext;
+	private              List<FirstPageResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
 	
 	public FirstPageAdapter(Context context) {
 		mContext = context;
@@ -35,7 +35,7 @@ public class FirstPageAdapter
 		notifyDataSetChanged();
 	}
 	
-	public void addAllData(List<JuHeNewsResponse.ResultData.JuheNewsBean> dataBeanList) {
+	public void addAllData(List<FirstPageResponse.ResultData.JuheNewsBean> dataBeanList) {
 		this.mJuheNewsBeanList.addAll(dataBeanList);
 		notifyDataSetChanged();
 	}
@@ -51,7 +51,7 @@ public class FirstPageAdapter
 	public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 		if (holder instanceof ContentHolder) {
 			ContentHolder contentHolder = (ContentHolder) holder;
-			JuHeNewsResponse.ResultData.JuheNewsBean juheNewsBean = mJuheNewsBeanList.get(position);
+			FirstPageResponse.ResultData.JuheNewsBean juheNewsBean = mJuheNewsBeanList.get(position);
 			String title = juheNewsBean.getTitle();
 			String author = juheNewsBean.getAuthor_name();
 			String time = juheNewsBean.getDate();

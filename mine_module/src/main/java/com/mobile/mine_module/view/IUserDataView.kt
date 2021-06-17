@@ -1,7 +1,6 @@
 package com.mobile.mine_module.view
 
 import com.mobile.common_library.base.IBaseView
-import com.mobile.mine_module.bean.Ans
 
 /**
  *    author : Urasaki
@@ -12,7 +11,7 @@ import com.mobile.mine_module.bean.Ans
  */
 interface IUserDataView : IBaseView {
 
-    fun userDataSuccess(success: List<Ans>)
+    fun userDataSuccess(success: String)
 
     fun userDataError(error: String)
 

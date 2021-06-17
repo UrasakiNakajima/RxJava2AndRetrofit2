@@ -10,10 +10,8 @@ import com.mobile.common_library.manager.GsonManager;
 import com.mobile.common_library.manager.LogManager;
 import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.first_page_module.R;
-import com.mobile.first_page_module.bean.FirstPageDetailsResponse;
-import com.mobile.first_page_module.bean.JuHeNewsResponse;
+import com.mobile.first_page_module.bean.FirstPageResponse;
 import com.mobile.first_page_module.model.FirstPageModelImpl;
-import com.mobile.first_page_module.view.IFirstPageDetailsView;
 import com.mobile.first_page_module.view.IFirstPageView;
 
 import java.util.Map;
@@ -55,7 +53,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 										 LogManager.i(TAG, "success*****" + success);
 										 if (!TextUtils.isEmpty(success)) {
 											 //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
-											 JuHeNewsResponse response = GsonManager.getInstance().convert(success, JuHeNewsResponse.class);
+											 FirstPageResponse response = GsonManager.getInstance().convert(success, FirstPageResponse.class);
 								
 											 //											 String jsonStr = GsonManager.getInstance().toJson(response);
 											 if (response.getResult().getData() != null && response.getResult().getData().size() > 0) {
@@ -124,7 +122,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 										 LogManager.i(TAG, "success*****" + success);
 										 if (!TextUtils.isEmpty(success)) {
 											 //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
-											 JuHeNewsResponse response = GsonManager.getInstance().convert(success, JuHeNewsResponse.class);
+											 FirstPageResponse response = GsonManager.getInstance().convert(success, FirstPageResponse.class);
 								
 											 //											 String jsonStr = GsonManager.getInstance().toJson(response);
 											 if (response.getResult().getData() != null && response.getResult().getData().size() > 0) {
@@ -174,63 +172,6 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 				//                                firstPageView.hideLoading();
 				//                            }
 				//                        });
-			}
-		}
-	}
-	
-	@Override
-	public void firstPageDetails(Map<String, String> bodyParams) {
-		IBaseView baseView = obtainView();
-		if (baseView != null) {
-			if (baseView instanceof IFirstPageDetailsView) {
-				IFirstPageDetailsView firstPageDetailsView = (IFirstPageDetailsView) baseView;
-				firstPageDetailsView.showLoading();
-				//rxjava2+retrofit2请求（响应速度更快）
-				disposable = RetrofitManager.getInstance()
-								 .responseString(model.firstPageDetails(bodyParams), new OnCommonSingleParamCallback<String>() {
-									 @Override
-									 public void onSuccess(String success) {
-										 LogManager.i(TAG, "success*****" + success);
-										 if (!TextUtils.isEmpty(success)) {
-											 //                                    FirstPageDetailsResponse response = JSONObject.parseObject(success, FirstPageDetailsResponse.class);
-											 FirstPageDetailsResponse response = GsonManager.getInstance().convert(success, FirstPageDetailsResponse.class);
-								
-											 if (response.getData() != null && response.getData().size() > 0) {
-												 firstPageDetailsView.firstPageDetailsSuccess(response.getData());
-											 } else {
-												 firstPageDetailsView.firstPageDetailsError(BaseApplication.getInstance().getResources().getString(R.string.no_data_available));
-											 }
-										 } else {
-											 firstPageDetailsView.firstPageDetailsError(BaseApplication.getInstance().getResources().getString(R.string.loading_failed));
-										 }
-										 firstPageDetailsView.hideLoading();
-									 }
-						
-									 @Override
-									 public void onError(String error) {
-										 LogManager.i(TAG, "error*****" + error);
-										 firstPageDetailsView.firstPageDetailsError(error);
-										 firstPageDetailsView.hideLoading();
-									 }
-								 });
-				//				compositeDisposable.add(disposable);
-				
-				//                //okhttp3请求（响应速度稍慢，可改进）
-				//                Okhttp3Manager.getInstance()
-				//                        .postAsyncKeyValuePairsOkhttp3(ConstantUrl.BASE_URL + ConstantUrl.FIRST_PAGE_DETAILS_URL,
-				//                                bodyParams,
-				//                                new OnCommonSingleParamCallback<String>() {
-				//                                    @Override
-				//                                    public void onSuccess(String success) {
-				//                                        LogManager.i(TAG, "success2*****" + success);
-				//                                    }
-				//
-				//                                    @Override
-				//                                    public void onError(String error) {
-				//                                        LogManager.i(TAG, "error2*****" + error);
-				//                                    }
-				//                                });
-				
 			}
 		}
 	}

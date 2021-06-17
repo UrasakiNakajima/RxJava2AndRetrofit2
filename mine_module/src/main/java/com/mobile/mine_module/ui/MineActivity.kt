@@ -1,33 +1,27 @@
-package com.mobile.mine_module
+package com.mobile.mine_module.ui
 
 import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.android.arouter.facade.annotation.Route
-import com.mobile.common_library.base.BaseMvpFragment
+import com.mobile.common_library.base.BaseMvpAppActivity
 import com.mobile.common_library.base.IBaseView
 import com.mobile.common_library.callback.RcvOnItemViewClickListener
 import com.mobile.common_library.manager.LogManager
 import com.mobile.common_library.manager.RetrofitManager
 import com.mobile.common_library.manager.ScreenManager
+import com.mobile.mine_module.R
 import com.mobile.mine_module.adapter.MineAdapter
 import com.mobile.mine_module.bean.Data
 import com.mobile.mine_module.presenter.MinePresenterImpl
-import com.mobile.mine_module.ui.NewsDetailActivity
-import com.mobile.mine_module.ui.UserDataActivity
 import com.mobile.mine_module.view.IMineView
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_mine.*
 
-@Route(path = "/mine_module/mine")
-class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView {
-
+//@Route(path = "/mine_module/ui/mine_details")
+class MineActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineView {
 
     private val TAG: String = "MineFragment"
 //    private var mainActivity: MainActivity? = null
@@ -37,14 +31,8 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     private var linearLayoutManager: LinearLayoutManager? = null
     private var isRefresh: Boolean = true
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // TODO: inflate a fragment view
-        rootView = super.onCreateView(inflater, container, savedInstanceState)
-        return rootView
-    }
-
     override fun initLayoutId(): Int {
-        return R.layout.fragment_mine
+        return R.layout.activity_mine
     }
 
     override fun initData() {
@@ -52,6 +40,8 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     }
 
     override fun initViews() {
+        setToolbar(false, R.color.color_FFE066FF)
+
         tev_title.setOnClickListener(object : View.OnClickListener {
 
             override fun onClick(v: View?) {
@@ -87,6 +77,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
                     intent.putExtra("detailUrl", juheNewsBeanList.get(position).url)
                     startActivity(intent)
                 }
+//                startActivity(UserDataActivity::class.java)
             }
         })
         rcv_data.setAdapter(mineAdapter)
@@ -168,7 +159,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
 
             bodyParams["type"] = "keji"
             bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.mineData(fragment, bodyParams)
+            presenter.mineData(appCompatActivity, bodyParams)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {

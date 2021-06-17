@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.FirstPageActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,22 +27,17 @@
                 android:layout_height="@dimen/dp_50"
                 android:layout_marginTop="@dimen/dp_25"
                 android:gravity="center"
-                android:text="@string/first_page"
+                android:text="@string/mine"
                 android:textColor="@color/color_FF198CFF"
                 android:textSize="@dimen/sp_20" />
 
         </androidx.appcompat.widget.Toolbar>
 
-        <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@color/color_FFFFFFFF" />-->
-
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/black"
             app:srlAccentColor="@android:color/white"
             app:srlEnablePreviewInEditMode="true"
             app:srlPrimaryColor="#444444">
@@ -60,16 +54,17 @@
             <com.scwang.smart.refresh.footer.ClassicsFooter
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     </LinearLayout>
 
     <com.qmuiteam.qmui.widget.QMUILoadingView
-        android:id="@+id/loadView"
+        android:id="@+id/load_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:color="@color/color_FF999999"
         android:visibility="gone" />
 
-</LinearLayout>
+</FrameLayout>

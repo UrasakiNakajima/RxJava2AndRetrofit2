@@ -7,12 +7,12 @@ import com.aspsine.irecyclerview.universaladapter.ViewHolderHelper;
 import com.aspsine.irecyclerview.universaladapter.recyclerview.CommonRecycleViewAdapter;
 import com.mobile.common_library.callback.RcvOnItemViewClickListener;
 import com.mobile.first_page_module.R;
-import com.mobile.first_page_module.bean.JuHeNewsResponse;
+import com.mobile.first_page_module.bean.FirstPageResponse;
 
 import java.util.List;
 
 public class FirstPageAdapter2
-	extends CommonRecycleViewAdapter<JuHeNewsResponse.ResultData.JuheNewsBean> {
+	extends CommonRecycleViewAdapter<FirstPageResponse.ResultData.JuheNewsBean> {
 	
 	private static final String  TAG = "FirstPageAdapter";
 	private              Context mContext;
@@ -23,7 +23,7 @@ public class FirstPageAdapter2
 	}
 	
 	@Override
-	public void convert(ViewHolderHelper holder, JuHeNewsResponse.ResultData.JuheNewsBean juheNewsBean, int position) {
+	public void convert(ViewHolderHelper holder, FirstPageResponse.ResultData.JuheNewsBean juheNewsBean, int position) {
 		String title = juheNewsBean.getTitle();
 		String author = juheNewsBean.getAuthor_name();
 		String time = juheNewsBean.getDate();
@@ -50,7 +50,7 @@ public class FirstPageAdapter2
 		notifyDataSetChanged();
 	}
 	
-	public void addAllData(List<JuHeNewsResponse.ResultData.JuheNewsBean> dataBeanList) {
+	public void addAllData(List<FirstPageResponse.ResultData.JuheNewsBean> dataBeanList) {
 		this.mDatas.addAll(dataBeanList);
 		notifyDataSetChanged();
 	}

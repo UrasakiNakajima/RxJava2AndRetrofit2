@@ -13,7 +13,7 @@ import com.mobile.common_library.manager.RetrofitManager;
 import com.mobile.common_library.manager.ScreenManager;
 import com.mobile.first_page_module.R;
 import com.mobile.first_page_module.adapter.FirstPageAdapter;
-import com.mobile.first_page_module.bean.JuHeNewsResponse;
+import com.mobile.first_page_module.bean.FirstPageResponse;
 import com.mobile.first_page_module.presenter.FirstPagePresenterImpl;
 import com.mobile.first_page_module.view.IFirstPageView;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
@@ -40,11 +40,11 @@ public class FirstPageActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
 	private              RecyclerView       rcvData;
 	private              QMUILoadingView    loadView;
 	
-	private List<JuHeNewsResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
-	private FirstPageAdapter                               firstPageAdapter;
-	private LinearLayoutManager                            linearLayoutManager;
-	private boolean                                        isRefresh;
-	private boolean                                        isFirstLoad;
+	private List<FirstPageResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
+	private FirstPageAdapter                                firstPageAdapter;
+	private LinearLayoutManager                             linearLayoutManager;
+	private boolean                                         isRefresh;
+	private boolean                                         isFirstLoad;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +161,7 @@ public class FirstPageActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
 	}
 	
 	@Override
-	public void firstPageDataSuccess(List<JuHeNewsResponse.ResultData.JuheNewsBean> success) {
+	public void firstPageDataSuccess(List<FirstPageResponse.ResultData.JuheNewsBean> success) {
 		if (!this.isFinishing()) {
 			if (isRefresh) {
 				mJuheNewsBeanList.clear();

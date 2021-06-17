@@ -18,5 +18,4 @@ public interface IFirstPagePresenter {
 	
 	void firstPage(AppCompatActivity appCompatActivity, Map<String, String> bodyParams);
 	
-	void firstPageDetails(Map<String, String> bodyParams);
 }

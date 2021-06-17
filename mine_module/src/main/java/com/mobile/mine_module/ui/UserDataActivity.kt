@@ -5,7 +5,6 @@ import androidx.core.content.ContextCompat
 import com.mobile.common_library.base.BaseMvpAppActivity
 import com.mobile.common_library.base.IBaseView
 import com.mobile.mine_module.R
-import com.mobile.mine_module.bean.Ans
 import com.mobile.mine_module.presenter.MinePresenterImpl
 import com.mobile.mine_module.view.IUserDataView
 import kotlinx.android.synthetic.main.activity_user_data.*
@@ -55,7 +54,7 @@ class UserDataActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IUs
         }
     }
 
-    override fun userDataSuccess(success: List<Ans>) {
+    override fun userDataSuccess(success: String) {
 
     }
 

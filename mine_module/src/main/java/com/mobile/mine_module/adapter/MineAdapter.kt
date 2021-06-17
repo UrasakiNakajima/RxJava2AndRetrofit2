@@ -4,39 +4,35 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.mobile.common_library.callback.RcvOnItemViewClickListener
 import com.mobile.mine_module.R
-import com.mobile.mine_module.bean.Ans
+import com.mobile.mine_module.bean.Data
 
 class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = "MineAdapter"
-    //    private var context: Context? = null
-    //    private var list = MutableList<MineResponse.AnsListBean>? = null
-    private var list: MutableList<Ans>? = null
+    private var mJuheNewsBeanList: MutableList<Data>? = null
 
     init {
-        list = mutableListOf()
+        mJuheNewsBeanList = mutableListOf()
     }
 
 //    fun MineAdapter(context: Context) {
 //        this.context = context
 //    }
-//
-//    fun MineAdapter(context: Context, list: MutableList<MineResponse.AnsListBean>) {
-//        this.context = context
-//        this.list = list
-//    }
 
     fun clearData() {
-        this.list!!.clear()
+        this.mJuheNewsBeanList!!.clear()
         notifyDataSetChanged()
     }
 
-    fun addAllData(list: MutableList<Ans>) {
-        this.list!!.addAll(list)
+    fun addAllData(mJuheNewsBeanList: MutableList<Data>) {
+        this.mJuheNewsBeanList!!.addAll(mJuheNewsBeanList)
         notifyDataSetChanged()
     }
 
@@ -47,26 +43,49 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ContentHolder) {
+            val contentHolder: ContentHolder = holder as ContentHolder
+            val juheNewsBean: Data = mJuheNewsBeanList!!.get(position)
+            val title: String = juheNewsBean.title
+            val author: String = juheNewsBean.author_name
+            val time: String = juheNewsBean.date
+            val imgSrc: String = juheNewsBean.thumbnail_pic_s
+            val imgMid: String = juheNewsBean.thumbnail_pic_s02
+            val imgRight: String = juheNewsBean.thumbnail_pic_s03
 
-            holder.tevAnsid!!.text = list!![position].ansid
-            holder.tevData!!.text = list!![position].content_abstract.text
+            contentHolder.newsSummaryTitleTv.setText(title)
+            contentHolder.newsSummaryAuthor.setText(author)
+            contentHolder.newsSummaryTime.setText(time)
+            Glide.with(context).load(imgSrc).into(contentHolder.newsSummaryPhotoIvLeft)
+            Glide.with(context).load(imgMid).into(contentHolder.newsSummaryPhotoIvMiddle)
+            Glide.with(context).load(imgRight).into(contentHolder.newsSummaryPhotoIvRight)
 
-            holder.tevData!!.setOnClickListener { v -> rcvOnItemViewClickListener!!.onItemClickListener(position, v) }
+            contentHolder.llRoot.setOnClickListener(View.OnClickListener { view: View? -> rcvOnItemViewClickListener!!.onItemClickListener(position, view) })
         }
     }
 
     override fun getItemCount(): Int {
-        return list!!.size
+        return mJuheNewsBeanList!!.size
     }
 
     protected class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        var tevAnsid: TextView? = null
-        var tevData: TextView? = null
+        val llRoot: LinearLayout
+        val newsSummaryTitleTv: TextView
+        val newsSummaryPhotoIvGroup: LinearLayout
+        val newsSummaryPhotoIvLeft: ImageView
+        val newsSummaryPhotoIvMiddle: ImageView
+        val newsSummaryPhotoIvRight: ImageView
+        val newsSummaryAuthor: TextView
+        val newsSummaryTime: TextView
 
         init {
-            tevAnsid = itemView.findViewById(R.id.tev_ansid)
-            tevData = itemView.findViewById(R.id.tev_data)
+            llRoot = itemView.findViewById<View>(R.id.ll_root) as LinearLayout
+            newsSummaryTitleTv = itemView.findViewById<View>(R.id.news_summary_title_tv) as TextView
+            newsSummaryPhotoIvGroup = itemView.findViewById<View>(R.id.news_summary_photo_iv_group) as LinearLayout
+            newsSummaryPhotoIvLeft = itemView.findViewById<View>(R.id.news_summary_photo_iv_left) as ImageView
+            newsSummaryPhotoIvMiddle = itemView.findViewById<View>(R.id.news_summary_photo_iv_middle) as ImageView
+            newsSummaryPhotoIvRight = itemView.findViewById<View>(R.id.news_summary_photo_iv_right) as ImageView
+            newsSummaryAuthor = itemView.findViewById<View>(R.id.news_summary_author) as TextView
+            newsSummaryTime = itemView.findViewById<View>(R.id.news_summary_time) as TextView
         }
     }
 
