@@ -1,6 +1,5 @@
 package com.mobile.common_library.base;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -31,9 +31,9 @@ import androidx.fragment.app.Fragment;
 public abstract class BaseFragment extends Fragment {
 
     private static final String TAG = "BaseFragment";
-    protected BaseApplication baseApplication;
-    protected Activity activity;
-    private Intent intent;
+    protected BaseApplication   baseApplication;
+    protected AppCompatActivity appCompatActivity;
+    private   Intent            intent;
     private Bundle bundle;
 
     protected View rootView;
@@ -58,9 +58,9 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        activity = getActivity();
-        if (activity != null) {
-            baseApplication = (BaseApplication) activity.getApplication();
+        appCompatActivity = (AppCompatActivity) getActivity();
+        if (appCompatActivity != null) {
+            baseApplication = (BaseApplication) appCompatActivity.getApplication();
         }
 
         initData();
@@ -78,7 +78,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected void showToast(String message, boolean isLongToast) {
 //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!activity.isFinishing()) {
+        if (!appCompatActivity.isFinishing()) {
             Toast toast;
             int duration;
             if (isLongToast) {
@@ -86,7 +86,7 @@ public abstract class BaseFragment extends Fragment {
             } else {
                 duration = Toast.LENGTH_SHORT;
             }
-            toast = Toast.makeText(activity, message, duration);
+            toast = Toast.makeText(appCompatActivity, message, duration);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
@@ -96,10 +96,10 @@ public abstract class BaseFragment extends Fragment {
                                    int textSize, int textColor,
                                    int bgColor, int height,
                                    int roundRadius, String message) {
-        FrameLayout frameLayout = new FrameLayout(activity);
+        FrameLayout frameLayout = new FrameLayout(appCompatActivity);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         frameLayout.setLayoutParams(layoutParams);
-        TextView textView = new TextView(activity);
+        TextView textView = new TextView(appCompatActivity);
         FrameLayout.LayoutParams layoutParams1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height);
         textView.setLayoutParams(layoutParams1);
         textView.setPadding(left, 0, right, 0);
@@ -114,7 +114,7 @@ public abstract class BaseFragment extends Fragment {
         textView.setText(message);
         frameLayout.addView(textView);
 
-        Toast toast = new Toast(activity);
+        Toast toast = new Toast(appCompatActivity);
         toast.setView(frameLayout);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
@@ -125,12 +125,12 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void startActivity(Class<?> cls) {
-        intent = new Intent(activity, cls);
+        intent = new Intent(appCompatActivity, cls);
         startActivity(intent);
     }
 
     protected void startActivityCarryParams(Class<?> cls, Map<String, String> params) {
-        intent = new Intent(activity, cls);
+        intent = new Intent(appCompatActivity, cls);
         bundle = new Bundle();
 
         if (params != null && params.size() > 0) {
@@ -145,12 +145,12 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void startActivityForResult(Class<?> cls, int requestCode) {
-        intent = new Intent(activity, cls);
+        intent = new Intent(appCompatActivity, cls);
         startActivityForResult(intent, requestCode);
     }
 
     protected void startActivityForResultCarryParams(Class<?> cls, Map<String, String> params, int requestCode) {
-        intent = new Intent(activity, cls);
+        intent = new Intent(appCompatActivity, cls);
         bundle = new Bundle();
 
         if (params != null && params.size() > 0) {

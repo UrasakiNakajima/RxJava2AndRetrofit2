@@ -3,7 +3,7 @@
 
     <string name="first_page">首页</string>
     <string name="project">项目</string>
-    <string name="square">广场</string>
+    <string name="square">MVVM</string>
     <string name="resource">资源</string>
     <string name="resource_center">资源中心</string>
     <string name="mine">我的</string>
@@ -34,7 +34,7 @@
     <string name="mine_details">我的详情</string>
     <string name="user_details">用户详情</string>
 
-    <string name="square_details">广场详情</string>
+    <string name="square_details">MVVM模式</string>
     <string name="resource_details">资源详情</string>
     <string name="loading_failed">加载失败</string>
     <string name="no_data_available">暂无数据</string>
@@ -44,7 +44,7 @@
     <string name="beautiful_woman">福利</string>
     <string name="android">Android</string>
     <string name="ios">IOS</string>
-    <string name="video">视频</string>
+    <string name="h5">H5</string>
     <string name="app">App</string>
 
     <string name="time">time</string>

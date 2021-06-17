@@ -80,12 +80,12 @@
                 android:textSize="@dimen/sp_17" />
 
             <TextView
-                android:id="@+id/tev_video"
+                android:id="@+id/tev_h5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/video"
+                android:text="@string/h5"
                 android:textColor="@color/color_FF999999"
                 android:textSize="@dimen/sp_17" />
 
