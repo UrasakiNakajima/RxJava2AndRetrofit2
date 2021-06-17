@@ -56,10 +56,10 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 											 FirstPageResponse response = GsonManager.getInstance().convert(success, FirstPageResponse.class);
 								
 											 //											 String jsonStr = GsonManager.getInstance().toJson(response);
-											 if (response.getResult().getData() != null && response.getResult().getData().size() > 0) {
+											 if (response.getError_code() == 0) {
 												 firstPageView.firstPageDataSuccess(response.getResult().getData());
 											 } else {
-												 firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.no_data_available));
+												 firstPageView.firstPageDataError(response.getReason());
 											 }
 										 } else {
 											 firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.loading_failed));
@@ -125,10 +125,10 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 											 FirstPageResponse response = GsonManager.getInstance().convert(success, FirstPageResponse.class);
 								
 											 //											 String jsonStr = GsonManager.getInstance().toJson(response);
-											 if (response.getResult().getData() != null && response.getResult().getData().size() > 0) {
+											 if (response.getError_code() == 0) {
 												 firstPageView.firstPageDataSuccess(response.getResult().getData());
 											 } else {
-												 firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.no_data_available));
+												 firstPageView.firstPageDataError(response.getReason());
 											 }
 										 } else {
 											 firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.loading_failed));

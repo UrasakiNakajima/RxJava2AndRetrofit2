@@ -55,7 +55,6 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	@BindView(id.loadView)
 	QMUILoadingView    loadView;
 	
-	
 	private List<FirstPageResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
 	private FirstPageAdapter                                firstPageAdapter;
 	//	private FirstPageAdapter2                              firstPageAdapter;

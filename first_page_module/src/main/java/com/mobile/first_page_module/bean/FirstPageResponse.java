@@ -10,19 +10,19 @@ public class FirstPageResponse implements Parcelable {
 	
 	public  String     reason;
 	public  ResultData result;
-	private String     error_code;
+	private int        error_code;
 	
 	protected FirstPageResponse(Parcel in) {
 		reason = in.readString();
 		result = in.readParcelable(ResultData.class.getClassLoader());
-		error_code = in.readString();
+		error_code = in.readInt();
 	}
 	
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(reason);
 		dest.writeParcelable(result, flags);
-		dest.writeString(error_code);
+		dest.writeInt(error_code);
 	}
 	
 	@Override
@@ -58,11 +58,11 @@ public class FirstPageResponse implements Parcelable {
 		this.result = result;
 	}
 	
-	public String getError_code() {
+	public int getError_code() {
 		return error_code;
 	}
 	
-	public void setError_code(String error_code) {
+	public void setError_code(int error_code) {
 		this.error_code = error_code;
 	}
 	

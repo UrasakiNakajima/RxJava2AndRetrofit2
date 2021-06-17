@@ -41,10 +41,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
                                     val response = GsonManager.getInstance().convert(success, MineResponse::class.java)
-                                    if (response.result.data != null && response.result.data.size > 0) {
+
+                                    if (response.error_code == 0) {
                                         baseView.mineDataSuccess(response.result.data)
                                     } else {
-                                        baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                                        baseView.mineDataError(response.reason)
                                     }
                                 } else {
                                     baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
@@ -77,10 +78,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
                                     val response = GsonManager.getInstance().convert(success, MineResponse::class.java)
-                                    if (response.result.data != null && response.result.data.size > 0) {
+//                                    String jsonStr = GsonManager . getInstance ().toJson(response);
+                                    if (response.error_code == 0) {
                                         baseView.mineDataSuccess(response.result.data)
                                     } else {
-                                        baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                                        baseView.mineDataError(response.reason)
                                     }
                                 } else {
                                     baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
