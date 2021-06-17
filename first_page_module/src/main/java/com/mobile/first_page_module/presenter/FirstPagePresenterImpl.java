@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment;
 /**
  * author    : Urasaki
  * e-mail    : Urasaki@qq.com
- * date      : 2019/3/10 17:04
+ * date      : 2019/3/10 17:05
  * introduce : Presenter登录模块的（一个小模块对应一个Presenter）
  */
 
@@ -30,7 +30,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 	implements IFirstPagePresenter {
 	
 	private static final String             TAG = "FirstPagePresenterImpl";
-	//    private IResourceChildView firstPageView;//P需要与V 交互，所以需要持有V的引用
+	//    private IFirstPageView firstPageView;//P需要与V 交互，所以需要持有V的引用
 	private              FirstPageModelImpl model;
 	
 	public FirstPagePresenterImpl(IBaseView baseView) {
@@ -121,9 +121,9 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
 									 public void onSuccess(String success) {
 										 LogManager.i(TAG, "success*****" + success);
 										 if (!TextUtils.isEmpty(success)) {
+										 	
 											 //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
 											 FirstPageResponse response = GsonManager.getInstance().convert(success, FirstPageResponse.class);
-								
 											 //											 String jsonStr = GsonManager.getInstance().toJson(response);
 											 if (response.getError_code() == 0) {
 												 firstPageView.firstPageDataSuccess(response.getResult().getData());
