@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.mobile.common_library.callback.OnCommonSingleParamCallback;
 
 import java.io.BufferedInputStream;
@@ -44,34 +45,30 @@ public class PictureManager {
 	 *
 	 * @param context
 	 * @param bitmap
-	 * @param path
+	 * @param fileName
 	 * @return
 	 */
-	public static boolean saveImageToPath(Context context, Bitmap bitmap,
-		String path, String fileName) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-			ContentValues values = new ContentValues();
-			String mimeType = "image/png";
-			values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
-			values.put(MediaStore.MediaColumns.MIME_TYPE, mimeType);
-			values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM);
-			
-			ContentResolver contentResolver = context.getContentResolver();
-			Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-			if (uri != null) {
-				try {
-					OutputStream os = contentResolver.openOutputStream(uri);
-					BufferedOutputStream bos = new BufferedOutputStream(os);
-					//通过io流的方式来压缩保存图片
-					boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-					bos.flush();
-					bos.close();
-					return isSuccess;
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+	public static boolean saveImageToPath(Context context,
+		Bitmap bitmap,
+		String fileName) {
+		//一定要是外部目录
+		String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+						  + File.separator + "Pictures";
+		String filesDir = context.getFilesDir().getAbsolutePath();
+		//先判断是否是沙盒内部目录
+		StringBuilder stringBuilder = new StringBuilder();
+		String[] filesDirArr = filesDir.split("/");
+		for (int i = 0; i < filesDirArr.length - 1; i++) {
+			if (i == 0) {
+				stringBuilder.append(filesDirArr[i]);
+			} else {
+				stringBuilder.append("/").append(filesDirArr[i]);
 			}
-		} else {
+		}
+		String pathInternal = stringBuilder.toString();
+		boolean isPathInternal = path.contains(pathInternal);
+		if (isPathInternal) {//是沙盒内部目录
+			LogUtils.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal);
 			//首先创建路径（有则不创建，没有则创建）
 			File appDir = new File(path);
 			if (!appDir.exists()) {
@@ -99,6 +96,60 @@ public class PictureManager {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else {//不是沙盒内部目录
+			LogUtils.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+				ContentValues values = new ContentValues();
+				String mimeType = "image/png";
+				values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
+				values.put(MediaStore.Files.FileColumns.TITLE, fileName);
+				values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
+				values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+				
+				ContentResolver contentResolver = context.getContentResolver();
+				Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+				if (uri != null) {
+					try {
+						OutputStream os = contentResolver.openOutputStream(uri);
+						BufferedOutputStream bos = new BufferedOutputStream(os);
+						//通过io流的方式来压缩保存图片
+						boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+						bos.flush();
+						bos.close();
+						return isSuccess;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			} else {
+				//首先创建路径（有则不创建，没有则创建）
+				File appDir = new File(path);
+				if (!appDir.exists()) {
+					appDir.mkdirs();
+				}
+				
+				//这个才是文件
+				fileName = fileName + ".png";
+				File file = new File(appDir, fileName);
+				try {
+					if (!file.exists()) {
+						file.createNewFile();
+					}
+					FileOutputStream fos = new FileOutputStream(file);
+					BufferedOutputStream bos = new BufferedOutputStream(fos);
+					//通过io流的方式来压缩保存图片
+					boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+					bos.flush();
+					bos.close();
+					
+					//保存图片后发送广播通知更新数据库
+					Uri uri = Uri.fromFile(file);
+					context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+					return isSuccess;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return false;
 	}
@@ -108,74 +159,32 @@ public class PictureManager {
 	 *
 	 * @param context
 	 * @param responseBody
+	 * @param fileName
 	 * @param onCommonSingleParamCallback
 	 * @return
 	 */
 	public static boolean saveImageToPath(Context context,
-		ResponseBody responseBody, String fileName, OnCommonSingleParamCallback<Integer> onCommonSingleParamCallback) {
-		
-		Bitmap bitmap = null;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-			//Android 外部目录
-			String mimeType = "image/png";
-			ContentValues values = new ContentValues();
-			values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
-			values.put(MediaStore.Files.FileColumns.TITLE, fileName);
-			values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
-			values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
-			
-			Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-			ContentResolver resolver = context.getContentResolver();
-			Uri insertUri = resolver.insert(external, values);
-			
-			//			long total = responseBody.contentLength();
-			try {
-				InputStream is = responseBody.byteStream();
-				BufferedInputStream bufferedInputStream = null;
-				OutputStream outputStream = null;
-				BufferedOutputStream bufferedOutputStream = null;
-				bufferedInputStream = new BufferedInputStream(is);
-				bitmap = BitmapFactory.decodeStream(bufferedInputStream);
-				if (insertUri != null) {
-					outputStream = resolver.openOutputStream(insertUri);
-					if (outputStream != null) {
-						bufferedOutputStream = new BufferedOutputStream(outputStream);
-					}
-				}
-				if (bufferedOutputStream != null) {
-					//					byte[] buffer = new byte[1024 * 2];
-					//					int len = 0;
-					//					int sum = 0;
-					//					while ((len = bis.read(buffer)) != -1) {
-					//						bos.write(buffer, 0, len);
-					//						sum += len;
-					//						MainThreadManager mainThreadManager = new MainThreadManager();
-					//						int finalSum = sum;
-					//						mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
-					//							@Override
-					//							public void onSuccess() {
-					//								int progress = (int) (finalSum * 1.0f / total * 100);
-					//								onCommonSingleParamCallback.onSuccess(progress);
-					//							}
-					//						});
-					//						mainThreadManager.subThreadToUIThread();
-					//					}
-					
-					//通过io流的方式来压缩保存图片
-					boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
-					bufferedOutputStream.flush();
-					bufferedInputStream.close();
-					bufferedOutputStream.close();
-					return isSuccess;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+		ResponseBody responseBody,
+		String fileName,
+		OnCommonSingleParamCallback<Integer> onCommonSingleParamCallback) {
+		//一定要是外部目录
+		String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+						  + File.separator + "Pictures";
+		String filesDir = context.getFilesDir().getAbsolutePath();
+		//先判断是否是沙盒内部目录
+		StringBuilder stringBuilder = new StringBuilder();
+		String[] filesDirArr = filesDir.split("/");
+		for (int i = 0; i < filesDirArr.length - 1; i++) {
+			if (i == 0) {
+				stringBuilder.append(filesDirArr[i]);
+			} else {
+				stringBuilder.append("/").append(filesDirArr[i]);
 			}
-		} else {
-			//一定要是外部目录
-			String path = Environment.getExternalStorageDirectory().getAbsolutePath()
-							  + File.separator + "Pictures";
-			
+		}
+		String pathInternal = stringBuilder.toString();
+		boolean isPathInternal = path.contains(pathInternal);
+		Bitmap bitmap = null;
+		if (isPathInternal) {//是沙盒内部目录
 			try {
 				//首先创建路径（有则不创建，没有则创建）
 				File appDir = new File(path);
@@ -206,8 +215,96 @@ public class PictureManager {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else {//不是沙盒内部目录
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+				//Android 外部目录
+				String mimeType = "image/png";
+				ContentValues values = new ContentValues();
+				values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
+				values.put(MediaStore.Files.FileColumns.TITLE, fileName);
+				values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
+				values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+				
+				Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+				ContentResolver resolver = context.getContentResolver();
+				Uri insertUri = resolver.insert(external, values);
+				
+				//			long total = responseBody.contentLength();
+				try {
+					InputStream is = responseBody.byteStream();
+					BufferedInputStream bufferedInputStream = null;
+					OutputStream outputStream = null;
+					BufferedOutputStream bufferedOutputStream = null;
+					bufferedInputStream = new BufferedInputStream(is);
+					bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+					if (insertUri != null) {
+						outputStream = resolver.openOutputStream(insertUri);
+						if (outputStream != null) {
+							bufferedOutputStream = new BufferedOutputStream(outputStream);
+						}
+					}
+					if (bufferedOutputStream != null) {
+						//					byte[] buffer = new byte[1024 * 2];
+						//					int len = 0;
+						//					int sum = 0;
+						//					while ((len = bis.read(buffer)) != -1) {
+						//						bos.write(buffer, 0, len);
+						//						sum += len;
+						//						MainThreadManager mainThreadManager = new MainThreadManager();
+						//						int finalSum = sum;
+						//						mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+						//							@Override
+						//							public void onSuccess() {
+						//								int progress = (int) (finalSum * 1.0f / total * 100);
+						//								onCommonSingleParamCallback.onSuccess(progress);
+						//							}
+						//						});
+						//						mainThreadManager.subThreadToUIThread();
+						//					}
+						
+						//通过io流的方式来压缩保存图片
+						boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
+						bufferedOutputStream.flush();
+						bufferedInputStream.close();
+						bufferedOutputStream.close();
+						return isSuccess;
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					//首先创建路径（有则不创建，没有则创建）
+					File appDir = new File(path);
+					if (!appDir.exists()) {
+						appDir.mkdirs();
+					}
+					
+					//这个才是文件
+					fileName = fileName + ".png";
+					File file = new File(appDir, fileName);
+					if (!file.exists()) {
+						file.createNewFile();
+					}
+					InputStream inputStream = responseBody.byteStream();
+					BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+					bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+					FileOutputStream fileOutputStream = new FileOutputStream(file);
+					BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+					
+					//通过io流的方式来压缩保存图片
+					boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
+					bufferedOutputStream.flush();
+					bufferedOutputStream.close();
+					//保存图片后发送广播通知更新数据库
+					Uri uri = Uri.fromFile(file);
+					context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+					return isSuccess;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		
 		return false;
 	}
 	
