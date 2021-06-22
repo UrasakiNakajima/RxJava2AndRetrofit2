@@ -19,7 +19,7 @@ open class BaseViewModel : ViewModel() {
     protected var disposable: Disposable? = null
 
     protected fun unSubscribe() {
-        if (compositeDisposable != null && compositeDisposable.size() > 0) {
+        if (compositeDisposable.size() > 0) {
             compositeDisposable.clear()
         }
     }

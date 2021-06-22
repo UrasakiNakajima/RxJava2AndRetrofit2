@@ -2,12 +2,14 @@ package com.mobile.common_library.adapter;
 
 import android.view.ViewGroup;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
-import java.util.List;
 
 /**
  * author    : Urasaki
@@ -33,6 +35,7 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
     public void addFragment(Fragment fragment){
     }
 
+    @NotNull
     @Override
     public Fragment getItem(int position) {
         return fragmentList.get(position);

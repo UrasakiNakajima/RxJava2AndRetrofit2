@@ -6,15 +6,15 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import androidx.appcompat.widget.AppCompatTextView;
-
 import com.mobile.common_library.manager.ViewAttributeManager;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 public class ColorTextView extends AppCompatTextView implements ColorUiInterface {
 
 
     private int attr_drawable = -1;
-    private int attr_textAppearance = -1;
+//    private int attr_textAppearance = -1;
     private int attr_textColor = -1;
     private int attr_textLinkColor = -1;
 
