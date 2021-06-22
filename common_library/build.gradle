@@ -83,8 +83,8 @@ kapt {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-//    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+//    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api 'androidx.appcompat:appcompat:1.2.0'
     api 'androidx.constraintlayout:constraintlayout:2.0.2'
     testApi 'junit:junit:4.12'
