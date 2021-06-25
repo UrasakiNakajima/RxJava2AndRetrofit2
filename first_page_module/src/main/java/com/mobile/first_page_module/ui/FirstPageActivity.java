@@ -166,6 +166,7 @@ public class FirstPageActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
 			if (isRefresh) {
 				mJuheNewsBeanList.clear();
 				mJuheNewsBeanList.addAll(success);
+				firstPageAdapter.clearData();
 				firstPageAdapter.addAllData(mJuheNewsBeanList);
 				refreshLayout.finishRefresh();
 			} else {

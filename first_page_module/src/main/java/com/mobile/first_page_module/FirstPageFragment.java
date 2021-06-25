@@ -191,6 +191,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 			if (isRefresh) {
 				mJuheNewsBeanList.clear();
 				mJuheNewsBeanList.addAll(success);
+				firstPageAdapter.clearData();
 				firstPageAdapter.addAllData(mJuheNewsBeanList);
 				refreshLayout.finishRefresh();
 			} else {
