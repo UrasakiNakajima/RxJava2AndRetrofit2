@@ -32,7 +32,7 @@ public class AidlClientActivity extends BaseAppActivity {
 	private BookManager mBookManager = null;
 	
 	//标志当前与服务端连接状况的布尔值，false为未连接，true为连接中
-	private boolean mBound = false;
+	private boolean isConnectServer = false;
 	
 	//包含Book对象的list
 	private List<Book> mBookList = new ArrayList<>();
@@ -78,7 +78,7 @@ public class AidlClientActivity extends BaseAppActivity {
 	
 	private void initAddBook() {
 		//如果与服务端的连接处于未连接状态，则尝试连接
-		if (!mBound) {
+		if (!isConnectServer) {
 			attemptToBindService();
 			Toast.makeText(this, "当前与服务端处于未连接状态，正在尝试重连，请稍后再试", Toast.LENGTH_SHORT).show();
 			return;
@@ -94,7 +94,7 @@ public class AidlClientActivity extends BaseAppActivity {
 		try {
 			mBookManager.addBook(book);
 			mBookList.clear();
-			mBookList.addAll(mBookManager.getBooks());
+			mBookList.addAll(mBookManager.getBookList());
 			mBookAdapter.clearData();
 			mBookAdapter.addAllData(mBookList);
 			LogManager.i(TAG, "initAddBook*****" + book.toString());
@@ -123,7 +123,7 @@ public class AidlClientActivity extends BaseAppActivity {
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			LogManager.i(TAG, "service connected");
 			mBookManager = BookManager.Stub.asInterface(service);
-			mBound = true;
+			isConnectServer = true;
 			
 			if (mBookManager != null) {
 				if (mBookList.size() > 0) {
@@ -135,14 +135,14 @@ public class AidlClientActivity extends BaseAppActivity {
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
 			LogManager.i(TAG, "service disconnected");
-			mBound = false;
+			isConnectServer = false;
 		}
 	};
 	
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (!mBound) {
+		if (!isConnectServer) {
 			attemptToBindService();
 		}
 	}
@@ -150,9 +150,9 @@ public class AidlClientActivity extends BaseAppActivity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		if (mBound) {
+		if (isConnectServer) {
 			unbindService(mServiceConnection);
-			mBound = false;
+			isConnectServer = false;
 		}
 	}
 	

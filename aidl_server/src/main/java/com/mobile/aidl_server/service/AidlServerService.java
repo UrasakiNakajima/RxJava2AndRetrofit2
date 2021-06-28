@@ -36,7 +36,7 @@ public class AidlServerService extends Service {
 	//由AIDL文件生成的BookManager
 	private BookManager.Stub mBookManager = new BookManager.Stub() {
 		@Override
-		public List<Book> getBooks() throws RemoteException {
+		public List<Book> getBookList() throws RemoteException {
 			synchronized (this) {
 				Log.i(TAG, "getBooks*****" + mBookList.toString());
 				return mBookList;
@@ -46,12 +46,8 @@ public class AidlServerService extends Service {
 		@Override
 		public void addBook(Book book) throws RemoteException {
 			synchronized (this) {
-				if (book == null) {
-					Log.i(TAG, "Book is null in In");
-					book = new Book();
-				}
 				//尝试修改book的参数，主要是为了观察其到客户端的反馈
-				book.setName(book.getName() + "$");
+				book.setContent(book.getContent() + "$");
 				mBookList.add(book);
 				//打印mBooks列表，观察客户端传过来的值
 				Log.i(TAG, "addBook*****" + mBookList.toString());

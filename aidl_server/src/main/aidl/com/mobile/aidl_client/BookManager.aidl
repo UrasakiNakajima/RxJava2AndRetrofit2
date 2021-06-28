@@ -6,7 +6,7 @@ import com.mobile.aidl_client.Book;
 
 interface BookManager {
 
-   List<Book> getBooks();
+   List<Book> getBookList();
 
    void addBook(in Book book);
 }
