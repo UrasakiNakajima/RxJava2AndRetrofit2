@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
-import com.mobile.aidl_client.callback.OnSoftKeyBoardChangeListener;
+import com.mobile.common_library.callback.OnSoftKeyBoardChangeListener;
 
 /**
  * author    : Urasaki
@@ -20,7 +20,7 @@ public class ToolbarManager {
 
     private static final String TAG = "ToolbarManager";
     private View rootView;//activity的根视图
-    private int rootViewVisibleHeight;//纪录根视图的显示高度
+    private int                          rootViewVisibleHeight;//纪录根视图的显示高度
     private OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener;
 
     public static void assistActivity(View content) {

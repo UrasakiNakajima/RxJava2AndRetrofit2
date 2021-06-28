@@ -29,31 +29,16 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    sourceSets{
-        main{
-            java.srcDirs = ['src/main/java','src/main/aidl']
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/aidl']
         }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    aidl_client aidl_server
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
-
-    //沉浸式状态栏框架导入
-    // 基础依赖包，必须要依赖
-    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
-    // fragment快速实现（可选）
-    implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
-    implementation 'com.qmuiteam:qmui:1.2.0'
-    //android函数分包框架导入
-    implementation 'androidx.multidex:multidex:2.0.1'
-
-    implementation 'com.jakewharton:butterknife:10.0.0'
+    implementation project(path: ':common_library')
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 }
