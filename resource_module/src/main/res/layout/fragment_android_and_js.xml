@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"
                 android:gravity="center"
-                android:text="@string/android_and_js"
+                android:text="@string/android_and_js_interactive"
                 android:textColor="@color/color_FF198CFF"
                 android:textSize="@dimen/sp_20" />
 
