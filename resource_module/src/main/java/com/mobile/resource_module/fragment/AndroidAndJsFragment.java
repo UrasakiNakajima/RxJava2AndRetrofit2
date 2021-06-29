@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.mobile.common_library.base.BaseFragment;
 import com.mobile.common_library.manager.LogManager;
-import com.mobile.common_library.ui.AndroidAndJsActivity;
 import com.mobile.resource_module.R;
 
 import androidx.appcompat.widget.Toolbar;
@@ -125,7 +124,7 @@ public class AndroidAndJsFragment extends BaseFragment {
 		//
 		//		});
 		//js调用android
-		webView.addJavascriptInterface(new AndroidAndJsActivity.JsInteration(), "android");
+		webView.addJavascriptInterface(new JsInteration(), "android");
 	}
 	
 	@Override
@@ -133,7 +132,7 @@ public class AndroidAndJsFragment extends BaseFragment {
 	
 	}
 	
-	public static class JsInteration {
+	private static class JsInteration {
 		
 		@JavascriptInterface
 		public String back() {

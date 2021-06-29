@@ -128,7 +128,7 @@ public class MainActivity extends BaseAppActivity {
 	
 	}
 	
-	public static class JsInteration {
+	private static class JsInteration {
 		
 		@JavascriptInterface
 		public String back() {
