@@ -13,7 +13,12 @@ public class GsonManager {
     private GsonManager() {
         gson = new Gson();
     }
-
+    
+    /**
+     * 线程安全的单例模式
+     *
+     * @return
+     */
     public static GsonManager getInstance() {
         if (gsonManager == null) {
             synchronized (GsonManager.class) {
