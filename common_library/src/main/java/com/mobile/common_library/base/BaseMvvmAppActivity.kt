@@ -34,10 +34,12 @@ abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : A
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null
+    protected var appCompatActivity: AppCompatActivity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        appCompatActivity = this;
         ActivityPageManager.getInstance().addActivity(this)
         baseApplication = application as BaseApplication
 

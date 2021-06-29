@@ -1,6 +1,5 @@
 package com.mobile.common_library.base
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -12,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -28,7 +28,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null
-    private var activity: Activity? = null
+    protected var appCompatActivity: AppCompatActivity? = null
     protected var intent: Intent? = null
     protected var bundle: Bundle? = null
 
@@ -41,7 +41,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity = getActivity();
+        appCompatActivity = getActivity() as AppCompatActivity?;
         viewModel = initViewModel()
         initData()
         initObservers()
@@ -65,10 +65,10 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
                                   textSize: Int, textColor: Int,
                                   bgColor: Int, height: Int,
                                   roundRadius: Int, message: String) {
-        val frameLayout = FrameLayout(activity!!)
+        val frameLayout = FrameLayout(appCompatActivity!!)
         val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
         frameLayout.layoutParams = layoutParams
-        val textView = TextView(activity)
+        val textView = TextView(appCompatActivity)
         val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
         textView.layoutParams = layoutParams1
         textView.setPadding(left, 0, right, 0)
@@ -83,7 +83,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
         textView.text = message
         frameLayout.addView(textView)
 
-        val toast = Toast(activity)
+        val toast = Toast(appCompatActivity)
         toast.view = frameLayout
         toast.duration = Toast.LENGTH_LONG
         toast.setGravity(Gravity.CENTER, 0, 0)
@@ -91,12 +91,12 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
     }
 
     protected fun startActivity(cls: Class<*>) {
-        intent = Intent(activity, cls)
+        intent = Intent(appCompatActivity, cls)
         startActivity(intent)
     }
 
     protected fun startActivityCarryParams(cls: Class<*>, params: Map<String, String>?) {
-        intent = Intent(activity, cls)
+        intent = Intent(appCompatActivity, cls)
         bundle = Bundle()
 
         if (params != null && params.size > 0) {
@@ -111,12 +111,12 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
     }
 
     protected fun startActivityForResult(cls: Class<*>, requestCode: Int) {
-        intent = Intent(activity, cls)
+        intent = Intent(appCompatActivity, cls)
         startActivityForResult(intent, requestCode)
     }
 
     protected fun startActivityForResultCarryParams(cls: Class<*>, params: Map<String, String>?, requestCode: Int) {
-        intent = Intent(activity, cls)
+        intent = Intent(appCompatActivity, cls)
         bundle = Bundle()
 
         if (params != null && params.size > 0) {
