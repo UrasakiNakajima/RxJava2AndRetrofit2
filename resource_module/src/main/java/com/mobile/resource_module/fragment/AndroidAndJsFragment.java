@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -27,13 +29,14 @@ import androidx.appcompat.widget.Toolbar;
  */
 public class AndroidAndJsFragment extends BaseFragment {
 	
-	private static final String   TAG = "AndroidAndJsActivity";
-	private              Toolbar  toolbar;
-	private              TextView tevTitle;
-	private              WebView  webView;
-	private              TextView tevAndroidToJs;
-	private              TextView tevAndroidToJs2;
-	private              TextView tevAndroidToJs3;
+	private static final String      TAG = "AndroidAndJsActivity";
+	private              Toolbar     toolbar;
+	private              TextView    tevTitle;
+	private              WebView     webView;
+	private              TextView    tevAndroidToJs;
+	private              TextView    tevAndroidToJs2;
+	private              TextView    tevAndroidToJs3;
+	private              WebSettings webSettings;
 	
 	public static AndroidAndJsFragment getInstance(String type) {
 		AndroidAndJsFragment fragment = new AndroidAndJsFragment();
@@ -90,7 +93,7 @@ public class AndroidAndJsFragment extends BaseFragment {
 		
 		//加载assets文件夹下的js_java_interaction.html页面
 		webView.loadUrl("file:///android_asset/js_java_interaction.html");
-		WebSettings webSettings = webView.getSettings();
+		webSettings = webView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		webView.setWebViewClient(new WebViewClient());
 		//1.直接把js弹框弹出来（第一种方法）
@@ -141,10 +144,40 @@ public class AndroidAndJsFragment extends BaseFragment {
 	}
 	
 	@Override
+	public void onResume() {
+		super.onResume();
+		if (webSettings != null) {
+			// webview 优化 据说可以省电
+			webSettings.setJavaScriptEnabled(true);
+		}
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		if (webSettings != null) {
+			// webview 优化 据说可以省电
+			webSettings.setJavaScriptEnabled(false);
+		}
+	}
+	
+	@Override
 	public void onDestroyView() {
 		if (webView != null) {
+			// 如果先调用destroy()方法，则会命中if (isDestroyed()) return;这一行代码，需要先onDetachedFromWindow()，再
+			// destory()
+			ViewParent parent = webView.getParent();
+			if (parent != null) {
+				((ViewGroup) parent).removeView(webView);
+			}
+			
+			webView.stopLoading();
+			// 退出时调用此方法，移除绑定的服务，否则某些特定系统会报错
+			webView.getSettings().setJavaScriptEnabled(false);
+			webView.clearHistory();
+			webView.clearView();
+			webView.removeAllViews();
 			webView.destroy();
-			webView = null;
 		}
 		super.onDestroyView();
 	}
