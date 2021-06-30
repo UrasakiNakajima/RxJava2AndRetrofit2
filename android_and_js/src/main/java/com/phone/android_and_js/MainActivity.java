@@ -136,4 +136,12 @@ public class MainActivity extends BaseAppActivity {
 		}
 	}
 	
+	@Override
+	protected void onDestroy() {
+		if (webView != null) {
+			webView.destroy();
+			webView = null;
+		}
+		super.onDestroy();
+	}
 }

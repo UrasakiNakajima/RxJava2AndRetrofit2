@@ -140,4 +140,12 @@ public class AndroidAndJsFragment extends BaseFragment {
 		}
 	}
 	
+	@Override
+	public void onDestroyView() {
+		if (webView != null) {
+			webView.destroy();
+			webView = null;
+		}
+		super.onDestroyView();
+	}
 }
