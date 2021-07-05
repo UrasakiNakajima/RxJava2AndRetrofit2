@@ -45,7 +45,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	implements IFirstPageView {
 	
 	private static final String             TAG = "FirstPageFragment";
-	private              FrameLayout        layoutAll;
+	private              FrameLayout        layoutOutLayer;
 	private              Toolbar            toolbar;
 	private              TextView           tevTitle;
 	private              SmartRefreshLayout refreshLayout;
@@ -84,7 +84,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	
 	@Override
 	protected void initViews() {
-		layoutAll = (FrameLayout) rootView.findViewById(R.id.layout_all);
+		layoutOutLayer = (FrameLayout) rootView.findViewById(R.id.layout_out_layer);
 		toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
 		tevTitle = (TextView) rootView.findViewById(R.id.tev_title);
 		refreshLayout = (SmartRefreshLayout) rootView.findViewById(R.id.refresh_layout);
@@ -257,7 +257,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	
 	@Override
 	public void onDestroyView() {
-		layoutAll.removeAllViews();
+		layoutOutLayer.removeAllViews();
 		super.onDestroyView();
 	}
 	
