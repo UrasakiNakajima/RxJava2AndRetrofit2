@@ -1,7 +1,10 @@
 package com.mobile.square_module
 
+import android.os.AsyncTask
+import android.os.SystemClock
 import android.text.TextUtils
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -81,6 +84,22 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
     override fun initLoadData() {
         initSquare("$currentPage")
+        startAsyncTask()
+    }
+
+    private fun startAsyncTask() {
+
+        // This async task is an anonymous class and therefore has a hidden reference to the outer
+        // class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
+        // the activity instance will leak.
+        object : AsyncTask<Void?, Void?, Void?>() {
+            override fun doInBackground(vararg p0: Void?): Void? {
+                // Do some slow work in background
+                SystemClock.sleep(10000)
+                return null
+            }
+        }.execute()
+        Toast.makeText(appCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
     }
 
     fun showLoading() {

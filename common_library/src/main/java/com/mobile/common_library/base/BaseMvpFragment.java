@@ -221,8 +221,5 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		
-		//        RefWatcher refWatcher = MineApplication.getRefWatcher();
-		//        refWatcher.watch(this);
 	}
 }

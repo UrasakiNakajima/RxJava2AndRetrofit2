@@ -1,9 +1,13 @@
 package com.mobile.common_library.manager;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * author    : Urasaki
@@ -12,8 +16,49 @@ import java.util.Locale;
  * introduce :
  */
 
-public class TimeManager {
-
+public class DateManager {
+    
+    private static final String TAG = "DateManager";
+    /**
+     * 将日期转化成日期字符串
+     *
+     * @param date
+     * @return
+     */
+    public static String dateToDataStr(Date date) {//可根据需要自行截取数据显示
+        Log.i(TAG, "getDate choice date millis: " + date.getTime());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
+    }
+    
+    /**
+     * 将日期转化成时间字符串
+     *
+     * @param date
+     * @return
+     */
+    public static String dateToTimeStr(Date date) {//可根据需要自行截取数据显示
+        Log.i(TAG, "getTime date millis: " + date.getTime());
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        return format.format(date);
+    }
+    
+    /**
+     * 将时间字符串转化成毫秒数
+     *
+     * @param dateStr
+     * @return
+     */
+    @SuppressWarnings("JavaDoc")
+    public static long dateStrToMillisecond(String dateStr) throws ParseException {
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+08"));
+        //24小时制
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        long time = simpleDateFormat.parse(dateStr).getTime();
+        return time;
+    }
+    
     /**
      * String 转 Data
      */

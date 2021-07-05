@@ -133,7 +133,7 @@ public class NewsDetailActivity extends BaseAppActivity {
 	
 	@Override
 	protected void onDestroy() {
-		destroyWebView(llWebContent);
+//		destroyWebView(llWebContent);
 		super.onDestroy();
 	}
 }

@@ -1,5 +1,8 @@
 //body app（不可单独运行）
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -25,10 +28,19 @@ android {
         enabled = true
     }
 
+    //使用Kotlin实验特性
+    androidExtensions {
+        experimental = true
+    }
+
     //开启Java1.8 能够使用lambda表达式
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
     buildTypes {

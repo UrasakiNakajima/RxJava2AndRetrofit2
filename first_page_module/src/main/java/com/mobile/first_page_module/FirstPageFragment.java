@@ -1,11 +1,14 @@
 package com.mobile.first_page_module;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.mobile.common_library.base.BaseMvpFragment;
@@ -161,12 +164,31 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	
 	@Override
 	protected void initLoadData() {
-		refreshLayout.autoRefresh();
+		//		refreshLayout.autoRefresh();
+		
+		startAsyncTask();
 	}
 	
 	@Override
 	protected FirstPagePresenterImpl attachPresenter() {
 		return new FirstPagePresenterImpl(this);
+	}
+	
+	private void startAsyncTask() {
+		
+		// This async task is an anonymous class and therefore has a hidden reference to the outer
+		// class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
+		// the activity instance will leak.
+		new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected Void doInBackground(Void... params) {
+				// Do some slow work in background
+				SystemClock.sleep(10000);
+				return null;
+			}
+		}.execute();
+		
+		Toast.makeText(appCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show();
 	}
 	
 	@Override

@@ -40,14 +40,14 @@ public class BaseApplication extends MultiDexApplication {
 		}
 		ARouter.init(this);
 		
-//		RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
-//			@Override
-//			public void accept(Throwable throwable) {
-//				//异常处理
-//				LogManager.i(TAG, "throwable*****" + throwable.toString());
-//				LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
-//			}
-//		});
+		//		RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
+		//			@Override
+		//			public void accept(Throwable throwable) {
+		//				//异常处理
+		//				LogManager.i(TAG, "throwable*****" + throwable.toString());
+		//				LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+		//			}
+		//		});
 	}
 	
 	@Override

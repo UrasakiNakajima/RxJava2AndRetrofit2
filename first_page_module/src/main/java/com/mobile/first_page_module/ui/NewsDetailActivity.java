@@ -2,6 +2,8 @@ package com.mobile.first_page_module.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -11,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mobile.common_library.base.BaseAppActivity;
 import com.mobile.common_library.manager.LogManager;
@@ -66,7 +69,24 @@ public class NewsDetailActivity extends BaseAppActivity {
 	
 	@Override
 	protected void initLoadData() {
+		startAsyncTask();
+	}
 	
+	private void startAsyncTask() {
+		
+		// This async task is an anonymous class and therefore has a hidden reference to the outer
+		// class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
+		// the activity instance will leak.
+		new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected Void doInBackground(Void... params) {
+				// Do some slow work in background
+				SystemClock.sleep(10000);
+				return null;
+			}
+		}.execute();
+		
+		Toast.makeText(this, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show();
 	}
 	
 	private void setWebSetting() {
