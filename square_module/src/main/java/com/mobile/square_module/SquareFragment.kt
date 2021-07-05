@@ -84,7 +84,8 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
     override fun initLoadData() {
         initSquare("$currentPage")
-        startAsyncTask()
+
+//        startAsyncTask()
     }
 
     private fun startAsyncTask() {
@@ -139,11 +140,6 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         }
     }
 
-    override fun onDestroyView() {
-        viewModel!!.getDataxSuccess().removeObservers(this)
-        super.onDestroyView()
-    }
-
     private fun initSquare(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(activity)) {
@@ -151,6 +147,11 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         } else {
             squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }
+    }
+
+    override fun onDestroyView() {
+        viewModel!!.getDataxSuccess().removeObservers(this)
+        super.onDestroyView()
     }
 
 }

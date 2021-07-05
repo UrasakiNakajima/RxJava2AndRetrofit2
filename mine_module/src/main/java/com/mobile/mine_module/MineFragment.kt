@@ -179,4 +179,9 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         }
     }
 
+    override fun onDestroyView() {
+        layout_all.removeAllViews()
+        super.onDestroyView()
+    }
+
 }

@@ -69,7 +69,7 @@ public class NewsDetailActivity extends BaseAppActivity {
 	
 	@Override
 	protected void initLoadData() {
-		startAsyncTask();
+//		startAsyncTask();
 	}
 	
 	private void startAsyncTask() {

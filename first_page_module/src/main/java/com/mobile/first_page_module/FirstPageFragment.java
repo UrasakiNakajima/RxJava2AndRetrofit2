@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,25 +39,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-
-import static com.mobile.first_page_module.R2.id;
 
 @Route(path = "/first_page_module/first_page")
 public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePresenterImpl>
 	implements IFirstPageView {
 	
-	private static final String TAG = "FirstPageFragment";
-	@BindView(id.tev_title)
-	TextView           tevTitle;
-	@BindView(id.toolbar)
-	Toolbar            toolbar;
-	@BindView(id.rcv_data)
-	RecyclerView       rcvData;
-	@BindView(id.refresh_layout)
-	SmartRefreshLayout refreshLayout;
-	@BindView(id.loadView)
-	QMUILoadingView    loadView;
+	private static final String             TAG = "FirstPageFragment";
+	private              FrameLayout        layoutAll;
+	private              Toolbar            toolbar;
+	private              TextView           tevTitle;
+	private              SmartRefreshLayout refreshLayout;
+	private              RecyclerView       rcvData;
+	private              QMUILoadingView    loadView;
 	
 	private List<FirstPageResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
 	private FirstPageAdapter                                firstPageAdapter;
@@ -90,6 +84,13 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	
 	@Override
 	protected void initViews() {
+		layoutAll = (FrameLayout) rootView.findViewById(R.id.layout_all);
+		toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+		tevTitle = (TextView) rootView.findViewById(R.id.tev_title);
+		refreshLayout = (SmartRefreshLayout) rootView.findViewById(R.id.refresh_layout);
+		rcvData = (RecyclerView) rootView.findViewById(R.id.rcv_data);
+		loadView = (QMUILoadingView) rootView.findViewById(R.id.loadView);
+		
 		tevTitle.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -164,9 +165,9 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	
 	@Override
 	protected void initLoadData() {
-		//		refreshLayout.autoRefresh();
+		refreshLayout.autoRefresh();
 		
-		startAsyncTask();
+		//		startAsyncTask();
 	}
 	
 	@Override
@@ -256,6 +257,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	
 	@Override
 	public void onDestroyView() {
+		layoutAll.removeAllViews();
 		super.onDestroyView();
 	}
 	
