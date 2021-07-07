@@ -15,7 +15,10 @@ import com.mobile.mine_module.bean.Data
 
 class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val TAG = "MineAdapter"
+    companion object {
+        private val TAG = "MineAdapter"
+    }
+
     private var mJuheNewsBeanList: MutableList<Data>? = null
 
     init {
