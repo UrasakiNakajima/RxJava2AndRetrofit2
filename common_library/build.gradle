@@ -162,7 +162,7 @@ dependencies {
     api 'com.alibaba:arouter-api:1.5.0'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
 
-    //LeakCanary导入
+    //leakcanary导入（检测内存泄漏框架）
     debugApi 'com.squareup.leakcanary:leakcanary-android:2.7'
 
     //工具库
