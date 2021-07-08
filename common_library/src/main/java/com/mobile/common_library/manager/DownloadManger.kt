@@ -97,14 +97,14 @@ class DownloadManger private constructor() {
                         mainThreadManager.subThreadToUIThread()
                     }
                     bos.flush()
+                    bis.close()
+                    bos.close()
                     // 下载完成
                     val mainThreadManager: MainThreadManager = MainThreadManager()
                     mainThreadManager.setOnSubThreadToMainThreadCallback {
                         listener.onDownloadSuccess()
                     }
                     mainThreadManager.subThreadToUIThread()
-                    bis.close()
-                    bos.close()
                 } catch (e: Exception) {
                     val mainThreadManager: MainThreadManager = MainThreadManager()
                     mainThreadManager.setOnSubThreadToMainThreadCallback {
