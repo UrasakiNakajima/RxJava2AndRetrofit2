@@ -46,6 +46,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
         mDatabind.datax = datax
 
         mDatabind.executePendingBindings()
+
     }
 
     override fun initObservers() {
