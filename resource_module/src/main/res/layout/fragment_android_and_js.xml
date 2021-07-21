@@ -6,98 +6,115 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:background="@color/color_FFE066FF"
-        android:minHeight="?attr/actionBarSize"
-        android:orientation="vertical"
-        app:contentInsetStart="0dp">
+        android:layout_height="match_parent">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50">
+            android:orientation="vertical"
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tev_title"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"
+                android:background="@color/color_FFE066FF"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="vertical"
+                app:contentInsetStart="0dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50">
+
+                    <TextView
+                        android:id="@+id/tev_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        android:gravity="center"
+                        android:text="@string/android_and_js_interactive"
+                        android:textColor="@color/color_FF198CFF"
+                        android:textSize="@dimen/sp_20" />
+
+                </FrameLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <WebView
+                android:id="@+id/web_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_230" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:background="@color/color_54E066FF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginStart="@dimen/dp_50"
                 android:gravity="center"
-                android:text="@string/android_and_js_interactive"
-                android:textColor="@color/color_FF198CFF"
-                android:textSize="@dimen/sp_20" />
+                android:paddingStart="@dimen/dp_25"
+                android:paddingEnd="@dimen/dp_25"
+                android:text="@string/this_is_the_h5_page"
+                android:textColor="@color/black" />
 
-        </FrameLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_20" />
 
-    </androidx.appcompat.widget.Toolbar>
+            <TextView
+                android:id="@+id/tev_android_to_js"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginStart="@dimen/dp_50"
+                android:background="@drawable/corners_25_color_ffe066ff"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp_25"
+                android:paddingEnd="@dimen/dp_25"
+                android:text="@string/android_to_js"
+                android:textColor="@color/white" />
 
-    <WebView
-        android:id="@+id/web_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_230" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_20" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@color/color_54E066FF" />
+            <TextView
+                android:id="@+id/tev_android_to_js2"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginStart="@dimen/dp_50"
+                android:background="@drawable/corners_25_color_ffe066ff"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp_25"
+                android:paddingEnd="@dimen/dp_25"
+                android:text="@string/android_to_js2"
+                android:textColor="@color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginStart="@dimen/dp_50"
-        android:gravity="center"
-        android:paddingStart="@dimen/dp_25"
-        android:paddingEnd="@dimen/dp_25"
-        android:text="@string/this_is_the_h5_page"
-        android:textColor="@color/black" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_20" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_20" />
+            <TextView
+                android:id="@+id/tev_android_to_js3"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginStart="@dimen/dp_50"
+                android:background="@drawable/corners_25_color_ffe066ff"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp_25"
+                android:paddingEnd="@dimen/dp_25"
+                android:text="@string/android_to_js3"
+                android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/tev_android_to_js"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginStart="@dimen/dp_50"
-        android:background="@drawable/corners_25_color_ffe066ff"
-        android:gravity="center"
-        android:paddingStart="@dimen/dp_25"
-        android:paddingEnd="@dimen/dp_25"
-        android:text="@string/android_to_js"
-        android:textColor="@color/white" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_20" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_20" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/tev_android_to_js2"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginStart="@dimen/dp_50"
-        android:background="@drawable/corners_25_color_ffe066ff"
-        android:gravity="center"
-        android:paddingStart="@dimen/dp_25"
-        android:paddingEnd="@dimen/dp_25"
-        android:text="@string/android_to_js2"
-        android:textColor="@color/white" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_20" />
-
-    <TextView
-        android:id="@+id/tev_android_to_js3"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginStart="@dimen/dp_50"
-        android:background="@drawable/corners_25_color_ffe066ff"
-        android:gravity="center"
-        android:paddingStart="@dimen/dp_25"
-        android:paddingEnd="@dimen/dp_25"
-        android:text="@string/android_to_js3"
-        android:textColor="@color/white" />
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
