@@ -21,7 +21,7 @@ android {
     defaultConfig {
         if (isModule.toBoolean()) {
             //可独立运行的app
-            applicationId "com.mobile.first_page_module"
+            applicationId "com.phone.first_page_module"
         } else {
             //被依赖的library
         }

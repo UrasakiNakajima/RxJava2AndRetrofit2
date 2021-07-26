@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.mobile.common_library.custom_view.MineVideoView
+    <com.phone.common_library.custom_view.MineVideoView
         android:id="@+id/mvideo_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

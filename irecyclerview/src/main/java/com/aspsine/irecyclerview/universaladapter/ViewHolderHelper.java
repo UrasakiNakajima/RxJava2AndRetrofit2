@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.mobile.common_library.manager.ImageLoaderManager;
+import com.phone.common_library.manager.ImageLoaderManager;
 
 import java.io.File;
 

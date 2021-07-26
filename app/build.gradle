@@ -13,7 +13,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.mobile.rxjava2andretrofit2"
+        applicationId "com.phone.rxjava2andretrofit2"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -21,6 +21,11 @@ android {
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+            }
+        }
     }
 
     //android 模块下开启DataBinding（必须添加，即使此module没有用到也要添加）
@@ -49,6 +54,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.10.2'
+        }
+    }
+    ndkVersion '21.1.6352462'
 }
 
 dependencies {

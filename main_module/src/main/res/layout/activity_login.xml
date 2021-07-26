@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".login.ui.LoginActivity">
 
-    <com.mobile.common_library.custom_view.ImmerseGroup
+    <com.phone.common_library.custom_view.ImmerseGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
@@ -46,7 +46,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-    </com.mobile.common_library.custom_view.ImmerseGroup>
+    </com.phone.common_library.custom_view.ImmerseGroup>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

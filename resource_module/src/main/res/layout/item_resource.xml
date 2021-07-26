@@ -13,7 +13,7 @@
         app:cardElevation="1dp"
         app:cardUseCompatPadding="true">
 
-        <com.mobile.common_library.custom_view.ColorTextView
+        <com.phone.common_library.custom_view.ColorTextView
             android:id="@+id/tev_resource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

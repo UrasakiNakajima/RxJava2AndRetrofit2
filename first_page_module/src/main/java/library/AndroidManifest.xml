@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mobile.first_page_module">
+    package="com.phone.first_page_module">
 
     <application
         android:allowBackup="false"
@@ -26,7 +26,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.mobile.common_library.ui.AndroidAndJsActivity"
+            android:name="com.phone.common_library.ui.AndroidAndJsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

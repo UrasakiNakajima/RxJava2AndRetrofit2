@@ -67,11 +67,11 @@ android {
     }
 
     noArg {
-        annotation("com.mobile.common_library.no_arg_open_data.NoArgOpenDataClass")
+        annotation("com.phone.common_library.no_arg_open_data.NoArgOpenDataClass")
     }
 
     allOpen {
-        annotation("com.mobile.common_library.no_arg_open_data.NoArgOpenDataClass")
+        annotation("com.phone.common_library.no_arg_open_data.NoArgOpenDataClass")
     }
 }
 

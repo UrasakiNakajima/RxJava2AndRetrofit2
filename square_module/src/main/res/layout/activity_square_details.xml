@@ -8,11 +8,11 @@
 
         <variable
             name="viewModel"
-            type="com.mobile.square_module.view_model.SquareViewModelImpl" />
+            type="com.phone.square_module.view_model.SquareViewModelImpl" />
 
         <variable
             name="dataxDetails"
-            type="com.mobile.square_module.bean.DataX" />
+            type="com.phone.square_module.bean.DataX" />
 
         <import type="android.view.View" />
 

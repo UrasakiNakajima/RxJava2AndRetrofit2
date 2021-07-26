@@ -19,7 +19,7 @@ android {
     defaultConfig {
         if (isModule.toBoolean()) {
             //可独立运行的app
-            applicationId "com.mobile.resource_module"
+            applicationId "com.phone.resource_module"
         } else {
             //被依赖的library
         }

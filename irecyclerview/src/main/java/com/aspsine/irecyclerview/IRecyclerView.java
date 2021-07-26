@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.aspsine.irecyclerview.widget.LoadMoreFooterView;
-import com.mobile.common_library.manager.LoggerManager;
+import com.phone.common_library.manager.LoggerManager;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;

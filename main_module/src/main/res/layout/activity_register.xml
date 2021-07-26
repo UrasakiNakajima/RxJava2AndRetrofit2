@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".login.ui.RegisterActivity">
 
-    <com.mobile.rxjava2andretrofit2.custom_view.ImmerseGroup
+    <com.phone.rxjava2andretrofit2.custom_view.ImmerseGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
@@ -46,7 +46,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-    </com.mobile.rxjava2andretrofit2.custom_view.ImmerseGroup>
+    </com.phone.rxjava2andretrofit2.custom_view.ImmerseGroup>
 
     <View
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.mobile.aidl_client"
+        applicationId "com.phone.aidl_client"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

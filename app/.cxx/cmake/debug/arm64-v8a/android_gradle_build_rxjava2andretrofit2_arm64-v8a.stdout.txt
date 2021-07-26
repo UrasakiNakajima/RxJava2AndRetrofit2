@@ -1,0 +1,2 @@
+ninja: Entering directory `/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/arm64-v8a'
+ninja: no work to do.

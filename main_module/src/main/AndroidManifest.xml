@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mobile.main_module">
+    package="com.phone.main_module">
     <!-- 允许访问网络的权限 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- WIFI网络状态信息权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 网络状态权限 用于断网/联网状态下，界面不同的展示 -->

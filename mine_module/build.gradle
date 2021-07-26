@@ -20,7 +20,7 @@ android {
     defaultConfig {
         if (isModule.toBoolean()) {
             //可独立运行的app
-            applicationId "com.mobile.mine_module"
+            applicationId "com.phone.mine_module"
         } else {
             //被依赖的library
         }

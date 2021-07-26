@@ -106,7 +106,7 @@
             android:layout_height="@dimen/dp_1"
             android:background="@color/color_FF999999"/>
 
-        <com.mobile.common_library.custom_view.MineLazyViewPager
+        <com.phone.common_library.custom_view.MineLazyViewPager
             android:id="@+id/mine_view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

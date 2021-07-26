@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mobile.resource_module">
+    package="com.phone.resource_module">
 
     <application
         android:allowBackup="true"
