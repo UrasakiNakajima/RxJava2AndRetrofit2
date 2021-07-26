@@ -15,6 +15,7 @@ import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.square_module.bean.DataX
 import com.phone.square_module.databinding.FragmentSquareBinding
+import com.phone.square_module.ui.PickerViewActivity
 import com.phone.square_module.ui.SquareDetailsActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
 
@@ -78,7 +79,9 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
     override fun initViews() {
         mDatabind.imvPic.setOnClickListener {
-            startActivity(SquareDetailsActivity::class.java)
+//            startActivity(SquareDetailsActivity::class.java)
+
+            startActivity(PickerViewActivity::class.java)
         }
     }
 

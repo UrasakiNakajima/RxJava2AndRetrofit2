@@ -1,0 +1,7 @@
+Executable : /Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja
+arguments : 
+-C
+/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a
+rxjava2andretrofit2
+jvmArgs : 
+

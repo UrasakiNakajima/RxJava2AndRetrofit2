@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.PickerViewActivity">
+
+<TextView
+    android:id="@+id/tev_show"
+    android:layout_width="wrap_content"
+    android:paddingEnd="@dimen/dp_20"
+    android:paddingStart="@dimen/dp_20"
+    android:layout_marginStart="@dimen/dp_20"
+    android:layout_height="@dimen/dp_50"
+    android:layout_marginTop="@dimen/dp_20"
+    android:background="@drawable/corners_25_color_ffe066ff"
+   android:gravity="center"
+    android:textSize="@dimen/sp_18"
+    android:text="@string/show_data"/>
+
+</LinearLayout>

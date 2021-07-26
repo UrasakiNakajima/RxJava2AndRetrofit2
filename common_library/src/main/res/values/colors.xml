@@ -40,4 +40,7 @@
 
     <color name="color_FFD0D6EC">#FFD0D6EC</color>
     <color name="color_FFCFE9FF">#FFCFE9FF</color>
+
+    <color name="colorTransparentA">#00000000</color>
+
 </resources>

@@ -153,6 +153,9 @@ dependencies {
     api 'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
     api 'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
 
+    //选择时间和省市县三级联动框架
+    api 'com.contrarywind:Android-PickerView:4.1.8'
+
     api 'com.mikepenz:iconics-core:2.5.5@aar'
     api 'com.mikepenz:material-design-iconic-typeface:2.2.0.1@aar'
     api 'com.mikepenz:fontawesome-typeface:4.5.0.1@aar'
