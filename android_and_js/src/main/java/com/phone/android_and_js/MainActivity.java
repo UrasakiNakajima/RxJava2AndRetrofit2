@@ -130,15 +130,15 @@ public class MainActivity extends BaseAppActivity {
 	protected void initLoadData() {
 	
 	}
-	
+
 	private static class JsInteration {
-		
+
 		@JavascriptInterface
-		public String back() {
-			return "Js to android hello world";
+		public String back(int num) {
+			return "Js to android hello world******" + num;
 		}
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
