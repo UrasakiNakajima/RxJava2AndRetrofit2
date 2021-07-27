@@ -34,7 +34,7 @@ import java.util.Map;
 public class PickerViewActivity extends BaseAppActivity {
 
     private static final String TAG = "PickerViewActivity";
-private TextView tevShow;
+    private TextView tevShow;
 
     protected Map<String, String> bodyParams;
 
