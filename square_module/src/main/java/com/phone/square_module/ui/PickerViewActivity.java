@@ -79,6 +79,9 @@ public class PickerViewActivity extends BaseAppActivity {
 
         setToolbar(false, R.color.color_FF198CFF);
         imvBack.setColorFilter(ContextCompat.getColor(appCompatActivity, R.color.white));
+        layoutBack.setOnClickListener(view -> {
+            finish();
+        });
         tevShow.setOnClickListener(v -> {
 
             pvOptions.show();
