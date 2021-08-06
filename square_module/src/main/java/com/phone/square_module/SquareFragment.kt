@@ -80,7 +80,6 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     override fun initViews() {
         mDatabind.imvPic.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
-
             startActivity(PickerViewActivity::class.java)
         }
     }

@@ -1,6 +1,8 @@
 package com.phone.square_module.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -34,6 +37,10 @@ import java.util.Map;
 public class PickerViewActivity extends BaseAppActivity {
 
     private static final String TAG = "PickerViewActivity";
+    private Toolbar toolbar;
+    private FrameLayout layoutBack;
+    private ImageView imvBack;
+    private TextView tevTitle;
     private TextView tevShow;
 
     protected Map<String, String> bodyParams;
@@ -64,7 +71,14 @@ public class PickerViewActivity extends BaseAppActivity {
 
     @Override
     protected void initViews() {
-        tevShow = findViewById(R.id.tev_show);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        layoutBack = (FrameLayout) findViewById(R.id.layout_back);
+        imvBack = (ImageView) findViewById(R.id.imv_back);
+        tevTitle = (TextView) findViewById(R.id.tev_title);
+        tevShow = (TextView) findViewById(R.id.tev_show);
+
+        setToolbar(false, R.color.color_FF198CFF);
+        imvBack.setColorFilter(ContextCompat.getColor(appCompatActivity, R.color.white));
         tevShow.setOnClickListener(v -> {
 
             pvOptions.show();
