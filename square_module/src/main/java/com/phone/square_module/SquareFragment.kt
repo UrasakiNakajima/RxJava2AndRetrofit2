@@ -90,20 +90,20 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 //        startAsyncTask()
     }
 
-    private fun startAsyncTask() {
-
-        // This async task is an anonymous class and therefore has a hidden reference to the outer
-        // class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
-        // the activity instance will leak.
-        object : AsyncTask<Void?, Void?, Void?>() {
-            override fun doInBackground(vararg p0: Void?): Void? {
-                // Do some slow work in background
-                SystemClock.sleep(10000)
-                return null
-            }
-        }.execute()
-        Toast.makeText(appCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
-    }
+//    private fun startAsyncTask() {
+//
+//        // This async task is an anonymous class and therefore has a hidden reference to the outer
+//        // class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
+//        // the activity instance will leak.
+//        object : AsyncTask<Void?, Void?, Void?>() {
+//            override fun doInBackground(vararg p0: Void?): Void? {
+//                // Do some slow work in background
+//                SystemClock.sleep(10000)
+//                return null
+//            }
+//        }.execute()
+//        Toast.makeText(appCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
+//    }
 
     fun showLoading() {
         if (mDatabind.loadView != null && !mDatabind.loadView.isShown()) {
