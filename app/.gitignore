@@ -5,6 +5,7 @@
 /local.properties
 .DS_Store
 /build
+/.cxx
 /debug
 /release
 /gradle
