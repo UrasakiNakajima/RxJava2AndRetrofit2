@@ -1,13 +1,11 @@
 package com.phone.square_module.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +19,7 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.phone.common_library.base.BaseAppActivity;
+import com.phone.common_library.fragment.EventScheduleDialogFragment;
 import com.phone.common_library.manager.GetJsonDataManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.square_module.R;
@@ -52,6 +51,8 @@ public class PickerViewActivity extends BaseAppActivity {
     private boolean isAnalyticalDataComplete;
     private AnalyticalDataAsyncTask analyticalDataAsyncTask;
 
+    private EventScheduleDialogFragment eventScheduleDialogFragment;
+
     @Override
     protected int initLayoutId() {
         return R.layout.activity_picker_view;
@@ -77,6 +78,8 @@ public class PickerViewActivity extends BaseAppActivity {
         tevTitle = (TextView) findViewById(R.id.tev_title);
         tevShow = (TextView) findViewById(R.id.tev_show);
 
+        eventScheduleDialogFragment = EventScheduleDialogFragment.newInstance();
+
         setToolbar(false, R.color.color_FF198CFF);
         imvBack.setColorFilter(ContextCompat.getColor(appCompatActivity, R.color.white));
         layoutBack.setOnClickListener(view -> {
@@ -84,7 +87,9 @@ public class PickerViewActivity extends BaseAppActivity {
         });
         tevShow.setOnClickListener(v -> {
 
-            pvOptions.show();
+//            pvOptions.show();
+
+            eventScheduleDialogFragment.show(getSupportFragmentManager(), "FOF");
         });
     }
 
