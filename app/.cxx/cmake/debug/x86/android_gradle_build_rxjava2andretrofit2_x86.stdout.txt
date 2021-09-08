@@ -1,3 +1,0 @@
-ninja: Entering directory `/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/x86'
-[1/2] Building CXX object CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o
-[2/2] Linking CXX shared library /Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/x86/librxjava2andretrofit2.so

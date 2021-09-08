@@ -1,9 +1,0 @@
-# ninja log v5
-0	39	1627303391	CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o	99c25c14f0adf46d
-39	98	1627303391	/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/x86/librxjava2andretrofit2.so	ddc32b676f04fecb
-1	39	1628265014	CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o	99c25c14f0adf46d
-39	95	1628265015	/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/x86/librxjava2andretrofit2.so	ddc32b676f04fecb
-0	435	1628401872	/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/x86/librxjava2andretrofit2.so	ddc32b676f04fecb
-0	11	0	clean	c6470991adac0db9
-0	42	1628401972	CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o	99c25c14f0adf46d
-42	98	1628401972	/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/x86/librxjava2andretrofit2.so	ddc32b676f04fecb
