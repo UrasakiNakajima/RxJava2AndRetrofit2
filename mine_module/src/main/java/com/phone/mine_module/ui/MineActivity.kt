@@ -2,6 +2,7 @@ package com.phone.mine_module.ui
 
 import android.content.Intent
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -140,8 +141,8 @@ class MineActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineVi
     override fun mineDataError(error: String) {
         if (!appCompatActivity!!.isFinishing()) {
             showCustomToast(ScreenManager.dpToPx(appCompatActivity, 20f), ScreenManager.dpToPx(appCompatActivity, 20f),
-                    18, resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(appCompatActivity, 40f),
+                    18, ContextCompat.getColor(appCompatActivity!!,R.color.white),
+                    ContextCompat.getColor(appCompatActivity!!,R.color.color_FFE066FF), ScreenManager.dpToPx(appCompatActivity, 40f),
                     ScreenManager.dpToPx(appCompatActivity, 20f), error,
                     true)
 

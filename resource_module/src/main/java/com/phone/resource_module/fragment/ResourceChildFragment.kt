@@ -155,7 +155,7 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
         if (!activity!!.isFinishing()) {
             showCustomToast(ScreenManager.dpToPx(activity, 20f), ScreenManager.dpToPx(activity, 20f),
                     18, ContextCompat.getColor(activity!!, R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(activity, 40f),
+                    ContextCompat.getColor(appCompatActivity!!,R.color.color_FFE066FF), ScreenManager.dpToPx(activity, 40f),
                     ScreenManager.dpToPx(activity, 20f), error,
                     true)
 

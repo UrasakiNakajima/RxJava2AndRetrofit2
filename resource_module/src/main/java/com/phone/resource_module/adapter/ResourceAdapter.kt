@@ -68,37 +68,72 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
                     rcvOnItemViewClickListener!!.onItemClickListener(position, it);
                 }
                 Glide.with(context).load(list.get(position).url)
-                        .placeholder(R.mipmap.picture_miyawaki_sakura)
-                        .error(R.mipmap.picture_miyawaki_sakura)
-                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) //自动选择缓存策略
-                        .priority(Priority.NORMAL)     // 设置加载的优先级
-                        .listener(object : RequestListener<Drawable> {
+                    .placeholder(R.mipmap.picture_miyawaki_sakura)
+                    .error(R.mipmap.picture_miyawaki_sakura)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) //自动选择缓存策略
+                    .priority(Priority.NORMAL)     // 设置加载的优先级
+                    .listener(object : RequestListener<Drawable> {
 
-                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                holder.imvResource.visibility = View.VISIBLE
-                                return false
-                            }
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            holder.imvResource.visibility = View.VISIBLE
+                            return false
+                        }
 
-                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                return false
-                            }
-                        })
-                        .into(holder.imvResource)
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            return false
+                        }
+                    })
+                    .into(holder.imvResource)
             } else {
                 holder.layoutCardView.setVisibility(View.VISIBLE)
                 holder.layoutPicture.setVisibility(View.GONE)
-                holder.tevResource.setLinkTextColor(context.resources.getColor(R.color.color_4876FF))
-                holder.tevResource.setText(Html.fromHtml("<a href=\""
-                        + list.get(position).url + "\">"
-                        + list.get(position).desc + "</a>"
-                        + "[" + list.get(position).who + "]"))
+                holder.tevResource.setLinkTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.color_4876FF
+                    )
+                )
+                holder.tevResource.setText(
+                    Html.fromHtml(
+                        "<a href=\""
+                                + list.get(position).url + "\">"
+                                + list.get(position).desc + "</a>"
+                                + "[" + list.get(position).who + "]"
+                    )
+                )
                 holder.tevResource.setMovementMethod(LinkMovementMethod.getInstance())
                 when (list.get(position).type) {
-                    "Android" -> setIconDrawable(holder.tevResource, MaterialDesignIconic.Icon.gmi_android)
-                    "iOS" -> setIconDrawable(holder.tevResource, MaterialDesignIconic.Icon.gmi_apple)
-                    "休息视频" -> setIconDrawable(holder.tevResource, MaterialDesignIconic.Icon.gmi_collection_video)
-                    "前端" -> setIconDrawable(holder.tevResource, MaterialDesignIconic.Icon.gmi_language_javascript)
-                    "拓展资源" -> setIconDrawable(holder.tevResource, FontAwesome.Icon.faw_location_arrow)
+                    "Android" -> setIconDrawable(
+                        holder.tevResource,
+                        MaterialDesignIconic.Icon.gmi_android
+                    )
+                    "iOS" -> setIconDrawable(
+                        holder.tevResource,
+                        MaterialDesignIconic.Icon.gmi_apple
+                    )
+                    "休息视频" -> setIconDrawable(
+                        holder.tevResource,
+                        MaterialDesignIconic.Icon.gmi_collection_video
+                    )
+                    "前端" -> setIconDrawable(
+                        holder.tevResource,
+                        MaterialDesignIconic.Icon.gmi_language_javascript
+                    )
+                    "拓展资源" -> setIconDrawable(
+                        holder.tevResource,
+                        FontAwesome.Icon.faw_location_arrow
+                    )
                     "App" -> setIconDrawable(holder.tevResource, MaterialDesignIconic.Icon.gmi_apps)
                     "瞎推荐" -> setIconDrawable(holder.tevResource, MaterialDesignIconic.Icon.gmi_more)
                 }
@@ -129,10 +164,12 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
     }
 
     private fun setIconDrawable(view: TextView, icon: IIcon) {
-        view.setCompoundDrawablesWithIntrinsicBounds(IconicsDrawable(context)
+        view.setCompoundDrawablesWithIntrinsicBounds(
+            IconicsDrawable(context)
                 .icon(icon)
                 .color(ContextCompat.getColor(context, R.color.color_4876FF))
-                .sizeDp(14), null, null, null)
+                .sizeDp(14), null, null, null
+        )
         view.compoundDrawablePadding = ScreenManager.dpToPx(context, 5f)
     }
 

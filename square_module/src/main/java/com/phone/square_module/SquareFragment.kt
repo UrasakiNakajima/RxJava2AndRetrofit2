@@ -5,6 +5,7 @@ import android.os.SystemClock
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -42,7 +43,6 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     override fun initData() {
-//        mainActivity = activity as MainActivity
         mDatabind.viewModel = viewModel
         mDatabind.datax = datax
 
@@ -120,7 +120,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     fun squareDataSuccess(success: List<DataX>) {
-        if (!activity!!.isFinishing()) {
+        if (!appCompatActivity!!.isFinishing()) {
             if (success.size > 0) {
                 datax.title = success.get(1).title
                 datax.chapterName = success.get(1).chapterName
@@ -132,11 +132,17 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     fun squareDataError(error: String) {
-        if (!activity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dpToPx(activity, 20f), ScreenManager.dpToPx(activity, 20f),
-                    18, resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(activity, 40f),
-                    ScreenManager.dpToPx(activity, 20f), error)
+        if (!appCompatActivity!!.isFinishing()) {
+            showCustomToast(
+                ScreenManager.dpToPx(appCompatActivity, 20f),
+                ScreenManager.dpToPx(appCompatActivity, 20f),
+                18,
+                ContextCompat.getColor(appCompatActivity!!, R.color.white),
+                ContextCompat.getColor(appCompatActivity!!, R.color.color_FFE066FF),
+                ScreenManager.dpToPx(appCompatActivity, 40f),
+                ScreenManager.dpToPx(appCompatActivity, 20f),
+                error
+            )
 
             hideLoading()
         }
@@ -144,7 +150,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
     private fun initSquare(currentPage: String) {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable(activity)) {
+        if (RetrofitManager.isNetworkAvailable(appCompatActivity)) {
             viewModel!!.squareData(this, currentPage)
         } else {
             squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
@@ -152,7 +158,9 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     override fun onDestroyView() {
-        viewModel!!.getDataxSuccess().removeObservers(this)
+        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
+        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+
         super.onDestroyView()
     }
 

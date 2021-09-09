@@ -3,6 +3,7 @@ package com.phone.square_module.ui;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -24,6 +25,7 @@ import com.phone.common_library.manager.GetJsonDataManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.square_module.R;
 import com.phone.square_module.bean.ProvincesBean;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.json.JSONArray;
 
@@ -53,6 +55,9 @@ public class PickerViewActivity extends BaseAppActivity {
 
     private EventScheduleDialogFragment eventScheduleDialogFragment;
 
+    // where this is an Activity or Fragment instance
+    private RxPermissions rxPermissions;
+
     @Override
     protected int initLayoutId() {
         return R.layout.activity_picker_view;
@@ -68,6 +73,31 @@ public class PickerViewActivity extends BaseAppActivity {
 
         analyticalDataAsyncTask = new AnalyticalDataAsyncTask((PickerViewActivity) appCompatActivity);
         analyticalDataAsyncTask.execute();
+
+        rxPermissions = new RxPermissions(this);
+        rxPermissions
+                .requestEach(Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                .subscribe(permission -> { // will emit 2 Permission objects
+                    if (permission.granted) {
+                        // `permission.name` is granted !
+
+                        // 用户已经同意该权限
+                        LogManager.i(TAG, "用户已经同意该权限");
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        // Denied permission without ask never again
+
+                        // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                        LogManager.i(TAG, "用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框");
+                    } else {
+                        // Denied permission with ask never again
+                        // Need to go to the settings
+
+                        // 用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限
+                        LogManager.i(TAG, "用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限");
+                    }
+                });
     }
 
     @Override
