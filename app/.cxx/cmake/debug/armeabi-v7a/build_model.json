@@ -171,6 +171,7 @@
       "project": {
         "compilerSettingsCacheFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/.cxx",
         "cxxFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/.cxx",
+        "ideBuildTargetAbi": "armeabi-v7a",
         "isBuildOnlyTargetAbiEnabled": true,
         "isCmakeBuildCohabitationEnabled": false,
         "isNativeCompilerSettingsCacheEnabled": false,
@@ -194,10 +195,7 @@
     "objFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj",
     "variantName": "debug",
     "validAbiList": [
-      "ARMEABI_V7A",
-      "ARM64_V8A",
-      "X86",
-      "X86_64"
+      "ARMEABI_V7A"
     ],
     "prefabDirectory": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/prefab",
     "prefabPackageDirectoryList": []

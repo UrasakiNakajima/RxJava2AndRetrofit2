@@ -76,7 +76,8 @@ public class PickerViewActivity extends BaseAppActivity {
 
         rxPermissions = new RxPermissions(this);
         rxPermissions
-                .requestEach(Manifest.permission.ACCESS_FINE_LOCATION,
+                .requestEach(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                 .subscribe(permission -> { // will emit 2 Permission objects
