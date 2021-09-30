@@ -1,8 +1,5 @@
 package com.phone.square_module.ui;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Dialog;
 import android.graphics.Color;
@@ -14,6 +11,9 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -78,8 +78,9 @@ public class PickerViewActivity extends BaseAppActivity {
         rxPermissions
                 .requestEach(
                         Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+//                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                )
                 .subscribe(permission -> { // will emit 2 Permission objects
                     if (permission.granted) {
                         // `permission.name` is granted !

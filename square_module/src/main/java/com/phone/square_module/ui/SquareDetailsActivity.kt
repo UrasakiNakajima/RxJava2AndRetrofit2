@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvvmAppActivity
+import com.phone.common_library.base.BaseMvvmAppRxActivity
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
@@ -14,7 +15,8 @@ import com.phone.square_module.bean.DataX
 import com.phone.square_module.databinding.ActivitySquareDetailsBinding
 import com.phone.square_module.view_model.SquareViewModelImpl
 
-class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivitySquareDetailsBinding>() {
+class SquareDetailsActivity :
+    BaseMvvmAppRxActivity<SquareViewModelImpl, ActivitySquareDetailsBinding>() {
 
     companion object {
         private val TAG: String = "SquareDetailsActivity"
@@ -119,11 +121,13 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
 
     fun squareDetailsError(error: String) {
         if (!this.isFinishing()) {
-            showCustomToast(ScreenManager.dpToPx(this, 20f), ScreenManager.dpToPx(this, 20f),
-                    18, resources!!.getColor(R.color.white),
-                    resources!!.getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(this, 40f),
-                    ScreenManager.dpToPx(this, 20f), error,
-                    true)
+            showCustomToast(
+                ScreenManager.dpToPx(this, 20f), ScreenManager.dpToPx(this, 20f),
+                18, resources!!.getColor(R.color.white),
+                resources!!.getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(this, 40f),
+                ScreenManager.dpToPx(this, 20f), error,
+                true
+            )
 
             hideLoading()
         }
@@ -132,7 +136,7 @@ class SquareDetailsActivity : BaseMvvmAppActivity<SquareViewModelImpl, ActivityS
     private fun initSquareDetails(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(this)) {
-            viewModel!!.squareDetails(currentPage)
+            viewModel!!.squareDetails(rxAppCompatActivity!!, currentPage)
         } else {
             squareDetailsError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }

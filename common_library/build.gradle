@@ -120,7 +120,25 @@ dependencies {
     api 'io.reactivex.rxjava2:rxandroid:2.0.1'
     api 'com.github.tbruyelle:rxpermissions:0.10.2'
 
-    //AutoDispose解决rxjava导致的内存泄漏的框架
+    //1.解决rxjava导致的内存泄漏的框架
+    api 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
+    // If you want to bind to Android-specific lifecycles
+    api 'com.trello.rxlifecycle3:rxlifecycle-android:3.1.0'
+    // If you want pre-written Activities and Fragments you can subclass as providers
+    api 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
+    // If you want pre-written support preference Fragments you can subclass as providers
+    api 'com.trello.rxlifecycle3:rxlifecycle-components-preference:3.1.0'
+    // If you want to use Android Lifecycle for providers
+    api 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.1.0'
+    // If you want to use Kotlin syntax
+    api 'com.trello.rxlifecycle3:rxlifecycle-kotlin:3.1.0'
+    // If you want to use Kotlin syntax with Android Lifecycle
+    api 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:3.1.0'
+    // If you want to use Navi for providers
+    // DEPRECATED: Use rxlifecycle-android-lifecycle instead. This will be removed in a future release.
+    api 'com.trello.rxlifecycle3:rxlifecycle-navi:3.1.0'
+
+    //2.AutoDispose解决rxjava导致的内存泄漏的框架
     api 'com.uber.autodispose:autodispose-android-archcomponents:1.0.0-RC2'
 
     api 'com.github.bumptech.glide:glide:4.9.0'

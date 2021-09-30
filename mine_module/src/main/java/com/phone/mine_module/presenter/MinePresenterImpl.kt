@@ -33,14 +33,18 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             if (baseView is IMineView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(fragment, model.mineData(bodyParams), object : OnCommonSingleParamCallback<String> {
+                    .responseStringAutoDispose(
+                        fragment,
+                        model.mineData(bodyParams),
+                        object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "mineData success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
-                                    val response = GsonManager.getInstance().convert(success, MineResponse::class.java)
+                                    val response = GsonManager.getInstance()
+                                        .convert(success, MineResponse::class.java)
 
                                     if (response.error_code == 0) {
                                         baseView.mineDataSuccess(response.result.data)
@@ -48,7 +52,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                         baseView.mineDataError(response.reason)
                                     }
                                 } else {
-                                    baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
+                                    baseView.mineDataError(
+                                        BaseApplication.getInstance().resources.getString(
+                                            R.string.loading_failed
+                                        )
+                                    )
                                 }
                                 baseView.hideLoading()
                             }
@@ -70,14 +78,18 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             if (baseView is IMineView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(appCompatActivity, model.mineData(bodyParams), object : OnCommonSingleParamCallback<String> {
+                    .responseStringAutoDispose(
+                        appCompatActivity,
+                        model.mineData(bodyParams),
+                        object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "mineData success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
-                                    val response = GsonManager.getInstance().convert(success, MineResponse::class.java)
+                                    val response = GsonManager.getInstance()
+                                        .convert(success, MineResponse::class.java)
 //                                    String jsonStr = GsonManager . getInstance ().toJson(response);
                                     if (response.error_code == 0) {
                                         baseView.mineDataSuccess(response.result.data)
@@ -85,7 +97,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                         baseView.mineDataError(response.reason)
                                     }
                                 } else {
-                                    baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
+                                    baseView.mineDataError(
+                                        BaseApplication.getInstance().resources.getString(
+                                            R.string.loading_failed
+                                        )
+                                    )
                                 }
                                 baseView.hideLoading()
                             }
@@ -107,7 +123,10 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             if (baseView is IUserDataView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(appCompatActivity, model.userData(bodyParams), object : OnCommonSingleParamCallback<String> {
+                    .responseStringAutoDispose(
+                        appCompatActivity,
+                        model.userData(bodyParams),
+                        object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "userData success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
@@ -122,7 +141,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                        baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
 //                                    }
                                 } else {
-                                    baseView.userDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
+                                    baseView.userDataError(
+                                        BaseApplication.getInstance().resources.getString(
+                                            R.string.loading_failed
+                                        )
+                                    )
                                 }
                                 baseView.hideLoading()
                             }
@@ -138,13 +161,20 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun userData(appCompatActivity: AppCompatActivity, accessToken: String, bodyParams: Map<String, String>) {
+    override fun userData(
+        appCompatActivity: AppCompatActivity,
+        accessToken: String,
+        bodyParams: Map<String, String>
+    ) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(appCompatActivity, model.userData(accessToken, bodyParams), object : OnCommonSingleParamCallback<String> {
+                    .responseStringAutoDispose(
+                        appCompatActivity,
+                        model.userData(accessToken, bodyParams),
+                        object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "userData success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
@@ -159,7 +189,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                        baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
 //                                    }
                                 } else {
-                                    baseView.userDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
+                                    baseView.userDataError(
+                                        BaseApplication.getInstance().resources.getString(
+                                            R.string.loading_failed
+                                        )
+                                    )
                                 }
                                 baseView.hideLoading()
                             }

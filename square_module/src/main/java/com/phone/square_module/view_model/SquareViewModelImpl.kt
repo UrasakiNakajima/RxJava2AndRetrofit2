@@ -13,6 +13,8 @@ import com.phone.square_module.bean.DataX
 import com.phone.square_module.bean.SquareBean
 import com.phone.square_module.model.SquareModelImpl
 import com.phone.square_module.R
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle3.components.support.RxFragment
 
 class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 
@@ -30,24 +32,29 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     private val dataxDetailsSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
     private val dataxDetailsError: MutableLiveData<String> = MutableLiveData()
 
-    override fun squareData(fragment: Fragment, currentPage: String) {
+    override fun squareData(rxFragment: RxFragment, currentPage: String) {
         disposable = RetrofitManager
-                .getInstance()
-                .responseString(fragment, model.squareData(currentPage), object : OnCommonSingleParamCallback<String> {
+            .getInstance()
+            .responseString2(rxFragment,
+                model.squareData(currentPage),
+                object : OnCommonSingleParamCallback<String> {
                     override fun onSuccess(success: String) {
                         LogManager.i(TAG, "success*****$success")
                         if (!TextUtils.isEmpty(success)) {
-                            val response: SquareBean = GsonManager.getInstance().convert(success, SquareBean::class.java)
+                            val response: SquareBean =
+                                GsonManager.getInstance().convert(success, SquareBean::class.java)
                             if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
 //                                LogManager.i(TAG, "response*****${response.toString()}")
 
 
                                 dataxSuccess.value = response.data!!.datas
                             } else {
-                                dataxError.value = BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                                dataxError.value =
+                                    BaseApplication.getInstance().resources.getString(R.string.no_data_available)
                             }
                         } else {
-                            dataxError.value = BaseApplication.getInstance().resources.getString(R.string.loading_failed)
+                            dataxError.value =
+                                BaseApplication.getInstance().resources.getString(R.string.loading_failed)
                         }
                     }
 
@@ -68,24 +75,29 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         return dataxError
     }
 
-    override fun squareDetails(currentPage: String) {
+    override fun squareDetails(rxAppCompatActivity: RxAppCompatActivity, currentPage: String) {
         disposable = RetrofitManager
-                .getInstance()
-                .responseString(model.squareDetails(currentPage), object : OnCommonSingleParamCallback<String> {
+            .getInstance()
+            .responseString2(rxAppCompatActivity,
+                model.squareDetails(currentPage),
+                object : OnCommonSingleParamCallback<String> {
                     override fun onSuccess(success: String) {
                         LogManager.i(TAG, "success*****$success")
                         if (!TextUtils.isEmpty(success)) {
-                            val response: SquareBean = GsonManager.getInstance().convert(success, SquareBean::class.java)
+                            val response: SquareBean =
+                                GsonManager.getInstance().convert(success, SquareBean::class.java)
                             if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
 //                                LogManager.i(TAG, "response*****${response.toString()}")
 
 
                                 dataxDetailsSuccess.value = response.data!!.datas
                             } else {
-                                dataxDetailsError.value = BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                                dataxDetailsError.value =
+                                    BaseApplication.getInstance().resources.getString(R.string.no_data_available)
                             }
                         } else {
-                            dataxDetailsError.value = BaseApplication.getInstance().resources.getString(R.string.loading_failed)
+                            dataxDetailsError.value =
+                                BaseApplication.getInstance().resources.getString(R.string.loading_failed)
                         }
                     }
 
