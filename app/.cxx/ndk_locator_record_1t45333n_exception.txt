@@ -40,7 +40,7 @@ class org.gradle.api.InvalidUserDataException: NDK not configured. Download it w
 	at org.gradle.internal.event.ListenerBroadcast.dispatch(ListenerBroadcast.java:141)
 	at org.gradle.internal.event.ListenerBroadcast.dispatch(ListenerBroadcast.java:37)
 	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
-	at com.sun.proxy.$Proxy40.afterEvaluate(Unknown Source)
+	at com.sun.proxy.$Proxy51.afterEvaluate(Unknown Source)
 	at org.gradle.configuration.project.LifecycleProjectEvaluator$NotifyAfterEvaluate$1.execute(LifecycleProjectEvaluator.java:183)
 	at org.gradle.configuration.project.LifecycleProjectEvaluator$NotifyAfterEvaluate$1.execute(LifecycleProjectEvaluator.java:180)
 	at org.gradle.api.internal.project.DefaultProject.stepEvaluationListener(DefaultProject.java:1454)
