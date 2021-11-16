@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvvmFragment
 import com.phone.common_library.base.BaseMvvmRxFragment
@@ -81,7 +82,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     override fun initViews() {
         mDatabind.imvPic.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
-            startActivity(PickerViewActivity::class.java)
+//            startActivity(PickerViewActivity::class.java)
+            startActivity(Base64AndFileActivity::class.java)
         }
     }
 

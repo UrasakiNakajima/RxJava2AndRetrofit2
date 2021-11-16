@@ -25,7 +25,7 @@ import com.phone.common_library.manager.GetJsonDataManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.square_module.R;
 import com.phone.square_module.bean.ProvincesBean;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.tbruyelle.rxpermissions3.RxPermissions;
 
 import org.json.JSONArray;
 
