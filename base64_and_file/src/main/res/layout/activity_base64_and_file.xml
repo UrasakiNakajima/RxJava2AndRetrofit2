@@ -1,45 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".Base64AndFileActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/line_divider">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    </androidx.appcompat.widget.Toolbar>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_200">
-
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="@dimen/dp_75"
+            android:background="@color/color_FFE066FF"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="vertical"
+            app:contentInsetStart="0dp">
 
             <TextView
-                android:id="@+id/tev_base64_str"
+                android:id="@+id/tev_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_25"
+                android:gravity="center"
+                android:text="@string/base64_and_file_title"
+                android:textColor="@color/color_FF198CFF"
+                android:textSize="@dimen/sp_20" />
 
-        </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
 
-    </androidx.core.widget.NestedScrollView>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_200">
 
-    <ImageView
-        android:id="@+id/imv_file"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_200"
+                android:background="@color/color_54E066FF"
+                android:orientation="vertical">
 
-</LinearLayout>
+                <TextView
+                    android:id="@+id/tev_base64_str"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48" />
+
+        <ImageView
+            android:id="@+id/imv_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlack666" />
+
+    </LinearLayout>
+
+    <com.qmuiteam.qmui.widget.QMUILoadingView
+        android:id="@+id/load_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:color="@color/color_FF999999"
+        android:visibility="gone" />
+
+</FrameLayout>
