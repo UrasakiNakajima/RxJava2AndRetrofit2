@@ -35,7 +35,7 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 	
 	protected BaseApplication          baseApplication;
 //	protected QMUILoadingView          loadView;
-	protected FrameLayout.LayoutParams layoutParams;
+//	protected FrameLayout.LayoutParams layoutParams;
 	protected Intent                   intent;
 	protected Bundle                   bundle;
 	protected AppCompatActivity        appCompatActivity;
@@ -55,9 +55,9 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 //		loadView.setVisibility(View.GONE);
 //		loadView.setSize(100);
 //		loadView.setColor(getResources().getColor(R.color.color_80000000));
-		layoutParams = new FrameLayout.LayoutParams(
-			FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-		layoutParams.gravity = Gravity.CENTER;
+//		layoutParams = new FrameLayout.LayoutParams(
+//			FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+//		layoutParams.gravity = Gravity.CENTER;
 		
 		//        setToolbar();
 		initData();
