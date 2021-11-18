@@ -5,9 +5,9 @@
     "environmentVariables": []
   },
   "cmake": {
-    "cmakeArtifactsBaseFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a",
-    "cmakeServerLogFile": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a/cmake_server_log.txt",
-    "cmakeWrappingBaseFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cxx/debug/armeabi-v7a",
+    "cmakeArtifactsBaseFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a",
+    "cmakeServerLogFile": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a/cmake_server_log.txt",
+    "cmakeWrappingBaseFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cxx/debug/armeabi-v7a",
     "effectiveConfiguration": {
       "name": "traditional-android-studio-cmake-environment",
       "description": "Composite reified CMakeSettings configuration",
@@ -15,13 +15,13 @@
       "inheritEnvironments": [
         "ndk"
       ],
-      "buildRoot": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a",
+      "buildRoot": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a",
       "cmakeToolchain": "/Users/erwinnakashima/Library/Android/sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake",
       "cmakeExecutable": "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake",
       "variables": [
         {
           "name": "CMAKE_FIND_ROOT_PATH",
-          "value": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/prefab/armeabi-v7a/prefab"
+          "value": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/prefab/armeabi-v7a/prefab"
         },
         {
           "name": "CMAKE_BUILD_TYPE",
@@ -57,7 +57,7 @@
         },
         {
           "name": "CMAKE_LIBRARY_OUTPUT_DIRECTORY",
-          "value": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/armeabi-v7a"
+          "value": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/armeabi-v7a"
         },
         {
           "name": "CMAKE_MAKE_PROGRAM",
@@ -74,14 +74,14 @@
       ]
     }
   },
-  "cxxBuildFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a",
+  "cxxBuildFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a",
   "info": {
     "abi": "ARMEABI_V7A",
     "bitness": 32,
     "deprecated": false,
     "default": true
   },
-  "originalCxxBuildFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a",
+  "originalCxxBuildFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a",
   "variant": {
     "buildSystemArgumentList": [],
     "buildTargetSet": [],
@@ -100,12 +100,12 @@
         "ninjaExe": "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja"
       },
       "cmakeToolchainFile": "/Users/erwinnakashima/Library/Android/sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake",
-      "cxxFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx",
+      "cxxFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx",
       "gradleModulePathName": ":app",
-      "intermediatesFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates",
-      "makeFile": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/src/main/cpp/CMakeLists.txt",
-      "moduleBuildFile": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build.gradle",
-      "moduleRootFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app",
+      "intermediatesFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates",
+      "makeFile": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/src/main/cpp/CMakeLists.txt",
+      "moduleBuildFile": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build.gradle",
+      "moduleRootFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app",
       "ndkDefaultAbiList": [
         "ARMEABI_V7A",
         "ARM64_V8A",
@@ -169,12 +169,12 @@
       "ndkDefaultStl": "LIBCXX_STATIC",
       "ndkVersion": "21.1.6352462",
       "project": {
-        "compilerSettingsCacheFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/.cxx",
-        "cxxFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/.cxx",
+        "compilerSettingsCacheFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/.cxx",
+        "cxxFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/.cxx",
         "isBuildOnlyTargetAbiEnabled": true,
         "isCmakeBuildCohabitationEnabled": false,
         "isNativeCompilerSettingsCacheEnabled": false,
-        "rootBuildGradleFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2",
+        "rootBuildGradleFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2",
         "sdkFolder": "/Users/erwinnakashima/Library/Android/sdk",
         "isPrefabEnabled": false
       },
@@ -191,7 +191,7 @@
         "SYSTEM": {}
       }
     },
-    "objFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj",
+    "objFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj",
     "variantName": "debug",
     "validAbiList": [
       "ARMEABI_V7A",
@@ -199,8 +199,8 @@
       "X86",
       "X86_64"
     ],
-    "prefabDirectory": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/prefab",
+    "prefabDirectory": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/prefab",
     "prefabPackageDirectoryList": []
   },
-  "prefabFolder": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/prefab/armeabi-v7a"
+  "prefabFolder": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/prefab/armeabi-v7a"
 }

@@ -1,33 +1,33 @@
 {
   "stringTable": {
-    "0": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a",
+    "0": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a",
     "1": "--target=armv7-none-linux-androideabi21 --gcc-toolchain=/Users/erwinnakashima/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/erwinnakashima/Library/Android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Drxjava2andretrofit2_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security -O0 -fno-limit-debug-info -fPIC"
   },
   "buildFiles": [
-    "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/src/main/cpp/CMakeLists.txt",
+    "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/src/main/cpp/CMakeLists.txt",
     "/Users/erwinnakashima/Library/Android/sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake",
     "/Users/erwinnakashima/Library/Android/sdk/ndk/21.1.6352462/build/cmake/platforms.cmake"
   ],
   "cleanCommands": [
-    "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a\" clean"
+    "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a\" clean"
   ],
-  "buildTargetsCommand": "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja  -C \"/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a\" {LIST_OF_TARGETS_TO_BUILD}",
+  "buildTargetsCommand": "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja  -C \"/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a\" {LIST_OF_TARGETS_TO_BUILD}",
   "libraries": {
     "rxjava2andretrofit2-Debug-armeabi-v7a": {
-      "buildCommand": "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a\" rxjava2andretrofit2",
+      "buildCommand": "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja -C \"/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/armeabi-v7a\" rxjava2andretrofit2",
       "buildType": "debug",
       "toolchain": "801249409",
       "abi": "armeabi-v7a",
       "artifactName": "rxjava2andretrofit2",
       "files": [
         {
-          "src": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/src/main/cpp/rxjava2andretrofit2.cpp",
+          "src": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/src/main/cpp/rxjava2andretrofit2.cpp",
           "flagsOrdinal": 1,
           "workingDirectoryOrdinal": 0
         }
       ],
       "headers": [],
-      "output": "/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/armeabi-v7a/librxjava2andretrofit2.so",
+      "output": "/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/armeabi-v7a/librxjava2andretrofit2.so",
       "runtimeFiles": []
     }
   },

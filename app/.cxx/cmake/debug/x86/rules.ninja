@@ -42,7 +42,7 @@ rule CXX_SHARED_LIBRARY_LINKER__rxjava2andretrofit2
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake -H/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/src/main/cpp -B/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/.cxx/cmake/debug/x86
+  command = /Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake -H/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/src/main/cpp -B/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/x86
   description = Re-running CMake...
   generator = 1
 

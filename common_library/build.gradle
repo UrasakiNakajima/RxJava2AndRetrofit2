@@ -109,19 +109,22 @@ dependencies {
     //apache Base64导入
     api 'commons-codec:commons-codec:1.11'
 
-    //谷歌官方Json字符串解析框架导入
+    //谷歌官方Json解析框架导入
     api 'com.google.code.gson:gson:2.8.5'
 
+    //okhttp3框架導入
     api 'com.squareup.okhttp3:okhttp:3.12.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    //retrofit2框架導入
     api 'com.squareup.retrofit2:retrofit:2.3.0'
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    //rxjava3框架導入
     api 'io.reactivex.rxjava3:rxjava:3.0.0'
     api 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    //rxpermissions框架導入
     api 'com.github.tbruyelle:rxpermissions:0.12'
-
-    //1.解决rxjava导致的内存泄漏的框架
+    //1.解决rxjava导致的内存泄漏的框架導入
     api 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
     // If you want to bind to Android-specific lifecycles
     api 'com.trello.rxlifecycle3:rxlifecycle-android:3.1.0'
@@ -142,8 +145,11 @@ dependencies {
     //2.AutoDispose解决rxjava导致的内存泄漏的框架
     api 'com.uber.autodispose:autodispose-android-archcomponents:1.0.0-RC2'
 
+    //glide框架導入
     api 'com.github.bumptech.glide:glide:4.9.0'
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
+
+    //butterknife框架導入
     api 'com.jakewharton:butterknife:10.2.3'
     kapt 'com.jakewharton:butterknife-compiler:10.2.3'
 

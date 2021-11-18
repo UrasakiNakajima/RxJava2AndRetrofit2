@@ -1,17 +1,6 @@
 # ninja log v5
-0	36	1629726861	CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o	2d6294cadc856631
-36	75	1629726861	/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/arm64-v8a/librxjava2andretrofit2.so	d5f481148537faf3
-0	12	0	clean	c6470991adac0db9
-0	37	1631085059	CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o	2d6294cadc856631
-37	124	1631085059	/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/arm64-v8a/librxjava2andretrofit2.so	d5f481148537faf3
+0	43	1637242653	CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o	7095fb99978f42ed
+43	85	1637242653	/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/arm64-v8a/librxjava2andretrofit2.so	45049691bb4265d0
 0	11	0	clean	c6470991adac0db9
-0	59	1631185251	CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o	2d6294cadc856631
-59	133	1631185251	/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/arm64-v8a/librxjava2andretrofit2.so	d5f481148537faf3
-0	11	0	clean	c6470991adac0db9
-0	42	1631185373	CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o	2d6294cadc856631
-42	94	1631185373	/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/arm64-v8a/librxjava2andretrofit2.so	d5f481148537faf3
-0	11	0	clean	c6470991adac0db9
-0	14	0	clean	c6470991adac0db9
-0	35	1632494267	CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o	2d6294cadc856631
-35	84	1632494267	/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/arm64-v8a/librxjava2andretrofit2.so	d5f481148537faf3
-0	246	1634736322	/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/arm64-v8a/librxjava2andretrofit2.so	d5f481148537faf3
+1	51	1637242696	CMakeFiles/rxjava2andretrofit2.dir/rxjava2andretrofit2.cpp.o	7095fb99978f42ed
+51	102	1637242696	/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/build/intermediates/cmake/debug/obj/arm64-v8a/librxjava2andretrofit2.so	45049691bb4265d0

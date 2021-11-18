@@ -93,11 +93,11 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
                         // 用户已经同意该权限
                         LogManager.i(TAG, "用户已经同意该权限");
 
-//                        thread = new MineThread();
-//                        thread.start();
-
+                        thread = new MineThread();
+                        thread.start();
                         LogManager.i(TAG, "Thread*******" + Thread.currentThread().getName());
-                        initTimer();
+
+//                        initTimer();
                     } else if (permission.shouldShowRequestPermissionRationale) {
                         // Denied permission without ask never again
 
@@ -188,9 +188,13 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
                     + "Pictures" + File.separator
                     + "picture2.jpeg";
+//            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
+//                    + "Pictures" + File.separator
+//                    + "picture5.jpeg";
             File file = new File(path);
-//                base64Str = Base64AndFile.fileToBase64(file);
-            base64Str = Base64AndFile.fileToBase64Second(file);
+//            base64Str = Base64AndFile.fileToBase64(file);
+            base64Str = Base64AndFileManager.fileToBase64Second(file);
+//            base64Str = Base64AndFile.fileToBase64Third(file);
 
             handler.post(new Runnable() {
                 @Override
@@ -217,8 +221,12 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
 
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "base64" + File.separator;
             String fileName = "pictureNew2.jpeg";
+//            String fileName = "pictureNew5.jpeg";
 //            File fileNew = Base64AndFile.base64ToFile(base64Str, path, fileName);
-            File fileNew = Base64AndFile.base64ToFileSecond(base64Str, path, fileName);
+            File fileNew = Base64AndFileManager.base64ToFileSecond(base64Str, path, fileName);
+//            File fileNew = Base64AndFile.base64ToFileThird(base64Str, path, fileName);
+
+
             Bitmap bitmap = BitmapFactory.decodeFile(fileNew.getAbsolutePath());
 
             handler.post(new Runnable() {
