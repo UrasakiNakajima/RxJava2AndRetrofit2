@@ -25,7 +25,7 @@ import com.phone.common_library.manager.GetJsonDataManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.square_module.R;
 import com.phone.square_module.bean.ProvincesBean;
-import com.tbruyelle.rxpermissions3.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.json.JSONArray;
 
@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.reactivex.disposables.Disposable;
 
 public class PickerViewActivity extends BaseAppActivity {
 
@@ -57,6 +59,7 @@ public class PickerViewActivity extends BaseAppActivity {
 
     // where this is an Activity or Fragment instance
     private RxPermissions rxPermissions;
+    private Disposable disposable;
 
     @Override
     protected int initLayoutId() {
@@ -75,7 +78,7 @@ public class PickerViewActivity extends BaseAppActivity {
         analyticalDataAsyncTask.execute();
 
         rxPermissions = new RxPermissions(this);
-        rxPermissions
+        disposable = rxPermissions
                 .requestEach(
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION
@@ -342,4 +345,15 @@ public class PickerViewActivity extends BaseAppActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (analyticalDataAsyncTask != null && analyticalDataAsyncTask.getStatus() == AsyncTask.Status.RUNNING) {
+            analyticalDataAsyncTask.cancel(true);
+            analyticalDataAsyncTask = null;
+        }
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+        super.onDestroy();
+    }
 }

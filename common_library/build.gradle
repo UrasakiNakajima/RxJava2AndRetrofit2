@@ -119,11 +119,11 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.3.0'
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    //rxjava3框架導入
-    api 'io.reactivex.rxjava3:rxjava:3.0.0'
-    api 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    //rxjava2框架導入
+    api 'io.reactivex.rxjava2:rxjava:2.2.10'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
     //rxpermissions框架導入
-    api 'com.github.tbruyelle:rxpermissions:0.12'
+    api 'com.github.tbruyelle:rxpermissions:0.11'
     //1.解决rxjava导致的内存泄漏的框架導入
     api 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
     // If you want to bind to Android-specific lifecycles

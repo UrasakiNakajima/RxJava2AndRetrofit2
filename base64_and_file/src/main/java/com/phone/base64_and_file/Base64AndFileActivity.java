@@ -17,14 +17,14 @@ import com.phone.common_library.base.BaseAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.manager.LogManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
-import com.tbruyelle.rxpermissions3.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.disposables.Disposable;
 
 public class Base64AndFileActivity extends BaseAppActivity implements IBaseView {
 
@@ -243,7 +243,6 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
     @Override
     protected void onDestroy() {
         stopTimer();
-
         if (thread != null && thread.isAlive()) {
             thread.interrupt();
         }
