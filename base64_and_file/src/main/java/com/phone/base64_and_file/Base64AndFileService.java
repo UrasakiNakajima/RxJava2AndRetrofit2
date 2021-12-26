@@ -107,14 +107,21 @@ public class Base64AndFileService extends Service {
             LogManager.i(TAG, "MineThread*******" + Thread.currentThread().getName());
 
             File file = new File(path);
-            //压缩图片
-            File result = initCompressorIO(file.getAbsolutePath(), dirsPath);
+            LogManager.i(TAG, "file size*****" + BitmapManager.getFileSize(file));
+            //先压缩图片
+            File result = BitmapManager.initCompressorIO(Base64AndFileService.this, file.getAbsolutePath(), dirsPath);
+            LogManager.i(TAG, "result size*****" + BitmapManager.getFileSize(result));
+            Bitmap bitmap = BitmapManager.getBitmap(result.getAbsolutePath());
 
-            byte[] bytes = BitmapManager.readStream(result.getAbsolutePath());
-            int orientation = BitmapManager.decodeImageDegree(result.getAbsolutePath());
-            Bitmap bitmap = BitmapManager.createBitmap(bytes, orientation);
-            //压缩bitmap
+//            byte[] bytes = BitmapManager.readStream(result.getAbsolutePath());
+//            int orientation = BitmapManager.decodeImageDegree(result.getAbsolutePath());
+//            Bitmap bitmap = BitmapManager.createBitmap(bytes, orientation);
+            LogManager.i(TAG, "bitmap mWidth*****" + bitmap.getWidth());
+            LogManager.i(TAG, "bitmap mHeight*****" + bitmap.getHeight());
+            //再压缩bitmap
             Bitmap bitmapNew = BitmapManager.calculateInSampleSize(bitmap, 1280, 960);
+            LogManager.i(TAG, "bitmapNew mWidth*****" + bitmapNew.getWidth());
+            LogManager.i(TAG, "bitmapNew mHeight*****" + bitmapNew.getHeight());
             File result2 = BitmapManager.saveFile(bitmapNew, dirsPath2, result.getName());
 
             //            base64Str = Base64AndFileManager.fileToBase64(file);
@@ -124,33 +131,6 @@ public class Base64AndFileService extends Service {
 
             onCommonSingleParamCallback.onSuccess(base64Str);
         }
-    }
-
-    /**
-     * 使用Compressor IO模式自定义压缩
-     *
-     * @param path .setMaxWidth(640).setMaxHeight(480)这两个数值越高，压缩力度越小，图片也不清晰
-     *             .setQuality(75)这个方法只是设置图片质量，并不影响压缩图片的大小KB
-     *             .setCompressFormat(Bitmap.CompressFormat.WEBP) WEBP图片格式是Google推出的 压缩强，质量 高，但是IOS不识别，需要把图片转为字节流然后转PNG格式
-     *             .setCompressFormat(Bitmap.CompressFormat.PNG)PNG格式的压缩，会导致图片变大，并耗过大的内 存，手机反应缓慢
-     *             .setCompressFormat(Bitmap.CompressFormat.JPEG)JPEG压缩；压缩速度比PNG快，质量一般，基本上属于1/10的压缩比例
-     */
-    private File initCompressorIO(String path, String dirsPath) {
-        try {
-            File file = new Compressor(this)
-                    .setMaxWidth(1280)
-                    .setMaxHeight(960)
-                    .setQuality(75)
-                    .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                    .setDestinationDirectoryPath(dirsPath)
-                    .compressToFile(new File(path));
-
-            return file;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     private class MineThread2 extends Thread {

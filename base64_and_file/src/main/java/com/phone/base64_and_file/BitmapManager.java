@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
+import id.zelory.compressor.Compressor;
+
 public class BitmapManager {
 
     /**
@@ -92,43 +94,6 @@ public class BitmapManager {
      * Private constructor to prohibit nonsense instance creation.
      */
     private BitmapManager() {
-    }
-
-    /**
-     * 这个是把文件变成二进制流
-     *
-     * @param imagepath
-     * @return
-     * @throws Exception
-     */
-    public static byte[] readStream(String imagepath) {
-        FileInputStream fis = null;
-        BufferedInputStream bis = null;
-        ByteArrayOutputStream baos = null;
-        try {
-            fis = new FileInputStream(imagepath);
-            bis = new BufferedInputStream(fis);
-
-            baos = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int len = 0;
-            while (-1 != (len = bis.read(buffer))) {
-                baos.write(buffer, 0, len);
-            }
-            baos.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                bis.close();
-                baos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return baos.toByteArray();
     }
 
     /**
@@ -523,25 +488,28 @@ public class BitmapManager {
      * @return
      */
     public static Bitmap getBitmap(String path) {
-        FileInputStream fis;
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
         Bitmap bm = null;
         try {
             fis = new FileInputStream(path);
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 8;//图片的长宽都是原来的1/8
-            BufferedInputStream bis = new BufferedInputStream(fis);
+            options.inSampleSize = 1;//图片的长宽都是原来的1/8
+            bis = new BufferedInputStream(fis);
             bm = BitmapFactory.decodeStream(bis, null, options);
-            fis.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } finally {
+            try {
+                bis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return bm;
     }
 
     /**
-     *
      * @param bitmap
      * @return
      */
@@ -555,15 +523,53 @@ public class BitmapManager {
     }
 
     /**
+     * 这个是把文件变成二进制流
+     *
+     * @param imagepath
+     * @return
+     * @throws Exception
+     */
+    public static byte[] readStream(String imagepath) {
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            fis = new FileInputStream(imagepath);
+            bis = new BufferedInputStream(fis);
+
+            baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while (-1 != (len = bis.read(buffer))) {
+                baos.write(buffer, 0, len);
+            }
+            baos.flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bis.close();
+                baos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return baos.toByteArray();
+    }
+
+    /**
      * 将Bitmap转换成文件
      * 保存文件
+     *
      * @param bitmap
      * @param fileName
      * @throws IOException
      */
     public static File saveFile(Bitmap bitmap, String path, String fileName) {
         File dirs = new File(path);
-        if(!dirs.exists()){
+        if (!dirs.exists()) {
             dirs.mkdirs();
         }
         File captureFile = new File(dirs, fileName);
@@ -585,6 +591,60 @@ public class BitmapManager {
         }
 
         return captureFile;
+    }
+
+    /**
+     * 读取文件的大小
+     */
+
+    public static long getFileSize(File file) {
+        long size = 0;
+        if (file.exists()) {
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(file);
+                size = fis.available();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return size;
+        }
+        return 0;
+    }
+
+    /**
+     * 使用Compressor IO模式自定义压缩
+     *
+     * @param path .setMaxWidth(640).setMaxHeight(480)这两个数值越高，压缩力度越小，图片也不清晰
+     *             .setQuality(75)这个方法只是设置图片质量，并不影响压缩图片的大小KB
+     *             .setCompressFormat(Bitmap.CompressFormat.WEBP) WEBP图片格式是Google推出的 压缩强，质量 高，但是IOS不识别，需要把图片转为字节流然后转PNG格式
+     *             .setCompressFormat(Bitmap.CompressFormat.PNG)PNG格式的压缩，会导致图片变大，并耗过大的内 存，手机反应缓慢
+     *             .setCompressFormat(Bitmap.CompressFormat.JPEG)JPEG压缩；压缩速度比PNG快，质量一般，基本上属于1/10的压缩比例
+     */
+    public static File initCompressorIO(Context context, String path, String dirsPath) {
+        try {
+            File file = new Compressor(context)
+                    .setMaxWidth(1280)
+                    .setMaxHeight(960)
+                    .setQuality(75)
+                    .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                    .setDestinationDirectoryPath(dirsPath)
+                    .compressToFile(new File(path));
+
+            return file;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
