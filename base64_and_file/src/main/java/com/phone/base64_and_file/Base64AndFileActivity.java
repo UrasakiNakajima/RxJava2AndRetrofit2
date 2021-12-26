@@ -301,6 +301,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
+                                    bitmap = success;
                                     imvFile.setImageBitmap(success);
 
 //                                    Glide.with(Base64AndFileActivity.this)
@@ -518,6 +519,10 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         }
         if (disposable2 != null && !disposable2.isDisposed()) {
             disposable2.dispose();
+        }
+        if (bitmap != null) {
+            bitmap.recycle();
+            bitmap = null;
         }
         if (connection != null) {
             // 解绑服务，服务要记得解绑，不要造成内存泄漏

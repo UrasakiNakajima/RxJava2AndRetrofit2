@@ -602,16 +602,18 @@ public class BitmapManager {
         long size = 0;
         if (file.exists()) {
             FileInputStream fis = null;
+            BufferedInputStream bis = null;
             try {
                 fis = new FileInputStream(file);
-                size = fis.available();
+                bis = new BufferedInputStream(fis);
+                size = bis.available();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    fis.close();
+                    bis.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
