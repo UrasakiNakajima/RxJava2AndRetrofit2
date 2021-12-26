@@ -107,26 +107,26 @@ public class Base64AndFileService extends Service {
             LogManager.i(TAG, "MineThread*******" + Thread.currentThread().getName());
 
             File file = new File(path);
+//            LogManager.i(TAG, "file size*****" + BitmapManager.formatFileSize(BitmapManager.getFileSize(file)));
             LogManager.i(TAG, "file size*****" + BitmapManager.getFileSize(file));
             //先压缩图片
             File result = BitmapManager.initCompressorIO(Base64AndFileService.this, file.getAbsolutePath(), dirsPath);
+//            LogManager.i(TAG, "result size*****" + BitmapManager.formatFileSize(BitmapManager.getFileSize(result)));
             LogManager.i(TAG, "result size*****" + BitmapManager.getFileSize(result));
-            Bitmap bitmap = BitmapManager.getBitmap(result.getAbsolutePath());
 
-//            byte[] bytes = BitmapManager.readStream(result.getAbsolutePath());
-//            int orientation = BitmapManager.decodeImageDegree(result.getAbsolutePath());
-//            Bitmap bitmap = BitmapManager.createBitmap(bytes, orientation);
-            LogManager.i(TAG, "bitmap mWidth*****" + bitmap.getWidth());
-            LogManager.i(TAG, "bitmap mHeight*****" + bitmap.getHeight());
-            //再压缩bitmap
-            Bitmap bitmapNew = BitmapManager.calculateInSampleSize(bitmap, 1280, 960);
-            LogManager.i(TAG, "bitmapNew mWidth*****" + bitmapNew.getWidth());
-            LogManager.i(TAG, "bitmapNew mHeight*****" + bitmapNew.getHeight());
-            File result2 = BitmapManager.saveFile(bitmapNew, dirsPath2, result.getName());
+
+//            Bitmap bitmap = BitmapManager.getBitmap(result.getAbsolutePath());
+//            LogManager.i(TAG, "bitmap mWidth*****" + bitmap.getWidth());
+//            LogManager.i(TAG, "bitmap mHeight*****" + bitmap.getHeight());
+//            //再压缩bitmap
+//            Bitmap bitmapNew = BitmapManager.calculateInSampleSize(bitmap, 2016, 1512);
+//            LogManager.i(TAG, "bitmapNew mWidth*****" + bitmapNew.getWidth());
+//            LogManager.i(TAG, "bitmapNew mHeight*****" + bitmapNew.getHeight());
+//            File result2 = BitmapManager.saveFile(bitmapNew, dirsPath2, result.getName());
 
             //            base64Str = Base64AndFileManager.fileToBase64(file);
-//            base64Str = Base64AndFileManager.fileToBase64Second(result);
-            base64Str = Base64AndFileManager.fileToBase64Second(result2);
+            base64Str = Base64AndFileManager.fileToBase64Second(result);
+//            base64Str = Base64AndFileManager.fileToBase64Second(result2);
 //            base64Str = Base64AndFileManager.fileToBase64Third(file);
 
             onCommonSingleParamCallback.onSuccess(base64Str);

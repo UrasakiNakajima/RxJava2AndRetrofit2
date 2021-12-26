@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.text.DecimalFormat;
 
 import id.zelory.compressor.Compressor;
 
@@ -621,6 +622,26 @@ public class BitmapManager {
     }
 
     /**
+     * 将文件大小转换成字节
+     */
+
+    public static String formatFileSize(long fSize) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        if (fSize < 1024) {
+            fileSizeString = df.format((double) fSize) + "B";
+        } else if (fSize > 104875) {
+            fileSizeString = df.format((double) fSize / 1024) + "K";
+        } else if (fSize > 1073741824) {
+            fileSizeString = df.format((double) fSize / 104875) + "M";
+        } else {
+            fileSizeString = df.format((double) fSize / 1073741824) + "G";
+        }
+
+        return fileSizeString;
+    }
+
+    /**
      * 使用Compressor IO模式自定义压缩
      *
      * @param path .setMaxWidth(640).setMaxHeight(480)这两个数值越高，压缩力度越小，图片也不清晰
@@ -632,9 +653,9 @@ public class BitmapManager {
     public static File initCompressorIO(Context context, String path, String dirsPath) {
         try {
             File file = new Compressor(context)
-                    .setMaxWidth(1280)
-                    .setMaxHeight(960)
-                    .setQuality(75)
+                    .setMaxWidth(2016)
+                    .setMaxHeight(1512)
+                    .setQuality(10)
                     .setCompressFormat(Bitmap.CompressFormat.JPEG)
                     .setDestinationDirectoryPath(dirsPath)
                     .compressToFile(new File(path));
