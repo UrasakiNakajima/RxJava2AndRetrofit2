@@ -48,7 +48,7 @@ public class Base64AndFileManager {
             bis = new BufferedInputStream(bais);
             fos = new FileOutputStream(file);
             bos = new BufferedOutputStream(fos);
-            byte[] buffer = new byte[1024 * 2];
+            byte[] buffer = new byte[1024 * 8];
             int len = 0;
             while ((len = bis.read(buffer)) != -1) {
                 bos.write(buffer, 0, len);
@@ -90,7 +90,7 @@ public class Base64AndFileManager {
             bis = new BufferedInputStream(is);
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024 * 8];
             int len = bis.read(buffer);
             while (len != -1) {
                 baos.write(buffer, 0, len);
@@ -133,7 +133,7 @@ public class Base64AndFileManager {
             bis = new BufferedInputStream(fis);
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024 * 8];
             int len = bis.read(buffer);
             while (len != -1) {
                 baos.write(buffer, 0, len);
@@ -191,7 +191,7 @@ public class Base64AndFileManager {
             bis = new BufferedInputStream(bais);
             fos = new FileOutputStream(file);
             bos = new BufferedOutputStream(fos);
-            byte[] buffer = new byte[1024 * 2];
+            byte[] buffer = new byte[1024 * 8];
             int len = 0;
             while ((len = bis.read(buffer)) != -1) {
                 bos.write(buffer, 0, len);
@@ -232,7 +232,7 @@ public class Base64AndFileManager {
             bis = new BufferedInputStream(is);
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024 * 8];
             int len = bis.read(buffer);
             while (len != -1) {
                 baos.write(buffer, 0, len);
@@ -275,7 +275,7 @@ public class Base64AndFileManager {
             bis = new BufferedInputStream(fis);
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024 * 8];
             int len = bis.read(buffer);
             while (len != -1) {
                 baos.write(buffer, 0, len);
@@ -335,7 +335,7 @@ public class Base64AndFileManager {
             bis = new BufferedInputStream(bais);
             fos = new FileOutputStream(file);
             bos = new BufferedOutputStream(fos);
-            byte[] buffer = new byte[1024 * 2];
+            byte[] buffer = new byte[1024 * 8];
             int len = 0;
             while ((len = bis.read(buffer)) != -1) {
                 bos.write(buffer, 0, len);
@@ -378,7 +378,7 @@ public class Base64AndFileManager {
             bis = new BufferedInputStream(is);
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024 * 8];
             int len = bis.read(buffer);
             while (len != -1) {
                 baos.write(buffer, 0, len);
@@ -422,7 +422,7 @@ public class Base64AndFileManager {
             bis = new BufferedInputStream(fis);
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024 * 8];
             int len = bis.read(buffer);
             while (len != -1) {
                 baos.write(buffer, 0, len);

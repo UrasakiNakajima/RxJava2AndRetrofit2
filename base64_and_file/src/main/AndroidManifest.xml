@@ -10,6 +10,8 @@
         <activity
             android:name=".Base64AndFileActivity"
             android:exported="false" />
+
+        <service android:name=".Base64AndFileService" />
     </application>
 
 </manifest>
