@@ -88,7 +88,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         handler = new Handler(getMainLooper());
 
         path = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "Pictures" + File.separator + "picture2.jpeg";
+                + File.separator + "Pictures" + File.separator + "picture6.jpeg";
         dirsPath = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + File.separator + "Pictures2";
         dirsPath2 = Environment.getExternalStorageDirectory().getAbsolutePath()

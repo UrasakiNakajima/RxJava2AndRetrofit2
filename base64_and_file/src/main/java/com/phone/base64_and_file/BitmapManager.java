@@ -607,13 +607,13 @@ public class BitmapManager {
                 fis = new FileInputStream(file);
                 bis = new BufferedInputStream(fis);
                 size = bis.available();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    bis.close();
+                    if (bis != null) {
+                        bis.close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -624,23 +624,27 @@ public class BitmapManager {
     }
 
     /**
-     * 将文件大小转换成字节
+     * 返回byte的数据大小对应的文本
+     *
+     * @param size
+     * @return
      */
-
-    public static String formatFileSize(long fSize) {
-        DecimalFormat df = new DecimalFormat("#.00");
-        String fileSizeString = "";
-        if (fSize < 1024) {
-            fileSizeString = df.format((double) fSize) + "B";
-        } else if (fSize > 104875) {
-            fileSizeString = df.format((double) fSize / 1024) + "K";
-        } else if (fSize > 1073741824) {
-            fileSizeString = df.format((double) fSize / 104875) + "M";
+    public static String getDataSize(long size) {
+        DecimalFormat formater = new DecimalFormat("####.00");
+        if (size < 1024) {
+            return size + "bytes";
+        } else if (size < 1024 * 1024) {
+            float kbsize = size / 1024f;
+            return formater.format(kbsize) + "KB";
+        } else if (size < 1024 * 1024 * 1024) {
+            float mbsize = size / 1024f / 1024f;
+            return formater.format(mbsize) + "MB";
+        } else if (size < 1024 * 1024 * 1024 * 1024) {
+            float gbsize = size / 1024f / 1024f / 1024f;
+            return formater.format(gbsize) + "GB";
         } else {
-            fileSizeString = df.format((double) fSize / 1073741824) + "G";
+            return "size: error";
         }
-
-        return fileSizeString;
     }
 
     /**
@@ -655,8 +659,8 @@ public class BitmapManager {
     public static File initCompressorIO(Context context, String path, String dirsPath) {
         try {
             File file = new Compressor(context)
-                    .setMaxWidth(2016)
-                    .setMaxHeight(1512)
+//                    .setMaxWidth(2016)
+//                    .setMaxHeight(1512)
                     .setQuality(10)
                     .setCompressFormat(Bitmap.CompressFormat.JPEG)
                     .setDestinationDirectoryPath(dirsPath)

@@ -107,11 +107,11 @@ public class Base64AndFileService extends Service {
             LogManager.i(TAG, "MineThread*******" + Thread.currentThread().getName());
 
             File file = new File(path);
-//            LogManager.i(TAG, "file size*****" + BitmapManager.formatFileSize(BitmapManager.getFileSize(file)));
+            LogManager.i(TAG, "file size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(file)));
             LogManager.i(TAG, "file size*****" + BitmapManager.getFileSize(file));
             //先压缩图片
             File result = BitmapManager.initCompressorIO(Base64AndFileService.this, file.getAbsolutePath(), dirsPath);
-//            LogManager.i(TAG, "result size*****" + BitmapManager.formatFileSize(BitmapManager.getFileSize(result)));
+            LogManager.i(TAG, "result size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result)));
             LogManager.i(TAG, "result size*****" + BitmapManager.getFileSize(result));
 
 
