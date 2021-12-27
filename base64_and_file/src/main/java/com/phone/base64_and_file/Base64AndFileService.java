@@ -46,18 +46,18 @@ public class Base64AndFileService extends Service {
         /**
          * 在服务中自定义startDownload()方法，待会活动中调用此方法
          */
-        public void startTask(String path, String dirsPath, String dirsPath2) {
+        public void startTask(String filePath, String dirsPath2, String dirsPath3) {
             Log.d(TAG, "startTask executed");
-            thread = new MineThread(path, dirsPath, dirsPath2);
+            thread = new MineThread(filePath, dirsPath2, dirsPath3);
             thread.start();
         }
 
         /**
          * 在服务中自定义startDownload()方法，待会活动中调用此方法
          */
-        public void startTask2(String path2) {
+        public void startTask2(String dirsPath5) {
             Log.d(TAG, "startTask2 executed");
-            thread2 = new MineThread2(path2);
+            thread2 = new MineThread2(dirsPath5);
             thread2.start();
         }
 
@@ -91,14 +91,14 @@ public class Base64AndFileService extends Service {
 
     private class MineThread extends Thread {
 
-        private String path;
-        private String dirsPath;
+        private String filePath;
         private String dirsPath2;
+        private String dirsPath3;
 
-        protected MineThread(String path, String dirsPath, String dirsPath2) {
-            this.path = path;
-            this.dirsPath = dirsPath;
+        protected MineThread(String filePath, String dirsPath2, String dirsPath3) {
+            this.filePath = filePath;
             this.dirsPath2 = dirsPath2;
+            this.dirsPath3 = dirsPath3;
         }
 
         @Override
@@ -106,11 +106,11 @@ public class Base64AndFileService extends Service {
             super.run();
             LogManager.i(TAG, "MineThread*******" + Thread.currentThread().getName());
 
-            File file = new File(path);
+            File file = new File(filePath);
             LogManager.i(TAG, "file size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(file)));
             LogManager.i(TAG, "file size*****" + BitmapManager.getFileSize(file));
             //先压缩图片
-            File result = BitmapManager.initCompressorIO(Base64AndFileService.this, file.getAbsolutePath(), dirsPath);
+            File result = BitmapManager.initCompressorIO(Base64AndFileService.this, file.getAbsolutePath(), dirsPath2);
             LogManager.i(TAG, "result size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result)));
             LogManager.i(TAG, "result size*****" + BitmapManager.getFileSize(result));
 
@@ -119,7 +119,7 @@ public class Base64AndFileService extends Service {
 //            LogManager.i(TAG, "bitmap mWidth*****" + bitmap.getWidth());
 //            LogManager.i(TAG, "bitmap mHeight*****" + bitmap.getHeight());
 //            //再压缩bitmap
-//            Bitmap bitmapNew = BitmapManager.calculateInSampleSize(bitmap, 2016, 1512);
+//            Bitmap bitmapNew = BitmapManager.calculateInSampleSize(bitmap, 1280, 960);
 //            LogManager.i(TAG, "bitmapNew mWidth*****" + bitmapNew.getWidth());
 //            LogManager.i(TAG, "bitmapNew mHeight*****" + bitmapNew.getHeight());
 //            File result2 = BitmapManager.saveFile(bitmapNew, dirsPath2, result.getName());
@@ -135,10 +135,10 @@ public class Base64AndFileService extends Service {
 
     private class MineThread2 extends Thread {
 
-        private String path2;
+        private String dirsPath5;
 
-        protected MineThread2(String path2) {
-            this.path2 = path2;
+        protected MineThread2(String dirsPath5) {
+            this.dirsPath5 = dirsPath5;
         }
 
         @Override
@@ -146,11 +146,11 @@ public class Base64AndFileService extends Service {
             super.run();
             LogManager.i(TAG, "MineThread2*******" + Thread.currentThread().getName());
 
-            String fileName = "pictureNew5.jpeg";
+            String fileName = "pictureNew2.png";
 //            String fileName = "pictureNew5.jpeg";
-//            File fileNew = Base64AndFileManager.base64ToFile(base64Str, path, fileName);
-            File fileNew = Base64AndFileManager.base64ToFileSecond(base64Str, path2, fileName);
-//            File fileNew = Base64AndFileManager.base64ToFileThird(base64Str, path, fileName);
+//            File fileNew = Base64AndFileManager.base64ToFile(base64Str, dirsPath5, fileName);
+            File fileNew = Base64AndFileManager.base64ToFileSecond(base64Str, dirsPath5, fileName);
+//            File fileNew = Base64AndFileManager.base64ToFileThird(base64Str, dirsPath5, fileName);
 
             Bitmap bitmap = BitmapFactory.decodeFile(fileNew.getAbsolutePath());
             onCommonSingleParamCallback2.onSuccess(bitmap);

@@ -659,9 +659,9 @@ public class BitmapManager {
     public static File initCompressorIO(Context context, String path, String dirsPath) {
         try {
             File file = new Compressor(context)
-//                    .setMaxWidth(2016)
-//                    .setMaxHeight(1512)
-                    .setQuality(10)
+                    .setMaxWidth(1280)
+                    .setMaxHeight(960)
+                    .setQuality(20)
                     .setCompressFormat(Bitmap.CompressFormat.JPEG)
                     .setDestinationDirectoryPath(dirsPath)
                     .compressToFile(new File(path));

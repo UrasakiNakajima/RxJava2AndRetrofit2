@@ -66,10 +66,10 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
     private Disposable disposable;
     private Disposable disposable2;
     private Bitmap bitmap;
-    private String path;
-    private String dirsPath;
+    private String filePath;
     private String dirsPath2;
-    private String path2;
+    private String dirsPath3;
+    private String dirsPath5;
 
     private Base64AndFileService.TaskBinder taskBinder;
 
@@ -87,22 +87,26 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
     protected void initData() {
         handler = new Handler(getMainLooper());
 
-        path = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "Pictures" + File.separator + "picture6.jpeg";
-        dirsPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "Pictures2";
+        filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + "Pictures" + File.separator + "picture2.jpeg";
         dirsPath2 = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + "Pictures2";
+        dirsPath3 = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + File.separator + "Pictures3";
+        dirsPath5 = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + "base64";
 
-        File dirs = new File(dirsPath);
-        if (!dirs.exists()) {
-            dirs.mkdirs();
-        }
-        path2 = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "base64" + File.separator;
-        File dirs2 = new File(path2);
+        File dirs2 = new File(dirsPath2);
         if (!dirs2.exists()) {
             dirs2.mkdirs();
+        }
+        File dirs3 = new File(dirsPath3);
+        if (!dirs3.exists()) {
+            dirs3.mkdirs();
+        }
+        File dirs5 = new File(dirsPath5);
+        if (!dirs5.exists()) {
+            dirs5.mkdirs();
         }
     }
 
@@ -284,7 +288,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
                                 public void run() {
                                     tevBase64Str.setText(success);
 
-                                    taskBinder.startTask2(path2);
+                                    taskBinder.startTask2(dirsPath5);
                                 }
                             });
                         }
@@ -318,7 +322,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
                     });
 //            downloadBinder.getProgress();
 
-            taskBinder.startTask(path, dirsPath, dirsPath2);
+            taskBinder.startTask(filePath, dirsPath2, dirsPath3);
         }
     };
 
