@@ -31,9 +31,9 @@ public class Base64AndFileService extends Service {
 
     private String base64Str;
     private TaskBinder mBinder = new TaskBinder();
-    private Thread thread;
-    private Thread thread2;
-    private Thread thread3;
+    private CompressedPictureThread compressedPictureThread;
+    private PictureToBase64TaskThread pictureToBase64TaskThread;
+    private Base64ToPictureThread base64ToPictureThread;
 
     private Handler handler;
 
@@ -48,7 +48,7 @@ public class Base64AndFileService extends Service {
                                                String dirsPath,
                                                String dirsPath2) {
             Log.d(TAG, "startTask executed");
-            thread = new CompressedPictureThread(
+            compressedPictureThread = new CompressedPictureThread(
                     appCompatActivity,
                     dirsPath,
                     dirsPath2, new OnCommonBothParamCallback<Bitmap>() {
@@ -68,7 +68,7 @@ public class Base64AndFileService extends Service {
                     }
                 }
             });
-            thread.start();
+            compressedPictureThread.start();
         }
 
         /**
@@ -78,7 +78,7 @@ public class Base64AndFileService extends Service {
         public void startPictureToBase64Task(AppCompatActivity appCompatActivity,
                                              String filePath) {
             Log.d(TAG, "startTask2 executed");
-            thread2 = new PictureToBase64TaskThread(
+            pictureToBase64TaskThread = new PictureToBase64TaskThread(
                     filePath, new OnCommonSingleParamCallback<String>() {
                 @Override
                 public void onSuccess(String success) {
@@ -96,7 +96,7 @@ public class Base64AndFileService extends Service {
                     }
                 }
             });
-            thread2.start();
+            pictureToBase64TaskThread.start();
         }
 
         /**
@@ -107,7 +107,7 @@ public class Base64AndFileService extends Service {
                                              String filePath,
                                              String base64Str) {
             Log.d(TAG, "startTask2 executed");
-            thread3 = new Base64ToPictureThread(
+            base64ToPictureThread = new Base64ToPictureThread(
                     filePath,
                     base64Str, new OnCommonSingleParamCallback<Bitmap>() {
                 @Override
@@ -126,7 +126,7 @@ public class Base64AndFileService extends Service {
                     }
                 }
             });
-            thread3.start();
+            base64ToPictureThread.start();
         }
 
         /**
@@ -229,7 +229,7 @@ public class Base64AndFileService extends Service {
         @Override
         public void run() {
             super.run();
-            LogManager.i(TAG, "MineThread2*******" + Thread.currentThread().getName());
+            LogManager.i(TAG, "PictureToBase64TaskThread*******" + Thread.currentThread().getName());
 
             base64Str = null;
             File file = new File(filePath);
@@ -242,7 +242,7 @@ public class Base64AndFileService extends Service {
                     if (!TextUtils.isEmpty(base64Str)) {
                         onCommonSingleParamCallback.onSuccess(base64Str);
                     } else {
-                        onCommonSingleParamCallback.onError("图片不存在");
+                        onCommonSingleParamCallback.onError("圖片不存在");
                     }
                 }
             });
@@ -276,7 +276,7 @@ public class Base64AndFileService extends Service {
         @Override
         public void run() {
             super.run();
-            LogManager.i(TAG, "MineThread2*******" + Thread.currentThread().getName());
+            LogManager.i(TAG, "Base64ToPictureThread*******" + Thread.currentThread().getName());
 
 //            File fileNew = Base64AndFileManager.base64ToFile(base64Str, dirsPath5, fileName);
             File fileNew = Base64AndFileManager.base64ToFileSecond(base64Str, filePath);
@@ -289,7 +289,7 @@ public class Base64AndFileService extends Service {
                     if (bitmap != null) {
                         onCommonSingleParamCallback.onSuccess(bitmap);
                     } else {
-                        onCommonSingleParamCallback.onError("图片不存在");
+                        onCommonSingleParamCallback.onError("圖片不存在");
                     }
                 }
             });
