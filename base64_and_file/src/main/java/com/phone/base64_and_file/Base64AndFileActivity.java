@@ -14,10 +14,13 @@ import android.os.IBinder;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.PathUtils;
+import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.luck.picture.lib.PictureSelector;
@@ -48,30 +51,28 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
     private static final String TAG = "Base64AndFileActivity";
     private Toolbar toolbar;
     private TextView tevTitle;
+    private TextView tevCompressedPicture;
+    private ImageView imvCompressedPicture;
+    private TextView tevPictureToBase64;
+    private NestedScrollView scrollViewBase64Str;
     private TextView tevBase64Str;
-    private ImageView imvFile;
+    private TextView tevBase64ToPicture;
+    private ImageView imvBase64ToPicture;
+    private TextView tevResetData;
     private QMUILoadingView loadView;
 
 
-    private Handler handler;
-    private Thread thread;
-    private Thread thread2;
-    private String base64Str;
-
-    private Timer timer;
-    private TimerTask timerTask;
-
     // where this is an Activity or Fragment instance
     private RxPermissions rxPermissions;
+    private Base64AndFileService.TaskBinder taskBinder;
     private Disposable disposable;
     private Disposable disposable2;
-    private Bitmap bitmap;
-    private String filePath;
+    private String dirsPath;
     private String dirsPath2;
-    private String dirsPath3;
-    private String dirsPath5;
 
-    private Base64AndFileService.TaskBinder taskBinder;
+    private String compressedPicturePath;
+    public String base64Str;
+    public Bitmap bitmap;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,41 +86,61 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
 
     @Override
     protected void initData() {
-        handler = new Handler(getMainLooper());
-
-        filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "Pictures" + File.separator + "picture2.jpeg";
+        dirsPath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + "Pictures";
         dirsPath2 = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + File.separator + "Pictures2";
-        dirsPath3 = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "Pictures3";
-        dirsPath5 = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "base64";
-
-        File dirs2 = new File(dirsPath2);
-        if (!dirs2.exists()) {
-            dirs2.mkdirs();
-        }
-        File dirs3 = new File(dirsPath3);
-        if (!dirs3.exists()) {
-            dirs3.mkdirs();
-        }
-        File dirs5 = new File(dirsPath5);
-        if (!dirs5.exists()) {
-            dirs5.mkdirs();
-        }
     }
 
     @Override
     protected void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tevTitle = (TextView) findViewById(R.id.tev_title);
+        tevCompressedPicture = (TextView) findViewById(R.id.tev_compressed_picture);
+        imvCompressedPicture = (ImageView) findViewById(R.id.imv_compressed_picture);
+        tevPictureToBase64 = (TextView) findViewById(R.id.tev_picture_to_base64);
+        scrollViewBase64Str = (NestedScrollView) findViewById(R.id.scroll_view_base64_str);
         tevBase64Str = (TextView) findViewById(R.id.tev_base64_str);
-        imvFile = (ImageView) findViewById(R.id.imv_file);
+        tevBase64ToPicture = (TextView) findViewById(R.id.tev_base64_to_picture);
+        imvBase64ToPicture = (ImageView) findViewById(R.id.imv_base64_to_picture);
+        tevResetData = (TextView) findViewById(R.id.tev_reset_data);
         loadView = (QMUILoadingView) findViewById(R.id.load_view);
-        loadView.setColor(R.color.color_80000000);
 
         setToolbar(false, R.color.color_54E066FF);
+
+        tevCompressedPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (taskBinder != null) {
+                    showLoading();
+                    taskBinder.startCompressedPictureTask(appCompatActivity, dirsPath, dirsPath2);
+                }
+            }
+        });
+        tevPictureToBase64.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (taskBinder != null) {
+                    showLoading();
+                    taskBinder.startPictureToBase64Task(appCompatActivity, compressedPicturePath);
+                }
+            }
+        });
+        tevBase64ToPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (taskBinder != null) {
+                    showLoading();
+                    taskBinder.startBase64ToPictureTask(appCompatActivity, compressedPicturePath, base64Str);
+                }
+            }
+        });
+        tevResetData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetData();
+            }
+        });
     }
 
     @Override
@@ -136,7 +157,6 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
 //                            // 解绑服务，服务要记得解绑，不要造成内存泄漏
 //                            unbindService(connection);
 //                        }
-            showLoading();
             Intent bindIntent = new Intent(this, Base64AndFileService.class);
             // 绑定服务和活动，之后活动就可以去调服务的方法了
             bindService(bindIntent, connection, BIND_AUTO_CREATE);
@@ -174,7 +194,6 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
 //                            // 解绑服务，服务要记得解绑，不要造成内存泄漏
 //                            unbindService(connection);
 //                        }
-                        showLoading();
                         Intent bindIntent = new Intent(this, Base64AndFileService.class);
                         // 绑定服务和活动，之后活动就可以去调服务的方法了
                         bindService(bindIntent, connection, BIND_AUTO_CREATE);
@@ -261,71 +280,6 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
 //                });
 //    }
 
-    private ServiceConnection connection = new ServiceConnection() {
-
-        /**
-         * 可交互的后台服务与普通服务的不同之处，就在于这个connection建立起了两者的联系
-         * @param name
-         */
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-        }
-
-        /**
-         * onServiceConnected()方法关键，在这里实现对服务的方法的调用
-         * @param name
-         * @param service
-         */
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            taskBinder = (Base64AndFileService.TaskBinder) service;
-            taskBinder.getService().setOnCommonSingleParamCallback(
-                    new OnCommonSingleParamCallback<String>() {
-                        @Override
-                        public void onSuccess(String success) {
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tevBase64Str.setText(success);
-
-                                    taskBinder.startTask2(dirsPath5);
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onError(String error) {
-
-                        }
-                    });
-            taskBinder.getService().setOnCommonSingleParamCallback2(
-                    new OnCommonSingleParamCallback<Bitmap>() {
-                        @Override
-                        public void onSuccess(Bitmap success) {
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    bitmap = success;
-                                    imvFile.setImageBitmap(success);
-
-//                                    Glide.with(Base64AndFileActivity.this)
-//                                            .load(success).into(imvFile);
-                                    hideLoading();
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onError(String error) {
-
-                        }
-                    });
-//            downloadBinder.getProgress();
-
-            taskBinder.startTask(filePath, dirsPath2, dirsPath3);
-        }
-    };
-
     @Override
     public void showLoading() {
         if (loadView != null && !loadView.isShown()) {
@@ -342,182 +296,88 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         }
     }
 
-    private void initTimer() {
-        showLoading();
-        stopTimer();
-        if (timer == null) {
-            timer = new Timer();
-        }
+    private ServiceConnection connection = new ServiceConnection() {
 
-        if (timerTask == null) {
-            timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    thread = new MineThread();
-                    thread.start();
-                }
-            };
-        }
-
-        if (timer != null && timerTask != null) {
-            timer.schedule(timerTask, 1000);
-        }
-    }
-
-    private void stopTimer() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
-
-        if (timerTask != null) {
-            timerTask.cancel();
-            timerTask = null;
-        }
-    }
-
-    private class MineThread extends Thread {
-
+        /**
+         * 可交互的后台服务与普通服务的不同之处，就在于这个connection建立起了两者的联系
+         *
+         * @param name
+         */
         @Override
-        public void run() {
-            super.run();
-            LogManager.i(TAG, "MineThread*******" + Thread.currentThread().getName());
-
-//            InputStream is = null;
-//            try {
-            //得到资源中的asset数据流
-//                is = getResources().getAssets().open("picture2.jpeg");
-//                base64Str = Base64AndFile.fileToBase64(is);
-//                base64Str = Base64AndFile.fileToBase64Second(is);
-
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-                    + "Pictures" + File.separator
-                    + "picture2.jpeg";
-//            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-//                    + "Pictures" + File.separator
-//                    + "picture5.jpeg";
-            File file = new File(path);
-            File result = initCompressorIO(file.getAbsolutePath());
-
-            //            base64Str = Base64AndFileManager.fileToBase64(file);
-            base64Str = Base64AndFileManager.fileToBase64Second(result);
-//            base64Str = Base64AndFileManager.fileToBase64Third(file);
-
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    tevBase64Str.setText(base64Str);
-
-                    thread2 = new MineThread2();
-                    thread2.start();
-                }
-            });
-
-
-//            // 使用文件 File 获取 Compress 实例
-//            Compress.with(Base64AndFileActivity.this, file)
-//                    // 指定要求的图片的质量
-//                    .setQuality(20)
-//                    // 指定文件的输出目录（如果返回结果不是 File 的会，无效）
-//                    .setTargetDir(dirsPath)
-//                    // 指定压缩结果回调（如哦返回结果不是 File 则不会被回调到）
-//                    .setCompressListener(new CompressListener() {
-//                        @Override
-//                        public void onStart() {
-//                            LogManager.i(TAG, "onStart*****");
-//                        }
-//
-//                        @Override
-//                        public void onSuccess(File result) {
-//                            LogManager.i(TAG, "result*****" + result.getAbsolutePath());
-//
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable throwable) {
-//
-//                            LogManager.i(TAG, "throwable*****" + throwable.getMessage());
-//                        }
-//                    });
-
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-        }
-    }
-
-    /**
-     * 使用Compressor IO模式自定义压缩
-     *
-     * @param path .setMaxWidth(640).setMaxHeight(480)这两个数值越高，压缩力度越小，图片也不清晰
-     *             .setQuality(75)这个方法只是设置图片质量，并不影响压缩图片的大小KB
-     *             .setCompressFormat(Bitmap.CompressFormat.WEBP) WEBP图片格式是Google推出的 压缩强，质量 高，但是IOS不识别，需要把图片转为字节流然后转PNG格式
-     *             .setCompressFormat(Bitmap.CompressFormat.PNG)PNG格式的压缩，会导致图片变大，并耗过大的内 存，手机反应缓慢
-     *             .setCompressFormat(Bitmap.CompressFormat.JPEG)JPEG压缩；压缩速度比PNG快，质量一般，基本上属于1/10的压缩比例
-     */
-    private File initCompressorIO(String path) {
-        try {
-            String dirsPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-                    + "Pictures2";
-            File dirs = new File(dirsPath);
-            if (!dirs.exists()) {
-                dirs.mkdirs();
-            }
-
-            File file = new Compressor(Base64AndFileActivity.this)
-//                    .setMaxWidth(640)
-//                    .setMaxHeight(480)
-                    .setQuality(25)
-                    .setCompressFormat(Bitmap.CompressFormat.WEBP)
-                    .setDestinationDirectoryPath(dirs.getAbsolutePath())
-                    .compressToFile(new File(path));
-
-            return file;
-        } catch (IOException e) {
-            e.printStackTrace();
+        public void onServiceDisconnected(ComponentName name) {
         }
 
-        return null;
-    }
-
-    private class MineThread2 extends Thread {
-
+        /**
+         * onServiceConnected()方法关键，在这里实现对服务的方法的调用
+         *
+         * @param name
+         * @param service
+         */
         @Override
-        public void run() {
-            super.run();
-            LogManager.i(TAG, "MineThread2*******" + Thread.currentThread().getName());
-
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "base64" + File.separator;
-            String fileName = "pictureNew2.jpeg";
-//            String fileName = "pictureNew5.jpeg";
-//            File fileNew = Base64AndFileManager.base64ToFile(base64Str, path, fileName);
-            File fileNew = Base64AndFileManager.base64ToFileSecond(base64Str, path, fileName);
-//            File fileNew = Base64AndFileManager.base64ToFileThird(base64Str, path, fileName);
-
-
-            Bitmap bitmap = BitmapFactory.decodeFile(fileNew.getAbsolutePath());
-
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    imvFile.setImageBitmap(bitmap);
-                    stopTimer();
-                    hideLoading();
-                }
-            });
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            taskBinder = (Base64AndFileService.TaskBinder) service;
         }
+    };
+
+    public void showCompressedPictureSuccess(Bitmap bitmap, String compressedPicturePath) {
+        this.bitmap = bitmap;
+        this.compressedPicturePath = compressedPicturePath;
+        tevCompressedPicture.setVisibility(View.GONE);
+        imvCompressedPicture.setVisibility(View.VISIBLE);
+        imvCompressedPicture.setImageBitmap(bitmap);
+        hideLoading();
+    }
+
+    public void showCompressedPictureError(String error) {
+        hideLoading();
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showPictureToBase64Success(String base64Str) {
+        this.base64Str = base64Str;
+        tevPictureToBase64.setVisibility(View.GONE);
+        scrollViewBase64Str.setVisibility(View.VISIBLE);
+        tevBase64Str.setText(base64Str);
+        hideLoading();
+    }
+
+    public void showPictureToBase64Error(String error) {
+        hideLoading();
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showBase64ToPictureSuccess(Bitmap bitmap) {
+        this.bitmap = bitmap;
+        tevBase64ToPicture.setVisibility(View.GONE);
+        imvBase64ToPicture.setVisibility(View.VISIBLE);
+        imvBase64ToPicture.setImageBitmap(bitmap);
+        hideLoading();
+    }
+
+    public void showBase64ToPictureError(String error) {
+        hideLoading();
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        resetData();
+    }
+
+    private void resetData() {
+        this.compressedPicturePath = null;
+        this.base64Str = null;
+        if (bitmap != null) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+
+        tevCompressedPicture.setVisibility(View.VISIBLE);
+        imvCompressedPicture.setVisibility(View.GONE);
+        tevPictureToBase64.setVisibility(View.VISIBLE);
+        scrollViewBase64Str.setVisibility(View.GONE);
+        tevBase64ToPicture.setVisibility(View.VISIBLE);
+        imvBase64ToPicture.setVisibility(View.GONE);
     }
 
     @Override
     protected void onDestroy() {
-        stopTimer();
-        if (thread != null && thread.isAlive()) {
-            thread.interrupt();
-        }
-        if (thread2 != null && thread2.isAlive()) {
-            thread2.interrupt();
-        }
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }

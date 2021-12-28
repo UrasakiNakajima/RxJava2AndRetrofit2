@@ -163,10 +163,9 @@ public class Base64AndFileManager {
     /**
      * @param base64Content
      * @param filePath
-     * @param fileName
      * @return
      */
-    public static File base64ToFileSecond(String base64Content, String filePath, String fileName) {
+    public static File base64ToFileSecond(String base64Content, String filePath) {
         ByteArrayInputStream bais = null;
         BufferedInputStream bis = null;
         FileOutputStream fos = null;
@@ -178,7 +177,7 @@ public class Base64AndFileManager {
             if (!dirs.exists()) {
                 dirs.mkdirs();
             }
-            file = new File(dirs, fileName);
+            file = new File(filePath);
             if (!file.exists()) {
                 file.createNewFile();
             }
