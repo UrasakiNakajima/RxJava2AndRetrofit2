@@ -700,7 +700,7 @@ public class BitmapManager {
         try {
             fis = new FileInputStream(path);
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 1;//图片的长宽都是原来的1/8
+//            options.inSampleSize = 8;//图片的长宽都是原来的1/8
             bis = new BufferedInputStream(fis);
             bm = BitmapFactory.decodeStream(bis, null, options);
         } catch (FileNotFoundException e) {

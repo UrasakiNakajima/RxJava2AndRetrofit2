@@ -181,15 +181,13 @@ public class Base64AndFileService extends Service {
             //先取出资源文件保存在本地
             File file = BitmapManager.getAssetFile(getApplicationContext(), "picture8.png", dirsPath);
             LogManager.i(TAG, "file size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(file)));
-//            LogManager.i(TAG, "file size*****" + BitmapManager.getFileSize(file));
 
-            //再压缩本地图片
-            File result = BitmapManager.initCompressorIO(getApplication(), file.getAbsolutePath(), dirsPath2);
-            LogManager.i(TAG, "result size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result)));
-//            LogManager.i(TAG, "result size*****" + BitmapManager.getFileSize(result));
+//            //再压缩本地图片
+//            File result = BitmapManager.initCompressorIO(getApplication(), file.getAbsolutePath(), dirsPath2);
+//            LogManager.i(TAG, "result size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result)));
 
             //然后把压缩后的图片转化成bitmap
-            Bitmap bitmap = BitmapManager.getBitmap(result.getAbsolutePath());
+            Bitmap bitmap = BitmapManager.getBitmap(file.getAbsolutePath());
             LogManager.i(TAG, "bitmap mWidth*****" + bitmap.getWidth());
             LogManager.i(TAG, "bitmap mHeight*****" + bitmap.getHeight());
             //再压缩bitmap
@@ -199,12 +197,6 @@ public class Base64AndFileService extends Service {
             //再把压缩后的bitmap保存到本地
             File result2 = BitmapManager.saveFile(bitmapNew, dirsPath2, file.getName());
             LogManager.i(TAG, "result2 size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result2)));
-//            LogManager.i(TAG, "result2 size*****" + BitmapManager.getFileSize(result2));
-
-            //            base64Str = Base64AndFileManager.fileToBase64(file);
-//            base64Str = Base64AndFileManager.fileToBase64Second(result);
-//            base64Str = Base64AndFileManager.fileToBase64Second(result2);
-//            base64Str = Base64AndFileManager.fileToBase64Third(file);
 
             handler.post(new Runnable() {
                 @Override
