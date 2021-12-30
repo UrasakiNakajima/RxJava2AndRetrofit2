@@ -517,11 +517,11 @@ public class BitmapManager {
     public static Uri saveTakePictureImage(Context context, byte[] data) {
         File file = context.getExternalFilesDir("file1");
         file = new File(file.getAbsolutePath() + File.separator + System.currentTimeMillis() + ".jpg");
-        FileOutputStream fout = null;
+        FileOutputStream fos = null;
         try {
-            fout = new FileOutputStream(file);
-            fout.write(data);
-            fout.flush();
+            fos = new FileOutputStream(file);
+            fos.write(data);
+            fos.flush();
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -536,9 +536,9 @@ public class BitmapManager {
 
             return null;
         } finally {
-            if (fout != null) {
+            if (fos != null) {
                 try {
-                    fout.close();
+                    fos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -749,15 +749,18 @@ public class BitmapManager {
             while (-1 != (len = bis.read(buffer))) {
                 baos.write(buffer, 0, len);
             }
+            //刷新此输出流并强制写出所有缓冲的输出字节
             baos.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                bis.close();
-                baos.close();
+                if (bis != null) {
+                    bis.close();
+                }
+                if (baos != null) {
+                    baos.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -782,17 +785,18 @@ public class BitmapManager {
         BufferedOutputStream bos = null;
         try {
             bos = new BufferedOutputStream(new FileOutputStream(captureFile));
+            //刷新此输出流并强制写出所有缓冲的输出字节
             bos.flush();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                bos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (bos != null) {
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -815,12 +819,12 @@ public class BitmapManager {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                try {
-                    if (bis != null) {
+                if (bis != null) {
+                    try {
                         bis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
             return size;
@@ -912,6 +916,7 @@ public class BitmapManager {
             while (-1 != (len = bis.read(buffer))) {
                 bos.write(buffer, 0, len);
             }
+            //刷新此输出流并强制写出所有缓冲的输出字节
             bos.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -923,7 +928,7 @@ public class BitmapManager {
                     e.printStackTrace();
                 }
             }
-            if (bis != null) {
+            if (bos != null) {
                 try {
                     bos.close();
                 } catch (IOException e) {
