@@ -47,7 +47,7 @@ public class Base64AndFileService extends Service {
         public void startCompressedPictureTask(AppCompatActivity appCompatActivity,
                                                String dirsPath,
                                                String dirsPath2) {
-            Log.d(TAG, "startTask executed");
+            LogManager.i(TAG, "startTask executed");
             compressedPictureThread = new CompressedPictureThread(
                     appCompatActivity,
                     dirsPath,
@@ -77,7 +77,7 @@ public class Base64AndFileService extends Service {
          */
         public void startPictureToBase64Task(AppCompatActivity appCompatActivity,
                                              String filePath) {
-            Log.d(TAG, "startTask2 executed");
+            LogManager.i(TAG, "startTask2 executed");
             pictureToBase64TaskThread = new PictureToBase64TaskThread(
                     filePath, new OnCommonSingleParamCallback<String>() {
                 @Override
@@ -106,7 +106,7 @@ public class Base64AndFileService extends Service {
         public void startBase64ToPictureTask(AppCompatActivity appCompatActivity,
                                              String filePath,
                                              String base64Str) {
-            Log.d(TAG, "startTask2 executed");
+            LogManager.i(TAG, "startTask2 executed");
             base64ToPictureThread = new Base64ToPictureThread(
                     filePath,
                     base64Str, new OnCommonSingleParamCallback<Bitmap>() {
