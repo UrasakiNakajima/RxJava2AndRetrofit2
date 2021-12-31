@@ -21,6 +21,8 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.phone.common_library.manager.LogManager;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -39,6 +41,7 @@ import id.zelory.compressor.Compressor;
 
 public class BitmapManager {
 
+    private static final String TAG = "BitmapManager";
     /**
      * 图像的旋转方向是0
      */
@@ -71,10 +74,6 @@ public class BitmapManager {
      * 图片显示最大边的像素
      */
     public static final int MAXLENTH = 1024;
-    /**
-     * Log TAG
-     */
-    private static final String TAG = "ImageUtils";
     /**
      * Log switch
      */
@@ -467,7 +466,20 @@ public class BitmapManager {
             final float heightRatio = (float) desHeight / (float) resHeight;
             final float widthRatio = (float) desWidth / (float) resWidth;
             float scale = heightRatio < widthRatio ? heightRatio : widthRatio;
-            return scale(resBitmap, scale);
+            LogManager.i(TAG, "scaleImage scale*****" + scale);
+            //開平方會有一點損失精度
+            float prescription = (float) Math.sqrt(scale);
+            LogManager.i(TAG, "scaleImage prescription*****" + prescription);
+            Bitmap bitmap = null;
+            for (int i = 0; i < 2; i++) {
+                if (bitmap != null) {
+                    bitmap = scale(bitmap, prescription);
+                } else {
+                    bitmap = scale(resBitmap, prescription);
+                }
+                LogManager.i(TAG, i + "scaleImage prescription*****" + prescription);
+            }
+            return bitmap;
         }
         return resBitmap;
     }

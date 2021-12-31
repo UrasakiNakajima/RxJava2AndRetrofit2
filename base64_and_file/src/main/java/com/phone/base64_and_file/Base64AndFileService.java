@@ -196,6 +196,7 @@ public class Base64AndFileService extends Service {
             LogManager.i(TAG, "bitmapNew mHeight*****" + bitmapNew.getHeight());
             //再把压缩后的bitmap保存到本地
             File result2 = BitmapManager.saveFile(bitmapNew, dirsPath2, file.getName());
+            LogManager.i(TAG, "CompressedPictureThread filePath*******" + result2.getAbsolutePath());
             LogManager.i(TAG, "result2 size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result2)));
 
             handler.post(new Runnable() {
@@ -225,8 +226,9 @@ public class Base64AndFileService extends Service {
 
             base64Str = null;
             File file = new File(filePath);
+            LogManager.i(TAG, "PictureToBase64TaskThread filePath*******" + filePath);
             if (file.exists()) {
-                base64Str = Base64AndFileManager.fileToBase64Second(file);
+                base64Str = Base64AndFileManager.fileToBase64(file);
             }
             handler.post(new Runnable() {
                 @Override

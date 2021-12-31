@@ -91,10 +91,9 @@ public class Base64AndFileManager {
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
             byte[] buffer = new byte[1024 * 8];
-            int len = bis.read(buffer);
-            while (len != -1) {
+            int len = 0;
+            while ((len = bis.read(buffer)) != -1) {
                 baos.write(buffer, 0, len);
-                len = bis.read(buffer);
             }
             //刷新此输出流并强制写出所有缓冲的输出字节
             baos.flush();
@@ -134,10 +133,9 @@ public class Base64AndFileManager {
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
             byte[] buffer = new byte[1024 * 8];
-            int len = bis.read(buffer);
-            while (len != -1) {
+            int len = 0;
+            while ((len = bis.read(buffer)) != -1) {
                 baos.write(buffer, 0, len);
-                len = bis.read(buffer);
             }
             //刷新此输出流并强制写出所有缓冲的输出字节
             baos.flush();
@@ -232,10 +230,9 @@ public class Base64AndFileManager {
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
             byte[] buffer = new byte[1024 * 8];
-            int len = bis.read(buffer);
-            while (len != -1) {
+            int len = 0;
+            while ((len = bis.read(buffer)) != -1) {
                 baos.write(buffer, 0, len);
-                len = bis.read(buffer);
             }
             //刷新此输出流并强制写出所有缓冲的输出字节
             baos.flush();
@@ -275,10 +272,9 @@ public class Base64AndFileManager {
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
             byte[] buffer = new byte[1024 * 8];
-            int len = bis.read(buffer);
-            while (len != -1) {
+            int len = 0;
+            while ((len = bis.read(buffer)) != -1) {
                 baos.write(buffer, 0, len);
-                len = bis.read(buffer);
             }
             //刷新此输出流并强制写出所有缓冲的输出字节
             baos.flush();
@@ -378,10 +374,9 @@ public class Base64AndFileManager {
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
             byte[] buffer = new byte[1024 * 8];
-            int len = bis.read(buffer);
-            while (len != -1) {
+            int len = 0;
+            while ((len = bis.read(buffer)) != -1) {
                 baos.write(buffer, 0, len);
-                len = bis.read(buffer);
             }
             //刷新此输出流并强制写出所有缓冲的输出字节
             baos.flush();
@@ -422,10 +417,9 @@ public class Base64AndFileManager {
             baos = new ByteArrayOutputStream();
 //            bos = new BufferedOutputStream(baos);
             byte[] buffer = new byte[1024 * 8];
-            int len = bis.read(buffer);
-            while (len != -1) {
+            int len = 0;
+            while ((len = bis.read(buffer)) != -1) {
                 baos.write(buffer, 0, len);
-                len = bis.read(buffer);
             }
             //刷新此输出流并强制写出所有缓冲的输出字节
             baos.flush();
