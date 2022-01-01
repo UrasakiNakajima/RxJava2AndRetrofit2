@@ -2,6 +2,8 @@ package com.phone.base64_and_file;
 
 import android.util.Base64;
 
+import com.phone.common_library.manager.LogManager;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -12,11 +14,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import Decoder.BASE64Decoder;
 import Decoder.BASE64Encoder;
 
 public class Base64AndFileManager {
+
+    private static final String TAG = "Base64AndFileManager";
 
     /**
      * @param base64Content
@@ -156,6 +163,86 @@ public class Base64AndFileManager {
         }
 
         return encoder.encodeBuffer(bytes).trim();
+    }
+
+    /**
+     * @param file
+     * @return
+     */
+    public static String fileToBase64Test(File file) {
+        BASE64Encoder encoder = new BASE64Encoder();
+        byte[] bytes = null;
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        ByteArrayOutputStream baos = null;
+//        BufferedOutputStream bos = null;
+        try {
+            fis = new FileInputStream(file);
+            bis = new BufferedInputStream(fis);
+            baos = new ByteArrayOutputStream();
+//            bos = new BufferedOutputStream(baos);
+            byte[] buffer = new byte[1024 * 8];
+            int len = 0;
+            while ((len = bis.read(buffer)) != -1) {
+                baos.write(buffer, 0, len);
+            }
+            //刷新此输出流并强制写出所有缓冲的输出字节
+            baos.flush();
+            bytes = baos.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bis != null) {
+                    bis.close();
+                }
+                if (baos != null) {
+                    baos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        LogManager.i(TAG, "bytes.length******" + bytes.length);
+        List<byte[]> byteList = new ArrayList<>();
+        if (bytes.length > 10) {
+            int byte1 = bytes.length / 10;
+            for (int i = 0; i < 10; i++) {
+                byte[] sub1 = null;
+                if (i == 0) {
+                    sub1 = Arrays.copyOf(bytes, byte1 * (i + 1));
+                } else {
+                    sub1 = Arrays.copyOfRange(bytes, byte1 * (i), byte1 * (i + 1));
+                }
+                byteList.add(sub1);
+            }
+
+            int byte2 = bytes.length % 10;
+            if (byte2 > 0) {
+                byte[] sub2 = Arrays.copyOf(bytes, byte1 * (9 + 1));
+                byteList.add(sub2);
+            }
+        }
+//        byte[] sub1 = Arrays.copyOf(bytes, 3);
+//        byte[] sub2 = Arrays.copyOfRange(bytes, 3, bytes.length);
+
+//        String[] str = {"112", "2321", "3231", "4443", "5321"};
+//        String[] sub1 = Arrays.copyOf(str, 3);
+//        String[] sub2 = Arrays.copyOfRange(str, 3, str.length);
+//        LogManager.i(TAG, "Arrays.deepToString(sub1)******" + Arrays.deepToString(sub1));
+//        LogManager.i(TAG, "Arrays.deepToString(sub2)******" + Arrays.deepToString(sub2));
+
+        String base64Str = null;
+        if (byteList != null && byteList.size() > 0) {
+            base64Str = "";
+            for (int i = 0; i < byteList.size(); i++) {
+                base64Str += encoder.encodeBuffer(byteList.get(i)).trim();
+            }
+        } else {
+            base64Str = encoder.encodeBuffer(bytes).trim();
+        }
+        return base64Str;
     }
 
     /**

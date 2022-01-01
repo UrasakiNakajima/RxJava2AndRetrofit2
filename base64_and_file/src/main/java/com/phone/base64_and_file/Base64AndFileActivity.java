@@ -5,46 +5,36 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.IBinder;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.PathUtils;
+import androidx.core.text.PrecomputedTextCompat;
 import androidx.core.widget.NestedScrollView;
 
-import com.bumptech.glide.Glide;
-import com.luck.picture.lib.PictureSelector;
 import com.phone.common_library.base.BaseAppActivity;
 import com.phone.common_library.base.IBaseView;
-import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.ScreenManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.yalantis.ucrop.util.FileUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
-import id.zelory.compressor.Compressor;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 public class Base64AndFileActivity extends BaseAppActivity implements IBaseView {
 
@@ -55,7 +45,9 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
     private ImageView imvCompressedPicture;
     private TextView tevPictureToBase64;
     private NestedScrollView scrollViewBase64Str;
-    private TextView tevBase64Str;
+    private FrameLayout layoutBase64Str;
+    private AppCompatTextView tevBase64Str;
+    private StaticLayoutView staticLayoutView;
     private TextView tevBase64ToPicture;
     private ImageView imvBase64ToPicture;
     private TextView tevResetData;
@@ -100,11 +92,14 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         imvCompressedPicture = (ImageView) findViewById(R.id.imv_compressed_picture);
         tevPictureToBase64 = (TextView) findViewById(R.id.tev_picture_to_base64);
         scrollViewBase64Str = (NestedScrollView) findViewById(R.id.scroll_view_base64_str);
-        tevBase64Str = (TextView) findViewById(R.id.tev_base64_str);
+        layoutBase64Str = (FrameLayout) findViewById(R.id.layout_base64_str);
+        tevBase64Str = (AppCompatTextView) findViewById(R.id.tev_base64_str);
+        staticLayoutView = (StaticLayoutView) findViewById(R.id.static_layout_view);
         tevBase64ToPicture = (TextView) findViewById(R.id.tev_base64_to_picture);
         imvBase64ToPicture = (ImageView) findViewById(R.id.imv_base64_to_picture);
         tevResetData = (TextView) findViewById(R.id.tev_reset_data);
         loadView = (QMUILoadingView) findViewById(R.id.load_view);
+
 
         setToolbar(false, R.color.color_54E066FF);
 
@@ -122,7 +117,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
             public void onClick(View v) {
                 if (taskBinder != null) {
                     showLoading();
-                    taskBinder.startPictureToBase64Task(appCompatActivity, compressedPicturePath);
+                    taskBinder.startPictureToBase64Task(appCompatActivity, compressedPicturePath, staticLayoutView);
                 }
             }
         });
@@ -333,11 +328,19 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
-    public void showPictureToBase64Success(String base64Str) {
+    public void showPictureToBase64Success(StaticLayout staticLayout, String base64Str) {
         this.base64Str = base64Str;
         tevPictureToBase64.setVisibility(View.GONE);
         scrollViewBase64Str.setVisibility(View.VISIBLE);
-        tevBase64Str.setText(base64Str);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            tevBase64Str.setBreakStrategy(Layout.BREAK_STRATEGY_SIMPLE);
+//        }
+//        tevBase64Str.setVisibility(View.VISIBLE);
+//        tevBase64Str.setText(base64Str);
+
+        staticLayoutView.setVisibility(View.VISIBLE);
+//        staticLayoutView.setLayout(staticLayout);
         hideLoading();
     }
 

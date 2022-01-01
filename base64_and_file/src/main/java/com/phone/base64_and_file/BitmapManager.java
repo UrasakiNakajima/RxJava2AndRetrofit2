@@ -469,15 +469,21 @@ public class BitmapManager {
             LogManager.i(TAG, "scaleImage scale*****" + scale);
             //開平方會有一點損失精度
             float prescription = (float) Math.sqrt(scale);
+//            float prescription2 = (float) Math.sqrt(prescription);
             LogManager.i(TAG, "scaleImage prescription*****" + prescription);
+//            LogManager.i(TAG, "scaleImage prescription2*****" + prescription2);
             Bitmap bitmap = null;
+            //循環壓縮bitmap，防止一次壓縮bitmap卡頓問題（子線程把主線成卡頓了）
             for (int i = 0; i < 2; i++) {
                 if (bitmap != null) {
                     bitmap = scale(bitmap, prescription);
+//                    bitmap = scale(bitmap, prescription2);
                 } else {
                     bitmap = scale(resBitmap, prescription);
+//                    bitmap = scale(resBitmap, prescription2);
                 }
                 LogManager.i(TAG, i + "scaleImage prescription*****" + prescription);
+//                LogManager.i(TAG, i + "scaleImage prescription2*****" + prescription2);
             }
             return bitmap;
         }

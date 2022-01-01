@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -19,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.phone.common_library.callback.OnCommonBothParamCallback;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.ScreenManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +54,6 @@ public class Base64AndFileService extends Service {
                                                String dirsPath2) {
             LogManager.i(TAG, "startTask executed");
             compressedPictureThread = new CompressedPictureThread(
-                    appCompatActivity,
                     dirsPath,
                     dirsPath2, new OnCommonBothParamCallback<Bitmap>() {
                 @Override
@@ -76,26 +80,30 @@ public class Base64AndFileService extends Service {
          * 开启图片转Base64任务
          */
         public void startPictureToBase64Task(AppCompatActivity appCompatActivity,
-                                             String filePath) {
+                                             String filePath,
+                                             StaticLayoutView staticLayoutView) {
             LogManager.i(TAG, "startTask2 executed");
             pictureToBase64TaskThread = new PictureToBase64TaskThread(
-                    filePath, new OnCommonSingleParamCallback<String>() {
-                @Override
-                public void onSuccess(String success) {
-                    if (appCompatActivity instanceof Base64AndFileActivity) {
-                        Base64AndFileActivity base64AndFileActivity = (Base64AndFileActivity) appCompatActivity;
-                        base64AndFileActivity.showPictureToBase64Success(success);
-                    }
-                }
+                    appCompatActivity,
+                    filePath,
+                    staticLayoutView,
+                    new OnCommonBothParamCallback<StaticLayout>() {
+                        @Override
+                        public void onSuccess(StaticLayout success, String base64Str) {
+                            if (appCompatActivity instanceof Base64AndFileActivity) {
+                                Base64AndFileActivity base64AndFileActivity = (Base64AndFileActivity) appCompatActivity;
+                                base64AndFileActivity.showPictureToBase64Success(success, base64Str);
+                            }
+                        }
 
-                @Override
-                public void onError(String error) {
-                    if (appCompatActivity instanceof Base64AndFileActivity) {
-                        Base64AndFileActivity base64AndFileActivity = (Base64AndFileActivity) appCompatActivity;
-                        base64AndFileActivity.showPictureToBase64Error(error);
-                    }
-                }
-            });
+                        @Override
+                        public void onError(String error) {
+                            if (appCompatActivity instanceof Base64AndFileActivity) {
+                                Base64AndFileActivity base64AndFileActivity = (Base64AndFileActivity) appCompatActivity;
+                                base64AndFileActivity.showPictureToBase64Error(error);
+                            }
+                        }
+                    });
             pictureToBase64TaskThread.start();
         }
 
@@ -164,8 +172,7 @@ public class Base64AndFileService extends Service {
         private String dirsPath2;
         private OnCommonBothParamCallback<Bitmap> onCommonBothParamCallback;
 
-        protected CompressedPictureThread(AppCompatActivity appCompatActivity,
-                                          String dirsPath,
+        protected CompressedPictureThread(String dirsPath,
                                           String dirsPath2,
                                           OnCommonBothParamCallback<Bitmap> onCommonBothParamCallback) {
             this.dirsPath = dirsPath;
@@ -210,13 +217,20 @@ public class Base64AndFileService extends Service {
 
     private class PictureToBase64TaskThread extends Thread {
 
+        private AppCompatActivity appCompatActivity;
         private String filePath;
-        private OnCommonSingleParamCallback<String> onCommonSingleParamCallback;
+        private StaticLayoutView staticLayoutView;
+        private StaticLayout staticLayout = null;
+        private OnCommonBothParamCallback<StaticLayout> onCommonBothParamCallback;
 
-        protected PictureToBase64TaskThread(String filePath,
-                                            OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+        protected PictureToBase64TaskThread(AppCompatActivity appCompatActivity,
+                                            String filePath,
+                                            StaticLayoutView staticLayoutView,
+                                            OnCommonBothParamCallback<StaticLayout> onCommonBothParamCallback) {
+            this.appCompatActivity = appCompatActivity;
             this.filePath = filePath;
-            this.onCommonSingleParamCallback = onCommonSingleParamCallback;
+            this.staticLayoutView = staticLayoutView;
+            this.onCommonBothParamCallback = onCommonBothParamCallback;
         }
 
         @Override
@@ -228,15 +242,38 @@ public class Base64AndFileService extends Service {
             File file = new File(filePath);
             LogManager.i(TAG, "PictureToBase64TaskThread filePath*******" + filePath);
             if (file.exists()) {
-                base64Str = Base64AndFileManager.fileToBase64(file);
+//                base64Str = Base64AndFileManager.fileToBase64(file);
+//                base64Str = Base64AndFileManager.fileToBase64Test(file);
+                base64Str = Base64AndFileManager.fileToBase64Second(file);
             }
+
+            if (!TextUtils.isEmpty(base64Str)) {
+                if (appCompatActivity instanceof Base64AndFileActivity) {
+                    Base64AndFileActivity base64AndFileActivity = (Base64AndFileActivity) appCompatActivity;
+                    TextPaint textPaint = new TextPaint();
+                    textPaint.setTextSize(ScreenManager
+                            .spToPx(base64AndFileActivity, 16));
+                    staticLayout = new StaticLayout(
+                            base64Str,            //文本
+                            textPaint,       //TextPaint对象
+                            ScreenManager.getScreenWidth(base64AndFileActivity), //layout宽度，多行的情况下取父容器宽度减去padding即可
+                            Layout.Alignment.ALIGN_NORMAL, //对其方式
+                            1.0f, //间隔倍数，表示1.0倍字体大小
+                            0f,   //增加的间隔
+                            true);
+                    Canvas canvas = new Canvas();
+                    staticLayout.draw(canvas);
+                    staticLayoutView.setLayout(staticLayout);
+                }
+            }
+
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (!TextUtils.isEmpty(base64Str)) {
-                        onCommonSingleParamCallback.onSuccess(base64Str);
+                    if (staticLayout != null) {
+                        onCommonBothParamCallback.onSuccess(staticLayout, base64Str);
                     } else {
-                        onCommonSingleParamCallback.onError("圖片不存在");
+                        onCommonBothParamCallback.onError("圖片不存在");
                     }
                 }
             });

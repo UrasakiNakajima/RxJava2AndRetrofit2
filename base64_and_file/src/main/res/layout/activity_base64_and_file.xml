@@ -86,19 +86,27 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
-                    <LinearLayout
+                    <FrameLayout
+                        android:id="@+id/layout_base64_str"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_200"
                         android:background="@color/color_54E066FF"
                         android:orientation="vertical">
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tev_base64_str"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
 
-                    </LinearLayout>
+                        <com.phone.base64_and_file.StaticLayoutView
+                            android:id="@+id/static_layout_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
 
                 </androidx.core.widget.NestedScrollView>
 
