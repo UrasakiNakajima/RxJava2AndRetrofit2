@@ -245,12 +245,12 @@ public class Base64AndFileService extends Service {
                 String fileName = "base64Str.txt";
                 txtFilePath = FileManager.writeStrToTextFile(base64Str, filePath, fileName);
                 base64StrList = Base64AndFileManager.getBase64StrList(txtFilePath);
-                base64Str = "";
-                StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 0; i < base64StrList.size(); i++) {
-                    stringBuilder.append(base64StrList.get(i));
-                }
-                base64Str = stringBuilder.toString();
+//                base64Str = "";
+//                StringBuilder stringBuilder = new StringBuilder();
+//                for (int i = 0; i < base64StrList.size(); i++) {
+//                    stringBuilder.append(base64StrList.get(i));
+//                }
+//                base64Str = stringBuilder.toString();
 
                 //把字符串的最後一個打印出來，然後看看和RecyclerView顯示的最後一個字符串是否一致
                 LogManager.i(TAG, "base64StrList******" + base64StrList.get(base64StrList.size() - 1));
