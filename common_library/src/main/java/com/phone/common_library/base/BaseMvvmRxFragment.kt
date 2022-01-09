@@ -28,7 +28,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
-        mDatabind.lifecycleOwner = this
+        mDatabind.lifecycleOwner = viewLifecycleOwner
         return mDatabind.root
     }
 
@@ -135,6 +135,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     override fun onDestroyView() {
         mDatabind.unbind()
         viewModelStore.clear()
+        viewModel = null
         super.onDestroyView()
     }
 }

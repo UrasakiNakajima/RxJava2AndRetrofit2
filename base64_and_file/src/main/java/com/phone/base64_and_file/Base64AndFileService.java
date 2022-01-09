@@ -27,6 +27,8 @@ import com.phone.common_library.manager.ScreenManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import id.zelory.compressor.Compressor;
 
@@ -80,16 +82,13 @@ public class Base64AndFileService extends Service {
          * 开启图片转Base64任务
          */
         public void startPictureToBase64Task(AppCompatActivity appCompatActivity,
-                                             String filePath,
-                                             StaticLayoutView staticLayoutView) {
+                                             String filePath) {
             LogManager.i(TAG, "startTask2 executed");
             pictureToBase64TaskThread = new PictureToBase64TaskThread(
-                    appCompatActivity,
                     filePath,
-                    staticLayoutView,
-                    new OnCommonBothParamCallback<StaticLayout>() {
+                    new OnCommonBothParamCallback<List<String>>() {
                         @Override
-                        public void onSuccess(StaticLayout success, String base64Str) {
+                        public void onSuccess(List<String> success, String base64Str) {
                             if (appCompatActivity instanceof Base64AndFileActivity) {
                                 Base64AndFileActivity base64AndFileActivity = (Base64AndFileActivity) appCompatActivity;
                                 base64AndFileActivity.showPictureToBase64Success(success, base64Str);
@@ -217,19 +216,14 @@ public class Base64AndFileService extends Service {
 
     private class PictureToBase64TaskThread extends Thread {
 
-        private AppCompatActivity appCompatActivity;
         private String filePath;
-        private StaticLayoutView staticLayoutView;
-        private StaticLayout staticLayout = null;
-        private OnCommonBothParamCallback<StaticLayout> onCommonBothParamCallback;
+        private OnCommonBothParamCallback<List<String>> onCommonBothParamCallback;
+        private String txtFilePath = null;
+        private List<String> base64StrList;
 
-        protected PictureToBase64TaskThread(AppCompatActivity appCompatActivity,
-                                            String filePath,
-                                            StaticLayoutView staticLayoutView,
-                                            OnCommonBothParamCallback<StaticLayout> onCommonBothParamCallback) {
-            this.appCompatActivity = appCompatActivity;
+        protected PictureToBase64TaskThread(String filePath,
+                                            OnCommonBothParamCallback<List<String>> onCommonBothParamCallback) {
             this.filePath = filePath;
-            this.staticLayoutView = staticLayoutView;
             this.onCommonBothParamCallback = onCommonBothParamCallback;
         }
 
@@ -248,45 +242,30 @@ public class Base64AndFileService extends Service {
             }
 
             if (!TextUtils.isEmpty(base64Str)) {
-                if (appCompatActivity instanceof Base64AndFileActivity) {
-                    Base64AndFileActivity base64AndFileActivity = (Base64AndFileActivity) appCompatActivity;
-                    TextPaint textPaint = new TextPaint();
-                    textPaint.setTextSize(ScreenManager
-                            .spToPx(base64AndFileActivity, 16));
-                    staticLayout = new StaticLayout(
-                            base64Str,            //文本
-                            textPaint,       //TextPaint对象
-                            ScreenManager.getScreenWidth(base64AndFileActivity), //layout宽度，多行的情况下取父容器宽度减去padding即可
-                            Layout.Alignment.ALIGN_NORMAL, //对其方式
-                            1.0f, //间隔倍数，表示1.0倍字体大小
-                            0f,   //增加的间隔
-                            true);
-                    Canvas canvas = new Canvas();
-                    staticLayout.draw(canvas);
-                    staticLayoutView.setLayout(staticLayout);
+                String fileName = "base64Str.txt";
+                txtFilePath = FileManager.writeStrToTextFile(base64Str, filePath, fileName);
+                base64StrList = Base64AndFileManager.getBase64StrList(txtFilePath);
+                base64Str = "";
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < base64StrList.size(); i++) {
+                    stringBuilder.append(base64StrList.get(i));
                 }
+                base64Str = stringBuilder.toString();
+
+                //把字符串的最後一個打印出來，然後看看和RecyclerView顯示的最後一個字符串是否一致
+                LogManager.i(TAG, "base64StrList******" + base64StrList.get(base64StrList.size() - 1));
             }
 
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (staticLayout != null) {
-                        onCommonBothParamCallback.onSuccess(staticLayout, base64Str);
+                    if (base64StrList.size() > 0) {
+                        onCommonBothParamCallback.onSuccess(base64StrList, base64Str);
                     } else {
                         onCommonBothParamCallback.onError("圖片不存在");
                     }
                 }
             });
-
-
-//            String fileName = "pictureNew2.png";
-//            String fileName = "pictureNew5.jpeg";
-//            File fileNew = Base64AndFileManager.base64ToFile(base64Str, dirsPath5, fileName);
-//            File fileNew = Base64AndFileManager.base64ToFileSecond(base64Str, dirsPath5, fileName);
-//            File fileNew = Base64AndFileManager.base64ToFileThird(base64Str, dirsPath5, fileName);
-
-//            Bitmap bitmap = BitmapFactory.decodeFile(fileNew.getAbsolutePath());
-//            onCommonSingleParamCallback2.onSuccess(bitmap);
         }
     }
 

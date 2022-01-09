@@ -529,4 +529,26 @@ public class Base64AndFileManager {
         return org.apache.commons.codec.binary.Base64.encodeBase64String(bytes);
     }
 
+    public static List<String> getBase64StrList(String filePath) {
+        List<String> base64StrList = new ArrayList<>();
+        LogManager.i(TAG, "base64StrList size*****" + base64StrList.size());
+
+        try {
+            FileInputStream fis = new FileInputStream(filePath);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            byte[] buffer = new byte[1024 * 8];
+            int len = 0;
+            String base64Content;
+            while ((len = bis.read(buffer)) != -1) {
+                base64Content = new String(buffer, 0, len);
+                base64StrList.add(base64Content);
+            }
+            LogManager.i(TAG, "base64StrList size*****" + base64StrList.size());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return base64StrList;
+    }
+
 }

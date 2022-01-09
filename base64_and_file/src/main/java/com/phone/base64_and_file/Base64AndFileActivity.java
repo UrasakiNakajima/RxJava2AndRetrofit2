@@ -8,7 +8,9 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -24,6 +26,9 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.text.PrecomputedTextCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.common_library.base.BaseAppActivity;
 import com.phone.common_library.base.IBaseView;
@@ -32,7 +37,19 @@ import com.phone.common_library.manager.ScreenManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.reactivex.disposables.Disposable;
 
@@ -44,10 +61,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
     private TextView tevCompressedPicture;
     private ImageView imvCompressedPicture;
     private TextView tevPictureToBase64;
-    private NestedScrollView scrollViewBase64Str;
-    private FrameLayout layoutBase64Str;
-    private AppCompatTextView tevBase64Str;
-    private StaticLayoutView staticLayoutView;
+    private RecyclerView rcvBase64Str;
     private TextView tevBase64ToPicture;
     private ImageView imvBase64ToPicture;
     private TextView tevResetData;
@@ -66,6 +80,15 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
     public String base64Str;
     public Bitmap bitmap;
 
+    private List<String> base64StrList = new ArrayList<>();
+    private LinearLayoutManager linearLayoutManager;
+    private Base64StrAdapter base64StrAdapter;
+
+    private Timer timer;
+    private TimerTask timerTask;
+
+    private Handler handler;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +105,8 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
                 + File.separator + "Pictures";
         dirsPath2 = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + File.separator + "Pictures2";
+
+        handler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -91,10 +116,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         tevCompressedPicture = (TextView) findViewById(R.id.tev_compressed_picture);
         imvCompressedPicture = (ImageView) findViewById(R.id.imv_compressed_picture);
         tevPictureToBase64 = (TextView) findViewById(R.id.tev_picture_to_base64);
-        scrollViewBase64Str = (NestedScrollView) findViewById(R.id.scroll_view_base64_str);
-        layoutBase64Str = (FrameLayout) findViewById(R.id.layout_base64_str);
-        tevBase64Str = (AppCompatTextView) findViewById(R.id.tev_base64_str);
-        staticLayoutView = (StaticLayoutView) findViewById(R.id.static_layout_view);
+        rcvBase64Str = (RecyclerView) findViewById(R.id.rcv_base64_str);
         tevBase64ToPicture = (TextView) findViewById(R.id.tev_base64_to_picture);
         imvBase64ToPicture = (ImageView) findViewById(R.id.imv_base64_to_picture);
         tevResetData = (TextView) findViewById(R.id.tev_reset_data);
@@ -117,7 +139,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
             public void onClick(View v) {
                 if (taskBinder != null) {
                     showLoading();
-                    taskBinder.startPictureToBase64Task(appCompatActivity, compressedPicturePath, staticLayoutView);
+                    taskBinder.startPictureToBase64Task(appCompatActivity, compressedPicturePath);
                 }
             }
         });
@@ -136,6 +158,20 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
                 resetData();
             }
         });
+
+        initAdapter();
+    }
+
+    private void initAdapter() {
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        rcvBase64Str.setLayoutManager(linearLayoutManager);
+        rcvBase64Str.setItemAnimator(new DefaultItemAnimator());
+
+        base64StrAdapter = new Base64StrAdapter(this);
+        rcvBase64Str.setAdapter(base64StrAdapter);
+        base64StrAdapter.clearData();
+        base64StrAdapter.addAllData(base64StrList);
     }
 
     @Override
@@ -156,6 +192,19 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
             // 绑定服务和活动，之后活动就可以去调服务的方法了
             bindService(bindIntent, connection, BIND_AUTO_CREATE);
         }
+
+
+//        // 注册刚写的滚动监听器
+//        contentScroll.setOnScrollChangedListener(new OnScrollChangedListenerSimple() {
+//            @Override
+//            public void onScrollBottom() {
+//                synchronized (Base64AndFileActivity.class) {
+//                    asyncTextLoadTask = new AsyncTextLoadTask(Base64AndFileActivity.this, br);
+//                    asyncTextLoadTask.execute();
+//                }
+//            }
+//        });
+
     }
 
     @Override
@@ -328,20 +377,57 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
-    public void showPictureToBase64Success(StaticLayout staticLayout, String base64Str) {
+    public void showPictureToBase64Success(List<String> base64StrList, String base64Str) {
         this.base64Str = base64Str;
         tevPictureToBase64.setVisibility(View.GONE);
-        scrollViewBase64Str.setVisibility(View.VISIBLE);
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            tevBase64Str.setBreakStrategy(Layout.BREAK_STRATEGY_SIMPLE);
-//        }
-//        tevBase64Str.setVisibility(View.VISIBLE);
-//        tevBase64Str.setText(base64Str);
-
-        staticLayoutView.setVisibility(View.VISIBLE);
-//        staticLayoutView.setLayout(staticLayout);
+        rcvBase64Str.setVisibility(View.VISIBLE);
+        this.base64StrList.clear();
+        this.base64StrList.addAll(base64StrList);
+        base64StrAdapter.clearData();
+        base64StrAdapter.addAllData(this.base64StrList);
         hideLoading();
+        startTimer();
+    }
+
+    private void startTimer() {
+        stopTimer();
+        if (timer == null) {
+            timer = new Timer();
+        }
+
+        if (timerTask == null) {
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (base64StrList.size() > 0) {
+                                //RecyclerView自動滑動到底部，看看最後一個字符串和打印出來的字符串是否一致
+                                rcvBase64Str.scrollToPosition(base64StrList.size() - 1);
+                            }
+                        }
+                    });
+                }
+            };
+        }
+
+        if (timer != null && timerTask != null) {
+            timer.schedule(timerTask, 2000);
+        }
+    }
+
+    private void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+
+        if (timerTask != null) {
+            timerTask.cancel();
+            timerTask = null;
+        }
     }
 
     public void showPictureToBase64Error(String error) {
@@ -374,7 +460,12 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         tevCompressedPicture.setVisibility(View.VISIBLE);
         imvCompressedPicture.setVisibility(View.GONE);
         tevPictureToBase64.setVisibility(View.VISIBLE);
-        scrollViewBase64Str.setVisibility(View.GONE);
+        if (base64StrList.size() > 0) {
+            rcvBase64Str.scrollToPosition(0);
+            base64StrList.clear();
+            base64StrAdapter.clearData();
+        }
+        rcvBase64Str.setVisibility(View.GONE);
         tevBase64ToPicture.setVisibility(View.VISIBLE);
         imvBase64ToPicture.setVisibility(View.GONE);
     }

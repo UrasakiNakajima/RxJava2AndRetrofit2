@@ -75,8 +75,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
         }
 
-        viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
-        viewModel!!.getDataxError().observe(this, dataxErrorObserver!!)
+        viewModel!!.getDataxSuccess().observe(viewLifecycleOwner, dataxSuccessObserver!!)
+        viewModel!!.getDataxError().observe(viewLifecycleOwner, dataxErrorObserver!!)
     }
 
     override fun initViews() {
