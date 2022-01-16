@@ -1,4 +1,4 @@
-package com.phone.base64_and_file;
+package com.phone.base64_and_file.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.phone.base64_and_file.R;
 
 import java.util.ArrayList;
 import java.util.List;

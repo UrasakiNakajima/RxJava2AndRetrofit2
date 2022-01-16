@@ -1,51 +1,37 @@
 package com.phone.base64_and_file;
 
 import android.Manifest;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Bitmap;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Looper;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.text.PrecomputedTextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.phone.common_library.base.BaseAppActivity;
+import com.phone.base64_and_file.adapter.Base64StrAdapter;
+import com.phone.base64_and_file.presenter.Base64AndFilePresenterImpl;
+import com.phone.base64_and_file.service.Base64AndFileService;
+import com.phone.base64_and_file.service.Base64AndFileServiceConnection;
+import com.phone.common_library.base.BaseMvpAppActivity;
 import com.phone.common_library.base.IBaseView;
+import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
-import com.phone.common_library.manager.ScreenManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -53,7 +39,7 @@ import java.util.TimerTask;
 
 import io.reactivex.disposables.Disposable;
 
-public class Base64AndFileActivity extends BaseAppActivity implements IBaseView {
+public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64AndFilePresenterImpl> implements IBase64AndFileView {
 
     private static final String TAG = "Base64AndFileActivity";
     private Toolbar toolbar;
@@ -70,7 +56,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
 
     // where this is an Activity or Fragment instance
     private RxPermissions rxPermissions;
-    private Base64AndFileService.TaskBinder taskBinder;
+    private Binder binder;
     private Disposable disposable;
     private Disposable disposable2;
     private String dirsPath;
@@ -78,6 +64,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
 
     private String compressedPicturePath;
     public String base64Str;
+    private Bitmap bitmapNew;
     public Bitmap bitmap;
 
     private List<String> base64StrList = new ArrayList<>();
@@ -128,27 +115,28 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         tevCompressedPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (taskBinder != null) {
+                if (presenter != null && binder != null) {
                     showLoading();
-                    taskBinder.startCompressedPictureTask(appCompatActivity, dirsPath, dirsPath2);
+                    presenter.showCompressedPicture(appCompatActivity,
+                            dirsPath, dirsPath2);
                 }
             }
         });
         tevPictureToBase64.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (taskBinder != null) {
+                if (presenter != null && binder != null) {
                     showLoading();
-                    taskBinder.startPictureToBase64Task(appCompatActivity, compressedPicturePath);
+                    presenter.showPictureToBase64(compressedPicturePath);
                 }
             }
         });
         tevBase64ToPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (taskBinder != null) {
+                if (presenter != null && binder != null) {
                     showLoading();
-                    taskBinder.startBase64ToPictureTask(appCompatActivity, compressedPicturePath, base64Str);
+                    presenter.showBase64ToPicture(compressedPicturePath, base64Str);
                 }
             }
         });
@@ -192,19 +180,11 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
             // 绑定服务和活动，之后活动就可以去调服务的方法了
             bindService(bindIntent, connection, BIND_AUTO_CREATE);
         }
+    }
 
-
-//        // 注册刚写的滚动监听器
-//        contentScroll.setOnScrollChangedListener(new OnScrollChangedListenerSimple() {
-//            @Override
-//            public void onScrollBottom() {
-//                synchronized (Base64AndFileActivity.class) {
-//                    asyncTextLoadTask = new AsyncTextLoadTask(Base64AndFileActivity.this, br);
-//                    asyncTextLoadTask.execute();
-//                }
-//            }
-//        });
-
+    @Override
+    protected Base64AndFilePresenterImpl attachPresenter() {
+        return new Base64AndFilePresenterImpl(this);
     }
 
     @Override
@@ -241,7 +221,6 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
                         Intent bindIntent = new Intent(this, Base64AndFileService.class);
                         // 绑定服务和活动，之后活动就可以去调服务的方法了
                         bindService(bindIntent, connection, BIND_AUTO_CREATE);
-
                     } else if (permission.shouldShowRequestPermissionRationale) {
                         // Denied permission without ask never again
 
@@ -340,55 +319,40 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         }
     }
 
-    private ServiceConnection connection = new ServiceConnection() {
+//    private ServiceConnection connection = new ServiceConnection() {
+//
+//        /**
+//         * 可交互的后台服务与普通服务的不同之处，就在于这个connection建立起了两者的联系
+//         *
+//         * @param name
+//         */
+//        @Override
+//        public void onServiceDisconnected(ComponentName name) {
+//        }
+//
+//        /**
+//         * onServiceConnected()方法关键，在这里实现对服务的方法的调用
+//         *
+//         * @param name
+//         * @param service
+//         */
+//        @Override
+//        public void onServiceConnected(ComponentName name, IBinder service) {
+//            taskBinder = (TaskBinder) service;
+//        }
+//    };
 
-        /**
-         * 可交互的后台服务与普通服务的不同之处，就在于这个connection建立起了两者的联系
-         *
-         * @param name
-         */
+    private Base64AndFileServiceConnection connection = new Base64AndFileServiceConnection(new OnCommonSingleParamCallback<Binder>() {
         @Override
-        public void onServiceDisconnected(ComponentName name) {
+        public void onSuccess(Binder success) {
+            binder = success;
         }
 
-        /**
-         * onServiceConnected()方法关键，在这里实现对服务的方法的调用
-         *
-         * @param name
-         * @param service
-         */
         @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            taskBinder = (Base64AndFileService.TaskBinder) service;
+        public void onError(String error) {
+
         }
-    };
-
-    public void showCompressedPictureSuccess(Bitmap bitmap, String compressedPicturePath) {
-        this.bitmap = bitmap;
-        this.compressedPicturePath = compressedPicturePath;
-        tevCompressedPicture.setVisibility(View.GONE);
-        imvCompressedPicture.setVisibility(View.VISIBLE);
-        imvCompressedPicture.setImageBitmap(bitmap);
-        hideLoading();
-    }
-
-    public void showCompressedPictureError(String error) {
-        hideLoading();
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
-    }
-
-    public void showPictureToBase64Success(List<String> base64StrList, String base64Str) {
-        this.base64Str = base64Str;
-        tevPictureToBase64.setVisibility(View.GONE);
-
-        rcvBase64Str.setVisibility(View.VISIBLE);
-        this.base64StrList.clear();
-        this.base64StrList.addAll(base64StrList);
-        base64StrAdapter.clearData();
-        base64StrAdapter.addAllData(this.base64StrList);
-        hideLoading();
-        startTimer();
-    }
+    });
 
     private void startTimer() {
         stopTimer();
@@ -430,11 +394,43 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         }
     }
 
+    @Override
+    public void showCompressedPictureSuccess(Bitmap bitmap, String compressedPicturePath) {
+        this.bitmap = bitmap;
+        this.compressedPicturePath = compressedPicturePath;
+        tevCompressedPicture.setVisibility(View.GONE);
+        imvCompressedPicture.setVisibility(View.VISIBLE);
+        imvCompressedPicture.setImageBitmap(bitmap);
+        hideLoading();
+    }
+
+    @Override
+    public void showCompressedPictureError(String error) {
+        hideLoading();
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showPictureToBase64Success(List<String> base64StrList, String base64Str) {
+        this.base64Str = base64Str;
+        tevPictureToBase64.setVisibility(View.GONE);
+
+        rcvBase64Str.setVisibility(View.VISIBLE);
+        this.base64StrList.clear();
+        this.base64StrList.addAll(base64StrList);
+        base64StrAdapter.clearData();
+        base64StrAdapter.addAllData(this.base64StrList);
+        hideLoading();
+        startTimer();
+    }
+
+    @Override
     public void showPictureToBase64Error(String error) {
         hideLoading();
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
     public void showBase64ToPictureSuccess(Bitmap bitmap) {
         this.bitmap = bitmap;
         tevBase64ToPicture.setVisibility(View.GONE);
@@ -443,6 +439,7 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
         hideLoading();
     }
 
+    @Override
     public void showBase64ToPictureError(String error) {
         hideLoading();
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
@@ -482,9 +479,11 @@ public class Base64AndFileActivity extends BaseAppActivity implements IBaseView 
             bitmap.recycle();
             bitmap = null;
         }
+        stopTimer();
         if (connection != null) {
             // 解绑服务，服务要记得解绑，不要造成内存泄漏
             unbindService(connection);
+            binder = null;
         }
         super.onDestroy();
     }

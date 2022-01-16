@@ -255,8 +255,13 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 	
 	@Override
 	public void onDestroyView() {
-		layoutOutLayer.removeAllViews();
+
 		super.onDestroyView();
 	}
-	
+
+	@Override
+	public void onDestroy() {
+		layoutOutLayer.removeAllViews();
+		super.onDestroy();
+	}
 }

@@ -133,9 +133,14 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     }
 
     override fun onDestroyView() {
+
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
         mDatabind.unbind()
         viewModelStore.clear()
         viewModel = null
-        super.onDestroyView()
+        super.onDestroy()
     }
 }

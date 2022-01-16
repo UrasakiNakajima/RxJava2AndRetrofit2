@@ -161,10 +161,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     override fun onDestroyView() {
-        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
-        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
-
         super.onDestroyView()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
+        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+    }
 }

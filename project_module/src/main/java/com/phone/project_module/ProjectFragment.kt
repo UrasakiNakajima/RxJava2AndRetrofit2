@@ -180,11 +180,15 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun onDestroyView() {
-        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
-        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
 
 //        viewModel!!.getDataxSuccess().removeObservers(this)
         super.onDestroyView()
     }
 
+    override fun onDestroy() {
+        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
+        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+        viewModel = null
+        super.onDestroy()
+    }
 }

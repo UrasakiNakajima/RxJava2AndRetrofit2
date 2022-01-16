@@ -460,7 +460,12 @@ class ResourceFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        fragmentList.clear()
+
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        fragmentList.clear()
+        super.onDestroy()
     }
 }

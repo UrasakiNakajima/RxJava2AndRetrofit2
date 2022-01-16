@@ -22,7 +22,8 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_resource_child.*
 
-class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(), IResourceChildView {
+class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(),
+    IResourceChildView {
 
     private val TAG: String = "ResourceChildFragment";
 
@@ -85,8 +86,8 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
 
                 //Jump with parameters
                 ARouter.getInstance().build("/common_library/ui/android_and_js")
-                        .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())
-                        .navigation()
+                    .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())
+                    .navigation()
             }
         })
         resourceAdapter!!.setHasStableIds(true)
@@ -95,20 +96,20 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
         resourceAdapter!!.addAllData(resultList)
 
         refresh_layout.setOnRefreshLoadMoreListener(
-                object : OnRefreshLoadMoreListener {
-                    override fun onLoadMore(refresh_layout: RefreshLayout) {
-                        LogManager.i(TAG, "onLoadMore")
-                        isRefresh = false
-                        initResource(type, pageSize, currentPage.toString())
-                    }
+            object : OnRefreshLoadMoreListener {
+                override fun onLoadMore(refresh_layout: RefreshLayout) {
+                    LogManager.i(TAG, "onLoadMore")
+                    isRefresh = false
+                    initResource(type, pageSize, currentPage.toString())
+                }
 
-                    override fun onRefresh(refresh_layout: RefreshLayout) {
-                        LogManager.i(TAG, "onRefresh")
-                        isRefresh = true
-                        currentPage = 1;
-                        initResource(type, pageSize, currentPage.toString())
-                    }
-                })
+                override fun onRefresh(refresh_layout: RefreshLayout) {
+                    LogManager.i(TAG, "onRefresh")
+                    isRefresh = true
+                    currentPage = 1;
+                    initResource(type, pageSize, currentPage.toString())
+                }
+            })
     }
 
     override fun initLoadData() {
@@ -153,11 +154,17 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
 
     override fun resourceDataError(error: String) {
         if (!activity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dpToPx(activity, 20f), ScreenManager.dpToPx(activity, 20f),
-                    18, ContextCompat.getColor(activity!!, R.color.white),
-                    ContextCompat.getColor(appCompatActivity!!,R.color.color_FFE066FF), ScreenManager.dpToPx(activity, 40f),
-                    ScreenManager.dpToPx(activity, 20f), error,
-                    true)
+            showCustomToast(
+                ScreenManager.dpToPx(activity, 20f),
+                ScreenManager.dpToPx(activity, 20f),
+                18,
+                ContextCompat.getColor(activity!!, R.color.white),
+                ContextCompat.getColor(appCompatActivity!!, R.color.color_FFE066FF),
+                ScreenManager.dpToPx(activity, 40f),
+                ScreenManager.dpToPx(activity, 20f),
+                error,
+                true
+            )
 
             if (isRefresh) {
                 refresh_layout.finishRefresh(false)
@@ -183,7 +190,12 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
     }
 
     override fun onDestroyView() {
-        resultList.clear()
+
         super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        resultList.clear()
+        super.onDestroy()
     }
 }
