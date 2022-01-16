@@ -117,7 +117,7 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
             public void onClick(View v) {
                 if (presenter != null && binder != null) {
                     showLoading();
-                    presenter.showCompressedPicture(appCompatActivity,
+                    presenter.showCompressedPicture(appCompatActivity.getApplicationContext(),
                             dirsPath, dirsPath2);
                 }
             }
