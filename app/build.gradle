@@ -21,11 +21,11 @@ android {
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                cppFlags ''
-            }
-        }
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags ''
+//            }
+//        }
     }
 
     //android 模块下开启DataBinding（必须添加，即使此module没有用到也要添加）
@@ -54,12 +54,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.10.2'
-        }
-    }
+//    externalNativeBuild {
+//        cmake {
+//            path file('src/main/cpp/CMakeLists.txt')
+//            version '3.10.2'
+//        }
+//    }
     ndkVersion '21.1.6352462'
 }
 
