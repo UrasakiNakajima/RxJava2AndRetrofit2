@@ -23,7 +23,8 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 @Route(path = "/project_module/project")
-class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBinding>(), IProjectChildView {
+class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBinding>(),
+    IProjectChildView {
 
     companion object {
         private val TAG: String = "ProjectChildFragment"
@@ -80,7 +81,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun initViews() {
-        projectAdapter = ProjectAdapter(activity!!);
+        projectAdapter = ProjectAdapter(appCompatActivity!!);
         projectAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
@@ -113,7 +114,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun showLoading() {
-        if (!activity!!.isFinishing()) {
+        if (!appCompatActivity!!.isFinishing()) {
             if (mDatabind.loadView != null && !mDatabind.loadView.isShown()) {
                 mDatabind.loadView.setVisibility(View.VISIBLE)
                 mDatabind.loadView.start()
@@ -122,7 +123,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun hideLoading() {
-        if (!activity!!.isFinishing()) {
+        if (!appCompatActivity!!.isFinishing()) {
             if (mDatabind.loadView != null && mDatabind.loadView.isShown()) {
                 mDatabind.loadView.stop()
                 mDatabind.loadView.setVisibility(View.GONE)
@@ -131,7 +132,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun projectDataSuccess(success: List<DataX>) {
-        if (!activity!!.isFinishing()) {
+        if (!appCompatActivity!!.isFinishing()) {
             if (isRefresh) {
                 dataList.clear()
                 dataList.addAll(success)
@@ -149,11 +150,17 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun projectDataError(error: String) {
-        if (!activity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dpToPx(activity, 20f), ScreenManager.dpToPx(activity, 20f),
-                    18, ContextCompat.getColor(activity!!, R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(activity, 40f),
-                    ScreenManager.dpToPx(activity, 20f), error)
+        if (!appCompatActivity!!.isFinishing()) {
+            showCustomToast(
+                ScreenManager.dpToPx(appCompatActivity, 20f),
+                ScreenManager.dpToPx(appCompatActivity, 20f),
+                18,
+                ContextCompat.getColor(appCompatActivity!!, R.color.white),
+                ContextCompat.getColor(appCompatActivity!!, R.color.color_FFE066FF),
+                ScreenManager.dpToPx(appCompatActivity, 40f),
+                ScreenManager.dpToPx(appCompatActivity, 20f),
+                error
+            )
 
             if (isRefresh) {
                 mDatabind.refreshLayout.finishRefresh(false)
@@ -165,7 +172,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
 
     private fun initProject(currentPage: String) {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable(activity)) {
+        if (RetrofitManager.isNetworkAvailable(appCompatActivity)) {
             viewModel!!.projectData(this, currentPage)
         } else {
             projectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
@@ -173,11 +180,15 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun onDestroyView() {
-//        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
-//        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
 
-        viewModel!!.getDataxSuccess().removeObservers(this)
+//        viewModel!!.getDataxSuccess().removeObservers(this)
         super.onDestroyView()
     }
 
+    override fun onDestroy() {
+        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
+        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+        viewModel = null
+        super.onDestroy()
+    }
 }

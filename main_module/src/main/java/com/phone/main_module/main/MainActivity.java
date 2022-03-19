@@ -5,10 +5,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.adapter.TabFragmentPagerAdapter;
-import com.phone.common_library.base.BaseMvpAppActivity;
+import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.custom_view.LazyViewPager;
 import com.phone.common_library.custom_view.MineLazyViewPager;
@@ -20,10 +22,9 @@ import com.phone.main_module.main.view.IMainView;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 
-public class MainActivity extends BaseMvpAppActivity<IBaseView, MainPresenterImpl>
+public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>
 	implements IMainView {
 	
 	private static final String TAG = "MainActivity";

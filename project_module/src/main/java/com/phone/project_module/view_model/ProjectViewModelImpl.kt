@@ -29,8 +29,11 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
 
     override fun projectData(fragment: Fragment, currentPage: String) {
         disposable = RetrofitManager
-                .getInstance()
-                .responseString(fragment, model.projectData(currentPage), object : OnCommonSingleParamCallback<String> {
+            .getInstance()
+            .responseStringAutoDispose(
+                fragment,
+                model.projectData(currentPage),
+                object : OnCommonSingleParamCallback<String> {
                     override fun onSuccess(success: String) {
                         LogManager.i(TAG, "success*****$success")
                         if (!TextUtils.isEmpty(success)) {
@@ -54,16 +57,19 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
 //                                    })
 //                            val response: ProjectBean = GsonManager.getInstance().convert(jsonString, ProjectBean::class.java)
 
-                            val response: ProjectBean = GsonManager.getInstance().convert(success, ProjectBean::class.java)
+                            val response: ProjectBean =
+                                GsonManager.getInstance().convert(success, ProjectBean::class.java)
                             if (response.data.datas != null && response.data.datas.size > 0) {
 //                                LogManager.i(TAG, "response*****${response.toString()}")
 
                                 dataxSuccess.value = response.data.datas
                             } else {
-                                dataxError.value = BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                                dataxError.value =
+                                    BaseApplication.getInstance().resources.getString(R.string.no_data_available)
                             }
                         } else {
-                            dataxError.value = BaseApplication.getInstance().resources.getString(R.string.loading_failed)
+                            dataxError.value =
+                                BaseApplication.getInstance().resources.getString(R.string.loading_failed)
                         }
                     }
 

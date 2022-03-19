@@ -7,22 +7,21 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
 import com.phone.common_library.manager.ActivityPageManager;
 import com.phone.common_library.manager.ToolbarManager;
-import com.qmuiteam.qmui.widget.QMUILoadingView;
 
 import java.util.Map;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 
 /**
@@ -35,8 +34,8 @@ import butterknife.ButterKnife;
 public abstract class BaseAppActivity extends AppCompatActivity {
 	
 	protected BaseApplication          baseApplication;
-	protected QMUILoadingView          loadView;
-	protected FrameLayout.LayoutParams layoutParams;
+//	protected QMUILoadingView          loadView;
+//	protected FrameLayout.LayoutParams layoutParams;
 	protected Intent                   intent;
 	protected Bundle                   bundle;
 	protected AppCompatActivity        appCompatActivity;
@@ -52,13 +51,13 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		setContentView(initLayoutId());
 		ButterKnife.bind(appCompatActivity);
 		
-		loadView = new QMUILoadingView(appCompatActivity);
-		loadView.setVisibility(View.GONE);
-		loadView.setSize(100);
-		loadView.setColor(getResources().getColor(R.color.color_80000000));
-		layoutParams = new FrameLayout.LayoutParams(
-			FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-		layoutParams.gravity = Gravity.CENTER;
+//		loadView = new QMUILoadingView(appCompatActivity);
+//		loadView.setVisibility(View.GONE);
+//		loadView.setSize(100);
+//		loadView.setColor(getResources().getColor(R.color.color_80000000));
+//		layoutParams = new FrameLayout.LayoutParams(
+//			FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+//		layoutParams.gravity = Gravity.CENTER;
 		
 		//        setToolbar();
 		initData();

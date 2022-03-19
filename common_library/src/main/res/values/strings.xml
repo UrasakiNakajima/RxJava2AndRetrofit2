@@ -1,20 +1,20 @@
 <resources>
     <string name="app_name">common_library</string>
 
-    <string name="first_page">首页</string>
-    <string name="project">项目</string>
+    <string name="first_page">首頁</string>
+    <string name="project">項目</string>
     <string name="square">MVVM</string>
-    <string name="resource">资源</string>
-    <string name="resource_center">资源中心</string>
+    <string name="resource">資源</string>
+    <string name="resource_center">資源中心</string>
     <string name="mine">我的</string>
-    <string name="data_in_wrong_format">数据格式错误</string>
+    <string name="data_in_wrong_format">數據格式錯誤</string>
     <string name="request_was_aborted">请求失败</string>
-    <string name="login">登录</string>
-    <string name="sign_out">退出登录</string>
-    <string name="network_sneak_off">网络开小差了</string>
-    <string name="server_sneak_off">服务器开小差了</string>
+    <string name="login">登陸</string>
+    <string name="sign_out">退出登陸</string>
+    <string name="network_sneak_off">網絡開小差了</string>
+    <string name="server_sneak_off">服務器開小差了</string>
 
-    <string name="select_photos1">选择照片1</string>
+    <string name="select_photos1">選擇照片1</string>
     <string name="select_photos2">选择照片2</string>
     <string name="select_photos3">选择照片3（不传）</string>
     <string name="select_photos5">选择照片5</string>
@@ -54,18 +54,18 @@
     <string name="start_time">00:00:00</string>
     <string name="start_time2">00:00</string>
 
-    <string name="video_play">视频播放</string>
-    <string name="save_to_phone">保存到手机</string>
+    <string name="video_play">視頻播放</string>
+    <string name="save_to_phone">保存到手機</string>
     <string name="cancel">取消</string>
     <string name="saved_successfully">保存成功</string>
-    <string name="failed_to_save_please_try_again">保存失败，请重试</string>
+    <string name="failed_to_save_please_try_again">保存失敗，請重識</string>
 
-    <string name="get_auth_code">获取验证码</string>
+    <string name="get_auth_code">獲取驗證碼</string>
 
-    <string name="check_pending">待审核</string>
-    <string name="checked">已审核</string>
+    <string name="check_pending">待審核</string>
+    <string name="checked">已審核</string>
 
-    <string name="event_schedule">活动日程</string>
+    <string name="event_schedule">活動日程</string>
 
     <string name="android_and_js">android和js</string>
     <string name="android_and_js_interactive">android和js交互</string>
@@ -75,7 +75,7 @@
     <string name="js_to_android">js调用android</string>
     <string name="this_is_the_h5_page">以上是H5页面</string>
 
-    <string name="information_details">资讯详情</string>
+    <string name="information_details">資訊詳情</string>
     <string name="show_data">展示數據</string>
 
 

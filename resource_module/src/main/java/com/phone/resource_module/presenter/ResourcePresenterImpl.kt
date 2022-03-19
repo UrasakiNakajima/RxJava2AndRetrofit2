@@ -26,28 +26,45 @@ class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), I
         attachView(baseView)
     }
 
-    override fun resourceData(fragment: Fragment, type: String, pageSize: String, currentPage: String) {
+    override fun resourceData(
+        fragment: Fragment,
+        type: String,
+        pageSize: String,
+        currentPage: String
+    ) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IResourceChildView) {
                 baseView.showLoading()
                 disposable = RetrofitManager.getInstance()
-                        .responseString(fragment, model.resourceData(type, pageSize, currentPage), object : OnCommonSingleParamCallback<String> {
+                    .responseStringAutoDispose(
+                        fragment,
+                        model.resourceData(type, pageSize, currentPage),
+                        object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
                                 LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, ResourcesBean::class.java)
-                                    val response = GsonManager.getInstance().convert(success, ResourcesBean::class.java)
+                                    val response = GsonManager.getInstance()
+                                        .convert(success, ResourcesBean::class.java)
                                     if (response.results != null && response.results.size > 0) {
                                         LogManager.i(TAG, "response*****${response.toString()}")
                                         baseView.resourceDataSuccess(response.results)
                                     } else {
-                                        baseView.resourceDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                                        baseView.resourceDataError(
+                                            BaseApplication.getInstance().resources.getString(
+                                                R.string.no_data_available
+                                            )
+                                        )
                                     }
                                 } else {
-                                    baseView.resourceDataError(BaseApplication.getInstance().resources.getString(R.string.loading_failed))
+                                    baseView.resourceDataError(
+                                        BaseApplication.getInstance().resources.getString(
+                                            R.string.loading_failed
+                                        )
+                                    )
                                 }
                                 baseView.hideLoading()
                             }

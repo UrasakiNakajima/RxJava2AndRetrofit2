@@ -5,11 +5,14 @@ import android.os.SystemClock
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvvmFragment
+import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
@@ -20,7 +23,7 @@ import com.phone.square_module.ui.SquareDetailsActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
 
 @Route(path = "/square_module/square")
-class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBinding>() {
+class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareBinding>() {
 
     companion object {
         private val TAG: String = "SquareFragment"
@@ -42,7 +45,6 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     override fun initData() {
-//        mainActivity = activity as MainActivity
         mDatabind.viewModel = viewModel
         mDatabind.datax = datax
 
@@ -73,15 +75,15 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
         }
 
-        viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
-        viewModel!!.getDataxError().observe(this, dataxErrorObserver!!)
+        viewModel!!.getDataxSuccess().observe(viewLifecycleOwner, dataxSuccessObserver!!)
+        viewModel!!.getDataxError().observe(viewLifecycleOwner, dataxErrorObserver!!)
     }
 
     override fun initViews() {
         mDatabind.imvPic.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
-
-            startActivity(PickerViewActivity::class.java)
+//            startActivity(PickerViewActivity::class.java)
+            startActivity(Base64AndFileActivity::class.java)
         }
     }
 
@@ -91,20 +93,20 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 //        startAsyncTask()
     }
 
-    private fun startAsyncTask() {
-
-        // This async task is an anonymous class and therefore has a hidden reference to the outer
-        // class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
-        // the activity instance will leak.
-        object : AsyncTask<Void?, Void?, Void?>() {
-            override fun doInBackground(vararg p0: Void?): Void? {
-                // Do some slow work in background
-                SystemClock.sleep(10000)
-                return null
-            }
-        }.execute()
-        Toast.makeText(appCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
-    }
+//    private fun startAsyncTask() {
+//
+//        // This async task is an anonymous class and therefore has a hidden reference to the outer
+//        // class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
+//        // the activity instance will leak.
+//        object : AsyncTask<Void?, Void?, Void?>() {
+//            override fun doInBackground(vararg p0: Void?): Void? {
+//                // Do some slow work in background
+//                SystemClock.sleep(10000)
+//                return null
+//            }
+//        }.execute()
+//        Toast.makeText(rxAppCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
+//    }
 
     fun showLoading() {
         if (mDatabind.loadView != null && !mDatabind.loadView.isShown()) {
@@ -121,7 +123,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     fun squareDataSuccess(success: List<DataX>) {
-        if (!activity!!.isFinishing()) {
+        if (!rxAppCompatActivity!!.isFinishing()) {
             if (success.size > 0) {
                 datax.title = success.get(1).title
                 datax.chapterName = success.get(1).chapterName
@@ -133,11 +135,17 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     fun squareDataError(error: String) {
-        if (!activity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dpToPx(activity, 20f), ScreenManager.dpToPx(activity, 20f),
-                    18, resources.getColor(R.color.white),
-                    resources.getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(activity, 40f),
-                    ScreenManager.dpToPx(activity, 20f), error)
+        if (!rxAppCompatActivity!!.isFinishing()) {
+            showCustomToast(
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                18,
+                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
+                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                error
+            )
 
             hideLoading()
         }
@@ -145,7 +153,7 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
 
     private fun initSquare(currentPage: String) {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable(activity)) {
+        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
             viewModel!!.squareData(this, currentPage)
         } else {
             squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
@@ -153,8 +161,12 @@ class SquareFragment() : BaseMvvmFragment<SquareViewModelImpl, FragmentSquareBin
     }
 
     override fun onDestroyView() {
-        viewModel!!.getDataxSuccess().removeObservers(this)
         super.onDestroyView()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
+        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+    }
 }

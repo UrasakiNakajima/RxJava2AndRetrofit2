@@ -1,27 +1,31 @@
 package com.phone.square_module.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.phone.common_library.base.BaseAppActivity;
+import com.phone.common_library.fragment.EventScheduleDialogFragment;
 import com.phone.common_library.manager.GetJsonDataManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.square_module.R;
 import com.phone.square_module.bean.ProvincesBean;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.json.JSONArray;
 
@@ -31,10 +35,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.disposables.Disposable;
+
 public class PickerViewActivity extends BaseAppActivity {
 
     private static final String TAG = "PickerViewActivity";
-private TextView tevShow;
+    private Toolbar toolbar;
+    private FrameLayout layoutBack;
+    private ImageView imvBack;
+    private TextView tevTitle;
+    private TextView tevShow;
 
     protected Map<String, String> bodyParams;
 
@@ -44,6 +54,12 @@ private TextView tevShow;
     private ArrayList<ArrayList<ArrayList<String>>> options3Items;
     private boolean isAnalyticalDataComplete;
     private AnalyticalDataAsyncTask analyticalDataAsyncTask;
+
+    private EventScheduleDialogFragment eventScheduleDialogFragment;
+
+    // where this is an Activity or Fragment instance
+    private RxPermissions rxPermissions;
+    private Disposable disposable;
 
     @Override
     protected int initLayoutId() {
@@ -60,14 +76,55 @@ private TextView tevShow;
 
         analyticalDataAsyncTask = new AnalyticalDataAsyncTask((PickerViewActivity) appCompatActivity);
         analyticalDataAsyncTask.execute();
+
+        rxPermissions = new RxPermissions(this);
+        disposable = rxPermissions
+                .requestEach(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+//                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                )
+                .subscribe(permission -> { // will emit 2 Permission objects
+                    if (permission.granted) {
+                        // `permission.name` is granted !
+
+                        // 用户已经同意该权限
+                        LogManager.i(TAG, "用户已经同意该权限");
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        // Denied permission without ask never again
+
+                        // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                        LogManager.i(TAG, "用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框");
+                    } else {
+                        // Denied permission with ask never again
+                        // Need to go to the settings
+
+                        // 用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限
+                        LogManager.i(TAG, "用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限");
+                    }
+                });
     }
 
     @Override
     protected void initViews() {
-        tevShow = findViewById(R.id.tev_show);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        layoutBack = (FrameLayout) findViewById(R.id.layout_back);
+        imvBack = (ImageView) findViewById(R.id.imv_back);
+        tevTitle = (TextView) findViewById(R.id.tev_title);
+        tevShow = (TextView) findViewById(R.id.tev_show);
+
+        eventScheduleDialogFragment = EventScheduleDialogFragment.newInstance();
+
+        setToolbar(false, R.color.color_FF198CFF);
+        imvBack.setColorFilter(ContextCompat.getColor(appCompatActivity, R.color.white));
+        layoutBack.setOnClickListener(view -> {
+            finish();
+        });
         tevShow.setOnClickListener(v -> {
 
-            pvOptions.show();
+//            pvOptions.show();
+
+            eventScheduleDialogFragment.show(getSupportFragmentManager(), "FOF");
         });
     }
 
@@ -288,4 +345,15 @@ private TextView tevShow;
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (analyticalDataAsyncTask != null && analyticalDataAsyncTask.getStatus() == AsyncTask.Status.RUNNING) {
+            analyticalDataAsyncTask.cancel(true);
+            analyticalDataAsyncTask = null;
+        }
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+        super.onDestroy();
+    }
 }
