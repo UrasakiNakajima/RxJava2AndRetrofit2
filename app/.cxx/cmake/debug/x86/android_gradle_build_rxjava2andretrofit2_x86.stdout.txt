@@ -1,2 +1,0 @@
-ninja: Entering directory `/Users/erwinnakashima/AndroidStudioProjects/RxJava2AndRetrofit2/app/.cxx/cmake/debug/x86'
-ninja: no work to do.
