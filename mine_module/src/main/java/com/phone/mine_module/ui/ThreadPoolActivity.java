@@ -204,7 +204,7 @@ public class ThreadPoolActivity extends BaseAppActivity {
                 mOption.inPreferredConfig = Bitmap.Config.RGB_565;
                 Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture15, mOption);
                 vector.add(mBitmap);
-                LogManager.i(TAG, "startThreadPool vector*****" + vector.size());
+                LogManager.i(TAG, "startThreadPool vector size*****" + vector.size());
             }
         }, 150);
 
@@ -236,7 +236,7 @@ public class ThreadPoolActivity extends BaseAppActivity {
         for (int i = 0; i < vector.size(); i++) {
             Bitmap mBitmap = vector.get(i);
             LogManager.i(TAG, "initFaceRecognition i*****" + i);
-            LogManager.i(TAG, "initFaceRecognition size*****" + vector.size());
+            LogManager.i(TAG, "initFaceRecognition vector size*****" + vector.size());
             int maxFaces = 20;
             FaceDetector mFaceDetector = new FaceDetector(mBitmap.getWidth(), mBitmap.getHeight(), maxFaces);
             FaceDetector.Face[] mFace = new FaceDetector.Face[maxFaces];

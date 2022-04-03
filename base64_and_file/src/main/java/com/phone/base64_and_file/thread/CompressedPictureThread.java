@@ -30,7 +30,7 @@ public class CompressedPictureThread extends Thread {
         LogManager.i(TAG, "CompressedPictureThread*******" + Thread.currentThread().getName());
 
         //先取出资源文件保存在本地
-        File file = BitmapManager.getAssetFile(context, "picture8.png", dirsPath);
+        File file = BitmapManager.getAssetFile(context, "picture24.webp", dirsPath);
         LogManager.i(TAG, "file size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(file)));
 
 //            //再压缩本地图片
@@ -49,10 +49,10 @@ public class CompressedPictureThread extends Thread {
         File result2 = BitmapManager.saveFile(bitmapNew, dirsPath2, file.getName());
         LogManager.i(TAG, "CompressedPictureThread filePath*******" + result2.getAbsolutePath());
         LogManager.i(TAG, "result2 size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result2)));
-        if (bitmap != null) {
-            bitmap.recycle();
-            bitmap = null;
-        }
+//        if (bitmap != null) {
+//            bitmap.recycle();
+//            bitmap = null;
+//        }
 
         onCommonBothParamCallback.onSuccess(bitmapNew, result2.getAbsolutePath());
     }
