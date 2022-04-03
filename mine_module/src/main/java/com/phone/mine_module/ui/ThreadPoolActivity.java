@@ -176,22 +176,23 @@ public class ThreadPoolActivity extends BaseAppActivity {
     private void startThreadPool() {
         LogManager.i(TAG, "startThreadPool*****");
         vector.clear();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             BitmapFactory.Options mOption = new BitmapFactory.Options();
             mOption.inPreferredConfig = Bitmap.Config.RGB_565;
             Bitmap mBitmap = null;
-            mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture3, mOption);
-//                    if (i == 0){
-//                        mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture, mOption);
-//                    } else if(i == 1){
-//                        mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture2, mOption);
-//                    } else if(i == 2){
-//                        mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture3, mOption);
-//                    } else if(i == 3){
-//                        mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture5, mOption);
-//                    } else {
-//                        mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture8, mOption);
-//                    }
+            if (i == 0) {
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture3, mOption);
+            } else if (i == 1) {
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture6, mOption);
+            } else if (i == 2) {
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture7, mOption);
+            } else if (i == 3) {
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture14, mOption);
+            } else if (i == 4) {
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture16, mOption);
+            } else {
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture18, mOption);
+            }
             vector.add(mBitmap);
         }
 
@@ -201,7 +202,7 @@ public class ThreadPoolActivity extends BaseAppActivity {
             public void run() {
                 BitmapFactory.Options mOption = new BitmapFactory.Options();
                 mOption.inPreferredConfig = Bitmap.Config.RGB_565;
-                Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture3, mOption);
+                Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture15, mOption);
                 vector.add(mBitmap);
                 LogManager.i(TAG, "startThreadPool vector*****" + vector.size());
             }
@@ -228,9 +229,8 @@ public class ThreadPoolActivity extends BaseAppActivity {
     /**
      * 人脸个数识别方法
      *
-     * @param vector
-     * 1、vector是final的，按说不会变化，可是vector是原vector传来的时候，当原vector发生变化，他还是会变化的
-     * 2、如果vector是由原vector.clone()传来的时候，当原vector发生变化，他是不会变化的
+     * @param vector 1、vector是final的，按说不会变化，可是vector是原vector传来的时候，当原vector发生变化，他还是会变化的
+     *               2、如果vector是由原vector.clone()传来的时候，当原vector发生变化，他是不会变化的
      */
     private void initFaceRecognition(final Vector<Bitmap> vector) {
         for (int i = 0; i < vector.size(); i++) {

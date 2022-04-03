@@ -259,7 +259,7 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
 //                                + "picture2.jpeg";
 ////            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
 ////                    + "Pictures" + File.separator
-////                    + "picture5.jpeg";
+////                    + "picture5.webp";
 //                        File file = new File(path);
 ////            base64Str = Base64AndFileManager.fileToBase64(file);
 //                        base64Str = Base64AndFileManager.fileToBase64Second(file);
