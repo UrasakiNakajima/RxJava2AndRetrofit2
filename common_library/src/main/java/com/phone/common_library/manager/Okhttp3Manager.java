@@ -16,6 +16,8 @@ import com.phone.common_library.callback.OnSubThreadToMainThreadCallback;
 import com.phone.common_library.interceptor.AddAccessTokenInterceptor;
 import com.phone.common_library.interceptor.ReceivedAccessTokenInterceptor;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.Proxy;
@@ -27,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -139,15 +142,193 @@ public class Okhttp3Manager {
     }
 
     /**
+     * get请求，添加请求参数，异步方式，是在子线程中执行的，需要切换到主线程才能更新UI
+     *
+     * @param url
+     * @param bodyParams
+     * @param onCommonSingleParamCallback
+     */
+    public void getAsyncOkhttp3(String url,
+                                Map<String, String> bodyParams,
+                                OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+        String urlNew = url;
+        // 设置HTTP请求参数
+        urlNew += getBodyParams(bodyParams);
+        //2.创建Request对象，设置一个url地址,设置请求方式。
+        Request request = new Request.Builder().url(urlNew).get().build();
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .get()//默认就是GET请求，可以不写（最好写上，要清晰表达出来）
+//                .build();
+        //3.创建一个call对象,参数就是Request请求对象
+        Call call = client.newCall(request);
+        //4 执行Call
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                LogManager.i(TAG, "getAsyncOkhttp3 onFailure e*******" + e.toString());
+                LogManager.i(TAG, "getAsyncOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                MainThreadManager mainThreadManager = new MainThreadManager();
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                    @Override
+                    public void onSuccess() {
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                    }
+                });
+                mainThreadManager.subThreadToUIThread();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String data = response.body().string();
+                LogManager.i(TAG, "getAsyncOkhttp3 onResponse data*****" + data);
+                MainThreadManager mainThreadManager = new MainThreadManager();
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                    @Override
+                    public void onSuccess() {
+                        if (!isEmpty(data)) {
+                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+//                            if (baseResponse.getCode() == 666) {
+//                                Intent intent = new Intent(context, LoginActivity.class);
+//                                context.startActivity(intent);
+//                            } else {
+                            onCommonSingleParamCallback.onSuccess(data);
+//                            }
+                        } else {
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                        }
+                    }
+                });
+                mainThreadManager.subThreadToUIThread();
+            }
+        });
+    }
+
+    /**
+     * get请求，添加请求参数和header参数，异步方式，是在子线程中执行的，需要切换到主线程才能更新UI
+     *
+     * @param url
+     * @param headerParams
+     * @param bodyParams
+     * @param onCommonSingleParamCallback
+     */
+    public void getAsyncOkhttp3(String url,
+                                Map<String, String> headerParams,
+                                Map<String, String> bodyParams,
+                                OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+        String urlNew = url;
+        // 设置HTTP请求参数
+        urlNew += getBodyParams(bodyParams);
+        Headers headers = setHeaderParams(headerParams);
+        //2.创建Request对象，设置一个url地址,设置请求方式。
+        Request request = new Request.Builder().url(urlNew).get().headers(headers).build();
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .get()//默认就是GET请求，可以不写（最好写上，要清晰表达出来）
+//                .build();
+        //3.创建一个call对象,参数就是Request请求对象
+        Call call = client.newCall(request);
+        //4 执行Call
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                LogManager.i(TAG, "getAsyncOkhttp3 onFailure e*******" + e.toString());
+                LogManager.i(TAG, "getAsyncOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                MainThreadManager mainThreadManager = new MainThreadManager();
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                    @Override
+                    public void onSuccess() {
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                    }
+                });
+                mainThreadManager.subThreadToUIThread();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String data = response.body().string();
+                LogManager.i(TAG, "getAsyncOkhttp3 onResponse data*****" + data);
+                MainThreadManager mainThreadManager = new MainThreadManager();
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                    @Override
+                    public void onSuccess() {
+                        if (!isEmpty(data)) {
+                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+//                            if (baseResponse.getCode() == 666) {
+//                                Intent intent = new Intent(context, LoginActivity.class);
+//                                context.startActivity(intent);
+//                            } else {
+                            onCommonSingleParamCallback.onSuccess(data);
+//                            }
+                        } else {
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                        }
+                    }
+                });
+                mainThreadManager.subThreadToUIThread();
+            }
+        });
+    }
+
+    /**
+     * 添加参数
+     *
+     * @param bodyParams
+     * @return
+     */
+    private String getBodyParams(Map<String, String> bodyParams) {
+        //1.添加请求参数
+        //遍历map中所有参数到builder
+        if (bodyParams != null && bodyParams.size() > 0) {
+            StringBuffer stringBuffer = new StringBuffer("?");
+            for (String key : bodyParams.keySet()) {
+                if (bodyParams.get(key) != null) {//如果参数不是null，就拼接起来
+                    stringBuffer.append("&");
+                    stringBuffer.append(key);
+                    stringBuffer.append("=");
+                    stringBuffer.append(bodyParams.get(key));
+                }
+            }
+
+            return stringBuffer.toString();
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * 添加headers
+     *
+     * @param headerParams
+     * @return
+     */
+    private Headers setHeaderParams(Map<String, String> headerParams) {
+        Headers headers = null;
+        Headers.Builder headersbuilder = new Headers.Builder();
+        if (headerParams != null && headerParams.size() > 0) {
+            for (String key : headerParams.keySet()) {
+                if (headerParams.get(key) != null) {//如果参数不是null，就拼接起来
+                    headersbuilder.add(key, headerParams.get(key));
+                }
+            }
+        }
+
+        headers = headersbuilder.build();
+        return headers;
+    }
+
+    /**
      * post请求提交字符串，异步方式，是在子线程中执行的，需要切换到主线程才能更新UI
      *
      * @param url
-     * @param data
+     * @param bodyParams
      * @param onCommonSingleParamCallback
      */
     public void postAsyncStringOkhttp3(String url,
-                                       String data,
+                                       Map<String, String> bodyParams,
                                        OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+        JSONObject jsonObject = new JSONObject(bodyParams);
+        String data = jsonObject.toString();
         LogManager.i(TAG, "postAsyncStringOkhttp3 data*****" + data);
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
         //2.通过RequestBody.create 创建requestBody对象
@@ -341,6 +522,69 @@ public class Okhttp3Manager {
 //                                context.startActivity(intent);
 //                            } else {
                                 onCommonSingleParamCallback.onSuccess(data);
+//                            }
+//                        } else {
+//                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                        }
+                    }
+                });
+                mainThreadManager.subThreadToUIThread();
+            }
+        });
+    }
+
+    /**
+     * post请求不携带参数，异步方式，是在子线程中执行的，需要切换到主线程才能更新UI
+     *
+     * @param url
+     * @param onCommonSingleParamCallback
+     */
+    public void postAsyncOkhttp3(String url,
+                                 OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+        //这句话是重点Request
+        //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
+        Request request = new Request.Builder().post(RequestBody.create(null, "")).url(url).build();
+        //4.创建一个call对象,参数就是Request请求对象
+        Call call = client.newCall(request);
+        //4 执行Call
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onFailure e*******" + e.toString());
+                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                MainThreadManager mainThreadManager = new MainThreadManager();
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                    @Override
+                    public void onSuccess() {
+                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
+                    }
+                });
+                mainThreadManager.subThreadToUIThread();
+
+//                MainThreadManager mainThreadManager2 =
+//                        new MainThreadManager(new OnSubThreadToMainThreadCallback() {
+//                            @Override
+//                            public void onSuccess() {
+//                                onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off));
+//                            }
+//                        });
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String data = response.body().string();
+                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onResponse data*****" + data);
+                MainThreadManager mainThreadManager = new MainThreadManager();
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                    @Override
+                    public void onSuccess() {
+//                        if (!isEmpty(data)) {
+//                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+//                            if (baseResponse.getCode() == 666) {
+//                                Intent intent = new Intent(context, LoginActivity.class);
+//                                context.startActivity(intent);
+//                            } else {
+                        onCommonSingleParamCallback.onSuccess(data);
 //                            }
 //                        } else {
 //                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
