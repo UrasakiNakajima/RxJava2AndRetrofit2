@@ -1,15 +1,11 @@
 package com.phone.mine_module.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.FaceDetector;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,14 +13,10 @@ import com.phone.common_library.base.BaseAppActivity;
 import com.phone.common_library.manager.LogManager;
 import com.phone.mine_module.R;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.Vector;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 
 /**
  * 记一次Java参数传递时（传Vector，就是线程安全的List）值发生变化问题
@@ -39,13 +31,15 @@ public class ThreadPoolActivity extends BaseAppActivity {
     private TextView tevStartThreadPool2;
     private TextView tevStopThreadPool2;
 
+//    private ExecutorService excutor0;
     private ExecutorService excutor;
     private ExecutorService excutor2;
     //    private FutureTask<String> futureTask;
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private Handler handler;
     private Vector<Bitmap> vector = new Vector<>();
 
 
+//    private Future<?> future0;
     private Future<?> future;
     private Future<?> future2;
 //    private MineAsyncTask mineAsyncTask;
@@ -58,8 +52,6 @@ public class ThreadPoolActivity extends BaseAppActivity {
 
     @Override
     protected void initData() {
-        excutor = Executors.newSingleThreadExecutor();
-        excutor2 = Executors.newSingleThreadExecutor();
 //        futureTask = new FutureTask<String>(new Callable<String>() {
 //            @Override
 //            public String call() throws Exception {
@@ -116,6 +108,12 @@ public class ThreadPoolActivity extends BaseAppActivity {
         tevStartThreadPool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                excutor0 = Executors.newSingleThreadExecutor();
+//                future0 = excutor0.submit(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                    }
+//                });
                 startThreadPool();
             }
         });
@@ -175,6 +173,7 @@ public class ThreadPoolActivity extends BaseAppActivity {
      */
     private void startThreadPool() {
         LogManager.i(TAG, "startThreadPool*****");
+        LogManager.i(TAG, "startThreadPool currentThread name*****" + Thread.currentThread().getName());
         vector.clear();
         for (int i = 0; i < 6; i++) {
             BitmapFactory.Options mOption = new BitmapFactory.Options();
@@ -196,22 +195,27 @@ public class ThreadPoolActivity extends BaseAppActivity {
             vector.add(mBitmap);
         }
 
+        handler = new Handler();
         //这是为了在检测人脸过程中改变原vector的数据
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                LogManager.i(TAG, "startThreadPool currentThread2 name*****" + Thread.currentThread().getName());
                 BitmapFactory.Options mOption = new BitmapFactory.Options();
                 mOption.inPreferredConfig = Bitmap.Config.RGB_565;
                 Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture15, mOption);
                 vector.add(mBitmap);
                 LogManager.i(TAG, "startThreadPool vector size*****" + vector.size());
+                handler.removeCallbacksAndMessages(null);
+                handler = null;
             }
         }, 150);
 
+        excutor = Executors.newSingleThreadExecutor();
         future = excutor.submit(new Runnable() {
             @Override
             public void run() {
-
+                LogManager.i(TAG, "startThreadPool excutor currentThread name*****" + Thread.currentThread().getName());
 //                //1、vector是原vector传来的时候，当原vector发生变化，他还是会变化的
 //                initFaceRecognition(vector);
 
@@ -220,6 +224,7 @@ public class ThreadPoolActivity extends BaseAppActivity {
                 initFaceRecognition(list);
             }
         });
+        LogManager.i(TAG, "startThreadPool&&&*****");
 
 //        mineAsyncTask.execute();
 
@@ -245,6 +250,16 @@ public class ThreadPoolActivity extends BaseAppActivity {
         }
     }
 
+//    private void stopThreadPool0() {
+//        if (excutor0 != null && future0 != null && !excutor0.isShutdown()) {
+//            future0.cancel(true);
+//            if (!excutor0.isShutdown()) {
+//                excutor0.shutdownNow();
+//                LogManager.i(TAG, "stopThreadPool0 shutdownNow*****");
+//            }
+//        }
+//    }
+
     private void stopThreadPool() {
         if (excutor != null && future != null && !excutor.isShutdown()) {
             future.cancel(true);
@@ -267,6 +282,7 @@ public class ThreadPoolActivity extends BaseAppActivity {
     }
 
     private void startThreadPool2() {
+        excutor2 = Executors.newSingleThreadExecutor();
         future2 = excutor2.submit(new Runnable() {
             @Override
             public void run() {
@@ -298,6 +314,7 @@ public class ThreadPoolActivity extends BaseAppActivity {
             handler.removeCallbacksAndMessages(null);
             handler = null;
         }
+//        stopThreadPool0();
         stopThreadPool();
         stopThreadPool2();
         super.onDestroy();

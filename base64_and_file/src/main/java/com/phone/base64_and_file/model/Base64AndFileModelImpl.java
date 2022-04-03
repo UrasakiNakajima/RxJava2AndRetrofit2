@@ -5,9 +5,9 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.phone.base64_and_file.thread.Base64ToPictureThreadPool;
-import com.phone.base64_and_file.thread.CompressedPictureThreadPool;
-import com.phone.base64_and_file.thread.PictureToBase64TaskThreadPool;
+import com.phone.base64_and_file.thread_pool.Base64ToPictureThreadPool;
+import com.phone.base64_and_file.thread_pool.CompressedPictureThreadPool;
+import com.phone.base64_and_file.thread_pool.PictureToBase64TaskThreadPool;
 import com.phone.common_library.callback.OnCommonBothParamCallback;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;

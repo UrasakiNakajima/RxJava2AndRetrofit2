@@ -41,7 +41,7 @@ import java.util.Map;
 public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePresenterImpl>
 	implements IFirstPageView {
 	
-	private static final String             TAG = "FirstPageFragment";
+	private static final String             TAG = FirstPageFragment.class.getSimpleName();
 	private              FrameLayout        layoutOutLayer;
 	private              Toolbar            toolbar;
 	private              TextView           tevTitle;

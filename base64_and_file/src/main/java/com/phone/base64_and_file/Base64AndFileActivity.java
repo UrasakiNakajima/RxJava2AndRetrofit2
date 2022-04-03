@@ -1,20 +1,22 @@
 package com.phone.base64_and_file;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Binder;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,11 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.base64_and_file.adapter.Base64StrAdapter;
 import com.phone.base64_and_file.presenter.Base64AndFilePresenterImpl;
-import com.phone.base64_and_file.service.Base64AndFileService;
-import com.phone.base64_and_file.service.Base64AndFileServiceConnection;
 import com.phone.common_library.base.BaseMvpAppActivity;
 import com.phone.common_library.base.IBaseView;
-import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -56,15 +55,15 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
 
     // where this is an Activity or Fragment instance
     private RxPermissions rxPermissions;
-    private Binder binder;
+//    private Binder binder;
     private Disposable disposable;
-    private Disposable disposable2;
+//    private Disposable disposable2;
     private String dirsPath;
     private String dirsPath2;
 
     private String compressedPicturePath;
     public String base64Str;
-    private Bitmap bitmapNew;
+//    private Bitmap bitmapNew;
     public Bitmap bitmap;
 
     private List<String> base64StrList = new ArrayList<>();
@@ -75,6 +74,8 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
     private TimerTask timerTask;
 
     private Handler handler;
+
+    private AlertDialog mPermissionsDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,24 +109,19 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
         imvBase64ToPicture = (ImageView) findViewById(R.id.imv_base64_to_picture);
         tevResetData = (TextView) findViewById(R.id.tev_reset_data);
         loadView = (QMUILoadingView) findViewById(R.id.load_view);
-
-
         setToolbar(false, R.color.color_54E066FF);
+
 
         tevCompressedPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (presenter != null && binder != null) {
-                    showLoading();
-                    presenter.showCompressedPicture(appCompatActivity.getApplicationContext(),
-                            dirsPath, dirsPath2);
-                }
+                initRxPermissions();
             }
         });
         tevPictureToBase64.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (presenter != null && binder != null) {
+                if (presenter != null) {
                     showLoading();
                     presenter.showPictureToBase64(compressedPicturePath);
                 }
@@ -134,7 +130,7 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
         tevBase64ToPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (presenter != null && binder != null) {
+                if (presenter != null) {
                     showLoading();
                     presenter.showBase64ToPicture(compressedPicturePath, base64Str);
                 }
@@ -164,22 +160,14 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
 
     @Override
     protected void initLoadData() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            initRxPermissions();
-        } else {
-
-//                        thread = new MineThread();
-//                        thread.start();
-//                        initTask();
-
-//                        if (connection != null) {
-//                            // 解绑服务，服务要记得解绑，不要造成内存泄漏
-//                            unbindService(connection);
-//                        }
-            Intent bindIntent = new Intent(this, Base64AndFileService.class);
-            // 绑定服务和活动，之后活动就可以去调服务的方法了
-            bindService(bindIntent, connection, BIND_AUTO_CREATE);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            initRxPermissions();
+//        } else {
+//
+////            Intent bindIntent = new Intent(this, Base64AndFileService.class);
+////            // 绑定服务和活动，之后活动就可以去调服务的方法了
+////            bindService(bindIntent, connection, BIND_AUTO_CREATE);
+//        }
     }
 
     @Override
@@ -192,6 +180,47 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 207) {
+//            initRxPermissions();
+        }
+    }
+
+    private void showSystemSetupDialog() {
+        cancelPermissionsDialog();
+        if (mPermissionsDialog == null) {
+            mPermissionsDialog = new AlertDialog.Builder(this)
+                    .setTitle("权限设置")
+                    .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
+                    .setPositiveButton("去授权", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            cancelPermissionsDialog();
+                            intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+                            intent.setData(uri);
+                            startActivityForResult(intent, 207);
+                        }
+                    })
+                    .create();
+        }
+
+        mPermissionsDialog.setCancelable(false);
+        mPermissionsDialog.show();
+    }
+
+    /**
+     * 关闭对话框
+     */
+    private void cancelPermissionsDialog() {
+        if (mPermissionsDialog != null) {
+            mPermissionsDialog.cancel();
+            mPermissionsDialog = null;
         }
     }
 
@@ -210,17 +239,14 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
                         // 用户已经同意该权限
                         LogManager.i(TAG, "用户已经同意该权限");
 
-//                        thread = new MineThread();
-//                        thread.start();
-//                        initTask();
-
-//                        if (connection != null) {
-//                            // 解绑服务，服务要记得解绑，不要造成内存泄漏
-//                            unbindService(connection);
-//                        }
-                        Intent bindIntent = new Intent(this, Base64AndFileService.class);
-                        // 绑定服务和活动，之后活动就可以去调服务的方法了
-                        bindService(bindIntent, connection, BIND_AUTO_CREATE);
+//                        Intent bindIntent = new Intent(this, Base64AndFileService.class);
+//                        // 绑定服务和活动，之后活动就可以去调服务的方法了
+//                        bindService(bindIntent, connection, BIND_AUTO_CREATE);
+                        if (presenter != null) {
+                            showLoading();
+                            presenter.showCompressedPicture(appCompatActivity.getApplicationContext(),
+                                    dirsPath, dirsPath2);
+                        }
                     } else if (permission.shouldShowRequestPermissionRationale) {
                         // Denied permission without ask never again
 
@@ -232,6 +258,7 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
 
                         // 用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限
                         LogManager.i(TAG, "用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限");
+                        showSystemSetupDialog();
                     }
                 });
     }
@@ -342,17 +369,17 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
 //        }
 //    };
 
-    private Base64AndFileServiceConnection connection = new Base64AndFileServiceConnection(new OnCommonSingleParamCallback<Binder>() {
-        @Override
-        public void onSuccess(Binder success) {
-            binder = success;
-        }
-
-        @Override
-        public void onError(String error) {
-
-        }
-    });
+//    private Base64AndFileServiceConnection connection = new Base64AndFileServiceConnection(new OnCommonSingleParamCallback<Binder>() {
+//        @Override
+//        public void onSuccess(Binder success) {
+//            binder = success;
+//        }
+//
+//        @Override
+//        public void onError(String error) {
+//
+//        }
+//    });
 
     private void startTimer() {
         stopTimer();
@@ -378,7 +405,7 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
         }
 
         if (timer != null && timerTask != null) {
-            timer.schedule(timerTask, 2000);
+            timer.schedule(timerTask, 500);
         }
     }
 
@@ -402,6 +429,11 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
         imvCompressedPicture.setVisibility(View.VISIBLE);
         imvCompressedPicture.setImageBitmap(bitmap);
         hideLoading();
+
+        if (presenter != null) {
+            showLoading();
+            presenter.showPictureToBase64(compressedPicturePath);
+        }
     }
 
     @Override
@@ -422,6 +454,11 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
         base64StrAdapter.addAllData(this.base64StrList);
         hideLoading();
         startTimer();
+
+        if (presenter != null) {
+            showLoading();
+            presenter.showBase64ToPicture(compressedPicturePath, base64Str);
+        }
     }
 
     @Override
@@ -472,19 +509,19 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
-        if (disposable2 != null && !disposable2.isDisposed()) {
-            disposable2.dispose();
-        }
+//        if (disposable2 != null && !disposable2.isDisposed()) {
+//            disposable2.dispose();
+//        }
         if (bitmap != null) {
             bitmap.recycle();
             bitmap = null;
         }
         stopTimer();
-        if (connection != null) {
-            // 解绑服务，服务要记得解绑，不要造成内存泄漏
-            unbindService(connection);
-            binder = null;
-        }
+//        if (connection != null) {
+//            // 解绑服务，服务要记得解绑，不要造成内存泄漏
+//            unbindService(connection);
+//            binder = null;
+//        }
         super.onDestroy();
     }
 }

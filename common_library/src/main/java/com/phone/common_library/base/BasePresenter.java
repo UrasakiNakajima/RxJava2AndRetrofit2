@@ -14,9 +14,9 @@ import io.reactivex.disposables.Disposable;
 
 public class BasePresenter<T> {
 
-    private   WeakReference<T> modelView;
-//    protected CompositeDisposable compositeDisposable;
-    protected Disposable       disposable;
+    private WeakReference<T> modelView;
+    //    protected CompositeDisposable compositeDisposable;
+    protected Disposable disposable;
 
     protected void attachView(T view) {
         modelView = new WeakReference<T>(view);

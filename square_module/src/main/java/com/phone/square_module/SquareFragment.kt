@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareBinding>() {
 
     companion object {
-        private val TAG: String = "SquareFragment"
+        private val TAG: String = SquareFragment::class.java.simpleName
     }
 
     //    private var mainActivity: MainActivity? = null
