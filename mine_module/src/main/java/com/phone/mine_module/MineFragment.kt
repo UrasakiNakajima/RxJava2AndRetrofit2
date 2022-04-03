@@ -20,6 +20,7 @@ import com.phone.mine_module.adapter.MineAdapter
 import com.phone.mine_module.bean.Data
 import com.phone.mine_module.presenter.MinePresenterImpl
 import com.phone.mine_module.ui.NewsDetailActivity
+import com.phone.mine_module.ui.ThreadPoolActivity
 import com.phone.mine_module.ui.UserDataActivity
 import com.phone.mine_module.view.IMineView
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -64,6 +65,9 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
                 startActivity(UserDataActivity::class.java)
             }
         })
+        tev_thread_pool.setOnClickListener {
+            startActivity(ThreadPoolActivity::class.java)
+        }
 
         initAdapter()
     }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.ThreadPoolActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_75"
+            android:background="@color/color_FFE066FF"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="vertical"
+            app:contentInsetStart="0dp">
+
+            <TextView
+                android:id="@+id/tev_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_25"
+                android:gravity="center"
+                android:text="@string/thread_pool"
+                android:textColor="@color/color_FF198CFF"
+                android:textSize="@dimen/sp_20" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <TextView
+            android:id="@+id/tev_start_thread_pool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_20"
+            android:background="@drawable/corners_25_color_ffe066ff"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/dp_15"
+            android:text="開始線程池"
+            android:textColor="@color/color_FFFFFFFF"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/tev_stop_thread_pool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_20"
+            android:background="@drawable/corners_25_color_ffe066ff"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/dp_15"
+            android:text="停止線程池（直接结束线程池中的所有任务运行，而不是等待线程池的任务结束再停止）"
+            android:textColor="@color/color_FFFFFFFF"
+            android:textSize="@dimen/sp_20" />
+
+        <TextView
+            android:id="@+id/tev_start_thread_pool2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_20"
+            android:background="@drawable/corners_25_color_ffe066ff"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/dp_15"
+            android:text="開始線程池2"
+            android:textColor="@color/color_FFFFFFFF"
+            android:textSize="@dimen/sp_20" />
+
+        <TextView
+            android:id="@+id/tev_stop_thread_pool2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_20"
+            android:background="@drawable/corners_25_color_ffe066ff"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="@dimen/dp_15"
+            android:text="停止線程池（等待线程池的任务结束再停止）"
+            android:textColor="@color/color_FFFFFFFF"
+            android:textSize="@dimen/sp_20" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -21,6 +21,7 @@ import com.phone.square_module.databinding.FragmentSquareBinding
 import com.phone.square_module.ui.PickerViewActivity
 import com.phone.square_module.ui.SquareDetailsActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
+import java.util.concurrent.atomic.AtomicBoolean
 
 @Route(path = "/square_module/square")
 class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareBinding>() {
@@ -35,6 +36,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     private var dataxSuccessObserver: Observer<List<DataX>>? = null;
     private var dataxErrorObserver: Observer<String>? = null;
     private var datax: DataX = DataX()
+    private var atomicBoolean: AtomicBoolean = AtomicBoolean(false);
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_square
@@ -158,6 +160,10 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         } else {
             squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }
+
+        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get());
+        atomicBoolean.compareAndSet(atomicBoolean.get(), true);
+        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get());
     }
 
     override fun onDestroyView() {
@@ -165,8 +171,9 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
         viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
+
+        super.onDestroy()
     }
 }
