@@ -36,9 +36,9 @@ public class PictureToBase64TaskThreadPool {
                 File file = new File(filePath);
                 LogManager.i(TAG, "PictureToBase64TaskThread filePath*******" + filePath);
                 if (file.exists()) {
-//                base64Str = Base64AndFileManager.fileToBase64(file);
+                    base64Str = Base64AndFileManager.fileToBase64(file);
 //                base64Str = Base64AndFileManager.fileToBase64Test(file);
-                    base64Str = Base64AndFileManager.fileToBase64Second(file);
+//                    base64Str = Base64AndFileManager.fileToBase64Second(file);
                 }
 
                 if (!TextUtils.isEmpty(base64Str)) {

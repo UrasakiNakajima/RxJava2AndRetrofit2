@@ -42,7 +42,7 @@ public class CompressedPictureThreadPool {
 //            File result = BitmapManager.initCompressorIO(getApplication(), file.getAbsolutePath(), dirsPath2);
 //            LogManager.i(TAG, "result size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result)));
 
-                //然后把压缩后的图片转化成bitmap
+                //把图片转化成bitmap
                 Bitmap bitmap = BitmapManager.getBitmap(file.getAbsolutePath());
                 LogManager.i(TAG, "bitmap mWidth*****" + bitmap.getWidth());
                 LogManager.i(TAG, "bitmap mHeight*****" + bitmap.getHeight());
