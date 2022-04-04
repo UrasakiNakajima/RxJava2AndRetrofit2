@@ -40,7 +40,7 @@ import io.reactivex.disposables.Disposable;
 
 public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64AndFilePresenterImpl> implements IBase64AndFileView {
 
-    private static final String TAG = "Base64AndFileActivity";
+    private static final String TAG = Base64AndFileActivity.class.getSimpleName();
     private Toolbar toolbar;
     private TextView tevTitle;
     private TextView tevCompressedPicture;
@@ -242,8 +242,13 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
 //                        Intent bindIntent = new Intent(this, Base64AndFileService.class);
 //                        // 绑定服务和活动，之后活动就可以去调服务的方法了
 //                        bindService(bindIntent, connection, BIND_AUTO_CREATE);
-                        if (presenter != null) {
+
+                        LogManager.i(TAG, "用户已经同意该权限 permission.name*****" + permission.name);
+
+                        if (presenter != null && Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permission.name)) {
                             showLoading();
+
+                            LogManager.i(TAG, "用户已经同意该权限 showCompressedPicture");
                             presenter.showCompressedPicture(appCompatActivity.getApplicationContext(),
                                     dirsPath, dirsPath2);
                         }
@@ -429,6 +434,7 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
         imvCompressedPicture.setVisibility(View.VISIBLE);
         imvCompressedPicture.setImageBitmap(bitmap);
         hideLoading();
+        LogManager.i(TAG, "showCompressedPictureSuccess");
 
         if (presenter != null) {
             showLoading();

@@ -32,10 +32,10 @@ public class CompressedPictureThreadPool {
         compressedPictureExcutor.submit(new Runnable() {
             @Override
             public void run() {
-                LogManager.i(TAG, "CompressedPictureThread*******" + Thread.currentThread().getName());
+                LogManager.i(TAG, "CompressedPictureThreadPool*******" + Thread.currentThread().getName());
 
                 //先取出资源文件保存在本地
-                File file = BitmapManager.getAssetFile(context, "picture26.jpeg", dirsPath);
+                File file = BitmapManager.getAssetFile(context, "picture_large.png", dirsPath);
                 LogManager.i(TAG, "file size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(file)));
 
 //            //再压缩本地图片
@@ -52,7 +52,7 @@ public class CompressedPictureThreadPool {
                 LogManager.i(TAG, "bitmapNew mHeight*****" + bitmapNew.getHeight());
                 //再把压缩后的bitmap保存到本地
                 File result2 = BitmapManager.saveFile(bitmapNew, dirsPath2, file.getName());
-                LogManager.i(TAG, "CompressedPictureThread filePath*******" + result2.getAbsolutePath());
+                LogManager.i(TAG, "CompressedPictureThreadPool filePath*******" + result2.getAbsolutePath());
                 LogManager.i(TAG, "result2 size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result2)));
 //                if (bitmap != null) {
 //                    bitmap.recycle();
