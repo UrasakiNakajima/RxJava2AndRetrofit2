@@ -20,6 +20,7 @@ import com.phone.mine_module.adapter.MineAdapter
 import com.phone.mine_module.bean.Data
 import com.phone.mine_module.presenter.MinePresenterImpl
 import com.phone.mine_module.ui.NewsDetailActivity
+import com.phone.mine_module.ui.ParamsTransferChangeProblemActivity
 import com.phone.mine_module.ui.ThreadPoolActivity
 import com.phone.mine_module.ui.UserDataActivity
 import com.phone.mine_module.view.IMineView
@@ -31,7 +32,7 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView {
 
 
-    private val TAG: String = "MineFragment"
+    private val TAG: String = MineFragment::class.java.name
 //    private var mainActivity: MainActivity? = null
 
     private var juheNewsBeanList: MutableList<Data> = mutableListOf()
@@ -67,6 +68,9 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
         })
         tev_thread_pool.setOnClickListener {
             startActivity(ThreadPoolActivity::class.java)
+        }
+        tev_params_transfer_change_problem.setOnClickListener {
+            startActivity(ParamsTransferChangeProblemActivity::class.java)
         }
 
         initAdapter()

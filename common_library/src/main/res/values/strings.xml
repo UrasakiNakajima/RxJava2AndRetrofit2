@@ -8,6 +8,8 @@
     <string name="resource_center">資源中心</string>
     <string name="mine">我的</string>
     <string name="thread_pool">線程池</string>
+    <string name="params_transfer_change_problem">参数传递改变问题</string>
+
     <string name="data_in_wrong_format">數據格式錯誤</string>
     <string name="request_was_aborted">请求失败</string>
     <string name="login">登陸</string>
