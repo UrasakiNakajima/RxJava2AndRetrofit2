@@ -134,12 +134,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
@@ -205,12 +199,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
@@ -279,12 +267,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
@@ -396,12 +378,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
@@ -475,12 +451,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
@@ -566,12 +536,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
@@ -637,12 +601,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
@@ -725,12 +683,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
@@ -826,12 +778,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
@@ -941,12 +887,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }
@@ -1047,12 +987,6 @@ public class Okhttp3Manager {
                                 return;
                             }
                             onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
                         }

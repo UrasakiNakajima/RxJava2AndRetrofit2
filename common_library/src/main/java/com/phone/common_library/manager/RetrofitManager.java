@@ -83,8 +83,8 @@ public class RetrofitManager {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         // 包含header、body数据
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        RewriteCacheControlInterceptor rewriteCacheControlInterceptor = new RewriteCacheControlInterceptor();
-        HeaderInterceptor headerInterceptor = new HeaderInterceptor();
+//        RewriteCacheControlInterceptor rewriteCacheControlInterceptor = new RewriteCacheControlInterceptor();
+//        HeaderInterceptor headerInterceptor = new HeaderInterceptor();
         // 初始化okhttp
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(5 * 1000, TimeUnit.MILLISECONDS)
@@ -94,9 +94,9 @@ public class RetrofitManager {
                 //								  .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance()))
                 //								  .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance()))
                 .addInterceptor(new BaseUrlManagerInterceptor(BaseApplication.getInstance()))
-                .addInterceptor(rewriteCacheControlInterceptor)
-                .addNetworkInterceptor(rewriteCacheControlInterceptor)
-                .addInterceptor(headerInterceptor)
+//                .addInterceptor(rewriteCacheControlInterceptor)
+//                .addNetworkInterceptor(rewriteCacheControlInterceptor)
+//                .addInterceptor(headerInterceptor)
                 .addInterceptor(loggingInterceptor)
                 .cache(cache)
                 //								  .proxy(Proxy.NO_PROXY)
@@ -252,25 +252,20 @@ public class RetrofitManager {
                                        Exception {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
-                                   if (!isEmpty(responseString)) {
-                                       BaseResponse baseResponse;
-                                       try {
-                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
-                                       } catch (Exception e) {
-                                           //如果不是标准json字符串，就返回错误提示
-                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-                                           return;
-                                       }
-                                       onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
-                                   } else {
-                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-                                   }
+                                   onCommonSingleParamCallback.onSuccess(responseString);
+//                                   if (!isEmpty(responseString)) {
+//                                       BaseResponse baseResponse;
+//                                       try {
+//                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+//                                       } catch (Exception e) {
+//                                           //如果不是标准json字符串，就返回错误提示
+//                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                           return;
+//                                       }
+//                                       onCommonSingleParamCallback.onSuccess(responseString);
+//                                   } else {
+//                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                   }
 
 
                                    //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
@@ -325,25 +320,21 @@ public class RetrofitManager {
                                        Exception {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
-                                   if (!isEmpty(responseString)) {
-                                       BaseResponse baseResponse;
-                                       try {
-                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
-                                       } catch (Exception e) {
-                                           //如果不是标准json字符串，就返回错误提示
-                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-                                           return;
-                                       }
-                                       onCommonSingleParamCallback.onSuccess(responseString);
+                                   onCommonSingleParamCallback.onSuccess(responseString);
 
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
-                                   } else {
-                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-                                   }
+//                                   if (!isEmpty(responseString)) {
+//                                       BaseResponse baseResponse;
+//                                       try {
+//                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+//                                       } catch (Exception e) {
+//                                           //如果不是标准json字符串，就返回错误提示
+//                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                           return;
+//                                       }
+//                                       onCommonSingleParamCallback.onSuccess(responseString);
+//                                   } else {
+//                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                   }
 
 
                                    //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
@@ -398,25 +389,20 @@ public class RetrofitManager {
                                        Exception {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
-                                   if (!isEmpty(responseString)) {
-                                       BaseResponse baseResponse;
-                                       try {
-                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
-                                       } catch (Exception e) {
-                                           //如果不是标准json字符串，就返回错误提示
-                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-                                           return;
-                                       }
-                                       onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
-                                   } else {
-                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-                                   }
+                                   onCommonSingleParamCallback.onSuccess(responseString);
+//                                   if (!isEmpty(responseString)) {
+//                                       BaseResponse baseResponse;
+//                                       try {
+//                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+//                                       } catch (Exception e) {
+//                                           //如果不是标准json字符串，就返回错误提示
+//                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                           return;
+//                                       }
+//                                       onCommonSingleParamCallback.onSuccess(responseString);
+//                                   } else {
+//                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                   }
 
 
                                    //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
@@ -471,25 +457,20 @@ public class RetrofitManager {
                                        Exception {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
-                                   if (!isEmpty(responseString)) {
-                                       BaseResponse baseResponse;
-                                       try {
-                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
-                                       } catch (Exception e) {
-                                           //如果不是标准json字符串，就返回错误提示
-                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-                                           return;
-                                       }
-                                       onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
-                                   } else {
-                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-                                   }
+                                   onCommonSingleParamCallback.onSuccess(responseString);
+//                                   if (!isEmpty(responseString)) {
+//                                       BaseResponse baseResponse;
+//                                       try {
+//                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+//                                       } catch (Exception e) {
+//                                           //如果不是标准json字符串，就返回错误提示
+//                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                           return;
+//                                       }
+//                                       onCommonSingleParamCallback.onSuccess(responseString);
+//                                   } else {
+//                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                   }
 
 
                                    //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
@@ -544,25 +525,20 @@ public class RetrofitManager {
                                        Exception {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
-                                   if (!isEmpty(responseString)) {
-                                       BaseResponse baseResponse;
-                                       try {
-                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
-                                       } catch (Exception e) {
-                                           //如果不是标准json字符串，就返回错误提示
-                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-                                           return;
-                                       }
-                                       onCommonSingleParamCallback.onSuccess(responseString);
-
-//                            if (baseResponse.getCode() == 666) {
-//                                Intent intent = new Intent(context, LoginActivity.class);
-//                                context.startActivity(intent);
-//                            } else {
-//                            }
-                                   } else {
-                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-                                   }
+                                   onCommonSingleParamCallback.onSuccess(responseString);
+//                                   if (!isEmpty(responseString)) {
+//                                       BaseResponse baseResponse;
+//                                       try {
+//                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+//                                       } catch (Exception e) {
+//                                           //如果不是标准json字符串，就返回错误提示
+//                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                           return;
+//                                       }
+//                                       onCommonSingleParamCallback.onSuccess(responseString);
+//                                   } else {
+//                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                   }
 
 
                                    //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();

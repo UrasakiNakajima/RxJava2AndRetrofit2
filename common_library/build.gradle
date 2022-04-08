@@ -157,10 +157,11 @@ dependencies {
 
     //沉浸式状态栏框架导入
     // 基础依赖包，必须要依赖
-    api 'com.gyf.immersionbar:immersionbar:3.0.0'
-    // fragment快速实现（可选）
-    api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
-    api 'com.qmuiteam:qmui:1.2.0'
+    api 'com.geyifeng.immersionbar:immersionbar:3.2.2'
+    // kotlin扩展（可选）
+    api 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
+
+    api 'com.qmuiteam:qmui:2.0.0-alpha10'
     //android函数分包框架导入
     api 'androidx.multidex:multidex:2.0.1'
 
