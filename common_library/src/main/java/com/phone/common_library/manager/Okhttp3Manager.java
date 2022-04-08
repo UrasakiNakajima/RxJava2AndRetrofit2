@@ -3,6 +3,7 @@ package com.phone.common_library.manager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -117,19 +118,27 @@ public class Okhttp3Manager {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-                LogManager.i(TAG, "getAsyncOkhttp3 onResponse data*****" + data);
+                String responseString = response.body().string();
+                LogManager.i(TAG, "getAsyncOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(data)) {
-                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                                onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
@@ -180,19 +189,27 @@ public class Okhttp3Manager {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-                LogManager.i(TAG, "getAsyncOkhttp3 onResponse data*****" + data);
+                String responseString = response.body().string();
+                LogManager.i(TAG, "getAsyncOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(data)) {
-                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                            onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
@@ -246,19 +263,27 @@ public class Okhttp3Manager {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-                LogManager.i(TAG, "getAsyncOkhttp3 onResponse data*****" + data);
+                String responseString = response.body().string();
+                LogManager.i(TAG, "getAsyncOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(data)) {
-                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                            onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
@@ -328,11 +353,11 @@ public class Okhttp3Manager {
                                        Map<String, String> bodyParams,
                                        OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         JSONObject jsonObject = new JSONObject(bodyParams);
-        String data = jsonObject.toString();
-        LogManager.i(TAG, "postAsyncStringOkhttp3 data*****" + data);
+        String requestData = jsonObject.toString();
+        LogManager.i(TAG, "postAsyncStringOkhttp3 requestData*****" + requestData);
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
         //2.通过RequestBody.create 创建requestBody对象
-        RequestBody requestBody = RequestBody.create(mediaType, data);
+        RequestBody requestBody = RequestBody.create(mediaType, requestData);
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         Request request = new Request.Builder().url(url).post(requestBody).build();
         //4.创建一个call对象,参数就是Request请求对象
@@ -355,19 +380,27 @@ public class Okhttp3Manager {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-                LogManager.i(TAG, "postAsyncStringOkhttp3 onResponse data*****" + data);
+                String responseString = response.body().string();
+                LogManager.i(TAG, "postAsyncStringOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(data)) {
-                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                                onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
@@ -383,13 +416,13 @@ public class Okhttp3Manager {
      * post请求提交流，异步方式，是在子线程中执行的，需要切换到主线程才能更新UI
      *
      * @param url
-     * @param data
+     * @param requestData
      * @param onCommonSingleParamCallback
      */
     public void postAsyncStreamOkhttp3(String url,
-                                       String data,
+                                       String requestData,
                                        OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
-        LogManager.i(TAG, "data*****" + data);
+        LogManager.i(TAG, "requestData*****" + requestData);
 
         //2.通过new RequestBody 创建requestBody对象
         RequestBody requestBody = new RequestBody() {
@@ -401,7 +434,7 @@ public class Okhttp3Manager {
 
             @Override
             public void writeTo(@NonNull BufferedSink sink) throws IOException {
-                sink.writeUtf8(data);
+                sink.writeUtf8(requestData);
             }
         };
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
@@ -426,19 +459,27 @@ public class Okhttp3Manager {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-                LogManager.i(TAG, "postAsyncStreamOkhttp3 onResponse data*****" + data);
+                String responseString = response.body().string();
+                LogManager.i(TAG, "postAsyncStreamOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(data)) {
-//                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                                onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
@@ -509,23 +550,31 @@ public class Okhttp3Manager {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onResponse data*****" + data);
+                String responseString = response.body().string();
+                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-//                        if (!isEmpty(data)) {
-//                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                                onCommonSingleParamCallback.onSuccess(data);
 //                            }
-//                        } else {
-//                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-//                        }
+                        } else {
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                        }
                     }
                 });
                 mainThreadManager.subThreadToUIThread();
@@ -572,23 +621,31 @@ public class Okhttp3Manager {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onResponse data*****" + data);
+                String responseString = response.body().string();
+                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-//                        if (!isEmpty(data)) {
-//                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                        onCommonSingleParamCallback.onSuccess(data);
 //                            }
-//                        } else {
-//                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
-//                        }
+                        } else {
+                            onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                        }
                     }
                 });
                 mainThreadManager.subThreadToUIThread();
@@ -650,21 +707,29 @@ public class Okhttp3Manager {
 //                //服务器返回的是加密字符串，要解密
 //                String dataEncrypt = response.body().string();
 //                LogManager.i(TAG, "login onResponse dataEncrypt*****" + dataEncrypt);
-                String data = response.body().string();
+                String responseString = response.body().string();
 //                try {
-//                    data = AESManager.aesDecrypt(dataEncrypt);
-                LogManager.i(TAG, "postAsyncFormOkhttp3 onResponse data*****" + data);
+//                    responseString = AESManager.aesDecrypt(dataEncrypt);
+                LogManager.i(TAG, "postAsyncFormOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(data)) {
-                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                                onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
@@ -745,19 +810,27 @@ public class Okhttp3Manager {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onResponse data*****" + data);
+                String responseString = response.body().string();
+                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(data)) {
-                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                                onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
@@ -852,19 +925,27 @@ public class Okhttp3Manager {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onResponse data*****" + data);
+                String responseString = response.body().string();
+                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(data)) {
-//                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                                onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
@@ -950,19 +1031,27 @@ public class Okhttp3Manager {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String data = response.body().string();
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onResponse data*****" + data);
+                String responseString = response.body().string();
+                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(data)) {
-                            BaseResponse baseResponse = JSON.parseObject(data, BaseResponse.class);
+                        if (!isEmpty(responseString)) {
+                            BaseResponse baseResponse;
+                            try {
+                                baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                            } catch (Exception e) {
+                                //如果不是标准json字符串，就返回错误提示
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                return;
+                            }
+                            onCommonSingleParamCallback.onSuccess(responseString);
+
 //                            if (baseResponse.getCode() == 666) {
 //                                Intent intent = new Intent(context, LoginActivity.class);
 //                                context.startActivity(intent);
 //                            } else {
-                                onCommonSingleParamCallback.onSuccess(data);
 //                            }
                         } else {
                             onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
@@ -1330,7 +1419,7 @@ public class Okhttp3Manager {
     }
 
     protected boolean isEmpty(String dataStr) {
-        if (dataStr != null && !"".equals(dataStr)) {
+        if (!TextUtils.isEmpty(dataStr)) {
             return false;
         } else {
             return true;

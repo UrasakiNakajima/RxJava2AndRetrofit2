@@ -3,12 +3,16 @@ package com.phone.common_library.manager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.alibaba.fastjson.JSON;
 import com.phone.common_library.BaseApplication;
+import com.phone.common_library.R;
+import com.phone.common_library.base.BaseResponse;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.common.ConstantUrl;
 import com.phone.common_library.interceptor.BaseUrlManagerInterceptor;
@@ -248,7 +252,26 @@ public class RetrofitManager {
                                        Exception {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
-                                   onCommonSingleParamCallback.onSuccess(responseString);
+                                   if (!isEmpty(responseString)) {
+                                       BaseResponse baseResponse;
+                                       try {
+                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                                       } catch (Exception e) {
+                                           //如果不是标准json字符串，就返回错误提示
+                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                           return;
+                                       }
+                                       onCommonSingleParamCallback.onSuccess(responseString);
+
+//                            if (baseResponse.getCode() == 666) {
+//                                Intent intent = new Intent(context, LoginActivity.class);
+//                                context.startActivity(intent);
+//                            } else {
+//                            }
+                                   } else {
+                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                   }
+
 
                                    //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
                                    //                                   manager.writeExternal("mineLog.txt",
@@ -302,7 +325,26 @@ public class RetrofitManager {
                                        Exception {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
-                                   onCommonSingleParamCallback.onSuccess(responseString);
+                                   if (!isEmpty(responseString)) {
+                                       BaseResponse baseResponse;
+                                       try {
+                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                                       } catch (Exception e) {
+                                           //如果不是标准json字符串，就返回错误提示
+                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                           return;
+                                       }
+                                       onCommonSingleParamCallback.onSuccess(responseString);
+
+//                            if (baseResponse.getCode() == 666) {
+//                                Intent intent = new Intent(context, LoginActivity.class);
+//                                context.startActivity(intent);
+//                            } else {
+//                            }
+                                   } else {
+                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                   }
+
 
                                    //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
                                    //                                   manager.writeExternal("mineLog.txt",
@@ -356,7 +398,26 @@ public class RetrofitManager {
                                        Exception {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
-                                   onCommonSingleParamCallback.onSuccess(responseString);
+                                   if (!isEmpty(responseString)) {
+                                       BaseResponse baseResponse;
+                                       try {
+                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                                       } catch (Exception e) {
+                                           //如果不是标准json字符串，就返回错误提示
+                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                           return;
+                                       }
+                                       onCommonSingleParamCallback.onSuccess(responseString);
+
+//                            if (baseResponse.getCode() == 666) {
+//                                Intent intent = new Intent(context, LoginActivity.class);
+//                                context.startActivity(intent);
+//                            } else {
+//                            }
+                                   } else {
+                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                   }
+
 
                                    //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
                                    //                                   manager.writeExternal("mineLog.txt",
@@ -410,7 +471,26 @@ public class RetrofitManager {
                                        Exception {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
-                                   onCommonSingleParamCallback.onSuccess(responseString);
+                                   if (!isEmpty(responseString)) {
+                                       BaseResponse baseResponse;
+                                       try {
+                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                                       } catch (Exception e) {
+                                           //如果不是标准json字符串，就返回错误提示
+                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                           return;
+                                       }
+                                       onCommonSingleParamCallback.onSuccess(responseString);
+
+//                            if (baseResponse.getCode() == 666) {
+//                                Intent intent = new Intent(context, LoginActivity.class);
+//                                context.startActivity(intent);
+//                            } else {
+//                            }
+                                   } else {
+                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                   }
+
 
                                    //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
                                    //                                   manager.writeExternal("mineLog.txt",
@@ -464,7 +544,26 @@ public class RetrofitManager {
                                        Exception {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
-                                   onCommonSingleParamCallback.onSuccess(responseString);
+                                   if (!isEmpty(responseString)) {
+                                       BaseResponse baseResponse;
+                                       try {
+                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+                                       } catch (Exception e) {
+                                           //如果不是标准json字符串，就返回错误提示
+                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                           return;
+                                       }
+                                       onCommonSingleParamCallback.onSuccess(responseString);
+
+//                            if (baseResponse.getCode() == 666) {
+//                                Intent intent = new Intent(context, LoginActivity.class);
+//                                context.startActivity(intent);
+//                            } else {
+//                            }
+                                   } else {
+                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+                                   }
+
 
                                    //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
                                    //                                   manager.writeExternal("mineLog.txt",
@@ -557,6 +656,14 @@ public class RetrofitManager {
             }
         }
         return false;
+    }
+
+    protected boolean isEmpty(String dataStr) {
+        if (!TextUtils.isEmpty(dataStr)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
