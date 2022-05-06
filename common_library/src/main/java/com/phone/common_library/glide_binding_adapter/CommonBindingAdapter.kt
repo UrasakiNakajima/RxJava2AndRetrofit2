@@ -44,7 +44,7 @@ object CommonBindingAdapter {
 //                            super.onLoadFailed(errorDrawable)
 ////                            numberOfTimes++;
 ////                            if (numberOfTimes == 1) {
-////                                Glide.with(imageView.context).load(url).into(imageView)
+////                                GlideApp.with(imageView.context).load(url).into(imageView)
 ////                            }
 //                            LogManager.i(TAG, "图片加载失败");
 //                        }
