@@ -901,16 +901,14 @@ public class Okhttp3Manager {
      * post请求上传Form表单和文件（上传php服务器），异步方式，提交表单，是在子线程中执行的，需要切换到主线程才能更新UI
      *
      * @param url
-     * @param header
      * @param bodyParams
      * @param filesList
      * @param onCommonSingleParamCallback
      */
-    public void postAsyncFormAndFilesOkhttp3(String url,
-                                             String header,
-                                             Map<String, String> bodyParams,
-                                             List<File> filesList,
-                                             OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+    public void postAsyncPhpFormAndFilesOkhttp3(String url,
+                                                Map<String, String> bodyParams,
+                                                List<File> filesList,
+                                                OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
             LogManager.i(TAG, "postAsyncFormOkhttp3 bodyParams String*******" + bodyParams.toString());
             LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
@@ -940,17 +938,7 @@ public class Okhttp3Manager {
 
         //构建请求体
         RequestBody requestBody = multipartBodyBuilder.build();
-        Request request;
-        if (header != null && !header.equals("")) {
-            request = new Request.Builder()
-                    .post(requestBody)
-                    .addHeader("Cookie", header)
-                    .url(url).build();
-        } else {
-            request = new Request.Builder()
-                    .post(requestBody)
-                    .url(url).build();
-        }
+        Request request = new Request.Builder().post(requestBody).url(url).build();
         //3 将Request封装为Call
         Call call = client.newCall(request);
         //4 执行Call
