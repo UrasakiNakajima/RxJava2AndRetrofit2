@@ -21,7 +21,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.Proxy;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +63,9 @@ public class Okhttp3Manager {
                 .writeTimeout(5000, TimeUnit.MILLISECONDS) //写入超时
                 .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于设置header
                 .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于接收并持久化cookie
-                .proxy(Proxy.NO_PROXY)
+                .sslSocketFactory(SSLSocketManager.getSSLSocketFactory())//配置
+                .hostnameVerifier(SSLSocketManager.getHostnameVerifier())//配置
+//                .proxy(Proxy.NO_PROXY)
                 .build();
     }
 
@@ -82,6 +83,10 @@ public class Okhttp3Manager {
             }
         }
         return manager;
+    }
+
+    public OkHttpClient getClient() {
+        return client;
     }
 
     /**

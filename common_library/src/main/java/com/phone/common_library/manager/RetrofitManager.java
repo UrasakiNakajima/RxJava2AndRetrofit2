@@ -9,14 +9,12 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.alibaba.fastjson.JSON;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
-import com.phone.common_library.base.BaseResponse;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.common.ConstantUrl;
 import com.phone.common_library.interceptor.BaseUrlManagerInterceptor;
-import com.phone.common_library.interceptor.HeaderInterceptor;
+import com.phone.common_library.interceptor.CacheControlInterceptor;
 import com.phone.common_library.interceptor.RewriteCacheControlInterceptor;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle3.components.support.RxFragment;
@@ -80,25 +78,27 @@ public class RetrofitManager {
         File cacheFile = new File(BaseApplication.getInstance().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
 
+        RewriteCacheControlInterceptor rewriteCacheControlInterceptor = new RewriteCacheControlInterceptor();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         // 包含header、body数据
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        RewriteCacheControlInterceptor rewriteCacheControlInterceptor = new RewriteCacheControlInterceptor();
 //        HeaderInterceptor headerInterceptor = new HeaderInterceptor();
         // 初始化okhttp
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(5 * 1000, TimeUnit.MILLISECONDS)
                 .readTimeout(5 * 1000, TimeUnit.MILLISECONDS)
                 .writeTimeout(5 * 1000, TimeUnit.MILLISECONDS)
-                //								  .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
+                								  .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
                 //								  .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance()))
                 //								  .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance()))
                 .addInterceptor(new BaseUrlManagerInterceptor(BaseApplication.getInstance()))
-//                .addInterceptor(rewriteCacheControlInterceptor)
+                .addInterceptor(rewriteCacheControlInterceptor)
 //                .addNetworkInterceptor(rewriteCacheControlInterceptor)
 //                .addInterceptor(headerInterceptor)
                 .addInterceptor(loggingInterceptor)
                 .cache(cache)
+                .sslSocketFactory(SSLSocketManager.getSSLSocketFactory())//配置
+                .hostnameVerifier(SSLSocketManager.getHostnameVerifier())//配置
                 //								  .proxy(Proxy.NO_PROXY)
                 .build();
 
@@ -286,15 +286,15 @@ public class RetrofitManager {
                                    //                                           });
                                }
                            }
-                        //                        , new Consumer<Throwable>() {
-                        //                            @Override
-                        //                            public void accept(Throwable throwable) throws Exception {
-                        //                                LogManager.i(TAG, "throwable*****" + throwable.toString());
-                        //                                LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
-                        //                                // 异常处理
-                        //                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-                        //                            }
-                        //                        }
+                                                , new Consumer<Throwable>() {
+                                                    @Override
+                                                    public void accept(Throwable throwable) throws Exception {
+                                                        LogManager.i(TAG, "throwable*****" + throwable.toString());
+                                                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+                                                        // 异常处理
+                                                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                                                    }
+                                                }
                 );
         return disposable;
     }
@@ -355,15 +355,15 @@ public class RetrofitManager {
                                    //                                           });
                                }
                            }
-                        //                        , new Consumer<Throwable>() {
-                        //                            @Override
-                        //                            public void accept(Throwable throwable) throws Exception {
-                        //                                LogManager.i(TAG, "throwable*****" + throwable.toString());
-                        //                                LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
-                        //                                // 异常处理
-                        //                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-                        //                            }
-                        //                        }
+                                                , new Consumer<Throwable>() {
+                                                    @Override
+                                                    public void accept(Throwable throwable) throws Exception {
+                                                        LogManager.i(TAG, "throwable*****" + throwable.toString());
+                                                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+                                                        // 异常处理
+                                                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                                                    }
+                                                }
                 );
         return disposable;
     }
@@ -423,15 +423,15 @@ public class RetrofitManager {
                                    //                                           });
                                }
                            }
-                        //                        , new Consumer<Throwable>() {
-                        //                            @Override
-                        //                            public void accept(Throwable throwable) throws Exception {
-                        //                                LogManager.i(TAG, "throwable*****" + throwable.toString());
-                        //                                LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
-                        //                                // 异常处理
-                        //                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-                        //                            }
-                        //                        }
+                                                , new Consumer<Throwable>() {
+                                                    @Override
+                                                    public void accept(Throwable throwable) throws Exception {
+                                                        LogManager.i(TAG, "throwable*****" + throwable.toString());
+                                                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+                                                        // 异常处理
+                                                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                                                    }
+                                                }
                 );
         return disposable;
     }
@@ -491,15 +491,15 @@ public class RetrofitManager {
                                    //                                           });
                                }
                            }
-                        //                        , new Consumer<Throwable>() {
-                        //                            @Override
-                        //                            public void accept(Throwable throwable) throws Exception {
-                        //                                LogManager.i(TAG, "throwable*****" + throwable.toString());
-                        //                                LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
-                        //                                // 异常处理
-                        //                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-                        //                            }
-                        //                        }
+                                                , new Consumer<Throwable>() {
+                                                    @Override
+                                                    public void accept(Throwable throwable) throws Exception {
+                                                        LogManager.i(TAG, "throwable*****" + throwable.toString());
+                                                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+                                                        // 异常处理
+                                                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                                                    }
+                                                }
                 );
         return disposable;
     }
@@ -559,15 +559,15 @@ public class RetrofitManager {
                                    //                                           });
                                }
                            }
-                        //                        , new Consumer<Throwable>() {
-                        //                            @Override
-                        //                            public void accept(Throwable throwable) throws Exception {
-                        //                                LogManager.i(TAG, "throwable*****" + throwable.toString());
-                        //                                LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
-                        //                                // 异常处理
-                        //                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-                        //                            }
-                        //                        }
+                                                , new Consumer<Throwable>() {
+                                                    @Override
+                                                    public void accept(Throwable throwable) throws Exception {
+                                                        LogManager.i(TAG, "throwable*****" + throwable.toString());
+                                                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+                                                        // 异常处理
+                                                        onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                                                    }
+                                                }
                 );
         return disposable;
     }

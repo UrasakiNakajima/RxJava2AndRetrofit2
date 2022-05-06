@@ -1,8 +1,8 @@
-package com.phone.common_library.binding_adapter
+package com.phone.common_library.glide_binding_adapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import com.phone.common_library.okhttp3_app_glide_module.GlideApp
 
 
 object CommonBindingAdapter {
@@ -13,13 +13,13 @@ object CommonBindingAdapter {
     @BindingAdapter("imageUrl")
     fun bindImage(imageView: ImageView, url: String?) {
         if (url != null) {
-            Glide.with(imageView.context)
+            GlideApp.with(imageView.context)
                     .load(url)
-                    .error(Glide.with(imageView.context).load(url))
+                    .error(GlideApp.with(imageView.context).load(url))
                     .into(imageView)
 
 //        var numberOfTimes: Int = 0;
-//            Glide.with(imageView.context).load(url)
+//            GlideApp.with(imageView.context).load(url)
 //                    .listener(object : RequestListener<Drawable> {
 //                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
 //                            LogManager.i(TAG, "网络访问失败，请检查是否开始网络或者增加http的访问许可");
@@ -32,7 +32,7 @@ object CommonBindingAdapter {
 //                        }
 //
 //                    })
-//                    .error(Glide.with(imageView.context).load(url))
+//                    .error(GlideApp.with(imageView.context).load(url))
 //                    .into(object : ImageViewTarget<Drawable>(imageView) {
 //
 //                        override fun onLoadStarted(placeholder: Drawable?) {
