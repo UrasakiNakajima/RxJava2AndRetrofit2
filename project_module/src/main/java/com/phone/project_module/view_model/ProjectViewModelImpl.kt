@@ -28,8 +28,7 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
     private val dataxError: MutableLiveData<String> = MutableLiveData()
 
     override fun projectData(fragment: Fragment, currentPage: String) {
-        disposable = RetrofitManager
-            .getInstance()
+        RetrofitManager.getInstance()
             .responseStringAutoDispose(
                 fragment,
                 model.projectData(currentPage),
@@ -79,7 +78,7 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
                     }
                 })
 
-        compositeDisposable.add(disposable!!)
+//        compositeDisposable.add(disposable!!)
     }
 
     override fun getDataxSuccess(): MutableLiveData<List<DataX>> {

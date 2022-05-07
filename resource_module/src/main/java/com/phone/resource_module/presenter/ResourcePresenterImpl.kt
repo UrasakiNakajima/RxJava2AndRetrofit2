@@ -36,7 +36,7 @@ class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), I
         if (baseView != null) {
             if (baseView is IResourceChildView) {
                 baseView.showLoading()
-                disposable = RetrofitManager.getInstance()
+                RetrofitManager.getInstance()
                     .responseStringAutoDispose(
                         fragment,
                         model.resourceData(type, pageSize, currentPage),

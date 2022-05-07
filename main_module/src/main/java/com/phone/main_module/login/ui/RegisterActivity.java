@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.phone.common_library.base.BaseMvpAppActivity;
+import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.main_module.R;
@@ -19,7 +19,7 @@ import com.phone.main_module.login.view.IRegisterView;
 
 import butterknife.BindView;
 
-public class RegisterActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterImpl>
+public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>
         implements IRegisterView {
 
     @BindView(R2.id.imv_back)
@@ -118,7 +118,7 @@ public class RegisterActivity extends BaseMvpAppActivity<IBaseView, LoginPresent
 //        String data = MapManager.mapToJsonStr(bodyParams);
 //        String requestData = JSONObject.toJSONString(bodyParams);
 //        LogManager.i(TAG, "requestData*****" + requestData);
-            presenter.register(bodyParams);
+            presenter.register(this, bodyParams);
         } else {
             showToast(getResources().getString(R.string.please_check_the_network_connection), true);
         }

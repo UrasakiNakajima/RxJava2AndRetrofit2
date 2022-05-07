@@ -1,8 +1,8 @@
 package com.phone.main_module.login.presenter;
 
-import java.util.Map;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.Map;
 
 /**
  * author    : Urasaki
@@ -12,11 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 
 public interface ILoginPresenter {
-	
-	void getAuthCode(AppCompatActivity activity, Map<String, String> bodyParams);
-	
-	void loginWithAuthCode(AppCompatActivity activity, Map<String, String> bodyParams);
-	
-	void register(Map<String, String> bodyParams);
-	
+
+    void getAuthCode(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams);
+
+    void loginWithAuthCode(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams);
+
+    void register(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams);
+
 }

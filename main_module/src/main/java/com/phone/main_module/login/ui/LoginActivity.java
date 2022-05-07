@@ -8,8 +8,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.phone.common_library.base.BaseMvpAppActivity;
+import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.manager.ActivityPageManager;
 import com.phone.common_library.manager.DeviceManager;
@@ -21,10 +23,8 @@ import com.phone.main_module.login.presenter.LoginPresenterImpl;
 import com.phone.main_module.login.view.ILoginView;
 import com.phone.main_module.main.MainActivity;
 
-import androidx.appcompat.widget.Toolbar;
-
 @Route(path = "/main_module/login")
-public class LoginActivity extends BaseMvpAppActivity<IBaseView, LoginPresenterImpl>
+public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>
 	implements ILoginView {
 	
 	private static final String      TAG = "LoginActivity";

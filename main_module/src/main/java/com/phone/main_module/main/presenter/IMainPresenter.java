@@ -1,5 +1,7 @@
 package com.phone.main_module.main.presenter;
 
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
+
 import java.util.Map;
 
 /**
@@ -11,5 +13,5 @@ import java.util.Map;
 
 public interface IMainPresenter {
 
-    void mainData(Map<String, String> bodyParams);
+    void mainData(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams);
 }

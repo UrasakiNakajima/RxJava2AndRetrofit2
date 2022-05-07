@@ -32,7 +32,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         if (baseView != null) {
             if (baseView is IMineView) {
                 baseView.showLoading()
-                disposable = RetrofitManager.getInstance()
+                RetrofitManager.getInstance()
                     .responseStringAutoDispose(
                         fragment,
                         model.mineData(bodyParams),
@@ -77,7 +77,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         if (baseView != null) {
             if (baseView is IMineView) {
                 baseView.showLoading()
-                disposable = RetrofitManager.getInstance()
+                RetrofitManager.getInstance()
                     .responseStringAutoDispose(
                         appCompatActivity,
                         model.mineData(bodyParams),
@@ -122,7 +122,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         if (baseView != null) {
             if (baseView is IUserDataView) {
                 baseView.showLoading()
-                disposable = RetrofitManager.getInstance()
+                RetrofitManager.getInstance()
                     .responseStringAutoDispose(
                         appCompatActivity,
                         model.userData(bodyParams),
@@ -170,7 +170,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         if (baseView != null) {
             if (baseView is IUserDataView) {
                 baseView.showLoading()
-                disposable = RetrofitManager.getInstance()
+                RetrofitManager.getInstance()
                     .responseStringAutoDispose(
                         appCompatActivity,
                         model.userData(accessToken, bodyParams),

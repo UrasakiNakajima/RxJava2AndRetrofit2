@@ -33,9 +33,8 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     private val dataxDetailsError: MutableLiveData<String> = MutableLiveData()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
-        disposable = RetrofitManager
-            .getInstance()
-            .responseString2(rxFragment,
+        RetrofitManager.getInstance()
+            .responseStringRxFragment(rxFragment,
                 model.squareData(currentPage),
                 object : OnCommonSingleParamCallback<String> {
                     override fun onSuccess(success: String) {
@@ -63,8 +62,6 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                         dataxError.value = error
                     }
                 })
-
-        compositeDisposable.add(disposable!!)
     }
 
     override fun getDataxSuccess(): MutableLiveData<List<DataX>> {
@@ -76,9 +73,8 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     }
 
     override fun squareDetails(rxAppCompatActivity: RxAppCompatActivity, currentPage: String) {
-        disposable = RetrofitManager
-            .getInstance()
-            .responseString2(rxAppCompatActivity,
+        RetrofitManager.getInstance()
+            .responseStringRxActivity(rxAppCompatActivity,
                 model.squareDetails(currentPage),
                 object : OnCommonSingleParamCallback<String> {
                     override fun onSuccess(success: String) {
@@ -106,8 +102,6 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                         dataxDetailsError.value = error
                     }
                 })
-
-        compositeDisposable.add(disposable!!)
     }
 
     override fun getDataxDetailsSuccess(): MutableLiveData<List<DataX>> {
