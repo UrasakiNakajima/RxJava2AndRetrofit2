@@ -374,7 +374,7 @@ public class RetrofitManager {
      * @param onCommonSingleParamCallback
      * @return
      */
-    public void responseStringRxActivity(RxAppCompatActivity rxAppCompatActivity, Observable<ResponseBody> observable, OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+    public void responseStringRxAppActivity(RxAppCompatActivity rxAppCompatActivity, Observable<ResponseBody> observable, OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
