@@ -12,6 +12,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
@@ -22,8 +25,6 @@ import com.qmuiteam.qmui.widget.QMUILoadingView;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 
 /**
@@ -42,7 +43,7 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
 	protected T presenter;
 	
 	protected String              url;
-	protected Map<String, String> bodyParams;
+	protected Map<String, String> bodyParams = new HashMap<>();
 	protected Intent              intent;
 	protected Bundle              bundle;
 	protected AppCompatActivity   appCompatActivity;
@@ -54,7 +55,6 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
 		appCompatActivity = this;
 		baseApplication = (BaseApplication) getApplication();
 		ActivityPageManager.getInstance().addActivity(this);
-		bodyParams = new HashMap<>();
 		
 		setContentView(initLayoutId());
 		ButterKnife.bind(this);

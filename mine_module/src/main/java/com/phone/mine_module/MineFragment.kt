@@ -40,11 +40,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     private var linearLayoutManager: LinearLayoutManager? = null
     private var isRefresh: Boolean = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // TODO: inflate a fragment view
         rootView = super.onCreateView(inflater, container, savedInstanceState)
         return rootView
@@ -199,13 +195,9 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     }
 
     override fun onDestroyView() {
-
+        layout_out_layer.removeAllViews()
+        rootView = null
         super.onDestroyView()
     }
 
-    override fun onDestroy() {
-        layout_out_layer.removeAllViews()
-        rootView = null
-        super.onDestroy()
-    }
 }

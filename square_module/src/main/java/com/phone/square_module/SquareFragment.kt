@@ -1,25 +1,19 @@
 package com.phone.square_module
 
-import android.os.AsyncTask
-import android.os.SystemClock
 import android.text.TextUtils
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
-import com.phone.common_library.base.BaseMvvmFragment
 import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.square_module.bean.DataX
 import com.phone.square_module.databinding.FragmentSquareBinding
-import com.phone.square_module.ui.PickerViewActivity
-import com.phone.square_module.ui.SquareDetailsActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -166,14 +160,4 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get());
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
-        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
-
-        super.onDestroy()
-    }
 }

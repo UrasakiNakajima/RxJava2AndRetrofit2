@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_resource_child.*
 class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(),
     IResourceChildView {
 
-    private val TAG: String = "ResourceChildFragment";
+    private val TAG = ResourceChildFragment::class.java.simpleName
 
     private var resultList: MutableList<Result2> = mutableListOf()
     private var resourceAdapter: ResourceAdapter? = null
@@ -50,9 +50,9 @@ class ResourceChildFragment : BaseMvpFragment<IBaseView, ResourcePresenterImpl>(
     }
 
     override fun initData() {
-
         bundle = arguments
         type = bundle.getString("type")!!
+
 //        if (resources.getString(R.string.all_resources).equals(type)) {
 //
 //        } else if (resources.getString(R.string.beautiful_woman).equals(type)) {

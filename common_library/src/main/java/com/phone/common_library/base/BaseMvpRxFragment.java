@@ -33,7 +33,7 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
     protected T presenter;
 
     protected String url;
-    protected Map<String, String> bodyParams;
+    protected Map<String, String> bodyParams = new HashMap<>();
     protected BaseApplication baseApplication;
     protected RxAppCompatActivity rxAppCompatActivity;
     protected Intent intent;
@@ -42,6 +42,7 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
     protected View rootView;
     private Unbinder unbinder;
     protected Fragment fragment;
+//    private boolean isFirstLoad = true;
 
     @Nullable
     @Override
@@ -69,7 +70,6 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
         if (rxAppCompatActivity != null) {
             baseApplication = (BaseApplication) rxAppCompatActivity.getApplication();
         }
-        bodyParams = new HashMap<>();
 
         initData();
         presenter = attachPresenter();

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.phone.common_library.manager.LogManager
 
 /**
  * author    : Urasaki
@@ -25,14 +26,21 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment() {
 
+    private var TAG = BaseMvvmFragment::class.java.simpleName
+
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null
     protected var appCompatActivity: AppCompatActivity? = null
     protected var intent: Intent? = null
     protected var bundle: Bundle? = null
+//    protected var isFirstLoad = true
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
         mDatabind.lifecycleOwner = this
         return mDatabind.root
@@ -41,9 +49,10 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        appCompatActivity = getActivity() as AppCompatActivity?;
+        appCompatActivity = getActivity() as AppCompatActivity?
         viewModel = initViewModel()
         initData()
+        LogManager.i(TAG, "onViewCreated")
         initObservers()
         initViews()
         initLoadData()
@@ -61,12 +70,17 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
 
     protected abstract fun initLoadData()
 
-    protected fun showCustomToast(left: Int, right: Int,
-                                  textSize: Int, textColor: Int,
-                                  bgColor: Int, height: Int,
-                                  roundRadius: Int, message: String) {
+    protected fun showCustomToast(
+        left: Int, right: Int,
+        textSize: Int, textColor: Int,
+        bgColor: Int, height: Int,
+        roundRadius: Int, message: String
+    ) {
         val frameLayout = FrameLayout(appCompatActivity!!)
-        val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
         frameLayout.layoutParams = layoutParams
         val textView = TextView(appCompatActivity)
         val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
@@ -115,7 +129,11 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
         startActivityForResult(intent, requestCode)
     }
 
-    protected fun startActivityForResultCarryParams(cls: Class<*>, params: Map<String, String>?, requestCode: Int) {
+    protected fun startActivityForResultCarryParams(
+        cls: Class<*>,
+        params: Map<String, String>?,
+        requestCode: Int
+    ) {
         intent = Intent(appCompatActivity, cls)
         bundle = Bundle()
 

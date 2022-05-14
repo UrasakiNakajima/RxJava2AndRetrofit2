@@ -1,14 +1,13 @@
 package com.phone.square_module.view_model
 
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseViewModel
 import com.phone.common_library.callback.OnCommonSingleParamCallback
 import com.phone.common_library.manager.GsonManager
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
+import com.phone.common_library.manager.SingleLiveData
 import com.phone.square_module.bean.DataX
 import com.phone.square_module.bean.SquareBean
 import com.phone.square_module.model.SquareModelImpl
@@ -19,18 +18,18 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 
     companion object {
-        private val TAG: String = "SquareViewModelImpl"
+        private val TAG: String = SquareViewModelImpl::class.java.simpleName
     }
 
     private var model: SquareModelImpl = SquareModelImpl()
 
-    //1.首先定义两个MutableLiveData的实例
-    private val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
-    private val dataxError: MutableLiveData<String> = MutableLiveData()
+    //1.首先定义两个SingleLiveData的实例
+    private val dataxSuccess: SingleLiveData<List<DataX>> = SingleLiveData()
+    private val dataxError: SingleLiveData<String> = SingleLiveData()
 
-    //1.首先定义两个MutableLiveData的实例
-    private val dataxDetailsSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
-    private val dataxDetailsError: MutableLiveData<String> = MutableLiveData()
+    //1.首先定义两个SingleLiveData的实例
+    private val dataxDetailsSuccess: SingleLiveData<List<DataX>> = SingleLiveData()
+    private val dataxDetailsError: SingleLiveData<String> = SingleLiveData()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
         RetrofitManager.getInstance()
@@ -64,11 +63,11 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                 })
     }
 
-    override fun getDataxSuccess(): MutableLiveData<List<DataX>> {
+    override fun getDataxSuccess(): SingleLiveData<List<DataX>> {
         return dataxSuccess
     }
 
-    override fun getDataxError(): MutableLiveData<String> {
+    override fun getDataxError(): SingleLiveData<String> {
         return dataxError
     }
 
@@ -104,11 +103,11 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                 })
     }
 
-    override fun getDataxDetailsSuccess(): MutableLiveData<List<DataX>> {
+    override fun getDataxDetailsSuccess(): SingleLiveData<List<DataX>> {
         return dataxDetailsSuccess
     }
 
-    override fun getDataxDetailsError(): MutableLiveData<String> {
+    override fun getDataxDetailsError(): SingleLiveData<String> {
         return dataxDetailsError
     }
 

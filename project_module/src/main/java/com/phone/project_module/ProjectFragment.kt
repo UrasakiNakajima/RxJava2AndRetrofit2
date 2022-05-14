@@ -27,7 +27,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     IProjectChildView {
 
     companion object {
-        private val TAG: String = "ProjectChildFragment"
+        private val TAG: String = ProjectFragment::class.java.simpleName
     }
 
     private var projectAdapter: ProjectAdapter? = null
@@ -76,7 +76,6 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
         }
 
         viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
-
         viewModel!!.getDataxError().observe(this, dataxErrorObserver!!)
     }
 
@@ -110,6 +109,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun initLoadData() {
+        LogManager.i(TAG, "initLoadData")
         mDatabind.refreshLayout.autoRefresh()
     }
 
@@ -179,16 +179,4 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
         }
     }
 
-    override fun onDestroyView() {
-
-//        viewModel!!.getDataxSuccess().removeObservers(this)
-        super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
-        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
-        viewModel = null
-        super.onDestroy()
-    }
 }

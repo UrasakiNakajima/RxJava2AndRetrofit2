@@ -188,7 +188,7 @@ public class FirstPageFragment extends BaseMvpFragment<IBaseView, FirstPagePrese
 //
 //		Toast.makeText(appCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show();
 //	}
-	
+
 	@Override
 	public void showLoading() {
 		if (loadView != null && !loadView.isShown()) {

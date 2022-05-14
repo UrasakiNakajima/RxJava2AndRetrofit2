@@ -44,7 +44,6 @@ public class FirstPageActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
 	private FirstPageAdapter                                firstPageAdapter;
 	private LinearLayoutManager                             linearLayoutManager;
 	private boolean                                         isRefresh;
-	private boolean                                         isFirstLoad;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
