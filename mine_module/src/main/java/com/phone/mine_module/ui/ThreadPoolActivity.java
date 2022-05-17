@@ -1,13 +1,13 @@
 package com.phone.mine_module.ui;
 
-import androidx.appcompat.widget.Toolbar;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.FaceDetector;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.phone.common_library.base.BaseAppActivity;
 import com.phone.common_library.manager.LogManager;
@@ -260,6 +260,15 @@ public class ThreadPoolActivity extends BaseAppActivity {
 //        }
 //    }
 
+    /**
+     * （1）修改线程池状态为STOP
+     * （2）不再接收任务提交
+     * （3）尝试中断线程池中所有的线程（包括正在执行的线程）
+     * （4）返回正在等待执行的任务列表 List<Runnable>
+     * 此时线程池中等待队列中的任务不会被执行，正在执行的任务也可能被终止（为什么是可能呢？因为如果正常执行的任务
+     * 如果不响应中断，那么就不会被终止，直到任务执行完毕）
+     * PS：线程池中的正在执行的任务一般是停不下来的
+     */
     private void stopThreadPool() {
         if (excutor != null && future != null && !excutor.isShutdown()) {
             future.cancel(true);
@@ -281,6 +290,12 @@ public class ThreadPoolActivity extends BaseAppActivity {
 //        }
     }
 
+    /**
+     * （1）修改线程池状态为SHUTDOWN
+     * （2）不再接收新提交的任务
+     * （3）中断线程池中空闲的线程
+     * 第（3）步只是中断了空闲的线程，但正在执行的任务以及线程池任务队列中的任务会继续执行完毕
+     */
     private void startThreadPool2() {
         excutor2 = Executors.newSingleThreadExecutor();
         future2 = excutor2.submit(new Runnable() {
