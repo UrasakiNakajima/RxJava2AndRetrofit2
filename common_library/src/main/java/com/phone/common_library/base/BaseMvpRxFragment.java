@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.phone.common_library.BaseApplication;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
@@ -41,7 +40,7 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
 
     protected View rootView;
     private Unbinder unbinder;
-    protected Fragment fragment;
+    protected RxFragment rxFragment;
 //    private boolean isFirstLoad = true;
 
     @Nullable
@@ -56,7 +55,7 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
         //            }
         //        }
 
-        fragment = this;
+        rxFragment = this;
         rootView = inflater.inflate(initLayoutId(), container, false);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;

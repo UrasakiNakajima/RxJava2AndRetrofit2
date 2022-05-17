@@ -1,9 +1,9 @@
 package com.phone.resource_module.presenter.base
 
-import androidx.fragment.app.Fragment
+import com.trello.rxlifecycle3.components.support.RxFragment
 
 interface IResourcePresenter {
 
-    fun resourceData(fragment: Fragment, type: String, pageSize: String, currentPage: String)
+    fun resourceData(rxFragment: RxFragment, type: String, pageSize: String, currentPage: String)
 
 }

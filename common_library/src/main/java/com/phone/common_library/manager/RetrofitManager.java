@@ -16,6 +16,8 @@ import com.phone.common_library.common.ConstantUrl;
 import com.phone.common_library.interceptor.BaseUrlManagerInterceptor;
 import com.phone.common_library.interceptor.CacheControlInterceptor;
 import com.phone.common_library.interceptor.RewriteCacheControlInterceptor;
+import com.trello.rxlifecycle3.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.FragmentEvent;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle3.components.support.RxFragment;
 import com.uber.autodispose.AutoDispose;
@@ -374,7 +376,7 @@ public class RetrofitManager {
      * @param onCommonSingleParamCallback
      * @return
      */
-    public void responseStringRxAppActivity(RxAppCompatActivity rxAppCompatActivity, Observable<ResponseBody> observable, OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+    public void responseStringRxAppActivityBindToLifecycle(RxAppCompatActivity rxAppCompatActivity, Observable<ResponseBody> observable, OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -433,19 +435,151 @@ public class RetrofitManager {
     }
 
     /**
-     * 返回Disposable，接口回调返回字符串
+     * 无返回值，接口回调返回字符串
+     *
+     * @param rxAppCompatActivity
+     * @param observable
+     * @param onCommonSingleParamCallback
+     * @return
+     */
+    public void responseStringRxAppActivityBindUntilEvent(RxAppCompatActivity rxAppCompatActivity, Observable<ResponseBody> observable, OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+        observable.onTerminateDetach()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                //解决rxjava导致的内存泄漏问题
+                .compose(rxAppCompatActivity.<ResponseBody>bindUntilEvent(ActivityEvent.DESTROY))
+                .subscribe(new Consumer<ResponseBody>() {
+                               @Override
+                               public void accept(ResponseBody responseBody) throws
+                                       Exception {
+                                   String responseString = responseBody.string();
+                                   LogManager.i(TAG, "responseString*****" + responseString);
+                                   onCommonSingleParamCallback.onSuccess(responseString);
+//                                   if (!isEmpty(responseString)) {
+//                                       BaseResponse baseResponse;
+//                                       try {
+//                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+//                                       } catch (Exception e) {
+//                                           //如果不是标准json字符串，就返回错误提示
+//                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                           return;
+//                                       }
+//                                       onCommonSingleParamCallback.onSuccess(responseString);
+//                                   } else {
+//                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                   }
+
+
+                                   //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
+                                   //                                   manager.writeExternal("mineLog.txt",
+                                   //                                           responseString,
+                                   //                                           new OnCommonSingleParamCallback<Boolean>() {
+                                   //                                               @Override
+                                   //                                               public void onSuccess(Boolean success) {
+                                   //                                                   LogManager.i(TAG, "success*****" + success);
+                                   //                                                   manager.unSubscribe();
+                                   //                                               }
+                                   //
+                                   //                                               @Override
+                                   //                                               public void onError(String error) {
+                                   //                                                   LogManager.i(TAG, "error*****" + error);
+                                   //                                                   manager.unSubscribe();
+                                   //                                               }
+                                   //                                           });
+                               }
+                           }
+                        , new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                LogManager.i(TAG, "throwable*****" + throwable.toString());
+                                LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+                                // 异常处理
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                            }
+                        }
+                );
+    }
+
+    /**
+     * 无返回值，，接口回调返回字符串
      *
      * @param rxFragment
      * @param observable
      * @param onCommonSingleParamCallback
      * @return
      */
-    public void responseStringRxFragment(RxFragment rxFragment, Observable<ResponseBody> observable, OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+    public void responseStringRxFragmentBindToLifecycle(RxFragment rxFragment, Observable<ResponseBody> observable, OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 //解决rxjava导致的内存泄漏问题
                 .compose(rxFragment.<ResponseBody>bindToLifecycle())
+                .subscribe(new Consumer<ResponseBody>() {
+                               @Override
+                               public void accept(ResponseBody responseBody) throws
+                                       Exception {
+                                   String responseString = responseBody.string();
+                                   LogManager.i(TAG, "responseString*****" + responseString);
+                                   onCommonSingleParamCallback.onSuccess(responseString);
+//                                   if (!isEmpty(responseString)) {
+//                                       BaseResponse baseResponse;
+//                                       try {
+//                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
+//                                       } catch (Exception e) {
+//                                           //如果不是标准json字符串，就返回错误提示
+//                                           onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                           return;
+//                                       }
+//                                       onCommonSingleParamCallback.onSuccess(responseString);
+//                                   } else {
+//                                       onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.server_sneak_off));
+//                                   }
+
+
+                                   //                                   ReadAndWriteManager manager = ReadAndWriteManager.getInstance();
+                                   //                                   manager.writeExternal("mineLog.txt",
+                                   //                                           responseString,
+                                   //                                           new OnCommonSingleParamCallback<Boolean>() {
+                                   //                                               @Override
+                                   //                                               public void onSuccess(Boolean success) {
+                                   //                                                   LogManager.i(TAG, "success*****" + success);
+                                   //                                                   manager.unSubscribe();
+                                   //                                               }
+                                   //
+                                   //                                               @Override
+                                   //                                               public void onError(String error) {
+                                   //                                                   LogManager.i(TAG, "error*****" + error);
+                                   //                                                   manager.unSubscribe();
+                                   //                                               }
+                                   //                                           });
+                               }
+                           }
+                        , new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                LogManager.i(TAG, "throwable*****" + throwable.toString());
+                                LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+                                // 异常处理
+                                onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                            }
+                        }
+                );
+    }
+
+    /**
+     * 无返回值，接口回调返回字符串
+     *
+     * @param rxFragment
+     * @param observable
+     * @param onCommonSingleParamCallback
+     * @return
+     */
+    public void responseStringRxFragmentBindUntilEvent(RxFragment rxFragment, Observable<ResponseBody> observable, OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+        observable.onTerminateDetach()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                //解决rxjava导致的内存泄漏问题
+                .compose(rxFragment.<ResponseBody>bindUntilEvent(FragmentEvent.DESTROY))
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override
                                public void accept(ResponseBody responseBody) throws

@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.phone.common_library.base.BaseMvpAppActivity
+import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.IBaseView
 import com.phone.common_library.callback.RcvOnItemViewClickListener
 import com.phone.common_library.manager.LogManager
@@ -23,7 +23,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_mine.*
 
 //@Route(path = "/mine_module/ui/mine_details")
-class MineActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineView {
+class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMineView {
 
     private val TAG: String = "MineFragment"
 //    private var mainActivity: MainActivity? = null
@@ -38,7 +38,7 @@ class MineActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineVi
     }
 
     override fun initData() {
-//        mainActivity = appCompatActivity as MainActivity
+//        mainActivity = rxAppCompatActivity as MainActivity
     }
 
     override fun initViews() {
@@ -56,12 +56,12 @@ class MineActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineVi
     }
 
     private fun initAdapter() {
-        linearLayoutManager = LinearLayoutManager(appCompatActivity)
+        linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
         linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
         rcv_data.layoutManager = (linearLayoutManager)
         rcv_data.itemAnimator = DefaultItemAnimator()
 
-        mineAdapter = MineAdapter(appCompatActivity!!)
+        mineAdapter = MineAdapter(rxAppCompatActivity!!)
         mineAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
@@ -75,7 +75,7 @@ class MineActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineVi
 //                        .navigation()
 
                 if (view?.id == R.id.ll_root) {
-                    val intent = Intent(appCompatActivity, NewsDetailActivity::class.java)
+                    val intent = Intent(rxAppCompatActivity, NewsDetailActivity::class.java)
                     intent.putExtra("detailUrl", juheNewsBeanList.get(position).url)
                     startActivity(intent)
                 }
@@ -123,7 +123,7 @@ class MineActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineVi
     }
 
     override fun mineDataSuccess(success: List<Data>) {
-        if (!appCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity!!.isFinishing()) {
             if (isRefresh) {
                 juheNewsBeanList.clear()
                 juheNewsBeanList.addAll(success)
@@ -140,11 +140,11 @@ class MineActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineVi
     }
 
     override fun mineDataError(error: String) {
-        if (!appCompatActivity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dpToPx(appCompatActivity, 20f), ScreenManager.dpToPx(appCompatActivity, 20f),
-                    18, ContextCompat.getColor(appCompatActivity!!,R.color.white),
-                    ContextCompat.getColor(appCompatActivity!!,R.color.color_FFE066FF), ScreenManager.dpToPx(appCompatActivity, 40f),
-                    ScreenManager.dpToPx(appCompatActivity, 20f), error,
+        if (!rxAppCompatActivity!!.isFinishing()) {
+            showCustomToast(ScreenManager.dpToPx(rxAppCompatActivity, 20f), ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                    18, ContextCompat.getColor(rxAppCompatActivity!!,R.color.white),
+                    ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FFE066FF), ScreenManager.dpToPx(rxAppCompatActivity, 40f),
+                    ScreenManager.dpToPx(rxAppCompatActivity, 20f), error,
                     true)
 
             if (isRefresh) {
@@ -156,12 +156,12 @@ class MineActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IMineVi
     }
 
     private fun initMine() {
-        if (RetrofitManager.isNetworkAvailable(appCompatActivity)) {
+        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
             bodyParams.clear()
 
             bodyParams["type"] = "keji"
             bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.mineData(appCompatActivity, bodyParams)
+            presenter.mineData(rxAppCompatActivity, bodyParams)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {

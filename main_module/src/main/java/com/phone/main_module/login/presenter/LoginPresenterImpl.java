@@ -185,7 +185,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                 IRegisterView registerView = (IRegisterView) baseView;
                 registerView.showLoading();
                 RetrofitManager.getInstance()
-                        .responseStringRxAppActivity(rxAppCompatActivity, model.register(bodyParams), new OnCommonSingleParamCallback<String>() {
+                        .responseStringRxAppActivityBindToLifecycle(rxAppCompatActivity, model.register(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
