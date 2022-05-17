@@ -225,7 +225,9 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
     }
 
     private void initRxPermissions() {
-        rxPermissions = new RxPermissions(this);
+        if (rxPermissions == null){
+            rxPermissions = new RxPermissions(this);
+        }
         disposable = rxPermissions
                 .requestEach(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
