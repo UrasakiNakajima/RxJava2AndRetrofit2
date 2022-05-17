@@ -39,7 +39,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
     protected T presenter;
 
     protected String url;
-    protected Map<String, String> bodyParams = new HashMap<>();
+    protected Map<String, String> bodyParams;
     protected BaseApplication baseApplication;
     protected AppCompatActivity appCompatActivity;
     protected Intent intent;
@@ -71,7 +71,7 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        bodyParams = new HashMap<>();
         appCompatActivity = (AppCompatActivity) getActivity();
         if (appCompatActivity != null) {
             baseApplication = (BaseApplication) appCompatActivity.getApplication();

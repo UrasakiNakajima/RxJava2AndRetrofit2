@@ -1,25 +1,31 @@
-package com.phone.mine_module.ui;
+package com.phone.common_library.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.phone.common_library.R;
 import com.phone.common_library.base.BaseAppActivity;
 import com.phone.common_library.manager.LogManager;
-import com.phone.mine_module.R;
 
 public class NewsDetailActivity extends BaseAppActivity {
 
@@ -67,7 +73,20 @@ public class NewsDetailActivity extends BaseAppActivity {
         webSettings = llWebContent.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setUseWideViewPort(true);
-        // android 5.0以上默认不支持Mixed Content，设置支持Mixed Content
+        llWebContent.clearFormData();
+        //设置缓存模式（只加载无缓存）
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);//有五种缓存模式
+//        //设置数据库缓存路径
+//        webSettings.setDatabasePath(cacheDirPath);
+//        //设置应用缓存目录
+//        webSettings.setAppCachePath(cacheDirPath);
+//        //DOM存储功能
+//        webSettings.setDomStorageEnabled(true);
+//        //数据库存储功能
+//        webSettings.setDatabaseEnabled(true);
+//        //应用缓存
+//        webSettings.setAppCacheEnabled(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(
                     WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
@@ -78,12 +97,28 @@ public class NewsDetailActivity extends BaseAppActivity {
 
     @Override
     protected void initLoadData() {
+//		startAsyncTask();
+    }
 
+    private void startAsyncTask() {
+
+        // This async task is an anonymous class and therefore has a hidden reference to the outer
+        // class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
+        // the activity instance will leak.
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                // Do some slow work in background
+                SystemClock.sleep(10000);
+                return null;
+            }
+        }.execute();
+
+        Toast.makeText(this, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show();
     }
 
     private void setWebSetting() {
         llWebContent.setWebViewClient(new WebViewClient() {
-            @SuppressWarnings("deprecation")
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -134,11 +169,24 @@ public class NewsDetailActivity extends BaseAppActivity {
 
     private void destroyWebView(WebView mWebView) {
         if (mWebView != null) {
+            //1.清除数据库缓存
+            deleteDatabase("webview.db");
+            deleteDatabase("webviewCache.db");
+            //2.清除历史
             mWebView.clearHistory();
-            mWebView.clearCache(true);
-            mWebView.loadUrl("about:blank"); // clearView() should be changed to loadUrl("about:blank"), since clearView() is deprecated now
-            mWebView.freeMemory();
-            mWebView.pauseTimers();
+            //3.清空Cookie
+            CookieManager cookieManager = CookieManager.getInstance();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                cookieManager.removeSessionCookies(null);
+                cookieManager.removeAllCookie();
+                cookieManager.flush();
+            } else {
+                cookieManager.removeSessionCookies(null);
+                cookieManager.removeAllCookie();
+                CookieSyncManager.getInstance().sync();
+            }
+            //4.清空Localstorage
+            WebStorage.getInstance().deleteAllData(); //清空WebView的localStorage
             mWebView = null; // Note that mWebView.destroy() and mWebView = null do the exact same thing
         }
     }

@@ -43,7 +43,7 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
 	protected T presenter;
 	
 	protected String              url;
-	protected Map<String, String> bodyParams = new HashMap<>();
+	protected Map<String, String> bodyParams;
 	protected Intent              intent;
 	protected Bundle              bundle;
 	protected AppCompatActivity   appCompatActivity;
@@ -51,7 +51,7 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		bodyParams = new HashMap<>();
 		appCompatActivity = this;
 		baseApplication = (BaseApplication) getApplication();
 		ActivityPageManager.getInstance().addActivity(this);

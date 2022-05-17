@@ -26,10 +26,6 @@
             android:name=".ui.UserDataActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.NewsDetailActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

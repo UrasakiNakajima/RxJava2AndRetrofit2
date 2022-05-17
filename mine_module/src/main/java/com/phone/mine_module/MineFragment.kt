@@ -16,10 +16,10 @@ import com.phone.common_library.callback.RcvOnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
+import com.phone.common_library.ui.NewsDetailActivity
 import com.phone.mine_module.adapter.MineAdapter
 import com.phone.mine_module.bean.Data
 import com.phone.mine_module.presenter.MinePresenterImpl
-import com.phone.mine_module.ui.NewsDetailActivity
 import com.phone.mine_module.ui.ParamsTransferChangeProblemActivity
 import com.phone.mine_module.ui.ThreadPoolActivity
 import com.phone.mine_module.ui.UserDataActivity
