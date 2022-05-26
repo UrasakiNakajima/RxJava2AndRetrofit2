@@ -229,7 +229,7 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
             rxPermissions = new RxPermissions(this);
         }
         disposable = rxPermissions
-                .requestEach(
+                .requestEachCombined(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
 //                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
@@ -238,16 +238,16 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
                     if (permission.granted) {
                         // `permission.name` is granted !
 
-                        // 用户已经同意该权限
-                        LogManager.i(TAG, "用户已经同意该权限");
+                        // 所有的权限都授予
+                        LogManager.i(TAG, "所有的权限都授予");
+                        LogManager.i(TAG, "用户已经同意该权限 permission.name*****" + permission.name);
 
 //                        Intent bindIntent = new Intent(this, Base64AndFileService.class);
 //                        // 绑定服务和活动，之后活动就可以去调服务的方法了
 //                        bindService(bindIntent, connection, BIND_AUTO_CREATE);
 
-                        LogManager.i(TAG, "用户已经同意该权限 permission.name*****" + permission.name);
 
-                        if (presenter != null && Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permission.name)) {
+                        if (presenter != null) {
                             showLoading();
 
                             LogManager.i(TAG, "用户已经同意该权限 showCompressedPicture");
@@ -257,14 +257,14 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
                     } else if (permission.shouldShowRequestPermissionRationale) {
                         // Denied permission without ask never again
 
-                        // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                        LogManager.i(TAG, "用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框");
+                        // 至少一个权限未授予且未勾选不再提示
+                        LogManager.i(TAG, "至少一个权限未授予且未勾选不再提示");
                     } else {
                         // Denied permission with ask never again
                         // Need to go to the settings
 
-                        // 用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限
-                        LogManager.i(TAG, "用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限");
+                        // 至少一个权限未授予且勾选了不再提示
+                        LogManager.i(TAG, "至少一个权限未授予且勾选了不再提示");
                         showSystemSetupDialog();
                     }
                 });
