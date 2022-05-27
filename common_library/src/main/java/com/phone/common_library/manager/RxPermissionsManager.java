@@ -52,6 +52,9 @@ public class RxPermissionsManager {
         return rxPermissionsManager;
     }
 
+    /**
+     * RxAppCompatActivity里需要的时候直接调用就行了
+     */
     public void initRxPermissionsRxAppCompatActivity(OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
         if (rxPermissions == null) {
             rxPermissions = new RxPermissions(rxAppCompatActivity);
@@ -96,15 +99,12 @@ public class RxPermissionsManager {
                             onCommonRxPermissionsCallback.onCheckNoMorePromptError();
                         }
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        LogManager.i(TAG, "throwable*****" + throwable.toString());
-                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
-                    }
                 });
     }
 
+    /**
+     * RxFragment里需要的时候直接调用就行了
+     */
     public void initRxPermissionsRxFragment(OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
         if (rxPermissions == null) {
             rxPermissions = new RxPermissions(rxFragment);

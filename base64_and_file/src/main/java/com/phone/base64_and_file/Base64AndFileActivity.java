@@ -52,7 +52,6 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
 
     // where this is an Activity or Fragment instance
-    private RxPermissionsManager rxPermissionsManager;
     //    private Binder binder;
 //    private Disposable disposable;
 //    private Disposable disposable2;
@@ -112,7 +111,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         tevCompressedPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initRxPermissions();
+                initRxPermissionsRxAppCompatActivity();
             }
         });
         tevPictureToBase64.setOnClickListener(new View.OnClickListener() {
@@ -222,8 +221,11 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         }
     }
 
-    private void initRxPermissions() {
-        rxPermissionsManager = RxPermissionsManager.getInstance(this);
+    /**
+     * RxAppCompatActivity里需要的时候直接调用就行了
+     */
+    private void initRxPermissionsRxAppCompatActivity() {
+        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
         rxPermissionsManager.initRxPermissionsRxAppCompatActivity(new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
