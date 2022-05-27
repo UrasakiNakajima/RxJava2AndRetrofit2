@@ -12,6 +12,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
@@ -22,8 +25,6 @@ import com.qmuiteam.qmui.widget.QMUILoadingView;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 
 /**
@@ -50,11 +51,10 @@ public abstract class BaseMvpAppActivity<V, T extends BasePresenter<V>> extends 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		bodyParams = new HashMap<>();
 		appCompatActivity = this;
 		baseApplication = (BaseApplication) getApplication();
 		ActivityPageManager.getInstance().addActivity(this);
-		bodyParams = new HashMap<>();
 		
 		setContentView(initLayoutId());
 		ButterKnife.bind(this);

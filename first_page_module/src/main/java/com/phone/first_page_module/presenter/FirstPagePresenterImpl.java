@@ -46,7 +46,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                 IFirstPageView firstPageView = (IFirstPageView) baseView;
                 //                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
-                disposable = RetrofitManager.getInstance()
+                RetrofitManager.getInstance()
                         .responseStringAutoDispose(fragment, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
@@ -115,7 +115,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                 IFirstPageView firstPageView = (IFirstPageView) baseView;
                 //                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
-                disposable = RetrofitManager.getInstance()
+                RetrofitManager.getInstance()
                         .responseStringAutoDispose(appCompatActivity, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {

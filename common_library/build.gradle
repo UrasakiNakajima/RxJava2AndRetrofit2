@@ -86,7 +86,9 @@ dependencies {
 //    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api 'androidx.appcompat:appcompat:1.2.0'
-    api 'androidx.constraintlayout:constraintlayout:2.0.2'
+    api 'com.google.android.material:material:1.4.0'
+    api 'androidx.constraintlayout:constraintlayout:2.0.4'
+
     implementation files('libs/BASE64Decoder.jar')
     testApi 'junit:junit:4.12'
     androidTestApi 'androidx.test:runner:1.3.0'
@@ -146,8 +148,10 @@ dependencies {
     api 'com.uber.autodispose:autodispose-android-archcomponents:1.0.0-RC2'
 
     //glide框架導入
-    api 'com.github.bumptech.glide:glide:4.9.0'
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    api 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    //https图片处理
+    api "com.github.bumptech.glide:okhttp3-integration:4.11.0"
 
     //butterknife框架導入
     api 'com.jakewharton:butterknife:10.2.3'
@@ -155,10 +159,11 @@ dependencies {
 
     //沉浸式状态栏框架导入
     // 基础依赖包，必须要依赖
-    api 'com.gyf.immersionbar:immersionbar:3.0.0'
-    // fragment快速实现（可选）
-    api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
-    api 'com.qmuiteam:qmui:1.2.0'
+    api 'com.geyifeng.immersionbar:immersionbar:3.2.2'
+    // kotlin扩展（可选）
+    api 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
+
+    api 'com.qmuiteam:qmui:2.0.0-alpha10'
     //android函数分包框架导入
     api 'androidx.multidex:multidex:2.0.1'
 

@@ -2,13 +2,13 @@ package com.phone.project_module.view_model
 
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseViewModel
 import com.phone.common_library.callback.OnCommonSingleParamCallback
 import com.phone.common_library.manager.GsonManager
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
+import com.phone.common_library.manager.SingleLiveData
 import com.phone.project_module.R
 import com.phone.project_module.bean.DataX
 import com.phone.project_module.bean.ProjectBean
@@ -18,18 +18,17 @@ import com.phone.project_module.model.ProjectModelImpl
 class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
 
     companion object {
-        private val TAG: String = "ProjectViewModelImpl"
+        private val TAG: String = ProjectViewModelImpl::class.java.simpleName
     }
 
     private var model: ProjectModelImpl = ProjectModelImpl()
 
-    //1.首先定义两个MutableLiveData的实例
-    private val dataxSuccess: MutableLiveData<List<DataX>> = MutableLiveData()
-    private val dataxError: MutableLiveData<String> = MutableLiveData()
+    //1.首先定义两个SingleLiveData的实例
+    private val dataxSuccess: SingleLiveData<List<DataX>> = SingleLiveData()
+    private val dataxError: SingleLiveData<String> = SingleLiveData()
 
     override fun projectData(fragment: Fragment, currentPage: String) {
-        disposable = RetrofitManager
-            .getInstance()
+        RetrofitManager.getInstance()
             .responseStringAutoDispose(
                 fragment,
                 model.projectData(currentPage),
@@ -79,14 +78,14 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
                     }
                 })
 
-        compositeDisposable.add(disposable!!)
+//        compositeDisposable.add(disposable!!)
     }
 
-    override fun getDataxSuccess(): MutableLiveData<List<DataX>> {
+    override fun getDataxSuccess(): SingleLiveData<List<DataX>> {
         return dataxSuccess
     }
 
-    override fun getDataxError(): MutableLiveData<String> {
+    override fun getDataxError(): SingleLiveData<String> {
         return dataxError
     }
 

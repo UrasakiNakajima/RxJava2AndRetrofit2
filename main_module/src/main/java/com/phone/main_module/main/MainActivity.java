@@ -27,7 +27,7 @@ import butterknife.BindView;
 public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>
 	implements IMainView {
 	
-	private static final String TAG = "MainActivity";
+	private static final String TAG = MainActivity.class.getSimpleName();
 	@BindView(R2.id.mine_view_pager)
 	MineLazyViewPager mineViewPager;
 	@BindView(R2.id.layout_bottom)

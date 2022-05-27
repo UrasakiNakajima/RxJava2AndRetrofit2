@@ -2,8 +2,6 @@ package com.phone.common_library.base;
 
 import java.lang.ref.WeakReference;
 
-import io.reactivex.disposables.Disposable;
-
 /**
  * author    : Urasaki
  * e-mail    : 1164688204@qq.com
@@ -14,9 +12,8 @@ import io.reactivex.disposables.Disposable;
 
 public class BasePresenter<T> {
 
-    private   WeakReference<T> modelView;
-//    protected CompositeDisposable compositeDisposable;
-    protected Disposable       disposable;
+    private WeakReference<T> modelView;
+    //    protected CompositeDisposable compositeDisposable;
 
     protected void attachView(T view) {
         modelView = new WeakReference<T>(view);

@@ -910,7 +910,7 @@ public class BitmapManager {
         if (!dirs.exists()) {
             dirs.mkdirs();
         }
-        File file = new File(dirs, "picture8.png");
+        File file = new File(dirs, assetFileName);
         if (!file.exists()) {
             try {
                 file.createNewFile();

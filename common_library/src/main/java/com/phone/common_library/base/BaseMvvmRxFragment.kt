@@ -25,8 +25,13 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     protected var rxAppCompatActivity: RxAppCompatActivity? = null
     protected var intent: Intent? = null
     protected var bundle: Bundle? = null
+//    private var isFirstLoad = true
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
         mDatabind.lifecycleOwner = viewLifecycleOwner
         return mDatabind.root
@@ -55,12 +60,17 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
 
     protected abstract fun initLoadData()
 
-    protected fun showCustomToast(left: Int, right: Int,
-                                  textSize: Int, textColor: Int,
-                                  bgColor: Int, height: Int,
-                                  roundRadius: Int, message: String) {
+    protected fun showCustomToast(
+        left: Int, right: Int,
+        textSize: Int, textColor: Int,
+        bgColor: Int, height: Int,
+        roundRadius: Int, message: String
+    ) {
         val frameLayout = FrameLayout(rxAppCompatActivity!!)
-        val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
         frameLayout.layoutParams = layoutParams
         val textView = TextView(rxAppCompatActivity)
         val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
@@ -109,7 +119,11 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         startActivityForResult(intent, requestCode)
     }
 
-    protected fun startActivityForResultCarryParams(cls: Class<*>, params: Map<String, String>?, requestCode: Int) {
+    protected fun startActivityForResultCarryParams(
+        cls: Class<*>,
+        params: Map<String, String>?,
+        requestCode: Int
+    ) {
         intent = Intent(rxAppCompatActivity, cls)
         bundle = Bundle()
 

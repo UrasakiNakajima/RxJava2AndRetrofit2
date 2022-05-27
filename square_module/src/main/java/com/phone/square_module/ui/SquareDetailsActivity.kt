@@ -5,7 +5,6 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.phone.common_library.BaseApplication
-import com.phone.common_library.base.BaseMvvmAppActivity
 import com.phone.common_library.base.BaseMvvmAppRxActivity
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager

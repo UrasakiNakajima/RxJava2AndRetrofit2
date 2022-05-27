@@ -15,9 +15,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.phone.common_library.BaseApplication;
+import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
+import com.phone.common_library.manager.RxPermissionsManager;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle3.components.support.RxFragment;
 
@@ -41,7 +42,8 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
 
     protected View rootView;
     private Unbinder unbinder;
-    protected Fragment fragment;
+    protected RxFragment rxFragment;
+//    private boolean isFirstLoad = true;
 
     @Nullable
     @Override
@@ -55,7 +57,7 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
         //            }
         //        }
 
-        fragment = this;
+        rxFragment = this;
         rootView = inflater.inflate(initLayoutId(), container, false);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
@@ -64,17 +66,36 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        bodyParams = new HashMap<>();
         rxAppCompatActivity = (RxAppCompatActivity) getActivity();
         if (rxAppCompatActivity != null) {
             baseApplication = (BaseApplication) rxAppCompatActivity.getApplication();
         }
-        bodyParams = new HashMap<>();
 
         initData();
         presenter = attachPresenter();
         initViews();
         initLoadData();
+
+//        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
+//        rxPermissionsManager.initRxPermissionsRxFragment(new OnCommonRxPermissionsCallback() {
+//            @Override
+//            public void onRxPermissionsAllPass() {
+//                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(rxAppCompatActivity);
+//                crashHandlerManager.sendPreviousReportsToServer();
+//                crashHandlerManager.init();
+//            }
+//
+//            @Override
+//            public void onNotCheckNoMorePromptError() {
+//
+//            }
+//
+//            @Override
+//            public void onCheckNoMorePromptError() {
+//
+//            }
+//        });
     }
 
     protected abstract int initLayoutId();
@@ -91,6 +112,29 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
      * @return
      */
     protected abstract T attachPresenter();
+
+    /**
+     * RxFragment里需要的时候直接调用就行了
+     */
+    private void initRxPermissionsRxFragment() {
+        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
+        rxPermissionsManager.initRxPermissionsRxFragment(new OnCommonRxPermissionsCallback() {
+            @Override
+            public void onRxPermissionsAllPass() {
+
+            }
+
+            @Override
+            public void onNotCheckNoMorePromptError() {
+
+            }
+
+            @Override
+            public void onCheckNoMorePromptError() {
+
+            }
+        });
+    }
 
     protected void showToast(String message, boolean isLongToast) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();

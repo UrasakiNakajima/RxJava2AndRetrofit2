@@ -44,11 +44,10 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        bodyParams = new HashMap<>();
         rxAppCompatActivity = this;
         baseApplication = (BaseApplication) getApplication();
         ActivityPageManager.getInstance().addActivity(this);
-        bodyParams = new HashMap<>();
 
         setContentView(initLayoutId());
         ButterKnife.bind(this);
@@ -66,6 +65,26 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
         initData();
         initViews();
         initLoadData();
+
+//        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
+//        rxPermissionsManager.initRxPermissionsActivity(new OnCommonRxPermissionsCallback() {
+//            @Override
+//            public void onRxPermissionsAllPass() {
+//                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(rxAppCompatActivity);
+//                crashHandlerManager.sendPreviousReportsToServer();
+//                crashHandlerManager.init();
+//            }
+//
+//            @Override
+//            public void onNotCheckNoMorePromptError() {
+//
+//            }
+//
+//            @Override
+//            public void onCheckNoMorePromptError() {
+//
+//            }
+//        });
     }
 
     @Override

@@ -13,6 +13,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
         <activity
+            android:name=".ui.ParamsTransferChangeProblemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ThreadPoolActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.MineActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -20,10 +26,6 @@
             android:name=".ui.UserDataActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.NewsDetailActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -10,16 +10,18 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.common_library.base.BaseMvpFragment
+import com.phone.common_library.base.BaseMvpRxFragment
 import com.phone.common_library.base.IBaseView
 import com.phone.common_library.callback.RcvOnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
+import com.phone.common_library.ui.NewsDetailActivity
 import com.phone.mine_module.adapter.MineAdapter
 import com.phone.mine_module.bean.Data
 import com.phone.mine_module.presenter.MinePresenterImpl
-import com.phone.mine_module.ui.NewsDetailActivity
+import com.phone.mine_module.ui.ParamsTransferChangeProblemActivity
+import com.phone.mine_module.ui.ThreadPoolActivity
 import com.phone.mine_module.ui.UserDataActivity
 import com.phone.mine_module.view.IMineView
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -27,10 +29,10 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_mine.*
 
 @Route(path = "/mine_module/mine")
-class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView {
+class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineView {
 
 
-    private val TAG: String = "MineFragment"
+    private val TAG: String = MineFragment::class.java.name
 //    private var mainActivity: MainActivity? = null
 
     private var juheNewsBeanList: MutableList<Data> = mutableListOf()
@@ -38,11 +40,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     private var linearLayoutManager: LinearLayoutManager? = null
     private var isRefresh: Boolean = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // TODO: inflate a fragment view
         rootView = super.onCreateView(inflater, container, savedInstanceState)
         return rootView
@@ -53,7 +51,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     }
 
     override fun initData() {
-//        mainActivity = appCompatActivity as MainActivity
+//        mainActivity = rxAppCompatActivity as MainActivity
     }
 
     override fun initViews() {
@@ -64,17 +62,23 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
                 startActivity(UserDataActivity::class.java)
             }
         })
+        tev_thread_pool.setOnClickListener {
+            startActivity(ThreadPoolActivity::class.java)
+        }
+        tev_params_transfer_change_problem.setOnClickListener {
+            startActivity(ParamsTransferChangeProblemActivity::class.java)
+        }
 
         initAdapter()
     }
 
     private fun initAdapter() {
-        linearLayoutManager = LinearLayoutManager(appCompatActivity)
+        linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
         linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
         rcv_data.layoutManager = (linearLayoutManager)
         rcv_data.itemAnimator = DefaultItemAnimator()
 
-        mineAdapter = MineAdapter(appCompatActivity!!)
+        mineAdapter = MineAdapter(rxAppCompatActivity!!)
         mineAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
@@ -88,7 +92,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
 //                        .navigation()
 
                 if (view?.id == R.id.ll_root) {
-                    val intent = Intent(appCompatActivity, NewsDetailActivity::class.java)
+                    val intent = Intent(rxAppCompatActivity, NewsDetailActivity::class.java)
                     intent.putExtra("detailUrl", juheNewsBeanList.get(position).url)
                     startActivity(intent)
                 }
@@ -135,7 +139,7 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     }
 
     override fun mineDataSuccess(success: List<Data>) {
-        if (!appCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity!!.isFinishing()) {
             if (isRefresh) {
                 juheNewsBeanList.clear()
                 juheNewsBeanList.addAll(success)
@@ -152,15 +156,15 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     }
 
     override fun mineDataError(error: String) {
-        if (!appCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity!!.isFinishing()) {
             showCustomToast(
-                ScreenManager.dpToPx(appCompatActivity, 20f),
-                ScreenManager.dpToPx(appCompatActivity, 20f),
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 18,
-                ContextCompat.getColor(appCompatActivity!!, R.color.white),
-                ContextCompat.getColor(appCompatActivity!!, R.color.color_FFE066FF),
-                ScreenManager.dpToPx(appCompatActivity, 40f),
-                ScreenManager.dpToPx(appCompatActivity, 20f),
+                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
+                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 error,
                 true
             )
@@ -174,12 +178,12 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     }
 
     private fun initMine() {
-        if (RetrofitManager.isNetworkAvailable(appCompatActivity)) {
+        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
             bodyParams.clear()
 
             bodyParams["type"] = "keji"
             bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.mineData(fragment, bodyParams)
+            presenter.mineData(rxFragment, bodyParams)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {
@@ -191,13 +195,9 @@ class MineFragment : BaseMvpFragment<IBaseView, MinePresenterImpl>(), IMineView 
     }
 
     override fun onDestroyView() {
-
+        layout_out_layer.removeAllViews()
+        rootView = null
         super.onDestroyView()
     }
 
-    override fun onDestroy() {
-        layout_out_layer.removeAllViews()
-        rootView = null
-        super.onDestroy()
-    }
 }

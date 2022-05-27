@@ -1,15 +1,15 @@
 package com.phone.mine_module.presenter
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle3.components.support.RxFragment
 
 interface IMinePresenter {
 
-    fun mineData(fragment: Fragment, bodyParams: Map<String, String>)
+    fun mineData(rxFragment: RxFragment, bodyParams: Map<String, String>)
 
-    fun mineData(appCompatActivity: AppCompatActivity, bodyParams: Map<String, String>)
+    fun mineData(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
 
-    fun userData(appCompatActivity: AppCompatActivity, bodyParams: Map<String, String>)
+    fun userData(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
 
-    fun userData(appCompatActivity: AppCompatActivity, accessToken: String, bodyParams: Map<String, String>)
+    fun userData(rxAppCompatActivity: RxAppCompatActivity, accessToken: String, bodyParams: Map<String, String>)
 }

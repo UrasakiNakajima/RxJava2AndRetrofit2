@@ -6,6 +6,7 @@ import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.main_module.main.model.MainModelImpl;
 import com.phone.main_module.main.view.IMainView;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.Map;
 
@@ -28,15 +29,15 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void mainData(Map<String, String> bodyParams) {
+    public void mainData(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IMainView) {
                 IMainView mainView = (IMainView) baseView;
                 mainView.showLoading();
 
-                disposable = RetrofitManager.getInstance()
-                        .responseString(model.mainData(bodyParams), new OnCommonSingleParamCallback<String>() {
+                RetrofitManager.getInstance()
+                        .responseStringRxAppActivityBindToLifecycle(rxAppCompatActivity, model.mainData(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
 

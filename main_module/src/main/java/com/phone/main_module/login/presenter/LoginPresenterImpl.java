@@ -1,7 +1,5 @@
 package com.phone.main_module.login.presenter;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.alibaba.fastjson.JSON;
 import com.phone.common_library.base.BasePresenter;
 import com.phone.common_library.base.BaseResponse;
@@ -16,6 +14,7 @@ import com.phone.main_module.login.bean.LoginResponse;
 import com.phone.main_module.login.model.LoginModelImpl;
 import com.phone.main_module.login.view.ILoginView;
 import com.phone.main_module.login.view.IRegisterView;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.Map;
 
@@ -39,14 +38,14 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void getAuthCode(AppCompatActivity activity, Map<String, String> bodyParams) {
+    public void getAuthCode(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof ILoginView) {
                 ILoginView loginView = (ILoginView) baseView;
                 loginView.showLoading();
-                disposable = RetrofitManager.getInstance()
-                        .responseStringAutoDispose(activity, model.getAuthCode(bodyParams), new OnCommonSingleParamCallback<String>() {
+                RetrofitManager.getInstance()
+                        .responseStringAutoDispose(rxAppCompatActivity, model.getAuthCode(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
@@ -107,14 +106,14 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void loginWithAuthCode(AppCompatActivity activity, Map<String, String> bodyParams) {
+    public void loginWithAuthCode(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof ILoginView) {
                 ILoginView loginView = (ILoginView) baseView;
                 loginView.showLoading();
-                disposable = RetrofitManager.getInstance()
-                        .responseStringAutoDispose(activity, model.loginWithAuthCode(bodyParams), new OnCommonSingleParamCallback<String>() {
+                RetrofitManager.getInstance()
+                        .responseStringAutoDispose(rxAppCompatActivity, model.loginWithAuthCode(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
@@ -179,14 +178,14 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void register(Map<String, String> bodyParams) {
+    public void register(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IRegisterView) {
                 IRegisterView registerView = (IRegisterView) baseView;
                 registerView.showLoading();
-                disposable = RetrofitManager.getInstance()
-                        .responseString(model.register(bodyParams), new OnCommonSingleParamCallback<String>() {
+                RetrofitManager.getInstance()
+                        .responseStringRxAppActivityBindToLifecycle(rxAppCompatActivity, model.register(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);

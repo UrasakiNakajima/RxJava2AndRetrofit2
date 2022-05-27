@@ -1,32 +1,28 @@
 package com.phone.square_module
 
-import android.os.AsyncTask
-import android.os.SystemClock
 import android.text.TextUtils
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
-import com.phone.common_library.base.BaseMvvmFragment
 import com.phone.common_library.base.BaseMvvmRxFragment
+import com.phone.common_library.manager.ExceptionManager
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.square_module.bean.DataX
 import com.phone.square_module.databinding.FragmentSquareBinding
-import com.phone.square_module.ui.PickerViewActivity
-import com.phone.square_module.ui.SquareDetailsActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
+import java.util.concurrent.atomic.AtomicBoolean
 
 @Route(path = "/square_module/square")
 class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareBinding>() {
 
     companion object {
-        private val TAG: String = "SquareFragment"
+        private val TAG: String = SquareFragment::class.java.simpleName
     }
 
     //    private var mainActivity: MainActivity? = null
@@ -35,6 +31,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     private var dataxSuccessObserver: Observer<List<DataX>>? = null;
     private var dataxErrorObserver: Observer<String>? = null;
     private var datax: DataX = DataX()
+    private var atomicBoolean: AtomicBoolean = AtomicBoolean(false);
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_square
@@ -62,7 +59,6 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                     squareDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
                 }
             }
-
         }
 
         dataxErrorObserver = object : Observer<String> {
@@ -72,11 +68,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                     squareDataError(t!!)
                 }
             }
-
         }
 
+//        dataxSuccessObserver = null
         viewModel!!.getDataxSuccess().observe(viewLifecycleOwner, dataxSuccessObserver!!)
         viewModel!!.getDataxError().observe(viewLifecycleOwner, dataxErrorObserver!!)
+        ExceptionManager.throwException();
     }
 
     override fun initViews() {
@@ -158,15 +155,10 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         } else {
             squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }
+
+        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get());
+        atomicBoolean.compareAndSet(atomicBoolean.get(), true);
+        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get());
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel!!.getDataxSuccess().removeObserver(dataxSuccessObserver!!)
-        viewModel!!.getDataxError().removeObserver(dataxErrorObserver!!)
-    }
 }

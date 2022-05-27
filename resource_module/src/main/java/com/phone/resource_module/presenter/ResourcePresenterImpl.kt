@@ -1,7 +1,6 @@
 package com.phone.resource_module.presenter
 
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BasePresenter
 import com.phone.common_library.base.IBaseView
@@ -14,6 +13,7 @@ import com.phone.resource_module.bean.ResourcesBean
 import com.phone.resource_module.model.ResourceModelImpl
 import com.phone.resource_module.presenter.base.IResourcePresenter
 import com.phone.resource_module.view.IResourceChildView
+import com.trello.rxlifecycle3.components.support.RxFragment
 
 class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IResourcePresenter {
 
@@ -27,7 +27,7 @@ class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), I
     }
 
     override fun resourceData(
-        fragment: Fragment,
+        rxFragment: RxFragment,
         type: String,
         pageSize: String,
         currentPage: String
@@ -36,9 +36,9 @@ class ResourcePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), I
         if (baseView != null) {
             if (baseView is IResourceChildView) {
                 baseView.showLoading()
-                disposable = RetrofitManager.getInstance()
-                    .responseStringAutoDispose(
-                        fragment,
+                RetrofitManager.getInstance()
+                    .responseStringRxFragmentBindUntilEvent(
+                        rxFragment,
                         model.resourceData(type, pageSize, currentPage),
                         object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {

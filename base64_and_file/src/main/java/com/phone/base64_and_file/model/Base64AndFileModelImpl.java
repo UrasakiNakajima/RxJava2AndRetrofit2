@@ -5,9 +5,9 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.phone.base64_and_file.thread.Base64ToPictureThread;
-import com.phone.base64_and_file.thread.CompressedPictureThread;
-import com.phone.base64_and_file.thread.PictureToBase64TaskThread;
+import com.phone.base64_and_file.thread_pool.Base64ToPictureThreadPool;
+import com.phone.base64_and_file.thread_pool.CompressedPictureThreadPool;
+import com.phone.base64_and_file.thread_pool.PictureToBase64TaskThreadPool;
 import com.phone.common_library.callback.OnCommonBothParamCallback;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
@@ -17,9 +17,10 @@ import java.util.List;
 public class Base64AndFileModelImpl implements IBase64AndFileModel {
 
     private static final String TAG = Base64AndFileModelImpl.class.getSimpleName();
-    private CompressedPictureThread compressedPictureThread;
-    private PictureToBase64TaskThread pictureToBase64TaskThread;
-    private Base64ToPictureThread base64ToPictureThread;
+    private CompressedPictureThreadPool compressedPictureThreadPool;
+    private PictureToBase64TaskThreadPool pictureToBase64TaskThreadPool;
+    private Base64ToPictureThreadPool base64ToPictureThreadPool;
+
     private Handler handler;
 
     public Base64AndFileModelImpl() {
@@ -33,11 +34,11 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                                       OnCommonBothParamCallback<Bitmap> onCommonBothParamCallback) {
         LogManager.i(TAG, "showCompressedPicture");
 
-        compressedPictureThread = new CompressedPictureThread(
+        compressedPictureThreadPool = new CompressedPictureThreadPool(
                 context,
                 dirsPath,
                 dirsPath2);
-        compressedPictureThread.setOnCommonBothParamCallback(new OnCommonBothParamCallback<Bitmap>() {
+        compressedPictureThreadPool.setOnCommonBothParamCallback(new OnCommonBothParamCallback<Bitmap>() {
             @Override
             public void onSuccess(Bitmap success, String data) {
                 handler.post(new Runnable() {
@@ -58,7 +59,7 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                 });
             }
         });
-        compressedPictureThread.start();
+        compressedPictureThreadPool.submit();
     }
 
     @Override
@@ -66,8 +67,8 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                                     OnCommonBothParamCallback<List<String>> onCommonBothParamCallback) {
         LogManager.i(TAG, "showPictureToBase64");
 
-        pictureToBase64TaskThread = new PictureToBase64TaskThread(filePath);
-        pictureToBase64TaskThread.setOnCommonBothParamCallback(new OnCommonBothParamCallback<List<String>>() {
+        pictureToBase64TaskThreadPool = new PictureToBase64TaskThreadPool(filePath);
+        pictureToBase64TaskThreadPool.setOnCommonBothParamCallback(new OnCommonBothParamCallback<List<String>>() {
             @Override
             public void onSuccess(List<String> success, String data) {
                 handler.post(new Runnable() {
@@ -88,7 +89,7 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                 });
             }
         });
-        pictureToBase64TaskThread.start();
+        pictureToBase64TaskThreadPool.submit();
     }
 
     @Override
@@ -97,8 +98,8 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                                     OnCommonSingleParamCallback<Bitmap> onCommonSingleParamCallback) {
         LogManager.i(TAG, "showBase64ToPicture");
 
-        base64ToPictureThread = new Base64ToPictureThread(filePath, base64Str);
-        base64ToPictureThread.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<Bitmap>() {
+        base64ToPictureThreadPool = new Base64ToPictureThreadPool(filePath, base64Str);
+        base64ToPictureThreadPool.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<Bitmap>() {
             @Override
             public void onSuccess(Bitmap success) {
                 handler.post(new Runnable() {
@@ -119,6 +120,6 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                 });
             }
         });
-        base64ToPictureThread.start();
+        base64ToPictureThreadPool.submit();
     }
 }

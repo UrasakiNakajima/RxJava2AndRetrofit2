@@ -15,18 +15,18 @@ import io.reactivex.disposables.Disposable
 open class BaseViewModel : ViewModel() {
 
     private val TAG: String = "BaseViewModel"
-    protected var compositeDisposable: CompositeDisposable = CompositeDisposable()
-    protected var disposable: Disposable? = null
+//    protected var compositeDisposable: CompositeDisposable = CompositeDisposable()
+//    protected var disposable: Disposable? = null
 
-    protected fun unSubscribe() {
-        if (compositeDisposable.size() > 0) {
-            compositeDisposable.clear()
-        }
-    }
+//    protected fun unSubscribe() {
+//        if (compositeDisposable.size() > 0) {
+//            compositeDisposable.clear()
+//        }
+//    }
 
     override fun onCleared() {
         LogManager.i(TAG, "onCleared")
-        unSubscribe();
+//        unSubscribe();
         super.onCleared()
     }
 }

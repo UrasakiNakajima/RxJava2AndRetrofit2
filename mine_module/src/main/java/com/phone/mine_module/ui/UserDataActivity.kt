@@ -2,14 +2,14 @@ package com.phone.mine_module.ui
 
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.phone.common_library.base.BaseMvpAppActivity
+import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.IBaseView
 import com.phone.mine_module.R
 import com.phone.mine_module.presenter.MinePresenterImpl
 import com.phone.mine_module.view.IUserDataView
 import kotlinx.android.synthetic.main.activity_user_data.*
 
-class UserDataActivity : BaseMvpAppActivity<IBaseView, MinePresenterImpl>(), IUserDataView {
+class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IUserDataView {
 
     companion object {
         private const val TAG = "UserDataActivity"

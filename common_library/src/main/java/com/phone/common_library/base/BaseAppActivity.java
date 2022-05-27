@@ -32,25 +32,25 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseAppActivity extends AppCompatActivity {
-	
+
 	protected BaseApplication          baseApplication;
 //	protected QMUILoadingView          loadView;
 //	protected FrameLayout.LayoutParams layoutParams;
 	protected Intent                   intent;
 	protected Bundle                   bundle;
 	protected AppCompatActivity        appCompatActivity;
-	
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		appCompatActivity = this;
 		baseApplication = (BaseApplication) getApplication();
 		ActivityPageManager.getInstance().addActivity(appCompatActivity);
-		
+
 		setContentView(initLayoutId());
 		ButterKnife.bind(appCompatActivity);
-		
+
 //		loadView = new QMUILoadingView(appCompatActivity);
 //		loadView.setVisibility(View.GONE);
 //		loadView.setSize(100);
@@ -58,13 +58,13 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 //		layoutParams = new FrameLayout.LayoutParams(
 //			FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 //		layoutParams.gravity = Gravity.CENTER;
-		
+
 		//        setToolbar();
 		initData();
 		initViews();
 		initLoadData();
 	}
-	
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		//非默认值
@@ -73,7 +73,7 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		}
 		super.onConfigurationChanged(newConfig);
 	}
-	
+
 	@Override
 	public Resources getResources() {//还原字体大小
 		Resources res = super.getResources();
@@ -85,9 +85,9 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		}
 		return res;
 	}
-	
+
 	protected abstract int initLayoutId();
-	
+
 	protected void setToolbar(boolean isDarkFont) {
 		if (isDarkFont) {
 			ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
@@ -104,10 +104,10 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 				.keyboardEnable(true)
 				.init();
 		}
-		
+
 		ToolbarManager.assistActivity(findViewById(android.R.id.content));
 	}
-	
+
 	protected void setToolbar(boolean isDarkFont, boolean isResizeChildOfContent) {
 		if (isDarkFont) {
 			ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
@@ -124,12 +124,12 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 				.keyboardEnable(true)
 				.init();
 		}
-		
+
 		if (isResizeChildOfContent) {
 			ToolbarManager.assistActivity(findViewById(android.R.id.content));
 		}
 	}
-	
+
 	protected void setToolbar(boolean isDarkFont, int color) {
 		if (isDarkFont) {
 			ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
@@ -144,10 +144,10 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 				//                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
 				.init();
 		}
-		
+
 		ToolbarManager.assistActivity(findViewById(android.R.id.content));
 	}
-	
+
 	protected void setToolbar(boolean isDarkFont, int color, boolean isResizeChildOfContent) {
 		if (isDarkFont) {
 			ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
@@ -162,12 +162,12 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 				//                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
 				.init();
 		}
-		
+
 		if (isResizeChildOfContent) {
 			ToolbarManager.assistActivity(findViewById(android.R.id.content));
 		}
 	}
-	
+
 	/**
 	 * 初始化沉浸式
 	 * Init immersion bar.
@@ -176,13 +176,13 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		//设置共同沉浸式样式
 		ImmersionBar.with(appCompatActivity).navigationBarColor(R.color.color_FFE066FF).init();
 	}
-	
+
 	protected abstract void initData();
-	
+
 	protected abstract void initViews();
-	
+
 	protected abstract void initLoadData();
-	
+
 	protected void showToast(String message, boolean isLongToast) {
 		//        Toast.makeText(appCompatActivity, message, Toast.LENGTH_LONG).show();
 		if (!appCompatActivity.isFinishing()) {
@@ -198,7 +198,7 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 			toast.show();
 		}
 	}
-	
+
 	protected void showCustomToast(int left, int right,
 		int textSize, int textColor,
 		int bgColor, int height,
@@ -220,26 +220,26 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		textView.setBackground(gradientDrawable);
 		textView.setText(message);
 		frameLayout.addView(textView);
-		
+
 		Toast toast = new Toast(appCompatActivity);
 		toast.setView(frameLayout);
 		toast.setDuration(Toast.LENGTH_LONG);
 		toast.show();
 	}
-	
+
 	public boolean isOnMainThread() {
 		return Looper.getMainLooper().getThread().getId() == Thread.currentThread().getId();
 	}
-	
+
 	protected void startActivity(Class<?> cls) {
 		intent = new Intent(appCompatActivity, cls);
 		startActivity(intent);
 	}
-	
+
 	protected void startActivityCarryParams(Class<?> cls, Map<String, String> params) {
 		intent = new Intent(appCompatActivity, cls);
 		bundle = new Bundle();
-		
+
 		if (params != null && params.size() > 0) {
 			for (String key : params.keySet()) {
 				if (params.get(key) != null) {//如果参数不是null，才把参数传给后台
@@ -250,16 +250,16 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		}
 		startActivity(intent);
 	}
-	
+
 	protected void startActivityForResult(Class<?> cls, int requestCode) {
 		intent = new Intent(appCompatActivity, cls);
 		startActivityForResult(intent, requestCode);
 	}
-	
+
 	protected void startActivityForResultCarryParams(Class<?> cls, Map<String, String> params, int requestCode) {
 		intent = new Intent(appCompatActivity, cls);
 		bundle = new Bundle();
-		
+
 		if (params != null && params.size() > 0) {
 			for (String key : params.keySet()) {
 				if (params.get(key) != null) {//如果参数不是null，才把参数传给后台
@@ -270,7 +270,7 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		}
 		startActivityForResult(intent, requestCode);
 	}
-	
+
 	protected boolean isEmpty(String dataStr) {
 		if (dataStr != null && !"".equals(dataStr)) {
 			return false;
@@ -278,7 +278,7 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 			return true;
 		}
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		ActivityPageManager.getInstance().removeActivity(appCompatActivity);

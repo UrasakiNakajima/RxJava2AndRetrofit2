@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_resource.*
 @Route(path = "/resource_module/resource")
 class ResourceFragment : BaseFragment() {
 
-    private val TAG: String = "ResourceFragment"
+    private val TAG = ResourceFragment::class.java.simpleName
 
     private var fragmentList: MutableList<Fragment> = mutableListOf()
     private var fragmentPagerAdapter: TabFragmentPagerAdapter? = null

@@ -3,12 +3,12 @@ package com.phone.common_library;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
+
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
-
-import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
 
 public class BaseApplication extends MultiDexApplication {
 	
@@ -33,7 +33,7 @@ public class BaseApplication extends MultiDexApplication {
 		
 		//初始化retrofit
 		RetrofitManager.getInstance();
-		
+
 		if (true) {
 			ARouter.openLog();
 			ARouter.openDebug();

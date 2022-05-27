@@ -28,6 +28,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:replace="android:allowBackup">
         <!-- 沉浸式状态栏适配 -->
@@ -41,6 +42,10 @@
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
+
+        <meta-data
+            android:name="com.phone.common_library.okhttp3_app_glide_module.Okhttp3AppGlideModule"
+            android:value="AppGlideModule" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -82,6 +87,14 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity
+            android:name="com.phone.common_library.ui.AndroidAndJsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.phone.common_library.ui.NewsDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

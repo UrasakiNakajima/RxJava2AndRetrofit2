@@ -34,4 +34,62 @@ public class LogManager {
         }
     }
 
+    public static void i(String TAG, String message, Throwable throwable) {
+        if (isOpenLog) {
+            int strLength = message.length();
+            int start = 0;
+            int end = LOG_MAXLENGTH;
+            for (int i = 0; i < 100; i++) {
+                //剩下的文本还是大于规定长度则继续重复截取并输出
+                if (strLength > end) {
+                    Log.i(TAG + i, message.substring(start, end), throwable);
+                    start = end;
+                    end = end + LOG_MAXLENGTH;
+                } else {
+                    Log.i(TAG, message.substring(start, strLength), throwable);
+                    break;
+                }
+            }
+        }
+    }
+
+
+    public static void e(String TAG, String message) {
+        if (isOpenLog) {
+            int strLength = message.length();
+            int start = 0;
+            int end = LOG_MAXLENGTH;
+            for (int i = 0; i < 100; i++) {
+                //剩下的文本还是大于规定长度则继续重复截取并输出
+                if (strLength > end) {
+                    Log.e(TAG + i, message.substring(start, end));
+                    start = end;
+                    end = end + LOG_MAXLENGTH;
+                } else {
+                    Log.e(TAG, message.substring(start, strLength));
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void e(String TAG, String message, Throwable throwable) {
+        if (isOpenLog) {
+            int strLength = message.length();
+            int start = 0;
+            int end = LOG_MAXLENGTH;
+            for (int i = 0; i < 100; i++) {
+                //剩下的文本还是大于规定长度则继续重复截取并输出
+                if (strLength > end) {
+                    Log.e(TAG + i, message.substring(start, end), throwable);
+                    start = end;
+                    end = end + LOG_MAXLENGTH;
+                } else {
+                    Log.e(TAG, message.substring(start, strLength), throwable);
+                    break;
+                }
+            }
+        }
+    }
+
 }

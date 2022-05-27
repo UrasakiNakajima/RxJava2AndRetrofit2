@@ -1,8 +1,6 @@
 package com.phone.mine_module.presenter
 
 import android.text.TextUtils
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BasePresenter
 import com.phone.common_library.base.IBaseView
@@ -15,6 +13,8 @@ import com.phone.mine_module.bean.MineResponse
 import com.phone.mine_module.model.MineModelImpl
 import com.phone.mine_module.view.IMineView
 import com.phone.mine_module.view.IUserDataView
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle3.components.support.RxFragment
 
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
@@ -27,14 +27,14 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         attachView(baseView)
     }
 
-    override fun mineData(fragment: Fragment, bodyParams: Map<String, String>) {
+    override fun mineData(rxFragment: RxFragment, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {
                 baseView.showLoading()
-                disposable = RetrofitManager.getInstance()
-                    .responseStringAutoDispose(
-                        fragment,
+                RetrofitManager.getInstance()
+                    .responseStringRxFragmentBindUntilEvent(
+                        rxFragment,
                         model.mineData(bodyParams),
                         object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
@@ -72,14 +72,14 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun mineData(appCompatActivity: AppCompatActivity, bodyParams: Map<String, String>) {
+    override fun mineData(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {
                 baseView.showLoading()
-                disposable = RetrofitManager.getInstance()
-                    .responseStringAutoDispose(
-                        appCompatActivity,
+                RetrofitManager.getInstance()
+                    .responseStringRxAppActivityBindUntilEvent(
+                        rxAppCompatActivity,
                         model.mineData(bodyParams),
                         object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
@@ -117,14 +117,14 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun userData(appCompatActivity: AppCompatActivity, bodyParams: Map<String, String>) {
+    override fun userData(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
                 baseView.showLoading()
-                disposable = RetrofitManager.getInstance()
-                    .responseStringAutoDispose(
-                        appCompatActivity,
+                RetrofitManager.getInstance()
+                    .responseStringRxAppActivityBindUntilEvent(
+                        rxAppCompatActivity,
                         model.userData(bodyParams),
                         object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
@@ -161,18 +161,14 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun userData(
-        appCompatActivity: AppCompatActivity,
-        accessToken: String,
-        bodyParams: Map<String, String>
-    ) {
+    override fun userData(rxAppCompatActivity: RxAppCompatActivity, accessToken: String, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
                 baseView.showLoading()
-                disposable = RetrofitManager.getInstance()
-                    .responseStringAutoDispose(
-                        appCompatActivity,
+                RetrofitManager.getInstance()
+                    .responseStringRxAppActivityBindUntilEvent(
+                        rxAppCompatActivity,
                         model.userData(accessToken, bodyParams),
                         object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
