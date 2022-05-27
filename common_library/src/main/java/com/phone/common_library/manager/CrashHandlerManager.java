@@ -1,0 +1,256 @@
+package com.phone.common_library.manager;
+
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Looper;
+import android.widget.Toast;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.TreeSet;
+
+public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
+
+    public static final String TAG = "CrashHandlerManager";
+
+    //系统默认的UncaughtException处理类 
+    private Thread.UncaughtExceptionHandler mDefaultHandler;
+    private static CrashHandlerManager instance;
+    private Context mContext;
+
+    /*使用Properties 来保存设备的信息和错误堆栈信息*/
+    private Properties mDeviceCrashInfo = new Properties();
+
+    //存储设备信息 
+    private Map<String, String> mDevInfoMap = new HashMap<>();
+    private SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+
+    private CrashHandlerManager(Context context) {
+        mContext = context;
+    }
+
+    //保证只有一个实例 
+    public static CrashHandlerManager getInstance(Context context) {
+        if (instance == null) {
+            synchronized (CrashHandlerManager.class) {
+                if (instance == null) {
+                    instance = new CrashHandlerManager(context);
+                }
+            }
+        }
+
+        return instance;
+    }
+
+    public void init() {
+        //获得默认的handle 
+        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+        //重新设置handle  设置该CrashHandler为程序的默认处理器 
+        Thread.setDefaultUncaughtExceptionHandler(this);
+    }
+
+    /**
+     * 当UncaughtException发生时会转入该函数来处理
+     */
+    public void uncaughtException(Thread thread, Throwable ex) {
+// TODO Auto-generated method stub 
+//如果用户没有处理则让系统默认的异常处理器来处理 
+        if (!handleException(ex) && mDefaultHandler != null) {
+            mDefaultHandler.uncaughtException(thread, ex);
+        } else {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                LogManager.i(TAG, "error");
+            }
+            //结束程序 
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        }
+    }
+
+    //Throwable 包含了其线程创建时线程执行堆栈的快照 
+    private boolean handleException(Throwable ex) {
+        // TODO Auto-generated method stub 
+        if (ex == null) {
+            return false;
+        }
+        final String msg = ex.getLocalizedMessage();
+        new Thread() {
+            public void run() {
+                Looper.prepare();
+                Toast.makeText(mContext, "msg" + msg, Toast.LENGTH_LONG).show();
+                Looper.loop();
+            }
+        }.start();
+        //收集设备信息 
+        collectDeviceInfo(mContext);
+        //保存信息 
+        saveCrashInfoToFile(ex);
+        //发送错误报告 
+        sendCrashReportsToServer(mContext);
+        return true;
+    }
+
+    public void sendPreviousReportsToServer() {
+        sendCrashReportsToServer(mContext);
+    }
+
+    private void sendCrashReportsToServer(Context mContext) {
+        String[] crFiles = getCrashReportFiles(mContext);
+        if (crFiles != null && crFiles.length > 0) {
+            TreeSet<String> sortedFiles = new TreeSet<String>();
+            sortedFiles.addAll(Arrays.asList(crFiles));
+            for (String fileName : sortedFiles) {
+                File cr = new File(mContext.getFilesDir(), fileName);
+                postReport(cr);
+                //cr.delete(); 
+            }
+        }
+    }
+
+    private void postReport(File cr) {
+        // TODO 使用HTTP Post 发送错误报告到服务器
+
+    }
+
+    private static final String CRASH_REPORTER_EXTENSION = ".cr";
+
+    private String[] getCrashReportFiles(Context mContext) {
+        File filesDir = mContext.getFilesDir();
+        FilenameFilter filter = new FilenameFilter() {
+
+            public boolean accept(File dir, String filename) {
+                return filename.endsWith(CRASH_REPORTER_EXTENSION);
+            }
+        };
+        return filesDir.list(filter);
+    }
+
+    private String saveCrashInfoToFile(Throwable ex) {
+        // TODO Auto-generated method stub 
+        StringBuffer buffer = new StringBuffer();
+        for (Map.Entry<String, String> entry : mDevInfoMap.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            buffer.append(key + "=" + value + '\n');
+        }
+        //可以用其回收在字符串缓冲区中的输出来构造字符串 
+        Writer writer = new StringWriter();
+        //向文本输出流打印对象的格式化表示形式 
+        PrintWriter printWriter = new PrintWriter(writer);
+        //将此 throwable 及其追踪输出至标准错误流 
+        ex.printStackTrace(printWriter);
+        Throwable cause = ex.getCause();
+        while (cause != null) {
+            //异常链 
+            cause.printStackTrace();
+            cause = cause.getCause();
+        }
+        printWriter.close();
+        String result = writer.toString();
+        buffer.append(result);
+        try {
+            long timestamp = System.currentTimeMillis();
+            String time = formatdate.format(new Date(timestamp));
+
+            String fileName = "crash-" + time + "-" + timestamp + ".log";
+            // 判断SD卡是否存在，并且是否具有读写权限 
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/crash_xy/";//     /sdcard/crash/crash-time-timestamp.log
+                File dirs = new File(path);
+                if (!dirs.exists()) {
+                    dirs.mkdirs();
+                }
+                File file = new File(path, fileName);
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+
+//                FileOutputStream trace = new FileOutputStream(file);
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+                mDeviceCrashInfo.store(bufferedOutputStream, "");
+                bufferedOutputStream.flush();
+                bufferedOutputStream.close();
+                //output 针对内存来说的 output到file中 
+                FileOutputStream fos = new FileOutputStream(file);
+                BufferedOutputStream bos = new BufferedOutputStream(fos);
+                bos.write(buffer.toString().getBytes());
+                bos.flush();
+                bos.close();
+            }
+            return fileName;
+        } catch (Exception e) {
+            LogManager.i(TAG, "an error occured while writing file...", e);
+        }
+        return null;
+    }
+
+    private void collectDeviceInfo(Context context) {
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+            if (pi != null) {
+                String versionName = pi.versionName == null ? "null" : pi.versionName;
+                String versionCode = pi.versionCode + "";
+                mDevInfoMap.put("versionName", versionName);
+                mDevInfoMap.put("versionCode", versionCode);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            LogManager.i(TAG, "NameNotFoundException");
+        }
+
+
+        //使用反射 获得Build类的所有类里的变量 
+        //  Class   代表类在运行时的一个映射 
+        //在Build类中包含各种设备信息,   
+        // 例如: 系统版本号,设备生产商 等帮助调试程序的有用信息   
+        // 具体信息请参考后面的截图
+        Field[] fields = Build.class.getDeclaredFields();
+        for (Field field : fields) {
+            try {
+                field.setAccessible(true);
+                //get方法返回指定对象上此 Field 表示的字段的值 
+                mDevInfoMap.put(field.getName(), field.get(null).toString());
+                LogManager.i(TAG, field.getName() + ":" + field.get(null).toString());
+            } catch (Exception e) {
+                LogManager.i(TAG, "an error occured when collect crash info", e);
+            }
+        }
+    }
+
+    //使用HTTP服务之前，需要确定网络畅通，我们可以使用下面的方式判断网络是否可用 
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] info = mgr.getAllNetworkInfo();
+        if (info != null) {
+            for (int i = 0; i < info.length; i++) {
+                if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
+}

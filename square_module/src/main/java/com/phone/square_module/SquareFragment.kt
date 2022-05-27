@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvvmRxFragment
+import com.phone.common_library.manager.ExceptionManager
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
@@ -71,8 +72,10 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
         }
 
+        dataxSuccessObserver = null
         viewModel!!.getDataxSuccess().observe(viewLifecycleOwner, dataxSuccessObserver!!)
         viewModel!!.getDataxError().observe(viewLifecycleOwner, dataxErrorObserver!!)
+        ExceptionManager.throwException();
     }
 
     override fun initViews() {
