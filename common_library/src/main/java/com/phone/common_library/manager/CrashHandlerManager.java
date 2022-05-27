@@ -7,8 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Looper;
-import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -87,23 +85,23 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     }
 
     //Throwable 包含了其线程创建时线程执行堆栈的快照 
-    private boolean handleException(Throwable ex) {
+    private boolean handleException(Throwable throwable) {
         // TODO Auto-generated method stub 
-        if (ex == null) {
+        if (throwable == null) {
             return false;
         }
-        final String msg = ex.getLocalizedMessage();
-        new Thread() {
-            public void run() {
-                Looper.prepare();
-                Toast.makeText(mContext, "msg" + msg, Toast.LENGTH_LONG).show();
-                Looper.loop();
-            }
-        }.start();
+//        final String msg = throwable.getLocalizedMessage();
+//        new Thread() {
+//            public void run() {
+//                Looper.prepare();
+//                Toast.makeText(mContext, "msg" + msg, Toast.LENGTH_LONG).show();
+//                Looper.loop();
+//            }
+//        }.start();
         //收集设备信息 
         collectDeviceInfo(mContext);
         //保存信息 
-        saveCrashInfoToFile(ex);
+        saveCrashInfoToFile(throwable);
         //发送错误报告 
         sendCrashReportsToServer(mContext);
         return true;
@@ -250,7 +248,6 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         }
         return false;
     }
-
 
 
 }

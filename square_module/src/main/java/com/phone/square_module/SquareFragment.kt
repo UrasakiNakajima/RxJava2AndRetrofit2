@@ -72,7 +72,6 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
         }
 
-        dataxSuccessObserver = null
         viewModel!!.getDataxSuccess().observe(viewLifecycleOwner, dataxSuccessObserver!!)
         viewModel!!.getDataxError().observe(viewLifecycleOwner, dataxErrorObserver!!)
         ExceptionManager.throwException();

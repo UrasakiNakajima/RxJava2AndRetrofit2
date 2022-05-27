@@ -17,7 +17,10 @@ import androidx.annotation.Nullable;
 import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
+import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.ActivityPageManager;
+import com.phone.common_library.manager.CrashHandlerManager;
+import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.ToolbarManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
@@ -65,6 +68,21 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
         initData();
         initViews();
         initLoadData();
+
+        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
+        rxPermissionsManager.initRxPermissionsActivity(new OnCommonSingleParamCallback<String>() {
+            @Override
+            public void onSuccess(String success) {
+                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(rxAppCompatActivity);
+                crashHandlerManager.sendPreviousReportsToServer();
+                crashHandlerManager.init();
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 
     @Override
