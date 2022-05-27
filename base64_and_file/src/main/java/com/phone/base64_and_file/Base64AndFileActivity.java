@@ -1,5 +1,6 @@
 package com.phone.base64_and_file;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,10 +26,10 @@ import com.phone.base64_and_file.adapter.Base64StrAdapter;
 import com.phone.base64_and_file.presenter.Base64AndFilePresenterImpl;
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
-import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -222,29 +223,47 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     }
 
     private void initRxPermissions() {
-        rxPermissionsManager = RxPermissionsManager.getInstance(this);
-        rxPermissionsManager.initRxPermissionsActivity(new OnCommonRxPermissionsCallback() {
-            @Override
-            public void onRxPermissionsAllPass() {
-                if (presenter != null) {
-                    showLoading();
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions
+                .requestEachCombined(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                )
+                .subscribe(permission -> { // will emit 2 Permission objects
+                    if (permission.granted) {
+                        // `permission.name` is granted !
 
-                    LogManager.i(TAG, "用户已经同意该权限 showCompressedPicture");
-                    presenter.showCompressedPicture(rxAppCompatActivity.getApplicationContext(),
-                            dirsPath, dirsPath2);
-                }
-            }
+                        // 用户已经同意该权限
+                        LogManager.i(TAG, "用户已经同意该权限");
 
-            @Override
-            public void onNotCheckNoMorePromptError() {
-                showSystemSetupDialog();
-            }
+//                        Intent bindIntent = new Intent(this, Base64AndFileService.class);
+//                        // 绑定服务和活动，之后活动就可以去调服务的方法了
+//                        bindService(bindIntent, connection, BIND_AUTO_CREATE);
 
-            @Override
-            public void onCheckNoMorePromptError() {
-                showSystemSetupDialog();
-            }
-        });
+                        LogManager.i(TAG, "用户已经同意该权限 permission.name*****" + permission.name);
+
+                        if (presenter != null && Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permission.name)) {
+                            showLoading();
+
+                            LogManager.i(TAG, "用户已经同意该权限 showCompressedPicture");
+                            presenter.showCompressedPicture(rxAppCompatActivity.getApplicationContext(),
+                                    dirsPath, dirsPath2);
+                        }
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        // Denied permission without ask never again
+
+                        // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                        LogManager.i(TAG, "用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框");
+                    } else {
+                        // Denied permission with ask never again
+                        // Need to go to the settings
+
+                        // 用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限
+                        LogManager.i(TAG, "用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限");
+                        showSystemSetupDialog();
+                    }
+                });
     }
 
 //    private void initTask() {
