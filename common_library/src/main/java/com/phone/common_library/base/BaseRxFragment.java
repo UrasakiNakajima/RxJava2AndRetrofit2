@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Looper;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,28 +19,17 @@ import com.phone.common_library.BaseApplication;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle3.components.support.RxFragment;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+public abstract class BaseRxFragment extends RxFragment {
 
-public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends RxFragment {
-
-    private static final String TAG = "BaseMvpFragment";
-    protected T presenter;
-
-    protected String url;
-    protected Map<String, String> bodyParams;
+    private static final String TAG = "BaseRxFragment";
     protected BaseApplication baseApplication;
     protected RxAppCompatActivity rxAppCompatActivity;
-    protected Intent intent;
-    protected Bundle bundle;
+    private Intent intent;
+    private Bundle bundle;
 
     protected View rootView;
-    private Unbinder unbinder;
-    protected RxFragment rxFragment;
-//    private boolean isFirstLoad = true;
 
     @Nullable
     @Override
@@ -55,45 +43,22 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
         //            }
         //        }
 
-        rxFragment = this;
         rootView = inflater.inflate(initLayoutId(), container, false);
-        unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bodyParams = new HashMap<>();
+
         rxAppCompatActivity = (RxAppCompatActivity) getActivity();
         if (rxAppCompatActivity != null) {
             baseApplication = (BaseApplication) rxAppCompatActivity.getApplication();
         }
 
         initData();
-        presenter = attachPresenter();
         initViews();
         initLoadData();
-
-//        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
-//        rxPermissionsManager.initRxPermissionsRxFragment(new OnCommonRxPermissionsCallback() {
-//            @Override
-//            public void onRxPermissionsAllPass() {
-//                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(rxAppCompatActivity);
-//                crashHandlerManager.sendPreviousReportsToServer();
-//                crashHandlerManager.init();
-//            }
-//
-//            @Override
-//            public void onNotCheckNoMorePromptError() {
-//
-//            }
-//
-//            @Override
-//            public void onCheckNoMorePromptError() {
-//
-//            }
-//        });
     }
 
     protected abstract int initLayoutId();
@@ -103,13 +68,6 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
     protected abstract void initViews();
 
     protected abstract void initLoadData();
-
-    /**
-     * 适配为不同的view 装载不同的presenter
-     *
-     * @return
-     */
-    protected abstract T attachPresenter();
 
     protected void showToast(String message, boolean isLongToast) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
@@ -130,8 +88,7 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
     protected void showCustomToast(int left, int right,
                                    int textSize, int textColor,
                                    int bgColor, int height,
-                                   int roundRadius, String message,
-                                   boolean isLongToast) {
+                                   int roundRadius, String message) {
         FrameLayout frameLayout = new FrameLayout(rxAppCompatActivity);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         frameLayout.setLayoutParams(layoutParams);
@@ -139,7 +96,7 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
         FrameLayout.LayoutParams layoutParams1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height);
         textView.setLayoutParams(layoutParams1);
         textView.setPadding(left, 0, right, 0);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+        textView.setTextSize(textSize);
         textView.setTextColor(textColor);
         textView.setGravity(Gravity.CENTER);
         textView.setIncludeFontPadding(false);
@@ -152,12 +109,7 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
 
         Toast toast = new Toast(rxAppCompatActivity);
         toast.setView(frameLayout);
-        if (isLongToast) {
-            toast.setDuration(Toast.LENGTH_LONG);
-        } else {
-            toast.setDuration(Toast.LENGTH_SHORT);
-        }
-        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
     }
 
@@ -213,27 +165,9 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
         }
     }
 
-    protected void detachPresenter() {
-        if (presenter != null) {
-            presenter.detachView();
-            presenter = null;
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        detachPresenter();
-
-        if (bodyParams != null) {
-            bodyParams.clear();
-            bodyParams = null;
-        }
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
 }
+

@@ -5,6 +5,8 @@ import android.Manifest;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.trello.rxlifecycle3.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.FragmentEvent;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle3.components.support.RxFragment;
 
@@ -13,10 +15,10 @@ import io.reactivex.functions.Consumer;
 public class RxPermissionsManager {
 
     private static final String TAG = RxPermissionsManager.class.getSimpleName();
+    private static RxPermissionsManager rxPermissionsManager;
     private RxAppCompatActivity rxAppCompatActivity;
     private RxFragment rxFragment;
     private RxPermissions rxPermissions;
-    private static RxPermissionsManager rxPermissionsManager;
 
     public RxPermissionsManager(RxAppCompatActivity rxAppCompatActivity) {
         this.rxAppCompatActivity = rxAppCompatActivity;
@@ -50,7 +52,7 @@ public class RxPermissionsManager {
         return rxPermissionsManager;
     }
 
-    public void initRxPermissionsActivity(OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
+    public void initRxPermissionsRxAppCompatActivity(OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
         if (rxPermissions == null) {
             rxPermissions = new RxPermissions(rxAppCompatActivity);
         }
@@ -61,7 +63,7 @@ public class RxPermissionsManager {
 //                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 )
                 //解决rxjava导致的内存泄漏问题
-                .compose(rxAppCompatActivity.<Permission>bindToLifecycle())
+                .compose(rxAppCompatActivity.<Permission>bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Consumer<Permission>() {
                     @Override
                     public void accept(Permission permission) throws Exception {
@@ -103,7 +105,7 @@ public class RxPermissionsManager {
                 });
     }
 
-    public void initRxPermissionsFragment(OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
+    public void initRxPermissionsRxFragment(OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
         if (rxPermissions == null) {
             rxPermissions = new RxPermissions(rxFragment);
         }
@@ -114,7 +116,7 @@ public class RxPermissionsManager {
 //                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 )
                 //解决rxjava导致的内存泄漏问题
-                .compose(rxFragment.<Permission>bindToLifecycle())
+                .compose(rxFragment.<Permission>bindUntilEvent(FragmentEvent.DESTROY))
                 .subscribe(new Consumer<Permission>() {
                     @Override
                     public void accept(Permission permission) throws Exception {

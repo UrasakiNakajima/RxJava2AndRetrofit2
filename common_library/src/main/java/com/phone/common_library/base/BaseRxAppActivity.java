@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.BaseApplication;
@@ -32,20 +31,20 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 //	protected FrameLayout.LayoutParams layoutParams;
     protected Intent intent;
     protected Bundle bundle;
-    protected AppCompatActivity appCompatActivity;
+    protected RxAppCompatActivity rxAppCompatActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        appCompatActivity = this;
+        rxAppCompatActivity = this;
         baseApplication = (BaseApplication) getApplication();
-        ActivityPageManager.getInstance().addActivity(appCompatActivity);
+        ActivityPageManager.getInstance().addActivity(rxAppCompatActivity);
 
         setContentView(initLayoutId());
-        ButterKnife.bind(appCompatActivity);
+        ButterKnife.bind(rxAppCompatActivity);
 
-//		loadView = new QMUILoadingView(appCompatActivity);
+//		loadView = new QMUILoadingView(rxAppCompatActivity);
 //		loadView.setVisibility(View.GONE);
 //		loadView.setSize(100);
 //		loadView.setColor(getResources().getColor(R.color.color_80000000));
@@ -84,14 +83,14 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
     protected void setToolbar(boolean isDarkFont) {
         if (isDarkFont) {
-            ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            ImmersionBar.with(rxAppCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(R.color.color_FFFFFFFF)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                     .keyboardEnable(true)
                     .init();
         } else {
-            ImmersionBar.with(appCompatActivity)
+            ImmersionBar.with(rxAppCompatActivity)
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(R.color.color_FF198CFF)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
@@ -104,14 +103,14 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
     protected void setToolbar(boolean isDarkFont, boolean isResizeChildOfContent) {
         if (isDarkFont) {
-            ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            ImmersionBar.with(rxAppCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(R.color.color_FFFFFFFF)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                     .keyboardEnable(true)
                     .init();
         } else {
-            ImmersionBar.with(appCompatActivity)
+            ImmersionBar.with(rxAppCompatActivity)
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(R.color.color_FF198CFF)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
@@ -126,13 +125,13 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
     protected void setToolbar(boolean isDarkFont, int color) {
         if (isDarkFont) {
-            ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            ImmersionBar.with(rxAppCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(color)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                     .init();
         } else {
-            ImmersionBar.with(appCompatActivity)
+            ImmersionBar.with(rxAppCompatActivity)
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(color)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
@@ -144,13 +143,13 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
     protected void setToolbar(boolean isDarkFont, int color, boolean isResizeChildOfContent) {
         if (isDarkFont) {
-            ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            ImmersionBar.with(rxAppCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(color)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                     .init();
         } else {
-            ImmersionBar.with(appCompatActivity)
+            ImmersionBar.with(rxAppCompatActivity)
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(color)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
@@ -168,7 +167,7 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
      */
     protected void initImmersionBar() {
         //设置共同沉浸式样式
-        ImmersionBar.with(appCompatActivity).navigationBarColor(R.color.color_FFE066FF).init();
+        ImmersionBar.with(rxAppCompatActivity).navigationBarColor(R.color.color_FFE066FF).init();
     }
 
     protected abstract void initData();
@@ -178,8 +177,8 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
     protected abstract void initLoadData();
 
     protected void showToast(String message, boolean isLongToast) {
-        //        Toast.makeText(appCompatActivity, message, Toast.LENGTH_LONG).show();
-        if (!appCompatActivity.isFinishing()) {
+        //        Toast.makeText(rxAppCompatActivity, message, Toast.LENGTH_LONG).show();
+        if (!rxAppCompatActivity.isFinishing()) {
             Toast toast;
             int duration;
             if (isLongToast) {
@@ -187,7 +186,7 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
             } else {
                 duration = Toast.LENGTH_SHORT;
             }
-            toast = Toast.makeText(appCompatActivity, message, duration);
+            toast = Toast.makeText(rxAppCompatActivity, message, duration);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
@@ -197,10 +196,10 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
                                    int textSize, int textColor,
                                    int bgColor, int height,
                                    int roundRadius, String message) {
-        FrameLayout frameLayout = new FrameLayout(appCompatActivity);
+        FrameLayout frameLayout = new FrameLayout(rxAppCompatActivity);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         frameLayout.setLayoutParams(layoutParams);
-        TextView textView = new TextView(appCompatActivity);
+        TextView textView = new TextView(rxAppCompatActivity);
         FrameLayout.LayoutParams layoutParams1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height);
         textView.setLayoutParams(layoutParams1);
         textView.setPadding(left, 0, right, 0);
@@ -215,7 +214,7 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
         textView.setText(message);
         frameLayout.addView(textView);
 
-        Toast toast = new Toast(appCompatActivity);
+        Toast toast = new Toast(rxAppCompatActivity);
         toast.setView(frameLayout);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
@@ -226,12 +225,12 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
     }
 
     protected void startActivity(Class<?> cls) {
-        intent = new Intent(appCompatActivity, cls);
+        intent = new Intent(rxAppCompatActivity, cls);
         startActivity(intent);
     }
 
     protected void startActivityCarryParams(Class<?> cls, Map<String, String> params) {
-        intent = new Intent(appCompatActivity, cls);
+        intent = new Intent(rxAppCompatActivity, cls);
         bundle = new Bundle();
 
         if (params != null && params.size() > 0) {
@@ -246,12 +245,12 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
     }
 
     protected void startActivityForResult(Class<?> cls, int requestCode) {
-        intent = new Intent(appCompatActivity, cls);
+        intent = new Intent(rxAppCompatActivity, cls);
         startActivityForResult(intent, requestCode);
     }
 
     protected void startActivityForResultCarryParams(Class<?> cls, Map<String, String> params, int requestCode) {
-        intent = new Intent(appCompatActivity, cls);
+        intent = new Intent(rxAppCompatActivity, cls);
         bundle = new Bundle();
 
         if (params != null && params.size() > 0) {
@@ -275,7 +274,7 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        ActivityPageManager.getInstance().removeActivity(appCompatActivity);
+        ActivityPageManager.getInstance().removeActivity(rxAppCompatActivity);
         super.onDestroy();
     }
 }

@@ -38,7 +38,7 @@ import java.util.Map;
 
 public class PickerViewActivity extends BaseRxAppActivity {
 
-    private static final String TAG = "PickerViewActivity";
+    private static final String TAG = PickerViewActivity.class.getSimpleName();
     private Toolbar toolbar;
     private FrameLayout layoutBack;
     private ImageView imvBack;
@@ -73,7 +73,7 @@ public class PickerViewActivity extends BaseRxAppActivity {
         options2Items = new ArrayList<>();
         options3Items = new ArrayList<>();
 
-        analyticalDataAsyncTask = new AnalyticalDataAsyncTask((PickerViewActivity) appCompatActivity);
+        analyticalDataAsyncTask = new AnalyticalDataAsyncTask((PickerViewActivity) rxAppCompatActivity);
         analyticalDataAsyncTask.execute();
 
         initRxPermissions();
@@ -90,7 +90,7 @@ public class PickerViewActivity extends BaseRxAppActivity {
         eventScheduleDialogFragment = EventScheduleDialogFragment.newInstance();
 
         setToolbar(false, R.color.color_FF198CFF);
-        imvBack.setColorFilter(ContextCompat.getColor(appCompatActivity, R.color.white));
+        imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
         layoutBack.setOnClickListener(view -> {
             finish();
         });
@@ -152,7 +152,7 @@ public class PickerViewActivity extends BaseRxAppActivity {
     }
 
     private void initPickerView() {// 弹出选择器
-        pvOptions = new OptionsPickerBuilder(appCompatActivity, new OnOptionsSelectListener() {
+        pvOptions = new OptionsPickerBuilder(rxAppCompatActivity, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View view) {
                 //返回的分别是三个级别的选中位置
@@ -220,7 +220,7 @@ public class PickerViewActivity extends BaseRxAppActivity {
          * 关键逻辑在于循环体
          *
          * */
-        String JsonData = new GetJsonDataManager().getJson(appCompatActivity, "province.json");//获取assets目录下的json文件数据
+        String JsonData = new GetJsonDataManager().getJson(rxAppCompatActivity, "province.json");//获取assets目录下的json文件数据
 
         ArrayList<ProvincesBean> jsonBean = parseData(JsonData);//用Gson 转成实体
 
