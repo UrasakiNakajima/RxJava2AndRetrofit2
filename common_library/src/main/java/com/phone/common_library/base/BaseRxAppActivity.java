@@ -7,84 +7,56 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
 import com.phone.common_library.manager.ActivityPageManager;
 import com.phone.common_library.manager.ToolbarManager;
-import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extends RxAppCompatActivity {
+public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
     protected BaseApplication baseApplication;
-    public QMUILoadingView loadView;
-    protected FrameLayout.LayoutParams layoutParams;
-
-    protected T presenter;
-
-    protected String url;
-    protected Map<String, String> bodyParams;
+    //	protected QMUILoadingView          loadView;
+//	protected FrameLayout.LayoutParams layoutParams;
     protected Intent intent;
     protected Bundle bundle;
-    protected RxAppCompatActivity rxAppCompatActivity;
+    protected AppCompatActivity appCompatActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bodyParams = new HashMap<>();
-        rxAppCompatActivity = this;
+
+        appCompatActivity = this;
         baseApplication = (BaseApplication) getApplication();
-        ActivityPageManager.getInstance().addActivity(this);
+        ActivityPageManager.getInstance().addActivity(appCompatActivity);
 
         setContentView(initLayoutId());
-        ButterKnife.bind(this);
+        ButterKnife.bind(appCompatActivity);
 
-        loadView = new QMUILoadingView(this);
-        loadView.setVisibility(View.GONE);
-        loadView.setSize(100);
-        loadView.setColor(getResources().getColor(R.color.color_80000000));
-        layoutParams = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        layoutParams.gravity = Gravity.CENTER;
+//		loadView = new QMUILoadingView(appCompatActivity);
+//		loadView.setVisibility(View.GONE);
+//		loadView.setSize(100);
+//		loadView.setColor(getResources().getColor(R.color.color_80000000));
+//		layoutParams = new FrameLayout.LayoutParams(
+//			FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+//		layoutParams.gravity = Gravity.CENTER;
 
         //        setToolbar();
-        presenter = attachPresenter();
         initData();
         initViews();
         initLoadData();
-
-//        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
-//        rxPermissionsManager.initRxPermissionsActivity(new OnCommonRxPermissionsCallback() {
-//            @Override
-//            public void onRxPermissionsAllPass() {
-//                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(rxAppCompatActivity);
-//                crashHandlerManager.sendPreviousReportsToServer();
-//                crashHandlerManager.init();
-//            }
-//
-//            @Override
-//            public void onNotCheckNoMorePromptError() {
-//
-//            }
-//
-//            @Override
-//            public void onCheckNoMorePromptError() {
-//
-//            }
-//        });
     }
 
     @Override
@@ -112,14 +84,14 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
 
     protected void setToolbar(boolean isDarkFont) {
         if (isDarkFont) {
-            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(R.color.color_FFFFFFFF)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                     .keyboardEnable(true)
                     .init();
         } else {
-            ImmersionBar.with(this)
+            ImmersionBar.with(appCompatActivity)
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(R.color.color_FF198CFF)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
@@ -132,14 +104,14 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
 
     protected void setToolbar(boolean isDarkFont, boolean isResizeChildOfContent) {
         if (isDarkFont) {
-            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(R.color.color_FFFFFFFF)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                     .keyboardEnable(true)
                     .init();
         } else {
-            ImmersionBar.with(this)
+            ImmersionBar.with(appCompatActivity)
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(R.color.color_FF198CFF)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
@@ -154,13 +126,13 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
 
     protected void setToolbar(boolean isDarkFont, int color) {
         if (isDarkFont) {
-            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(color)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                     .init();
         } else {
-            ImmersionBar.with(this)
+            ImmersionBar.with(appCompatActivity)
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(color)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
@@ -172,13 +144,13 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
 
     protected void setToolbar(boolean isDarkFont, int color, boolean isResizeChildOfContent) {
         if (isDarkFont) {
-            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+            ImmersionBar.with(appCompatActivity) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(color)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                     .init();
         } else {
-            ImmersionBar.with(this)
+            ImmersionBar.with(appCompatActivity)
                     .statusBarDarkFont(isDarkFont)
                     .statusBarColor(color)     //状态栏颜色，不写默认透明色
                     //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
@@ -196,8 +168,7 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
      */
     protected void initImmersionBar() {
         //设置共同沉浸式样式
-        ImmersionBar.with(this)
-                .navigationBarColor(R.color.color_FFE066FF).init();
+        ImmersionBar.with(appCompatActivity).navigationBarColor(R.color.color_FFE066FF).init();
     }
 
     protected abstract void initData();
@@ -206,16 +177,9 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
 
     protected abstract void initLoadData();
 
-    /**
-     * 适配为不同的view 装载不同的presenter
-     *
-     * @return
-     */
-    protected abstract T attachPresenter();
-
     protected void showToast(String message, boolean isLongToast) {
-        //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!rxAppCompatActivity.isFinishing()) {
+        //        Toast.makeText(appCompatActivity, message, Toast.LENGTH_LONG).show();
+        if (!appCompatActivity.isFinishing()) {
             Toast toast;
             int duration;
             if (isLongToast) {
@@ -223,7 +187,7 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
             } else {
                 duration = Toast.LENGTH_SHORT;
             }
-            toast = Toast.makeText(rxAppCompatActivity, message, duration);
+            toast = Toast.makeText(appCompatActivity, message, duration);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
@@ -232,12 +196,11 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
     protected void showCustomToast(int left, int right,
                                    int textSize, int textColor,
                                    int bgColor, int height,
-                                   int roundRadius, String message,
-                                   boolean isLongToast) {
-        FrameLayout frameLayout = new FrameLayout(this);
+                                   int roundRadius, String message) {
+        FrameLayout frameLayout = new FrameLayout(appCompatActivity);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         frameLayout.setLayoutParams(layoutParams);
-        TextView textView = new TextView(this);
+        TextView textView = new TextView(appCompatActivity);
         FrameLayout.LayoutParams layoutParams1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height);
         textView.setLayoutParams(layoutParams1);
         textView.setPadding(left, 0, right, 0);
@@ -252,13 +215,9 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
         textView.setText(message);
         frameLayout.addView(textView);
 
-        Toast toast = new Toast(this);
+        Toast toast = new Toast(appCompatActivity);
         toast.setView(frameLayout);
-        if (isLongToast) {
-            toast.setDuration(Toast.LENGTH_LONG);
-        } else {
-            toast.setDuration(Toast.LENGTH_SHORT);
-        }
+        toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
     }
 
@@ -267,12 +226,12 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
     }
 
     protected void startActivity(Class<?> cls) {
-        intent = new Intent(this, cls);
+        intent = new Intent(appCompatActivity, cls);
         startActivity(intent);
     }
 
     protected void startActivityCarryParams(Class<?> cls, Map<String, String> params) {
-        intent = new Intent(this, cls);
+        intent = new Intent(appCompatActivity, cls);
         bundle = new Bundle();
 
         if (params != null && params.size() > 0) {
@@ -287,12 +246,12 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
     }
 
     protected void startActivityForResult(Class<?> cls, int requestCode) {
-        intent = new Intent(this, cls);
+        intent = new Intent(appCompatActivity, cls);
         startActivityForResult(intent, requestCode);
     }
 
     protected void startActivityForResultCarryParams(Class<?> cls, Map<String, String> params, int requestCode) {
-        intent = new Intent(this, cls);
+        intent = new Intent(appCompatActivity, cls);
         bundle = new Bundle();
 
         if (params != null && params.size() > 0) {
@@ -314,22 +273,10 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
         }
     }
 
-    protected void detachPresenter() {
-        if (presenter != null) {
-            presenter.detachView();
-            presenter = null;
-        }
-    }
-
     @Override
     protected void onDestroy() {
-        detachPresenter();
-
-        if (bodyParams != null) {
-            bodyParams.clear();
-            bodyParams = null;
-        }
-        ActivityPageManager.getInstance().removeActivity(this);
+        ActivityPageManager.getInstance().removeActivity(appCompatActivity);
         super.onDestroy();
     }
 }
+

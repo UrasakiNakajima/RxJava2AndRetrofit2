@@ -59,7 +59,6 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                     squareDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
                 }
             }
-
         }
 
         dataxErrorObserver = object : Observer<String> {
@@ -69,9 +68,9 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                     squareDataError(t!!)
                 }
             }
-
         }
 
+//        dataxSuccessObserver = null
         viewModel!!.getDataxSuccess().observe(viewLifecycleOwner, dataxSuccessObserver!!)
         viewModel!!.getDataxError().observe(viewLifecycleOwner, dataxErrorObserver!!)
         ExceptionManager.throwException();

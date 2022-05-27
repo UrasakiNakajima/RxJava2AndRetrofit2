@@ -74,6 +74,26 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
         presenter = attachPresenter();
         initViews();
         initLoadData();
+
+//        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
+//        rxPermissionsManager.initRxPermissionsFragment(new OnCommonRxPermissionsCallback() {
+//            @Override
+//            public void onRxPermissionsAllPass() {
+//                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(rxAppCompatActivity);
+//                crashHandlerManager.sendPreviousReportsToServer();
+//                crashHandlerManager.init();
+//            }
+//
+//            @Override
+//            public void onNotCheckNoMorePromptError() {
+//
+//            }
+//
+//            @Override
+//            public void onCheckNoMorePromptError() {
+//
+//            }
+//        });
     }
 
     protected abstract int initLayoutId();

@@ -19,12 +19,13 @@ import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
-import com.phone.common_library.base.BaseAppActivity;
+import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.fragment.EventScheduleDialogFragment;
 import com.phone.common_library.manager.GetJsonDataManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.square_module.R;
 import com.phone.square_module.bean.ProvincesBean;
+import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.json.JSONArray;
@@ -35,9 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.disposables.Disposable;
-
-public class PickerViewActivity extends BaseAppActivity {
+public class PickerViewActivity extends BaseRxAppActivity {
 
     private static final String TAG = "PickerViewActivity";
     private Toolbar toolbar;
@@ -59,7 +58,7 @@ public class PickerViewActivity extends BaseAppActivity {
 
     // where this is an Activity or Fragment instance
     private RxPermissions rxPermissions;
-    private Disposable disposable;
+//    private Disposable disposable;
 
     @Override
     protected int initLayoutId() {
@@ -115,12 +114,14 @@ public class PickerViewActivity extends BaseAppActivity {
         if (rxPermissions == null) {
             rxPermissions = new RxPermissions(this);
         }
-        disposable = rxPermissions
+        rxPermissions
                 .requestEachCombined(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
 //                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 )
+                //解决rxjava导致的内存泄漏问题
+                .compose(this.<Permission>bindToLifecycle())
                 .subscribe(permission -> { // will emit 2 Permission objects
                     if (permission.granted) {
                         // `permission.name` is granted !
@@ -367,9 +368,10 @@ public class PickerViewActivity extends BaseAppActivity {
             analyticalDataAsyncTask.cancel(true);
             analyticalDataAsyncTask = null;
         }
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-        }
+
+//        if (disposable != null && !disposable.isDisposed()) {
+//            disposable.dispose();
+//        }
         super.onDestroy();
     }
 }

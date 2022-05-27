@@ -1,6 +1,5 @@
 package com.phone.base64_and_file;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,11 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.base64_and_file.adapter.Base64StrAdapter;
 import com.phone.base64_and_file.presenter.Base64AndFilePresenterImpl;
-import com.phone.common_library.base.BaseMvpAppActivity;
+import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
+import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.RxPermissionsManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,9 +36,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import io.reactivex.disposables.Disposable;
-
-public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64AndFilePresenterImpl> implements IBase64AndFileView {
+public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base64AndFilePresenterImpl> implements IBase64AndFileView {
 
     private static final String TAG = Base64AndFileActivity.class.getSimpleName();
     private Toolbar toolbar;
@@ -54,16 +52,16 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
 
 
     // where this is an Activity or Fragment instance
-    private RxPermissions rxPermissions;
-//    private Binder binder;
-    private Disposable disposable;
+    private RxPermissionsManager rxPermissionsManager;
+    //    private Binder binder;
+//    private Disposable disposable;
 //    private Disposable disposable2;
     private String dirsPath;
     private String dirsPath2;
 
     private String compressedPicturePath;
     public String base64Str;
-//    private Bitmap bitmapNew;
+    //    private Bitmap bitmapNew;
     public Bitmap bitmap;
 
     private List<String> base64StrList = new ArrayList<>();
@@ -72,7 +70,6 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
 
     private Timer timer;
     private TimerTask timerTask;
-
     private Handler handler;
 
     private AlertDialog mPermissionsDialog;
@@ -225,49 +222,29 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
     }
 
     private void initRxPermissions() {
-        if (rxPermissions == null){
-            rxPermissions = new RxPermissions(this);
-        }
-        disposable = rxPermissions
-                .requestEachCombined(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-//                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
-                .subscribe(permission -> { // will emit 2 Permission objects
-                    if (permission.granted) {
-                        // `permission.name` is granted !
+        rxPermissionsManager = RxPermissionsManager.getInstance(this);
+        rxPermissionsManager.initRxPermissionsActivity(new OnCommonRxPermissionsCallback() {
+            @Override
+            public void onRxPermissionsAllPass() {
+                if (presenter != null) {
+                    showLoading();
 
-                        // 所有的权限都授予
-                        LogManager.i(TAG, "所有的权限都授予");
-                        LogManager.i(TAG, "用户已经同意该权限 permission.name*****" + permission.name);
+                    LogManager.i(TAG, "用户已经同意该权限 showCompressedPicture");
+                    presenter.showCompressedPicture(rxAppCompatActivity.getApplicationContext(),
+                            dirsPath, dirsPath2);
+                }
+            }
 
-//                        Intent bindIntent = new Intent(this, Base64AndFileService.class);
-//                        // 绑定服务和活动，之后活动就可以去调服务的方法了
-//                        bindService(bindIntent, connection, BIND_AUTO_CREATE);
+            @Override
+            public void onNotCheckNoMorePromptError() {
+                showSystemSetupDialog();
+            }
 
-
-                        if (presenter != null) {
-                            showLoading();
-
-                            LogManager.i(TAG, "用户已经同意该权限 showCompressedPicture");
-                            presenter.showCompressedPicture(appCompatActivity.getApplicationContext(),
-                                    dirsPath, dirsPath2);
-                        }
-                    } else if (permission.shouldShowRequestPermissionRationale) {
-                        // Denied permission without ask never again
-
-                        // 至少一个权限未授予且未勾选不再提示
-                        LogManager.i(TAG, "至少一个权限未授予且未勾选不再提示");
-                    } else {
-                        // Denied permission with ask never again
-                        // Need to go to the settings
-
-                        // 至少一个权限未授予且勾选了不再提示
-                        LogManager.i(TAG, "至少一个权限未授予且勾选了不再提示");
-                        showSystemSetupDialog();
-                    }
-                });
+            @Override
+            public void onCheckNoMorePromptError() {
+                showSystemSetupDialog();
+            }
+        });
     }
 
 //    private void initTask() {
@@ -514,9 +491,10 @@ public class Base64AndFileActivity extends BaseMvpAppActivity<IBaseView, Base64A
 
     @Override
     protected void onDestroy() {
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-        }
+//        if (disposable != null && !disposable.isDisposed()) {
+//            disposable.dispose();
+//        }
+
 //        if (disposable2 != null && !disposable2.isDisposed()) {
 //            disposable2.dispose();
 //        }
