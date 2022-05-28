@@ -164,6 +164,8 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 ////            // 绑定服务和活动，之后活动就可以去调服务的方法了
 ////            bindService(bindIntent, connection, BIND_AUTO_CREATE);
 //        }
+
+
     }
 
     @Override

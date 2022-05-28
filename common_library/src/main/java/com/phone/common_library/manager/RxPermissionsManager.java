@@ -103,7 +103,8 @@ public class RxPermissionsManager {
         rxPermissionsFragment
                 .requestEachCombined(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_PHONE_STATE
 //                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 )
                 //解决rxjava导致的内存泄漏问题

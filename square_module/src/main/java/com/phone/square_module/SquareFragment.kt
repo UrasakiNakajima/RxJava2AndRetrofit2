@@ -12,6 +12,7 @@ import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.bean.User
 import com.phone.common_library.bean.User2
 import com.phone.common_library.bean.User3
+import com.phone.common_library.manager.ExceptionManager
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
@@ -83,6 +84,22 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 //            startActivity(PickerViewActivity::class.java)
             startActivity(Base64AndFileActivity::class.java)
         }
+        mDatabind.tevCreateAnException.setOnClickListener {
+            //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+            val user: User = User2()
+            val user3 = user as User3
+            LogManager.i(TAG, user3.toString())
+        }
+        mDatabind.tevCreateAnException2.setOnClickListener {
+            try {
+                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+                val user: User = User2()
+                val user3 = user as User3
+                LogManager.i(TAG, user3.toString())
+            } catch (e: Exception) {
+                ExceptionManager.getInstance().throwException(rxAppCompatActivity, e)
+            }
+        }
     }
 
     override fun initLoadData() {
@@ -90,10 +107,10 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
 //        startAsyncTask()
 
-        //製造一個类强制转换异常（java.lang.ClassCastException）
-        val user: User = User2()
-        val user3 = user as User3
-        LogManager.i(TAG, user3.toString())
+//        //製造一個类强制转换异常（java.lang.ClassCastException）
+//        val user: User = User2()
+//        val user3 = user as User3
+//        LogManager.i(TAG, user3.toString())
     }
 
 //    private fun startAsyncTask() {

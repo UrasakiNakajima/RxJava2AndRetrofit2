@@ -5,7 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Environment;
 
 import java.io.BufferedOutputStream;
@@ -15,7 +14,6 @@ import java.io.FilenameFilter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -25,7 +23,7 @@ import java.util.Properties;
 import java.util.TreeSet;
 
 /**
- * 造成App崩潰異常管理類
+ * 造成App崩潰的異常管理類
  */
 public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 
@@ -250,22 +248,29 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         }
 
 
-        //使用反射 获得Build类的所有类里的变量 
-        //  Class   代表类在运行时的一个映射 
-        //在Build类中包含各种设备信息,   
-        // 例如: 系统版本号,设备生产商 等帮助调试程序的有用信息   
-        // 具体信息请参考后面的截图
-        Field[] fields = Build.class.getDeclaredFields();
-        for (Field field : fields) {
-            try {
-                field.setAccessible(true);
-                //get方法返回指定对象上此 Field 表示的字段的值 
-                mDevInfoMap.put(field.getName(), field.get(null).toString());
-                LogManager.i(TAG, field.getName() + ":" + field.get(null).toString());
-            } catch (Exception e) {
-                LogManager.i(TAG, "an error occured when collect crash info", e);
-            }
-        }
+//        //使用反射 获得Build类的所有类里的变量
+//        //  Class   代表类在运行时的一个映射
+//        //在Build类中包含各种设备信息,
+//        // 例如: 系统版本号,设备生产商 等帮助调试程序的有用信息
+//        // 具体信息请参考后面的截图
+//        Field[] fields = Build.class.getDeclaredFields();
+//        for (Field field : fields) {
+//            try {
+//                field.setAccessible(true);
+//                //get方法返回指定对象上此 Field 表示的字段的值
+//                mDevInfoMap.put(field.getName(), field.get(null).toString());
+//                LogManager.i(TAG, field.getName() + ":" + field.get(null).toString());
+//            } catch (Exception e) {
+//                LogManager.i(TAG, "an error occured when collect crash info", e);
+//            }
+//        }
+
+
+        mDevInfoMap.put("手机厂商", SystemManager.getDeviceBrand());
+        mDevInfoMap.put("手机型号", SystemManager.getSystemModel());
+        mDevInfoMap.put("手机当前系统语言", SystemManager.getSystemLanguage());
+        mDevInfoMap.put("Android系统版本号", SystemManager.getSystemVersion());
+        mDevInfoMap.put("手机IMEI", SystemManager.getIMEI(context));
     }
 
     //使用HTTP服务之前，需要确定网络畅通，我们可以使用下面的方式判断网络是否可用 
