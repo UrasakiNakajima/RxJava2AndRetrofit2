@@ -74,7 +74,6 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
      * 当UncaughtException发生时会转入该函数来处理
      */
     public void uncaughtException(Thread thread, Throwable throwable) {
-        // TODO Auto-generated method stub
         //如果開發人員没有处理则让系统默认的异常处理器来处理
         if (!handleException(throwable) && mDefaultHandler != null) {
             mDefaultHandler.uncaughtException(thread, throwable);
@@ -119,7 +118,6 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
      * @return
      */
     public boolean handleException(Throwable throwable) {
-        // TODO Auto-generated method stub 
         if (throwable == null) {
             return false;
         }
@@ -190,7 +188,6 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
      * @return
      */
     private String saveCrashInfoToFile(Throwable throwable) {
-        // TODO Auto-generated method stub 
         StringBuffer buffer = new StringBuffer();
         for (Map.Entry<String, String> entry : mDevInfoMap.entrySet()) {
             String key = entry.getKey();
