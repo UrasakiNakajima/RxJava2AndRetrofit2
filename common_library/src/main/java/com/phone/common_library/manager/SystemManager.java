@@ -85,5 +85,23 @@ public class SystemManager {
         return null;
     }
 
+    /**
+     * 获取手机CPU_ABI
+     *
+     * @return 手机CPU_ABI
+     */
+    public static String getDeviceCpuAbi() {
+        return android.os.Build.CPU_ABI;
+    }
+
+    /**
+     * 是否是模拟器
+     *
+     * @return 是否是模拟器
+     */
+    public static String getDeviceProduct() {
+        return android.os.Build.PRODUCT;
+    }
+
 
 }

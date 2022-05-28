@@ -1,11 +1,13 @@
 package com.phone.common_library.manager;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.util.ArrayMap;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -17,7 +19,7 @@ import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
@@ -38,7 +40,7 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     private Properties mDeviceCrashInfo = new Properties();
 
     //存储设备信息 
-    private Map<String, String> mDevInfoMap = new HashMap<>();
+    private Map<String, String> mDevInfoMap = new ArrayMap<>();
     private SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
     private CrashHandlerManager(Context context) {
@@ -80,15 +82,36 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
             mDefaultHandler.uncaughtException(thread, throwable);
         } else {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 LogManager.i(TAG, "error");
             }
+
             //结束程序 
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
+            killAppProcess(mContext);
         }
     }
+
+    /**
+     * 真正的退出应用程序
+     *
+     * @param context
+     */
+    private void killAppProcess(Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> processInfos = manager.getRunningAppProcesses();
+
+        // 先杀掉相关进程，最后再杀掉主进程
+        for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : processInfos) {
+            if (runningAppProcessInfo.pid != android.os.Process.myPid()) {
+                android.os.Process.killProcess(runningAppProcessInfo.pid);
+            }
+        }
+        android.os.Process.killProcess(android.os.Process.myPid());
+        // 异常退出程序，也就是结束当前正在运行的 java 虚拟机
+        System.exit(1);
+    }
+
 
     /**
      * Throwable 包含了其线程创建时线程执行堆栈的快照
@@ -235,18 +258,17 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
      */
     private void collectDeviceInfo(Context context) {
         try {
-            PackageManager pm = context.getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
-            if (pi != null) {
-                String versionName = pi.versionName == null ? "null" : pi.versionName;
-                String versionCode = pi.versionCode + "";
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+            if (packageInfo != null) {
+                String versionName = packageInfo.versionName == null ? "null" : packageInfo.versionName;
+                String versionCode = packageInfo.versionCode + "";
                 mDevInfoMap.put("versionName", versionName);
                 mDevInfoMap.put("versionCode", versionCode);
             }
         } catch (PackageManager.NameNotFoundException e) {
             LogManager.i(TAG, "NameNotFoundException");
         }
-
 
 //        //使用反射 获得Build类的所有类里的变量
 //        //  Class   代表类在运行时的一个映射
@@ -265,12 +287,11 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 //            }
 //        }
 
-
         mDevInfoMap.put("手机厂商", SystemManager.getDeviceBrand());
         mDevInfoMap.put("手机型号", SystemManager.getSystemModel());
         mDevInfoMap.put("手机当前系统语言", SystemManager.getSystemLanguage());
-        mDevInfoMap.put("Android系统版本号", SystemManager.getSystemVersion());
-        mDevInfoMap.put("手机IMEI", SystemManager.getIMEI(context));
+        mDevInfoMap.put("手机系统版本号", SystemManager.getSystemVersion());
+        mDevInfoMap.put("手机CPU架构", SystemManager.getDeviceCpuAbi());
     }
 
     //使用HTTP服务之前，需要确定网络畅通，我们可以使用下面的方式判断网络是否可用 
