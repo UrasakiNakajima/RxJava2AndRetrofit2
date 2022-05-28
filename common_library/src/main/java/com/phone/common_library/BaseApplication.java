@@ -93,5 +93,6 @@ public class BaseApplication extends MultiDexApplication {
 		editor.remove("isLogin");
 		editor.commit();
 	}
-	
+
+
 }

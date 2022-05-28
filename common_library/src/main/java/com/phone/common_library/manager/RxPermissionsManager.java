@@ -16,35 +16,18 @@ public class RxPermissionsManager {
 
     private static final String TAG = RxPermissionsManager.class.getSimpleName();
     private static RxPermissionsManager rxPermissionsManager;
-    private RxAppCompatActivity rxAppCompatActivity;
-    private RxFragment rxFragment;
-    private RxPermissions rxPermissions;
+//    private RxPermissions rxPermissions;
+    private RxPermissions rxPermissionsActivity;
+    private RxPermissions rxPermissionsFragment;
 
-    public RxPermissionsManager(RxAppCompatActivity rxAppCompatActivity) {
-        this.rxAppCompatActivity = rxAppCompatActivity;
+    public RxPermissionsManager() {
     }
 
-    public static RxPermissionsManager getInstance(RxAppCompatActivity rxAppCompatActivity) {
+    public static RxPermissionsManager getInstance() {
         if (rxPermissionsManager == null) {
             synchronized (RxPermissionsManager.class) {
                 if (rxPermissionsManager == null) {
-                    rxPermissionsManager = new RxPermissionsManager(rxAppCompatActivity);
-                }
-            }
-        }
-
-        return rxPermissionsManager;
-    }
-
-    public RxPermissionsManager(RxFragment rxFragment) {
-        this.rxFragment = rxFragment;
-    }
-
-    public static RxPermissionsManager getInstance(RxFragment rxFragment) {
-        if (rxPermissionsManager == null) {
-            synchronized (RxPermissionsManager.class) {
-                if (rxPermissionsManager == null) {
-                    rxPermissionsManager = new RxPermissionsManager(rxFragment);
+                    rxPermissionsManager = new RxPermissionsManager();
                 }
             }
         }
@@ -55,11 +38,11 @@ public class RxPermissionsManager {
     /**
      * RxAppCompatActivity里需要的时候直接调用就行了
      */
-    public void initRxPermissionsRxAppCompatActivity(OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
-        if (rxPermissions == null) {
-            rxPermissions = new RxPermissions(rxAppCompatActivity);
+    public void initRxPermissionsRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
+        if (rxPermissionsActivity == null) {
+            rxPermissionsActivity = new RxPermissions(rxAppCompatActivity);
         }
-        rxPermissions
+        rxPermissionsActivity
                 .requestEachCombined(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -105,11 +88,11 @@ public class RxPermissionsManager {
     /**
      * RxFragment里需要的时候直接调用就行了
      */
-    public void initRxPermissionsRxFragment(OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
-        if (rxPermissions == null) {
-            rxPermissions = new RxPermissions(rxFragment);
+    public void initRxPermissionsRxFragment(RxFragment rxFragment, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
+        if (rxPermissionsFragment == null) {
+            rxPermissionsFragment = new RxPermissions(rxFragment);
         }
-        rxPermissions
+        rxPermissionsFragment
                 .requestEachCombined(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE

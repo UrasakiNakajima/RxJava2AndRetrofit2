@@ -1,7 +1,10 @@
 package com.phone.first_page_module;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,9 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.common_library.base.BaseMvpRxFragment;
 import com.phone.common_library.base.IBaseView;
+import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.callback.RcvOnItemViewClickListener;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
+import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.ScreenManager;
 import com.phone.common_library.ui.NewsDetailActivity;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
@@ -55,6 +61,8 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     private LinearLayoutManager linearLayoutManager;
     private boolean isRefresh;
     private Map<String, String> paramMap = new HashMap<>();
+
+    private AlertDialog mPermissionsDialog;
 
     @Nullable
     @Override
@@ -165,6 +173,8 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         refreshLayout.autoRefresh();
 
         //		startAsyncTask();
+
+        initRxPermissionsRxFragment();
     }
 
     @Override
@@ -237,6 +247,63 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
             } else {
                 refreshLayout.finishLoadMore(false);
             }
+        }
+    }
+
+    /**
+     * RxFragment里需要的时候直接调用就行了
+     */
+    private void initRxPermissionsRxFragment() {
+        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
+        rxPermissionsManager.initRxPermissionsRxFragment(this, new OnCommonRxPermissionsCallback() {
+            @Override
+            public void onRxPermissionsAllPass() {
+
+            }
+
+            @Override
+            public void onNotCheckNoMorePromptError() {
+                showSystemSetupDialog();
+            }
+
+            @Override
+            public void onCheckNoMorePromptError() {
+                showSystemSetupDialog();
+            }
+        });
+    }
+
+    private void showSystemSetupDialog() {
+        cancelPermissionsDialog();
+        if (mPermissionsDialog == null) {
+            mPermissionsDialog = new AlertDialog.Builder(rxAppCompatActivity)
+                    .setTitle("权限设置")
+                    .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
+                    .setPositiveButton("去授权", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            cancelPermissionsDialog();
+                            intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", rxAppCompatActivity.getApplicationContext().getPackageName(), null);
+                            intent.setData(uri);
+                            startActivityForResult(intent, 207);
+                        }
+                    })
+                    .create();
+        }
+
+        mPermissionsDialog.setCancelable(false);
+        mPermissionsDialog.setCanceledOnTouchOutside(false);
+        mPermissionsDialog.show();
+    }
+
+    /**
+     * 关闭对话框
+     */
+    private void cancelPermissionsDialog() {
+        if (mPermissionsDialog != null) {
+            mPermissionsDialog.cancel();
+            mPermissionsDialog = null;
         }
     }
 
