@@ -1,5 +1,7 @@
 package com.phone.common_library.base;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -17,21 +19,25 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
 import com.phone.common_library.manager.ActivityPageManager;
+import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.ToolbarManager;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
+import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
 
 public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
-    protected BaseApplication baseApplication;
+    private static final String TAG = "BaseRxAppActivity";
     //	protected QMUILoadingView          loadView;
 //	protected FrameLayout.LayoutParams layoutParams;
     protected Intent intent;
     protected Bundle bundle;
     protected RxAppCompatActivity rxAppCompatActivity;
+    protected BaseApplication baseApplication;
+    private ActivityPageManager activityPageManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +45,8 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
         rxAppCompatActivity = this;
         baseApplication = (BaseApplication) getApplication();
-        ActivityPageManager.getInstance().addActivity(rxAppCompatActivity);
+        activityPageManager = ActivityPageManager.getInstance();
+        activityPageManager.addActivity(rxAppCompatActivity);
 
         setContentView(initLayoutId());
         ButterKnife.bind(rxAppCompatActivity);
@@ -272,9 +279,30 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
         }
     }
 
+    private void killAppProcess(Context context) {
+        LogManager.i(TAG, "killAppProcess");
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> processInfos = manager.getRunningAppProcesses();
+
+        // 先杀掉相关进程，最后再杀掉主进程
+        for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : processInfos) {
+            if (runningAppProcessInfo.pid != android.os.Process.myPid()) {
+                android.os.Process.killProcess(runningAppProcessInfo.pid);
+            }
+        }
+        android.os.Process.killProcess(android.os.Process.myPid());
+        // 正常退出程序，也就是结束当前正在运行的 java 虚拟机
+        System.exit(0);
+    }
+
     @Override
     protected void onDestroy() {
-        ActivityPageManager.getInstance().removeActivity(rxAppCompatActivity);
+        if (activityPageManager != null) {
+            if (activityPageManager.isLastAliveActivity().get()) {
+                killAppProcess(rxAppCompatActivity);
+            }
+            activityPageManager.removeActivity(rxAppCompatActivity);
+        }
         super.onDestroy();
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.common_library.base.BaseMvpRxFragment;
 import com.phone.common_library.base.IBaseView;
-import com.phone.common_library.bean.User;
-import com.phone.common_library.bean.User2;
-import com.phone.common_library.bean.User3;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.callback.RcvOnItemViewClickListener;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.ScreenManager;
+import com.phone.common_library.manager.SystemIdManager;
 import com.phone.common_library.ui.NewsDetailActivity;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
 import com.phone.first_page_module.bean.FirstPageResponse;
@@ -54,6 +53,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     private FrameLayout layoutOutLayer;
     private Toolbar toolbar;
     private TextView tevTitle;
+    private TextView tevRequestPermissions;
     private SmartRefreshLayout refreshLayout;
     private RecyclerView rcvData;
     private QMUILoadingView loadView;
@@ -95,6 +95,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         layoutOutLayer = (FrameLayout) rootView.findViewById(R.id.layout_out_layer);
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         tevTitle = (TextView) rootView.findViewById(R.id.tev_title);
+        tevRequestPermissions = (TextView) rootView.findViewById(R.id.tev_request_permissions);
         refreshLayout = (SmartRefreshLayout) rootView.findViewById(R.id.refresh_layout);
         rcvData = (RecyclerView) rootView.findViewById(R.id.rcv_data);
         loadView = (QMUILoadingView) rootView.findViewById(R.id.loadView);
@@ -104,6 +105,13 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
             public void onClick(View v) {
                 LogManager.i(TAG, "tev_title");
                 initFirstPage();
+            }
+        });
+        tevRequestPermissions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogManager.i(TAG, "tevRequestPermissions");
+                initRxPermissionsRxFragment();
             }
         });
 
@@ -177,7 +185,14 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
 
         //		startAsyncTask();
 
-        initRxPermissionsRxFragment();
+//        try {
+//            //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+//            User user = new User2();
+//            User3 user3 = (User3) user;
+//            LogManager.i(TAG, user3.toString());
+//        } catch (Exception e) {
+//            ExceptionManager.getInstance().throwException(rxAppCompatActivity, e);
+//        }
     }
 
     @Override
@@ -261,9 +276,18 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         rxPermissionsManager.initRxPermissionsRxFragment(this, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
-                User user = new User2();
-                User3 user3 = (User3) user;
-                LogManager.i(TAG, user3.toString());
+//                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+//                User user = new User2();
+//                User3 user3 = (User3) user;
+//                LogManager.i(TAG, user3.toString());
+
+                if (TextUtils.isEmpty(baseApplication.getSystemId())) {
+                    String systemId = SystemIdManager.getSystemId(rxAppCompatActivity);
+                    baseApplication.setSystemId(systemId);
+                    LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
+                } else {
+                    LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
+                }
             }
 
             @Override

@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RxPermissionsManager;
+import com.phone.common_library.manager.SystemIdManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 
 import java.io.File;
@@ -41,6 +43,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     private static final String TAG = Base64AndFileActivity.class.getSimpleName();
     private Toolbar toolbar;
     private TextView tevTitle;
+    private TextView tevRequestPermissions;
     private TextView tevCompressedPicture;
     private ImageView imvCompressedPicture;
     private TextView tevPictureToBase64;
@@ -97,6 +100,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     protected void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tevTitle = (TextView) findViewById(R.id.tev_title);
+        tevRequestPermissions = (TextView) findViewById(R.id.tev_request_permissions);
         tevCompressedPicture = (TextView) findViewById(R.id.tev_compressed_picture);
         imvCompressedPicture = (ImageView) findViewById(R.id.imv_compressed_picture);
         tevPictureToBase64 = (TextView) findViewById(R.id.tev_picture_to_base64);
@@ -108,6 +112,13 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         setToolbar(false, R.color.color_54E066FF);
 
 
+        tevRequestPermissions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogManager.i(TAG, "tevRequestPermissions");
+                initRxPermissionsRxAppCompatActivity();
+            }
+        });
         tevCompressedPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,6 +175,8 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 ////            // 绑定服务和活动，之后活动就可以去调服务的方法了
 ////            bindService(bindIntent, connection, BIND_AUTO_CREATE);
 //        }
+
+
     }
 
     @Override
@@ -235,11 +248,19 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                     presenter.showCompressedPicture(rxAppCompatActivity.getApplicationContext(),
                             dirsPath, dirsPath2);
                 }
+
+                if (TextUtils.isEmpty(baseApplication.getSystemId())) {
+                    String systemId = SystemIdManager.getSystemId(rxAppCompatActivity);
+                    baseApplication.setSystemId(systemId);
+                    LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
+                } else {
+                    LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
+                }
             }
 
             @Override
             public void onNotCheckNoMorePromptError() {
-//                showSystemSetupDialog();
+                showSystemSetupDialog();
             }
 
             @Override

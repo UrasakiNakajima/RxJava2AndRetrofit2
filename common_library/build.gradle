@@ -17,6 +17,16 @@ android {
 
 
     defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -72,12 +82,6 @@ android {
 
     allOpen {
         annotation("com.phone.common_library.no_arg_open_data.NoArgOpenDataClass")
-    }
-}
-
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
     }
 }
 

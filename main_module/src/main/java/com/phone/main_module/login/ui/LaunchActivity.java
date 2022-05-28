@@ -9,7 +9,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 
-import com.phone.common_library.base.BaseAppActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.manager.LogManager;
 import com.phone.main_module.R;
 import com.phone.main_module.main.MainActivity;
@@ -17,13 +23,7 @@ import com.phone.main_module.main.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-public class LaunchActivity extends BaseAppActivity {
+public class LaunchActivity extends BaseRxAppActivity {
 
     private static final String TAG = "LaunchActivity";
 

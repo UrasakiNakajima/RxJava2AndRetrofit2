@@ -6,12 +6,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.phone.common_library.base.BaseAppActivity
+import com.phone.common_library.base.BaseRxAppActivity
 import com.phone.common_library.callback.OnDialogCallback
 import com.phone.common_library.fragment.EventScheduleDialogFragment
 import com.phone.project_module.R
 
-class EventScheduleActivity : BaseAppActivity() {
+class EventScheduleActivity : BaseRxAppActivity() {
 
     companion object {
         private const val TAG = "EventScheduleActivity"

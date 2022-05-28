@@ -13,16 +13,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
-import com.phone.common_library.R;
-import com.phone.common_library.base.BaseAppActivity;
-import com.phone.common_library.manager.LogManager;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.phone.common_library.R;
+import com.phone.common_library.base.BaseRxAppActivity;
+import com.phone.common_library.manager.LogManager;
+
 @Route(path = "/common_library/ui/android_and_js")
-public class AndroidAndJsActivity extends BaseAppActivity {
+public class AndroidAndJsActivity extends BaseRxAppActivity {
 	
 	private static final String      TAG = "AndroidAndJsActivity";
 	private              Toolbar     toolbar;
@@ -57,7 +57,7 @@ public class AndroidAndJsActivity extends BaseAppActivity {
 		tevAndroidToJs2 = (TextView) findViewById(R.id.tev_android_to_js2);
 		tevAndroidToJs3 = (TextView) findViewById(R.id.tev_android_to_js3);
 		
-		imvBack.setColorFilter(ContextCompat.getColor(appCompatActivity, R.color.white));
+		imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
 		setToolbar(false, R.color.color_FFE066FF);
 		tevAndroidToJs.setOnClickListener(view -> {
 			
@@ -101,7 +101,7 @@ public class AndroidAndJsActivity extends BaseAppActivity {
 		//		webView.setWebChromeClient(new WebChromeClient() {
 		//			@Override
 		//			public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-		//				AlertDialog.Builder builder = new AlertDialog.Builder(appCompatActivity);
+		//				AlertDialog.Builder builder = new AlertDialog.Builder(rxAppCompatActivity);
 		//				builder.setTitle("Alert");
 		//				builder.setMessage(message);
 		//				builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

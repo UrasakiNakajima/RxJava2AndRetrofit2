@@ -3,13 +3,13 @@ package com.phone.aidl_server;
 import android.widget.TextView;
 
 import com.phone.aidl_server.bean.ConnectBean;
-import com.phone.common_library.base.BaseAppActivity;
+import com.phone.common_library.base.BaseRxAppActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class AidlServerActivity extends BaseAppActivity {
+public class AidlServerActivity extends BaseRxAppActivity {
 	
 	private static final String   TAG = "AidlServerActivity";
 	private              TextView tevConnectInfo;
