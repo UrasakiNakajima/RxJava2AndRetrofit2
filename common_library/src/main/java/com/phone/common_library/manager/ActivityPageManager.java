@@ -184,7 +184,7 @@ public class ActivityPageManager {
     }
 
     /**
-     * 退出应用程序（最後一個存活Activity內部做了退出應用程序處理）
+     * 退出应用程序（最後一個存活Activity退出的时候（onDestroy）做了退出應用程序處理）
      */
     public void exitApp2() {
         try {
