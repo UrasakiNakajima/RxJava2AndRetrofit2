@@ -71,8 +71,8 @@ public class SystemManager {
      */
 
     public static String getIMEI(Context context) {
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Activity.TELEPHONY_SERVICE);
-        if (tm != null) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Activity.TELEPHONY_SERVICE);
+        if (telephonyManager != null) {
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
@@ -83,7 +83,7 @@ public class SystemManager {
                 // for ActivityCompat#requestPermissions for more details.
                 return null;
             }
-            return tm.getDeviceId();
+            return telephonyManager.getDeviceId();
         }
         return null;
     }
@@ -98,7 +98,16 @@ public class SystemManager {
     }
 
     /**
-     * 获取手機唯一識別码（不要使用，Android有很多雜牌手機，還有山寨機，根本沒有統一的手機唯一識別碼）
+     * 获取手機唯一識別码（推薦使用，Android有很多雜牌手機，還有山寨機，这个方法可以統一獲取到）
+     *
+     * @return
+     */
+    public static String getSystemId(Context context) {
+        return SystemIdManager.getSystemId(context);
+    }
+
+    /**
+     * 获取手機唯一識別码（不要使用，Android有很多雜牌手機，還有山寨機，根本沒有統一的deviceUuid）
      *
      * @return
      */

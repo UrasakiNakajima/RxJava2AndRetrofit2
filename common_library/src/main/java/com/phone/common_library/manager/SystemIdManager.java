@@ -43,7 +43,7 @@ public class SystemIdManager {
         //读取保存的在sd卡中的唯一标识符
         String systemId = readSystemId(context);
         //用于生成最终的唯一标识符
-        StringBuffer s = new StringBuffer();
+        StringBuffer stringBuffer = new StringBuffer();
         //判断是否已经生成过,
         if (systemId != null && !"".equals(systemId)) {
             LogManager.i(TAG, "已经生成过");
@@ -52,7 +52,7 @@ public class SystemIdManager {
         try {
             //获取IMES(也就是常说的SystemId)
             systemId = getIMIEStatus(context);
-            s.append(systemId);
+            stringBuffer.append(systemId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,20 +60,20 @@ public class SystemIdManager {
         try {
             //获取设备的MACAddress地址 去掉中间相隔的冒号
             systemId = getLocalMac(context).replace(":", "");
-            s.append(systemId);
+            stringBuffer.append(systemId);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         //如果以上搜没有获取相应的则自己生成相应的UUID作为相应设备唯一标识符
-        if (s == null || s.length() <= 0) {
+        if (stringBuffer == null || stringBuffer.length() <= 0) {
             UUID uuid = UUID.randomUUID();
             systemId = uuid.toString().replace("-", "");
-            s.append(systemId);
+            stringBuffer.append(systemId);
         }
         //为了统一格式对设备的唯一标识进行md5加密 最终生成32位字符串
-        String md5 = getMD5(s.toString(), false);
-        if (s.length() > 0) {
+        String md5 = getMD5(stringBuffer.toString(), false);
+        if (stringBuffer.length() > 0) {
             //持久化操作, 进行保存到SD卡中
             saveSystemId(md5, context);
         } else {
@@ -118,22 +118,8 @@ public class SystemIdManager {
         }
     }
 
-//    /**
-//     * 获取设备的DeviceId(IMES) 这里需要相应的权限<br/>
-//     * 需要 READ_PHONE_STATE 权限
-//     *
-//     * @param context
-//     * @return
-//     */
-//    private static String getIMIEStatus(Context context) {
-//        TelephonyManager tm = (TelephonyManager) context
-//                .getSystemService(Context.TELEPHONY_SERVICE);
-//        String systemId = tm.getDeviceId();
-//        return systemId;
-//    }
-
     /**
-     * 获取设备的DeviceId(IMES) 这里需要相应的权限<br/>
+     * 获取手机IMEI（需要“android.permission.READ_PHONE_STATE”权限）
      * 需要 READ_PHONE_STATE 权限
      *
      * @param context
@@ -155,7 +141,7 @@ public class SystemIdManager {
                 return null;
             }
             iMIEStatus = telephonyManager.getDeviceId();
-            LogManager.i(TAG, "iMIEStatus*****");
+            LogManager.i(TAG, "iMIEStatus*****" + iMIEStatus);
         }
         return iMIEStatus;
     }
@@ -173,7 +159,6 @@ public class SystemIdManager {
 //                .getSystemService(Context.WIFI_SERVICE);
 //        WifiInfo info = wifi.getConnectionInfo();
 //        return info.getMacAddress();
-
 
         String macAddress = null;
         StringBuffer buf = new StringBuffer();
@@ -244,7 +229,6 @@ public class SystemIdManager {
         }
         return md5str;
     }
-
 
     public static String bytesToHex(byte[] bytes, boolean upperCase) {
         StringBuffer md5str = new StringBuffer();

@@ -287,6 +287,19 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         mDevInfoMap.put("手机当前系统语言", SystemManager.getSystemLanguage());
         mDevInfoMap.put("手机系统版本号", SystemManager.getSystemVersion());
         mDevInfoMap.put("手机CPU架构", SystemManager.getDeviceCpuAbi());
+
+//        //手机厂商
+//        SystemManager.getDeviceBrand();
+//        //手机型号
+//        SystemManager.getSystemModel();
+//        //手机当前系统语言
+//        SystemManager.getSystemLanguage();
+//        //手机系统版本号
+//        SystemManager.getSystemVersion();
+//        //手机CPU架构
+//        SystemManager.getDeviceCpuAbi();
+//        //手機唯一識別碼
+//        SystemManager.getSystemId(mContext);
     }
 
 //    /**
