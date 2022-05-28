@@ -8,7 +8,7 @@ import android.os.Build
 import android.view.View
 import android.widget.SeekBar
 import androidx.annotation.RequiresApi
-import com.phone.common_library.base.BaseAppActivity
+import com.phone.common_library.base.BaseRxAppActivity
 import com.phone.project_module.R
 import com.phone.rxjava2andretrofit2.manager.VideoImageManager
 import io.reactivex.Observable
@@ -22,7 +22,7 @@ import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.activity_video_view.*
 
 
-class VideoViewActivity : BaseAppActivity() {
+class VideoViewActivity : BaseRxAppActivity() {
 
     companion object {
         private val TAG: String = "VideoViewActivity"

@@ -8,7 +8,7 @@ import android.net.Uri
 import android.view.SurfaceHolder
 import android.view.View
 import android.widget.SeekBar
-import com.phone.common_library.base.BaseAppActivity
+import com.phone.common_library.base.BaseRxAppActivity
 import com.phone.common_library.manager.LogManager
 import com.phone.project_module.R
 import com.phone.rxjava2andretrofit2.manager.VideoImageManager
@@ -24,7 +24,7 @@ import java.util.*
 import kotlin.concurrent.timerTask
 
 
-class SurfaceViewActivity : BaseAppActivity() {
+class SurfaceViewActivity : BaseRxAppActivity() {
 
     companion object {
         private val TAG: String = "SurfaceViewActivity"

@@ -8,14 +8,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.adapter.TabFragmentPagerAdapter
-import com.phone.common_library.base.BaseFragment
+import com.phone.common_library.base.BaseRxFragment
 import com.phone.common_library.custom_view.LazyViewPager
 import com.phone.resource_module.fragment.AndroidAndJsFragment
 import com.phone.resource_module.fragment.ResourceChildFragment
 import kotlinx.android.synthetic.main.fragment_resource.*
 
 @Route(path = "/resource_module/resource")
-class ResourceFragment : BaseFragment() {
+class ResourceFragment : BaseRxFragment() {
 
     private val TAG = ResourceFragment::class.java.simpleName
 
@@ -63,180 +63,180 @@ class ResourceFragment : BaseFragment() {
                         mine_view_pager.setCurrentItem(position)
                         tev_all.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FFE066FF
                             )
                         )
                         tev_beautiful_woman.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_android.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_ios.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_h5.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
-//                        tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+//                        tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
                     }
                     1 -> {
                         mine_view_pager.setCurrentItem(position)
                         tev_all.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_beautiful_woman.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FFE066FF
                             )
                         )
                         tev_android.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_ios.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_h5.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
-//                        tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+//                        tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
                     }
                     2 -> {
                         mine_view_pager.setCurrentItem(position)
                         tev_all.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_beautiful_woman.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_android.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FFE066FF
                             )
                         )
                         tev_ios.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_h5.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
-//                        tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+//                        tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
                     }
                     3 -> {
                         mine_view_pager.setCurrentItem(position)
                         tev_all.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_beautiful_woman.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_android.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_ios.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FFE066FF
                             )
                         )
                         tev_h5.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
-//                        tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+//                        tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
                     }
                     4 -> {
                         mine_view_pager.setCurrentItem(position)
                         tev_all.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_beautiful_woman.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_android.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_ios.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FF999999
                             )
                         )
                         tev_h5.setTextColor(
                             ContextCompat.getColor(
-                                appCompatActivity!!,
+                                rxAppCompatActivity!!,
                                 R.color.color_FFE066FF
                             )
                         )
-//                        tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+//                        tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
                     }
 //                    5 -> {
 //                        mine_view_pager.setCurrentItem(position)
-//                        tev_all.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
-//                        tev_beautiful_woman.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
-//                        tev_android.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
-//                        tev_ios.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
-//                        tev_h5.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
-//                        tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FFE066FF))
+//                        tev_all.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+//                        tev_beautiful_woman.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+//                        tev_android.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+//                        tev_ios.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+//                        tev_h5.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+//                        tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FFE066FF))
 //                    }
                 }
             }
@@ -251,35 +251,35 @@ class ResourceFragment : BaseFragment() {
                 mine_view_pager.setCurrentItem(0)
                 tev_all.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FFE066FF
                     )
                 )
                 tev_beautiful_woman.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_android.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_ios.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_h5.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
-//                tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+//                tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
             }
         })
         tev_beautiful_woman.setOnClickListener(object : View.OnClickListener {
@@ -287,35 +287,35 @@ class ResourceFragment : BaseFragment() {
                 mine_view_pager.setCurrentItem(1)
                 tev_all.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_beautiful_woman.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FFE066FF
                     )
                 )
                 tev_android.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_ios.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_h5.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
-//                tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+//                tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
             }
         })
         tev_android.setOnClickListener(object : View.OnClickListener {
@@ -323,35 +323,35 @@ class ResourceFragment : BaseFragment() {
                 mine_view_pager.setCurrentItem(2)
                 tev_all.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_beautiful_woman.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_android.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FFE066FF
                     )
                 )
                 tev_ios.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_h5.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
-//                tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+//                tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
             }
         })
         tev_ios.setOnClickListener(object : View.OnClickListener {
@@ -359,35 +359,35 @@ class ResourceFragment : BaseFragment() {
                 mine_view_pager.setCurrentItem(3)
                 tev_all.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_beautiful_woman.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_android.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_ios.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FFE066FF
                     )
                 )
                 tev_h5.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
-//                tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+//                tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
             }
         })
         tev_h5.setOnClickListener(object : View.OnClickListener {
@@ -395,68 +395,68 @@ class ResourceFragment : BaseFragment() {
                 mine_view_pager.setCurrentItem(4)
                 tev_all.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_beautiful_woman.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_android.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_ios.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FF999999
                     )
                 )
                 tev_h5.setTextColor(
                     ContextCompat.getColor(
-                        appCompatActivity!!,
+                        rxAppCompatActivity!!,
                         R.color.color_FFE066FF
                     )
                 )
-//                tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+//                tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
             }
         })
 //        tev_app.setOnClickListener(object :View.OnClickListener{
 //            override fun onClick(v: View?) {
 //                mine_view_pager.setCurrentItem(5)
-//                tev_all.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
-//                tev_beautiful_woman.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
-//                tev_android.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
-//                tev_ios.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
-//                tev_h5.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
-//                tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FFE066FF))
+//                tev_all.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+//                tev_beautiful_woman.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+//                tev_android.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+//                tev_ios.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+//                tev_h5.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+//                tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FFE066FF))
 //            }
 //        })
     }
 
     override fun initLoadData() {
         mine_view_pager.setCurrentItem(0)
-        tev_all.setTextColor(ContextCompat.getColor(appCompatActivity!!, R.color.color_FFE066FF))
+        tev_all.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF))
         tev_beautiful_woman.setTextColor(
             ContextCompat.getColor(
-                appCompatActivity!!,
+                rxAppCompatActivity!!,
                 R.color.color_FF999999
             )
         )
         tev_android.setTextColor(
             ContextCompat.getColor(
-                appCompatActivity!!,
+                rxAppCompatActivity!!,
                 R.color.color_FF999999
             )
         )
-        tev_ios.setTextColor(ContextCompat.getColor(appCompatActivity!!, R.color.color_FF999999))
-        tev_h5.setTextColor(ContextCompat.getColor(appCompatActivity!!, R.color.color_FF999999))
-//        tev_app.setTextColor(ContextCompat.getColor(appCompatActivity!!,R.color.color_FF999999))
+        tev_ios.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FF999999))
+        tev_h5.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FF999999))
+//        tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
     }
 
     override fun onDestroyView() {
