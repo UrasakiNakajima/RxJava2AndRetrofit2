@@ -22,7 +22,7 @@ public class ActivityPageManager {
     /**
      * 单一实例
      */
-    private static ActivityPageManager sActivityPageManager;
+    private static ActivityPageManager mActivityPageManager;
     /**
      * Activity堆栈 Stack:线程安全
      */
@@ -40,14 +40,14 @@ public class ActivityPageManager {
      * @return this
      */
     public static ActivityPageManager getInstance() {
-        if (sActivityPageManager == null) {
+        if (mActivityPageManager == null) {
             synchronized (ActivityPageManager.class) {
-                if (sActivityPageManager == null) {
-                    sActivityPageManager = new ActivityPageManager();
+                if (mActivityPageManager == null) {
+                    mActivityPageManager = new ActivityPageManager();
                 }
             }
         }
-        return sActivityPageManager;
+        return mActivityPageManager;
     }
 
     /**

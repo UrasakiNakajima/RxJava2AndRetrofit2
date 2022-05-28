@@ -107,7 +107,7 @@ public class SystemManager {
     }
 
     /**
-     * 获取手機唯一識別码（不要使用，Android有很多雜牌手機，還有山寨機，根本沒有統一的deviceUuid）
+     * 获取手機唯一識別码（不推薦使用，Android有很多雜牌手機，還有山寨機，根本不能統一獲取到deviceUuid）
      *
      * @return
      */

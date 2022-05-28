@@ -37,12 +37,12 @@ public class ExceptionManager {
         //2.打印异常堆栈（推薦使用，讓系統把異常日誌打印出來）
         throwable.printStackTrace();
 
-//        //3.获取当前线程的堆栈（打印的不是很詳細，報錯具體哪行沒打印出來，故不要使用這種方法）
+//        //3.获取当前线程的堆栈（不推薦使用，打印的不是很詳細，報錯具體哪行沒打印出來，故不要使用這種方法）
 //        for (StackTraceElement i : Thread.currentThread().getStackTrace()) {
 //            LogManager.i(TAG, i.toString());
 //        }
 
-//        //4.打印异常堆栈（打印的不是很詳細，報錯具體哪行沒打印出來，故不要使用這種方法）
+//        //4.打印异常堆栈（不推薦使用，打印的不是很詳細，報錯具體哪行沒打印出來，故不要使用這種方法）
 //        throwable.fillInStackTrace();
 //        LogManager.i(TAG, "stackTrace", throwable);
 
