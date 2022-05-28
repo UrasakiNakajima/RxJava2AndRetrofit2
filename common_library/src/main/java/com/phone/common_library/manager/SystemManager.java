@@ -8,7 +8,10 @@ import android.telephony.TelephonyManager;
 
 import androidx.core.app.ActivityCompat;
 
+import com.blankj.utilcode.util.DeviceUtils;
+
 import java.util.Locale;
+import java.util.UUID;
 
 public class SystemManager {
 
@@ -95,13 +98,14 @@ public class SystemManager {
     }
 
     /**
-     * 是否是模拟器
+     * 获取手機唯一識別码（不要使用，Android有很多雜牌手機，還有山寨機，根本沒有統一的手機唯一識別碼）
      *
-     * @return 是否是模拟器
+     * @return
      */
-    public static String getDeviceProduct() {
-        return android.os.Build.PRODUCT;
+    public static String getDeviceUUid() {
+        String androidId = DeviceUtils.getAndroidID();
+        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) androidId.hashCode() << 32));
+        return deviceUuid.toString();
     }
-
 
 }

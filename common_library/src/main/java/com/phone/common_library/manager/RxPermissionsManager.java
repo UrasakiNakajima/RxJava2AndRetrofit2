@@ -17,8 +17,8 @@ public class RxPermissionsManager {
     private static final String TAG = RxPermissionsManager.class.getSimpleName();
     private static RxPermissionsManager rxPermissionsManager;
     //    private RxPermissions rxPermissions;
-    private RxPermissions rxPermissionsActivity;
-    private RxPermissions rxPermissionsFragment;
+    private RxPermissions rxActivityPermissions;
+    private RxPermissions rxFragmentPermissions;
 
     private RxPermissionsManager() {
     }
@@ -39,13 +39,12 @@ public class RxPermissionsManager {
      * RxAppCompatActivity里需要的时候直接调用就行了
      */
     public void initRxPermissionsRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
-        if (rxPermissionsActivity == null) {
-            rxPermissionsActivity = new RxPermissions(rxAppCompatActivity);
-        }
-        rxPermissionsActivity
+        rxActivityPermissions = new RxPermissions(rxAppCompatActivity);
+        rxActivityPermissions
                 .requestEachCombined(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_PHONE_STATE
 //                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 )
                 //解决rxjava导致的内存泄漏问题
@@ -97,10 +96,8 @@ public class RxPermissionsManager {
      * RxFragment里需要的时候直接调用就行了
      */
     public void initRxPermissionsRxFragment(RxFragment rxFragment, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
-        if (rxPermissionsFragment == null) {
-            rxPermissionsFragment = new RxPermissions(rxFragment);
-        }
-        rxPermissionsFragment
+        rxFragmentPermissions = new RxPermissions(rxFragment);
+        rxFragmentPermissions
                 .requestEachCombined(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,

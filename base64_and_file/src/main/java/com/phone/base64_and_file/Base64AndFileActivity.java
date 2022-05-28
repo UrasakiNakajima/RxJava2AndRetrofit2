@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RxPermissionsManager;
+import com.phone.common_library.manager.SystemIdManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 
 import java.io.File;
@@ -236,6 +238,14 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
                     presenter.showCompressedPicture(rxAppCompatActivity.getApplicationContext(),
                             dirsPath, dirsPath2);
+                }
+
+                if (TextUtils.isEmpty(baseApplication.getSystemId())) {
+                    String systemId = SystemIdManager.getSystemId(rxAppCompatActivity);
+                    baseApplication.setSystemId(systemId);
+                    LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
+                } else {
+                    LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
                 }
             }
 
