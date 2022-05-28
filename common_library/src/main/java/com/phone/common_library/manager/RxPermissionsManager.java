@@ -16,11 +16,11 @@ public class RxPermissionsManager {
 
     private static final String TAG = RxPermissionsManager.class.getSimpleName();
     private static RxPermissionsManager rxPermissionsManager;
-//    private RxPermissions rxPermissions;
+    //    private RxPermissions rxPermissions;
     private RxPermissions rxPermissionsActivity;
     private RxPermissions rxPermissionsFragment;
 
-    public RxPermissionsManager() {
+    private RxPermissionsManager() {
     }
 
     public static RxPermissionsManager getInstance() {
@@ -132,6 +132,14 @@ public class RxPermissionsManager {
 
                             onCommonRxPermissionsCallback.onCheckNoMorePromptError();
                         }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        LogManager.i(TAG, "throwable*****" + throwable.toString());
+                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+
+                        ExceptionManager.getInstance().throwException(rxFragment.getContext(), throwable);
                     }
                 });
     }

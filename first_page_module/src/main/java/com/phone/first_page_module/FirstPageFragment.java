@@ -22,6 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.common_library.base.BaseMvpRxFragment;
 import com.phone.common_library.base.IBaseView;
+import com.phone.common_library.bean.User;
+import com.phone.common_library.bean.User2;
+import com.phone.common_library.bean.User3;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.callback.RcvOnItemViewClickListener;
 import com.phone.common_library.manager.LogManager;
@@ -258,7 +261,9 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         rxPermissionsManager.initRxPermissionsRxFragment(this, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
-
+                User user = new User2();
+                User3 user3 = (User3) user;
+                LogManager.i(TAG, user3.toString());
             }
 
             @Override
