@@ -175,6 +175,15 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         //		startAsyncTask();
 
         initRxPermissionsRxFragment();
+
+//        try {
+//            //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+//            User user = new User2();
+//            User3 user3 = (User3) user;
+//            LogManager.i(TAG, user3.toString());
+//        } catch (Exception e) {
+//            ExceptionManager.getInstance().throwException(rxAppCompatActivity, e);
+//        }
     }
 
     @Override

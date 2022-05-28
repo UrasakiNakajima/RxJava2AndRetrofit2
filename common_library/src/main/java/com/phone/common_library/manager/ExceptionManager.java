@@ -3,7 +3,7 @@ package com.phone.common_library.manager;
 import android.content.Context;
 
 /**
- * 不會造成App崩潰的異常管理類（被try(){}catch拋出來的異常日誌管理類）
+ * 不會造成App崩潰的異常（被try(){}catch拋出來的異常）管理類
  */
 public class ExceptionManager {
 
