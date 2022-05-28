@@ -1,15 +1,17 @@
 package com.phone.common_library.base
 
+import android.app.ActivityManager
+import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.os.Process
 import android.util.TypedValue
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -17,24 +19,29 @@ import com.gyf.immersionbar.ImmersionBar
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.R
 import com.phone.common_library.manager.ActivityPageManager
+import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.common_library.manager.ToolbarManager
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
-abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> : RxAppCompatActivity() {
+abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
+    RxAppCompatActivity() {
 
-    protected var baseApplication: BaseApplication? = null
+    private val TAG = "BaseMvvmRxAppActivity"
 
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null
     protected var rxAppCompatActivity: RxAppCompatActivity? = null
+    protected var baseApplication: BaseApplication? = null
+    private var activityPageManager: ActivityPageManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         rxAppCompatActivity = this;
-        ActivityPageManager.getInstance().addActivity(this)
+        activityPageManager = ActivityPageManager.getInstance();
+        activityPageManager!!.addActivity(this)
         baseApplication = application as BaseApplication
 
         mDatabind = DataBindingUtil.setContentView(this, initLayoutId())
@@ -170,10 +177,16 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
 
     protected fun showCustomToast(message: String, isLongToast: Boolean) {
         val frameLayout = FrameLayout(this)
-        val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
         frameLayout.layoutParams = layoutParams
         val textView = TextView(this)
-        val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, ScreenManager.dpToPx(this, 40f))
+        val layoutParams1 = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            ScreenManager.dpToPx(this, 40f)
+        )
         textView.layoutParams = layoutParams1
         textView.setPadding(ScreenManager.dpToPx(this, 20f), 0, ScreenManager.dpToPx(this, 20f), 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.toFloat())
@@ -198,13 +211,18 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         toast.show()
     }
 
-    protected fun showCustomToast(left: Int, right: Int,
-                                  textSize: Int, textColor: Int,
-                                  bgColor: Int, height: Int,
-                                  roundRadius: Int, message: String,
-                                  isLongToast: Boolean) {
+    protected fun showCustomToast(
+        left: Int, right: Int,
+        textSize: Int, textColor: Int,
+        bgColor: Int, height: Int,
+        roundRadius: Int, message: String,
+        isLongToast: Boolean
+    ) {
         val frameLayout = FrameLayout(this)
-        val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
         frameLayout.layoutParams = layoutParams
         val textView = TextView(this)
         val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
@@ -232,10 +250,32 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         toast.show()
     }
 
+    private fun killAppProcess(context: Context) {
+        LogManager.i(TAG, "killAppProcess")
+        val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val processInfos = manager.runningAppProcesses
+
+        // 先杀掉相关进程，最后再杀掉主进程
+        for (runningAppProcessInfo in processInfos) {
+            if (runningAppProcessInfo.pid != Process.myPid()) {
+                Process.killProcess(runningAppProcessInfo.pid)
+            }
+        }
+        Process.killProcess(Process.myPid())
+        // 正常退出程序，也就是结束当前正在运行的 java 虚拟机
+        System.exit(0)
+    }
+
     override fun onDestroy() {
         mDatabind.unbind()
         viewModelStore.clear()
-        ActivityPageManager.getInstance().removeActivity(this)
+
+        if (activityPageManager != null) {
+            if (activityPageManager!!.isLastAliveActivity.get()) {
+                killAppProcess(rxAppCompatActivity!!)
+            }
+            activityPageManager!!.removeActivity(rxAppCompatActivity)
+        }
         super.onDestroy()
     }
 }

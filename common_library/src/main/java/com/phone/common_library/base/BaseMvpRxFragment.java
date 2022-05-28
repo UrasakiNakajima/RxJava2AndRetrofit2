@@ -33,8 +33,8 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
 
     protected String url;
     protected Map<String, String> bodyParams;
-    protected BaseApplication baseApplication;
     protected RxAppCompatActivity rxAppCompatActivity;
+    protected BaseApplication baseApplication;
     protected Intent intent;
     protected Bundle bundle;
 

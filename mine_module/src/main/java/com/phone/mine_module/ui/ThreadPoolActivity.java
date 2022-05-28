@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.phone.common_library.base.BaseAppActivity;
+import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.manager.LogManager;
 import com.phone.mine_module.R;
 
@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
 /**
  * 记一次Java参数传递时（传Vector，就是线程安全的List）值发生变化问题
  */
-public class ThreadPoolActivity extends BaseAppActivity {
+public class ThreadPoolActivity extends BaseRxAppActivity {
 
     private static final String TAG = ThreadPoolActivity.class.getSimpleName();
     private Toolbar toolbar;

@@ -14,8 +14,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.manager.ActivityPageManager;
-import com.phone.common_library.manager.DeviceManager;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.SystemManager;
 import com.phone.main_module.R;
 import com.phone.main_module.login.bean.GetVerificationCode;
 import com.phone.main_module.login.bean.LoginResponse;
@@ -164,7 +164,7 @@ public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresente
 	private void initLoginWithAuthCode() {
 		accountNumber = edtAccountNumber.getText().toString();
 		verificationCode = edtVerificationCode.getText().toString();
-		phoneDevice = DeviceManager.getDeviceUUid();
+		phoneDevice = SystemManager.getDeviceUUid();
 		
 		bodyParams.clear();
 		bodyParams.put("account", accountNumber);

@@ -6,8 +6,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
-import com.phone.common_library.base.BaseMvpAppActivity;
+import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.manager.LogManager;
 import com.phone.first_page_module.R;
@@ -21,10 +26,6 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 /**
@@ -34,7 +35,7 @@ import butterknife.BindView;
  * introduce :
  */
 
-public class VideoListActivity extends BaseMvpAppActivity<IBaseView, FirstPagePresenterImpl>
+public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>
 	implements IVideoListView {
 	
 	private static final String TAG = "VideoListActivity";

@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.phone.common_library.BaseApplication
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 
@@ -23,6 +23,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     lateinit var mDatabind: DB
     var viewModel: VM? = null
     protected var rxAppCompatActivity: RxAppCompatActivity? = null
+    protected var baseApplication: BaseApplication? = null
     protected var intent: Intent? = null
     protected var bundle: Bundle? = null
 //    private var isFirstLoad = true
@@ -41,6 +42,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         super.onViewCreated(view, savedInstanceState)
 
         rxAppCompatActivity = getActivity() as RxAppCompatActivity?;
+        baseApplication = rxAppCompatActivity?.application as BaseApplication?;
         viewModel = initViewModel()
         initData()
         initObservers()

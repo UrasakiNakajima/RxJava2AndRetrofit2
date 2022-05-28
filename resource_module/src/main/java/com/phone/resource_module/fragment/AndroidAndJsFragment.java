@@ -14,11 +14,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import com.phone.common_library.base.BaseFragment;
+import androidx.appcompat.widget.Toolbar;
+
+import com.phone.common_library.base.BaseRxFragment;
 import com.phone.common_library.manager.LogManager;
 import com.phone.resource_module.R;
-
-import androidx.appcompat.widget.Toolbar;
 
 /**
  * author : Urasaki
@@ -27,7 +27,7 @@ import androidx.appcompat.widget.Toolbar;
  * desc   :
  * version: 1.0
  */
-public class AndroidAndJsFragment extends BaseFragment {
+public class AndroidAndJsFragment extends BaseRxFragment {
 	
 	private static final String      TAG = "AndroidAndJsActivity";
 	private              Toolbar     toolbar;

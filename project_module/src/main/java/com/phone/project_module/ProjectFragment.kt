@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.BaseApplication
-import com.phone.common_library.base.BaseMvvmFragment
+import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.callback.RcvOnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
@@ -23,7 +23,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 @Route(path = "/project_module/project")
-class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBinding>(),
+class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProjectBinding>(),
     IProjectChildView {
 
     companion object {
@@ -80,7 +80,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun initViews() {
-        projectAdapter = ProjectAdapter(appCompatActivity!!);
+        projectAdapter = ProjectAdapter(rxAppCompatActivity!!);
         projectAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
@@ -114,7 +114,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun showLoading() {
-        if (!appCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity!!.isFinishing()) {
             if (mDatabind.loadView != null && !mDatabind.loadView.isShown()) {
                 mDatabind.loadView.setVisibility(View.VISIBLE)
                 mDatabind.loadView.start()
@@ -123,7 +123,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun hideLoading() {
-        if (!appCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity!!.isFinishing()) {
             if (mDatabind.loadView != null && mDatabind.loadView.isShown()) {
                 mDatabind.loadView.stop()
                 mDatabind.loadView.setVisibility(View.GONE)
@@ -132,7 +132,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun projectDataSuccess(success: List<DataX>) {
-        if (!appCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity!!.isFinishing()) {
             if (isRefresh) {
                 dataList.clear()
                 dataList.addAll(success)
@@ -150,15 +150,15 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
     }
 
     override fun projectDataError(error: String) {
-        if (!appCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity!!.isFinishing()) {
             showCustomToast(
-                ScreenManager.dpToPx(appCompatActivity, 20f),
-                ScreenManager.dpToPx(appCompatActivity, 20f),
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 18,
-                ContextCompat.getColor(appCompatActivity!!, R.color.white),
-                ContextCompat.getColor(appCompatActivity!!, R.color.color_FFE066FF),
-                ScreenManager.dpToPx(appCompatActivity, 40f),
-                ScreenManager.dpToPx(appCompatActivity, 20f),
+                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
+                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 error
             )
 
@@ -172,7 +172,7 @@ class ProjectFragment : BaseMvvmFragment<ProjectViewModelImpl, FragmentProjectBi
 
     private fun initProject(currentPage: String) {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable(appCompatActivity)) {
+        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
             viewModel!!.projectData(this, currentPage)
         } else {
             projectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));

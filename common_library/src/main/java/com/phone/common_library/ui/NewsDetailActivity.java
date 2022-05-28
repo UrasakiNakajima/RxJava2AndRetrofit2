@@ -24,10 +24,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.phone.common_library.R;
-import com.phone.common_library.base.BaseAppActivity;
+import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.manager.LogManager;
 
-public class NewsDetailActivity extends BaseAppActivity {
+public class NewsDetailActivity extends BaseRxAppActivity {
 
     private static final String TAG = "NewsDetailActivity";
     private Toolbar toolbar;
@@ -65,7 +65,7 @@ public class NewsDetailActivity extends BaseAppActivity {
         llWebContent = (WebView) findViewById(R.id.ll_web_content);
 
         setToolbar(true, R.color.color_FFE066FF);
-        imvBack.setColorFilter(ContextCompat.getColor(appCompatActivity, R.color.white));
+        imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
         layoutBack.setOnClickListener(view -> {
             finish();
         });
