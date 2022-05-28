@@ -43,6 +43,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     private static final String TAG = Base64AndFileActivity.class.getSimpleName();
     private Toolbar toolbar;
     private TextView tevTitle;
+    private TextView tevRequestPermissions;
     private TextView tevCompressedPicture;
     private ImageView imvCompressedPicture;
     private TextView tevPictureToBase64;
@@ -99,6 +100,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     protected void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tevTitle = (TextView) findViewById(R.id.tev_title);
+        tevRequestPermissions = (TextView) findViewById(R.id.tev_request_permissions);
         tevCompressedPicture = (TextView) findViewById(R.id.tev_compressed_picture);
         imvCompressedPicture = (ImageView) findViewById(R.id.imv_compressed_picture);
         tevPictureToBase64 = (TextView) findViewById(R.id.tev_picture_to_base64);
@@ -110,6 +112,13 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         setToolbar(false, R.color.color_54E066FF);
 
 
+        tevRequestPermissions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogManager.i(TAG, "tevRequestPermissions");
+                initRxPermissionsRxAppCompatActivity();
+            }
+        });
         tevCompressedPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,7 +260,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
             @Override
             public void onNotCheckNoMorePromptError() {
-//                showSystemSetupDialog();
+                showSystemSetupDialog();
             }
 
             @Override
