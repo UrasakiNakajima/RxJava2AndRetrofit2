@@ -4,8 +4,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Environment;
 import android.util.ArrayMap;
 
@@ -29,7 +27,7 @@ import java.util.TreeSet;
  */
 public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 
-    public static final String TAG = "CrashHandlerManager";
+    public static final String TAG = CrashHandlerManager.class.getSimpleName();
 
     //系统默认的UncaughtException处理类 
     private Thread.UncaughtExceptionHandler mDefaultHandler;
@@ -294,19 +292,24 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         mDevInfoMap.put("手机CPU架构", SystemManager.getDeviceCpuAbi());
     }
 
-    //使用HTTP服务之前，需要确定网络畅通，我们可以使用下面的方式判断网络是否可用 
-    public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] info = mgr.getAllNetworkInfo();
-        if (info != null) {
-            for (int i = 0; i < info.length; i++) {
-                if (info[i].getState() == NetworkInfo.State.CONNECTED) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    /**
+//     * 使用HTTP服务之前，需要确定网络畅通，我们可以使用下面的方式判断网络是否可用
+//     *
+//     * @param context
+//     * @return
+//     */
+//    public static boolean isNetworkAvailable(Context context) {
+//        ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo[] info = mgr.getAllNetworkInfo();
+//        if (info != null) {
+//            for (int i = 0; i < info.length; i++) {
+//                if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
 
 }
