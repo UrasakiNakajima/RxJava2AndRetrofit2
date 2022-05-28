@@ -84,8 +84,8 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
                 LogManager.i(TAG, "error");
             }
 
-            //结束程序 
-            killAppProcess(mContext);
+            //结束程序
+            ActivityPageManager.getInstance().exitApp2();
         }
     }
 
