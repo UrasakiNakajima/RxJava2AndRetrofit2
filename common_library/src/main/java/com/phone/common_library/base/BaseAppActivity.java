@@ -33,12 +33,12 @@ import butterknife.ButterKnife;
 
 public abstract class BaseAppActivity extends AppCompatActivity {
 
-	protected BaseApplication          baseApplication;
 //	protected QMUILoadingView          loadView;
 //	protected FrameLayout.LayoutParams layoutParams;
 	protected Intent                   intent;
 	protected Bundle                   bundle;
 	protected AppCompatActivity        appCompatActivity;
+	protected BaseApplication          baseApplication;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {

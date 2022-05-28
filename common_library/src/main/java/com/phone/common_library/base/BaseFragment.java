@@ -12,14 +12,14 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.phone.common_library.BaseApplication;
-
-import java.util.Map;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.phone.common_library.BaseApplication;
+
+import java.util.Map;
 
 /**
  * author    : Urasaki
@@ -31,8 +31,8 @@ import androidx.fragment.app.Fragment;
 public abstract class BaseFragment extends Fragment {
 	
 	private static final String            TAG = "BaseFragment";
-	protected            BaseApplication   baseApplication;
 	protected            AppCompatActivity appCompatActivity;
+	protected            BaseApplication   baseApplication;
 	private              Intent            intent;
 	private              Bundle            bundle;
 	

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.phone.common_library.BaseApplication
 import com.phone.common_library.manager.LogManager
 
 /**
@@ -32,6 +33,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
     lateinit var mDatabind: DB
     var viewModel: VM? = null
     protected var appCompatActivity: AppCompatActivity? = null
+    protected var baseApplication: BaseApplication? = null
     protected var intent: Intent? = null
     protected var bundle: Bundle? = null
 //    protected var isFirstLoad = true
@@ -50,6 +52,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel, DB : ViewDataBinding> : Frag
         super.onViewCreated(view, savedInstanceState)
 
         appCompatActivity = getActivity() as AppCompatActivity?
+        baseApplication = appCompatActivity?.application as BaseApplication?;
         viewModel = initViewModel()
         initData()
         LogManager.i(TAG, "onViewCreated")

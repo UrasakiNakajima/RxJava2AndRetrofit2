@@ -24,8 +24,8 @@ import java.util.Map;
 public abstract class BaseRxFragment extends RxFragment {
 
     private static final String TAG = "BaseRxFragment";
-    protected BaseApplication baseApplication;
     protected RxAppCompatActivity rxAppCompatActivity;
+    protected BaseApplication baseApplication;
     private Intent intent;
     private Bundle bundle;
 

@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 
 public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extends RxAppCompatActivity {
 
-    protected BaseApplication baseApplication;
     public QMUILoadingView loadView;
     protected FrameLayout.LayoutParams layoutParams;
 
@@ -40,6 +39,7 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
     protected Intent intent;
     protected Bundle bundle;
     protected RxAppCompatActivity rxAppCompatActivity;
+    protected BaseApplication baseApplication;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

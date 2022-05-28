@@ -29,12 +29,11 @@ import com.phone.common_library.manager.ToolbarManager
 
 abstract class BaseMvvmAppActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompatActivity() {
 
-    protected var baseApplication: BaseApplication? = null
-
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null
     protected var appCompatActivity: AppCompatActivity? = null
+    protected var baseApplication: BaseApplication? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

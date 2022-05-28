@@ -23,12 +23,11 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
 abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> : RxAppCompatActivity() {
 
-    protected var baseApplication: BaseApplication? = null
-
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null
     protected var rxAppCompatActivity: RxAppCompatActivity? = null
+    protected var baseApplication: BaseApplication? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

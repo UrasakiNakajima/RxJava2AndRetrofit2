@@ -26,12 +26,12 @@ import butterknife.ButterKnife;
 
 public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
-    protected BaseApplication baseApplication;
     //	protected QMUILoadingView          loadView;
 //	protected FrameLayout.LayoutParams layoutParams;
     protected Intent intent;
     protected Bundle bundle;
     protected RxAppCompatActivity rxAppCompatActivity;
+    protected BaseApplication baseApplication;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

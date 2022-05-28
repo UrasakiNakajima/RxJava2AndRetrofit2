@@ -40,8 +40,8 @@ public abstract class BaseMvpFragment<V, T extends BasePresenter<V>> extends Fra
 
     protected String url;
     protected Map<String, String> bodyParams;
-    protected BaseApplication baseApplication;
     protected AppCompatActivity appCompatActivity;
+    protected BaseApplication baseApplication;
     protected Intent intent;
     protected Bundle bundle;
 
