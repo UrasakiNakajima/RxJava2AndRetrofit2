@@ -12,7 +12,6 @@ import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.bean.User
 import com.phone.common_library.bean.User2
 import com.phone.common_library.bean.User3
-import com.phone.common_library.manager.ExceptionManager
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
@@ -91,8 +90,9 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
 //        startAsyncTask()
 
+        //製造一個类强制转换异常（java.lang.ClassCastException）
         val user: User = User2()
-        val user3: User3 = user as User3
+        val user3 = user as User3
         LogManager.i(TAG, user3.toString())
     }
 

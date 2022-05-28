@@ -82,6 +82,14 @@ public class RxPermissionsManager {
                             onCommonRxPermissionsCallback.onCheckNoMorePromptError();
                         }
                     }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        LogManager.i(TAG, "throwable*****" + throwable.toString());
+                        LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
+
+                        ExceptionManager.getInstance().throwException(rxAppCompatActivity, throwable);
+                    }
                 });
     }
 

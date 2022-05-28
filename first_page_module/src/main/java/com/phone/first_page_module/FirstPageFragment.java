@@ -261,6 +261,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         rxPermissionsManager.initRxPermissionsRxFragment(this, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
+                //製造一個类强制转换异常（java.lang.ClassCastException）
                 User user = new User2();
                 User3 user3 = (User3) user;
                 LogManager.i(TAG, user3.toString());
