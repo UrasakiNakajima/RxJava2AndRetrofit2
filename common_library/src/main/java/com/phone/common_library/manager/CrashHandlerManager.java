@@ -24,6 +24,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
 
+/**
+ * 造成App崩潰異常管理類
+ */
 public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 
     public static final String TAG = "CrashHandlerManager";
@@ -44,7 +47,12 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         mContext = context;
     }
 
-    //保证只有一个实例 
+    /**
+     * 保证只有一个实例
+     *
+     * @param context
+     * @return
+     */
     public static CrashHandlerManager getInstance(Context context) {
         if (instance == null) {
             synchronized (CrashHandlerManager.class) {
@@ -67,11 +75,11 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     /**
      * 当UncaughtException发生时会转入该函数来处理
      */
-    public void uncaughtException(Thread thread, Throwable ex) {
-// TODO Auto-generated method stub 
-//如果用户没有处理则让系统默认的异常处理器来处理 
-        if (!handleException(ex) && mDefaultHandler != null) {
-            mDefaultHandler.uncaughtException(thread, ex);
+    public void uncaughtException(Thread thread, Throwable throwable) {
+        // TODO Auto-generated method stub
+        //如果開發人員没有处理则让系统默认的异常处理器来处理
+        if (!handleException(throwable) && mDefaultHandler != null) {
+            mDefaultHandler.uncaughtException(thread, throwable);
         } else {
             try {
                 Thread.sleep(3000);
@@ -84,12 +92,19 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         }
     }
 
-    //Throwable 包含了其线程创建时线程执行堆栈的快照 
-    private boolean handleException(Throwable throwable) {
+    /**
+     * Throwable 包含了其线程创建时线程执行堆栈的快照
+     * 收集設備信息和保存異常日誌到文件
+     *
+     * @param throwable
+     * @return
+     */
+    public boolean handleException(Throwable throwable) {
         // TODO Auto-generated method stub 
         if (throwable == null) {
             return false;
         }
+
 //        final String msg = throwable.getLocalizedMessage();
 //        new Thread() {
 //            public void run() {
@@ -98,19 +113,26 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 //                Looper.loop();
 //            }
 //        }.start();
-        //收集设备信息 
+
+        //收集設備信息
         collectDeviceInfo(mContext);
-        //保存信息 
+        //保存異常日誌到文件
         saveCrashInfoToFile(throwable);
-        //发送错误报告 
+        //使用HTTP Post發送錯誤報告
         sendCrashReportsToServer(mContext);
         return true;
     }
 
     public void sendPreviousReportsToServer() {
+        //使用HTTP Post發送錯誤報告
         sendCrashReportsToServer(mContext);
     }
 
+    /**
+     * 使用HTTP Post發送錯誤報告
+     *
+     * @param mContext
+     */
     private void sendCrashReportsToServer(Context mContext) {
         String[] crFiles = getCrashReportFiles(mContext);
         if (crFiles != null && crFiles.length > 0) {
@@ -142,7 +164,13 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         return filesDir.list(filter);
     }
 
-    private String saveCrashInfoToFile(Throwable ex) {
+    /**
+     * 保存異常日誌到文件
+     *
+     * @param throwable
+     * @return
+     */
+    private String saveCrashInfoToFile(Throwable throwable) {
         // TODO Auto-generated method stub 
         StringBuffer buffer = new StringBuffer();
         for (Map.Entry<String, String> entry : mDevInfoMap.entrySet()) {
@@ -155,8 +183,8 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         //向文本输出流打印对象的格式化表示形式 
         PrintWriter printWriter = new PrintWriter(writer);
         //将此 throwable 及其追踪输出至标准错误流 
-        ex.printStackTrace(printWriter);
-        Throwable cause = ex.getCause();
+        throwable.printStackTrace(printWriter);
+        Throwable cause = throwable.getCause();
         while (cause != null) {
             //异常链 
             cause.printStackTrace();
@@ -202,6 +230,11 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         return null;
     }
 
+    /**
+     * 收集設備信息
+     *
+     * @param context
+     */
     private void collectDeviceInfo(Context context) {
         try {
             PackageManager pm = context.getPackageManager();

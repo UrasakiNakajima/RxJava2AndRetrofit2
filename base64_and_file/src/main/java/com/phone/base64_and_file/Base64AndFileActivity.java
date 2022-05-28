@@ -225,14 +225,13 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
      * RxAppCompatActivity里需要的时候直接调用就行了
      */
     private void initRxPermissionsRxAppCompatActivity() {
-        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
-        rxPermissionsManager.initRxPermissionsRxAppCompatActivity(new OnCommonRxPermissionsCallback() {
+        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
+        rxPermissionsManager.initRxPermissionsRxAppCompatActivity(this, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
                 if (presenter != null) {
                     showLoading();
 
-                    LogManager.i(TAG, "用户已经同意该权限 showCompressedPicture");
                     presenter.showCompressedPicture(rxAppCompatActivity.getApplicationContext(),
                             dirsPath, dirsPath2);
                 }

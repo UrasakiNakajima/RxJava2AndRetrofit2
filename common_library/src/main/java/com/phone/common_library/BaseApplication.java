@@ -7,6 +7,7 @@ import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.phone.common_library.manager.CrashHandlerManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
 
@@ -33,6 +34,10 @@ public class BaseApplication extends MultiDexApplication {
 		
 		//初始化retrofit
 		RetrofitManager.getInstance();
+
+		CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(this);
+		crashHandlerManager.sendPreviousReportsToServer();
+		crashHandlerManager.init();
 
 		if (true) {
 			ARouter.openLog();
@@ -93,5 +98,6 @@ public class BaseApplication extends MultiDexApplication {
 		editor.remove("isLogin");
 		editor.commit();
 	}
-	
+
+
 }

@@ -287,5 +287,5 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
 	public void mainDataError(String error) {
 		showToast(error, true);
 	}
-	
+
 }

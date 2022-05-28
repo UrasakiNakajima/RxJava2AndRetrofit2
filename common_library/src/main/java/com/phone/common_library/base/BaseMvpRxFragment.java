@@ -17,8 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.phone.common_library.BaseApplication;
-import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
-import com.phone.common_library.manager.RxPermissionsManager;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle3.components.support.RxFragment;
 
@@ -112,29 +110,6 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
      * @return
      */
     protected abstract T attachPresenter();
-
-    /**
-     * RxFragment里需要的时候直接调用就行了
-     */
-    private void initRxPermissionsRxFragment() {
-        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
-        rxPermissionsManager.initRxPermissionsRxFragment(new OnCommonRxPermissionsCallback() {
-            @Override
-            public void onRxPermissionsAllPass() {
-
-            }
-
-            @Override
-            public void onNotCheckNoMorePromptError() {
-
-            }
-
-            @Override
-            public void onCheckNoMorePromptError() {
-
-            }
-        });
-    }
 
     protected void showToast(String message, boolean isLongToast) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();

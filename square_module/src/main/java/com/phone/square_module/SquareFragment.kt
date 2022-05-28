@@ -9,6 +9,9 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvvmRxFragment
+import com.phone.common_library.bean.User
+import com.phone.common_library.bean.User2
+import com.phone.common_library.bean.User3
 import com.phone.common_library.manager.ExceptionManager
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
@@ -73,7 +76,6 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 //        dataxSuccessObserver = null
         viewModel!!.getDataxSuccess().observe(viewLifecycleOwner, dataxSuccessObserver!!)
         viewModel!!.getDataxError().observe(viewLifecycleOwner, dataxErrorObserver!!)
-        ExceptionManager.throwException();
     }
 
     override fun initViews() {
@@ -88,6 +90,10 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         initSquare("$currentPage")
 
 //        startAsyncTask()
+
+        val user: User = User2()
+        val user3: User3 = user as User3
+        LogManager.i(TAG, user3.toString())
     }
 
 //    private fun startAsyncTask() {
