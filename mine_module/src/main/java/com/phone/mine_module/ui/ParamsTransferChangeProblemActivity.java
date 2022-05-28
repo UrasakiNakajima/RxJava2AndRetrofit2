@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.phone.common_library.base.BaseAppActivity;
+import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.manager.LogManager;
 import com.phone.mine_module.R;
 import com.phone.mine_module.bean.User;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 参数传递值改变问题
  */
-public class ParamsTransferChangeProblemActivity extends BaseAppActivity {
+public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
 
     private static final String TAG = ParamsTransferChangeProblemActivity.class.getSimpleName();
     private Toolbar toolbar;

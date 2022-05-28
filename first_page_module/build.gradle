@@ -19,6 +19,16 @@ android {
 
 
     defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
         if (isModule.toBoolean()) {
             //可独立运行的app
             applicationId "com.phone.first_page_module"
@@ -75,12 +85,6 @@ android {
         }
     }
 
-}
-
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
 }
 
 dependencies {

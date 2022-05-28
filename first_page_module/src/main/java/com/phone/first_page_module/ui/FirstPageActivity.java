@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.phone.common_library.base.BaseMvpAppActivity;
+import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.RcvOnItemViewClickListener;
 import com.phone.common_library.manager.LogManager;
@@ -31,7 +31,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstPageActivity extends BaseMvpAppActivity<IBaseView, FirstPagePresenterImpl>
+public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>
 	implements IFirstPageView {
 	
 	private static final String             TAG = "FirstPageDetailsActivity";
@@ -74,12 +74,12 @@ public class FirstPageActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
 	}
 	
 	private void initAdapter() {
-		linearLayoutManager = new LinearLayoutManager(appCompatActivity);
+		linearLayoutManager = new LinearLayoutManager(rxAppCompatActivity);
 		linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
 		rcvData.setLayoutManager(linearLayoutManager);
 		rcvData.setItemAnimator(new DefaultItemAnimator());
 		
-		firstPageAdapter = new FirstPageAdapter(appCompatActivity);
+		firstPageAdapter = new FirstPageAdapter(rxAppCompatActivity);
 		//		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page);
 		firstPageAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
 			@Override
@@ -108,7 +108,7 @@ public class FirstPageActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
 				//				}
 				
 				if (view.getId() == R.id.ll_root) {
-					Intent intent = new Intent(appCompatActivity, NewsDetailActivity.class);
+					Intent intent = new Intent(rxAppCompatActivity, NewsDetailActivity.class);
 					intent.putExtra("detailUrl", mJuheNewsBeanList.get(position).getUrl());
 					startActivity(intent);
 				}
@@ -197,12 +197,12 @@ public class FirstPageActivity extends BaseMvpAppActivity<IBaseView, FirstPagePr
 	
 	private void initFirstPage() {
 		showLoading();
-		if (RetrofitManager.isNetworkAvailable(appCompatActivity)) {
+		if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
 			bodyParams.clear();
 			
 			bodyParams.put("type", "yule");
 			bodyParams.put("key", "d5cc661633a28f3cf4b1eccff3ee7bae");
-			presenter.firstPage(appCompatActivity, bodyParams);
+			presenter.firstPage(rxAppCompatActivity, bodyParams);
 		} else {
 			firstPageDataError(getResources().getString(R.string.please_check_the_network_connection));
 		}

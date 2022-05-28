@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * author    : Urasaki
@@ -24,9 +25,19 @@ public class ActivityPageManager {
      */
     private static ActivityPageManager mActivityPageManager;
     /**
-     * Activity堆栈 Stack:线程安全
+     * Activity栈 Stack:线程安全
      */
     private Stack<Activity> mActivityStack = new Stack<>();
+
+    /**
+     * 還存活的Activity栈
+     */
+    private Stack<Activity> mActivityAliveStack = new Stack<>();
+
+    /**
+     * 是否是棧中最後一個存活的Activity
+     */
+    private AtomicBoolean isLastAliveActivity = new AtomicBoolean(false);
 
     /**
      * 私有构造器 无法外部创建
@@ -51,14 +62,14 @@ public class ActivityPageManager {
     }
 
     /**
-     * 添加Activity到堆栈
+     * 添加Activity到栈
      */
     public void addActivity(Activity activity) {
         mActivityStack.add(activity);
     }
 
     /**
-     * 移除堆栈中的Activity
+     * 移除栈中的Activity
      *
      * @param activity Activity
      */
@@ -128,14 +139,23 @@ public class ActivityPageManager {
      * 结束所有Activity
      */
     public void finishAllActivity() {
-
+        mActivityAliveStack.clear();
         for (int i = mActivityStack.size() - 1; i >= 0; i--) {
-
             if (mActivityStack.get(i) != null) {
-                finishActivity(mActivityStack.get(i));
+                mActivityAliveStack.add(mActivityStack.get(i));
             }
         }
-        mActivityStack.clear();
+        for (int i = mActivityAliveStack.size() - 1; i >= 0; i--) {
+            if (i == 0) {
+                isLastAliveActivity.set(true);
+            }
+            finishActivity(mActivityAliveStack.get(i));
+        }
+        mActivityAliveStack.clear();
+    }
+
+    public AtomicBoolean isLastAliveActivity() {
+        return isLastAliveActivity;
     }
 
     /**
@@ -160,6 +180,17 @@ public class ActivityPageManager {
             e.printStackTrace();
         } finally {
             System.exit(0);
+        }
+    }
+
+    /**
+     * 退出应用程序（最後一個存活Activity內部做了退出應用程序處理）
+     */
+    public void exitApp2() {
+        try {
+            finishAllActivity();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

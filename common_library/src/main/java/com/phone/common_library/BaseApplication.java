@@ -7,6 +7,7 @@ import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.phone.common_library.manager.ActivityPageManager;
 import com.phone.common_library.manager.CrashHandlerManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
@@ -23,6 +24,7 @@ public class BaseApplication extends MultiDexApplication {
     private String systemId;
 
     protected static BaseApplication baseApplication;
+    private ActivityPageManager activityPageManager;
 
     @Override
     public void onCreate() {
@@ -35,6 +37,7 @@ public class BaseApplication extends MultiDexApplication {
 
         //初始化retrofit
         RetrofitManager.getInstance();
+        activityPageManager = ActivityPageManager.getInstance();
 
         CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(this);
         crashHandlerManager.sendPreviousReportsToServer();
@@ -111,5 +114,12 @@ public class BaseApplication extends MultiDexApplication {
         editor.commit();
     }
 
-
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        if (level == TRIM_MEMORY_MODERATE) {
+            //App开始自杀，清场掉所有的activity（最後一個存活Activity內部做了退出應用程序處理）
+            activityPageManager.exitApp2();
+        }
+    }
 }

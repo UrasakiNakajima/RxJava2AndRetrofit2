@@ -9,20 +9,20 @@ import android.os.RemoteException;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.phone.aidl_client.adapter.BookAdapter;
-import com.phone.common_library.base.BaseAppActivity;
+import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.manager.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class AidlClientActivity extends BaseAppActivity {
+public class AidlClientActivity extends BaseRxAppActivity {
 	
-	private static final String       TAG = "AidlActivity";
+	private static final String       TAG = "AidlClientActivity";
 	private              TextView     tevBookName;
 	private              TextView     tevBookContent;
 	private              RecyclerView rcvBook;
@@ -67,12 +67,12 @@ public class AidlClientActivity extends BaseAppActivity {
 	}
 	
 	private void initAdapter() {
-		mLayoutManager = new LinearLayoutManager(appCompatActivity);
+		mLayoutManager = new LinearLayoutManager(rxAppCompatActivity);
 		mLayoutManager.setOrientation(RecyclerView.VERTICAL);
 		rcvBook.setLayoutManager(mLayoutManager);
 		rcvBook.setItemAnimator(new DefaultItemAnimator());
 		
-		mBookAdapter = new BookAdapter(appCompatActivity);
+		mBookAdapter = new BookAdapter(rxAppCompatActivity);
 		rcvBook.setAdapter(mBookAdapter);
 	}
 	
