@@ -29,8 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.ButterKnife;
-
 public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extends RxAppCompatActivity {
 
     private static final String TAG = "BaseMvpRxAppActivity";
@@ -56,7 +54,6 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
         activityPageManager.addActivity(this);
 
         setContentView(initLayoutId());
-        ButterKnife.bind(this);
 
         loadView = new QMUILoadingView(this);
         loadView.setVisibility(View.GONE);

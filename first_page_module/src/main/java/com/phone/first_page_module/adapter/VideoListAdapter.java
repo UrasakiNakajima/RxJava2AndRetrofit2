@@ -14,14 +14,10 @@ import com.bumptech.glide.Glide;
 import com.phone.common_library.callback.RcvOnItemViewClickListener;
 import com.phone.common_library.manager.LogManager;
 import com.phone.first_page_module.R;
-import com.phone.first_page_module.R2;
 import com.phone.first_page_module.bean.VideoListBean;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class VideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -75,14 +71,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     protected static class ContentHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R2.id.tev_id)
-        TextView tevId;
-        @BindView(R2.id.imv_data)
-        ImageView imvData;
+        private TextView tevId;
+        private ImageView imvData;
 
         protected ContentHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            tevId = itemView.findViewById(R.id.tev_id);
+            imvData = itemView.findViewById(R.id.imv_data);
         }
     }
 

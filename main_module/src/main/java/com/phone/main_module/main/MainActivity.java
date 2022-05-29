@@ -15,34 +15,24 @@ import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.custom_view.LazyViewPager;
 import com.phone.common_library.custom_view.MineLazyViewPager;
 import com.phone.main_module.R;
-import com.phone.main_module.R2;
 import com.phone.main_module.main.presenter.MainPresenterImpl;
 import com.phone.main_module.main.view.IMainView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-
 public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>
 	implements IMainView {
 	
 	private static final String TAG = MainActivity.class.getSimpleName();
-	@BindView(R2.id.mine_view_pager)
-	MineLazyViewPager mineViewPager;
-	@BindView(R2.id.layout_bottom)
-	LinearLayout      layoutBottom;
-	@BindView(R2.id.tev_first_page)
-	TextView          tevFirstPage;
-	@BindView(R2.id.tev_project)
-	TextView          tevProject;
-	@BindView(R2.id.tev_square)
-	TextView          tevSquare;
-	@BindView(R2.id.tev_resource_center)
-	TextView          tevResourceCenter;
-	@BindView(R2.id.tev_mine)
-	TextView          tevMine;
-	
+	private MineLazyViewPager mineViewPager;
+	private LinearLayout layoutBottom;
+	private TextView tevFirstPage;
+	private TextView tevProject;
+	private TextView tevSquare;
+	private TextView tevResourceCenter;
+	private TextView tevMine;
+
 	private List<Fragment>          fragmentList = new ArrayList<>();
 	private TabFragmentStatePagerAdapter fragmentStatePagerAdapter;
 	
@@ -87,6 +77,14 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
 	
 	@Override
 	protected void initViews() {
+		mineViewPager = (MineLazyViewPager) findViewById(R.id.mine_view_pager);
+		layoutBottom = (LinearLayout) findViewById(R.id.layout_bottom);
+		tevFirstPage = (TextView) findViewById(R.id.tev_first_page);
+		tevProject = (TextView) findViewById(R.id.tev_project);
+		tevSquare = (TextView) findViewById(R.id.tev_square);
+		tevResourceCenter = (TextView) findViewById(R.id.tev_resource_center);
+		tevMine = (TextView) findViewById(R.id.tev_mine);
+
 		addContentView(loadView, layoutParams);
 
 		fragmentStatePagerAdapter = new TabFragmentStatePagerAdapter(getSupportFragmentManager(), fragmentList);

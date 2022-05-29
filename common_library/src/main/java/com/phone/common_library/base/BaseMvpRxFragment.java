@@ -23,9 +23,6 @@ import com.trello.rxlifecycle3.components.support.RxFragment;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends RxFragment {
 
     private static final String TAG = "BaseMvpFragment";
@@ -39,7 +36,6 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
     protected Bundle bundle;
 
     protected View rootView;
-    private Unbinder unbinder;
     protected RxFragment rxFragment;
 //    private boolean isFirstLoad = true;
 
@@ -57,7 +53,6 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
 
         rxFragment = this;
         rootView = inflater.inflate(initLayoutId(), container, false);
-        unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -237,7 +232,6 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
             rootView = null;
         }
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override

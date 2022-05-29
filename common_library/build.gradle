@@ -158,10 +158,6 @@ dependencies {
     //https图片处理
     api "com.github.bumptech.glide:okhttp3-integration:4.11.0"
 
-    //butterknife框架導入
-    api 'com.jakewharton:butterknife:10.2.3'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
-
     //沉浸式状态栏框架导入
     // 基础依赖包，必须要依赖
     api 'com.geyifeng.immersionbar:immersionbar:3.2.2'

@@ -26,8 +26,6 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.ButterKnife;
-
 public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
     private static final String TAG = "BaseRxAppActivity";
@@ -49,7 +47,6 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
         activityPageManager.addActivity(rxAppCompatActivity);
 
         setContentView(initLayoutId());
-        ButterKnife.bind(rxAppCompatActivity);
 
 //		loadView = new QMUILoadingView(rxAppCompatActivity);
 //		loadView.setVisibility(View.GONE);

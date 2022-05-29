@@ -6,7 +6,6 @@ apply plugin: 'kotlin-kapt'
 //kotlin noArg和allOpen插件
 apply plugin: 'kotlin-noarg'
 apply plugin: 'kotlin-allopen'
-apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 29
@@ -64,9 +63,6 @@ kapt {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(path: ':common_library')
-
-//    implementation 'com.jakewharton:butterknife:10.2.3'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
 
     //Android路由（用于不同app之间的跳转）
 //    implementation 'com.alibaba:arouter-api:1.5.0'
