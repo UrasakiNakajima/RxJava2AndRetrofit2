@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.gyf.immersionbar.ImmersionBar;
-import com.phone.common_library.adapter.TabFragmentPagerAdapter;
+import com.phone.common_library.adapter.TabFragmentStatePagerAdapter;
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.custom_view.LazyViewPager;
@@ -44,7 +44,7 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
 	TextView          tevMine;
 	
 	private List<Fragment>          fragmentList = new ArrayList<>();
-	private TabFragmentPagerAdapter fragmentPagerAdapter;
+	private TabFragmentStatePagerAdapter fragmentStatePagerAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +88,9 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
 	@Override
 	protected void initViews() {
 		addContentView(loadView, layoutParams);
-		
-		fragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
-		mineViewPager.setAdapter(fragmentPagerAdapter);
+
+		fragmentStatePagerAdapter = new TabFragmentStatePagerAdapter(getSupportFragmentManager(), fragmentList);
+		mineViewPager.setAdapter(fragmentStatePagerAdapter);
 		mineViewPager.setOnPageChangeListener(new LazyViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

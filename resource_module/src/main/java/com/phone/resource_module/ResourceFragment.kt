@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.common_library.adapter.TabFragmentPagerAdapter
+import com.phone.common_library.adapter.TabFragmentStatePagerAdapter
 import com.phone.common_library.base.BaseRxFragment
 import com.phone.common_library.custom_view.LazyViewPager
 import com.phone.resource_module.fragment.AndroidAndJsFragment
@@ -20,7 +20,7 @@ class ResourceFragment : BaseRxFragment() {
     private val TAG = ResourceFragment::class.java.simpleName
 
     private var fragmentList: MutableList<Fragment> = mutableListOf()
-    private var fragmentPagerAdapter: TabFragmentPagerAdapter? = null
+    private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,8 +46,12 @@ class ResourceFragment : BaseRxFragment() {
     }
 
     override fun initViews() {
-        fragmentPagerAdapter = TabFragmentPagerAdapter(childFragmentManager, fragmentList)
-        mine_view_pager.setAdapter(fragmentPagerAdapter)
+        fragmentStatePagerAdapter =
+            TabFragmentStatePagerAdapter(
+                childFragmentManager,
+                fragmentList
+            )
+        mine_view_pager.setAdapter(fragmentStatePagerAdapter)
         mine_view_pager.setOnPageChangeListener(object : LazyViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,

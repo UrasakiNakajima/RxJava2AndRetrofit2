@@ -9,7 +9,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 /**
  * author    : Urasaki
@@ -18,21 +18,21 @@ import androidx.fragment.app.FragmentPagerAdapter;
  * introduce :
  */
 
-public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
+public class TabFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
 
-    private static final String TAG = TabFragmentPagerAdapter.class.getSimpleName();
+    private static final String TAG = TabFragmentStatePagerAdapter.class.getSimpleName();
     private List<Fragment> fragmentList;
 
-    public TabFragmentPagerAdapter(FragmentManager fm) {
+    public TabFragmentStatePagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public TabFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
+    public TabFragmentStatePagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
         super(fm);
         this.fragmentList = fragmentList;
     }
 
-    public void addFragment(Fragment fragment){
+    public void addFragment(Fragment fragment) {
     }
 
     @NotNull

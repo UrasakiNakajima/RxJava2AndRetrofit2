@@ -32,7 +32,7 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
     protected T presenter;
 
     protected String url;
-    protected Map<String, String> bodyParams = new HashMap<>();
+    protected Map<String, String> bodyParams;
     protected RxAppCompatActivity rxAppCompatActivity;
     protected BaseApplication baseApplication;
     protected Intent intent;
@@ -64,6 +64,7 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        bodyParams = new HashMap<>();
         rxAppCompatActivity = (RxAppCompatActivity) getActivity();
         if (rxAppCompatActivity != null) {
             baseApplication = (BaseApplication) rxAppCompatActivity.getApplication();
@@ -222,6 +223,10 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
     @Override
     public void onDestroyView() {
         detachPresenter();
+        if (bodyParams != null) {
+            bodyParams.clear();
+            bodyParams = null;
+        }
         if (rxAppCompatActivity != null) {
             rxAppCompatActivity = null;
         }
@@ -237,10 +242,6 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
 
     @Override
     public void onDestroy() {
-        if (bodyParams != null) {
-            bodyParams.clear();
-            bodyParams = null;
-        }
         super.onDestroy();
     }
 }
