@@ -29,7 +29,7 @@ import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RxPermissionsManager;
-import com.phone.common_library.manager.SystemIdManager;
+import com.phone.common_library.manager.SystemManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 
 import java.io.File;
@@ -238,7 +238,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
      * RxAppCompatActivity里需要的时候直接调用就行了
      */
     private void initRxPermissionsRxAppCompatActivity() {
-        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
+        RxPermissionsManager rxPermissionsManager = new RxPermissionsManager();
         rxPermissionsManager.initRxPermissionsRxAppCompatActivity(this, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
@@ -250,7 +250,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                 }
 
                 if (TextUtils.isEmpty(baseApplication.getSystemId())) {
-                    String systemId = SystemIdManager.getSystemId(rxAppCompatActivity);
+                    String systemId = SystemManager.getSystemId(baseApplication);
                     baseApplication.setSystemId(systemId);
                     LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
                 } else {

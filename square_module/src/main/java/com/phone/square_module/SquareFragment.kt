@@ -20,6 +20,7 @@ import com.phone.common_library.callback.OnCommonRxPermissionsCallback
 import com.phone.common_library.manager.*
 import com.phone.square_module.bean.DataX
 import com.phone.square_module.databinding.FragmentSquareBinding
+import com.phone.square_module.ui.PickerViewActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -86,8 +87,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     override fun initViews() {
         mDatabind.imvPic.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
-//            startActivity(PickerViewActivity::class.java)
-            startActivity(Base64AndFileActivity::class.java)
+            startActivity(PickerViewActivity::class.java)
+//            startActivity(Base64AndFileActivity::class.java)
         }
         mDatabind.tevCreateAnException.setOnClickListener {
             number = 1;
@@ -172,7 +173,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
      * RxFragment里需要的时候直接调用就行了
      */
     private fun initRxPermissionsRxFragment(number: Int) {
-        val rxPermissionsManager = RxPermissionsManager.getInstance()
+        val rxPermissionsManager = RxPermissionsManager()
         rxPermissionsManager.initRxPermissionsRxFragment2(
             this,
             object : OnCommonRxPermissionsCallback {

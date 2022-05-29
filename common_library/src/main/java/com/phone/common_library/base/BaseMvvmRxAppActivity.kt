@@ -269,7 +269,6 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     override fun onDestroy() {
         mDatabind.unbind()
         viewModelStore.clear()
-
         if (activityPageManager != null) {
             if (activityPageManager!!.isLastAliveActivity.get()) {
                 killAppProcess(rxAppCompatActivity!!)
