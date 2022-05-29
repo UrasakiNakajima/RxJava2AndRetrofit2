@@ -197,8 +197,8 @@ dependencies {
     api 'com.alibaba:arouter-api:1.5.0'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
 
-    //leakcanary导入（检测内存泄漏框架，直接導入框架就可以了，2.7版本的不用配置）
-    debugApi 'com.squareup.leakcanary:leakcanary-android:2.7'
+//    //leakcanary导入（检测内存泄漏框架，直接導入框架就可以了，2.7版本的不用配置）
+//    debugApi 'com.squareup.leakcanary:leakcanary-android:2.7'
 
     //工具库
     implementation 'com.blankj:utilcodex:1.29.0'
