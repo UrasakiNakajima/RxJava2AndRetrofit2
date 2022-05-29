@@ -195,7 +195,9 @@ class ResourceChildFragment : BaseMvpRxFragment<IBaseView, ResourcePresenterImpl
     }
 
     override fun onDestroy() {
-        resultList.clear()
+        if (resultList != null) {
+            resultList.clear()
+        }
         super.onDestroy()
     }
 }

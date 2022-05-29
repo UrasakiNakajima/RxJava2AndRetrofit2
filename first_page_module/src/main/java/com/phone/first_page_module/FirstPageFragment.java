@@ -30,6 +30,7 @@ import com.phone.common_library.manager.RetrofitManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.ScreenManager;
 import com.phone.common_library.manager.SystemIdManager;
+import com.phone.common_library.manager.SystemManager;
 import com.phone.common_library.ui.NewsDetailActivity;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
 import com.phone.first_page_module.bean.FirstPageResponse;
@@ -272,7 +273,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
      * RxFragment里需要的时候直接调用就行了
      */
     private void initRxPermissionsRxFragment() {
-        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
+        RxPermissionsManager rxPermissionsManager = new RxPermissionsManager();
         rxPermissionsManager.initRxPermissionsRxFragment(this, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
@@ -282,7 +283,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
 //                LogManager.i(TAG, user3.toString());
 
                 if (TextUtils.isEmpty(baseApplication.getSystemId())) {
-                    String systemId = SystemIdManager.getSystemId(rxAppCompatActivity);
+                    String systemId = SystemManager.getSystemId(baseApplication);
                     baseApplication.setSystemId(systemId);
                     LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
                 } else {
@@ -351,13 +352,11 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
 
     @Override
     public void onDestroyView() {
-
+        if (layoutOutLayer != null) {
+            layoutOutLayer.removeAllViews();
+            layoutOutLayer = null;
+        }
         super.onDestroyView();
     }
 
-    @Override
-    public void onDestroy() {
-        layoutOutLayer.removeAllViews();
-        super.onDestroy();
-    }
 }
