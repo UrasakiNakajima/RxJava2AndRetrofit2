@@ -19,6 +19,7 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
 import com.phone.common_library.manager.ActivityPageManager;
+import com.phone.common_library.manager.CrashHandlerManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.ToolbarManager;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
@@ -280,13 +281,22 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
         LogManager.i(TAG, "killAppProcess");
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> processInfos = manager.getRunningAppProcesses();
-
         // 先杀掉相关进程，最后再杀掉主进程
         for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : processInfos) {
             if (runningAppProcessInfo.pid != android.os.Process.myPid()) {
                 android.os.Process.killProcess(runningAppProcessInfo.pid);
             }
         }
+
+        LogManager.i(TAG, "killAppProcess，應用開始自殺");
+        CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(context);
+        crashHandlerManager.saveTrimMemoryInfoToFile("killAppProcess，應用開始自殺");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            LogManager.i(TAG, "error");
+        }
+
         android.os.Process.killProcess(android.os.Process.myPid());
         // 正常退出程序，也就是结束当前正在运行的 java 虚拟机
         System.exit(0);
@@ -296,7 +306,7 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
     protected void onDestroy() {
         if (activityPageManager != null) {
             if (activityPageManager.isLastAliveActivity().get()) {
-                killAppProcess(rxAppCompatActivity);
+                killAppProcess(baseApplication);
             }
             activityPageManager.removeActivity(rxAppCompatActivity);
         }

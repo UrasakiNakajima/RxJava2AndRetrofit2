@@ -43,6 +43,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     private static final String TAG = Base64AndFileActivity.class.getSimpleName();
     private Toolbar toolbar;
     private TextView tevTitle;
+    private TextView tevKillApp;
     private TextView tevRequestPermissions;
     private TextView tevCompressedPicture;
     private ImageView imvCompressedPicture;
@@ -100,6 +101,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     protected void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tevTitle = (TextView) findViewById(R.id.tev_title);
+        tevKillApp = (TextView) findViewById(R.id.tev_kill_app);
         tevRequestPermissions = (TextView) findViewById(R.id.tev_request_permissions);
         tevCompressedPicture = (TextView) findViewById(R.id.tev_compressed_picture);
         imvCompressedPicture = (ImageView) findViewById(R.id.imv_compressed_picture);
@@ -109,9 +111,20 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         imvBase64ToPicture = (ImageView) findViewById(R.id.imv_base64_to_picture);
         tevResetData = (TextView) findViewById(R.id.tev_reset_data);
         loadView = (QMUILoadingView) findViewById(R.id.load_view);
+
+
         setToolbar(false, R.color.color_54E066FF);
 
+        tevKillApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogManager.i(TAG, "tevKillApp");
 
+                if (activityPageManager != null) {
+                    activityPageManager.exitApp2();
+                }
+            }
+        });
         tevRequestPermissions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

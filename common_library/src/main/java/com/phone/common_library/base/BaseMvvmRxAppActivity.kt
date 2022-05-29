@@ -18,10 +18,7 @@ import androidx.databinding.ViewDataBinding
 import com.gyf.immersionbar.ImmersionBar
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.R
-import com.phone.common_library.manager.ActivityPageManager
-import com.phone.common_library.manager.LogManager
-import com.phone.common_library.manager.ScreenManager
-import com.phone.common_library.manager.ToolbarManager
+import com.phone.common_library.manager.*
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
 abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
@@ -254,13 +251,22 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         LogManager.i(TAG, "killAppProcess")
         val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val processInfos = manager.runningAppProcesses
-
         // 先杀掉相关进程，最后再杀掉主进程
         for (runningAppProcessInfo in processInfos) {
             if (runningAppProcessInfo.pid != Process.myPid()) {
                 Process.killProcess(runningAppProcessInfo.pid)
             }
         }
+
+        LogManager.i(TAG, "killAppProcess，應用開始自殺")
+        val crashHandlerManager = CrashHandlerManager.getInstance(context)
+        crashHandlerManager.saveTrimMemoryInfoToFile("killAppProcess，應用開始自殺")
+        try {
+            Thread.sleep(1000)
+        } catch (e: InterruptedException) {
+            LogManager.i(TAG, "error")
+        }
+
         Process.killProcess(Process.myPid())
         // 正常退出程序，也就是结束当前正在运行的 java 虚拟机
         System.exit(0)
@@ -271,7 +277,7 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         viewModelStore.clear()
         if (activityPageManager != null) {
             if (activityPageManager!!.isLastAliveActivity.get()) {
-                killAppProcess(rxAppCompatActivity!!)
+                killAppProcess(baseApplication!!)
             }
             activityPageManager!!.removeActivity(rxAppCompatActivity)
         }

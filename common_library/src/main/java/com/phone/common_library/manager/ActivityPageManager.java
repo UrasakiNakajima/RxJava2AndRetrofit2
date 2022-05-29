@@ -117,6 +117,7 @@ public class ActivityPageManager {
     public void finishActivity(Activity activity) {
         if (activity != null && mActivityStack.contains(activity)) {
             mActivityStack.remove(activity);
+            LogManager.i(TAG, "finishActivity");
             activity.finish();
         }
     }
@@ -148,6 +149,7 @@ public class ActivityPageManager {
         for (int i = mActivityAliveStack.size() - 1; i >= 0; i--) {
             if (i == 0) {
                 isLastAliveActivity.set(true);
+                LogManager.i(TAG, "isLastAliveActivity.set(true)");
             }
             finishActivity(mActivityAliveStack.get(i));
         }
@@ -188,6 +190,7 @@ public class ActivityPageManager {
      */
     public void exitApp2() {
         try {
+            LogManager.i(TAG, "exitApp2");
             finishAllActivity();
         } catch (Exception e) {
             e.printStackTrace();
