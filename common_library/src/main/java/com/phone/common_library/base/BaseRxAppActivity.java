@@ -288,9 +288,9 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
             }
         }
 
-        LogManager.i(TAG, "killAppProcess，應用開始自殺");
+        LogManager.i(TAG, "执行killAppProcess，應用開始自殺");
         CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(context);
-        crashHandlerManager.saveTrimMemoryInfoToFile("killAppProcess，應用開始自殺");
+        crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

@@ -123,6 +123,19 @@ public class ActivityPageManager {
     }
 
     /**
+     * 结束指定的Activity
+     *
+     * @param activity Activity
+     */
+    public void finishAliveActivity(Activity activity) {
+        if (activity != null && mActivityAliveStack.contains(activity)) {
+            mActivityAliveStack.remove(activity);
+            LogManager.i(TAG, "finishActivity");
+            activity.finish();
+        }
+    }
+
+    /**
      * 结束指定类名的Activity
      *
      * @param clazz Activity.class
@@ -151,9 +164,10 @@ public class ActivityPageManager {
                 isLastAliveActivity.set(true);
                 LogManager.i(TAG, "isLastAliveActivity.set(true)");
             }
-            finishActivity(mActivityAliveStack.get(i));
+            finishAliveActivity(mActivityAliveStack.get(i));
         }
         mActivityAliveStack.clear();
+        mActivityStack.clear();
     }
 
     public AtomicBoolean isLastAliveActivity() {
