@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * author    : Urasaki
- * e-mail    : Urasaki@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2020/3/11 9:23
  * introduce : 软键盘管理类
  */

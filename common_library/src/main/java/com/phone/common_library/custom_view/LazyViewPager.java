@@ -18,7 +18,7 @@ package com.phone.common_library.custom_view;
  *
  *
  * author    : Urasaki
- * e-mail    : Urasaki@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2020/3/9 13:35
  * introduce : 禁止预加载的ViewPager
  */

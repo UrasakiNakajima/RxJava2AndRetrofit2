@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * author    : Urasaki
- * e-mail    : Urasaki@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2020/3/17 10:35
  * introduce :
  */

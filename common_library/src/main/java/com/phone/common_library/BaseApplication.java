@@ -117,8 +117,8 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
-        if (level == TRIM_MEMORY_UI_HIDDEN) {
-            //App开始自杀，清场掉所有的activity（最後一個存活的Activity退出的时候（onDestroy）做了退出應用程序處理）
+        if (level == TRIM_MEMORY_BACKGROUND) {
+            //App开始自杀，清理掉所有的activity（最後一個存活的Activity退出的时候（onDestroy）做了退出應用程序處理）
             activityPageManager.exitApp2();
         }
     }

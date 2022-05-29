@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 /**
  * author    : Urasaki
- * e-mail    : Urasaki@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2020/3/27 11:16
  * introduce :
  */

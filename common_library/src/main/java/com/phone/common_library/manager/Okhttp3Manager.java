@@ -40,7 +40,7 @@ import okio.BufferedSink;
 
 /**
  * author    : Urasaki
- * e-mail    : Urasaki@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2020/3/10 9:35
  * introduce : 联网okhttp3管理类
  */
