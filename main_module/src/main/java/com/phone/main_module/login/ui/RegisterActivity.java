@@ -13,29 +13,20 @@ import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.main_module.R;
-import com.phone.main_module.R2;
 import com.phone.main_module.login.presenter.LoginPresenterImpl;
 import com.phone.main_module.login.view.IRegisterView;
-
-import butterknife.BindView;
 
 public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>
         implements IRegisterView {
 
-    @BindView(R2.id.imv_back)
-    ImageView imvBack;
-    @BindView(R2.id.layout_back)
-    FrameLayout layoutBack;
-    @BindView(R2.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R2.id.edt_user_name)
-    EditText edtUserName;
-    @BindView(R2.id.edt_password)
-    EditText edtPassword;
-    @BindView(R2.id.edt_confirm_password)
-    EditText edtConfirmPassword;
-    @BindView(R2.id.tev_register)
-    TextView tevRegister;
+    private static final String TAG = "RegisterActivity";
+    private Toolbar toolbar;
+    private FrameLayout layoutBack;
+    private ImageView imvBack;
+    private EditText edtUserName;
+    private EditText edtPassword;
+    private EditText edtConfirmPassword;
+    private TextView tevRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +40,18 @@ public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPrese
 
     @Override
     protected void initData() {
-        edtUserName.setText("13510001000");
-        edtPassword.setText("12345678");
-        edtConfirmPassword.setText("12345678");
     }
 
     @Override
     protected void initViews() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        layoutBack = (FrameLayout) findViewById(R.id.layout_back);
+        imvBack = (ImageView) findViewById(R.id.imv_back);
+        edtUserName = (EditText) findViewById(R.id.edt_user_name);
+        edtPassword = (EditText) findViewById(R.id.edt_password);
+        edtConfirmPassword = (EditText) findViewById(R.id.edt_confirm_password);
+        tevRegister = (TextView) findViewById(R.id.tev_register);
+
         addContentView(loadView, layoutParams);
         setToolbar(true, R.color.color_FFFFFFFF);
 
@@ -75,7 +71,9 @@ public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPrese
 
     @Override
     protected void initLoadData() {
-
+        edtUserName.setText("13510001000");
+        edtPassword.setText("12345678");
+        edtConfirmPassword.setText("12345678");
     }
 
     @Override

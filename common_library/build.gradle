@@ -22,11 +22,6 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.getName())
-            }
-        }
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -82,6 +77,12 @@ android {
 
     allOpen {
         annotation("com.phone.common_library.no_arg_open_data.NoArgOpenDataClass")
+    }
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
     }
 }
 
@@ -157,10 +158,6 @@ dependencies {
     //https图片处理
     api "com.github.bumptech.glide:okhttp3-integration:4.11.0"
 
-    //butterknife框架導入
-    api 'com.jakewharton:butterknife:10.2.3'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
-
     //沉浸式状态栏框架导入
     // 基础依赖包，必须要依赖
     api 'com.geyifeng.immersionbar:immersionbar:3.2.2'
@@ -200,8 +197,8 @@ dependencies {
     api 'com.alibaba:arouter-api:1.5.0'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
 
-    //leakcanary导入（检测内存泄漏框架，直接導入框架就可以了，2.7版本的不用配置）
-    debugApi 'com.squareup.leakcanary:leakcanary-android:2.7'
+//    //leakcanary导入（检测内存泄漏框架，直接導入框架就可以了，2.7版本的不用配置）
+//    debugApi 'com.squareup.leakcanary:leakcanary-android:2.7'
 
     //工具库
     implementation 'com.blankj:utilcodex:1.29.0'

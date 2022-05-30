@@ -1,6 +1,5 @@
 package com.phone.common_library.manager;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -17,7 +16,6 @@ import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
@@ -84,31 +82,10 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
                 LogManager.i(TAG, "error");
             }
 
-            //结束程序 
-            killAppProcess(mContext);
+            //结束程序
+            ActivityPageManager.getInstance().exitApp2();
         }
     }
-
-    /**
-     * 真正的退出应用程序
-     *
-     * @param context
-     */
-    private void killAppProcess(Context context) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> processInfos = manager.getRunningAppProcesses();
-
-        // 先杀掉相关进程，最后再杀掉主进程
-        for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : processInfos) {
-            if (runningAppProcessInfo.pid != android.os.Process.myPid()) {
-                android.os.Process.killProcess(runningAppProcessInfo.pid);
-            }
-        }
-        android.os.Process.killProcess(android.os.Process.myPid());
-        // 异常退出程序，也就是结束当前正在运行的 java 虚拟机
-        System.exit(1);
-    }
-
 
     /**
      * Throwable 包含了其线程创建时线程执行堆栈的快照
@@ -213,7 +190,7 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
             long timestamp = System.currentTimeMillis();
             String time = formatdate.format(new Date(timestamp));
 
-            String fileName = "crash-" + time + "-" + timestamp + ".log";
+            String fileName = "crash-" + time + "-" + timestamp + ".txt";
             // 判断SD卡是否存在，并且是否具有读写权限 
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/crash_xy/";//     /sdcard/crash/crash-time-timestamp.log
@@ -233,6 +210,54 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
                 bufferedOutputStream.flush();
                 bufferedOutputStream.close();
                 //output 针对内存来说的 output到file中 
+                FileOutputStream fos = new FileOutputStream(file);
+                BufferedOutputStream bos = new BufferedOutputStream(fos);
+                bos.write(buffer.toString().getBytes());
+                bos.flush();
+                bos.close();
+            }
+            return fileName;
+        } catch (Exception e) {
+            LogManager.i(TAG, "an error occured while writing file...", e);
+        }
+        return null;
+    }
+
+    /**
+     * 保存內存不足日誌到文件（在即將殺死App之前保存）
+     *
+     * @param info
+     * @return
+     */
+    public String saveTrimMemoryInfoToFile(String info) {
+        collectDeviceInfo(mContext);
+        LogManager.i(TAG, "saveTrimMemoryInfoToFile");
+        StringBuffer buffer = new StringBuffer();
+        for (Map.Entry<String, String> entry : mDevInfoMap.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            buffer.append(key + "=" + value + '\n');
+        }
+
+        buffer.append(info);
+        try {
+            long timestamp = System.currentTimeMillis();
+            String time = formatdate.format(new Date(timestamp));
+
+            String fileName = "aCrash-" + time + "-" + timestamp + ".txt";
+            // 判断SD卡是否存在，并且是否具有读写权限
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/aCrash_xy/";//     /sdcard/crash/crash-time-timestamp.log
+                File dirs = new File(path);
+                if (!dirs.exists()) {
+                    dirs.mkdirs();
+                }
+                File file = new File(path, fileName);
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+
+                //output 针对内存来说的 output到file中
                 FileOutputStream fos = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(fos);
                 bos.write(buffer.toString().getBytes());

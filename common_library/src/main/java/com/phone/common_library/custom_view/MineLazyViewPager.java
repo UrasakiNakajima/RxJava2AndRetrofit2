@@ -6,7 +6,7 @@ import android.view.MotionEvent;
 
 /**
  * author    : Urasaki
- * e-mail    : Urasaki@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2020/3/10 14:12
  * introduce : 禁止左右滑动
  */

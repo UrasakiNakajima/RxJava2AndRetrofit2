@@ -20,6 +20,7 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
 import com.phone.common_library.manager.ActivityPageManager;
+import com.phone.common_library.manager.CrashHandlerManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.ToolbarManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
@@ -28,8 +29,6 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.ButterKnife;
 
 public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extends RxAppCompatActivity {
 
@@ -40,24 +39,22 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
     protected T presenter;
 
     protected String url;
-    protected Map<String, String> bodyParams;
+    protected Map<String, String> bodyParams = new HashMap<>();
     protected Intent intent;
     protected Bundle bundle;
     protected RxAppCompatActivity rxAppCompatActivity;
     protected BaseApplication baseApplication;
-    private ActivityPageManager activityPageManager;
+    protected ActivityPageManager activityPageManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bodyParams = new HashMap<>();
         rxAppCompatActivity = this;
         baseApplication = (BaseApplication) getApplication();
         activityPageManager = ActivityPageManager.getInstance();
         activityPageManager.addActivity(this);
 
         setContentView(initLayoutId());
-        ButterKnife.bind(this);
 
         loadView = new QMUILoadingView(this);
         loadView.setVisibility(View.GONE);
@@ -332,13 +329,22 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
         LogManager.i(TAG, "killAppProcess");
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> processInfos = manager.getRunningAppProcesses();
-
         // 先杀掉相关进程，最后再杀掉主进程
         for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : processInfos) {
             if (runningAppProcessInfo.pid != android.os.Process.myPid()) {
                 android.os.Process.killProcess(runningAppProcessInfo.pid);
             }
         }
+
+        LogManager.i(TAG, "执行killAppProcess，應用開始自殺");
+        CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(context);
+        crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            LogManager.i(TAG, "error");
+        }
+
         android.os.Process.killProcess(android.os.Process.myPid());
         // 正常退出程序，也就是结束当前正在运行的 java 虚拟机
         System.exit(0);
@@ -347,15 +353,13 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
     @Override
     protected void onDestroy() {
         detachPresenter();
-
         if (bodyParams != null) {
             bodyParams.clear();
             bodyParams = null;
         }
-
         if (activityPageManager != null) {
             if (activityPageManager.isLastAliveActivity().get()) {
-                killAppProcess(rxAppCompatActivity);
+                killAppProcess(baseApplication);
             }
             activityPageManager.removeActivity(rxAppCompatActivity);
         }

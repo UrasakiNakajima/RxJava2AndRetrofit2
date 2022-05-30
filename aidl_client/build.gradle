@@ -40,5 +40,4 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':common_library')
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 }

@@ -172,7 +172,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
      * RxFragment里需要的时候直接调用就行了
      */
     private fun initRxPermissionsRxFragment(number: Int) {
-        val rxPermissionsManager = RxPermissionsManager.getInstance()
+        val rxPermissionsManager = RxPermissionsManager()
         rxPermissionsManager.initRxPermissionsRxFragment2(
             this,
             object : OnCommonRxPermissionsCallback {

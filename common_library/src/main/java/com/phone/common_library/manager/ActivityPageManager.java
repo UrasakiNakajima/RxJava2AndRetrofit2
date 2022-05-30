@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * author    : Urasaki
- * e-mail    : Urasaki@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2020/3/10 14:05
  * introduce :
  */
@@ -117,6 +117,20 @@ public class ActivityPageManager {
     public void finishActivity(Activity activity) {
         if (activity != null && mActivityStack.contains(activity)) {
             mActivityStack.remove(activity);
+            LogManager.i(TAG, "finishActivity");
+            activity.finish();
+        }
+    }
+
+    /**
+     * 结束指定的Activity
+     *
+     * @param activity Activity
+     */
+    public void finishAliveActivity(Activity activity) {
+        if (activity != null && mActivityAliveStack.contains(activity)) {
+            mActivityAliveStack.remove(activity);
+            LogManager.i(TAG, "finishActivity");
             activity.finish();
         }
     }
@@ -148,10 +162,12 @@ public class ActivityPageManager {
         for (int i = mActivityAliveStack.size() - 1; i >= 0; i--) {
             if (i == 0) {
                 isLastAliveActivity.set(true);
+                LogManager.i(TAG, "isLastAliveActivity.set(true)");
             }
-            finishActivity(mActivityAliveStack.get(i));
+            finishAliveActivity(mActivityAliveStack.get(i));
         }
         mActivityAliveStack.clear();
+        mActivityStack.clear();
     }
 
     public AtomicBoolean isLastAliveActivity() {
@@ -184,10 +200,11 @@ public class ActivityPageManager {
     }
 
     /**
-     * 退出应用程序（最後一個存活Activity退出的时候（onDestroy）做了退出應用程序處理）
+     * 退出应用程序（最後一個存活的Activity退出的时候（onDestroy）做了退出應用程序處理）
      */
     public void exitApp2() {
         try {
+            LogManager.i(TAG, "exitApp2");
             finishAllActivity();
         } catch (Exception e) {
             e.printStackTrace();

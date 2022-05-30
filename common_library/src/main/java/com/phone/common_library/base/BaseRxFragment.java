@@ -166,6 +166,20 @@ public abstract class BaseRxFragment extends RxFragment {
     }
 
     @Override
+    public void onDestroyView() {
+        if (rxAppCompatActivity != null) {
+            rxAppCompatActivity = null;
+        }
+        if (baseApplication != null) {
+            baseApplication = null;
+        }
+        if (rootView != null) {
+            rootView = null;
+        }
+        super.onDestroyView();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
     }

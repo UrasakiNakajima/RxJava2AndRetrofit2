@@ -14,7 +14,7 @@ import android.view.WindowManager;
 
 /**
  * author    : Urasaki
- * e-mail    : Urasaki@qq.com
+ * e-mail    : 1164688204@qq.com
  * date      : 2020/3/09 11:35
  * introduce : 屏幕管理类
  */
