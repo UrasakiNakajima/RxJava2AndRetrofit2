@@ -130,7 +130,7 @@ public class ActivityPageManager {
     public void finishAliveActivity(Activity activity) {
         if (activity != null && mActivityAliveStack.contains(activity)) {
             mActivityAliveStack.remove(activity);
-            LogManager.i(TAG, "finishActivity");
+            LogManager.i(TAG, "finishAliveActivity");
             activity.finish();
         }
     }
