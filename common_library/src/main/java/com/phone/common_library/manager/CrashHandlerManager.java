@@ -71,14 +71,16 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     /**
      * 当UncaughtException发生时会转入该函数来处理
      */
-    public void uncaughtException(Thread thread, Throwable throwable) {
+    @Override
+    public void uncaughtException(Thread t, Throwable e) {
         //如果開發人員没有处理则让系统默认的异常处理器来处理
-        if (!handleException(throwable) && mDefaultHandler != null) {
-            mDefaultHandler.uncaughtException(thread, throwable);
+        if (!handleException(e) && mDefaultHandler != null) {
+            mDefaultHandler.uncaughtException(t, e);
         } else {
             try {
                 Thread.sleep(2000);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
                 LogManager.i(TAG, "error");
             }
 
