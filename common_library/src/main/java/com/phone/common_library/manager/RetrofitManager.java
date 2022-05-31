@@ -314,7 +314,7 @@ public class RetrofitManager {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //AutoDispose的关键语句（解决rxjava导致的内存泄漏的）
+                //AutoDispose的关键语句（解决RxJava2导致的内存泄漏的）
                 .as(AutoDispose.<ResponseBody>autoDisposable(AndroidLifecycleScopeProvider.from(fragment)))
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override
@@ -380,7 +380,7 @@ public class RetrofitManager {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //解决rxjava导致的内存泄漏问题
+                //解决RxJava2导致的内存泄漏问题
                 .compose(rxAppCompatActivity.<ResponseBody>bindToLifecycle())
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override
@@ -446,7 +446,7 @@ public class RetrofitManager {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //解决rxjava导致的内存泄漏问题
+                //解决RxJava2导致的内存泄漏问题
                 .compose(rxAppCompatActivity.<ResponseBody>bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override
@@ -512,7 +512,7 @@ public class RetrofitManager {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //解决rxjava导致的内存泄漏问题
+                //解决RxJava2导致的内存泄漏问题
                 .compose(rxFragment.<ResponseBody>bindToLifecycle())
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override
@@ -578,7 +578,7 @@ public class RetrofitManager {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //解决rxjava导致的内存泄漏问题
+                //解决RxJava2导致的内存泄漏问题
                 .compose(rxFragment.<ResponseBody>bindUntilEvent(FragmentEvent.DESTROY))
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override

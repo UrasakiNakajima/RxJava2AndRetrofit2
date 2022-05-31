@@ -21,7 +21,7 @@ import java.util.Properties;
 import java.util.TreeSet;
 
 /**
- * 造成App崩潰的異常管理類
+ * 造成App崩潰的異常管理類（在Application裏初始化，只要一有崩潰的異常就會被捕獲）
  */
 public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 
