@@ -7,7 +7,7 @@ import android.os.Looper;
 
 import com.phone.base64_and_file.thread_pool.Base64ToPictureThreadPool;
 import com.phone.base64_and_file.thread_pool.CompressedPictureThreadPool;
-import com.phone.base64_and_file.thread_pool.PictureToBase64TaskThreadPool;
+import com.phone.base64_and_file.thread_pool.PictureToBase64ThreadPool;
 import com.phone.common_library.callback.OnCommonBothParamCallback;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
@@ -18,7 +18,7 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
 
     private static final String TAG = Base64AndFileModelImpl.class.getSimpleName();
     private CompressedPictureThreadPool compressedPictureThreadPool;
-    private PictureToBase64TaskThreadPool pictureToBase64TaskThreadPool;
+    private PictureToBase64ThreadPool pictureToBase64ThreadPool;
     private Base64ToPictureThreadPool base64ToPictureThreadPool;
 
     private Handler handler;
@@ -67,8 +67,8 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                                     OnCommonBothParamCallback<List<String>> onCommonBothParamCallback) {
         LogManager.i(TAG, "showPictureToBase64");
 
-        pictureToBase64TaskThreadPool = new PictureToBase64TaskThreadPool(filePath);
-        pictureToBase64TaskThreadPool.setOnCommonBothParamCallback(new OnCommonBothParamCallback<List<String>>() {
+        pictureToBase64ThreadPool = new PictureToBase64ThreadPool(filePath);
+        pictureToBase64ThreadPool.setOnCommonBothParamCallback(new OnCommonBothParamCallback<List<String>>() {
             @Override
             public void onSuccess(List<String> success, String data) {
                 handler.post(new Runnable() {
@@ -89,7 +89,7 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                 });
             }
         });
-        pictureToBase64TaskThreadPool.submit();
+        pictureToBase64ThreadPool.submit();
     }
 
     @Override

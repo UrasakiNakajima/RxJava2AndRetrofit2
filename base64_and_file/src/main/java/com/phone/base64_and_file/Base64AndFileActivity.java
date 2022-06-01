@@ -3,6 +3,7 @@ package com.phone.base64_and_file;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.base64_and_file.adapter.Base64StrAdapter;
+import com.phone.base64_and_file.bean.Base64AndFileBean;
 import com.phone.base64_and_file.presenter.Base64AndFilePresenterImpl;
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
@@ -31,12 +33,20 @@ import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.SystemManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base64AndFilePresenterImpl> implements IBase64AndFileView {
 
@@ -255,13 +265,6 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         rxPermissionsManager.initRxPermissionsRxAppCompatActivity(this, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
-                if (presenter != null) {
-                    showLoading();
-
-                    presenter.showCompressedPicture(rxAppCompatActivity.getApplicationContext(),
-                            dirsPath, dirsPath2);
-                }
-
                 if (TextUtils.isEmpty(baseApplication.getSystemId())) {
                     String systemId = SystemManager.getSystemId(baseApplication);
                     baseApplication.setSystemId(systemId);
@@ -269,6 +272,18 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                 } else {
                     LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
                 }
+
+//                //第一种方法
+//                if (presenter != null) {
+//                    showLoading();
+//
+//                    presenter.showCompressedPicture(rxAppCompatActivity.getApplicationContext(),
+//                            dirsPath, dirsPath2);
+//                }
+
+
+                //第二种方法
+                initBase64AndFileTask();
             }
 
             @Override
@@ -283,72 +298,166 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         });
     }
 
-//    private void initTask() {
-//        showLoading();
-//        disposable2 = Observable.timer(1000, TimeUnit.MILLISECONDS)
-//                .subscribeOn(Schedulers.io())
-////                .observeOn(AndroidSchedulers.mainThread())
-////                .doOnNext(new Consumer<Long>() {
-////                    @Override
-////                    public void accept(Long aLong) throws Exception {
-////                        LogManager.i(TAG, "MineThread*******" + Thread.currentThread().getName());
-////
-////                    }
-////                })
-////                .observeOn(Schedulers.io())
-//                .doOnNext(new Consumer<Long>() {
-//                    @Override
-//                    public void accept(Long aLong) throws Exception {
-//                        LogManager.i(TAG, "MineThread2*******" + Thread.currentThread().getName());
-//
-//                        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-//                                + "Pictures" + File.separator
-//                                + "picture2.jpeg";
-////            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
-////                    + "Pictures" + File.separator
-////                    + "picture5.webp";
-//                        File file = new File(path);
-////            base64Str = Base64AndFileManager.fileToBase64(file);
-//                        base64Str = Base64AndFileManager.fileToBase64Second(file);
-////            base64Str = Base64AndFileManager.fileToBase64Third(file);
-//                    }
-//                })
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnNext(new Consumer<Long>() {
-//                    @Override
-//                    public void accept(Long aLong) throws Exception {
-//                        LogManager.i(TAG, "MineThread3*******" + Thread.currentThread().getName());
-//
-//                        tevBase64Str.setText(base64Str);
-//                    }
-//                })
-//                .observeOn(Schedulers.io())
-//                .doOnNext(new Consumer<Long>() {
-//                    @Override
-//                    public void accept(Long aLong) throws Exception {
-//                        LogManager.i(TAG, "MineThread5*******" + Thread.currentThread().getName());
-//
-//                        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "base64" + File.separator;
-//                        String fileName = "pictureNew2.jpeg";
-////            String fileName = "pictureNew5.jpeg";
-////            File fileNew = Base64AndFileManager.base64ToFile(base64Str, path, fileName);
-//                        File fileNew = Base64AndFileManager.base64ToFileSecond(base64Str, path, fileName);
-////            File fileNew = Base64AndFileManager.base64ToFileThird(base64Str, path, fileName);
-//
-//                        bitmap = BitmapFactory.decodeFile(fileNew.getAbsolutePath());
-//                    }
-//                })
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<Long>() {
-//                    @Override
-//                    public void accept(Long aLong) throws Exception {
-//                        LogManager.i(TAG, "MineThread6*******" + Thread.currentThread().getName());
-//
-//                        imvFile.setImageBitmap(bitmap);
-//                        hideLoading();
-//                    }
-//                });
-//    }
+    private void initBase64AndFileTask() {
+        Observable.just(0)
+                .subscribeOn(AndroidSchedulers.mainThread()) //给上面分配了UI线程
+                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
+                .doOnNext(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        LogManager.i(TAG, "threadName*****" + Thread.currentThread().getName());
+                        showLoading();
+                    }
+                })
+                .observeOn(Schedulers.io()) //给下面分配了异步线程
+                .map(new Function<Integer, Base64AndFileBean>() {
+                    @Override
+                    public Base64AndFileBean apply(Integer integer) throws Exception {
+                        LogManager.i(TAG, "threadName2*****" + Thread.currentThread().getName());
+                        String dirsPath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                                + File.separator + "Pictures";
+                        String dirsPathCompressed = Environment.getExternalStorageDirectory().getAbsolutePath()
+                                + File.separator + "PicturesCompressed";
+                        File file = BitmapManager.getAssetFile(rxAppCompatActivity.getApplicationContext(), "picture_large.png", dirsPath);
+                        Base64AndFileBean base64AndFileBean = new Base64AndFileBean();
+                        base64AndFileBean.setDirsPath(dirsPath);
+                        base64AndFileBean.setDirsPathCompressed(dirsPathCompressed);
+                        base64AndFileBean.setFile(file);
+                        return base64AndFileBean;
+                    }
+                })
+                .observeOn(Schedulers.io()) //给下面分配了异步线程
+                .doOnNext(new Consumer<Base64AndFileBean>() {
+                    @Override
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName3*****" + Thread.currentThread().getName());
+                        //把图片转化成bitmap
+                        Bitmap bitmap = BitmapManager.getBitmap(base64AndFileBean.getFile().getAbsolutePath());
+                        base64AndFileBean.setBitmap(bitmap);
+                    }
+                })
+                .observeOn(Schedulers.io()) //给下面分配了异步线程
+                .doOnNext(new Consumer<Base64AndFileBean>() {
+                    @Override
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName4*****" + Thread.currentThread().getName());
+                        //再压缩bitmap
+                        Bitmap bitmapCompressed = BitmapManager.scaleImage(base64AndFileBean.getBitmap(), 1280, 960);
+                        base64AndFileBean.setBitmapCompressed(bitmapCompressed);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了异步线程
+                .doOnNext(new Consumer<Base64AndFileBean>() {
+                    @Override
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName5*****" + Thread.currentThread().getName());
+                        //展示压缩过的图片
+                        tevCompressedPicture.setVisibility(View.GONE);
+                        imvCompressedPicture.setVisibility(View.VISIBLE);
+                        imvCompressedPicture.setImageBitmap(base64AndFileBean.getBitmapCompressed());
+                    }
+                })
+                .observeOn(Schedulers.io()) //给下面分配了异步线程
+                .doOnNext(new Consumer<Base64AndFileBean>() {
+                    @Override
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName6*****" + Thread.currentThread().getName());
+                        //再把压缩后的bitmap保存到本地
+                        File fileCompressed = BitmapManager.saveFile(base64AndFileBean.getBitmapCompressed(), base64AndFileBean.getDirsPathCompressed(), "picture_large_compressed.png");
+                        base64AndFileBean.setFileCompressed(fileCompressed);
+                    }
+                })
+                .observeOn(Schedulers.io()) //给下面分配了异步线程
+                .doOnNext(new Consumer<Base64AndFileBean>() {
+                    @Override
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName7*****" + Thread.currentThread().getName());
+                        String base64Str = null;
+                        if (base64AndFileBean.getFileCompressed().exists()) {
+                            base64Str = Base64AndFileManager.fileToBase64(base64AndFileBean.getFileCompressed());
+//                base64Str = Base64AndFileManager.fileToBase64Test(file);
+//                    base64Str = Base64AndFileManager.fileToBase64Second(file);
+                            base64AndFileBean.setBase64Str(base64Str);
+                        }
+                        if (!TextUtils.isEmpty(base64Str)) {
+                            String fileName = "base64Str.txt";
+                            String txtFilePath = FileManager.writeStrToTextFile(base64Str, base64AndFileBean.getFileCompressed().getAbsolutePath(), fileName);
+                            base64AndFileBean.setTxtFilePath(txtFilePath);
+                            base64AndFileBean.setBase64StrList(Base64AndFileManager.getBase64StrList(txtFilePath));
+//                base64Str = "";
+//                StringBuilder stringBuilder = new StringBuilder();
+//                for (int i = 0; i < base64StrList.size(); i++) {
+//                    stringBuilder.append(base64StrList.get(i));
+//                }
+//                base64Str = stringBuilder.toString();
+
+//                    //把字符串的最後一個打印出來，然後看看和RecyclerView顯示的最後一個字符串是否一致
+//                    LogManager.i(TAG, "base64StrList******" + base64StrList.get(base64StrList.size() - 1));
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了异步线程
+                .doOnNext(new Consumer<Base64AndFileBean>() {
+                    @Override
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName8*****" + Thread.currentThread().getName());
+                        tevPictureToBase64.setVisibility(View.GONE);
+                        rcvBase64Str.setVisibility(View.VISIBLE);
+
+                        base64StrAdapter.clearData();
+                        base64StrAdapter.addAllData(base64AndFileBean.getBase64StrList());
+
+                        Observable.timer(2000, TimeUnit.MILLISECONDS)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                //解决RxJava2导致的内存泄漏问题
+                                .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                                .subscribe(new Consumer<Long>() {
+                                    @Override
+                                    public void accept(Long aLong) throws Exception {
+                                        LogManager.i(TAG, "threadNameC*****" + Thread.currentThread().getName());
+                                        if (base64AndFileBean.getBase64StrList().size() > 0) {
+                                            //RecyclerView自動滑動到底部，看看最後一個字符串和打印出來的字符串是否一致
+                                            rcvBase64Str.scrollToPosition(base64AndFileBean.getBase64StrList().size() - 1);
+                                        }
+                                    }
+                                });
+                    }
+                })
+                .observeOn(Schedulers.io()) //给下面分配了异步线程
+                .doOnNext(new Consumer<Base64AndFileBean>() {
+                    @Override
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName9*****" + Thread.currentThread().getName());
+                        //再把压缩后的bitmap保存到本地
+                        File fileCompressedRecover = Base64AndFileManager.base64ToFileSecond(base64AndFileBean.getBase64Str(), base64AndFileBean.getFileCompressed().getAbsolutePath());
+                        base64AndFileBean.setFileCompressedRecover(fileCompressedRecover);
+                    }
+                })
+                .observeOn(Schedulers.io()) //给下面分配了异步线程
+                .doOnNext(new Consumer<Base64AndFileBean>() {
+                    @Override
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName10*****" + Thread.currentThread().getName());
+                        Bitmap bitmapCompressedRecover = BitmapFactory.decodeFile(base64AndFileBean.getFileCompressedRecover().getAbsolutePath());
+                        base64AndFileBean.setBitmapCompressedRecover(bitmapCompressedRecover);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
+                //解决RxJava2导致的内存泄漏问题
+                .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                .subscribe(new Consumer<Base64AndFileBean>() {
+                    @Override
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName11*****" + Thread.currentThread().getName());
+                        tevBase64ToPicture.setVisibility(View.GONE);
+                        imvBase64ToPicture.setVisibility(View.VISIBLE);
+                        imvBase64ToPicture.setImageBitmap(base64AndFileBean.getBitmapCompressedRecover());
+                        hideLoading();
+                    }
+                });
+
+    }
 
     @Override
     public void showLoading() {

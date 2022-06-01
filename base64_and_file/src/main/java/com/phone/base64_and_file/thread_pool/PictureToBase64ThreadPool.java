@@ -12,16 +12,16 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class PictureToBase64TaskThreadPool {
+public class PictureToBase64ThreadPool {
 
-    private static final String TAG = PictureToBase64TaskThreadPool.class.getSimpleName();
+    private static final String TAG = PictureToBase64ThreadPool.class.getSimpleName();
     private String base64Str;
     private String filePath;
     private String txtFilePath = null;
     private List<String> base64StrList;
     private ExecutorService pictureToBase64TaskExcutor;
 
-    public PictureToBase64TaskThreadPool(String filePath) {
+    public PictureToBase64ThreadPool(String filePath) {
         this.filePath = filePath;
         pictureToBase64TaskExcutor = Executors.newSingleThreadExecutor();
     }
