@@ -43,6 +43,8 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -299,16 +301,22 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     }
 
     private void initBase64AndFileTask() {
-        Observable.just(0)
-                .subscribeOn(AndroidSchedulers.mainThread()) //给上面分配了UI线程
-                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
-                .doOnNext(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        LogManager.i(TAG, "threadName*****" + Thread.currentThread().getName());
-                        showLoading();
-                    }
-                })
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+                LogManager.i(TAG, "threadName*****" + Thread.currentThread().getName());
+                showLoading();
+                emitter.onNext(0);
+            }
+        }).subscribeOn(AndroidSchedulers.mainThread()) //给上面分配了UI线程
+//                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
+//                .doOnNext(new Consumer<Integer>() {
+//                    @Override
+//                    public void accept(Integer integer) throws Exception {
+//                        LogManager.i(TAG, "threadName*****" + Thread.currentThread().getName());
+//                        showLoading();
+//                    }
+//                })
                 .observeOn(Schedulers.io()) //给下面分配了异步线程
                 .map(new Function<Integer, Base64AndFileBean>() {
                     @Override
