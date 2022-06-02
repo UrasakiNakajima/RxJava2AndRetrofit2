@@ -132,30 +132,30 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                 initRxPermissionsRxAppCompatActivity();
             }
         });
-        tevCompressedPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initRxPermissionsRxAppCompatActivity();
-            }
-        });
-        tevPictureToBase64.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (presenter != null) {
-                    showLoading();
-                    presenter.showPictureToBase64(compressedPicturePath);
-                }
-            }
-        });
-        tevBase64ToPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (presenter != null) {
-                    showLoading();
-                    presenter.showBase64ToPicture(compressedPicturePath, base64Str);
-                }
-            }
-        });
+//        tevCompressedPicture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                initRxPermissionsRxAppCompatActivity();
+//            }
+//        });
+//        tevPictureToBase64.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (presenter != null) {
+//                    showLoading();
+//                    presenter.showPictureToBase64(compressedPicturePath);
+//                }
+//            }
+//        });
+//        tevBase64ToPicture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (presenter != null) {
+//                    showLoading();
+//                    presenter.showBase64ToPicture(compressedPicturePath, base64Str);
+//                }
+//            }
+//        });
         tevResetData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,6 +288,9 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         });
     }
 
+    /**
+     * 开启获取App中的图片，然后图片转bitmap，然后bitmap压缩，然后bitmap转base64，之后base64转bitmap的任务
+     */
     private void initBase64AndFileTask() {
         Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
@@ -431,24 +434,32 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                     }
                 })
                 .observeOn(Schedulers.io()) //给下面分配了异步线程
-                .doOnNext(new Consumer<Base64AndFileBean>() {
+//                .doOnNext(new Consumer<Base64AndFileBean>() {
+//                    @Override
+//                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+//                        LogManager.i(TAG, "threadName10*****" + Thread.currentThread().getName());
+//                        Bitmap bitmapCompressedRecover = BitmapFactory.decodeFile(base64AndFileBean.getFileCompressedRecover().getAbsolutePath());
+//                        base64AndFileBean.setBitmapCompressedRecover(bitmapCompressedRecover);
+//                    }
+//                })
+                .map(new Function<Base64AndFileBean, Bitmap>() {
                     @Override
-                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                    public Bitmap apply(Base64AndFileBean base64AndFileBean) throws Exception {
                         LogManager.i(TAG, "threadName10*****" + Thread.currentThread().getName());
                         Bitmap bitmapCompressedRecover = BitmapFactory.decodeFile(base64AndFileBean.getFileCompressedRecover().getAbsolutePath());
-                        base64AndFileBean.setBitmapCompressedRecover(bitmapCompressedRecover);
+                        return bitmapCompressedRecover;
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
                 //解决RxJava2导致的内存泄漏问题
                 .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                .subscribe(new Consumer<Base64AndFileBean>() {
+                .subscribe(new Consumer<Bitmap>() {
                     @Override
-                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                    public void accept(Bitmap bitmapCompressedRecover) throws Exception {
                         LogManager.i(TAG, "threadName11*****" + Thread.currentThread().getName());
                         tevBase64ToPicture.setVisibility(View.GONE);
                         imvBase64ToPicture.setVisibility(View.VISIBLE);
-                        imvBase64ToPicture.setImageBitmap(base64AndFileBean.getBitmapCompressedRecover());
+                        imvBase64ToPicture.setImageBitmap(bitmapCompressedRecover);
                         hideLoading();
                     }
                 });
