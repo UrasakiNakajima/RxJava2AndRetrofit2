@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
+import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.bean.User
 import com.phone.common_library.bean.User2
@@ -84,18 +85,23 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     override fun initViews() {
-        mDatabind.imvPic.setOnClickListener {
-//            startActivity(SquareDetailsActivity::class.java)
-//            startActivity(PickerViewActivity::class.java)
-            startActivity(Base64AndFileActivity::class.java)
-        }
-        mDatabind.tevCreateAnException.setOnClickListener {
+        mDatabind.tevKillApp.setOnClickListener {
+            LogManager.i(TAG, "tevKillApp");
             number = 1;
             initRxPermissionsRxFragment(number!!)
         }
-        mDatabind.tevCreateAnException2.setOnClickListener {
+        mDatabind.tevCreateAnException.setOnClickListener {
             number = 2;
             initRxPermissionsRxFragment(number!!)
+        }
+        mDatabind.tevCreateAnException2.setOnClickListener {
+            number = 3;
+            initRxPermissionsRxFragment(number!!)
+        }
+        mDatabind.imvPicture.setOnClickListener {
+//            startActivity(SquareDetailsActivity::class.java)
+//            startActivity(PickerViewActivity::class.java)
+            startActivity(Base64AndFileActivity::class.java)
         }
     }
 
@@ -169,7 +175,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     /**
-     * RxFragment里需要的时候直接调用就行了
+     * 請求權限，RxFragment里需要的时候直接调用就行了
      */
     private fun initRxPermissionsRxFragment(number: Int) {
         val rxPermissionsManager = RxPermissionsManager()
@@ -178,11 +184,14 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
                     if (number == 1) {
+                        val baseMvpRxAppActivity = rxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
+                        baseMvpRxAppActivity.activityPageManager.exitApp2();
+                    } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                         val user: User = User2()
                         val user3 = user as User3
                         LogManager.i(TAG, user3.toString())
-                    } else if (number == 2) {
+                    } else if (number == 3) {
                         try {
                             //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                             val user: User = User2()

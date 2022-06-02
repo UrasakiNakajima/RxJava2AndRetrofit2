@@ -34,18 +34,6 @@
         </androidx.appcompat.widget.Toolbar>
 
         <TextView
-            android:id="@+id/tev_kill_app"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:layout_gravity="center"
-            android:background="@color/color_FFFFC73B"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/kill_app"
-            android:textColor="@color/color_FFFFFFFF"
-            android:textSize="@dimen/sp_16" />
-
-        <TextView
             android:id="@+id/tev_request_permissions"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"

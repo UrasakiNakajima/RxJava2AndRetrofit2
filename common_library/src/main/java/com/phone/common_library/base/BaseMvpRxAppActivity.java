@@ -44,7 +44,7 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
     protected Bundle bundle;
     protected RxAppCompatActivity rxAppCompatActivity;
     protected BaseApplication baseApplication;
-    protected ActivityPageManager activityPageManager;
+    public ActivityPageManager activityPageManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
