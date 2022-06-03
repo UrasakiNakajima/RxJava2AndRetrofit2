@@ -1,24 +1,19 @@
 package com.phone.base64_and_file;
 
-import android.graphics.Bitmap;
-import android.view.View;
-import android.widget.Toast;
-
+import com.phone.base64_and_file.bean.Base64AndFileBean;
 import com.phone.common_library.base.IBaseView;
-
-import java.util.List;
 
 public interface IBase64AndFileView extends IBaseView {
 
-    void showCompressedPictureSuccess(Bitmap bitmap, String compressedPicturePath);
+    void showCompressedPictureSuccess(Base64AndFileBean success);
 
     void showCompressedPictureError(String error);
 
-    void showPictureToBase64Success(List<String> base64StrList, String base64Str);
+    void showPictureToBase64Success(Base64AndFileBean success);
 
     void showPictureToBase64Error(String error);
 
-    void showBase64ToPictureSuccess(Bitmap bitmap);
+    void showBase64ToPictureSuccess(Base64AndFileBean success);
 
     void showBase64ToPictureError(String error);
 

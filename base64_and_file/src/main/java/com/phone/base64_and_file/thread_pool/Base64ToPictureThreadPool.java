@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.phone.base64_and_file.Base64AndFileManager;
+import com.phone.base64_and_file.bean.Base64AndFileBean;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
 
@@ -14,14 +15,11 @@ import java.util.concurrent.Executors;
 public class Base64ToPictureThreadPool {
 
     private static final String TAG = Base64ToPictureThreadPool.class.getSimpleName();
-    private String filePath;
-    private String base64Str;
+    private Base64AndFileBean base64AndFileBean;
     private ExecutorService base64ToPictureExcutor;
 
-    public Base64ToPictureThreadPool(String filePath,
-                                     String base64Str) {
-        this.filePath = filePath;
-        this.base64Str = base64Str;
+    public Base64ToPictureThreadPool(Base64AndFileBean base64AndFileBean) {
+        this.base64AndFileBean = base64AndFileBean;
         base64ToPictureExcutor = Executors.newSingleThreadExecutor();
     }
 
@@ -32,13 +30,19 @@ public class Base64ToPictureThreadPool {
 
                 LogManager.i(TAG, "Base64ToPictureThreadPool*******" + Thread.currentThread().getName());
 
-//            File fileNew = Base64AndFileManager.base64ToFile(base64Str, dirsPath5, fileName);
-                File fileNew = Base64AndFileManager.base64ToFileSecond(base64Str, filePath);
-//            File fileNew = Base64AndFileManager.base64ToFileThird(base64Str, dirsPath5, fileName);
+                File fileCompressedRecover = Base64AndFileManager.base64ToFile(base64AndFileBean.getBase64Str(),
+                        base64AndFileBean.getDirsPathCompressedRecover(),
+                        "picture_large_compressed_recover");
+//                File fileCompressedRecover = Base64AndFileManager.base64ToFileSecond(
+//                        base64AndFileBean.getBase64Str(),
+//                        base64AndFileBean.getDirsPathCompressedRecover(),
+//                        base64AndFileBean.getFile().getName());
+//            File fileCompressedRecover = Base64AndFileManager.base64ToFileThird(base64Str, dirsPath5, fileName);
 
-                Bitmap bitmap = BitmapFactory.decodeFile(fileNew.getAbsolutePath());
-                if (bitmap != null) {
-                    onCommonSingleParamCallback.onSuccess(bitmap);
+                Bitmap bitmapCompressedRecover = BitmapFactory.decodeFile(fileCompressedRecover.getAbsolutePath());
+                if (bitmapCompressedRecover != null) {
+                    base64AndFileBean.setBitmapCompressedRecover(bitmapCompressedRecover);
+                    onCommonSingleParamCallback.onSuccess(base64AndFileBean);
                 } else {
                     onCommonSingleParamCallback.onError("圖片不存在");
                 }
@@ -46,9 +50,9 @@ public class Base64ToPictureThreadPool {
         });
     }
 
-    private OnCommonSingleParamCallback<Bitmap> onCommonSingleParamCallback;
+    private OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback;
 
-    public void setOnCommonSingleParamCallback(OnCommonSingleParamCallback<Bitmap> onCommonSingleParamCallback) {
+    public void setOnCommonSingleParamCallback(OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback) {
         this.onCommonSingleParamCallback = onCommonSingleParamCallback;
     }
 }

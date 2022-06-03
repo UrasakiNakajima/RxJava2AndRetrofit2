@@ -793,8 +793,8 @@ public class BitmapManager {
      * @param fileName
      * @throws IOException
      */
-    public static File saveFile(Bitmap bitmap, String path, String fileName) {
-        File dirs = new File(path);
+    public static File saveFile(Bitmap bitmap, String dirsPath, String fileName) {
+        File dirs = new File(dirsPath);
         if (!dirs.exists()) {
             dirs.mkdirs();
         }
@@ -903,7 +903,7 @@ public class BitmapManager {
         return file;
     }
 
-    public static File getAssetFile(Context context, String assetFileName, String dirsPath) {
+    public static File getAssetFile(Context context, String dirsPath, String assetFileName) {
         AssetManager assetManager = context.getAssets();
         File dirs = new File(dirsPath);
         if (!dirs.exists()) {

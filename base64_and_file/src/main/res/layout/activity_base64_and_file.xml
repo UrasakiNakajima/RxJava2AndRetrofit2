@@ -132,19 +132,17 @@
                 android:layout_height="@dimen/dp_1"
                 android:background="@color/light_gray" />
 
-            <FrameLayout
+            <TextView
+                android:id="@+id/tev_reset_data"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50">
-
-                <TextView
-                    android:id="@+id/tev_reset_data"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="重置數據"
-                    android:textSize="@dimen/sp_20" />
-
-            </FrameLayout>
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="center"
+                android:background="@color/color_FFFFC73B"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="重置數據"
+                android:textColor="@color/color_FFFFFFFF"
+                android:textSize="@dimen/sp_16" />
 
         </LinearLayout>
 

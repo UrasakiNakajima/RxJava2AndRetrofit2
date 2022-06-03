@@ -10,6 +10,7 @@ public class Base64AndFileBean {
 
     private String dirsPath;
     private String dirsPathCompressed;
+    private String dirsPathCompressedRecover;
     private File file;
     private File fileCompressed;
     private File fileCompressedRecover;
@@ -34,6 +35,14 @@ public class Base64AndFileBean {
 
     public void setDirsPathCompressed(String dirsPathCompressed) {
         this.dirsPathCompressed = dirsPathCompressed;
+    }
+
+    public String getDirsPathCompressedRecover() {
+        return dirsPathCompressedRecover;
+    }
+
+    public void setDirsPathCompressedRecover(String dirsPathCompressedRecover) {
+        this.dirsPathCompressedRecover = dirsPathCompressedRecover;
     }
 
     public File getFile() {

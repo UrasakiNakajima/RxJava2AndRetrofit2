@@ -1,18 +1,15 @@
 package com.phone.base64_and_file.model;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.phone.base64_and_file.bean.Base64AndFileBean;
 import com.phone.base64_and_file.thread_pool.Base64ToPictureThreadPool;
 import com.phone.base64_and_file.thread_pool.CompressedPictureThreadPool;
 import com.phone.base64_and_file.thread_pool.PictureToBase64ThreadPool;
-import com.phone.common_library.callback.OnCommonBothParamCallback;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
-
-import java.util.List;
 
 public class Base64AndFileModelImpl implements IBase64AndFileModel {
 
@@ -29,22 +26,20 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
 
     @Override
     public void showCompressedPicture(Context context,
-                                      String dirsPath,
-                                      String dirsPath2,
-                                      OnCommonBothParamCallback<Bitmap> onCommonBothParamCallback) {
+                                      Base64AndFileBean base64AndFileBean,
+                                      OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback) {
         LogManager.i(TAG, "showCompressedPicture");
 
         compressedPictureThreadPool = new CompressedPictureThreadPool(
                 context,
-                dirsPath,
-                dirsPath2);
-        compressedPictureThreadPool.setOnCommonBothParamCallback(new OnCommonBothParamCallback<Bitmap>() {
+                base64AndFileBean);
+        compressedPictureThreadPool.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<Base64AndFileBean>() {
             @Override
-            public void onSuccess(Bitmap success, String data) {
+            public void onSuccess(Base64AndFileBean success) {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        onCommonBothParamCallback.onSuccess(success, data);
+                        onCommonSingleParamCallback.onSuccess(success);
                     }
                 });
             }
@@ -54,7 +49,7 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        onCommonBothParamCallback.onError(error);
+                        onCommonSingleParamCallback.onError(error);
                     }
                 });
             }
@@ -63,18 +58,18 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
     }
 
     @Override
-    public void showPictureToBase64(String filePath,
-                                    OnCommonBothParamCallback<List<String>> onCommonBothParamCallback) {
+    public void showPictureToBase64(Base64AndFileBean base64AndFileBean,
+                                    OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback) {
         LogManager.i(TAG, "showPictureToBase64");
 
-        pictureToBase64ThreadPool = new PictureToBase64ThreadPool(filePath);
-        pictureToBase64ThreadPool.setOnCommonBothParamCallback(new OnCommonBothParamCallback<List<String>>() {
+        pictureToBase64ThreadPool = new PictureToBase64ThreadPool(base64AndFileBean);
+        pictureToBase64ThreadPool.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<Base64AndFileBean>() {
             @Override
-            public void onSuccess(List<String> success, String data) {
+            public void onSuccess(Base64AndFileBean success) {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        onCommonBothParamCallback.onSuccess(success, data);
+                        onCommonSingleParamCallback.onSuccess(success);
                     }
                 });
             }
@@ -84,7 +79,7 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        onCommonBothParamCallback.onError(error);
+                        onCommonSingleParamCallback.onError(error);
                     }
                 });
             }
@@ -93,15 +88,14 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
     }
 
     @Override
-    public void showBase64ToPicture(String filePath,
-                                    String base64Str,
-                                    OnCommonSingleParamCallback<Bitmap> onCommonSingleParamCallback) {
+    public void showBase64ToPicture(Base64AndFileBean base64AndFileBean,
+                                    OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback) {
         LogManager.i(TAG, "showBase64ToPicture");
 
-        base64ToPictureThreadPool = new Base64ToPictureThreadPool(filePath, base64Str);
-        base64ToPictureThreadPool.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<Bitmap>() {
+        base64ToPictureThreadPool = new Base64ToPictureThreadPool(base64AndFileBean);
+        base64ToPictureThreadPool.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<Base64AndFileBean>() {
             @Override
-            public void onSuccess(Bitmap success) {
+            public void onSuccess(Base64AndFileBean success) {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {

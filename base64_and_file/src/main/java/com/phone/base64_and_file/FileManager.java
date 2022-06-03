@@ -2,9 +2,6 @@ package com.phone.base64_and_file;
 
 import android.util.Log;
 
-import com.phone.common_library.manager.LogManager;
-
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,15 +10,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FileManager {
 
     private static final String TAG = "FileManager";
 
     // 将字符串写入到文本文件中
-    public static String writeStrToTextFile(String strcontent,
+    public static String writeStrToTextFile(String strContent,
                                         String filePath,
                                         String fileName) {
         //生成文件夹之后，再生成文件，不然会出错
@@ -29,7 +24,7 @@ public class FileManager {
 
         String strFilePath = filePath + fileName;
         // 每次写入时，都换行写
-        String strContent = strcontent + "\r\n";
+        String strContent2 = strContent + "\r\n";
 
         String filePath2 = null;
         File file;
@@ -42,7 +37,7 @@ public class FileManager {
             }
             RandomAccessFile raf = new RandomAccessFile(file, "rwd");
             raf.seek(file.length());
-            raf.write(strContent.getBytes());
+            raf.write(strContent2.getBytes());
             raf.close();
 
             filePath2 = file.getAbsolutePath();

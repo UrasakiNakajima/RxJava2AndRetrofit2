@@ -13,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,11 +26,11 @@ public class Base64AndFileManager {
 
     /**
      * @param base64Content
-     * @param filePath
+     * @param dirsPath
      * @param fileName
      * @return
      */
-    public static File base64ToFile(String base64Content, String filePath, String fileName) {
+    public static File base64ToFile(String base64Content, String dirsPath, String fileName) {
         BASE64Decoder decoder = new BASE64Decoder();
         ByteArrayInputStream bais = null;
         BufferedInputStream bis = null;
@@ -40,7 +39,7 @@ public class Base64AndFileManager {
         File file = null;
 
         try {
-            File dirs = new File(filePath);
+            File dirs = new File(dirsPath);
             if (!dirs.exists()) {
                 dirs.mkdirs();
             }
@@ -247,10 +246,10 @@ public class Base64AndFileManager {
 
     /**
      * @param base64Content
-     * @param filePath
+     * @param dirsPath
      * @return
      */
-    public static File base64ToFileSecond(String base64Content, String filePath) {
+    public static File base64ToFileSecond(String base64Content, String dirsPath, String fileName) {
         ByteArrayInputStream bais = null;
         BufferedInputStream bis = null;
         FileOutputStream fos = null;
@@ -258,11 +257,11 @@ public class Base64AndFileManager {
         File file = null;
 
         try {
-            File dirs = new File(filePath);
+            File dirs = new File(dirsPath);
             if (!dirs.exists()) {
                 dirs.mkdirs();
             }
-            file = new File(filePath);
+            file = new File(dirs, fileName);
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -390,11 +389,11 @@ public class Base64AndFileManager {
      * 還在驗證中，請不要使用
      *
      * @param base64Content
-     * @param filePath
+     * @param dirsPath
      * @param fileName
      * @return
      */
-    public static File base64ToFileThird(String base64Content, String filePath, String fileName) {
+    public static File base64ToFileThird(String base64Content, String dirsPath, String fileName) {
         ByteArrayInputStream bais = null;
         BufferedInputStream bis = null;
         FileOutputStream fos = null;
@@ -402,7 +401,7 @@ public class Base64AndFileManager {
         File file = null;
 
         try {
-            File dirs = new File(filePath);
+            File dirs = new File(dirsPath);
             if (!dirs.exists()) {
                 dirs.mkdirs();
             }
