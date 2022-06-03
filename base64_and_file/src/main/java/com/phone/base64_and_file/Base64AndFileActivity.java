@@ -42,9 +42,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -263,17 +265,17 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                     LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
                 }
 
-                //第一种方法
-                if (presenter != null) {
-                    showLoading();
+//                //第一种方法
+//                if (presenter != null) {
+//                    showLoading();
+//
+//                    presenter.showCompressedPicture(baseApplication,
+//                            base64AndFileBean);
+//                }
 
-                    presenter.showCompressedPicture(baseApplication,
-                            base64AndFileBean);
-                }
 
-
-//                //第二种方法
-//                initBase64AndFileTask();
+                //第二种方法
+                initBase64AndFileTask();
             }
 
             @Override
@@ -292,14 +294,14 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
      * 开启获取App中的图片，然后图片转bitmap，然后bitmap压缩，然后bitmap转base64，之后base64转bitmap的任务
      */
     private void initBase64AndFileTask() {
-        Observable.create(new ObservableOnSubscribe<Integer>() {
+        Flowable.create(new FlowableOnSubscribe<Integer>() {
             @Override
-            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+            public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
                 LogManager.i(TAG, "threadName*****" + Thread.currentThread().getName());
                 showLoading();
                 emitter.onNext(0);
             }
-        }).subscribeOn(AndroidSchedulers.mainThread()) //给上面分配了UI线程
+        }, BackpressureStrategy.BUFFER).subscribeOn(AndroidSchedulers.mainThread()) //给上面分配了UI线程
 //                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
 //                .doOnNext(new Consumer<Integer>() {
 //                    @Override
