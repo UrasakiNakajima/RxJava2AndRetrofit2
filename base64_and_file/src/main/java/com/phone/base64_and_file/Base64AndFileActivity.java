@@ -403,7 +403,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                         base64StrAdapter.clearData();
                         base64StrAdapter.addAllData(base64AndFileBean.getBase64StrList());
 
-                        Observable.timer(2000, TimeUnit.MILLISECONDS)
+                        Observable.timer(1000, TimeUnit.MILLISECONDS)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 //解决RxJava2导致的内存泄漏问题
@@ -541,7 +541,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         }
 
         if (timer != null && timerTask != null) {
-            timer.schedule(timerTask, 500);
+            timer.schedule(timerTask, 1000);
         }
     }
 
