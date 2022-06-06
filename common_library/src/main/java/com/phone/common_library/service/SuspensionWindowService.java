@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 public class SuspensionWindowService extends Service {
 
+    private static final String TAG = SuspensionWindowService.class.getSimpleName();
 
     @Nullable
     @Override

@@ -2,7 +2,7 @@ package com.phone.base64_and_file.presenter;
 
 import android.content.Context;
 
-import com.phone.base64_and_file.IBase64AndFileView;
+import com.phone.base64_and_file.view.IBase64AndFileView;
 import com.phone.base64_and_file.bean.Base64AndFileBean;
 import com.phone.base64_and_file.model.Base64AndFileModelImpl;
 import com.phone.common_library.base.BasePresenter;

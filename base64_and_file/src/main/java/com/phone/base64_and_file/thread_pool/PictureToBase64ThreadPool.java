@@ -2,8 +2,8 @@ package com.phone.base64_and_file.thread_pool;
 
 import android.text.TextUtils;
 
-import com.phone.base64_and_file.Base64AndFileManager;
-import com.phone.base64_and_file.FileManager;
+import com.phone.base64_and_file.manager.Base64AndFileManager;
+import com.phone.base64_and_file.manager.FileManager;
 import com.phone.base64_and_file.bean.Base64AndFileBean;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;

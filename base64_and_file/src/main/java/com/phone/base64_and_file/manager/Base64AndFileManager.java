@@ -1,4 +1,4 @@
-package com.phone.base64_and_file;
+package com.phone.base64_and_file.manager;
 
 import android.util.Base64;
 

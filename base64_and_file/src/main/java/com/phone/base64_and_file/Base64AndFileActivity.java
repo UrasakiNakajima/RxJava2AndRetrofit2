@@ -25,7 +25,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.base64_and_file.adapter.Base64StrAdapter;
 import com.phone.base64_and_file.bean.Base64AndFileBean;
+import com.phone.base64_and_file.manager.Base64AndFileManager;
+import com.phone.base64_and_file.manager.BitmapManager;
+import com.phone.base64_and_file.manager.FileManager;
 import com.phone.base64_and_file.presenter.Base64AndFilePresenterImpl;
+import com.phone.base64_and_file.view.IBase64AndFileView;
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;

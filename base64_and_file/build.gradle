@@ -27,6 +27,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
+            java {//移除module包下的代码
+                exclude 'module'
+            }
+        }
+    }
+
 }
 
 dependencies {

@@ -1,4 +1,4 @@
-package com.phone.base64_and_file;
+package com.phone.base64_and_file.view;
 
 import com.phone.base64_and_file.bean.Base64AndFileBean;
 import com.phone.common_library.base.IBaseView;

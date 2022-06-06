@@ -3,7 +3,7 @@ package com.phone.base64_and_file.thread_pool;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.phone.base64_and_file.Base64AndFileManager;
+import com.phone.base64_and_file.manager.Base64AndFileManager;
 import com.phone.base64_and_file.bean.Base64AndFileBean;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
