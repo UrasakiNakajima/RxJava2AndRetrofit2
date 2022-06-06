@@ -19,7 +19,7 @@
             android:name=".ui.ThreadPoolActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MineActivity"
+            android:name=".MineActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

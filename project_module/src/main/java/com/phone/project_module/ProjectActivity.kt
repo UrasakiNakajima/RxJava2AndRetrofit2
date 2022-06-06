@@ -6,28 +6,27 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.BaseApplication
-import com.phone.common_library.base.BaseMvvmRxFragment
+import com.phone.common_library.base.BaseMvvmAppRxActivity
 import com.phone.common_library.callback.RcvOnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.project_module.adapter.ProjectAdapter
 import com.phone.project_module.bean.DataX
-import com.phone.project_module.databinding.FragmentProjectBinding
+import com.phone.project_module.databinding.ActivityProjectBinding
 import com.phone.project_module.ui.EventScheduleActivity
 import com.phone.project_module.view.IProjectChildView
 import com.phone.project_module.view_model.ProjectViewModelImpl
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
-@Route(path = "/project_module/project")
-class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProjectBinding>(),
+class ProjectActivity :
+    BaseMvvmAppRxActivity<ProjectViewModelImpl, ActivityProjectBinding>(),
     IProjectChildView {
 
     companion object {
-        private val TAG: String = ProjectFragment::class.java.simpleName
+        private val TAG: String = ProjectActivity::class.java.simpleName
     }
 
     private var projectAdapter: ProjectAdapter? = null
@@ -38,7 +37,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     private var dataxErrorObserver: Observer<String>? = null;
 
     override fun initLayoutId(): Int {
-        return R.layout.fragment_project
+        return R.layout.activity_project
     }
 
     override fun initViewModel(): ProjectViewModelImpl {
@@ -70,16 +69,19 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
                 if (!TextUtils.isEmpty(t)) {
                     LogManager.i(TAG, "onChanged*****dataxErrorObserver")
                     projectDataError(t!!)
+                    hideLoading()
                 }
             }
 
         }
 
-        viewModel!!.getDataxRxFragmentSuccess().observe(this, dataxSuccessObserver!!)
-        viewModel!!.getDataxRxFragmentError().observe(this, dataxErrorObserver!!)
+        viewModel!!.getDataxRxAppCompatActivitySuccess().observe(this, dataxSuccessObserver!!)
+        viewModel!!.getDataxRxAppCompatActivityError().observe(this, dataxErrorObserver!!)
     }
 
     override fun initViews() {
+        setToolbar(false, R.color.color_FF198CFF)
+
         projectAdapter = ProjectAdapter(rxAppCompatActivity!!);
         projectAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
 
@@ -159,7 +161,8 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
                 ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
                 ScreenManager.dpToPx(rxAppCompatActivity, 40f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                error
+                error,
+                false
             )
 
             if (isRefresh) {
@@ -173,7 +176,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     private fun initProject(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel!!.projectDataRxFragment(this, currentPage)
+            viewModel!!.projectDataRxAppCompatActivity(this, currentPage)
         } else {
             projectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }

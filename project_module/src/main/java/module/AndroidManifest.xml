@@ -11,14 +11,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.SurfaceViewActivity"
+            android:name=".ProjectActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.SurfaceViewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
+
         </activity>
         <activity
             android:name=".ui.VideoViewActivity"

@@ -44,7 +44,7 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
     protected Bundle bundle;
     protected RxAppCompatActivity rxAppCompatActivity;
     protected BaseApplication baseApplication;
-    public ActivityPageManager activityPageManager;
+    protected ActivityPageManager activityPageManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -323,6 +323,10 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
             presenter.detachView();
             presenter = null;
         }
+    }
+
+    public ActivityPageManager getActivityPageManager() {
+        return activityPageManager;
     }
 
     private void killAppProcess(Context context) {

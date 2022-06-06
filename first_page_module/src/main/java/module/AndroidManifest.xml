@@ -15,7 +15,7 @@
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
         tools:replace="android:allowBackup">
         <activity
-            android:name=".ui.FirstPageActivity"
+            android:name=".FirstPageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -30,6 +30,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ShowVideoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.phone.common_library.ui.NewsDetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 

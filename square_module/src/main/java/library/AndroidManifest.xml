@@ -16,7 +16,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.SquareDetailsActivity"
+            android:name=".SquareActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
     </application>

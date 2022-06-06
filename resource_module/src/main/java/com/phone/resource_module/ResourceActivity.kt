@@ -1,39 +1,24 @@
 package com.phone.resource_module
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.adapter.TabFragmentStatePagerAdapter
-import com.phone.common_library.base.BaseRxFragment
+import com.phone.common_library.base.BaseRxAppActivity
 import com.phone.common_library.custom_view.LazyViewPager
 import com.phone.resource_module.fragment.AndroidAndJsFragment
 import com.phone.resource_module.fragment.ResourceChildFragment
-import kotlinx.android.synthetic.main.fragment_resource.*
+import kotlinx.android.synthetic.main.activity_resource.*
 
-@Route(path = "/resource_module/resource")
-class ResourceFragment : BaseRxFragment() {
+class ResourceActivity : BaseRxAppActivity() {
 
-    private val TAG = ResourceFragment::class.java.simpleName
+    private val TAG = ResourceActivity::class.java.simpleName
 
     private var fragmentList: MutableList<Fragment> = mutableListOf()
     private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // TODO: inflate a fragment view
-        rootView = super.onCreateView(inflater, container, savedInstanceState)
-        return rootView
-    }
-
     override fun initLayoutId(): Int {
-        return R.layout.fragment_resource
+        return R.layout.activity_resource
     }
 
     override fun initData() {
@@ -42,13 +27,14 @@ class ResourceFragment : BaseRxFragment() {
         fragmentList.add(ResourceChildFragment.getInstance("Android"))
         fragmentList.add(ResourceChildFragment.getInstance("iOS"))
         fragmentList.add(AndroidAndJsFragment.getInstance("H5"))
-//        fragmentList.add(ResourceChildFragment.getInstance("App"))
     }
 
     override fun initViews() {
+        setToolbar(false, R.color.color_FF198CFF)
+
         fragmentStatePagerAdapter =
             TabFragmentStatePagerAdapter(
-                childFragmentManager,
+                supportFragmentManager,
                 fragmentList
             )
         mine_view_pager.setAdapter(fragmentStatePagerAdapter)
@@ -467,4 +453,6 @@ class ResourceFragment : BaseRxFragment() {
         fragmentList.clear()
         super.onDestroy()
     }
+
+
 }

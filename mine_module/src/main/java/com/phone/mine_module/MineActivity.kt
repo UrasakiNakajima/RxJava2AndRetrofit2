@@ -1,4 +1,4 @@
-package com.phone.mine_module.ui
+package com.phone.mine_module
 
 import android.content.Intent
 import android.view.View
@@ -13,10 +13,12 @@ import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.common_library.ui.NewsDetailActivity
-import com.phone.mine_module.R
 import com.phone.mine_module.adapter.MineAdapter
 import com.phone.mine_module.bean.Data
 import com.phone.mine_module.presenter.MinePresenterImpl
+import com.phone.mine_module.ui.ParamsTransferChangeProblemActivity
+import com.phone.mine_module.ui.ThreadPoolActivity
+import com.phone.mine_module.ui.UserDataActivity
 import com.phone.mine_module.view.IMineView
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -51,6 +53,12 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
                 startActivity(UserDataActivity::class.java)
             }
         })
+        tev_thread_pool.setOnClickListener {
+            startActivity(ThreadPoolActivity::class.java)
+        }
+        tev_params_transfer_change_problem.setOnClickListener {
+            startActivity(ParamsTransferChangeProblemActivity::class.java)
+        }
 
         initAdapter()
     }

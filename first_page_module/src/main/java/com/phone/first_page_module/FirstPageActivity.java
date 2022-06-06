@@ -1,4 +1,4 @@
-package com.phone.first_page_module.ui;
+package com.phone.first_page_module;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.common_library.manager.ScreenManager;
 import com.phone.common_library.ui.NewsDetailActivity;
-import com.phone.first_page_module.R;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
 import com.phone.first_page_module.bean.FirstPageResponse;
 import com.phone.first_page_module.presenter.FirstPagePresenterImpl;
@@ -34,7 +33,7 @@ import java.util.List;
 public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>
 	implements IFirstPageView {
 	
-	private static final String             TAG = "FirstPageDetailsActivity";
+	private static final String             TAG = FirstPageActivity.class.getSimpleName();
 	private              Toolbar            toolbar;
 	private              TextView           tevTitle;
 	private              SmartRefreshLayout refreshLayout;

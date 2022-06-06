@@ -49,7 +49,7 @@ public class RxPermissionsManager {
 //                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 )
                 //解决rxjava导致的内存泄漏问题
-                .compose(rxAppCompatActivity.<Permission>bindUntilEvent(ActivityEvent.DESTROY))
+                .compose(rxAppCompatActivity.<Permission>bindToLifecycle())
                 .subscribe(new Consumer<Permission>() {
                     @Override
                     public void accept(Permission permission) throws Exception {
@@ -155,7 +155,7 @@ public class RxPermissionsManager {
 //                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 )
                 //解决rxjava导致的内存泄漏问题
-                .compose(rxFragment.<Permission>bindUntilEvent(FragmentEvent.DESTROY))
+                .compose(rxFragment.<Permission>bindToLifecycle())
                 .subscribe(new Consumer<Permission>() {
                     @Override
                     public void accept(Permission permission) throws Exception {
