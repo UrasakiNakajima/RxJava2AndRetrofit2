@@ -27,7 +27,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         attachView(baseView)
     }
 
-    override fun mineData(rxFragment: RxFragment, bodyParams: Map<String, String>) {
+    override fun mineDataRxFragment(rxFragment: RxFragment, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {
@@ -72,7 +72,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun mineData(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>) {
+    override fun mineDataRxAppCompatActivity(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {
