@@ -71,7 +71,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         return dataxRxFragmentError
     }
 
-    override fun squareDataDetailsRxAppCompatActivity(rxAppCompatActivity: RxAppCompatActivity, currentPage: String) {
+    override fun squareDataRxAppCompatActivity(rxAppCompatActivity: RxAppCompatActivity, currentPage: String) {
         RetrofitManager.getInstance()
             .responseStringRxAppActivityBindUntilEvent(rxAppCompatActivity,
                 model.squareData(currentPage),

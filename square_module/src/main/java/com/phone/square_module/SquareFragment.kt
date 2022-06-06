@@ -106,7 +106,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     override fun initLoadData() {
-        initSquare("$currentPage")
+        initSquareData("$currentPage")
 
 //        startAsyncTask()
 
@@ -247,7 +247,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         }
     }
 
-    private fun initSquare(currentPage: String) {
+    private fun initSquareData(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
             viewModel!!.squareDataRxFragment(this, currentPage)

@@ -343,7 +343,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
 
             bodyParams.put("type", "yule");
             bodyParams.put("key", "d5cc661633a28f3cf4b1eccff3ee7bae");
-            presenter.firstPage(this, bodyParams);
+            presenter.firstPageRxFragment(this, bodyParams);
         } else {
             firstPageDataError(getResources().getString(R.string.please_check_the_network_connection));
         }

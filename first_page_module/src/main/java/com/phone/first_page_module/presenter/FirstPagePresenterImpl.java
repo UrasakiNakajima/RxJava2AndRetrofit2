@@ -16,6 +16,8 @@ import com.phone.first_page_module.R;
 import com.phone.first_page_module.bean.FirstPageResponse;
 import com.phone.first_page_module.model.FirstPageModelImpl;
 import com.phone.first_page_module.view.IFirstPageView;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxFragment;
 
 import java.util.Map;
 
@@ -39,7 +41,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void firstPage(Fragment fragment, Map<String, String> bodyParams) {
+    public void firstPageRxFragment(RxFragment fragment, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IFirstPageView) {
@@ -108,7 +110,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void firstPage(AppCompatActivity appCompatActivity, Map<String, String> bodyParams) {
+    public void firstPageRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IFirstPageView) {
@@ -116,7 +118,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                 //                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
                 RetrofitManager.getInstance()
-                        .responseStringAutoDispose(appCompatActivity, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
+                        .responseStringAutoDispose(rxAppCompatActivity, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);

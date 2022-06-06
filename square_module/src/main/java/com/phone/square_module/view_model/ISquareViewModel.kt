@@ -14,7 +14,7 @@ interface ISquareViewModel {
 
     fun getDataxRxFragmentError(): MutableLiveData<String>
 
-    fun squareDataDetailsRxAppCompatActivity(rxAppCompatActivity: RxAppCompatActivity, currentPage: String)
+    fun squareDataRxAppCompatActivity(rxAppCompatActivity: RxAppCompatActivity, currentPage: String)
 
     fun getDataxRxAppCompatActivitySuccess(): MutableLiveData<List<DataX>>
 

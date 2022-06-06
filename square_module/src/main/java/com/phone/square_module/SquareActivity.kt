@@ -107,7 +107,7 @@ class SquareActivity :
     }
 
     override fun initLoadData() {
-        initSquareDetails("$currentPage")
+        initSquareData("$currentPage")
 
 //        startAsyncTask()
 
@@ -235,10 +235,10 @@ class SquareActivity :
         }
     }
 
-    private fun initSquareDetails(currentPage: String) {
+    private fun initSquareData(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel!!.squareDataDetailsRxAppCompatActivity(this, currentPage)
+            viewModel!!.squareDataRxAppCompatActivity(this, currentPage)
         } else {
             squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }
