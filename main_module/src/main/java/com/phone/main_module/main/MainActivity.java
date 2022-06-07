@@ -249,7 +249,7 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
 
     @Override
     protected void initLoadData() {
-        if (!BuildConfig.IS_MODULE){
+        if (!BuildConfig.IS_MODULE) {
             tevPleaseAddComponents.setVisibility(View.GONE);
             layoutMain.setVisibility(View.VISIBLE);
             mineViewPager.setCurrentItem(0);

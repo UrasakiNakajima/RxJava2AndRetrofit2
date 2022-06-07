@@ -12,10 +12,6 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        //java代码中引用的定义形式
-        buildConfigField "Boolean", "IS_MODULE", "${isModule}"
-//        buildConfigField "String", "DEBUG_LOGIN_SN", "\"${DEBUG_LOGIN_SN}\""
-
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
@@ -52,10 +48,14 @@ android {
 
     buildTypes {
         release {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
