@@ -331,6 +331,8 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                         LogManager.i(TAG, "threadName3*****" + Thread.currentThread().getName());
                         //把图片转化成bitmap
                         Bitmap bitmap = BitmapManager.getBitmap(base64AndFileBean.getFile().getAbsolutePath());
+                        LogManager.i(TAG, "bitmap mWidth*****" + bitmap.getWidth());
+                        LogManager.i(TAG, "bitmap mHeight*****" + bitmap.getHeight());
                         base64AndFileBean.setBitmap(bitmap);
                     }
                 })
@@ -341,6 +343,8 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                         LogManager.i(TAG, "threadName4*****" + Thread.currentThread().getName());
                         //再压缩bitmap
                         Bitmap bitmapCompressed = BitmapManager.scaleImage(base64AndFileBean.getBitmap(), 1280, 960);
+                        LogManager.i(TAG, "bitmapCompressed mWidth*****" + bitmapCompressed.getWidth());
+                        LogManager.i(TAG, "bitmapCompressed mHeight*****" + bitmapCompressed.getHeight());
                         base64AndFileBean.setBitmapCompressed(bitmapCompressed);
                     }
                 })
