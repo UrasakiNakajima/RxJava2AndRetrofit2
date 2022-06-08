@@ -344,7 +344,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                         base64AndFileBean.setBitmapCompressed(bitmapCompressed);
                     }
                 })
-                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了异步线程
+                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
                 .doOnNext(new Consumer<Base64AndFileBean>() {
                     @Override
                     public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
@@ -396,7 +396,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                         }
                     }
                 })
-                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了异步线程
+                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
                 .doOnNext(new Consumer<Base64AndFileBean>() {
                     @Override
                     public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
@@ -408,8 +408,8 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                         base64StrAdapter.addAllData(base64AndFileBean.getBase64StrList());
 
                         Observable.timer(1000, TimeUnit.MILLISECONDS)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()) //给上面分配了异步线程
+                                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
                                 //解决RxJava2导致的内存泄漏问题
                                 .compose(bindUntilEvent(ActivityEvent.DESTROY))
                                 .subscribe(new Consumer<Long>() {
