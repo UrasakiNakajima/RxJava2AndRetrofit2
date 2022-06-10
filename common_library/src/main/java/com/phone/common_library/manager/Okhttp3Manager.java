@@ -707,12 +707,12 @@ public class Okhttp3Manager {
      *
      * @param url
      * @param bodyParams
-     * @param filesList
+     * @param fileList
      * @param onCommonSingleParamCallback
      */
     public void postAsyncFormAndFilesOkhttp3(String url,
                                              Map<String, String> bodyParams,
-                                             List<File> filesList,
+                                             List<File> fileList,
                                              OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
             LogManager.i(TAG, "postAsyncFormOkhttp3 bodyParams String*******" + bodyParams.toString());
@@ -733,15 +733,15 @@ public class Okhttp3Manager {
         }
 
         //遍历fileList中所有图片绝对路径到builder，并约定key如"upload"作为上传php服务器接受多张图片的key
-        if (filesList != null && filesList.size() > 0) {
-            for (int i = 0; i < filesList.size(); i++) {
-                if (filesList.get(i).exists()) {
-                    filesList.get(i).getPath();
-                    multipartBodyBuilder.addFormDataPart("upload", filesList.get(i).getName(), RequestBody.create(MEDIA_TYPE, filesList.get(i)));
+        if (fileList != null && fileList.size() > 0) {
+            for (int i = 0; i < fileList.size(); i++) {
+                if (fileList.get(i).exists()) {
+                    fileList.get(i).getPath();
+                    multipartBodyBuilder.addFormDataPart("upload", fileList.get(i).getName(), RequestBody.create(MEDIA_TYPE, fileList.get(i)));
                 }
             }
         } else {
-            LogManager.i(TAG, "postAsyncFormAndFileOkhttp3 filesList.size() = 0");
+            LogManager.i(TAG, "postAsyncFormAndFileOkhttp3 fileList.size() = 0");
         }
 
         //构建请求体
@@ -907,12 +907,12 @@ public class Okhttp3Manager {
      *
      * @param url
      * @param bodyParams
-     * @param filesList
+     * @param fileList
      * @param onCommonSingleParamCallback
      */
     public void postAsyncPhpFormAndFilesOkhttp3(String url,
                                                 Map<String, String> bodyParams,
-                                                List<File> filesList,
+                                                List<File> fileList,
                                                 OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
             LogManager.i(TAG, "postAsyncFormOkhttp3 bodyParams String*******" + bodyParams.toString());
@@ -932,10 +932,10 @@ public class Okhttp3Manager {
         }
 
         //遍历fileList中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
-        if (filesList != null && filesList.size() > 0) {
-            for (int i = 0; i < filesList.size(); i++) {
-                if (filesList.get(i).exists()) {
-                    multipartBodyBuilder.addFormDataPart("upload[]", filesList.get(i).getName(), RequestBody.create(MEDIA_TYPE, filesList.get(i)));
+        if (fileList != null && fileList.size() > 0) {
+            for (int i = 0; i < fileList.size(); i++) {
+                if (fileList.get(i).exists()) {
+                    multipartBodyBuilder.addFormDataPart("upload[]", fileList.get(i).getName(), RequestBody.create(MEDIA_TYPE, fileList.get(i)));
                 }
             }
         }
