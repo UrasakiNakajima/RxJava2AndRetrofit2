@@ -7,6 +7,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,10 +23,10 @@ import java.util.List;
 public class AidlClientActivity extends BaseRxAppActivity {
 
     private static final String TAG = AidlClientActivity.class.getSimpleName();
-    private TextView tevBookName;
-    private TextView tevBookContent;
-    private RecyclerView rcvBook;
+    private TextView tevConnectServerService;
     private TextView tevAddBook;
+    private RecyclerView rcvBook;
+
 
     //由AIDL文件生成的Java类
     private BookManager mBookManager = null;
@@ -52,13 +53,15 @@ public class AidlClientActivity extends BaseRxAppActivity {
 
     @Override
     protected void initViews() {
-        tevBookName = (TextView) findViewById(R.id.tev_book_name);
-        tevBookContent = (TextView) findViewById(R.id.tev_book_content);
-        rcvBook = (RecyclerView) findViewById(R.id.rcv_book);
+        tevConnectServerService = (TextView) findViewById(R.id.tev_connect_server_service);
         tevAddBook = (TextView) findViewById(R.id.tev_add_book);
+        rcvBook = (RecyclerView) findViewById(R.id.rcv_book);
 
-        tevAddBook.setOnClickListener(view -> {
 
+        tevConnectServerService.setOnClickListener(v -> {
+            connectServerService();
+        });
+        tevAddBook.setOnClickListener(v -> {
             initAddBook();
         });
 
@@ -75,14 +78,16 @@ public class AidlClientActivity extends BaseRxAppActivity {
         rcvBook.setAdapter(mBookAdapter);
     }
 
-    private void initAddBook() {
+    private void connectServerService() {
         //如果与服务端的连接处于未连接状态，则尝试连接
         if (!isConnectServer) {
             attemptToBindService();
-//			Toast.makeText(this, "当前与服务端处于未连接状态，正在尝试重连，请稍后再试", Toast.LENGTH_SHORT).show();
-            return;
         }
+    }
+
+    private void initAddBook() {
         if (mBookManager == null) {
+            Toast.makeText(this, "当前与服务端处于未连接状态，正在尝试重连，请稍后再试", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -123,6 +128,7 @@ public class AidlClientActivity extends BaseRxAppActivity {
             LogManager.i(TAG, "service connected");
             mBookManager = BookManager.Stub.asInterface(service);
             isConnectServer = true;
+            Toast.makeText(AidlClientActivity.this, "已连接服务端", Toast.LENGTH_SHORT).show();
 
             if (mBookManager != null) {
                 if (mBookList.size() > 0) {

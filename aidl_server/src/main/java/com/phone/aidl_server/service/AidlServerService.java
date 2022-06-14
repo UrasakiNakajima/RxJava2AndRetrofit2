@@ -29,7 +29,7 @@ public class AidlServerService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.i(TAG, "onBind");
-        EventBus.getDefault().post(new ConnectBean("已连接"));
+        EventBus.getDefault().postSticky(new ConnectBean("已连接客户端"));
         return mBookManager;
     }
 
