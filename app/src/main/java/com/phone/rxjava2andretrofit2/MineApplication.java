@@ -1,7 +1,11 @@
-package com.phone.main_module;
+package com.phone.rxjava2andretrofit2;
+
+import android.text.TextUtils;
 
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.manager.LogManager;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * author    : Urasaki
@@ -24,12 +28,26 @@ public class MineApplication extends BaseApplication {
     //纬度
     private String latitude;
 
+    private String registrationId;
+
     @Override
     public void onCreate() {
         super.onCreate();
         date = getDate();
         if (date == null || "".equals(date)) {
             date = "0";
+        }
+
+
+        //极光推送初始化
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+
+        registrationId = getRegistrationId();
+        if (TextUtils.isEmpty(registrationId)) {
+            //获取RegistrationID唯一标识
+            registrationId = JPushInterface.getRegistrationID(getApplicationContext());
+            setRegistrationId(registrationId);
         }
     }
 
@@ -116,6 +134,18 @@ public class MineApplication extends BaseApplication {
 
     public void setLatitude(String latitude) {
         editor.putString("latitude", latitude);
+        editor.commit();
+    }
+
+    public String getRegistrationId() {
+        registrationId = sp.getString("registrationId", "");
+        LogManager.i(TAG, "getRegistrationId***" + registrationId);
+        return registrationId;
+    }
+
+    public void setRegistrationId(String registrationId) {
+        LogManager.i(TAG, "setRegistrationId***" + registrationId);
+        editor.putString("registrationId", registrationId);
         editor.commit();
     }
 

@@ -97,6 +97,12 @@ dependencies {
         implementation project(path: ':resource_module')
         implementation project(path: ':project_module')
     }
+    
+    //极光推送JPush
+    implementation 'cn.jiguang.sdk:jpush:4.7.0'
+    //极光推送JCore
+    implementation 'cn.jiguang.sdk:jcore:3.2.4'
 //    // 接入小米厂商
 //    implementation 'cn.jiguang.sdk.plugin:xiaomi:4.0.0'
+
 }

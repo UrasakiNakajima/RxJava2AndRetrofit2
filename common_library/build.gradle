@@ -233,8 +233,4 @@ dependencies {
     //日志打印框架
     api 'com.orhanobut:logger:2.2.0'
 
-    //极光推送JPush
-    api 'cn.jiguang.sdk:jpush:4.7.0'
-    //极光推送JCore
-    api 'cn.jiguang.sdk:jcore:3.2.4'
 }

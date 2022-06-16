@@ -84,7 +84,7 @@ class SquareActivity :
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.color_FFE066FF)
+        setToolbar(false, R.color.color_FF198CFF)
 
         mDatabind.tevKillApp.setOnClickListener {
             LogManager.i(TAG, "tevKillApp");
