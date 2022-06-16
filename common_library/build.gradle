@@ -17,6 +17,14 @@ android {
 
 
     defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
 //        //java代码中引用的定义形式
 //        buildConfigField "String", "CUR_PROJECT", "\"${CUR_PROJECT}\""
 //        buildConfigField "Boolean", "DEBUG_TAG", "${DEBUG_TAG}"
@@ -31,19 +39,16 @@ android {
 //        buildConfigField "Boolean", "SUPPORT_TIMESHIFT", "${SUPPORT_TIMESHIFT}"
 //        buildConfigField "Boolean", "IS_USE_IJKPLAYER_FOR_VOD", "${IS_USE_IJKPLAYER_FOR_VOD}"
 
-
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+    }
 
-        multiDexEnabled true
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    packagingOptions {
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
     }
 
     //android 模块下开启DataBinding
@@ -227,4 +232,9 @@ dependencies {
 
     //日志打印框架
     api 'com.orhanobut:logger:2.2.0'
+
+    //极光推送JPush
+    api 'cn.jiguang.sdk:jpush:4.7.0'
+    //极光推送JCore
+    api 'cn.jiguang.sdk:jcore:3.2.4'
 }

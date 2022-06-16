@@ -17,11 +17,6 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
         if (isModule.toBoolean()) {
             //可独立运行的app
             applicationId "com.phone.project_module"
@@ -35,6 +30,12 @@ android {
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     //android 模块下开启DataBinding

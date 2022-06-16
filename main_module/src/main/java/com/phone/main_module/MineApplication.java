@@ -31,7 +31,6 @@ public class MineApplication extends BaseApplication {
         if (date == null || "".equals(date)) {
             date = "0";
         }
-
     }
 
     public static MineApplication getInstance() {

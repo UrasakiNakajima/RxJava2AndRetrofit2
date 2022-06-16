@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.huawei.agconnect'
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
@@ -26,6 +29,18 @@ android {
 //                cppFlags ''
 //            }
 //        }
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : "com.phone.rxjava2andretrofit2",
+                JPUSH_APPKEY : "8e2573e36e6e9c4d624d29d4", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+
     }
 
     //android 模块下开启DataBinding（必须添加，即使此module没有用到也要添加）
@@ -57,13 +72,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    ndkVersion '21.1.6352462'
 //    externalNativeBuild {
 //        cmake {
 //            path file('src/main/cpp/CMakeLists.txt')
 //            version '3.10.2'
 //        }
 //    }
-    ndkVersion '21.1.6352462'
 }
 
 dependencies {
@@ -81,4 +97,6 @@ dependencies {
         implementation project(path: ':resource_module')
         implementation project(path: ':project_module')
     }
+//    // 接入小米厂商
+//    implementation 'cn.jiguang.sdk.plugin:xiaomi:4.0.0'
 }

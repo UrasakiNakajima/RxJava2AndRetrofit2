@@ -12,6 +12,8 @@ import com.phone.common_library.manager.CrashHandlerManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class BaseApplication extends MultiDexApplication {
 
     private static final String TAG = "BaseApplication";
@@ -57,6 +59,10 @@ public class BaseApplication extends MultiDexApplication {
         //				LogManager.i(TAG, "throwable message*****" + throwable.getMessage());
         //			}
         //		});
+
+        //极光推送初始化
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     @Override
