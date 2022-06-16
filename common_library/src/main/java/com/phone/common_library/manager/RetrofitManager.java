@@ -13,8 +13,10 @@ import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.common.ConstantUrl;
+import com.phone.common_library.interceptor.AddAccessTokenInterceptor;
 import com.phone.common_library.interceptor.BaseUrlManagerInterceptor;
 import com.phone.common_library.interceptor.CacheControlInterceptor;
+import com.phone.common_library.interceptor.ReceivedAccessTokenInterceptor;
 import com.phone.common_library.interceptor.RewriteCacheControlInterceptor;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.trello.rxlifecycle3.android.FragmentEvent;
@@ -45,9 +47,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-//import com.trello.rxlifecycle4.components.support.RxAppCompatActivity;
-//import com.trello.rxlifecycle4.components.support.RxFragment;
 
 public class RetrofitManager {
 
@@ -90,8 +89,8 @@ public class RetrofitManager {
                 .readTimeout(5 * 1000, TimeUnit.MILLISECONDS)
                 .writeTimeout(5 * 1000, TimeUnit.MILLISECONDS)
                 .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
-                //								  .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance()))
-                //								  .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance()))
+                .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance()))
+                .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance()))
                 .addInterceptor(new BaseUrlManagerInterceptor(BaseApplication.getInstance()))
                 .addInterceptor(rewriteCacheControlInterceptor)
 //                .addNetworkInterceptor(rewriteCacheControlInterceptor)
