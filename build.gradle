@@ -10,8 +10,8 @@ buildscript {
         maven { url 'https://jitpack.io' }
 //        // fcm
 //        maven { url "https://maven.google.com" }
-        // hms
-        maven { url 'http://developer.huawei.com/repo/'}
+//        // hms
+//        maven { url 'http://developer.huawei.com/repo/'}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
@@ -24,8 +24,8 @@ buildscript {
 
 //        // fcm
 //        classpath 'com.google.gms:google-services:4.3.4'
-        // hms
-        classpath 'com.huawei.agconnect:agcp:1.4.1.300'
+//        // hms
+//        classpath 'com.huawei.agconnect:agcp:1.4.1.300'
     }
 }
 
@@ -38,8 +38,8 @@ allprojects {
         maven { url "https://oss.jfrog.org/libs-snapshot" }
 //        // fcm
 //        maven { url "https://maven.google.com" }
-        // hms
-        maven { url 'http://developer.huawei.com/repo/'}
+//        // hms
+//        maven { url 'http://developer.huawei.com/repo/'}
     }
 }
 
