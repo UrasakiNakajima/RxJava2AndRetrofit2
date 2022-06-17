@@ -48,6 +48,7 @@ import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.MediaFileManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.SystemManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
@@ -382,8 +383,12 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                     @Override
                     public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
                         LogManager.i(TAG, "threadName6*****" + Thread.currentThread().getName());
+                        MediaFileManager.MediaFileType mediaFileType = MediaFileManager.getFileType(base64AndFileBean.getFile().getAbsolutePath());
+                        String mimeType = mediaFileType.mimeType;
+                        String[] typeArr = mimeType.split("/");
+                        String fileType = typeArr[1];
                         //再把压缩后的bitmap保存到本地
-                        File fileCompressed = BitmapManager.saveFile(base64AndFileBean.getBitmapCompressed(), base64AndFileBean.getDirsPathCompressed(), "picture_large_compressed.png");
+                        File fileCompressed = BitmapManager.saveFile(base64AndFileBean.getBitmapCompressed(), base64AndFileBean.getDirsPathCompressed(), "picture_large_compressed" + "." + fileType);
                         base64AndFileBean.setFileCompressed(fileCompressed);
                         LogManager.i(TAG, "base64AndFileBean.getFileCompressed().getPath()*****" + base64AndFileBean.getFileCompressed().getPath());
                         LogManager.i(TAG, "base64AndFileBean.getFileCompressed().getAbsolutePath()*****" + base64AndFileBean.getFileCompressed().getAbsolutePath());
@@ -451,10 +456,14 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                     @Override
                     public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
                         LogManager.i(TAG, "threadName9*****" + Thread.currentThread().getName());
+                        MediaFileManager.MediaFileType mediaFileType = MediaFileManager.getFileType(base64AndFileBean.getFileCompressed().getAbsolutePath());
+                        String mimeType = mediaFileType.mimeType;
+                        String[] typeArr = mimeType.split("/");
+                        String fileType = typeArr[1];
                         //再把压缩后的bitmap保存到本地
                         File fileCompressedRecover = Base64AndFileManager.base64ToFile(base64AndFileBean.getBase64Str(),
                                 base64AndFileBean.getDirsPathCompressedRecover(),
-                                "picture_large_compressed_recover");
+                                "picture_large_compressed_recover" + "." + fileType);
                         base64AndFileBean.setFileCompressedRecover(fileCompressedRecover);
                     }
                 })
@@ -467,14 +476,6 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                         base64AndFileBean.setBitmapCompressedRecover(bitmapCompressedRecover);
                     }
                 })
-//                .doOnNext(new Consumer<Base64AndFileBean>() {
-//                    @Override
-//                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
-//                        LogManager.i(TAG, "threadName10*****" + Thread.currentThread().getName());
-//                        Bitmap bitmapCompressedRecover = BitmapFactory.decodeFile(base64AndFileBean.getFileCompressedRecover().getAbsolutePath());
-//                        base64AndFileBean.setBitmapCompressedRecover(bitmapCompressedRecover);
-//                    }
-//                })
 //                .map(new Function<Base64AndFileBean, Bitmap>() {
 //                    @Override
 //                    public Bitmap apply(Base64AndFileBean base64AndFileBean) throws Exception {
@@ -513,6 +514,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         String accessKeyId = "xxxxxxx";
         //你的阿里云对象存储上的accessKeySecret
         String accessKeySecret = "xxxxxxx";
+
         //token直接用这个就行
         String token = "CAES+wMIARKAAZhjH0EUOIhJMQBMjRywXq7MQ/cjLYg80Aho1ek0Jm63XMhr9Oc5s˙∂˙∂3qaPer8p1YaX1NTDiCFZWFkvlHf1pQhuxfKBc+mRR9KAbHUefqH+rdjZqjTF7p2m1wJXP8S6k+G2MpHrUe6TYBkJ43GhhTVFMuM3BZajY3VjZWOXBIODRIR1FKZjIiEjMzMzE0MjY0NzM5MTE4NjkxMSoLY2xpZGSSDgSDGAGESGTETqOio6c2RrLWRlbW8vKgoUYWNzOm9zczoqOio6c2RrLWRlbW9KEDExNDg5MzAxMDcyNDY4MThSBTI2ODQyWg9Bc3N1bWVkUm9sZVVzZXJgAGoSMzMzMTQyNjQ3MzkxMTg2OTExcglzZGstZGVtbzI=";
         //expiration直接用这个就行
@@ -543,7 +545,12 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         OSS oss = new OSSClient(getApplicationContext(), endpoint, credentialProvider);
         // 调用此方法开启日志。
         OSSLog.enableLog();
-        String objectKey = "base64_and_file" + "/" + file.getName() + "_" + System.currentTimeMillis();
+
+        MediaFileManager.MediaFileType mediaFileType = MediaFileManager.getFileType(file.getAbsolutePath());
+        String mimeType = mediaFileType.mimeType;
+        String[] typeArr = mimeType.split("/");
+        String fileType = typeArr[1];
+        String objectKey = "base64_and_file" + "/" + "picture_" + System.currentTimeMillis() + "." + fileType;
 
         // 构造上传请求。
         PutObjectRequest put = new PutObjectRequest("rx-java2-and-retrofit2-bucket", objectKey, file.getAbsolutePath());
@@ -617,7 +624,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                             public void accept(Integer integer) throws Exception {
                                 LogManager.i(TAG, "onFailure threadName3*****" + Thread.currentThread().getName());
                                 hideLoading();
-                                showToast("upload success", true);
+                                showToast("upload error", true);
                             }
                         });
             }
