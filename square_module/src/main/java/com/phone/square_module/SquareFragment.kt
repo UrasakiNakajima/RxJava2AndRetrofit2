@@ -133,14 +133,14 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 //    }
 
     fun showLoading() {
-        if (mDatabind.loadView != null && !mDatabind.loadView.isShown()) {
+        if (!mDatabind.loadView.isShown()) {
             mDatabind.loadView.setVisibility(View.VISIBLE)
             mDatabind.loadView.start()
         }
     }
 
     fun hideLoading() {
-        if (mDatabind.loadView != null && mDatabind.loadView.isShown()) {
+        if (mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
             mDatabind.loadView.setVisibility(View.GONE)
         }

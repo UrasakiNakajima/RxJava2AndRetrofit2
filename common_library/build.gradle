@@ -233,4 +233,6 @@ dependencies {
     //日志打印框架
     api 'com.orhanobut:logger:2.2.0'
 
+    //阿里云Oss对象存储
+    api 'com.aliyun.dpa:oss-android-sdk:2.9.11'
 }

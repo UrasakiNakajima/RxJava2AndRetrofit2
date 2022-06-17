@@ -24,6 +24,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.sdk.android.oss.ClientConfiguration;
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.ServiceException;
+import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
+import com.alibaba.sdk.android.oss.common.OSSLog;
+import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
+import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.phone.base64_and_file.adapter.Base64StrAdapter;
 import com.phone.base64_and_file.bean.Base64AndFileBean;
 import com.phone.base64_and_file.manager.Base64AndFileManager;
@@ -52,6 +65,8 @@ import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -444,6 +459,14 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                     }
                 })
                 .observeOn(Schedulers.io()) //给下面分配了异步线程
+                .doOnNext(new Consumer<Base64AndFileBean>() {
+                    @Override
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName10*****" + Thread.currentThread().getName());
+                        Bitmap bitmapCompressedRecover = BitmapFactory.decodeFile(base64AndFileBean.getFileCompressedRecover().getAbsolutePath());
+                        base64AndFileBean.setBitmapCompressedRecover(bitmapCompressedRecover);
+                    }
+                })
 //                .doOnNext(new Consumer<Base64AndFileBean>() {
 //                    @Override
 //                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
@@ -452,29 +475,156 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 //                        base64AndFileBean.setBitmapCompressedRecover(bitmapCompressedRecover);
 //                    }
 //                })
-                .map(new Function<Base64AndFileBean, Bitmap>() {
+//                .map(new Function<Base64AndFileBean, Bitmap>() {
+//                    @Override
+//                    public Bitmap apply(Base64AndFileBean base64AndFileBean) throws Exception {
+//                        LogManager.i(TAG, "threadName10*****" + Thread.currentThread().getName());
+//                        Bitmap bitmapCompressedRecover = BitmapFactory.decodeFile(base64AndFileBean.getFileCompressedRecover().getAbsolutePath());
+//                        return bitmapCompressedRecover;
+//                    }
+//                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Consumer<Base64AndFileBean>() {
                     @Override
-                    public Bitmap apply(Base64AndFileBean base64AndFileBean) throws Exception {
-                        LogManager.i(TAG, "threadName10*****" + Thread.currentThread().getName());
-                        Bitmap bitmapCompressedRecover = BitmapFactory.decodeFile(base64AndFileBean.getFileCompressedRecover().getAbsolutePath());
-                        return bitmapCompressedRecover;
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+                        LogManager.i(TAG, "threadName11*****" + Thread.currentThread().getName());
+                        tevBase64ToPicture.setVisibility(View.GONE);
+                        imvBase64ToPicture.setVisibility(View.VISIBLE);
+                        imvBase64ToPicture.setImageBitmap(base64AndFileBean.getBitmapCompressedRecover());
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
                 //解决RxJava2导致的内存泄漏问题
                 .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                .subscribe(new Consumer<Bitmap>() {
+                .subscribe(new Consumer<Base64AndFileBean>() {
                     @Override
-                    public void accept(Bitmap bitmapCompressedRecover) throws Exception {
-                        LogManager.i(TAG, "threadName11*****" + Thread.currentThread().getName());
-                        tevBase64ToPicture.setVisibility(View.GONE);
-                        imvBase64ToPicture.setVisibility(View.VISIBLE);
-                        imvBase64ToPicture.setImageBitmap(bitmapCompressedRecover);
-                        base64AndFileBean.setBitmapCompressedRecover(bitmapCompressedRecover);
-                        hideLoading();
+                    public void accept(Base64AndFileBean base64AndFileBean) throws Exception {
+
+                        ossPutSaveFile(base64AndFileBean.getFileCompressedRecover());
                     }
                 });
 
+    }
+
+    private void ossPutSaveFile(File file) {
+        String endpoint = "http://oss-cn-shenzhen.aliyuncs.com";
+
+        //你的阿里云对象存储上的accessKeyId
+        String accessKeyId = "xxxxxxx";
+        //你的阿里云对象存储上的accessKeySecret
+        String accessKeySecret = "xxxxxxx";
+        //token直接用这个就行
+        String token = "CAES+wMIARKAAZhjH0EUOIhJMQBMjRywXq7MQ/cjLYg80Aho1ek0Jm63XMhr9Oc5s˙∂˙∂3qaPer8p1YaX1NTDiCFZWFkvlHf1pQhuxfKBc+mRR9KAbHUefqH+rdjZqjTF7p2m1wJXP8S6k+G2MpHrUe6TYBkJ43GhhTVFMuM3BZajY3VjZWOXBIODRIR1FKZjIiEjMzMzE0MjY0NzM5MTE4NjkxMSoLY2xpZGSSDgSDGAGESGTETqOio6c2RrLWRlbW8vKgoUYWNzOm9zczoqOio6c2RrLWRlbW9KEDExNDg5MzAxMDcyNDY4MThSBTI2ODQyWg9Bc3N1bWVkUm9sZVVzZXJgAGoSMzMzMTQyNjQ3MzkxMTg2OTExcglzZGstZGVtbzI=";
+        //expiration直接用这个就行
+        String expiration = "2022-12-10T07:49:09Z";
+        OSSFederationToken authToken = new OSSFederationToken(accessKeyId, accessKeySecret, token, expiration);
+
+//        // 填写STS应用服务器地址。
+//        String stsServer = "https://example.com";
+//        // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
+//        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
+
+        OSSCredentialProvider credentialProvider = new OSSCredentialProvider() {
+            @Override
+            public OSSFederationToken getFederationToken() throws ClientException {
+                return authToken;
+            }
+        };
+
+
+        // 配置类如果不设置，会有默认配置。
+        ClientConfiguration conf = new ClientConfiguration();
+        conf.setConnectionTimeout(15 * 1000); // 连接超时，默认15秒。
+        conf.setSocketTimeout(15 * 1000); // socket超时，默认15秒。
+        conf.setMaxConcurrentRequest(5); // 最大并发请求数，默认5个。
+        conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次。
+        conf.setHttpDnsEnable(true);//默认为true，表示开启DNS配置。如需关闭请将其设置为false。
+
+        OSS oss = new OSSClient(getApplicationContext(), endpoint, credentialProvider);
+        // 调用此方法开启日志。
+        OSSLog.enableLog();
+        String objectKey = "base64_and_file" + "/" + file.getName() + "_" + System.currentTimeMillis();
+
+        // 构造上传请求。
+        PutObjectRequest put = new PutObjectRequest("rx-java2-and-retrofit2-bucket", objectKey, file.getAbsolutePath());
+
+        // 异步上传时可以设置进度回调。
+        put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
+            @Override
+            public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
+                LogManager.i(TAG, "currentSize: " + currentSize + " totalSize: " + totalSize);
+            }
+        });
+
+        OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                LogManager.i(TAG, "onSuccess ETag*****" + result.getETag());
+                LogManager.i(TAG, "onSuccess RequestId*****" + result.getRequestId());
+                LogManager.i(TAG, "onSuccess threadName*****" + Thread.currentThread().getName());
+
+
+                Observable.create(new ObservableOnSubscribe<Integer>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+                        emitter.onNext(0);
+                        LogManager.i(TAG, "onSuccess threadName2*****" + Thread.currentThread().getName());
+                    }
+                })
+//                        .subscribeOn(Schedulers.io()) //给上面分配了异步线程
+                        .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
+                        //解决RxJava2导致的内存泄漏问题
+                        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                        .subscribe(new Consumer<Integer>() {
+                            @Override
+                            public void accept(Integer integer) throws Exception {
+                                LogManager.i(TAG, "onSuccess threadName3*****" + Thread.currentThread().getName());
+                                hideLoading();
+                                showToast("upload success", true);
+                            }
+                        });
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                // 请求异常。
+                if (clientExcepion != null) {
+                    // 本地异常，如网络异常等。
+                    clientExcepion.printStackTrace();
+                }
+                if (serviceException != null) {
+                    // 服务异常。
+                    LogManager.i(TAG, "onFailure ErrorCode" + serviceException.getErrorCode());
+                    LogManager.i(TAG, "onFailure RequestId" + serviceException.getRequestId());
+                    LogManager.i(TAG, "onFailure HostId" + serviceException.getHostId());
+                    LogManager.i(TAG, "onFailure RawMessage" + serviceException.getRawMessage());
+                    LogManager.i(TAG, "onFailure threadName*****" + Thread.currentThread().getName());
+                }
+
+                Observable.create(new ObservableOnSubscribe<Integer>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+                        emitter.onNext(0);
+                        LogManager.i(TAG, "onFailure threadName2*****" + Thread.currentThread().getName());
+                    }
+                })
+//                        .subscribeOn(Schedulers.io()) //给上面分配了异步线程
+                        .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
+                        //解决RxJava2导致的内存泄漏问题
+                        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                        .subscribe(new Consumer<Integer>() {
+                            @Override
+                            public void accept(Integer integer) throws Exception {
+                                LogManager.i(TAG, "onFailure threadName3*****" + Thread.currentThread().getName());
+                                hideLoading();
+                                showToast("upload success", true);
+                            }
+                        });
+            }
+        });
+
+        // task.cancel(); // 可以取消任务。
+        // task.waitUntilFinished(); // 等待上传完成。
     }
 
     @Override
