@@ -1,7 +1,5 @@
 package com.phone.common_library.manager;
 
-import android.Manifest;
-
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -15,7 +13,7 @@ import io.reactivex.functions.Consumer;
 public class RxPermissionsManager {
 
     private static final String TAG = RxPermissionsManager.class.getSimpleName();
-//    private static RxPermissionsManager rxPermissionsManager;
+    //    private static RxPermissionsManager rxPermissionsManager;
     //    private RxPermissions rxPermissions;
     private RxPermissions rxActivityPermissions;
     private RxPermissions rxFragmentPermissions;
@@ -39,15 +37,10 @@ public class RxPermissionsManager {
     /**
      * RxAppCompatActivity里需要的时候直接调用就行了（會拋出異常）
      */
-    public void initRxPermissionsRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
+    public void initRxPermissionsRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback, String... permissions) {
         rxActivityPermissions = new RxPermissions(rxAppCompatActivity);
         rxActivityPermissions
-                .requestEachCombined(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_PHONE_STATE
-//                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
+                .requestEachCombined(permissions)
                 //解决rxjava导致的内存泄漏问题
                 .compose(rxAppCompatActivity.<Permission>bindToLifecycle())
                 .subscribe(new Consumer<Permission>() {
@@ -96,15 +89,10 @@ public class RxPermissionsManager {
     /**
      * RxAppCompatActivity里需要的时候直接调用就行了（不會拋出異常）
      */
-    public void initRxPermissionsRxAppCompatActivity2(RxAppCompatActivity rxAppCompatActivity, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
+    public void initRxPermissionsRxAppCompatActivity2(RxAppCompatActivity rxAppCompatActivity, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback, String... permissions) {
         rxActivityPermissions = new RxPermissions(rxAppCompatActivity);
         rxActivityPermissions
-                .requestEachCombined(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_PHONE_STATE
-//                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
+                .requestEachCombined(permissions)
                 //解决rxjava导致的内存泄漏问题
                 .compose(rxAppCompatActivity.<Permission>bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Consumer<Permission>() {
@@ -145,15 +133,10 @@ public class RxPermissionsManager {
     /**
      * RxFragment里需要的时候直接调用就行了（會拋出異常）
      */
-    public void initRxPermissionsRxFragment(RxFragment rxFragment, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
+    public void initRxPermissionsRxFragment(RxFragment rxFragment, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback, String... permissions) {
         rxFragmentPermissions = new RxPermissions(rxFragment);
         rxFragmentPermissions
-                .requestEachCombined(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_PHONE_STATE
-//                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
+                .requestEachCombined(permissions)
                 //解决rxjava导致的内存泄漏问题
                 .compose(rxFragment.<Permission>bindToLifecycle())
                 .subscribe(new Consumer<Permission>() {
@@ -203,15 +186,10 @@ public class RxPermissionsManager {
     /**
      * RxFragment里需要的时候直接调用就行了（不會拋出異常）
      */
-    public void initRxPermissionsRxFragment2(RxFragment rxFragment, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
+    public void initRxPermissionsRxFragment2(RxFragment rxFragment, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback, String... permissions) {
         rxFragmentPermissions = new RxPermissions(rxFragment);
         rxFragmentPermissions
-                .requestEachCombined(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_PHONE_STATE
-//                        , Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
+                .requestEachCombined(permissions)
                 //解决rxjava导致的内存泄漏问题
                 .compose(rxFragment.<Permission>bindUntilEvent(FragmentEvent.DESTROY))
                 .subscribe(new Consumer<Permission>() {

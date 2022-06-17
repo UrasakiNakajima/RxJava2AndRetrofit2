@@ -1,5 +1,6 @@
 package com.phone.base64_and_file;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -259,15 +260,15 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     private void initRxPermissionsRxAppCompatActivity() {
         RxPermissionsManager rxPermissionsManager = new RxPermissionsManager();
         rxPermissionsManager.initRxPermissionsRxAppCompatActivity(this, new OnCommonRxPermissionsCallback() {
-            @Override
-            public void onRxPermissionsAllPass() {
-                if (TextUtils.isEmpty(baseApplication.getSystemId())) {
-                    String systemId = SystemManager.getSystemId(baseApplication);
-                    baseApplication.setSystemId(systemId);
-                    LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
-                } else {
-                    LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
-                }
+                    @Override
+                    public void onRxPermissionsAllPass() {
+                        if (TextUtils.isEmpty(baseApplication.getSystemId())) {
+                            String systemId = SystemManager.getSystemId(baseApplication);
+                            baseApplication.setSystemId(systemId);
+                            LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
+                        } else {
+                            LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
+                        }
 
 //                //第一种方法
 //                if (presenter != null) {
@@ -278,20 +279,22 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 //                }
 
 
-                //第二种方法
-                initBase64AndFileTask();
-            }
+                        //第二种方法
+                        initBase64AndFileTask();
+                    }
 
-            @Override
-            public void onNotCheckNoMorePromptError() {
-                showSystemSetupDialog();
-            }
+                    @Override
+                    public void onNotCheckNoMorePromptError() {
+                        showSystemSetupDialog();
+                    }
 
-            @Override
-            public void onCheckNoMorePromptError() {
-                showSystemSetupDialog();
-            }
-        });
+                    @Override
+                    public void onCheckNoMorePromptError() {
+                        showSystemSetupDialog();
+                    }
+                }, Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE);
     }
 
     /**

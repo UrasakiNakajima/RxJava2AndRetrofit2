@@ -22,7 +22,6 @@
     <!-- 如您需要接入地理围栏业务，建议集成以下权限（可选）-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
     <!-- 如您需要对应设备通知相关的能力，建议集成以下权限（可选）-->
@@ -35,7 +34,6 @@
         android:name="${applicationId}.permission.JOPERATE_MESSAGE"
         android:protectionLevel="signature" />
     <uses-permission android:name="${applicationId}.permission.JOPERATE_MESSAGE" />
-
 
     <application
         android:name=".MineApplication"
@@ -50,7 +48,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:replace="android:allowBackup">
-
 
         <!-- 若您的业务中有使用极光富媒体功能，或者极光早上好功能，需要把此 Activity 的 exported 修改成 true 覆盖 mavenCentral 上的组件。 -->
         <activity

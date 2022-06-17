@@ -16,6 +16,7 @@
     <string name="create_an_exception">製造一個異常（造成App崩潰的異常）</string>
     <string name="create_an_exception2">製造一個異常（不會造成App崩潰的異常）</string>
     <string name="request_permissions">請求權限</string>
+    <string name="request_permission_and_start_locating">請求權限，并开始定位</string>
     <string name="kill_app">殺死App</string>
 
     <string name="data_in_wrong_format">數據格式錯誤</string>

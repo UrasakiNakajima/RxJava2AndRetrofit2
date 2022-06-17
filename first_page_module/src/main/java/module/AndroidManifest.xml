@@ -14,6 +14,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
         tools:replace="android:allowBackup">
+
+        <!-- 高德地图，这里的value是高德地图开放平台你的应用的Key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="xxxxxxx" />
+
         <activity
             android:name=".FirstPageActivity"
             android:launchMode="singleTask"
@@ -32,6 +38,9 @@
             android:name=".ui.ShowVideoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+        <!-- 高德地图 -->
+        <service android:name="com.amap.api.location.APSService" />
 
     </application>
 

@@ -107,4 +107,7 @@ dependencies {
 
     //百分比进度条
     implementation 'cn.bingoogolapple:bga-progressbar:1.0.1@aar'
+
+    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
 }

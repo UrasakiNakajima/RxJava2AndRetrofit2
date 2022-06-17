@@ -93,6 +93,7 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
         tevResourceCenter = (TextView) findViewById(R.id.tev_resource_center);
         tevMine = (TextView) findViewById(R.id.tev_mine);
 
+
         addContentView(loadView, layoutParams);
 
         fragmentStatePagerAdapter = new TabFragmentStatePagerAdapter(getSupportFragmentManager(), fragmentList);
@@ -268,6 +269,7 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
             tevPleaseAddComponents.setVisibility(View.VISIBLE);
             layoutMain.setVisibility(View.GONE);
         }
+
     }
 
     @Override

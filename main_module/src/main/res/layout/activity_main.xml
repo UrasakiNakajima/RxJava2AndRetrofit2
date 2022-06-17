@@ -19,21 +19,21 @@
         android:textColor="@color/color_FF198CFF"
         android:textSize="@dimen/sp_18"
         android:textStyle="bold"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/layout_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:ignore="UselessParent">
 
         <com.phone.common_library.custom_view.MineLazyViewPager
             android:id="@+id/mine_view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="590" />
+            android:layout_weight="540" />
 
         <View
             android:layout_width="match_parent"
