@@ -385,148 +385,148 @@ public class Base64AndFileManager {
     }
 
 
-    /**
-     * 還在驗證中，請不要使用
-     *
-     * @param base64Content
-     * @param dirsPath
-     * @param fileName
-     * @return
-     */
-    public static File base64ToFileThird(String base64Content, String dirsPath, String fileName) {
-        ByteArrayInputStream bais = null;
-        BufferedInputStream bis = null;
-        FileOutputStream fos = null;
-        BufferedOutputStream bos = null;
-        File file = null;
+//    /**
+//     * 還在驗證中，請不要使用
+//     *
+//     * @param base64Content
+//     * @param dirsPath
+//     * @param fileName
+//     * @return
+//     */
+//    public static File base64ToFileThird(String base64Content, String dirsPath, String fileName) {
+//        ByteArrayInputStream bais = null;
+//        BufferedInputStream bis = null;
+//        FileOutputStream fos = null;
+//        BufferedOutputStream bos = null;
+//        File file = null;
+//
+//        try {
+//            File dirs = new File(dirsPath);
+//            if (!dirs.exists()) {
+//                dirs.mkdirs();
+//            }
+//            file = new File(dirs, fileName);
+//            if (!file.exists()) {
+//                file.createNewFile();
+//            }
+//
+//            //base64编码内容转换为字节数组
+//            byte[] bytes = org.apache.commons.codec.binary.Base64.decodeBase64(base64Content);
+//            bais = new ByteArrayInputStream(bytes);
+//            bis = new BufferedInputStream(bais);
+//            fos = new FileOutputStream(file);
+//            bos = new BufferedOutputStream(fos);
+//            byte[] buffer = new byte[1024 * 8];
+//            int len = 0;
+//            while ((len = bis.read(buffer)) != -1) {
+//                bos.write(buffer, 0, len);
+//            }
+//            bos.flush();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (bis != null) {
+//                    bis.close();
+//                }
+//                if (bos != null) {
+//                    bos.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return file;
+//    }
 
-        try {
-            File dirs = new File(dirsPath);
-            if (!dirs.exists()) {
-                dirs.mkdirs();
-            }
-            file = new File(dirs, fileName);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
 
-            //base64编码内容转换为字节数组
-            byte[] bytes = org.apache.commons.codec.binary.Base64.decodeBase64(base64Content);
-            bais = new ByteArrayInputStream(bytes);
-            bis = new BufferedInputStream(bais);
-            fos = new FileOutputStream(file);
-            bos = new BufferedOutputStream(fos);
-            byte[] buffer = new byte[1024 * 8];
-            int len = 0;
-            while ((len = bis.read(buffer)) != -1) {
-                bos.write(buffer, 0, len);
-            }
-            bos.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bis != null) {
-                    bis.close();
-                }
-                if (bos != null) {
-                    bos.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//    /**
+//     * 還在驗證中，請不要使用
+//     *
+//     * @param is
+//     * @return
+//     */
+//    public static String fileToBase64Third(InputStream is) {
+//        byte[] bytes = null;
+////        FileInputStream fis = null;
+//        BufferedInputStream bis = null;
+//        ByteArrayOutputStream baos = null;
+////        BufferedOutputStream bos = null;
+//
+//        try {
+////            fis = new FileInputStream(file);
+//            bis = new BufferedInputStream(is);
+//            baos = new ByteArrayOutputStream();
+////            bos = new BufferedOutputStream(baos);
+//            byte[] buffer = new byte[1024 * 8];
+//            int len = 0;
+//            while ((len = bis.read(buffer)) != -1) {
+//                baos.write(buffer, 0, len);
+//            }
+//            //刷新此输出流并强制写出所有缓冲的输出字节
+//            baos.flush();
+//            bytes = baos.toByteArray();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (bis != null) {
+//                    bis.close();
+//                }
+//                if (baos != null) {
+//                    baos.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return org.apache.commons.codec.binary.Base64.encodeBase64String(bytes);
+//    }
 
-        return file;
-    }
-
-
-    /**
-     * 還在驗證中，請不要使用
-     *
-     * @param is
-     * @return
-     */
-    public static String fileToBase64Third(InputStream is) {
-        byte[] bytes = null;
+//    /**
+//     * 還在驗證中，請不要使用
+//     *
+//     * @param file
+//     * @return
+//     */
+//    public static String fileToBase64Third(File file) {
+//        byte[] bytes = null;
 //        FileInputStream fis = null;
-        BufferedInputStream bis = null;
-        ByteArrayOutputStream baos = null;
-//        BufferedOutputStream bos = null;
-
-        try {
+//        BufferedInputStream bis = null;
+//        ByteArrayOutputStream baos = null;
+////        BufferedOutputStream bos = null;
+//        try {
 //            fis = new FileInputStream(file);
-            bis = new BufferedInputStream(is);
-            baos = new ByteArrayOutputStream();
-//            bos = new BufferedOutputStream(baos);
-            byte[] buffer = new byte[1024 * 8];
-            int len = 0;
-            while ((len = bis.read(buffer)) != -1) {
-                baos.write(buffer, 0, len);
-            }
-            //刷新此输出流并强制写出所有缓冲的输出字节
-            baos.flush();
-            bytes = baos.toByteArray();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bis != null) {
-                    bis.close();
-                }
-                if (baos != null) {
-                    baos.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return org.apache.commons.codec.binary.Base64.encodeBase64String(bytes);
-    }
-
-    /**
-     * 還在驗證中，請不要使用
-     *
-     * @param file
-     * @return
-     */
-    public static String fileToBase64Third(File file) {
-        byte[] bytes = null;
-        FileInputStream fis = null;
-        BufferedInputStream bis = null;
-        ByteArrayOutputStream baos = null;
-//        BufferedOutputStream bos = null;
-        try {
-            fis = new FileInputStream(file);
-            bis = new BufferedInputStream(fis);
-            baos = new ByteArrayOutputStream();
-//            bos = new BufferedOutputStream(baos);
-            byte[] buffer = new byte[1024 * 8];
-            int len = 0;
-            while ((len = bis.read(buffer)) != -1) {
-                baos.write(buffer, 0, len);
-            }
-            //刷新此输出流并强制写出所有缓冲的输出字节
-            baos.flush();
-            bytes = baos.toByteArray();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bis != null) {
-                    bis.close();
-                }
-                if (baos != null) {
-                    baos.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return org.apache.commons.codec.binary.Base64.encodeBase64String(bytes);
-    }
+//            bis = new BufferedInputStream(fis);
+//            baos = new ByteArrayOutputStream();
+////            bos = new BufferedOutputStream(baos);
+//            byte[] buffer = new byte[1024 * 8];
+//            int len = 0;
+//            while ((len = bis.read(buffer)) != -1) {
+//                baos.write(buffer, 0, len);
+//            }
+//            //刷新此输出流并强制写出所有缓冲的输出字节
+//            baos.flush();
+//            bytes = baos.toByteArray();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (bis != null) {
+//                    bis.close();
+//                }
+//                if (baos != null) {
+//                    baos.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return org.apache.commons.codec.binary.Base64.encodeBase64String(bytes);
+//    }
 
     public static List<String> getBase64StrList(String filePath) {
         List<String> base64StrList = new ArrayList<>();

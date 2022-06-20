@@ -47,4 +47,7 @@ dependencies {
     implementation 'id.zelory:compressor:2.1.0'
 
 
+    //阿里云Oss对象存储
+    api 'com.aliyun.dpa:oss-android-sdk:2.9.11'
+
 }

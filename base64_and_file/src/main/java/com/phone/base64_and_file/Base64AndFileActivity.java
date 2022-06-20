@@ -515,21 +515,22 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         //你的阿里云对象存储上的accessKeySecret
         String accessKeySecret = "xxxxxxx";
 
-        //token直接用这个就行
-        String token = "CAES+wMIARKAAZhjH0EUOIhJMQBMjRywXq7MQ/cjLYg80Aho1ek0Jm63XMhr9Oc5s˙∂˙∂3qaPer8p1YaX1NTDiCFZWFkvlHf1pQhuxfKBc+mRR9KAbHUefqH+rdjZqjTF7p2m1wJXP8S6k+G2MpHrUe6TYBkJ43GhhTVFMuM3BZajY3VjZWOXBIODRIR1FKZjIiEjMzMzE0MjY0NzM5MTE4NjkxMSoLY2xpZGSSDgSDGAGESGTETqOio6c2RrLWRlbW8vKgoUYWNzOm9zczoqOio6c2RrLWRlbW9KEDExNDg5MzAxMDcyNDY4MThSBTI2ODQyWg9Bc3N1bWVkUm9sZVVzZXJgAGoSMzMzMTQyNjQ3MzkxMTg2OTExcglzZGstZGVtbzI=";
+        //token
+        String token = "xxxxxxx";
+
         //expiration直接用这个就行
-        String expiration = "2022-12-10T07:49:09Z";
-        OSSFederationToken authToken = new OSSFederationToken(accessKeyId, accessKeySecret, token, expiration);
+        String expiration = "xxxxxxx";
 
 //        // 填写STS应用服务器地址。
 //        String stsServer = "https://example.com";
 //        // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
 //        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
 
+        //这里要使用阿里云的STS，不要自己配置
         OSSCredentialProvider credentialProvider = new OSSCredentialProvider() {
             @Override
             public OSSFederationToken getFederationToken() throws ClientException {
-                return authToken;
+                return new OSSFederationToken(accessKeyId, accessKeySecret, token, expiration);
             }
         };
 
@@ -559,7 +560,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
             @Override
             public void onProgress(PutObjectRequest request, long currentSize, long totalSize) {
-                LogManager.i(TAG, "currentSize: " + currentSize + " totalSize: " + totalSize);
+//                LogManager.i(TAG, "currentSize: " + currentSize + " totalSize: " + totalSize);
             }
         });
 
@@ -598,14 +599,17 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                 if (clientExcepion != null) {
                     // 本地异常，如网络异常等。
                     clientExcepion.printStackTrace();
+//                    ExceptionManager.getInstance().throwException(rxAppCompatActivity, clientExcepion);
                 }
                 if (serviceException != null) {
                     // 服务异常。
-                    LogManager.i(TAG, "onFailure ErrorCode" + serviceException.getErrorCode());
-                    LogManager.i(TAG, "onFailure RequestId" + serviceException.getRequestId());
-                    LogManager.i(TAG, "onFailure HostId" + serviceException.getHostId());
-                    LogManager.i(TAG, "onFailure RawMessage" + serviceException.getRawMessage());
+                    LogManager.i(TAG, "onFailure ErrorCode*****" + serviceException.getErrorCode());
+                    LogManager.i(TAG, "onFailure RequestId*****" + serviceException.getRequestId());
+                    LogManager.i(TAG, "onFailure HostId*****" + serviceException.getHostId());
+                    LogManager.i(TAG, "onFailure RawMessage*****" + serviceException.getRawMessage());
                     LogManager.i(TAG, "onFailure threadName*****" + Thread.currentThread().getName());
+                    LogManager.i(TAG, "onFailure serviceException*****" + serviceException.toString());
+//                    ExceptionManager.getInstance().throwException(rxAppCompatActivity, clientExcepion);
                 }
 
                 Observable.create(new ObservableOnSubscribe<Integer>() {

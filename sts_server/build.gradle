@@ -1,0 +1,22 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //阿里云Oss对象存储获取sts token（java端的）
+    implementation 'com.aliyun:aliyun-java-sdk-sts:3.0.0'
+    //阿里云Oss对象存储获取sts token（java端的）
+    implementation 'com.aliyun:aliyun-java-sdk-core:4.4.6'
+
+}
