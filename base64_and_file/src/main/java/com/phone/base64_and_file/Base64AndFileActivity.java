@@ -514,25 +514,23 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         String accessKeyId = "xxxxxxx";
         //你的阿里云对象存储上的accessKeySecret
         String accessKeySecret = "xxxxxxx";
-
         //token
         String token = "xxxxxxx";
-
-        //expiration直接用这个就行
+        //expiration
         String expiration = "xxxxxxx";
-
-//        // 填写STS应用服务器地址。
-//        String stsServer = "https://example.com";
-//        // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
-//        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
-
-        //这里要使用阿里云的STS，不要自己配置
+        //这里要使用阿里云的STS，不要自己配置（这个是模拟代码，所以这样使用的）
         OSSCredentialProvider credentialProvider = new OSSCredentialProvider() {
             @Override
             public OSSFederationToken getFederationToken() throws ClientException {
                 return new OSSFederationToken(accessKeyId, accessKeySecret, token, expiration);
             }
         };
+
+
+//        // 填写STS应用服务器地址。（使用这个，服务端要部署STS）
+//        String stsServer = "https://example.com";
+//        // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
+//        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
 
 
         // 配置类如果不设置，会有默认配置。
