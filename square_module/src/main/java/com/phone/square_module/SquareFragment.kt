@@ -22,6 +22,7 @@ import com.phone.common_library.callback.OnCommonRxPermissionsCallback
 import com.phone.common_library.manager.*
 import com.phone.square_module.bean.DataX
 import com.phone.square_module.databinding.FragmentSquareBinding
+import com.phone.square_module.observer.ObserverActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -102,7 +103,10 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         mDatabind.imvPicture.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
 //            startActivity(PickerViewActivity::class.java)
-            startActivity(Base64AndFileActivity::class.java)
+//            startActivity(Base64AndFileActivity::class.java)
+
+
+            startActivity(ObserverActivity::class.java)
         }
     }
 
@@ -185,7 +189,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
                     if (number == 1) {
-                        val baseMvpRxAppActivity = rxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
+                        val baseMvpRxAppActivity =
+                            rxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
                         baseMvpRxAppActivity.getActivityPageManager().exitApp2();
                     } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
@@ -213,7 +218,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 }
             }, Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE)
+            Manifest.permission.READ_PHONE_STATE
+        )
     }
 
     private fun showSystemSetupDialog() {

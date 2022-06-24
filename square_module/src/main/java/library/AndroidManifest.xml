@@ -12,6 +12,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".observer.ObserverActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.PickerViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
