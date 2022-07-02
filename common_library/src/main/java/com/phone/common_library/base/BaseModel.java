@@ -16,7 +16,7 @@ public class BaseModel<T> {
     private WeakReference<T> modelContext;
 
     protected void attachContext(T modelContext) {
-        this.modelContext = new WeakReference<T>(modelContext);
+        this.modelContext = new WeakReference<>(modelContext);
     }
 
     protected T obtainContext() {

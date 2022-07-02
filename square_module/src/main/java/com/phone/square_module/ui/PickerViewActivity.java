@@ -287,7 +287,7 @@ public class PickerViewActivity extends BaseRxAppActivity {
         private WeakReference<PickerViewActivity> activityWeakReference;
 
         private AnalyticalDataAsyncTask(PickerViewActivity pickerViewActivity) {
-            activityWeakReference = new WeakReference<PickerViewActivity>(pickerViewActivity);
+            activityWeakReference = new WeakReference<>(pickerViewActivity);
         }
 
         /**

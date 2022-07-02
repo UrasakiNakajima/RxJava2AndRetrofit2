@@ -16,7 +16,7 @@ public class BasePresenter<T> {
     //    protected CompositeDisposable compositeDisposable;
 
     protected void attachView(T view) {
-        modelView = new WeakReference<T>(view);
+        modelView = new WeakReference<>(view);
 //        compositeDisposable = new CompositeDisposable();
     }
 
