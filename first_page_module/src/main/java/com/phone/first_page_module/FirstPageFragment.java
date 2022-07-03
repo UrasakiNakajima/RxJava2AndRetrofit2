@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.amap.api.location.AMapLocation;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.base.BaseMvpRxFragment;
@@ -34,9 +35,11 @@ import com.phone.common_library.manager.RetrofitManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.ScreenManager;
 import com.phone.common_library.manager.SystemManager;
+import com.phone.common_library.service.FirstPageService;
+import com.phone.common_library.service.SquareService;
 import com.phone.common_library.ui.NewsDetailActivity;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
-import com.phone.first_page_module.bean.FirstPageResponse;
+import com.phone.common_library.bean.FirstPageResponse;
 import com.phone.first_page_module.manager.AMAPLocationManager;
 import com.phone.first_page_module.presenter.FirstPagePresenterImpl;
 import com.phone.first_page_module.view.IFirstPageView;
@@ -205,6 +208,12 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     protected void initLoadData() {
         refreshLayout.autoRefresh();
 
+        SquareService squareService =
+                (SquareService) ARouter.getInstance().build("/square_module/SquareServiceImpl")
+                        .navigation();
+        LogManager.i(TAG,
+                "squareService.getSquareDataList()******" + squareService.getSquareDataList().toString());
+
         //		startAsyncTask();
 
 //        try {
@@ -258,6 +267,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     @Override
     public void firstPageDataSuccess(List<FirstPageResponse.ResultData.JuheNewsBean> success) {
         if (!rxAppCompatActivity.isFinishing()) {
+            FirstPageService firstPageService = (FirstPageService) ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl").navigation();
             if (isRefresh) {
                 mJuheNewsBeanList.clear();
                 mJuheNewsBeanList.addAll(success);
@@ -270,6 +280,8 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
                 firstPageAdapter.addAllData(mJuheNewsBeanList);
                 refreshLayout.finishLoadMore();
             }
+            firstPageService.setFirstPageDataList(mJuheNewsBeanList);
+            hideLoading();
         }
     }
 
@@ -287,6 +299,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
             } else {
                 refreshLayout.finishLoadMore(false);
             }
+            hideLoading();
         }
     }
 

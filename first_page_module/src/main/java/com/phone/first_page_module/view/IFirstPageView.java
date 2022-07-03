@@ -1,7 +1,7 @@
 package com.phone.first_page_module.view;
 
 import com.phone.common_library.base.IBaseView;
-import com.phone.first_page_module.bean.FirstPageResponse;
+import com.phone.common_library.bean.FirstPageResponse;
 
 import java.util.List;
 

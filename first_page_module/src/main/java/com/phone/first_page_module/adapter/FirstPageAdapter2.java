@@ -7,7 +7,7 @@ import com.aspsine.irecyclerview.universaladapter.ViewHolderHelper;
 import com.aspsine.irecyclerview.universaladapter.recyclerview.CommonRecycleViewAdapter;
 import com.phone.common_library.callback.RcvOnItemViewClickListener;
 import com.phone.first_page_module.R;
-import com.phone.first_page_module.bean.FirstPageResponse;
+import com.phone.common_library.bean.FirstPageResponse;
 
 import java.util.List;
 

@@ -12,7 +12,7 @@
 
         <variable
             name="dataxRxAppCompatActivity"
-            type="com.phone.square_module.bean.DataX" />
+            type="com.phone.common_library.bean.DataX" />
 
         <import type="android.view.View" />
 

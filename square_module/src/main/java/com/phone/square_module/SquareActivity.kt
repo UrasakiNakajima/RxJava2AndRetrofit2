@@ -13,12 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvvmAppRxActivity
+import com.phone.common_library.bean.DataX
 import com.phone.common_library.bean.User
 import com.phone.common_library.bean.User2
 import com.phone.common_library.bean.User3
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback
 import com.phone.common_library.manager.*
-import com.phone.square_module.bean.DataX
 import com.phone.square_module.databinding.ActivitySquareBinding
 import com.phone.square_module.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
@@ -157,7 +157,6 @@ class SquareActivity :
                 error,
                 false
             )
-
             hideLoading()
         }
     }

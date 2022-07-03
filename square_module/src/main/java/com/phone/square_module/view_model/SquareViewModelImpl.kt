@@ -3,13 +3,13 @@ package com.phone.square_module.view_model
 import android.text.TextUtils
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseViewModel
+import com.phone.common_library.bean.DataX
+import com.phone.common_library.bean.SquareBean
 import com.phone.common_library.callback.OnCommonSingleParamCallback
 import com.phone.common_library.manager.GsonManager
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.SingleLiveData
-import com.phone.square_module.bean.DataX
-import com.phone.square_module.bean.SquareBean
 import com.phone.square_module.model.SquareModelImpl
 import com.phone.square_module.R
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity

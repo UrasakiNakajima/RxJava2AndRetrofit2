@@ -1,4 +1,4 @@
-package com.phone.first_page_module.bean;
+package com.phone.common_library.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -227,6 +227,21 @@ public class FirstPageResponse implements Parcelable {
 					return new JuheNewsBean[size];
 				}
 			};
+
+			@Override
+			public String toString() {
+				return "JuheNewsBean{" +
+						"uniquekey='" + uniquekey + '\'' +
+						", title='" + title + '\'' +
+						", date='" + date + '\'' +
+						", category='" + category + '\'' +
+						", author_name='" + author_name + '\'' +
+						", url='" + url + '\'' +
+						", thumbnail_pic_s='" + thumbnail_pic_s + '\'' +
+						", thumbnail_pic_s02='" + thumbnail_pic_s02 + '\'' +
+						", thumbnail_pic_s03='" + thumbnail_pic_s03 + '\'' +
+						'}';
+			}
 		}
 		
 		@Override

@@ -27,7 +27,7 @@ import com.phone.common_library.manager.ScreenManager;
 import com.phone.common_library.manager.SystemManager;
 import com.phone.common_library.ui.NewsDetailActivity;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
-import com.phone.first_page_module.bean.FirstPageResponse;
+import com.phone.common_library.bean.FirstPageResponse;
 import com.phone.first_page_module.manager.AMAPLocationManager;
 import com.phone.first_page_module.presenter.FirstPagePresenterImpl;
 import com.phone.first_page_module.view.IFirstPageView;
@@ -209,6 +209,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
                 firstPageAdapter.addAllData(mJuheNewsBeanList);
                 refreshLayout.finishLoadMore();
             }
+            hideLoading();
         }
     }
 
@@ -226,6 +227,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
             } else {
                 refreshLayout.finishLoadMore(false);
             }
+            hideLoading();
         }
     }
 
@@ -279,6 +281,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
             presenter.firstPageRxAppCompatActivity(rxAppCompatActivity, bodyParams);
         } else {
             firstPageDataError(getResources().getString(R.string.please_check_the_network_connection));
+            hideLoading();
         }
     }
 

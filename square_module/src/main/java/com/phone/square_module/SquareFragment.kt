@@ -11,20 +11,23 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.base64_and_file.Base64AndFileActivity
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.BaseMvvmRxFragment
+import com.phone.common_library.bean.DataX
 import com.phone.common_library.bean.User
 import com.phone.common_library.bean.User2
 import com.phone.common_library.bean.User3
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback
 import com.phone.common_library.manager.*
-import com.phone.square_module.bean.DataX
+import com.phone.common_library.service.FirstPageService
+import com.phone.common_library.service.SquareService
 import com.phone.square_module.databinding.FragmentSquareBinding
 import com.phone.square_module.observer.ObserverActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
+
 
 @Route(path = "/square_module/square")
 class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareBinding>() {
@@ -113,6 +116,14 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     override fun initLoadData() {
         initSquareData("$currentPage")
 
+        val firstPageService =
+            ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
+                .navigation() as FirstPageService
+        LogManager.i(
+            TAG,
+            "firstPageService.firstPageDataList******" + firstPageService.firstPageDataList.toString()
+        );
+
 //        startAsyncTask()
 
 //        //製造一個类强制转换异常（java.lang.ClassCastException）
@@ -157,6 +168,10 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 datax.chapterName = success.get(1).chapterName
                 datax.link = success.get(1).link
                 datax.envelopePic = success.get(1).envelopePic
+                val squareService: SquareService =
+                    ARouter.getInstance().build("/square_module/SquareServiceImpl")
+                        .navigation() as SquareService
+                squareService.squareDataList = success;
             }
             hideLoading()
         }
@@ -174,7 +189,6 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 error
             )
-
             hideLoading()
         }
     }

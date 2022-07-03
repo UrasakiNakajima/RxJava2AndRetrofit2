@@ -2,9 +2,6 @@ package com.phone.first_page_module.presenter;
 
 import android.text.TextUtils;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.base.BasePresenter;
 import com.phone.common_library.base.IBaseView;
@@ -13,7 +10,7 @@ import com.phone.common_library.manager.GsonManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.first_page_module.R;
-import com.phone.first_page_module.bean.FirstPageResponse;
+import com.phone.common_library.bean.FirstPageResponse;
 import com.phone.first_page_module.model.FirstPageModelImpl;
 import com.phone.first_page_module.view.IFirstPageView;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
@@ -66,14 +63,12 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                 } else {
                                     firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.loading_failed));
                                 }
-                                firstPageView.hideLoading();
                             }
 
                             @Override
                             public void onError(String error) {
                                 LogManager.i(TAG, "error*****" + error);
                                 firstPageView.firstPageDataError(error);
-                                firstPageView.hideLoading();
                             }
                         });
                 //				compositeDisposable.add(disposable);
@@ -135,14 +130,12 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                 } else {
                                     firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.loading_failed));
                                 }
-                                firstPageView.hideLoading();
                             }
 
                             @Override
                             public void onError(String error) {
                                 LogManager.i(TAG, "error*****" + error);
                                 firstPageView.firstPageDataError(error);
-                                firstPageView.hideLoading();
                             }
                         });
                 //				compositeDisposable.add(disposable);
