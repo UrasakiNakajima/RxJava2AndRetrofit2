@@ -40,7 +40,7 @@ import id.zelory.compressor.Compressor;
 
 public class BitmapManager {
 
-    private static final String TAG = "BitmapManager";
+    private static final String TAG = BitmapManager.class.getSimpleName();
     /**
      * 图像的旋转方向是0
      */

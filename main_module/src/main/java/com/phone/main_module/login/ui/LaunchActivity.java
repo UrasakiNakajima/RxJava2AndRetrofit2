@@ -25,7 +25,7 @@ import java.util.List;
 
 public class LaunchActivity extends BaseRxAppActivity {
 
-    private static final String TAG = "LaunchActivity";
+    private static final String TAG = LaunchActivity.class.getSimpleName();
 
     private String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,

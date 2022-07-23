@@ -7,7 +7,7 @@ import com.phone.common_library.okhttp3_app_glide_module.GlideApp
 
 object CommonBindingAdapter {
 
-    val TAG = "CommonBindingAdapter"
+    val TAG = CommonBindingAdapter::class.java.simpleName
 
     @JvmStatic
     @BindingAdapter("imageUrl")

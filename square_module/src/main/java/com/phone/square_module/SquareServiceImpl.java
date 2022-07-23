@@ -11,7 +11,7 @@ import java.util.List;
 @Route(path = "/square_module/SquareServiceImpl")
 public class SquareServiceImpl implements SquareService {
 
-    private static final String TAG = "SquareServiceImpl";
+    private static final String TAG = SquareServiceImpl.class.getSimpleName();
 
     @Override
     public void setSquareDataList(List<DataX> squareDataList) {

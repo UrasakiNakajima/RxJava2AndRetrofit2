@@ -16,7 +16,7 @@ import com.phone.mine_module.bean.Data
 class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        private val TAG = "MineAdapter"
+        private val TAG = MineAdapter::class.java.simpleName
     }
 
     private var mJuheNewsBeanList: MutableList<Data>? = null

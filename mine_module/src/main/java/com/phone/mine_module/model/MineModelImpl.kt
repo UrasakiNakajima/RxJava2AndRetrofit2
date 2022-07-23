@@ -7,7 +7,9 @@ import okhttp3.ResponseBody
 
 class MineModelImpl : IMineModel {
 
-    private val TAG = "MineModelImpl"
+    companion object {
+        private val TAG = MineModelImpl::class.java.simpleName
+    }
 
     override fun mineData(bodyParams: Map<String, String>): Observable<ResponseBody> {
         return RetrofitManager.getInstance().retrofit

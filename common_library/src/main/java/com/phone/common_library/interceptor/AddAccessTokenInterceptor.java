@@ -21,7 +21,7 @@ import okhttp3.Response;
 
 public class AddAccessTokenInterceptor implements Interceptor {
 	
-	private static final String          TAG = "AddCookiesInterceptor";
+	private static final String          TAG = AddAccessTokenInterceptor.class.getSimpleName();
 	private              BaseApplication baseApplication;
 	
 	public AddAccessTokenInterceptor(BaseApplication baseApplication) {

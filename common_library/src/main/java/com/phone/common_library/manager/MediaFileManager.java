@@ -14,6 +14,7 @@ import java.util.Locale;
 
 public class MediaFileManager {
 
+    private static final String TAG = MediaFileManager.class.getSimpleName();
     // Audio file types
     private static final int FILE_TYPE_MP3 = 1;
     private static final int FILE_TYPE_M4A = 2;

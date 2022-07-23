@@ -16,7 +16,7 @@ import android.view.ViewTreeObserver;
 
 public class ToolbarManager {
 
-    private static final String TAG = "ToolbarManager";
+    private static final String TAG = ToolbarManager.class.getSimpleName();
     private View rootView;//activity的根视图
     private int rootViewVisibleHeight;//纪录根视图的显示高度
     private OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener;

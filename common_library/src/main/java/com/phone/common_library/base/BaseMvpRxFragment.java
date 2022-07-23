@@ -25,7 +25,7 @@ import java.util.Map;
 
 public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends RxFragment {
 
-    private static final String TAG = "BaseMvpFragment";
+    private static final String TAG = BaseMvpRxFragment.class.getSimpleName();
     protected T presenter;
 
     protected String url;

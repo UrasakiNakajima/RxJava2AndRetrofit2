@@ -28,7 +28,7 @@ import java.util.Map;
 public class LoginPresenterImpl extends BasePresenter<IBaseView>
         implements ILoginPresenter {
 
-    private static final String TAG = "LoginPresenterImpl";
+    private static final String TAG = LoginPresenterImpl.class.getSimpleName();
     //    private IResourceChildView loginView;//P需要与V 交互，所以需要持有V的引用
     private LoginModelImpl model;
 

@@ -27,7 +27,7 @@ import com.phone.main_module.main.MainActivity;
 public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>
 	implements ILoginView {
 	
-	private static final String      TAG = "LoginActivity";
+	private static final String      TAG = LoginActivity.class.getSimpleName();
 	private              Toolbar     toolbar;
 	private              FrameLayout layoutBack;
 	private              ImageView   imvBack;

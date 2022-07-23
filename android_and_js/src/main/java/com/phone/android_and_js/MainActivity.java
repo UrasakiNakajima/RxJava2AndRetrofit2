@@ -27,7 +27,7 @@ import androidx.core.content.ContextCompat;
 
 public class MainActivity extends BaseAppActivity {
 	
-	private static final String      TAG = "MainActivity";
+	private static final String      TAG = MainActivity.class.getSimpleName();
 	private              Toolbar     toolbar;
 	private              FrameLayout layoutBack;
 	private              ImageView   imvBack;

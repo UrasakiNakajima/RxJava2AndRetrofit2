@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class Base64AndFileService extends Service {
 
-    private static final String TAG = "Base64AndFileService";
+    private static final String TAG = Base64AndFileService.class.getSimpleName();
     private Binder mBinder;
     /**
      * 普通服务的不同之处，onBind()方法不在打酱油，而是会返回一个实例

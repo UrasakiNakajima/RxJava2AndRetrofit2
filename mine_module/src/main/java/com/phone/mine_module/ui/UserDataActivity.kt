@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_user_data.*
 class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IUserDataView {
 
     companion object {
-        private const val TAG = "UserDataActivity"
+        private val TAG = UserDataActivity::class.java.simpleName
     }
 
     override fun initLayoutId(): Int {

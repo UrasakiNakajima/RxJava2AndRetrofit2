@@ -32,7 +32,7 @@ import java.util.Map;
 
 public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extends RxAppCompatActivity {
 
-    private static final String TAG = "BaseMvpRxAppActivity";
+    private static final String TAG = BaseMvpRxAppActivity.class.getSimpleName();
     public QMUILoadingView loadView;
     protected FrameLayout.LayoutParams layoutParams;
 

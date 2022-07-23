@@ -47,7 +47,7 @@ import okio.BufferedSink;
 
 public class Okhttp3Manager {
 
-    private static final String TAG = "Okhttp3Manager";
+    private static final String TAG = Okhttp3Manager.class.getSimpleName();
     private OkHttpClient client;
     private static Okhttp3Manager manager;
     public static final int UPDATA = 666;

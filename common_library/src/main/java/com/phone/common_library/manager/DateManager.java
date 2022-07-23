@@ -18,7 +18,7 @@ import java.util.TimeZone;
 
 public class DateManager {
     
-    private static final String TAG = "DateManager";
+    private static final String TAG = DateManager.class.getSimpleName();
     /**
      * 将日期转化成日期字符串
      *

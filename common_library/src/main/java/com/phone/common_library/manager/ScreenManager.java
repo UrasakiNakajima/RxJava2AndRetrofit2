@@ -21,7 +21,7 @@ import android.view.WindowManager;
 
 public class ScreenManager {
 	
-	private static final String TAG = "ScreenManager";
+	private static final String TAG = ScreenManager.class.getSimpleName();
 	
 	/**
 	 * 根据手机的分辨率从 dp 的单位 转成为 px(像素)

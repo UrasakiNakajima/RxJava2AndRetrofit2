@@ -18,7 +18,9 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
-    private val TAG: String = "MinePresenterImpl"
+    companion object {
+        private val TAG = MinePresenterImpl::class.java.simpleName
+    }
 
     //    private IResourceChildView feedbackView;//P需要与V 交互，所以需要持有V的引用
     private var model: MineModelImpl = MineModelImpl();

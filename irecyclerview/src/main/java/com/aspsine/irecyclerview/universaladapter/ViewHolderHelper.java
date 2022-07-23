@@ -26,6 +26,7 @@ import java.io.File;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewHolderHelper extends RecyclerView.ViewHolder {
+
     private SparseArray<View> mViews;
     private int mPosition;
     private View mConvertView;

@@ -20,7 +20,7 @@ import java.util.List;
 
 public class SoftKeyboardManager {
 
-    private static final String TAG = "SoftKeyboardManager";
+    private static final String TAG = SoftKeyboardManager.class.getSimpleName();
     private View rootView;//activity的根视图
     private int rootViewVisibleHeight;//纪录根视图的显示高度
     private OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener;

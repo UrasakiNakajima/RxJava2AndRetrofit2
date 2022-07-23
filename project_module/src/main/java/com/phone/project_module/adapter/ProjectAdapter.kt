@@ -14,7 +14,9 @@ import com.phone.project_module.databinding.ItemProjectBinding
 
 class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val TAG = "ProjectAdapter"
+    companion object {
+        private val TAG = ProjectAdapter::class.java.simpleName
+    }
     private var list: MutableList<DataX> = mutableListOf()
 
     fun clearData() {

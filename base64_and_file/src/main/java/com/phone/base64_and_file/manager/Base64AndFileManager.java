@@ -22,7 +22,7 @@ import Decoder.BASE64Encoder;
 
 public class Base64AndFileManager {
 
-    private static final String TAG = "Base64AndFileManager";
+    private static final String TAG = Base64AndFileManager.class.getSimpleName();
 
     /**
      * @param base64Content

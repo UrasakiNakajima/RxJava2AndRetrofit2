@@ -13,7 +13,7 @@ import java.io.RandomAccessFile;
 
 public class FileManager {
 
-    private static final String TAG = "FileManager";
+    private static final String TAG = FileManager.class.getSimpleName();
 
     // 将字符串写入到文本文件中
     public static String writeStrToTextFile(String strContent,

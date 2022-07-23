@@ -27,7 +27,10 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 //@Route(path = "/mine_module/ui/mine_details")
 class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMineView {
 
-    private val TAG: String = "MineFragment"
+    companion object {
+        private val TAG: String = MineActivity::class.java.simpleName
+    }
+
 //    private var mainActivity: MainActivity? = null
 
     private var juheNewsBeanList: MutableList<Data> = mutableListOf()

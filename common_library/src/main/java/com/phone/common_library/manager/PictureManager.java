@@ -31,7 +31,7 @@ import okhttp3.ResponseBody;
  */
 public class PictureManager {
 	
-	private static final String TAG = "PictureManager";
+	private static final String TAG = PictureManager.class.getSimpleName();
 	
 	/**
 	 * 保存文件到指定路径

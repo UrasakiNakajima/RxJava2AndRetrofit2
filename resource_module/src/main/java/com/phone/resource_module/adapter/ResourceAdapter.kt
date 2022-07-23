@@ -32,7 +32,10 @@ import com.phone.resource_module.bean.Result2
 
 class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val TAG = "ResourceAdapter"
+    companion object {
+        private val TAG = ResourceAdapter::class.java.simpleName
+    }
+
     private var list: MutableList<Result2> = mutableListOf()
 
     fun clearData() {

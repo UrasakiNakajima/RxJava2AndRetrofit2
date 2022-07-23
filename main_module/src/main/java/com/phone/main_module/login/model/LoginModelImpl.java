@@ -17,7 +17,7 @@ import okhttp3.ResponseBody;
 
 public class LoginModelImpl implements ILoginModel {
 	
-	private static final String TAG = "LoginModelImpl";
+	private static final String TAG = LoginModelImpl.class.getSimpleName();
 	
 	public LoginModelImpl() {
 	}

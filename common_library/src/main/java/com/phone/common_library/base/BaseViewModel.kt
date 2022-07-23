@@ -14,7 +14,10 @@ import io.reactivex.disposables.Disposable
 
 open class BaseViewModel : ViewModel() {
 
-    private val TAG: String = "BaseViewModel"
+    companion object {
+        private val TAG: String = BaseViewModel::class.java.simpleName
+    }
+
 //    protected var compositeDisposable: CompositeDisposable = CompositeDisposable()
 //    protected var disposable: Disposable? = null
 

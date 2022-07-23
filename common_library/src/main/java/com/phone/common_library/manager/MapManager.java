@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class MapManager {
 
-    private static final String TAG = "MapManager";
+    private static final String TAG = MapManager.class.getSimpleName();
 
     /**
      * map 转成json字符串

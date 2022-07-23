@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ActivityPageManager {
 
-    private static final String TAG = "ActivityPageManager";
+    private static final String TAG = ActivityPageManager.class.getSimpleName();
     /**
      * 单一实例
      */

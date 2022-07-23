@@ -25,7 +25,10 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     RxAppCompatActivity() {
 
-    private val TAG = "BaseMvvmRxAppActivity"
+    companion object {
+        private val TAG = BaseMvvmAppRxActivity::class.java.simpleName
+    }
+
 
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB

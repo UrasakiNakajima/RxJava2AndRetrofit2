@@ -19,7 +19,7 @@ import com.phone.main_module.login.view.IRegisterView;
 public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>
         implements IRegisterView {
 
-    private static final String TAG = "RegisterActivity";
+    private static final String TAG = RegisterActivity.class.getSimpleName();
     private Toolbar toolbar;
     private FrameLayout layoutBack;
     private ImageView imvBack;

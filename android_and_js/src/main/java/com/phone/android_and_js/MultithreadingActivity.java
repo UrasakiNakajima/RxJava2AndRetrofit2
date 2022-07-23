@@ -29,7 +29,7 @@ import androidx.annotation.RequiresApi;
 
 public class MultithreadingActivity extends BaseAppActivity {
 	
-	private static final String TAG = "MultithreadingActivity";
+	private static final String TAG = MultithreadingActivity.class.getSimpleName();
 	
 	@Override
 	protected int initLayoutId() {

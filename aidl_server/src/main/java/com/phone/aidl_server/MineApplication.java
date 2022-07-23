@@ -11,7 +11,7 @@ import com.phone.common_library.BaseApplication;
  */
 public class MineApplication extends BaseApplication {
 	
-	private static final String TAG = "MineApplication";
+	private static final String TAG = MineApplication.class.getSimpleName();
 	
 	@Override
 	public void onCreate() {

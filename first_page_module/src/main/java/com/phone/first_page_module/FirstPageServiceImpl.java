@@ -11,7 +11,7 @@ import java.util.List;
 @Route(path = "/first_page_module/FirstPageServiceImpl")
 public class FirstPageServiceImpl implements FirstPageService {
 
-    private static final String TAG = "FirstPageServiceImpl";
+    private static final String TAG = FirstPageServiceImpl.class.getSimpleName();
 
     @Override
     public void setFirstPageDataList(List<FirstPageResponse.ResultData.JuheNewsBean> firstPageDataList) {

@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	
-	private static final String     TAG       = "BookAdapter";
+	private static final String     TAG       = BookAdapter.class.getSimpleName();
 	private              Context    mContext;
 	private              List<Book> mBookList = new ArrayList<>();
 	

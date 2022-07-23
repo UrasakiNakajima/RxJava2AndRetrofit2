@@ -20,15 +20,15 @@ class DownloadManger private constructor() {
 
     init {
         client = OkHttpClient.Builder()
-                .connectTimeout(5000, TimeUnit.MILLISECONDS) //连接超时
-                .readTimeout(5000, TimeUnit.MILLISECONDS) //读取超时
-                .writeTimeout(5000, TimeUnit.MILLISECONDS) //写入超时
-                .proxy(Proxy.NO_PROXY)
-                .build()
+            .connectTimeout(5000, TimeUnit.MILLISECONDS) //连接超时
+            .readTimeout(5000, TimeUnit.MILLISECONDS) //读取超时
+            .writeTimeout(5000, TimeUnit.MILLISECONDS) //写入超时
+            .proxy(Proxy.NO_PROXY)
+            .build()
     }
 
     companion object {
-        private const val TAG = "DownloadManger"
+        private val TAG = DownloadManger::class.java.simpleName
 
         private var manager: DownloadManger? = null
             get() {

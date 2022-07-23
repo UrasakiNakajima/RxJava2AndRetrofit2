@@ -35,7 +35,7 @@ import static android.view.View.VISIBLE;
  */
 public class EventScheduleDialogFragment extends DialogFragment {
 	
-	private static final String                                      TAG         = "EventScheduleDialogFragment";
+	private static final String                                      TAG         = EventScheduleDialogFragment.class.getSimpleName();
 	private              TextView                                    tevEventSchedule;
 	private              FrameLayout                                 layoutCloseDialog;
 	private              NestedScrollView                            nestedScrollView;
