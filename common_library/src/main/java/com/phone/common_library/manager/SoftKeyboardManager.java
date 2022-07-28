@@ -5,7 +5,9 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.phone.common_library.callback.OnSoftKeyBoardChangeListener;
 
@@ -78,6 +80,42 @@ public class SoftKeyboardManager {
     public static void setListener(Activity activity, OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener) {
         SoftKeyboardManager softKeyBoardListener = new SoftKeyboardManager(activity);
         softKeyBoardListener.setOnSoftKeyBoardChangeListener(onSoftKeyBoardChangeListener);
+    }
+
+    /**
+     * EditText获取焦点并显示软键盘
+     */
+    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        //显示软键盘
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    }
+
+
+    /**
+     * 显示软键盘(只适用于Activity，不适用于Fragment)
+     */
+    public static void showSoftKeyboard(Activity activity) {
+//        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    /**
+     * 显示软键盘(只适用于Activity，不适用于Fragment)
+     */
+    public static void showSoftKeyboard2(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+            }
+        }
     }
 
     /**

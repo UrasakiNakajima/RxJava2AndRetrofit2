@@ -36,4 +36,13 @@
         <item name="android:scaleType">centerCrop</item>
     </style>
 
+    <style name="dialog_decimal_style"  parent="@android:style/Theme.DeviceDefault.Light.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <!--设置横屏最少宽度-->
+        <item name="android:windowMinWidthMajor">220mm</item>
+    </style>
+
 </resources>

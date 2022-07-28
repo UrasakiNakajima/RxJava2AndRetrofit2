@@ -91,6 +91,8 @@
     <string name="show_data">展示數據</string>
 
 
+    <string name="edittext_limits_that_only_integers_and_decimals_can_be_entered_and_the_total_length_of_the_number_is_less_than_or_equal_to11_digits_customizable_integer5_digits_customizable_decimal5_digits_customizable">EditText限制只能输入整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）</string>
+
     <!--真正用于解析的属性-->
     <declare-styleable name="RCAttrs">
         <attr name="round_as_circle" format="boolean" />

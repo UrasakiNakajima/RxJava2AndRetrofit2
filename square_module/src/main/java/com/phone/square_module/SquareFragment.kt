@@ -1,11 +1,18 @@
 package com.phone.square_module
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import android.text.InputFilter
+import android.text.InputType
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -46,6 +53,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
     private var mPermissionsDialog: AlertDialog? = null
     private var number: Int? = null
+    private var mDecimalAndIntegerDialog: AlertDialog? = null
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_square
@@ -103,13 +111,79 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             number = 3;
             initRxPermissionsRxFragment(number!!)
         }
+        mDatabind.tevEditTextDecimalOrInteger.setOnClickListener {
+            showDecimalOrIntegerDialog()
+        }
         mDatabind.imvPicture.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
 //            startActivity(PickerViewActivity::class.java)
 //            startActivity(Base64AndFileActivity::class.java)
 
-
             startActivity(ObserverActivity::class.java)
+        }
+    }
+
+    private fun showDecimalOrIntegerDialog() {
+        val view: View =
+            LayoutInflater.from(rxAppCompatActivity!!).inflate(R.layout.decimal_or_integer_dialog_layout, null, false)
+        val edtInput = view.findViewById<View>(R.id.edt_input) as EditText
+        val tevCancel = view.findViewById<View>(R.id.tev_cancel) as TextView
+        val tevConfirm = view.findViewById<View>(R.id.tev_confirm) as TextView
+        //小数点前边几位（修改这里可以自定义）
+        val beforeDecimalNum = 5
+        //小数点后边几位（修改这里可以自定义）
+        val afterDecimalNum = 5
+        //最大长度是多少位（修改这里可以自定义）
+        val maxLength = 11
+        //输入的类型可以是整数或小数
+        edtInput.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+        val decimalInputFilter = DecimalInputFilter(beforeDecimalNum, afterDecimalNum)
+        //输入总长度多少位，小数几位（修改这里可以自定义）
+        val inputFilter = arrayOf(InputFilter.LengthFilter(maxLength), decimalInputFilter)
+        edtInput.filters = inputFilter
+        edtInput.addTextChangedListener(DecimalTextWatcher(edtInput, afterDecimalNum))
+        @SuppressLint("RestrictedApi")
+        val alertDialog =
+            AlertDialog.Builder(rxAppCompatActivity!!, R.style.dialog_decimal_style)
+                .setView(view, 0, 0, 0, 0)
+                .show()
+
+        val widthPx = ScreenManager.getScreenWidth(rxAppCompatActivity!!);
+        val widthDp = ScreenManager.pxToDp(rxAppCompatActivity!!, widthPx.toFloat());
+        val heightPx = ScreenManager.getScreenHeight(rxAppCompatActivity!!);
+        val heightDp = ScreenManager.pxToDp(rxAppCompatActivity!!, heightPx.toFloat());
+        LogManager.i(TAG, "widthDp*****" + widthDp);
+        LogManager.i(TAG, "heightDp*****" + heightDp);
+        tevCancel.setOnClickListener { v: View? -> alertDialog.dismiss() }
+        tevConfirm.setOnClickListener { v: View? ->
+            val afterData = edtInput.text.toString()
+            if (!"".equals(afterData)) {
+                if (afterData.contains(".")) {
+                    val afterDataArr = afterData.split("\\.".toRegex()).toTypedArray()
+                    if ("" == afterDataArr[0]) {
+                        Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT).show()
+                    } else if (afterDataArr.size == 1) { //当afterData是这种类型的小数时（0. 100.）
+                        Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT).show()
+                    } else {
+                        edtInput.setText(edtInput.text.toString())
+                        alertDialog.dismiss()
+                    }
+                } else {
+                    if (afterData.length <= beforeDecimalNum) {
+                        val afterDataArr = afterData.split("".toRegex()).toTypedArray()
+                        if (afterDataArr.size > 1 && "0" == afterDataArr[1]) {
+                            Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT).show()
+                        } else {
+                            edtInput.setText(edtInput.text.toString())
+                            alertDialog.dismiss()
+                        }
+                    } else {
+                        Toast.makeText(rxAppCompatActivity!!, "整数长度不能大于" + beforeDecimalNum + "位", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                Toast.makeText(rxAppCompatActivity!!, "请输入整数或小数", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

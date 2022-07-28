@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_300"
+    android:layout_height="@dimen/dp_240"
+    android:background="@drawable/corners_14_color_white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="@dimen/dp_240"
+        android:background="@drawable/corners_14_color_white"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30" />
+
+        <TextView
+            android:id="@+id/tev_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/corners_10_color_blue"
+            android:gravity="center"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_10"
+            android:text="decimal or integer dialog"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_16" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edt_input"
+                android:layout_width="@dimen/dp_260"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/corners_10_stroke_color_80000000_1_color_white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:text=""
+                tools:ignore="Autofill,LabelFor,TextFields" />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30" />
+
+        <FrameLayout
+            android:layout_width="@dimen/dp_180"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/tev_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/corners_10_color_blue"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:text="cancel"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tev_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="end|center_vertical"
+                android:background="@drawable/corners_10_color_blue"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:text="confirm"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

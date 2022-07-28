@@ -125,6 +125,22 @@
                 android:textColor="@color/color_FFFFFFFF"
                 android:textSize="@dimen/sp_16" />
 
+            <TextView
+                android:id="@+id/tev_edit_text_decimal_or_integer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:layout_gravity="center"
+                android:background="@color/color_FFFFC73B"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/edittext_limits_that_only_integers_and_decimals_can_be_entered_and_the_total_length_of_the_number_is_less_than_or_equal_to11_digits_customizable_integer5_digits_customizable_decimal5_digits_customizable"
+                android:textColor="@color/color_FFFFFFFF"
+                android:textSize="@dimen/sp_16" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_10" />
