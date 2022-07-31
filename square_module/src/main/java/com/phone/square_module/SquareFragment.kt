@@ -151,12 +151,14 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 .setView(view, 0, 0, 0, 0)
                 .show()
 
-//        val widthPx = ScreenManager.getScreenWidth(rxAppCompatActivity!!);
-//        val widthDp = ScreenManager.pxToDp(rxAppCompatActivity!!, widthPx.toFloat());
-//        val heightPx = ScreenManager.getScreenHeight(rxAppCompatActivity!!);
-//        val heightDp = ScreenManager.pxToDp(rxAppCompatActivity!!, heightPx.toFloat());
-//        LogManager.i(TAG, "widthDp*****" + widthDp);
-//        LogManager.i(TAG, "heightDp*****" + heightDp);
+        val widthPx = ScreenManager.getScreenWidth(rxAppCompatActivity!!)
+        LogManager.i(TAG, "widthPx*****" + widthPx)
+        val widthDp = ScreenManager.pxToDp(rxAppCompatActivity!!, widthPx.toFloat())
+        LogManager.i(TAG, "widthDp*****" + widthDp)
+        val heightPx = ScreenManager.getScreenHeight(rxAppCompatActivity!!)
+        LogManager.i(TAG, "heightPx*****" + heightPx)
+        val heightDp = ScreenManager.pxToDp(rxAppCompatActivity!!, heightPx.toFloat())
+        LogManager.i(TAG, "heightDp*****" + heightDp)
         tevCancel.setOnClickListener { v: View? ->
             MineInputMethodManager.hideInputMethod(rxAppCompatActivity);
             alertDialog.dismiss()
@@ -206,6 +208,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         edtInput.setFocusableInTouchMode(true)
         edtInput.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
+//                val widthPx = alertDialog.window!!.getAttributes().width
+//                val widthDp = ScreenManager.pxToDp(rxAppCompatActivity!!, widthPx.toFloat())
+//                val heightPx = alertDialog.window!!.getAttributes().height
+//                val heightDp = ScreenManager.pxToDp(rxAppCompatActivity!!, heightPx.toFloat())
+//                LogManager.i(TAG, "alertDialog widthDp*****" + widthDp)
+//                LogManager.i(TAG, "alertDialog heightDp*****" + heightDp)
                 MineInputMethodManager.showInputMethod(rxAppCompatActivity, edtInput);
             } else {
 
