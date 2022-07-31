@@ -10,6 +10,7 @@ import android.text.InputType
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -33,6 +34,7 @@ import com.phone.common_library.service.SquareService
 import com.phone.square_module.databinding.FragmentSquareBinding
 import com.phone.square_module.observer.ObserverActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
+import kotlinx.android.synthetic.main.fragment_square.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -125,7 +127,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
     private fun showDecimalOrIntegerDialog() {
         val view: View =
-            LayoutInflater.from(rxAppCompatActivity!!).inflate(R.layout.decimal_or_integer_dialog_layout, null, false)
+            LayoutInflater.from(rxAppCompatActivity!!)
+                .inflate(R.layout.decimal_or_integer_dialog_layout, null, false)
         val edtInput = view.findViewById<View>(R.id.edt_input) as EditText
         val tevCancel = view.findViewById<View>(R.id.tev_cancel) as TextView
         val tevConfirm = view.findViewById<View>(R.id.tev_confirm) as TextView
@@ -148,43 +151,67 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 .setView(view, 0, 0, 0, 0)
                 .show()
 
-        val widthPx = ScreenManager.getScreenWidth(rxAppCompatActivity!!);
-        val widthDp = ScreenManager.pxToDp(rxAppCompatActivity!!, widthPx.toFloat());
-        val heightPx = ScreenManager.getScreenHeight(rxAppCompatActivity!!);
-        val heightDp = ScreenManager.pxToDp(rxAppCompatActivity!!, heightPx.toFloat());
-        LogManager.i(TAG, "widthDp*****" + widthDp);
-        LogManager.i(TAG, "heightDp*****" + heightDp);
-        tevCancel.setOnClickListener { v: View? -> alertDialog.dismiss() }
+//        val widthPx = ScreenManager.getScreenWidth(rxAppCompatActivity!!);
+//        val widthDp = ScreenManager.pxToDp(rxAppCompatActivity!!, widthPx.toFloat());
+//        val heightPx = ScreenManager.getScreenHeight(rxAppCompatActivity!!);
+//        val heightDp = ScreenManager.pxToDp(rxAppCompatActivity!!, heightPx.toFloat());
+//        LogManager.i(TAG, "widthDp*****" + widthDp);
+//        LogManager.i(TAG, "heightDp*****" + heightDp);
+        tevCancel.setOnClickListener { v: View? ->
+            MineInputMethodManager.hideInputMethod(rxAppCompatActivity);
+            alertDialog.dismiss()
+        }
         tevConfirm.setOnClickListener { v: View? ->
             val afterData = edtInput.text.toString()
             if (!"".equals(afterData)) {
                 if (afterData.contains(".")) {
                     val afterDataArr = afterData.split("\\.".toRegex()).toTypedArray()
                     if ("" == afterDataArr[0]) {
-                        Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT)
+                            .show()
                     } else if (afterDataArr.size == 1) { //当afterData是这种类型的小数时（0. 100.）
-                        Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT)
+                            .show()
                     } else {
-                        edtInput.setText(edtInput.text.toString())
+//                        SquareFragment::tev_edit_text_decimal_or_integer.get(SquareFragment()).setText(edtInput.text.toString())
+                        tev_edit_text_decimal_or_integer.setText(edtInput.text.toString())
                         alertDialog.dismiss()
                     }
                 } else {
                     if (afterData.length <= beforeDecimalNum) {
                         val afterDataArr = afterData.split("".toRegex()).toTypedArray()
                         if (afterDataArr.size > 1 && "0" == afterDataArr[1]) {
-                            Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT)
+                                .show()
                         } else {
-                            edtInput.setText(edtInput.text.toString())
+                            tev_edit_text_decimal_or_integer.setText(edtInput.text.toString())
                             alertDialog.dismiss()
                         }
                     } else {
-                        Toast.makeText(rxAppCompatActivity!!, "整数长度不能大于" + beforeDecimalNum + "位", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            rxAppCompatActivity!!,
+                            "整数长度不能大于" + beforeDecimalNum + "位",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } else {
                 Toast.makeText(rxAppCompatActivity!!, "请输入整数或小数", Toast.LENGTH_SHORT).show()
             }
         }
+
+        alertDialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+        alertDialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+        edtInput.setFocusable(true)
+        edtInput.setFocusableInTouchMode(true)
+        edtInput.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                MineInputMethodManager.showInputMethod(rxAppCompatActivity, edtInput);
+            } else {
+
+            }
+        }
+        edtInput.requestFocus();
     }
 
     override fun initLoadData() {

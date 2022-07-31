@@ -20,14 +20,14 @@ import java.util.List;
  * introduce : 软键盘管理类
  */
 
-public class SoftKeyboardManager {
+public class MineInputMethodManager {
 
-    private static final String TAG = SoftKeyboardManager.class.getSimpleName();
+    private static final String TAG = MineInputMethodManager.class.getSimpleName();
     private View rootView;//activity的根视图
     private int rootViewVisibleHeight;//纪录根视图的显示高度
     private OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener;
 
-    public SoftKeyboardManager(Activity activity) {
+    public MineInputMethodManager(Activity activity) {
         //获取activity的根视图
         rootView = activity.getWindow().getDecorView();
 
@@ -78,31 +78,35 @@ public class SoftKeyboardManager {
     }
 
     public static void setListener(Activity activity, OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener) {
-        SoftKeyboardManager softKeyBoardListener = new SoftKeyboardManager(activity);
+        MineInputMethodManager softKeyBoardListener = new MineInputMethodManager(activity);
         softKeyBoardListener.setOnSoftKeyBoardChangeListener(onSoftKeyBoardChangeListener);
     }
 
     /**
-     * EditText获取焦点并显示软键盘
+     * 显示软键盘（输入法）
+     *
+     * @param activity
+     * @param editText
      */
-    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        //显示软键盘
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    public static void showInputMethod(final Activity activity, final EditText editText) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
     }
 
 
     /**
-     * 显示软键盘(只适用于Activity，不适用于Fragment)
+     * 隐藏软键盘（输入法）
+     *
+     * @param activity
      */
-    public static void showSoftKeyboard(Activity activity) {
-//        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
-
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+    public static void hideInputMethod(final Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager.isActive() && activity.getCurrentFocus() != null) {
+            if (activity.getCurrentFocus().getWindowToken() != null) {
+                inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
     }
 
     /**
