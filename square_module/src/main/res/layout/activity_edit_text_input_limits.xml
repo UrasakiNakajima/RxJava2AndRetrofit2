@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.EditTextInputLimitsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_75"
+        android:background="@color/color_FF198CFF"
+        android:minHeight="?attr/actionBarSize"
+        android:orientation="vertical"
+        app:contentInsetStart="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_75"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_25" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50">
+
+                <FrameLayout
+                    android:id="@+id/layout_back"
+                    android:layout_width="@dimen/dp_36"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    tools:ignore="UselessParent">
+
+                    <ImageView
+                        android:id="@+id/imv_back"
+                        android:layout_width="@dimen/dp_6"
+                        android:layout_height="@dimen/dp_11"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/icon_arrowhead_left"
+                        tools:ignore="ContentDescription" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tev_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center"
+                    android:text="@string/edit_text_input_limits"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_20" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
+        android:text="Android EditText限制只能输入整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_16" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
+
+    <EditText
+        android:id="@+id/edt_input"
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/corners_14_color_white_stroke_1_color_80000000"
+        android:gravity="center"
+        android:textColor="@color/colorBlack333"
+        android:textSize="@dimen/sp_16"
+        tools:ignore="Autofill,LabelFor,TextFields" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
+
+    <TextView
+        android:id="@+id/tev_input"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/corners_14_color_white_stroke_1_color_80000000"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
+        android:text="input"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_16" />
+
+
+</LinearLayout>

@@ -33,6 +33,8 @@ import com.phone.common_library.service.FirstPageService
 import com.phone.common_library.service.SquareService
 import com.phone.square_module.databinding.FragmentSquareBinding
 import com.phone.square_module.observer.ObserverActivity
+import com.phone.square_module.ui.DecimalOperationActivity
+import com.phone.square_module.ui.EditTextInputLimitsActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
 import kotlinx.android.synthetic.main.fragment_square.*
 import java.util.concurrent.atomic.AtomicBoolean
@@ -114,7 +116,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             initRxPermissionsRxFragment(number!!)
         }
         mDatabind.tevEditTextDecimalOrInteger.setOnClickListener {
-            showDecimalOrIntegerDialog()
+//            showDecimalOrIntegerDialog()
+
+            startActivity(EditTextInputLimitsActivity::class.java)
+        }
+        mDatabind.tevDecimalOperation.setOnClickListener {
+            startActivity(DecimalOperationActivity::class.java)
         }
         mDatabind.imvPicture.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
@@ -128,7 +135,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     private fun showDecimalOrIntegerDialog() {
         val view: View =
             LayoutInflater.from(rxAppCompatActivity!!)
-                .inflate(R.layout.decimal_or_integer_dialog_layout, null, false)
+                .inflate(R.layout.dialog_layout_edit_text_input_limits, null, false)
         val edtInput = view.findViewById<View>(R.id.edt_input) as EditText
         val tevCancel = view.findViewById<View>(R.id.tev_cancel) as TextView
         val tevConfirm = view.findViewById<View>(R.id.tev_confirm) as TextView
