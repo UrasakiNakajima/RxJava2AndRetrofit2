@@ -80,8 +80,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50" />
 
-    <EditText
-        android:id="@+id/edt_input"
+    <TextView
+        android:id="@+id/tev_show_input"
         android:layout_width="@dimen/dp_280"
         android:layout_height="@dimen/dp_40"
         android:layout_gravity="center_horizontal"
@@ -96,7 +96,7 @@
         android:layout_height="@dimen/dp_50" />
 
     <TextView
-        android:id="@+id/tev_input"
+        android:id="@+id/tev_start_input"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_40"
         android:layout_gravity="center_horizontal"
@@ -104,7 +104,7 @@
         android:gravity="center"
         android:paddingStart="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_10"
-        android:text="input"
+        android:text="start input"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_16" />
 

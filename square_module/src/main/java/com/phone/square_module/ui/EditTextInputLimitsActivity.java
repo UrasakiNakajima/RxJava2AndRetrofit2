@@ -29,8 +29,8 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
     private FrameLayout layoutBack;
     private ImageView imvBack;
     private TextView tevTitle;
-    private EditText edtInput;
-    private TextView tevInput;
+    private TextView tevShowInput;
+    private TextView tevStartInput;
 
     @Override
     protected int initLayoutId() {
@@ -48,13 +48,13 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
         layoutBack = (FrameLayout) findViewById(R.id.layout_back);
         imvBack = (ImageView) findViewById(R.id.imv_back);
         tevTitle = (TextView) findViewById(R.id.tev_title);
-        edtInput = (EditText) findViewById(R.id.edt_input);
-        tevInput = (TextView) findViewById(R.id.tev_input);
+        tevShowInput = (TextView) findViewById(R.id.tev_show_input);
+        tevStartInput = (TextView) findViewById(R.id.tev_start_input);
 
         setToolbar(false, R.color.color_FF198CFF);
         imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
 
-        tevInput.setOnClickListener(v -> {
+        tevStartInput.setOnClickListener(v -> {
             showDecimalAlertDialog();
         });
     }
@@ -110,7 +110,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
                     } else if (afterDataArr.length == 1) {//当afterData是这种类型的小数时（0. 100.）
                         Toast.makeText(this, "请输入正常整数或小数", Toast.LENGTH_SHORT).show();
                     } else {
-                        this.edtInput.setText(edtInput.getText().toString());
+                        this.tevShowInput.setText(edtInput.getText().toString());
                         alertDialog.dismiss();
                     }
                 } else {
@@ -119,7 +119,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
                         if (afterDataArr.length > 1 && "0".equals(afterDataArr[1])) {
                             Toast.makeText(this, "请输入正常整数或小数", Toast.LENGTH_SHORT).show();
                         } else {
-                            this.edtInput.setText(edtInput.getText().toString());
+                            this.tevShowInput.setText(edtInput.getText().toString());
                             alertDialog.dismiss();
                         }
                     } else {
