@@ -78,10 +78,10 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50" />
+        android:layout_height="@dimen/dp_10" />
 
     <TextView
-        android:id="@+id/tev_decimal_operation"
+        android:id="@+id/tev_decimal_operation_rounding"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_40"
         android:layout_gravity="center_horizontal"
@@ -89,7 +89,39 @@
         android:gravity="center"
         android:paddingStart="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_10"
-        android:text="decimal_operation"
+        android:text="decimal_operation_rounding"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_16" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
+        android:text="double精确的加减乘除运算，并保留3位小数（3位后边的直接舍去不要）"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_16" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10" />
+
+    <TextView
+        android:id="@+id/tev_decimal_operation_rejection"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/corners_14_color_white_stroke_1_color_80000000"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
+        android:text="decimal_operation_rejection"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_16" />
 

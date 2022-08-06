@@ -57,7 +57,6 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
     private var mPermissionsDialog: AlertDialog? = null
     private var number: Int? = null
-    private var mDecimalAndIntegerDialog: AlertDialog? = null
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_square

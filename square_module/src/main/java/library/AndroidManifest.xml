@@ -12,9 +12,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.DecimalOperation2Activity"
-            android:exported="false" />
-        <activity
             android:name=".ui.DecimalOperationActivity"
             android:exported="false" />
         <activity
