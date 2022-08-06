@@ -1,4 +1,4 @@
-package com.phone.common_library.manager;
+package com.phone.common_library.common;
 
 import android.text.Editable;
 import android.text.TextUtils;

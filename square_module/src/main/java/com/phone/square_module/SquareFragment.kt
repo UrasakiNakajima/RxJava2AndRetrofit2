@@ -28,6 +28,8 @@ import com.phone.common_library.bean.User
 import com.phone.common_library.bean.User2
 import com.phone.common_library.bean.User3
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback
+import com.phone.common_library.common.DecimalInputFilter
+import com.phone.common_library.common.DecimalTextWatcher
 import com.phone.common_library.manager.*
 import com.phone.common_library.service.FirstPageService
 import com.phone.common_library.service.SquareService
@@ -146,11 +148,20 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         val maxLength = 11
         //输入的类型可以是整数或小数
         edtInput.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        val decimalInputFilter = DecimalInputFilter(beforeDecimalNum, afterDecimalNum)
+        val decimalInputFilter =
+            DecimalInputFilter(
+                beforeDecimalNum,
+                afterDecimalNum
+            )
         //输入总长度多少位，小数几位（修改这里可以自定义）
         val inputFilter = arrayOf(InputFilter.LengthFilter(maxLength), decimalInputFilter)
         edtInput.filters = inputFilter
-        edtInput.addTextChangedListener(DecimalTextWatcher(edtInput, afterDecimalNum))
+        edtInput.addTextChangedListener(
+            DecimalTextWatcher(
+                edtInput,
+                afterDecimalNum
+            )
+        )
         @SuppressLint("RestrictedApi")
         val alertDialog =
             AlertDialog.Builder(rxAppCompatActivity!!, R.style.dialog_decimal_style)

@@ -17,8 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phone.common_library.base.BaseRxAppActivity;
-import com.phone.common_library.manager.DecimalInputFilter;
-import com.phone.common_library.manager.DecimalTextWatcher;
+import com.phone.common_library.common.DecimalInputFilter;
+import com.phone.common_library.common.DecimalTextWatcher;
 import com.phone.common_library.manager.MineInputMethodManager;
 import com.phone.square_module.R;
 
@@ -64,7 +64,10 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
 
     }
 
-
+    /**
+     * 注意：如果输入特殊小数或整数，如：.或.15或10.或00035或输入21153.67589，然后删除中间小数点，整数就是10位了（整数不能大于5位），
+     * 则要在点击Dialog确认按钮之前进行提示，这样就不会填入不符合规范的整数或小数了。
+     */
     private void showDecimalAlertDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_layout_edit_text_input_limits, null, false);
         EditText edtInput = (EditText) view.findViewById(R.id.edt_input);
