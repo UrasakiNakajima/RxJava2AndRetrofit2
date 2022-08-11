@@ -4,13 +4,14 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 /**
- * double精确运算工具类（5位后边的四舍五入，小数位可自定义，至多可以保留6位小数，如果计算的数值总和很大，超过50 0000，请使用带有DoubleToStr的方法，
+ * double精确运算工具类（5位后边的四舍五入，小数位可自定义，至多可以保留5位小数，如果计算的数值总和很大，超过50 0000，请使用带有DoubleToStr的方法，
  * 不然可能会有保留小数位出现问题，不然也可能double数字会转成科学计数法显示）
  *
- * 拓展知识：直接舍去小数点5位后边的数不要，就稍微有一点点繁琐了，文中带DoubleCompatible字段的方法都是直接舍去小数点5位后边的数不要
- * （只有在小数点后边有连续10个5以上的情况下会五入，其他情况下都会正常舍去），至多可以保留6位小数。
- * 注意：如果计算的数值总和很大，超过50 0000，请使用带有DoubleCompatibleToStr的方法，不然可能会有保留小数位出现问题，不然也可能double数字会转成科学计数法显示，
- * 但是带有DoubleCompatibleToStr的方法计算之后的总和不要超过900 0000 0000，不然BigDecimal也无法提供舍去小数点5位后边的数不要的精确计算了（只是用上边的四舍五入进行计算了）
+ * 拓展知识：直接舍去小数点5位后边的数不要，就稍微有一点点繁琐了，文中带DoubleCompatible字段的方法都是直接舍去小数点5位后边的数不要，
+ * 至多可以保留5位小数。
+ * 注意：如果计算的数值总和很大，超过50 0000，请使用带有DoubleCompatibleToStr的方法，不然可能会有保留小数位出现问题，不然也可能double数字
+ * 会转成科学计数法显示，但是带有DoubleCompatibleToStr的方法计算之后的总和不要超过900 0000 0000，不然BigDecimal也无法提供舍去小数点5位
+ * 后边的数不要的精确计算了（只能用上边的四舍五入进行计算了）
  *
  */
 public class BigDecimalManager {
@@ -132,7 +133,7 @@ public class BigDecimalManager {
     }
 
     /**
-     * double类型的保留小数（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * double类型的保留小数（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
@@ -143,7 +144,7 @@ public class BigDecimalManager {
     }
 
     /**
-     * double类型的保留小数（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * double类型的保留小数（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
@@ -161,7 +162,7 @@ public class BigDecimalManager {
 
 
     /**
-     * double类型的加法运算兼容（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * double类型的加法运算兼容（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -169,13 +170,13 @@ public class BigDecimalManager {
     public static double additionDoubleCompatible(double m1, double m2, int scale) {
         BigDecimal p1 = new BigDecimal(Double.toString(m1));
         BigDecimal p2 = new BigDecimal(Double.toString(m2));
-        double value = p1.add(p2).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.add(p2).setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToDou(value, scale);
     }
 
     /**
-     * double类型的加法运算兼容（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * double类型的加法运算兼容（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -183,14 +184,14 @@ public class BigDecimalManager {
     public static double additionDoubleCompatible(String m1, String m2, int scale) {
         BigDecimal p1 = new BigDecimal(m1);
         BigDecimal p2 = new BigDecimal(m2);
-        double value = p1.add(p2).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.add(p2).setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToDou(value, scale);
     }
 
     /**
      * double类型的加法运算兼容，可以把double类型的科学计数法转化成小数字符串，
-     * 主要用来显示小数（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * 主要用来显示小数（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -198,13 +199,13 @@ public class BigDecimalManager {
     public static String additionDoubleCompatibleToStr(String m1, String m2, int scale) {
         BigDecimal p1 = new BigDecimal(m1);
         BigDecimal p2 = new BigDecimal(m2);
-        double value = p1.add(p2).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.add(p2).setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToStr(value, scale);
     }
 
     /**
-     * double类型的减法运算兼容（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * double类型的减法运算兼容（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -212,13 +213,13 @@ public class BigDecimalManager {
     public static double subtractionDoubleCompatible(double m1, double m2, int scale) {
         BigDecimal p1 = new BigDecimal(Double.toString(m1));
         BigDecimal p2 = new BigDecimal(Double.toString(m2));
-        double value = p1.subtract(p2).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.subtract(p2).setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToDou(value, scale);
     }
 
     /**
-     * double类型的减法运算兼容（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * double类型的减法运算兼容（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -226,14 +227,14 @@ public class BigDecimalManager {
     public static double subtractionDoubleCompatible(String m1, String m2, int scale) {
         BigDecimal p1 = new BigDecimal(m1);
         BigDecimal p2 = new BigDecimal(m2);
-        double value = p1.subtract(p2).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.subtract(p2).setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToDou(value, scale);
     }
 
     /**
      * double类型的加法运算兼容，可以把double类型的科学计数法转化成小数字符串，
-     * 主要用来显示小数（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * 主要用来显示小数（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -241,13 +242,13 @@ public class BigDecimalManager {
     public static String subtractionDoubleCompatibleToStr(String m1, String m2, int scale) {
         BigDecimal p1 = new BigDecimal(m1);
         BigDecimal p2 = new BigDecimal(m2);
-        double value = p1.subtract(p2).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.subtract(p2).setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToStr(value, scale);
     }
 
     /**
-     * double类型的除法运算兼容（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * double类型的除法运算兼容（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -255,14 +256,14 @@ public class BigDecimalManager {
     public static double multiplicationDoubleCompatible(double m1, double m2, int scale) {
         BigDecimal p1 = new BigDecimal(Double.toString(m1));
         BigDecimal p2 = new BigDecimal(Double.toString(m2));
-        double value = p1.multiply(p2).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.multiply(p2).setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToDou(value, scale);
     }
 
     /**
      * double类型的加法运算兼容，可以把double类型的科学计数法转化成小数字符串，
-     * 主要用来显示小数（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * 主要用来显示小数（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -270,14 +271,14 @@ public class BigDecimalManager {
     public static String multiplicationDoubleCompatibleToStr(double m1, double m2, int scale) {
         BigDecimal p1 = new BigDecimal(Double.toString(m1));
         BigDecimal p2 = new BigDecimal(Double.toString(m2));
-        double value = p1.multiply(p2).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.multiply(p2).setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToStr(value, scale);
     }
 
     /**
      * double类型的加法运算兼容，可以把double类型的科学计数法转化成小数字符串，
-     * 主要用来显示小数（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * 主要用来显示小数（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -285,13 +286,13 @@ public class BigDecimalManager {
     public static String multiplicationDoubleCompatibleToStr(String m1, String m2, int scale) {
         BigDecimal p1 = new BigDecimal(m1);
         BigDecimal p2 = new BigDecimal(m2);
-        double value = p1.multiply(p2).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.multiply(p2).setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToStr(value, scale);
     }
 
     /**
-     * double类型的除法运算兼容（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * double类型的除法运算兼容（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -299,14 +300,14 @@ public class BigDecimalManager {
     public static double divisionDoubleCompatible(double m1, double m2, int scale) {
         BigDecimal p1 = new BigDecimal(Double.toString(m1));
         BigDecimal p2 = new BigDecimal(Double.toString(m2));
-        double value = p1.divide(p2, 10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.divide(p2, scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToDou(value, scale);
     }
 
     /**
      * double类型的加法运算兼容，可以把double类型的科学计数法转化成小数字符串，
-     * 主要用来显示小数（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * 主要用来显示小数（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -314,13 +315,13 @@ public class BigDecimalManager {
     public static String divisionDoubleCompatibleToStr(double m1, double m2, int scale) {
         BigDecimal p1 = new BigDecimal(Double.toString(m1));
         BigDecimal p2 = new BigDecimal(Double.toString(m2));
-        double value = p1.divide(p2, 10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.divide(p2, scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToStr(value, scale);
     }
 
     /**
-     * double类型的除法运算兼容（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * double类型的除法运算兼容（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
@@ -328,32 +329,32 @@ public class BigDecimalManager {
     public static double divisionDoubleCompatible(String m1, String m2, int scale) {
         BigDecimal p1 = new BigDecimal(m1);
         BigDecimal p2 = new BigDecimal(m2);
-        double value = p1.divide(p2, 10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.divide(p2, scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToDou(value, scale);
     }
 
     /**
-     * double类型的保留小数（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * double类型的保留小数（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
     public static double getDoubleKeepDecimalsCompatible(double m1, int scale) {
         BigDecimal p1 = new BigDecimal(Double.toString(m1));
-        double value = p1.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToDou(value, scale);
     }
 
     /**
      * double类型的加法运算兼容，可以把double类型的科学计数法转化成小数字符串，
-     * 主要用来显示小数（自定义保留5位小数，至多保留6位小数，舍去后边的值不要，小数位不足5位不用补零）
+     * 主要用来显示小数（自定义保留5位小数，至多保留5位小数，舍去后边的值不要，小数位不足5位不用补零）
      * @param m1
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
     public static String getDoubleKeepDecimalsCompatibleToStr(double m1, int scale) {
         BigDecimal p1 = new BigDecimal(Double.toString(m1));
-        double value = p1.setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double value = p1.setScale(scale, BigDecimal.ROUND_DOWN).doubleValue();
 
         return keepDecimalsCompatibleToStr(value, scale);
     }
@@ -365,7 +366,7 @@ public class BigDecimalManager {
         // 设置数的小数部分所允许的最小位数
         numberFormat.setMinimumFractionDigits(0);
         // 设置数的小数部分所允许的最大位数
-        numberFormat.setMaximumFractionDigits(10);
+        numberFormat.setMaximumFractionDigits(scale);
         String valueStr = numberFormat.format(value);
 
         //返回的double数据如果很大还是科学计数法的，如果需要显示，建议返回String类型的
@@ -396,7 +397,7 @@ public class BigDecimalManager {
         // 设置数的小数部分所允许的最小位数
         numberFormat.setMinimumFractionDigits(0);
         // 设置数的小数部分所允许的最大位数
-        numberFormat.setMaximumFractionDigits(10);
+        numberFormat.setMaximumFractionDigits(scale);
         String valueStr = numberFormat.format(value);
 
         if (valueStr.contains(".")){

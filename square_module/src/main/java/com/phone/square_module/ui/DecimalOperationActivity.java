@@ -94,20 +94,21 @@ public class DecimalOperationActivity extends BaseRxAppActivity {
 
 
         tevDecimalOperationRejection.setOnClickListener(v -> {
-            double mCompatible1 = 986790.278576897;
-            double mCompatible2 = 1887906.795768;
+            double mCompatible1 = 986790.27857;
+            double mCompatible2 = 1887906.79501;
+            //这个因为超过了50 0000，可能会出现问题
             double numAddCompatible = BigDecimalManager.additionDoubleCompatible(mCompatible1, mCompatible2, 5);
             LogManager.i(TAG, "numAddCompatible*****" + numAddCompatible);
 
-            double nCompatible1 = 1870689.79557790;
-            double nCompatible2 = 987900.27876876656;
+            double nCompatible1 = 1870689.795572;
+            double nCompatible2 = 987900.278768;
             //这个因为超过了50 0000，已经出现问题了
             double numSubCompatible = BigDecimalManager.subtractionDoubleCompatible(nCompatible1, nCompatible2, 5);;
             LogManager.i(TAG, "numSubCompatible*****" + numSubCompatible);
 
             double oCompatible1 = 9860.2785667;
             double oCompatible2 = 1000;
-            //这个因为超过了50 0000，已经出现问题了
+            //这个因为超过了50 0000，可能会出现问题
             double numMulCompatible = BigDecimalManager.multiplicationDoubleCompatible(oCompatible1, oCompatible2, 5);
             LogManager.i(TAG, "numMulCompatible*****" + numMulCompatible);
 
@@ -116,8 +117,9 @@ public class DecimalOperationActivity extends BaseRxAppActivity {
             String numMulCompatibleStr = BigDecimalManager.multiplicationDoubleCompatibleToStr(rCompatible1, rCompatible2, 0);
             LogManager.i(TAG, "numMulCompatibleStr*****" + numMulCompatibleStr);
 
-            String sCompatible1 = "98679007.27798867";
-            String sCompatible2 = "1000.55859767";
+            String sCompatible1 = "98679007.27798";
+            String sCompatible2 = "1000.55859";
+            //这个因为超过了900 0000 0000，可能会出现问题
             String numMulCompatibleStr2 = BigDecimalManager.multiplicationDoubleCompatibleToStr(sCompatible1, sCompatible2, 5);
             LogManager.i(TAG, "numMulCompatibleStr2*****" + numMulCompatibleStr2);
 
@@ -127,6 +129,7 @@ public class DecimalOperationActivity extends BaseRxAppActivity {
             LogManager.i(TAG, "numDivCompatible*****" + numDivCompatible);
 
             double qCompatible1 = 9867900.278590876;
+            //这个因为超过了50 0000，可能会出现问题
             double numKeepDecimalsCompatible = BigDecimalManager.getDoubleKeepDecimalsCompatible(qCompatible1, 5);
             LogManager.i(TAG, "numKeepDecimalsCompatible*****" + numKeepDecimalsCompatible);
 
