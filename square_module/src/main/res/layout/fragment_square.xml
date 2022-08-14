@@ -193,9 +193,9 @@
                 <ImageView
                     android:id="@+id/imv_picture"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/dp_640"
+                    android:scaleType="fitXY"
                     android:layout_gravity="center_horizontal"
-                    android:scaleType="centerCrop"
                     android:src="@drawable/default_project_img"
                     app:imageUrl="@{datax.envelopePic}"
                     tools:ignore="ContentDescription" />

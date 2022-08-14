@@ -145,8 +145,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         imvBase64ToPicture = (ImageView) findViewById(R.id.imv_base64_to_picture);
         tevResetData = (TextView) findViewById(R.id.tev_reset_data);
         loadView = (QMUILoadingView) findViewById(R.id.load_view);
-
-        setToolbar(false, R.color.color_54E066FF);
+        setToolbar(false, R.color.color_FFE066FF);
 
         tevRequestPermissions.setOnClickListener(new View.OnClickListener() {
             @Override
