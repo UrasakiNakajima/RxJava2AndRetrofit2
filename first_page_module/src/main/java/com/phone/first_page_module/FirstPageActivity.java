@@ -39,6 +39,12 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>
         implements IFirstPageView {
 

@@ -73,6 +73,12 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base64AndFilePresenterImpl> implements IBase64AndFileView {
 
     private static final String TAG = Base64AndFileActivity.class.getSimpleName();

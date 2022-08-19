@@ -32,6 +32,12 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_mine.*
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 @Route(path = "/mine_module/mine")
 class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineView {
 

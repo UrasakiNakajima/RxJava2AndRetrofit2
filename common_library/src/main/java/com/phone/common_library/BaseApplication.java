@@ -12,6 +12,12 @@ import com.phone.common_library.manager.CrashHandlerManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 public class BaseApplication extends MultiDexApplication {
 
     private static final String TAG = "BaseApplication";

@@ -36,6 +36,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 public class PickerViewActivity extends BaseRxAppActivity {
 
     private static final String TAG = PickerViewActivity.class.getSimpleName();

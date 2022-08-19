@@ -22,6 +22,12 @@ import com.phone.main_module.main.view.IMainView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>
         implements IMainView {
 

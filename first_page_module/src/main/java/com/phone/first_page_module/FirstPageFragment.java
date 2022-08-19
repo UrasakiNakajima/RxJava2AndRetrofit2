@@ -53,6 +53,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 @Route(path = "/first_page_module/first_page")
 public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>
         implements IFirstPageView {

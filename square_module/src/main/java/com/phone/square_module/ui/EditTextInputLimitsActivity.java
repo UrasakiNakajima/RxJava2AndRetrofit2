@@ -1,9 +1,5 @@
 package com.phone.square_module.ui;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.annotation.SuppressLint;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -16,12 +12,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+
 import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.common.DecimalInputFilter;
 import com.phone.common_library.common.DecimalTextWatcher;
 import com.phone.common_library.manager.MineInputMethodManager;
 import com.phone.square_module.R;
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 public class EditTextInputLimitsActivity extends BaseRxAppActivity {
 
     private static final String TAG = EditTextInputLimitsActivity.class.getSimpleName();

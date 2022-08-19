@@ -42,7 +42,12 @@ import com.phone.square_module.view_model.SquareViewModelImpl
 import kotlinx.android.synthetic.main.fragment_square.*
 import java.util.concurrent.atomic.AtomicBoolean
 
-
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 @Route(path = "/square_module/square")
 class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareBinding>() {
 

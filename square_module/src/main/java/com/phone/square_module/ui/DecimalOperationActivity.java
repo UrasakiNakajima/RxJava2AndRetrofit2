@@ -13,7 +13,10 @@ import com.phone.common_library.manager.LogManager;
 import com.phone.square_module.R;
 
 /**
- * 如果计算的数值总和很大很大，超过100 0000 0000，请使用带有ToStr的方法，不然double数字会转成科学计数法显示
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce : 如果计算的数值总和很大很大，超过100 0000 0000，请使用带有ToStr的方法，不然double数字会转成科学计数法显示
  */
 public class DecimalOperationActivity extends BaseRxAppActivity {
 

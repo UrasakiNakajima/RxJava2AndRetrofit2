@@ -23,6 +23,12 @@ import com.phone.square_module.databinding.ActivitySquareBinding
 import com.phone.square_module.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 class SquareActivity :
     BaseMvvmAppRxActivity<SquareViewModelImpl, ActivitySquareBinding>() {
 

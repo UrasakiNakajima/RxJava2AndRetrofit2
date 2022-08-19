@@ -21,7 +21,10 @@ import java.util.Properties;
 import java.util.TreeSet;
 
 /**
- * 造成App崩潰的異常管理類（在Application裏初始化，只要一有崩潰的異常就會被捕獲）
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce : 造成App崩潰的異常管理類（在Application裏初始化，只要一有崩潰的異常就會被捕獲）
  */
 public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 
