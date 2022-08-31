@@ -67,7 +67,6 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
 
     @Override
     protected void initLoadData() {
-
     }
 
     /**
