@@ -7,6 +7,12 @@ buildscript {
 //    ext.tingyun_ndk_version = '2.0.0'//基调听云NDK版本
 
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+
+
         maven { url "https://kotlin.bintray.com/kotlinx/" }
         google()
         jcenter()
@@ -39,6 +45,12 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+
+
         maven { url "https://kotlin.bintray.com/kotlinx/" }
         google()
         jcenter()
