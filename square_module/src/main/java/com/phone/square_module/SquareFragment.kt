@@ -35,7 +35,6 @@ import com.phone.common_library.manager.*
 import com.phone.common_library.service.FirstPageService
 import com.phone.common_library.service.SquareService
 import com.phone.square_module.databinding.FragmentSquareBinding
-import com.phone.square_module.observer.ObserverActivity
 import com.phone.square_module.ui.DecimalOperationActivity
 import com.phone.square_module.ui.EditTextInputLimitsActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
@@ -65,6 +64,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
     private var mPermissionsDialog: AlertDialog? = null
     private var number: Int? = null
+
+    private var permissions = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_PHONE_STATE
+    )
 
     override fun initLayoutId(): Int {
         return R.layout.fragment_square
@@ -332,6 +337,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         val rxPermissionsManager = RxPermissionsManager()
         rxPermissionsManager.initRxPermissionsRxFragment2(
             this,
+            permissions,
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
                     if (number == 1) {
@@ -362,10 +368,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 override fun onCheckNoMorePromptError() {
                     showSystemSetupDialog()
                 }
-            }, Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE
-        )
+            })
     }
 
     private fun showSystemSetupDialog() {

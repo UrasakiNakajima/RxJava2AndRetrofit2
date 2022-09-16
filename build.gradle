@@ -7,6 +7,7 @@ buildscript {
 //    ext.tingyun_ndk_version = '2.0.0'//基调听云NDK版本
 
     repositories {
+        maven { url "https://kotlin.bintray.com/kotlinx/" }
         google()
         jcenter()
         mavenCentral()
@@ -38,6 +39,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url "https://kotlin.bintray.com/kotlinx/" }
         google()
         jcenter()
         mavenCentral()

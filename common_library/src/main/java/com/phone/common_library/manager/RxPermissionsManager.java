@@ -37,7 +37,7 @@ public class RxPermissionsManager {
     /**
      * RxAppCompatActivity里需要的时候直接调用就行了（會拋出異常）
      */
-    public void initRxPermissionsRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback, String... permissions) {
+    public void initRxPermissionsRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, String[] permissions, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
         rxActivityPermissions = new RxPermissions(rxAppCompatActivity);
         rxActivityPermissions
                 .requestEachCombined(permissions)
@@ -89,7 +89,7 @@ public class RxPermissionsManager {
     /**
      * RxAppCompatActivity里需要的时候直接调用就行了（不會拋出異常）
      */
-    public void initRxPermissionsRxAppCompatActivity2(RxAppCompatActivity rxAppCompatActivity, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback, String... permissions) {
+    public void initRxPermissionsRxAppCompatActivity2(RxAppCompatActivity rxAppCompatActivity, String[] permissions, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
         rxActivityPermissions = new RxPermissions(rxAppCompatActivity);
         rxActivityPermissions
                 .requestEachCombined(permissions)
@@ -133,7 +133,7 @@ public class RxPermissionsManager {
     /**
      * RxFragment里需要的时候直接调用就行了（會拋出異常）
      */
-    public void initRxPermissionsRxFragment(RxFragment rxFragment, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback, String... permissions) {
+    public void initRxPermissionsRxFragment(RxFragment rxFragment, String[] permissions, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
         rxFragmentPermissions = new RxPermissions(rxFragment);
         rxFragmentPermissions
                 .requestEachCombined(permissions)
@@ -186,7 +186,7 @@ public class RxPermissionsManager {
     /**
      * RxFragment里需要的时候直接调用就行了（不會拋出異常）
      */
-    public void initRxPermissionsRxFragment2(RxFragment rxFragment, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback, String... permissions) {
+    public void initRxPermissionsRxFragment2(RxFragment rxFragment, String[] permissions, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
         rxFragmentPermissions = new RxPermissions(rxFragment);
         rxFragmentPermissions
                 .requestEachCombined(permissions)

@@ -81,8 +81,10 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     private Map<String, String> paramMap = new HashMap<>();
 
     private AlertDialog mPermissionsDialog;
-
     private AMAPLocationManager amapLocationManager;
+
+    private List<String> permissionList = new ArrayList<>();
+    private String[] permissions;
 
     @Nullable
     @Override
@@ -118,6 +120,16 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
                 LogManager.i(TAG, "error*****" + error);
             }
         });
+
+        permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        permissions = new String[permissionList.size()];
+        for (int i = 0; i < permissions.length; i++) {
+            permissions[i] = permissionList.get(i);
+        }
     }
 
     @Override
@@ -314,39 +326,35 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
      */
     private void initRxPermissionsRxFragment() {
         RxPermissionsManager rxPermissionsManager = new RxPermissionsManager();
-        rxPermissionsManager.initRxPermissionsRxFragment2(this, new OnCommonRxPermissionsCallback() {
-                    @Override
-                    public void onRxPermissionsAllPass() {
+        rxPermissionsManager.initRxPermissionsRxFragment2(this, permissions, new OnCommonRxPermissionsCallback() {
+            @Override
+            public void onRxPermissionsAllPass() {
 //                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
 //                User user = new User2();
 //                User3 user3 = (User3) user;
 //                LogManager.i(TAG, user3.toString());
 
-                        if (TextUtils.isEmpty(baseApplication.getSystemId())) {
-                            String systemId = SystemManager.getSystemId(baseApplication);
-                            baseApplication.setSystemId(systemId);
-                            LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
-                        } else {
-                            LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
-                        }
+                if (TextUtils.isEmpty(baseApplication.getSystemId())) {
+                    String systemId = SystemManager.getSystemId(baseApplication);
+                    baseApplication.setSystemId(systemId);
+                    LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
+                } else {
+                    LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
+                }
 
-                        amapLocationManager.startLocation();
-                    }
+                amapLocationManager.startLocation();
+            }
 
-                    @Override
-                    public void onNotCheckNoMorePromptError() {
-                        showSystemSetupDialog();
-                    }
+            @Override
+            public void onNotCheckNoMorePromptError() {
+                showSystemSetupDialog();
+            }
 
-                    @Override
-                    public void onCheckNoMorePromptError() {
-                        showSystemSetupDialog();
-                    }
-                }, Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION);
+            @Override
+            public void onCheckNoMorePromptError() {
+                showSystemSetupDialog();
+            }
+        });
     }
 
     private void showSystemSetupDialog() {

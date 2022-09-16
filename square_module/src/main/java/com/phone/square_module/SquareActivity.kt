@@ -47,6 +47,12 @@ class SquareActivity :
     private var mPermissionsDialog: AlertDialog? = null
     private var number: Int? = null
 
+    private var permissions = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_PHONE_STATE
+    )
+
     override fun initLayoutId(): Int {
         return R.layout.activity_square
     }
@@ -174,6 +180,7 @@ class SquareActivity :
         val rxPermissionsManager = RxPermissionsManager()
         rxPermissionsManager.initRxPermissionsRxAppCompatActivity2(
             this,
+            permissions,
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
                     if (number == 1) {
@@ -204,9 +211,7 @@ class SquareActivity :
                 override fun onCheckNoMorePromptError() {
                     showSystemSetupDialog()
                 }
-            }, Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE)
+            })
     }
 
     private fun showSystemSetupDialog() {
