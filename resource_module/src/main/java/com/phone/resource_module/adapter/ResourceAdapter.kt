@@ -50,11 +50,11 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_resource, parent, false)
-        return ContentHolder(view)
+        return BodyHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is ContentHolder) {
+        if (holder is BodyHolder) {
             if (list.get(position).type.equals("福利")) {
                 holder.layoutCardView.setVisibility(View.GONE)
                 holder.layoutPicture.setVisibility(View.VISIBLE)
@@ -152,7 +152,7 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
         return position.toLong()
     }
 
-    protected class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private class BodyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val layoutCardView: CardView = itemView.findViewById(R.id.layout_card_view)
         val tevResource: ColorTextView = itemView.findViewById(R.id.tev_resource)

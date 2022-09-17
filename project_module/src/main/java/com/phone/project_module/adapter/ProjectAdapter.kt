@@ -34,7 +34,7 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
                 LayoutInflater.from(this.context),
                 R.layout.item_project, parent,
                 false)
-        return ContentHolder(binding.getRoot())
+        return BodyHolder(binding.getRoot())
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -53,7 +53,7 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
         return list.size
     }
 
-    protected class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private class BodyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
