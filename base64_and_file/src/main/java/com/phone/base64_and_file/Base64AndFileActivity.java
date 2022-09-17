@@ -309,7 +309,6 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 //                            base64AndFileBean);
 //                }
 
-
                 //第二种方法
                 initBase64AndFileTask();
             }
