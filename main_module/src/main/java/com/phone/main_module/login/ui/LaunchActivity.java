@@ -23,9 +23,15 @@ import com.phone.main_module.main.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 public class LaunchActivity extends BaseRxAppActivity {
 
-    private static final String TAG = "LaunchActivity";
+    private static final String TAG = LaunchActivity.class.getSimpleName();
 
     private String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,

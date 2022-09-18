@@ -11,7 +11,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class AidlServerActivity extends BaseRxAppActivity {
 	
-	private static final String   TAG = "AidlServerActivity";
+	private static final String   TAG = AidlServerActivity.class.getSimpleName();
 	private              TextView tevConnectInfo;
 	
 	@Override

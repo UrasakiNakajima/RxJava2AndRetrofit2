@@ -47,7 +47,7 @@ import okio.BufferedSink;
 
 public class Okhttp3Manager {
 
-    private static final String TAG = "Okhttp3Manager";
+    private static final String TAG = Okhttp3Manager.class.getSimpleName();
     private OkHttpClient client;
     private static Okhttp3Manager manager;
     public static final int UPDATA = 666;
@@ -95,7 +95,7 @@ public class Okhttp3Manager {
      * @param url
      * @param onCommonSingleParamCallback
      */
-    public void getAsyncOkhttp3(String url,
+    public void getAsync(String url,
                                 OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         //2.创建Request对象，设置一个url地址（百度地址）,设置请求方式。
         Request request = new Request.Builder().url(url).method("GET", null).build();
@@ -109,8 +109,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "getAsyncOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "getAsyncOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "getAsync onFailure e*******" + e.toString());
+                LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -124,7 +124,7 @@ public class Okhttp3Manager {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseString = response.body().string();
-                LogManager.i(TAG, "getAsyncOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "getAsync onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -156,7 +156,7 @@ public class Okhttp3Manager {
      * @param bodyParams
      * @param onCommonSingleParamCallback
      */
-    public void getAsyncOkhttp3(String url,
+    public void getAsync(String url,
                                 Map<String, String> bodyParams,
                                 OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         String urlNew = url;
@@ -174,8 +174,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "getAsyncOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "getAsyncOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "getAsync onFailure e*******" + e.toString());
+                LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -189,7 +189,7 @@ public class Okhttp3Manager {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseString = response.body().string();
-                LogManager.i(TAG, "getAsyncOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "getAsync onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -222,7 +222,7 @@ public class Okhttp3Manager {
      * @param bodyParams
      * @param onCommonSingleParamCallback
      */
-    public void getAsyncOkhttp3(String url,
+    public void getAsync(String url,
                                 Map<String, String> headerParams,
                                 Map<String, String> bodyParams,
                                 OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
@@ -242,8 +242,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "getAsyncOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "getAsyncOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "getAsync onFailure e*******" + e.toString());
+                LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -257,7 +257,7 @@ public class Okhttp3Manager {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseString = response.body().string();
-                LogManager.i(TAG, "getAsyncOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "getAsync onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -336,12 +336,12 @@ public class Okhttp3Manager {
      * @param bodyParams
      * @param onCommonSingleParamCallback
      */
-    public void postAsyncStringOkhttp3(String url,
+    public void postAsyncString(String url,
                                        Map<String, String> bodyParams,
                                        OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         JSONObject jsonObject = new JSONObject(bodyParams);
         String requestData = jsonObject.toString();
-        LogManager.i(TAG, "postAsyncStringOkhttp3 requestData*****" + requestData);
+        LogManager.i(TAG, "postAsyncString requestData*****" + requestData);
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");//"类型,字节码"
         //2.通过RequestBody.create 创建requestBody对象
         RequestBody requestBody = RequestBody.create(mediaType, requestData);
@@ -353,8 +353,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "postAsyncStringOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "postAsyncStringOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "postAsyncString onFailure e*******" + e.toString());
+                LogManager.i(TAG, "postAsyncString onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -368,7 +368,7 @@ public class Okhttp3Manager {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseString = response.body().string();
-                LogManager.i(TAG, "postAsyncStringOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "postAsyncString onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -400,7 +400,7 @@ public class Okhttp3Manager {
      * @param requestData
      * @param onCommonSingleParamCallback
      */
-    public void postAsyncStreamOkhttp3(String url,
+    public void postAsyncStream(String url,
                                        String requestData,
                                        OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         LogManager.i(TAG, "requestData*****" + requestData);
@@ -426,8 +426,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "postAsyncStreamOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "postAsyncStreamOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "postAsyncStream onFailure e*******" + e.toString());
+                LogManager.i(TAG, "postAsyncStream onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -441,7 +441,7 @@ public class Okhttp3Manager {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseString = response.body().string();
-                LogManager.i(TAG, "postAsyncStreamOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "postAsyncStream onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -473,12 +473,12 @@ public class Okhttp3Manager {
      * @param bodyParams
      * @param onCommonSingleParamCallback
      */
-    public void postAsyncKeyValuePairsOkhttp3(String url,
+    public void postAsyncKeyValuePairs(String url,
                                               Map<String, String> bodyParams,
                                               OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
-            LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 bodyParams*****" + bodyParams.toString());
-            LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
+            LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams*****" + bodyParams.toString());
+            LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
         }
 
         //2.通过new FormBody()调用build方法,创建一个RequestBody,可以用add添加键值对
@@ -503,8 +503,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "postAsyncKeyValuePairs onFailure e*******" + e.toString());
+                LogManager.i(TAG, "postAsyncKeyValuePairs onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -526,7 +526,7 @@ public class Okhttp3Manager {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseString = response.body().string();
-                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "postAsyncKeyValuePairs onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -557,7 +557,7 @@ public class Okhttp3Manager {
      * @param url
      * @param onCommonSingleParamCallback
      */
-    public void postAsyncOkhttp3(String url,
+    public void postAsync(String url,
                                  OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         //这句话是重点Request
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
@@ -568,8 +568,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "postAsyncKeyValuePairs onFailure e*******" + e.toString());
+                LogManager.i(TAG, "postAsyncKeyValuePairs onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -591,7 +591,7 @@ public class Okhttp3Manager {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseString = response.body().string();
-                LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "postAsyncKeyValuePairs onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -624,12 +624,12 @@ public class Okhttp3Manager {
      * @param bodyParams
      * @param onCommonSingleParamCallback
      */
-    public void postAsyncFormOkhttp3(String url,
+    public void postAsyncForm(String url,
                                      Map<String, String> bodyParams,
                                      OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
-            LogManager.i(TAG, "postAsyncFormOkhttp3 bodyParams String*******" + bodyParams.toString());
-            LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
+            LogManager.i(TAG, "postAsyncForm bodyParams String*******" + bodyParams.toString());
+            LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
         }
 
         // form 表单形式上传
@@ -653,8 +653,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "postAsyncFormOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "postAsyncFormOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "postAsyncForm onFailure e*******" + e.toString());
+                LogManager.i(TAG, "postAsyncForm onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -673,7 +673,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
 //                try {
 //                    responseString = AESManager.aesDecrypt(dataEncrypt);
-                LogManager.i(TAG, "postAsyncFormOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "postAsyncForm onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -707,16 +707,16 @@ public class Okhttp3Manager {
      *
      * @param url
      * @param bodyParams
-     * @param filesList
+     * @param fileList
      * @param onCommonSingleParamCallback
      */
-    public void postAsyncFormAndFilesOkhttp3(String url,
+    public void postAsyncFormAndFiles(String url,
                                              Map<String, String> bodyParams,
-                                             List<File> filesList,
+                                             List<File> fileList,
                                              OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
-            LogManager.i(TAG, "postAsyncFormOkhttp3 bodyParams String*******" + bodyParams.toString());
-            LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
+            LogManager.i(TAG, "postAsyncForm bodyParams String*******" + bodyParams.toString());
+            LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
         }
         //        MediaType MEDIA_TYPE = MediaType.parse("image/png");
         MediaType MEDIA_TYPE = MediaType.parse("image/*");
@@ -733,15 +733,15 @@ public class Okhttp3Manager {
         }
 
         //遍历fileList中所有图片绝对路径到builder，并约定key如"upload"作为上传php服务器接受多张图片的key
-        if (filesList != null && filesList.size() > 0) {
-            for (int i = 0; i < filesList.size(); i++) {
-                if (filesList.get(i).exists()) {
-                    filesList.get(i).getPath();
-                    multipartBodyBuilder.addFormDataPart("upload", filesList.get(i).getName(), RequestBody.create(MEDIA_TYPE, filesList.get(i)));
+        if (fileList != null && fileList.size() > 0) {
+            for (int i = 0; i < fileList.size(); i++) {
+                if (fileList.get(i).exists()) {
+                    fileList.get(i).getPath();
+                    multipartBodyBuilder.addFormDataPart("upload", fileList.get(i).getName(), RequestBody.create(MEDIA_TYPE, fileList.get(i)));
                 }
             }
         } else {
-            LogManager.i(TAG, "postAsyncFormAndFileOkhttp3 filesList.size() = 0");
+            LogManager.i(TAG, "postAsyncFormAndFile fileList.size() = 0");
         }
 
         //构建请求体
@@ -753,8 +753,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "postAsyncFormAndFiles onFailure e*******" + e.toString());
+                LogManager.i(TAG, "postAsyncFormAndFiles onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -768,7 +768,7 @@ public class Okhttp3Manager {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseString = response.body().string();
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "postAsyncFormAndFiles onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -800,14 +800,14 @@ public class Okhttp3Manager {
      * @param bodyParams
      * @param fileMap
      */
-    public void postAsyncFormAndFilesOkhttp3(String url,
+    public void postAsyncFormAndFiles(String url,
                                              Map<String, String> bodyParams,
                                              Map<String, File> fileMap,
                                              Map<String, List<File>> filesMap,
                                              OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
-            LogManager.i(TAG, "postAsyncFormOkhttp3 bodyParams String*******" + bodyParams.toString());
-            LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
+            LogManager.i(TAG, "postAsyncForm bodyParams String*******" + bodyParams.toString());
+            LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
         }
         MediaType MEDIA_TYPE = MediaType.parse("image/*");
         // form 表单形式上传
@@ -862,8 +862,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "postAsyncFormAndFiles onFailure e*******" + e.toString());
+                LogManager.i(TAG, "postAsyncFormAndFiles onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -877,7 +877,7 @@ public class Okhttp3Manager {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseString = response.body().string();
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "postAsyncFormAndFiles onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -907,16 +907,16 @@ public class Okhttp3Manager {
      *
      * @param url
      * @param bodyParams
-     * @param filesList
+     * @param fileList
      * @param onCommonSingleParamCallback
      */
-    public void postAsyncPhpFormAndFilesOkhttp3(String url,
+    public void postAsyncPhpFormAndFiles(String url,
                                                 Map<String, String> bodyParams,
-                                                List<File> filesList,
+                                                List<File> fileList,
                                                 OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
-            LogManager.i(TAG, "postAsyncFormOkhttp3 bodyParams String*******" + bodyParams.toString());
-            LogManager.i(TAG, "postAsyncKeyValuePairsOkhttp3 bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
+            LogManager.i(TAG, "postAsyncForm bodyParams String*******" + bodyParams.toString());
+            LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
         }
         MediaType MEDIA_TYPE = MediaType.parse("image/png");
         // form 表单形式上传
@@ -932,10 +932,10 @@ public class Okhttp3Manager {
         }
 
         //遍历fileList中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
-        if (filesList != null && filesList.size() > 0) {
-            for (int i = 0; i < filesList.size(); i++) {
-                if (filesList.get(i).exists()) {
-                    multipartBodyBuilder.addFormDataPart("upload[]", filesList.get(i).getName(), RequestBody.create(MEDIA_TYPE, filesList.get(i)));
+        if (fileList != null && fileList.size() > 0) {
+            for (int i = 0; i < fileList.size(); i++) {
+                if (fileList.get(i).exists()) {
+                    multipartBodyBuilder.addFormDataPart("upload[]", fileList.get(i).getName(), RequestBody.create(MEDIA_TYPE, fileList.get(i)));
                 }
             }
         }
@@ -950,8 +950,8 @@ public class Okhttp3Manager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onFailure e*******" + e.toString());
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+                LogManager.i(TAG, "postAsyncFormAndFiles onFailure e*******" + e.toString());
+                LogManager.i(TAG, "postAsyncFormAndFiles onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -965,7 +965,7 @@ public class Okhttp3Manager {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String responseString = response.body().string();
-                LogManager.i(TAG, "postAsyncFormAndFilesOkhttp3 onResponse responseString*****" + responseString);
+                LogManager.i(TAG, "postAsyncFormAndFiles onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
@@ -997,7 +997,7 @@ public class Okhttp3Manager {
 //     * @param bodyParams
 //     * @param onCommonSingleParamCallback
 //     */
-//    public void getAppContentLengthOkhttp3(String url,
+//    public void getAppContentLength(String url,
 //                                           Map<String, String> bodyParams,
 //                                           OnCommonSingleParamCallback<Long> onCommonSingleParamCallback) {
 //        LogManager.i(TAG, "bodyParams String*******" + bodyParams.toString());
@@ -1011,8 +1011,8 @@ public class Okhttp3Manager {
 //        call.enqueue(new Callback() {
 //            @Override
 //            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                LogManager.i(TAG, "getAppContentLengthOkhttp3 onFailure e*******" + e.toString());
-//                LogManager.i(TAG, "getAppContentLengthOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+//                LogManager.i(TAG, "getAppContentLength onFailure e*******" + e.toString());
+//                LogManager.i(TAG, "getAppContentLength onFailure e detailMessage*******" + e.getMessage());
 //                MainThreadManager mainThreadManager = new MainThreadManager();
 //                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                    @Override
@@ -1027,7 +1027,7 @@ public class Okhttp3Manager {
 //            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 //                if (response != null && response.isSuccessful()) {
 //                    long contentLength = response.body().contentLength();
-//                    LogManager.i(TAG, "getAppContentLengthOkhttp3 onResponse contentLength*******" + contentLength);
+//                    LogManager.i(TAG, "getAppContentLength onResponse contentLength*******" + contentLength);
 //                    MainThreadManager mainThreadManager = new MainThreadManager();
 //                    mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                        @Override
@@ -1048,8 +1048,8 @@ public class Okhttp3Manager {
 //     * @param bodyParams
 //     * @param onDownloadCallback
 //     */
-//    public void downloadAppOkhttp3(String url, Map<String, String> bodyParams, OnDownloadCallback<String> onDownloadCallback) {
-//        LogManager.i(TAG, "downloadAppOkhttp3 bodyParams String*******" + bodyParams.toString());
+//    public void downloadApp(String url, Map<String, String> bodyParams, OnDownloadCallback<String> onDownloadCallback) {
+//        LogManager.i(TAG, "downloadApp bodyParams String*******" + bodyParams.toString());
 //        String alreadyDownloadLength = null;
 //        String appContentLength = null;
 //        //遍历map中所有参数到builder
@@ -1075,8 +1075,8 @@ public class Okhttp3Manager {
 //        call.enqueue(new Callback() {
 //            @Override
 //            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                LogManager.i(TAG, "getAppContentLengthOkhttp3 onFailure e*******" + e.toString());
-//                LogManager.i(TAG, "getAppContentLengthOkhttp3 onFailure e detailMessage*******" + e.getMessage());
+//                LogManager.i(TAG, "getAppContentLength onFailure e*******" + e.toString());
+//                LogManager.i(TAG, "getAppContentLength onFailure e detailMessage*******" + e.getMessage());
 //                MainThreadManager mainThreadManager = new MainThreadManager();
 //                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                    @Override
@@ -1260,7 +1260,7 @@ public class Okhttp3Manager {
 //     * @param bodyParams
 //     * @param callback
 //     */
-//    public void getDownloadAppOkhttp3(String url, Map<String, String> bodyParams, Callback callback) {
+//    public void getDownloadApp(String url, Map<String, String> bodyParams, Callback callback) {
 //        LogManager.i(TAG, "bodyParams String*******" + bodyParams.toString());
 //        String alreadyDownloadLength = null;
 //        String appContentLength = null;
@@ -1275,8 +1275,8 @@ public class Okhttp3Manager {
 //            }
 //        }
 //
-//        LogManager.i(TAG, "getDownloadAppOkhttp3 alreadyDownloadLength*******" + alreadyDownloadLength);
-//        LogManager.i(TAG, "getDownloadAppOkhttp3 appContentLength*******" + appContentLength);
+//        LogManager.i(TAG, "getDownloadApp alreadyDownloadLength*******" + alreadyDownloadLength);
+//        LogManager.i(TAG, "getDownloadApp appContentLength*******" + appContentLength);
 //        Request request = null;
 //        if (alreadyDownloadLength != null && !"".equals(alreadyDownloadLength)
 //                && appContentLength != null && !"".equals(appContentLength)) {

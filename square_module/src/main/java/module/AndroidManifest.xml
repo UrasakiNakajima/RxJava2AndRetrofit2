@@ -14,7 +14,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:name">
         <activity
-            android:name=".ui.SquareDetailsActivity"
+            android:name=".SquareActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>

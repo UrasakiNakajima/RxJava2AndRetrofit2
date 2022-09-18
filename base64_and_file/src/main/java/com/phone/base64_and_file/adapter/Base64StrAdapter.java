@@ -43,14 +43,14 @@ public class Base64StrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_base64_str, parent, false);
-        return new ContentHolder(view);
+        return new BodyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ContentHolder) {
-            ContentHolder contentHolder = (ContentHolder) holder;
-            contentHolder.tevBase64Str.setText(base64StrList.get(position));
+        if (holder instanceof BodyHolder) {
+            BodyHolder bodyHolder = (BodyHolder) holder;
+            bodyHolder.tevBase64Str.setText(base64StrList.get(position));
         }
     }
 
@@ -59,11 +59,11 @@ public class Base64StrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return base64StrList.size();
     }
 
-    protected class ContentHolder extends RecyclerView.ViewHolder {
+    private class BodyHolder extends RecyclerView.ViewHolder {
 
         private TextView tevBase64Str;
 
-        public ContentHolder(@NonNull View itemView) {
+        public BodyHolder(@NonNull View itemView) {
             super(itemView);
 
             tevBase64Str = (TextView) itemView.findViewById(R.id.tev_base64_str);

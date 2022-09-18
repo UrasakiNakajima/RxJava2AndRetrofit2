@@ -1,13 +1,13 @@
 package com.phone.main_module.login.presenter;
 
 import com.alibaba.fastjson.JSON;
+import com.phone.common_library.BaseApplication;
 import com.phone.common_library.base.BasePresenter;
 import com.phone.common_library.base.BaseResponse;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
-import com.phone.main_module.MineApplication;
 import com.phone.main_module.R;
 import com.phone.main_module.login.bean.GetVerificationCode;
 import com.phone.main_module.login.bean.LoginResponse;
@@ -28,7 +28,7 @@ import java.util.Map;
 public class LoginPresenterImpl extends BasePresenter<IBaseView>
         implements ILoginPresenter {
 
-    private static final String TAG = "LoginPresenterImpl";
+    private static final String TAG = LoginPresenterImpl.class.getSimpleName();
     //    private IResourceChildView loginView;//P需要与V 交互，所以需要持有V的引用
     private LoginModelImpl model;
 
@@ -54,7 +54,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                                     GetVerificationCode getVerificationCode = JSON.parseObject(success, GetVerificationCode.class);
                                     loginView.getAuthCodeSuccess(getVerificationCode.getData());
                                 } else {
-                                    loginView.getAuthCodeError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+                                    loginView.getAuthCodeError(BaseApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
                                 }
                                 loginView.hideLoading();
                             }
@@ -63,7 +63,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                             public void onError(String error) {
                                 LogManager.i(TAG, "error*****" + error);
                                 // 异常处理
-                                loginView.getAuthCodeError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                                loginView.getAuthCodeError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
                                 loginView.hideLoading();
                             }
                         });
@@ -83,12 +83,12 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                 //                                BaseResponse baseResponse = JSON.parseObject(responseString, BaseResponse.class);
                 //                                if (baseResponse.getCode() == 200) {
                 //                                    LoginResponse loginResponse = JSON.parseObject(responseString, LoginResponse.class);
-                //                                    MineApplication mineApplication = MineApplication.getInstance();
+                //                                    BaseApplication mineApplication = BaseApplication.getInstance();
                 //                                    mineApplication.setShopId(loginResponse.getData().getShopId() + "");
                 //                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
                 //                                    loginView.loginSuccess(loginResponse.getData());
                 //                                } else {
-                //                                    loginView.loginError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+                //                                    loginView.loginError(BaseApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
                 //                                }
                 //                                loginView.hideLoading();
                 //                            }
@@ -97,7 +97,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                 //                            public void accept(Throwable throwable) throws Exception {
                 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
-                //                                loginView.loginError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                //                                loginView.loginError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
                 //                                loginView.hideLoading();
                 //                            }
                 //                        });
@@ -120,13 +120,13 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                                 BaseResponse baseResponse = JSON.parseObject(success, BaseResponse.class);
                                 if (baseResponse.getCode() == 0) {
                                     LoginResponse loginResponse = JSON.parseObject(success, LoginResponse.class);
-                                    MineApplication mineApplication = MineApplication.getInstance();
+                                    BaseApplication mineApplication = BaseApplication.getInstance();
                                     //											 mineApplication.setUserId(loginResponse.getData().getUserId());
                                     mineApplication.setAccessToken(loginResponse.getData().getToken());
                                     mineApplication.setLogin(true);
                                     loginView.loginWithAuthCodeSuccess(loginResponse.getData());
                                 } else {
-                                    loginView.loginWithAuthCodeError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+                                    loginView.loginWithAuthCodeError(BaseApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
                                 }
                                 loginView.hideLoading();
                             }
@@ -135,7 +135,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                             public void onError(String error) {
                                 LogManager.i(TAG, "error*****" + error);
                                 // 异常处理
-                                loginView.loginWithAuthCodeError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                                loginView.loginWithAuthCodeError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
                                 loginView.hideLoading();
                             }
                         });
@@ -155,12 +155,12 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                 //                                BaseResponse baseResponse = JSON.parseObject(responseString, BaseResponse.class);
                 //                                if (baseResponse.getCode() == 200) {
                 //                                    LoginResponse loginResponse = JSON.parseObject(responseString, LoginResponse.class);
-                //                                    MineApplication mineApplication = MineApplication.getInstance();
+                //                                    BaseApplication mineApplication = BaseApplication.getInstance();
                 //                                    mineApplication.setShopId(loginResponse.getData().getShopId() + "");
                 //                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
                 //                                    loginView.loginSuccess(loginResponse.getData());
                 //                                } else {
-                //                                    loginView.loginError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+                //                                    loginView.loginError(BaseApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
                 //                                }
                 //                                loginView.hideLoading();
                 //                            }
@@ -169,7 +169,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                 //                            public void accept(Throwable throwable) throws Exception {
                 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
-                //                                loginView.loginError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                //                                loginView.loginError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
                 //                                loginView.hideLoading();
                 //                            }
                 //                        });
@@ -192,12 +192,12 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                                 BaseResponse baseResponse = JSON.parseObject(success, BaseResponse.class);
                                 if (baseResponse.getCode() == 200) {
                                     //                                    LoginResponse loginResponse = JSON.parseObject(success, LoginResponse.class);
-                                    //                                    MineApplication mineApplication = MineApplication.getInstance();
+                                    //                                    BaseApplication mineApplication = BaseApplication.getInstance();
                                     //                                    mineApplication.setShopId(loginResponse.getData().getShopId() + "");
                                     //                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
                                     registerView.registerSuccess(success);
                                 } else {
-                                    registerView.registerError(MineApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+                                    registerView.registerError(BaseApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
                                 }
                                 registerView.hideLoading();
                             }
@@ -206,7 +206,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                             public void onError(String error) {
                                 LogManager.i(TAG, "error*****" + error);
                                 // 异常处理
-                                registerView.registerError(MineApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+                                registerView.registerError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
                                 registerView.hideLoading();
                             }
                         });

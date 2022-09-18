@@ -18,11 +18,6 @@ android {
 
 
     defaultConfig {
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
         if (isModule.toBoolean()) {
             //可独立运行的app
             applicationId "com.phone.first_page_module"
@@ -37,6 +32,12 @@ android {
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     //android 模块下开启DataBinding
@@ -77,6 +78,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
 }
@@ -103,4 +107,7 @@ dependencies {
 
     //百分比进度条
     implementation 'cn.bingoogolapple:bga-progressbar:1.0.1@aar'
+
+    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
 }

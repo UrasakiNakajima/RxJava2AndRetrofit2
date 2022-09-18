@@ -29,7 +29,7 @@ import com.phone.resource_module.R;
  */
 public class AndroidAndJsFragment extends BaseRxFragment {
 	
-	private static final String      TAG = "AndroidAndJsActivity";
+	private static final String      TAG = AndroidAndJsFragment.class.getSimpleName();
 	private              Toolbar     toolbar;
 	private              TextView    tevTitle;
 	private              WebView     webView;

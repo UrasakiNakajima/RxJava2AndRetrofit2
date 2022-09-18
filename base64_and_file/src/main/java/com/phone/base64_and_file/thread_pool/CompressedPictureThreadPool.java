@@ -3,8 +3,9 @@ package com.phone.base64_and_file.thread_pool;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.phone.base64_and_file.BitmapManager;
-import com.phone.common_library.callback.OnCommonBothParamCallback;
+import com.phone.base64_and_file.manager.BitmapManager;
+import com.phone.base64_and_file.bean.Base64AndFileBean;
+import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
 
 import java.io.File;
@@ -15,16 +16,13 @@ public class CompressedPictureThreadPool {
 
     private static final String TAG = CompressedPictureThreadPool.class.getSimpleName();
     private Context context;
-    private String dirsPath;
-    private String dirsPath2;
+    private Base64AndFileBean base64AndFileBean;
     private ExecutorService compressedPictureExcutor;
 
     public CompressedPictureThreadPool(Context context,
-                                       String dirsPath,
-                                       String dirsPath2) {
+                                       Base64AndFileBean base64AndFileBean) {
         this.context = context;
-        this.dirsPath = dirsPath;
-        this.dirsPath2 = dirsPath2;
+        this.base64AndFileBean = base64AndFileBean;
         compressedPictureExcutor = Executors.newSingleThreadExecutor();
     }
 
@@ -35,8 +33,9 @@ public class CompressedPictureThreadPool {
                 LogManager.i(TAG, "CompressedPictureThreadPool*******" + Thread.currentThread().getName());
 
                 //先取出资源文件保存在本地
-                File file = BitmapManager.getAssetFile(context, "picture_large.png", dirsPath);
+                File file = BitmapManager.getAssetFile(context, base64AndFileBean.getDirsPath(), "picture_large.png");
                 LogManager.i(TAG, "file size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(file)));
+                base64AndFileBean.setFile(file);
 
 //            //再压缩本地图片
 //            File result = BitmapManager.initCompressorIO(getApplication(), file.getAbsolutePath(), dirsPath2);
@@ -46,28 +45,31 @@ public class CompressedPictureThreadPool {
                 Bitmap bitmap = BitmapManager.getBitmap(file.getAbsolutePath());
                 LogManager.i(TAG, "bitmap mWidth*****" + bitmap.getWidth());
                 LogManager.i(TAG, "bitmap mHeight*****" + bitmap.getHeight());
+                base64AndFileBean.setBitmap(bitmap);
                 //再压缩bitmap
-                Bitmap bitmapNew = BitmapManager.scaleImage(bitmap, 1280, 960);
-                LogManager.i(TAG, "bitmapNew mWidth*****" + bitmapNew.getWidth());
-                LogManager.i(TAG, "bitmapNew mHeight*****" + bitmapNew.getHeight());
+                Bitmap bitmapCompressed = BitmapManager.scaleImage(bitmap, 1280, 960);
+                LogManager.i(TAG, "bitmapCompressed mWidth*****" + bitmapCompressed.getWidth());
+                LogManager.i(TAG, "bitmapCompressed mHeight*****" + bitmapCompressed.getHeight());
+                base64AndFileBean.setBitmapCompressed(bitmapCompressed);
                 //再把压缩后的bitmap保存到本地
-                File result2 = BitmapManager.saveFile(bitmapNew, dirsPath2, file.getName());
-                LogManager.i(TAG, "CompressedPictureThreadPool filePath*******" + result2.getAbsolutePath());
-                LogManager.i(TAG, "result2 size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result2)));
+                File fileCompressed = BitmapManager.saveFile(bitmapCompressed, base64AndFileBean.getDirsPathCompressed(), "picture_large_compressed.png");
+                LogManager.i(TAG, "CompressedPictureThreadPool fileCompressedPath*******" + fileCompressed.getAbsolutePath());
+                LogManager.i(TAG, "fileCompressed size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(fileCompressed)));
+                base64AndFileBean.setFileCompressed(fileCompressed);
 //                if (bitmap != null) {
 //                    bitmap.recycle();
 //                    bitmap = null;
 //                }
 
-                onCommonBothParamCallback.onSuccess(bitmapNew, result2.getAbsolutePath());
+                onCommonSingleParamCallback.onSuccess(base64AndFileBean);
             }
         });
     }
 
-    private OnCommonBothParamCallback<Bitmap> onCommonBothParamCallback;
+    private OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback;
 
-    public void setOnCommonBothParamCallback(OnCommonBothParamCallback<Bitmap> onCommonBothParamCallback) {
-        this.onCommonBothParamCallback = onCommonBothParamCallback;
+    public void setOnCommonSingleParamCallback(OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback) {
+        this.onCommonSingleParamCallback = onCommonSingleParamCallback;
     }
 }
 

@@ -75,8 +75,8 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
 
         }
 
-        viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)
-        viewModel!!.getDataxError().observe(this, dataxErrorObserver!!)
+        viewModel!!.getDataxRxFragmentSuccess().observe(this, dataxSuccessObserver!!)
+        viewModel!!.getDataxRxFragmentError().observe(this, dataxErrorObserver!!)
     }
 
     override fun initViews() {
@@ -173,7 +173,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     private fun initProject(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel!!.projectData(this, currentPage)
+            viewModel!!.projectDataRxFragment(this, currentPage)
         } else {
             projectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }

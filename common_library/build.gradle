@@ -17,11 +17,6 @@ android {
 
 
     defaultConfig {
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -29,6 +24,31 @@ android {
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+//        //java代码中引用的定义形式
+//        buildConfigField "String", "CUR_PROJECT", "\"${CUR_PROJECT}\""
+//        buildConfigField "Boolean", "DEBUG_TAG", "${DEBUG_TAG}"
+//        buildConfigField "String", "DEBUG_LOGIN_SN", "\"${DEBUG_LOGIN_SN}\""
+//        buildConfigField "String", "DEBUG_LOGIN_MODEL", "\"${DEBUG_LOGIN_MODEL}\""
+//        buildConfigField "String", "DEBUG_LOGIN_VENDOR", "\"${DEBUG_LOGIN_VENDOR}\""
+//        buildConfigField "String", "DEBUG_LOGIN_TYPE", "\"${DEBUG_LOGIN_TYPE}\""
+//        buildConfigField "String", "SERVER_UP_URL", "\"${SERVER_UP_URL}\""
+//        buildConfigField "String", "VIDEO_EXTRANET_IP", "\"${VIDEO_EXTRANET_IP}\""
+//        buildConfigField "String", "LOAD_H5_UP", "\"${LOAD_H5_UP}\""
+//        buildConfigField "String", "TIME_SERVER_IP", "\"${TIME_SERVER_IP}\""
+//        buildConfigField "Boolean", "SUPPORT_TIMESHIFT", "${SUPPORT_TIMESHIFT}"
+//        buildConfigField "Boolean", "IS_USE_IJKPLAYER_FOR_VOD", "${IS_USE_IJKPLAYER_FOR_VOD}"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    packagingOptions {
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
     }
 
     //android 模块下开启DataBinding
@@ -66,7 +86,14 @@ android {
 
     buildTypes {
         release {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -117,7 +144,7 @@ dependencies {
     api 'commons-codec:commons-codec:1.11'
 
     //谷歌官方Json解析框架导入
-    api 'com.google.code.gson:gson:2.8.5'
+    api 'com.google.code.gson:gson:2.8.6'
 
     //okhttp3框架導入
     api 'com.squareup.okhttp3:okhttp:3.12.0'
@@ -127,7 +154,7 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //rxjava2框架導入
-    api 'io.reactivex.rxjava2:rxjava:2.2.10'
+    api 'io.reactivex.rxjava2:rxjava:2.2.19'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
     //rxpermissions框架導入
     api 'com.github.tbruyelle:rxpermissions:0.11'
@@ -205,4 +232,6 @@ dependencies {
 
     //日志打印框架
     api 'com.orhanobut:logger:2.2.0'
+
+
 }

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.phone.common_library.callback.RcvOnItemViewClickListener;
 import com.phone.first_page_module.R;
-import com.phone.first_page_module.bean.FirstPageResponse;
+import com.phone.common_library.bean.FirstPageResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +44,13 @@ public class FirstPageAdapter
 	@Override
 	public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View view = LayoutInflater.from(mContext).inflate(R.layout.item_first_page, parent, false);
-		return new ContentHolder(view);
+		return new BodyHolder(view);
 	}
 	
 	@Override
 	public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-		if (holder instanceof ContentHolder) {
-			ContentHolder contentHolder = (ContentHolder) holder;
+		if (holder instanceof BodyHolder) {
+			BodyHolder bodyHolder = (BodyHolder) holder;
 			FirstPageResponse.ResultData.JuheNewsBean juheNewsBean = mJuheNewsBeanList.get(position);
 			String title = juheNewsBean.getTitle();
 			String author = juheNewsBean.getAuthor_name();
@@ -59,14 +59,14 @@ public class FirstPageAdapter
 			String imgMid = juheNewsBean.getThumbnail_pic_s02();
 			String imgRight = juheNewsBean.getThumbnail_pic_s03();
 			
-			contentHolder.newsSummaryTitleTv.setText(title);
-			contentHolder.newsSummaryAuthor.setText(author);
-			contentHolder.newsSummaryTime.setText(time);
-			Glide.with(mContext).load(imgSrc).into(contentHolder.newsSummaryPhotoIvLeft);
-			Glide.with(mContext).load(imgMid).into(contentHolder.newsSummaryPhotoIvMiddle);
-			Glide.with(mContext).load(imgRight).into(contentHolder.newsSummaryPhotoIvRight);
+			bodyHolder.newsSummaryTitleTv.setText(title);
+			bodyHolder.newsSummaryAuthor.setText(author);
+			bodyHolder.newsSummaryTime.setText(time);
+			Glide.with(mContext).load(imgSrc).into(bodyHolder.newsSummaryPhotoIvLeft);
+			Glide.with(mContext).load(imgMid).into(bodyHolder.newsSummaryPhotoIvMiddle);
+			Glide.with(mContext).load(imgRight).into(bodyHolder.newsSummaryPhotoIvRight);
 			
-			contentHolder.llRoot.setOnClickListener(view -> {
+			bodyHolder.llRoot.setOnClickListener(view -> {
 				rcvOnItemViewClickListener.onItemClickListener(position, view);
 			});
 		}
@@ -77,7 +77,7 @@ public class FirstPageAdapter
 		return mJuheNewsBeanList.size();
 	}
 	
-	protected static class ContentHolder extends RecyclerView.ViewHolder {
+	private static class BodyHolder extends RecyclerView.ViewHolder {
 		
 		private LinearLayout llRoot;
 		private TextView     newsSummaryTitleTv;
@@ -88,7 +88,7 @@ public class FirstPageAdapter
 		private TextView     newsSummaryAuthor;
 		private TextView     newsSummaryTime;
 		
-		public ContentHolder(@NonNull View itemView) {
+		public BodyHolder(@NonNull View itemView) {
 			super(itemView);
 			
 			llRoot = (LinearLayout) itemView.findViewById(R.id.ll_root);

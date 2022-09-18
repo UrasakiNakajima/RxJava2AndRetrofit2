@@ -463,11 +463,6 @@ class ResourceFragment : BaseRxFragment() {
 //        tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
     }
 
-    override fun onDestroyView() {
-
-        super.onDestroyView()
-    }
-
     override fun onDestroy() {
         fragmentList.clear()
         super.onDestroy()

@@ -6,17 +6,13 @@ apply plugin: 'kotlin-kapt'
 //kotlin noArg和allOpen插件
 apply plugin: 'kotlin-noarg'
 apply plugin: 'kotlin-allopen'
+//apply plugin:'newlens'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -24,6 +20,12 @@ android {
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     //android 模块下开启DataBinding
@@ -48,7 +50,14 @@ android {
 
     buildTypes {
         release {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -67,4 +76,8 @@ dependencies {
     //Android路由（用于不同app之间的跳转）
 //    implementation 'com.alibaba:arouter-api:1.5.0'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
+
+//    implementation "com.networkbench.newlens.agent.android:nbs.newlens.agent:$tingyun_sdk_version"
+//    implementation "com.networkbench.newlens.agent.android2:nbs.newlens.nativecrash:$tingyun_ndk_version"//采集native carsh 需集成此包
+
 }

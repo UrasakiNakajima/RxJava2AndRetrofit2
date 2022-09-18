@@ -9,11 +9,14 @@ package com.phone.common_library.common;
 
 public class ConstantUrl {
 	
-	//正式地址（此地址无效，请替换）
+	//base地址（此地址失效，暂未替换，待以后替换）
 	public static final String BASE_URL0 = "https://is.snssdk.net/";
-	
+
+	//base地址
 	public static final String BASE_URL  = "http://v.juhe.cn/";
+	//base地址
 	public static final String BASE_URL2 = "http://gank.io/";
+	//base地址
 	public static final String BASE_URL3 = "https://wanandroid.com/";
 	//    public static final String BASE_URL = "http://baobab.kaiyanapp.com/api/";
 	

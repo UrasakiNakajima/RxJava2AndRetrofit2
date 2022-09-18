@@ -1,5 +1,6 @@
 package com.phone.first_page_module;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,18 +22,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.amap.api.location.AMapLocation;
+import com.phone.common_library.BaseApplication;
 import com.phone.common_library.base.BaseMvpRxFragment;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
+import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.callback.RcvOnItemViewClickListener;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.ScreenManager;
 import com.phone.common_library.manager.SystemManager;
+import com.phone.common_library.service.FirstPageService;
+import com.phone.common_library.service.SquareService;
 import com.phone.common_library.ui.NewsDetailActivity;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
-import com.phone.first_page_module.bean.FirstPageResponse;
+import com.phone.common_library.bean.FirstPageResponse;
+import com.phone.first_page_module.manager.AMAPLocationManager;
 import com.phone.first_page_module.presenter.FirstPagePresenterImpl;
 import com.phone.first_page_module.view.IFirstPageView;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
@@ -45,6 +53,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 @Route(path = "/first_page_module/first_page")
 public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>
         implements IFirstPageView {
@@ -53,10 +67,11 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     private FrameLayout layoutOutLayer;
     private Toolbar toolbar;
     private TextView tevTitle;
-    private TextView tevRequestPermissions;
+    private TextView tevRequestPermissionAndStartLocating;
     private SmartRefreshLayout refreshLayout;
     private RecyclerView rcvData;
     private QMUILoadingView loadView;
+
 
     private List<FirstPageResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
     private FirstPageAdapter firstPageAdapter;
@@ -66,6 +81,14 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     private Map<String, String> paramMap = new HashMap<>();
 
     private AlertDialog mPermissionsDialog;
+    private AMAPLocationManager amapLocationManager;
+
+    private String[] permissions = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION};
 
     @Nullable
     @Override
@@ -88,6 +111,20 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     @Override
     protected void initData() {
         isRefresh = true;
+
+        amapLocationManager = AMAPLocationManager.getInstance(BaseApplication.getInstance());
+        amapLocationManager.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<AMapLocation>() {
+            @Override
+            public void onSuccess(AMapLocation success) {
+                LogManager.i(TAG, "address*****" + success.getAddress());
+            }
+
+            @Override
+            public void onError(String error) {
+                LogManager.i(TAG, "error*****" + error);
+            }
+        });
+
     }
 
     @Override
@@ -95,10 +132,11 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         layoutOutLayer = (FrameLayout) rootView.findViewById(R.id.layout_out_layer);
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         tevTitle = (TextView) rootView.findViewById(R.id.tev_title);
-        tevRequestPermissions = (TextView) rootView.findViewById(R.id.tev_request_permissions);
+        tevRequestPermissionAndStartLocating = (TextView) rootView.findViewById(R.id.tev_request_permission_and_start_locating);
         refreshLayout = (SmartRefreshLayout) rootView.findViewById(R.id.refresh_layout);
         rcvData = (RecyclerView) rootView.findViewById(R.id.rcv_data);
         loadView = (QMUILoadingView) rootView.findViewById(R.id.loadView);
+
 
         tevTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +145,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
                 initFirstPage();
             }
         });
-        tevRequestPermissions.setOnClickListener(new View.OnClickListener() {
+        tevRequestPermissionAndStartLocating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LogManager.i(TAG, "tevRequestPermissions");
@@ -183,6 +221,12 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     protected void initLoadData() {
         refreshLayout.autoRefresh();
 
+        SquareService squareService =
+                (SquareService) ARouter.getInstance().build("/square_module/SquareServiceImpl")
+                        .navigation();
+        LogManager.i(TAG,
+                "squareService.getSquareDataList()******" + squareService.getSquareDataList().toString());
+
         //		startAsyncTask();
 
 //        try {
@@ -236,6 +280,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     @Override
     public void firstPageDataSuccess(List<FirstPageResponse.ResultData.JuheNewsBean> success) {
         if (!rxAppCompatActivity.isFinishing()) {
+            FirstPageService firstPageService = (FirstPageService) ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl").navigation();
             if (isRefresh) {
                 mJuheNewsBeanList.clear();
                 mJuheNewsBeanList.addAll(success);
@@ -248,6 +293,8 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
                 firstPageAdapter.addAllData(mJuheNewsBeanList);
                 refreshLayout.finishLoadMore();
             }
+            firstPageService.setFirstPageDataList(mJuheNewsBeanList);
+            hideLoading();
         }
     }
 
@@ -265,6 +312,15 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
             } else {
                 refreshLayout.finishLoadMore(false);
             }
+            hideLoading();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 207) {
+//            initRxPermissions();
         }
     }
 
@@ -272,10 +328,11 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
      * RxFragment里需要的时候直接调用就行了
      */
     private void initRxPermissionsRxFragment() {
-        RxPermissionsManager rxPermissionsManager = new RxPermissionsManager();
-        rxPermissionsManager.initRxPermissionsRxFragment(this, new OnCommonRxPermissionsCallback() {
+        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
+        rxPermissionsManager.initRxPermissionsRxFragment(this, permissions, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
+                //所有的权限都授予
 //                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
 //                User user = new User2();
 //                User3 user3 = (User3) user;
@@ -288,15 +345,19 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
                 } else {
                     LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
                 }
+
+                amapLocationManager.startLocation();
             }
 
             @Override
             public void onNotCheckNoMorePromptError() {
+                //至少一个权限未授予且未勾选不再提示
                 showSystemSetupDialog();
             }
 
             @Override
             public void onCheckNoMorePromptError() {
+                //至少一个权限未授予且勾选了不再提示
                 showSystemSetupDialog();
             }
         });
@@ -343,7 +404,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
 
             bodyParams.put("type", "yule");
             bodyParams.put("key", "d5cc661633a28f3cf4b1eccff3ee7bae");
-            presenter.firstPage(this, bodyParams);
+            presenter.firstPageRxFragment(this, bodyParams);
         } else {
             firstPageDataError(getResources().getString(R.string.please_check_the_network_connection));
         }
@@ -354,6 +415,9 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         if (layoutOutLayer != null) {
             layoutOutLayer.removeAllViews();
             layoutOutLayer = null;
+        }
+        if (amapLocationManager != null) {
+            amapLocationManager.destoryLocation();
         }
         super.onDestroyView();
     }

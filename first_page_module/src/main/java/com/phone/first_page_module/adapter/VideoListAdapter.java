@@ -48,19 +48,19 @@ public class VideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_video_list, parent, false);
-        return new ContentHolder(view);
+        return new BodyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ContentHolder) {
-            ContentHolder contentHolder = (ContentHolder) holder;
-//            contentHolder.tevCode.setText(videoListBeanList.get(position).getCode());
+        if (holder instanceof BodyHolder) {
+            BodyHolder bodyHolder = (BodyHolder) holder;
+//            bodyHolder.tevCode.setText(videoListBeanList.get(position).getCode());
             String data = videoListBeanList.get(position).getUrl();
             LogManager.i(TAG, "onBindViewHolder data*****" + data);
 
 //            ViewGroup.LayoutParams layoutParams=new ViewGroup.LayoutParams();
-            Glide.with(context).load(data).into(contentHolder.imvData);
+            Glide.with(context).load(data).into(bodyHolder.imvData);
         }
     }
 
@@ -69,12 +69,12 @@ public class VideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return videoListBeanList.size();
     }
 
-    protected static class ContentHolder extends RecyclerView.ViewHolder {
+    private static class BodyHolder extends RecyclerView.ViewHolder {
 
         private TextView tevId;
         private ImageView imvData;
 
-        protected ContentHolder(@NonNull View itemView) {
+        protected BodyHolder(@NonNull View itemView) {
             super(itemView);
             tevId = itemView.findViewById(R.id.tev_id);
             imvData = itemView.findViewById(R.id.imv_data);

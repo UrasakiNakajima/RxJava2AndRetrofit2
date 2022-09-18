@@ -16,7 +16,7 @@ import com.phone.mine_module.bean.Data
 class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        private val TAG = "MineAdapter"
+        private val TAG = MineAdapter::class.java.simpleName
     }
 
     private var mJuheNewsBeanList: MutableList<Data>? = null
@@ -41,12 +41,12 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_mine, parent, false)
-        return ContentHolder(view)
+        return BodyHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is ContentHolder) {
-            val contentHolder: ContentHolder = holder as ContentHolder
+        if (holder is BodyHolder) {
+            val bodyHolder: BodyHolder = holder as BodyHolder
             val juheNewsBean: Data = mJuheNewsBeanList!!.get(position)
             val title: String = juheNewsBean.title
             val author: String = juheNewsBean.author_name
@@ -55,14 +55,19 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
             val imgMid: String = juheNewsBean.thumbnail_pic_s02
             val imgRight: String = juheNewsBean.thumbnail_pic_s03
 
-            contentHolder.newsSummaryTitleTv.setText(title)
-            contentHolder.newsSummaryAuthor.setText(author)
-            contentHolder.newsSummaryTime.setText(time)
-            Glide.with(context).load(imgSrc).into(contentHolder.newsSummaryPhotoIvLeft)
-            Glide.with(context).load(imgMid).into(contentHolder.newsSummaryPhotoIvMiddle)
-            Glide.with(context).load(imgRight).into(contentHolder.newsSummaryPhotoIvRight)
+            bodyHolder.newsSummaryTitleTv.setText(title)
+            bodyHolder.newsSummaryAuthor.setText(author)
+            bodyHolder.newsSummaryTime.setText(time)
+            Glide.with(context).load(imgSrc).into(bodyHolder.newsSummaryPhotoIvLeft)
+            Glide.with(context).load(imgMid).into(bodyHolder.newsSummaryPhotoIvMiddle)
+            Glide.with(context).load(imgRight).into(bodyHolder.newsSummaryPhotoIvRight)
 
-            contentHolder.llRoot.setOnClickListener(View.OnClickListener { view: View? -> rcvOnItemViewClickListener!!.onItemClickListener(position, view) })
+            bodyHolder.llRoot.setOnClickListener(View.OnClickListener { view: View? ->
+                rcvOnItemViewClickListener!!.onItemClickListener(
+                    position,
+                    view
+                )
+            })
         }
     }
 
@@ -70,7 +75,8 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         return mJuheNewsBeanList!!.size
     }
 
-    protected class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private class BodyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         val llRoot: LinearLayout
         val newsSummaryTitleTv: TextView
         val newsSummaryPhotoIvGroup: LinearLayout
@@ -83,10 +89,14 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         init {
             llRoot = itemView.findViewById<View>(R.id.ll_root) as LinearLayout
             newsSummaryTitleTv = itemView.findViewById<View>(R.id.news_summary_title_tv) as TextView
-            newsSummaryPhotoIvGroup = itemView.findViewById<View>(R.id.news_summary_photo_iv_group) as LinearLayout
-            newsSummaryPhotoIvLeft = itemView.findViewById<View>(R.id.news_summary_photo_iv_left) as ImageView
-            newsSummaryPhotoIvMiddle = itemView.findViewById<View>(R.id.news_summary_photo_iv_middle) as ImageView
-            newsSummaryPhotoIvRight = itemView.findViewById<View>(R.id.news_summary_photo_iv_right) as ImageView
+            newsSummaryPhotoIvGroup =
+                itemView.findViewById<View>(R.id.news_summary_photo_iv_group) as LinearLayout
+            newsSummaryPhotoIvLeft =
+                itemView.findViewById<View>(R.id.news_summary_photo_iv_left) as ImageView
+            newsSummaryPhotoIvMiddle =
+                itemView.findViewById<View>(R.id.news_summary_photo_iv_middle) as ImageView
+            newsSummaryPhotoIvRight =
+                itemView.findViewById<View>(R.id.news_summary_photo_iv_right) as ImageView
             newsSummaryAuthor = itemView.findViewById<View>(R.id.news_summary_author) as TextView
             newsSummaryTime = itemView.findViewById<View>(R.id.news_summary_time) as TextView
         }

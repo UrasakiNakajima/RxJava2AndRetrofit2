@@ -63,7 +63,7 @@ import java.util.Comparator;
 
 public class LazyViewPager extends ViewGroup {
 
-    private static final String TAG = "LazyViewPager";
+    private static final String TAG = LazyViewPager.class.getSimpleName();
 
     private static final boolean DEBUG = false;
     private static final boolean USE_CACHE = false;

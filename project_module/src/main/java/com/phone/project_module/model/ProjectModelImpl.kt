@@ -7,7 +7,9 @@ import okhttp3.ResponseBody
 
 class ProjectModelImpl() : IProjectModel {
 
-    private val TAG: String = "ProjectModelImpl"
+    companion object {
+        private val TAG: String = ProjectModelImpl::class.java.simpleName
+    }
 
     override fun projectData(currentPage: String): Observable<ResponseBody> {
         return RetrofitManager.getInstance().retrofit

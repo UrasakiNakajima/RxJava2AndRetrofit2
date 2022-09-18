@@ -3,6 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.phone.first_page_module">
 
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!--用于写入缓存数据到扩展存储卡-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <!--如果设置了target >= 28 如果需要启动后台定位则必须声明这个权限-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!--如果您的应用需要后台定位权限，且有可能运行在Android Q设备上,并且设置了target>28，必须增加这个权限声明-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -13,8 +23,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
         tools:replace="android:allowBackup">
+
+        <!-- 高德地图，这里的value是高德地图开放平台你的应用的Key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="xxxxxxx" />
+
         <activity
-            android:name=".ui.FirstPageActivity"
+            android:name=".FirstPageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -25,6 +41,9 @@
             android:name=".ui.ShowVideoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+        <!-- 高德地图 -->
+        <service android:name="com.amap.api.location.APSService" />
 
     </application>
 

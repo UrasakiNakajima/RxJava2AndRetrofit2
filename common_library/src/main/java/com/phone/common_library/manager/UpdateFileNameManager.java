@@ -27,7 +27,7 @@ import java.util.List;
 
 public class UpdateFileNameManager {
 	
-	private static final String TAG = "UpdateFileNameManager";
+	private static final String TAG = UpdateFileNameManager.class.getSimpleName();
 	
 	/**
 	 * 修改多个文件名字

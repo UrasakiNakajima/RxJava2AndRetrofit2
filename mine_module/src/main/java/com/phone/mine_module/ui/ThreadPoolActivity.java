@@ -19,7 +19,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- * 记一次Java参数传递时（传Vector，就是线程安全的List）值发生变化问题
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce : 记一次Java参数传递时（传Vector，就是线程安全的List）值发生变化问题
  */
 public class ThreadPoolActivity extends BaseRxAppActivity {
 

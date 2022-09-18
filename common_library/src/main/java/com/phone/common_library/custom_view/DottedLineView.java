@@ -24,7 +24,7 @@ import androidx.core.content.ContextCompat;
  */
 public class DottedLineView extends View {
 	
-	private static final String TAG        = "DottedLineView";
+	private static final String TAG        = DottedLineView.class.getSimpleName();
 	private              Paint  mDashPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private              Rect   mRect      = new Rect();
 	

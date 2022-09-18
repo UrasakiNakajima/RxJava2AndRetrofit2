@@ -19,6 +19,9 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 
 abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : RxFragment() {
 
+    companion object {
+        private val TAG = BaseMvvmRxFragment::class.java.simpleName
+    }
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null

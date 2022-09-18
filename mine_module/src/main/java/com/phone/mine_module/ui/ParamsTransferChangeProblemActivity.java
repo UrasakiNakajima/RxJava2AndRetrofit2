@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 参数传递值改变问题
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce : 参数传递值改变问题
  */
 public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
 

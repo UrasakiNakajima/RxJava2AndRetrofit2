@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:background="@color/color_FF198CFF"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="vertical"
+            app:contentInsetStart="0dp">
+
+            <TextView
+                android:id="@+id/tev_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:gravity="center"
+                android:text="@string/resource"
+                android:textColor="@color/color_FFE066FF"
+                android:textSize="@dimen/sp_20" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:background="@color/color_FFFFFFFF"
+            android:orientation="horizontal"
+            tools:ignore="UselessLeaf">
+
+            <TextView
+                android:id="@+id/tev_all"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/all"
+                android:textColor="@color/color_FFE066FF"
+                android:textSize="@dimen/sp_17" />
+
+            <TextView
+                android:id="@+id/tev_beautiful_woman"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/beautiful_woman"
+                android:textColor="@color/color_FF999999"
+                android:textSize="@dimen/sp_17" />
+
+            <TextView
+                android:id="@+id/tev_android"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/android"
+                android:textColor="@color/color_FF999999"
+                android:textSize="@dimen/sp_17" />
+
+            <TextView
+                android:id="@+id/tev_ios"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/ios"
+                android:textColor="@color/color_FF999999"
+                android:textSize="@dimen/sp_17" />
+
+            <TextView
+                android:id="@+id/tev_h5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/h5"
+                android:textColor="@color/color_FF999999"
+                android:textSize="@dimen/sp_17" />
+
+            <!--<TextView-->
+            <!--android:id="@+id/tev_app"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/app"-->
+            <!--android:textColor="@color/color_FF999999"-->
+            <!--android:textSize="@dimen/sp_17" />-->
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_FF999999" />
+
+        <com.phone.common_library.custom_view.MineLazyViewPager
+            android:id="@+id/mine_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+    </LinearLayout>
+
+    <com.qmuiteam.qmui.widget.QMUILoadingView
+        android:id="@+id/load_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:color="@color/color_FF999999"
+        android:visibility="gone" />
+
+</FrameLayout>

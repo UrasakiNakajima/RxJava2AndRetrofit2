@@ -29,7 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ReadAndWriteManager {
 
-    private static final String TAG = "ReadAndWriteManager";
+    private static final String TAG = ReadAndWriteManager.class.getSimpleName();
     private static ReadAndWriteManager manager;
 //    private List<Disposable> disposableList;
     private Disposable disposable;

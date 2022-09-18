@@ -13,8 +13,10 @@ import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.common.ConstantUrl;
+import com.phone.common_library.interceptor.AddAccessTokenInterceptor;
 import com.phone.common_library.interceptor.BaseUrlManagerInterceptor;
 import com.phone.common_library.interceptor.CacheControlInterceptor;
+import com.phone.common_library.interceptor.ReceivedAccessTokenInterceptor;
 import com.phone.common_library.interceptor.RewriteCacheControlInterceptor;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.trello.rxlifecycle3.android.FragmentEvent;
@@ -46,9 +48,12 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-//import com.trello.rxlifecycle4.components.support.RxAppCompatActivity;
-//import com.trello.rxlifecycle4.components.support.RxFragment;
-
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 public class RetrofitManager {
 
     private static final String TAG = "RetrofitManager";
@@ -90,8 +95,8 @@ public class RetrofitManager {
                 .readTimeout(5 * 1000, TimeUnit.MILLISECONDS)
                 .writeTimeout(5 * 1000, TimeUnit.MILLISECONDS)
                 .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
-                //								  .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance()))
-                //								  .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance()))
+                .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance()))
+                .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance()))
                 .addInterceptor(new BaseUrlManagerInterceptor(BaseApplication.getInstance()))
                 .addInterceptor(rewriteCacheControlInterceptor)
 //                .addNetworkInterceptor(rewriteCacheControlInterceptor)
@@ -314,7 +319,7 @@ public class RetrofitManager {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //AutoDispose的关键语句（解决rxjava导致的内存泄漏的）
+                //AutoDispose的关键语句（解决RxJava2导致的内存泄漏的）
                 .as(AutoDispose.<ResponseBody>autoDisposable(AndroidLifecycleScopeProvider.from(fragment)))
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override
@@ -380,7 +385,7 @@ public class RetrofitManager {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //解决rxjava导致的内存泄漏问题
+                //解决RxJava2导致的内存泄漏问题
                 .compose(rxAppCompatActivity.<ResponseBody>bindToLifecycle())
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override
@@ -446,7 +451,7 @@ public class RetrofitManager {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //解决rxjava导致的内存泄漏问题
+                //解决RxJava2导致的内存泄漏问题
                 .compose(rxAppCompatActivity.<ResponseBody>bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override
@@ -512,7 +517,7 @@ public class RetrofitManager {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //解决rxjava导致的内存泄漏问题
+                //解决RxJava2导致的内存泄漏问题
                 .compose(rxFragment.<ResponseBody>bindToLifecycle())
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override
@@ -578,7 +583,7 @@ public class RetrofitManager {
         observable.onTerminateDetach()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                //解决rxjava导致的内存泄漏问题
+                //解决RxJava2导致的内存泄漏问题
                 .compose(rxFragment.<ResponseBody>bindUntilEvent(FragmentEvent.DESTROY))
                 .subscribe(new Consumer<ResponseBody>() {
                                @Override

@@ -1,2 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.phone.rxjava2andretrofit2" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.phone.rxjava2andretrofit2">
+
+    <!-- Required -->
+    <permission
+        android:name="${applicationId}.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Optional. Required for location feature -->
+    <!-- 为了提高sdk识别唯一用户的能力，保证消息推送的精准送达，建议集成以下权限（可选）-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- 如您需要接入地理围栏业务，建议集成以下权限（可选）-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+    <!-- 如您需要对应设备通知相关的能力，建议集成以下权限（可选）-->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" /><!-- 华为角标 -->
+    <uses-permission android:name="com.vivo.notification.permission.BADGE_ICON" /><!-- VIVO角标权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" /><!--振动器权限，JPUSH支持通知开启振动功能，小米推送必须-->
+
+    <!-- 扩展备用权限（可选）-->
+    <permission
+        android:name="${applicationId}.permission.JOPERATE_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${applicationId}.permission.JOPERATE_MESSAGE" />
+
+    <application
+        android:name=".MineApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="UnusedAttribute"
+        tools:replace="android:allowBackup">
+
+        <!-- 若您的业务中有使用极光富媒体功能，或者极光早上好功能，需要把此 Activity 的 exported 修改成 true 覆盖 mavenCentral 上的组件。 -->
+        <activity
+            android:name="cn.jpush.android.ui.PopWinActivity"
+            android:exported="true"
+            android:theme="@style/MyDialogStyle"
+            tools:node="replace">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="cn.jpush.android.ui.PopWinActivity" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </activity>
+
+        <!-- 若您的业务中有使用极光富媒体功能，或者极光早上好功能，需要把此 Activity 的 exported 修改成 true 覆盖 mavenCentral 上的组件。 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:theme="@android:style/Theme.NoTitleBar"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </activity>
+
+        <!-- Since JCore2.0.0 Required SDK核心功能-->
+        <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->
+        <!-- 这个是自定义Service，要继承极光JCommonService，可以在更多手机平台上使得推送通道保持的更稳定 -->
+        <service
+            android:name=".service.JiGuangPushService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
+
+        <!-- Required since 3.0.7 -->
+        <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
+        <!-- 3.3.0开始所有事件将通过该类回调 -->
+        <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
+        <receiver
+            android:name=".receiver.JiGuangPushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

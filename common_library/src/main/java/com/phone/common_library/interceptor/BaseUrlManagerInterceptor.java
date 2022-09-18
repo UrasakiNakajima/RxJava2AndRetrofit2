@@ -16,7 +16,7 @@ import okhttp3.Response;
 
 public class BaseUrlManagerInterceptor implements Interceptor {
 	
-	private static final String          TAG = "BaseUrlManagerInterceptor";
+	private static final String          TAG = BaseUrlManagerInterceptor.class.getSimpleName();
 	private              BaseApplication baseApplication;
 	
 	public BaseUrlManagerInterceptor(BaseApplication baseApplication) {

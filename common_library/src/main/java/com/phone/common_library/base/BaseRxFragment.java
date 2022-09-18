@@ -23,7 +23,7 @@ import java.util.Map;
 
 public abstract class BaseRxFragment extends RxFragment {
 
-    private static final String TAG = "BaseRxFragment";
+    private static final String TAG = BaseRxFragment.class.getSimpleName();
     protected RxAppCompatActivity rxAppCompatActivity;
     protected BaseApplication baseApplication;
     private Intent intent;

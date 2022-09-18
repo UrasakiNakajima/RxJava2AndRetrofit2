@@ -14,77 +14,78 @@ import java.util.Locale;
 
 public class MediaFileManager {
 
+    private static final String TAG = MediaFileManager.class.getSimpleName();
     // Audio file types
-    private static final int FILE_TYPE_MP3     = 1;
-    private static final int FILE_TYPE_M4A     = 2;
-    private static final int FILE_TYPE_WAV     = 3;
-    private static final int FILE_TYPE_AMR     = 4;
-    private static final int FILE_TYPE_AWB     = 5;
-    private static final int FILE_TYPE_WMA     = 6;
-    private static final int FILE_TYPE_OGG     = 7;
-    private static final int FILE_TYPE_AAC     = 8;
-    private static final int FILE_TYPE_MKA     = 9;
-    private static final int FILE_TYPE_FLAC    = 10;
+    private static final int FILE_TYPE_MP3 = 1;
+    private static final int FILE_TYPE_M4A = 2;
+    private static final int FILE_TYPE_WAV = 3;
+    private static final int FILE_TYPE_AMR = 4;
+    private static final int FILE_TYPE_AWB = 5;
+    private static final int FILE_TYPE_WMA = 6;
+    private static final int FILE_TYPE_OGG = 7;
+    private static final int FILE_TYPE_AAC = 8;
+    private static final int FILE_TYPE_MKA = 9;
+    private static final int FILE_TYPE_FLAC = 10;
     private static final int FIRST_AUDIO_FILE_TYPE = FILE_TYPE_MP3;
     private static final int LAST_AUDIO_FILE_TYPE = FILE_TYPE_FLAC;
 
     // MIDI file types
-    private static final int FILE_TYPE_MID     = 11;
-    private static final int FILE_TYPE_SMF     = 12;
-    private static final int FILE_TYPE_IMY     = 13;
+    private static final int FILE_TYPE_MID = 11;
+    private static final int FILE_TYPE_SMF = 12;
+    private static final int FILE_TYPE_IMY = 13;
     private static final int FIRST_MIDI_FILE_TYPE = FILE_TYPE_MID;
     private static final int LAST_MIDI_FILE_TYPE = FILE_TYPE_IMY;
 
     // Video file types
-    private static final int FILE_TYPE_MP4     = 21;
-    private static final int FILE_TYPE_M4V     = 22;
-    private static final int FILE_TYPE_3GPP    = 23;
-    private static final int FILE_TYPE_3GPP2   = 24;
-    private static final int FILE_TYPE_WMV     = 25;
-    private static final int FILE_TYPE_ASF     = 26;
-    private static final int FILE_TYPE_MKV     = 27;
-    private static final int FILE_TYPE_MP2TS   = 28;
-    private static final int FILE_TYPE_AVI     = 29;
-    private static final int FILE_TYPE_WEBM    = 30;
+    private static final int FILE_TYPE_MP4 = 21;
+    private static final int FILE_TYPE_M4V = 22;
+    private static final int FILE_TYPE_3GPP = 23;
+    private static final int FILE_TYPE_3GPP2 = 24;
+    private static final int FILE_TYPE_WMV = 25;
+    private static final int FILE_TYPE_ASF = 26;
+    private static final int FILE_TYPE_MKV = 27;
+    private static final int FILE_TYPE_MP2TS = 28;
+    private static final int FILE_TYPE_AVI = 29;
+    private static final int FILE_TYPE_WEBM = 30;
     private static final int FIRST_VIDEO_FILE_TYPE = FILE_TYPE_MP4;
     private static final int LAST_VIDEO_FILE_TYPE = FILE_TYPE_WEBM;
 
     // More video file types
-    private static final int FILE_TYPE_MP2PS   = 200;
+    private static final int FILE_TYPE_MP2PS = 200;
     private static final int FIRST_VIDEO_FILE_TYPE2 = FILE_TYPE_MP2PS;
     private static final int LAST_VIDEO_FILE_TYPE2 = FILE_TYPE_MP2PS;
     // Image file types
-    private static final int FILE_TYPE_JPEG    = 31;
-    private static final int FILE_TYPE_PNG     = 32;
-    private static final int FILE_TYPE_BMP     = 33;
-    private static final int FILE_TYPE_WBMP    = 34;
-    private static final int FILE_TYPE_WEBP    = 35;
+    private static final int FILE_TYPE_JPEG = 31;
+    private static final int FILE_TYPE_PNG = 32;
+    private static final int FILE_TYPE_BMP = 33;
+    private static final int FILE_TYPE_WBMP = 34;
+    private static final int FILE_TYPE_WEBP = 35;
     private static final int FIRST_IMAGE_FILE_TYPE = FILE_TYPE_JPEG;
     private static final int LAST_IMAGE_FILE_TYPE = FILE_TYPE_WEBP;
 
     // Gif file types
-    private static final int FILE_TYPE_GIF     = 36;
+    private static final int FILE_TYPE_GIF = 36;
 
     // Playlist file types
-    private static final int FILE_TYPE_M3U      = 41;
-    private static final int FILE_TYPE_PLS      = 42;
-    private static final int FILE_TYPE_WPL      = 43;
+    private static final int FILE_TYPE_M3U = 41;
+    private static final int FILE_TYPE_PLS = 42;
+    private static final int FILE_TYPE_WPL = 43;
     private static final int FILE_TYPE_HTTPLIVE = 44;
     private static final int FIRST_PLAYLIST_FILE_TYPE = FILE_TYPE_M3U;
     private static final int LAST_PLAYLIST_FILE_TYPE = FILE_TYPE_HTTPLIVE;
     // Drm file types
-    private static final int FILE_TYPE_FL      = 51;
+    private static final int FILE_TYPE_FL = 51;
     private static final int FIRST_DRM_FILE_TYPE = FILE_TYPE_FL;
     private static final int LAST_DRM_FILE_TYPE = FILE_TYPE_FL;
     // Other popular file types
-    private static final int FILE_TYPE_TEXT          = 100;
-    private static final int FILE_TYPE_HTML          = 101;
-    private static final int FILE_TYPE_PDF           = 102;
-    private static final int FILE_TYPE_XML           = 103;
-    private static final int FILE_TYPE_MS_WORD       = 104;
-    private static final int FILE_TYPE_MS_EXCEL      = 105;
+    private static final int FILE_TYPE_TEXT = 100;
+    private static final int FILE_TYPE_HTML = 101;
+    private static final int FILE_TYPE_PDF = 102;
+    private static final int FILE_TYPE_XML = 103;
+    private static final int FILE_TYPE_MS_WORD = 104;
+    private static final int FILE_TYPE_MS_EXCEL = 105;
     private static final int FILE_TYPE_MS_POWERPOINT = 106;
-    private static final int FILE_TYPE_ZIP           = 107;
+    private static final int FILE_TYPE_ZIP = 107;
 
     public static class MediaFileType {
         public final int fileType;
@@ -105,6 +106,7 @@ public class MediaFileManager {
         sFileTypeMap.put(extension, new MediaFileType(fileType, mimeType));
         sMimeTypeMap.put(mimeType, fileType);
     }
+
     static {
         addFileType("MP3", FILE_TYPE_MP3, "audio/mpeg");
         addFileType("MPGA", FILE_TYPE_MP3, "audio/mpeg");
@@ -177,6 +179,7 @@ public class MediaFileManager {
 
     /**
      * check is audio or not
+     *
      * @param fileType file type integer value
      * @return if is audio type , return true;otherwise , return false
      */
@@ -189,6 +192,7 @@ public class MediaFileManager {
 
     /**
      * check is video or not
+     *
      * @param fileType file type integer value
      * @return if is video type , return true ; otherwise , return false
      */
@@ -201,6 +205,7 @@ public class MediaFileManager {
 
     /**
      * check is image or not
+     *
      * @param fileType file type integer value
      * @return if is image type , return true ; otherwise , return false ;
      */
@@ -211,6 +216,7 @@ public class MediaFileManager {
 
     /**
      * check is image or not
+     *
      * @param fileType file type integer value
      * @return if is image type , return true ; otherwise , return false ;
      */
@@ -220,6 +226,7 @@ public class MediaFileManager {
 
     /**
      * check is playlist or not
+     *
      * @param fileType file type integer value
      * @return if is playlist type , return true ; otherwise , return false ;
      */
@@ -230,6 +237,7 @@ public class MediaFileManager {
 
     /**
      * check is drm or not
+     *
      * @param fileType file type integer value
      * @return if is drm type , return true ; otherwise , return false ;
      */
@@ -240,6 +248,7 @@ public class MediaFileManager {
 
     /**
      * get file's extension by file' path
+     *
      * @param path file's path
      * @return MediaFileType if the given file extension exist , or null
      */
@@ -252,6 +261,7 @@ public class MediaFileManager {
 
     /**
      * get file's extension by file' path
+     *
      * @param fileType file's type
      * @return MediaFileType if the given file extension exist , or null
      */
@@ -261,6 +271,7 @@ public class MediaFileManager {
 
     /**
      * check the given mime type is mime type media or not
+     *
      * @param mimeType mime type to check
      * @return if the given mime type is mime type media,return true ;otherwise , false
      */
@@ -272,8 +283,8 @@ public class MediaFileManager {
 
     /**
      * generates a title based on file name
-     * @param path file's path
      *
+     * @param path file's path
      * @return file'name without extension
      */
     public static String getFileTitle(String path) {
@@ -295,6 +306,7 @@ public class MediaFileManager {
 
     /**
      * get mine type integer value
+     *
      * @param mimeType mime type to get
      * @return return mime type value if exist ;or zero value if not exist
      */
@@ -305,6 +317,7 @@ public class MediaFileManager {
 
     /**
      * get file's mime type base on path
+     *
      * @param path file path
      * @return return mime type if exist , or null
      */

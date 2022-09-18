@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SquareActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.phone.square_module.view_model.SquareViewModelImpl" />
+
+        <variable
+            name="dataxRxAppCompatActivity"
+            type="com.phone.common_library.bean.DataX" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:background="@color/color_FF198CFF"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="vertical"
+                app:contentInsetStart="0dp">
+
+                <TextView
+                    android:id="@+id/tev_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:gravity="center"
+                    android:text="@string/square"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_20" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:text="@={dataxRxAppCompatActivity.title}"
+                android:textColor="@color/color_FFE066FF"
+                android:textSize="@dimen/sp_18"
+                android:visibility="@{dataxRxAppCompatActivity.collect? View.GONE:View.VISIBLE}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:text="@={dataxRxAppCompatActivity.chapterName}"
+                android:textColor="@color/colorBlack333"
+                android:textSize="@dimen/sp_16"
+                android:visibility="@{dataxRxAppCompatActivity.collect? View.GONE:View.VISIBLE}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:text="@={dataxRxAppCompatActivity.link}"
+                android:textColor="@color/colorBlack333"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tev_kill_app"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="center"
+                android:background="@color/color_FFFFC73B"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/kill_app"
+                android:textColor="@color/color_FFFFFFFF"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tev_create_an_exception"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="center"
+                android:background="@color/color_FFFFC73B"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/create_an_exception"
+                android:textColor="@color/color_FFFFFFFF"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tev_create_an_exception2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="center"
+                android:background="@color/color_FFFFC73B"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/create_an_exception2"
+                android:textColor="@color/color_FFFFFFFF"
+                android:textSize="@dimen/sp_16" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <ImageView
+                android:id="@+id/imv_picture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_project_img"
+                app:imageUrl="@{dataxRxAppCompatActivity.envelopePic}"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <com.qmuiteam.qmui.widget.QMUILoadingView
+            android:id="@+id/load_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:color="@color/color_FF999999"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+</layout>

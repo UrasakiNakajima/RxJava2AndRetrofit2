@@ -5,6 +5,9 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxFragment;
+
 /**
  * author    : Urasaki
  * e-mail    : 1164688204@qq.com
@@ -14,8 +17,8 @@ import androidx.fragment.app.Fragment;
 
 public interface IFirstPagePresenter {
 	
-	void firstPage(Fragment fragment, Map<String, String> bodyParams);
+	void firstPageRxFragment(RxFragment rxFragment, Map<String, String> bodyParams);
 	
-	void firstPage(AppCompatActivity appCompatActivity, Map<String, String> bodyParams);
+	void firstPageRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams);
 	
 }

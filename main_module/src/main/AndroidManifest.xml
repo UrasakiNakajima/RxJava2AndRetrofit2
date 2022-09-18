@@ -19,7 +19,6 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name=".MineApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -87,14 +86,7 @@
             android:screenOrientation="portrait">
 
         </activity>
-        <activity
-            android:name="com.phone.common_library.ui.AndroidAndJsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.phone.common_library.ui.NewsDetailActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

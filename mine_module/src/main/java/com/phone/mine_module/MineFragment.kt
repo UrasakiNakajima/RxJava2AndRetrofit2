@@ -32,11 +32,19 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_mine.*
 
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce :
+ */
 @Route(path = "/mine_module/mine")
 class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineView {
 
+    companion object {
+        private val TAG: String = MineFragment::class.java.name
+    }
 
-    private val TAG: String = MineFragment::class.java.name
 //    private var mainActivity: MainActivity? = null
 
     private var juheNewsBeanList: MutableList<Data> = mutableListOf()
@@ -191,7 +199,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
             bodyParams["type"] = "keji"
             bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.mineData(rxFragment, bodyParams)
+            presenter.mineDataRxFragment(rxFragment, bodyParams)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {

@@ -12,28 +12,21 @@
         android:layout_height="@dimen/dp_20" />
 
     <TextView
-        android:id="@+id/tev_book_name"
+        android:id="@+id/tev_connect_server_service"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_50"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/color_54E066FF"
+        android:gravity="center"
         android:paddingStart="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_10"
-        android:text="@string/app_name"
+        android:text="@string/connect_server_service"
         android:textColor="@color/color_FF198CFF"
-        android:textSize="@dimen/sp_16" />
+        android:textSize="@dimen/sp_20" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_20" />
-
-    <TextView
-        android:id="@+id/tev_book_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_10"
-        android:text="@string/app_name"
-        android:textColor="@color/color_FF198CFF"
-        android:textSize="@dimen/sp_16" />
 
     <TextView
         android:id="@+id/tev_add_book"

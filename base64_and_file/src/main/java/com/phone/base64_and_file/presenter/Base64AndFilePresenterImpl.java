@@ -1,16 +1,13 @@
 package com.phone.base64_and_file.presenter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 
-import com.phone.base64_and_file.IBase64AndFileView;
+import com.phone.base64_and_file.view.IBase64AndFileView;
+import com.phone.base64_and_file.bean.Base64AndFileBean;
 import com.phone.base64_and_file.model.Base64AndFileModelImpl;
 import com.phone.common_library.base.BasePresenter;
 import com.phone.common_library.base.IBaseView;
-import com.phone.common_library.callback.OnCommonBothParamCallback;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
-
-import java.util.List;
 
 public class Base64AndFilePresenterImpl extends BasePresenter<IBaseView>
         implements IBase64AndFilePresenter {
@@ -26,16 +23,15 @@ public class Base64AndFilePresenterImpl extends BasePresenter<IBaseView>
 
     @Override
     public void showCompressedPicture(Context context,
-                                      String dirsPath,
-                                      String dirsPath2) {
+                                      Base64AndFileBean base64AndFileBean) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IBase64AndFileView) {
                 IBase64AndFileView base64AndFileView = (IBase64AndFileView) baseView;
-                model.showCompressedPicture(context, dirsPath, dirsPath2, new OnCommonBothParamCallback<Bitmap>() {
+                model.showCompressedPicture(context, base64AndFileBean, new OnCommonSingleParamCallback<Base64AndFileBean>() {
                     @Override
-                    public void onSuccess(Bitmap success, String data) {
-                        base64AndFileView.showCompressedPictureSuccess(success, data);
+                    public void onSuccess(Base64AndFileBean success) {
+                        base64AndFileView.showCompressedPictureSuccess(success);
                     }
 
                     @Override
@@ -48,15 +44,15 @@ public class Base64AndFilePresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void showPictureToBase64(String filePath) {
+    public void showPictureToBase64(Base64AndFileBean base64AndFileBean) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IBase64AndFileView) {
                 IBase64AndFileView base64AndFileView = (IBase64AndFileView) baseView;
-                model.showPictureToBase64(filePath, new OnCommonBothParamCallback<List<String>>() {
+                model.showPictureToBase64(base64AndFileBean, new OnCommonSingleParamCallback<Base64AndFileBean>() {
                     @Override
-                    public void onSuccess(List<String> success, String data) {
-                        base64AndFileView.showPictureToBase64Success(success, data);
+                    public void onSuccess(Base64AndFileBean success) {
+                        base64AndFileView.showPictureToBase64Success(success);
                     }
 
                     @Override
@@ -69,15 +65,14 @@ public class Base64AndFilePresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void showBase64ToPicture(String filePath,
-                                    String base64Str) {
+    public void showBase64ToPicture(Base64AndFileBean base64AndFileBean) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IBase64AndFileView) {
                 IBase64AndFileView base64AndFileView = (IBase64AndFileView) baseView;
-                model.showBase64ToPicture(filePath, base64Str, new OnCommonSingleParamCallback<Bitmap>() {
+                model.showBase64ToPicture(base64AndFileBean, new OnCommonSingleParamCallback<Base64AndFileBean>() {
                     @Override
-                    public void onSuccess(Bitmap success) {
+                    public void onSuccess(Base64AndFileBean success) {
                         base64AndFileView.showBase64ToPictureSuccess(success);
                     }
 

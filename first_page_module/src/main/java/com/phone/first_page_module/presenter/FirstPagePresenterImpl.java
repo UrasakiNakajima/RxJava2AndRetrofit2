@@ -2,9 +2,6 @@ package com.phone.first_page_module.presenter;
 
 import android.text.TextUtils;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.base.BasePresenter;
 import com.phone.common_library.base.IBaseView;
@@ -13,9 +10,11 @@ import com.phone.common_library.manager.GsonManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.first_page_module.R;
-import com.phone.first_page_module.bean.FirstPageResponse;
+import com.phone.common_library.bean.FirstPageResponse;
 import com.phone.first_page_module.model.FirstPageModelImpl;
 import com.phone.first_page_module.view.IFirstPageView;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxFragment;
 
 import java.util.Map;
 
@@ -39,7 +38,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void firstPage(Fragment fragment, Map<String, String> bodyParams) {
+    public void firstPageRxFragment(RxFragment fragment, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IFirstPageView) {
@@ -64,14 +63,12 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                 } else {
                                     firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.loading_failed));
                                 }
-                                firstPageView.hideLoading();
                             }
 
                             @Override
                             public void onError(String error) {
                                 LogManager.i(TAG, "error*****" + error);
                                 firstPageView.firstPageDataError(error);
-                                firstPageView.hideLoading();
                             }
                         });
                 //				compositeDisposable.add(disposable);
@@ -108,7 +105,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void firstPage(AppCompatActivity appCompatActivity, Map<String, String> bodyParams) {
+    public void firstPageRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IFirstPageView) {
@@ -116,7 +113,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                 //                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
                 RetrofitManager.getInstance()
-                        .responseStringAutoDispose(appCompatActivity, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
+                        .responseStringAutoDispose(rxAppCompatActivity, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
@@ -133,14 +130,12 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                 } else {
                                     firstPageView.firstPageDataError(BaseApplication.getInstance().getResources().getString(R.string.loading_failed));
                                 }
-                                firstPageView.hideLoading();
                             }
 
                             @Override
                             public void onError(String error) {
                                 LogManager.i(TAG, "error*****" + error);
                                 firstPageView.firstPageDataError(error);
-                                firstPageView.hideLoading();
                             }
                         });
                 //				compositeDisposable.add(disposable);

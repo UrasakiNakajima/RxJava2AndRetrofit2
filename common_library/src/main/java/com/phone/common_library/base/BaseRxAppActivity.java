@@ -29,7 +29,7 @@ import java.util.Map;
 
 public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
-    private static final String TAG = "BaseRxAppActivity";
+    private static final String TAG = BaseRxAppActivity.class.getSimpleName();
     //	protected QMUILoadingView          loadView;
 //	protected FrameLayout.LayoutParams layoutParams;
     protected Intent intent;

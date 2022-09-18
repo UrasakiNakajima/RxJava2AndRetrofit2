@@ -1,25 +1,16 @@
 package com.phone.base64_and_file.presenter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import com.phone.base64_and_file.IBase64AndFileView;
-
-import java.util.List;
-import java.util.Map;
+import com.phone.base64_and_file.bean.Base64AndFileBean;
 
 public interface IBase64AndFilePresenter {
 
     void showCompressedPicture(Context context,
-                               String dirsPath,
-                               String dirsPath2);
+                               Base64AndFileBean base64AndFileBean);
 
-    void showPictureToBase64(String filePath);
+    void showPictureToBase64(Base64AndFileBean base64AndFileBean);
 
-    void showBase64ToPicture(String filePath,
-                              String base64Str);
+    void showBase64ToPicture(Base64AndFileBean base64AndFileBean);
 
 }

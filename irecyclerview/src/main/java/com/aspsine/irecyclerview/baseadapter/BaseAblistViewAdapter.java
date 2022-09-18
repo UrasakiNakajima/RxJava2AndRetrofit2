@@ -17,8 +17,6 @@ import java.util.List;
  */
 public class BaseAblistViewAdapter<T> extends android.widget.BaseAdapter {
 
-
-
     protected Context mContext;
     protected LayoutInflater mInflater;
     protected List<T> data = new ArrayList<T>();

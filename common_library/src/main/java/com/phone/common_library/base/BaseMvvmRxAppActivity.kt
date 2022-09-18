@@ -2,6 +2,7 @@ package com.phone.common_library.base
 
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.drawable.GradientDrawable
@@ -24,14 +25,17 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     RxAppCompatActivity() {
 
-    private val TAG = "BaseMvvmRxAppActivity"
+    companion object {
+        private val TAG = BaseMvvmAppRxActivity::class.java.simpleName
+    }
+
 
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
     var viewModel: VM? = null
     protected var rxAppCompatActivity: RxAppCompatActivity? = null
     protected var baseApplication: BaseApplication? = null
-    private var activityPageManager: ActivityPageManager? = null
+    var activityPageManager: ActivityPageManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -245,6 +249,15 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         }
         toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
+    }
+
+    protected open fun startActivity(cls: Class<*>?) {
+        val intent = Intent(this, cls)
+        startActivity(intent)
+    }
+
+    open fun getActivityPageManager2(): ActivityPageManager? {
+        return activityPageManager
     }
 
     private fun killAppProcess(context: Context) {

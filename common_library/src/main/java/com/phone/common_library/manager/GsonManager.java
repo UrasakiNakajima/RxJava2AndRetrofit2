@@ -6,7 +6,7 @@ import java.lang.reflect.Type;
 
 public class GsonManager {
 
-    public static final String TAG = "GsonManager";
+    public static final String TAG = GsonManager.class.getSimpleName();
     private static Gson gson;
     private static GsonManager gsonManager;
 

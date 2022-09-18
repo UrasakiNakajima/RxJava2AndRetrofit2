@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
  * Created by aspsine on 16/3/12.
  */
 public class WrapperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     protected static final int REFRESH_HEADER = Integer.MIN_VALUE;
     protected static final int HEADER = Integer.MIN_VALUE + 1;
     protected static final int FOOTER = Integer.MAX_VALUE - 1;

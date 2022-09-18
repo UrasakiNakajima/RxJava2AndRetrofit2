@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ActivityPageManager {
 
-    private static final String TAG = "ActivityPageManager";
+    private static final String TAG = ActivityPageManager.class.getSimpleName();
     /**
      * 单一实例
      */
@@ -130,7 +130,7 @@ public class ActivityPageManager {
     public void finishAliveActivity(Activity activity) {
         if (activity != null && mActivityAliveStack.contains(activity)) {
             mActivityAliveStack.remove(activity);
-            LogManager.i(TAG, "finishActivity");
+            LogManager.i(TAG, "finishAliveActivity");
             activity.finish();
         }
     }

@@ -16,7 +16,7 @@ public abstract class BaseManager<T> {
     private WeakReference<T> modelActivity;
 
     protected void attachActivity(T modelActivity) {
-        this.modelActivity = new WeakReference<T>(modelActivity);
+        this.modelActivity = new WeakReference<>(modelActivity);
     }
 
     public void detachActivity() {

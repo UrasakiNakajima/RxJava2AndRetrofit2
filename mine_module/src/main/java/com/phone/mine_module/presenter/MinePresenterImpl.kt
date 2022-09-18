@@ -18,7 +18,9 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
-    private val TAG: String = "MinePresenterImpl"
+    companion object {
+        private val TAG = MinePresenterImpl::class.java.simpleName
+    }
 
     //    private IResourceChildView feedbackView;//P需要与V 交互，所以需要持有V的引用
     private var model: MineModelImpl = MineModelImpl();
@@ -27,7 +29,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         attachView(baseView)
     }
 
-    override fun mineData(rxFragment: RxFragment, bodyParams: Map<String, String>) {
+    override fun mineDataRxFragment(rxFragment: RxFragment, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {
@@ -72,7 +74,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun mineData(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>) {
+    override fun mineDataRxAppCompatActivity(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {

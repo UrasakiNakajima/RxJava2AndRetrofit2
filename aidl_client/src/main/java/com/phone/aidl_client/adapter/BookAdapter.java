@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	
-	private static final String     TAG       = "BookAdapter";
+	private static final String     TAG       = BookAdapter.class.getSimpleName();
 	private              Context    mContext;
 	private              List<Book> mBookList = new ArrayList<>();
 	
@@ -46,15 +46,15 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	@Override
 	public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View view = LayoutInflater.from(mContext).inflate(R.layout.item_book, parent, false);
-		return new ContentHolder(view);
+		return new BodyHolder(view);
 	}
 	
 	@Override
 	public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-		if (holder instanceof ContentHolder) {
-			ContentHolder contentHolder = (ContentHolder) holder;
-			contentHolder.tevBookName.setText(mBookList.get(position).getName());
-			contentHolder.tevBookContent.setText(mBookList.get(position).getContent());
+		if (holder instanceof BodyHolder) {
+			BodyHolder bodyHolder = (BodyHolder) holder;
+			bodyHolder.tevBookName.setText(mBookList.get(position).getName());
+			bodyHolder.tevBookContent.setText(mBookList.get(position).getContent());
 		}
 	}
 	
@@ -63,12 +63,12 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 		return mBookList.size();
 	}
 	
-	private static class ContentHolder extends RecyclerView.ViewHolder {
+	private static class BodyHolder extends RecyclerView.ViewHolder {
 		
 		private TextView tevBookName;
 		private TextView tevBookContent;
 		
-		public ContentHolder(@NonNull View itemView) {
+		public BodyHolder(@NonNull View itemView) {
 			super(itemView);
 			
 			tevBookName = (TextView) itemView.findViewById(R.id.tev_book_name);
