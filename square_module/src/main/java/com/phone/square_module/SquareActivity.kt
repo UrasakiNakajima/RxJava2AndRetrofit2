@@ -173,16 +173,24 @@ class SquareActivity :
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 207) {
+//            initRxPermissions();
+        }
+    }
+
     /**
      * 請求權限，RxFragment里需要的时候直接调用就行了
      */
     private fun initRxPermissionsRxAppCompatActivity(number: Int) {
-        val rxPermissionsManager = RxPermissionsManager()
-        rxPermissionsManager.initRxPermissionsRxAppCompatActivity2(
+        val rxPermissionsManager = RxPermissionsManager.getInstance()
+        rxPermissionsManager.initRxPermissionsRxAppCompatActivity(
             this,
             permissions,
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
+                    //所有的权限都授予
                     if (number == 1) {
                         val baseMvvmAppRxActivity =
                             rxAppCompatActivity as BaseMvvmAppRxActivity<*, *>;
@@ -205,10 +213,12 @@ class SquareActivity :
                 }
 
                 override fun onNotCheckNoMorePromptError() {
+                    //至少一个权限未授予且未勾选不再提示
                     showSystemSetupDialog()
                 }
 
                 override fun onCheckNoMorePromptError() {
+                    //至少一个权限未授予且勾选了不再提示
                     showSystemSetupDialog()
                 }
             })

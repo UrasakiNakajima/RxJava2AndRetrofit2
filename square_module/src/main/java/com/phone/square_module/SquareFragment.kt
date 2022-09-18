@@ -334,12 +334,13 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
      * 請求權限，RxFragment里需要的时候直接调用就行了
      */
     private fun initRxPermissionsRxFragment(number: Int) {
-        val rxPermissionsManager = RxPermissionsManager()
-        rxPermissionsManager.initRxPermissionsRxFragment2(
+        val rxPermissionsManager = RxPermissionsManager.getInstance()
+        rxPermissionsManager.initRxPermissionsRxFragment(
             this,
             permissions,
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
+                    //所有的权限都授予
                     if (number == 1) {
                         val baseMvpRxAppActivity =
                             rxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
@@ -362,10 +363,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 }
 
                 override fun onNotCheckNoMorePromptError() {
+                    //至少一个权限未授予且未勾选不再提示
                     showSystemSetupDialog()
                 }
 
                 override fun onCheckNoMorePromptError() {
+                    //至少一个权限未授予且勾选了不再提示
                     showSystemSetupDialog()
                 }
             })

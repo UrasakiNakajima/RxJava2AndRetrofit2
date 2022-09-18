@@ -111,8 +111,10 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
     private AlertDialog mPermissionsDialog;
     private Base64AndFileBean base64AndFileBean;
-    private List<String> permissionList = new ArrayList<>();
-    private String[] permissions;
+    private String[] permissions = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -136,14 +138,6 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         base64AndFileBean.setDirsPath(dirsPath);
         base64AndFileBean.setDirsPathCompressed(dirsPathCompressed);
         base64AndFileBean.setDirsPathCompressedRecover(dirsPathCompressedRecover);
-
-        permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        permissions = new String[permissionList.size()];
-        for (int i = 0; i < permissions.length; i++) {
-            permissions[i] = permissionList.get(i);
-        }
 
         handler = new Handler(Looper.getMainLooper());
     }
@@ -251,6 +245,49 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         }
     }
 
+    /**
+     * 請求權限，RxAppCompatActivity里需要的时候直接调用就行了
+     */
+    private void initRxPermissionsRxAppCompatActivity() {
+        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
+        rxPermissionsManager.initRxPermissionsRxAppCompatActivity(this, permissions, new OnCommonRxPermissionsCallback() {
+            @Override
+            public void onRxPermissionsAllPass() {
+                //所有的权限都授予
+                if (TextUtils.isEmpty(baseApplication.getSystemId())) {
+                    String systemId = SystemManager.getSystemId(baseApplication);
+                    baseApplication.setSystemId(systemId);
+                    LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
+                } else {
+                    LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
+                }
+
+//                //第一种方法
+//                if (presenter != null) {
+//                    showLoading();
+//
+//                    presenter.showCompressedPicture(baseApplication,
+//                            base64AndFileBean);
+//                }
+
+                //第二种方法
+                initBase64AndFileTask();
+            }
+
+            @Override
+            public void onNotCheckNoMorePromptError() {
+                //至少一个权限未授予且未勾选不再提示
+                showSystemSetupDialog();
+            }
+
+            @Override
+            public void onCheckNoMorePromptError() {
+                //至少一个权限未授予且勾选了不再提示
+                showSystemSetupDialog();
+            }
+        });
+    }
+
     private void showSystemSetupDialog() {
         cancelPermissionsDialog();
         if (mPermissionsDialog == null) {
@@ -283,46 +320,6 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
             mPermissionsDialog.cancel();
             mPermissionsDialog = null;
         }
-    }
-
-    /**
-     * 請求權限，RxAppCompatActivity里需要的时候直接调用就行了
-     */
-    private void initRxPermissionsRxAppCompatActivity() {
-        RxPermissionsManager rxPermissionsManager = new RxPermissionsManager();
-        rxPermissionsManager.initRxPermissionsRxAppCompatActivity(this, permissions, new OnCommonRxPermissionsCallback() {
-            @Override
-            public void onRxPermissionsAllPass() {
-                if (TextUtils.isEmpty(baseApplication.getSystemId())) {
-                    String systemId = SystemManager.getSystemId(baseApplication);
-                    baseApplication.setSystemId(systemId);
-                    LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
-                } else {
-                    LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
-                }
-
-//                //第一种方法
-//                if (presenter != null) {
-//                    showLoading();
-//
-//                    presenter.showCompressedPicture(baseApplication,
-//                            base64AndFileBean);
-//                }
-
-                //第二种方法
-                initBase64AndFileTask();
-            }
-
-            @Override
-            public void onNotCheckNoMorePromptError() {
-                showSystemSetupDialog();
-            }
-
-            @Override
-            public void onCheckNoMorePromptError() {
-                showSystemSetupDialog();
-            }
-        });
     }
 
     /**

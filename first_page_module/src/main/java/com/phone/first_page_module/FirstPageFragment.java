@@ -83,8 +83,12 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     private AlertDialog mPermissionsDialog;
     private AMAPLocationManager amapLocationManager;
 
-    private List<String> permissionList = new ArrayList<>();
-    private String[] permissions;
+    private String[] permissions = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION};
 
     @Nullable
     @Override
@@ -121,15 +125,6 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
             }
         });
 
-        permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-        permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        permissions = new String[permissionList.size()];
-        for (int i = 0; i < permissions.length; i++) {
-            permissions[i] = permissionList.get(i);
-        }
     }
 
     @Override
@@ -321,14 +316,23 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 207) {
+//            initRxPermissions();
+        }
+    }
+
     /**
      * RxFragment里需要的时候直接调用就行了
      */
     private void initRxPermissionsRxFragment() {
-        RxPermissionsManager rxPermissionsManager = new RxPermissionsManager();
-        rxPermissionsManager.initRxPermissionsRxFragment2(this, permissions, new OnCommonRxPermissionsCallback() {
+        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
+        rxPermissionsManager.initRxPermissionsRxFragment(this, permissions, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
+                //所有的权限都授予
 //                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
 //                User user = new User2();
 //                User3 user3 = (User3) user;
@@ -347,11 +351,13 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
 
             @Override
             public void onNotCheckNoMorePromptError() {
+                //至少一个权限未授予且未勾选不再提示
                 showSystemSetupDialog();
             }
 
             @Override
             public void onCheckNoMorePromptError() {
+                //至少一个权限未授予且勾选了不再提示
                 showSystemSetupDialog();
             }
         });

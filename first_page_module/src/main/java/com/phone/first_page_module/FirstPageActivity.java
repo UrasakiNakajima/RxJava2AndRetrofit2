@@ -1,13 +1,18 @@
 package com.phone.first_page_module;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -63,8 +68,13 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
 
     private AMAPLocationManager amapLocationManager;
 
-    private List<String> permissionList = new ArrayList<>();
-    private String[] permissions;
+    private AlertDialog mPermissionsDialog;
+    private String[] permissions = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,16 +102,6 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
                 LogManager.i(TAG, "error*****" + error);
             }
         });
-
-        permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-        permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        permissions = new String[permissionList.size()];
-        for (int i = 0; i < permissions.length; i++) {
-            permissions[i] = permissionList.get(i);
-        }
 
     }
 
@@ -251,14 +251,23 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 207) {
+//            initRxPermissions();
+        }
+    }
+
     /**
      * RxAppCompatActivity里需要的时候直接调用就行了
      */
     private void initRxPermissionsRxAppCompatActivity() {
-        RxPermissionsManager rxPermissionsManager = new RxPermissionsManager();
-        rxPermissionsManager.initRxPermissionsRxAppCompatActivity2(this, permissions, new OnCommonRxPermissionsCallback() {
+        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
+        rxPermissionsManager.initRxPermissionsRxAppCompatActivity(this, permissions, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
+                //所有的权限都授予
 //                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
 //                User user = new User2();
 //                User3 user3 = (User3) user;
@@ -277,14 +286,50 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
 
             @Override
             public void onNotCheckNoMorePromptError() {
-
+                //至少一个权限未授予且未勾选不再提示
+                showSystemSetupDialog();
             }
 
             @Override
             public void onCheckNoMorePromptError() {
-
+                //至少一个权限未授予且勾选了不再提示
+                showSystemSetupDialog();
             }
         });
+    }
+
+    private void showSystemSetupDialog() {
+        cancelPermissionsDialog();
+        if (mPermissionsDialog == null) {
+            mPermissionsDialog = new AlertDialog.Builder(this)
+                    .setTitle("权限设置")
+                    .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
+                    .setPositiveButton("去授权", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            cancelPermissionsDialog();
+                            intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+                            intent.setData(uri);
+                            startActivityForResult(intent, 207);
+                        }
+                    })
+                    .create();
+        }
+
+        mPermissionsDialog.setCancelable(false);
+        mPermissionsDialog.setCanceledOnTouchOutside(false);
+        mPermissionsDialog.show();
+    }
+
+    /**
+     * 关闭对话框
+     */
+    private void cancelPermissionsDialog() {
+        if (mPermissionsDialog != null) {
+            mPermissionsDialog.cancel();
+            mPermissionsDialog = null;
+        }
     }
 
     private void initFirstPage() {
