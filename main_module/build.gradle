@@ -3,10 +3,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//kotlin noArg和allOpen插件
-apply plugin: 'kotlin-noarg'
-apply plugin: 'kotlin-allopen'
-//apply plugin:'newlens'
 
 android {
     compileSdkVersion 29

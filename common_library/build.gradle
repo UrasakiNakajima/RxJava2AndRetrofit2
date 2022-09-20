@@ -2,9 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//kotlin noArg和allOpen插件
-apply plugin: 'kotlin-noarg'
-apply plugin: 'kotlin-allopen'
+//apply plugin:'newlens'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -98,13 +96,6 @@ android {
         }
     }
 
-    noArg {
-        annotation("com.phone.common_library.no_arg_open_data.NoArgOpenDataClass")
-    }
-
-    allOpen {
-        annotation("com.phone.common_library.no_arg_open_data.NoArgOpenDataClass")
-    }
 }
 
 kapt {
