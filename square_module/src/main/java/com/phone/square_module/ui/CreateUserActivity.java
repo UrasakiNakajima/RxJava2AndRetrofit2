@@ -40,6 +40,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
     private StandardCreateUserDialog createUserDialog;//创建用户Dialog
     private StandardDialog deleteAllUserDialog;//删除全部用户Dialog
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
