@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.common_library.bean.User;
-import com.phone.common_library.callback.OnItemItemViewClickListener;
 import com.phone.common_library.callback.OnItemViewClickListener;
 import com.phone.square_module.R;
 
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String TAG = "DrawInventoryAdapter";
+    private static final String TAG = UserAdapter.class.getSimpleName();
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_BODY = 1;
     private static final int TYPE_FOOTER = 2;
@@ -57,13 +56,13 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         if (viewType == TYPE_HEADER) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_user_header, null);
+            view = LayoutInflater.from(context).inflate(R.layout.item_user_header, parent, false);
             return new HeaderHolder(view);
         } else if (viewType == TYPE_FOOTER) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_user_footer, null);
+            view = LayoutInflater.from(context).inflate(R.layout.item_user_footer, parent, false);
             return new FooterHolder(view);
         } else {
-            view = LayoutInflater.from(context).inflate(R.layout.item_user_body, null);
+            view = LayoutInflater.from(context).inflate(R.layout.item_user_body, parent, false);
             return new BodyHolder(view);
         }
     }
