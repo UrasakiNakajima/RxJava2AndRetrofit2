@@ -67,7 +67,6 @@ public class StandardCreateUserDialog {
             addressList.add(new Address("北莱茵-威斯特法伦州", "波恩"));
             addressList.add(new Address("汉堡州", "汉堡"));
             user.setAddressList(addressList);
-            user.setDate(DateManager.dateToDataStr(new Date(System.currentTimeMillis())));
             onItemViewClick2Listener.onItemClickListener(1, v, user);
         });
         standardDialog.show();
