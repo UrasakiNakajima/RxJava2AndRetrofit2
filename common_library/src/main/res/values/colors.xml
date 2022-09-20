@@ -9,9 +9,11 @@
     <color name="color_54E066FF">#54E066FF</color>
     <color name="color_FF999999">#FF999999</color>
     <color name="color_80000000">#80000000</color>
+    <color name="color_000000">#000000</color>
     <color name="color_54000000">#54000000</color>
 
     <color name="color_FFFFFFFF">#FFFFFFFF</color>
+    <color name="color_FFFFFF">#FFFFFF</color>
     <color name="color_FF198CFF">#FF198CFF</color>
 
     <color name="color_FF474747">#FF474747</color>
@@ -40,6 +42,12 @@
 
     <color name="color_FFD0D6EC">#FFD0D6EC</color>
     <color name="color_FFCFE9FF">#FFCFE9FF</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_989898">#989898</color>
+    <color name="color_ABABAB">#ABABAB</color>
+    <color name="color_0000FF">#0000FF</color>
+
+
 
     <color name="colorTransparentA">#00000000</color>
 

@@ -8,9 +8,6 @@ if (isModule.toBoolean()) {
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//kotlin noArg和allOpen插件
-apply plugin: 'kotlin-noarg'
-apply plugin: 'kotlin-allopen'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -58,9 +55,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+//    kotlinOptions {
+//        jvmTarget = "1.8"
+//    }
 
     sourceSets {
         main {
@@ -107,4 +104,8 @@ dependencies {
     //Android路由（用于不同app之间的跳转）
 //    implementation 'com.alibaba:arouter-api:1.5.0'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    kapt 'org.projectlombok:lombok:1.18.24'
+
 }

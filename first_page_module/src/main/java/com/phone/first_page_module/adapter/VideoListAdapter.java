@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.phone.common_library.callback.RcvOnItemViewClickListener;
+import com.phone.common_library.callback.OnItemViewClickListener;
 import com.phone.common_library.manager.LogManager;
 import com.phone.first_page_module.R;
 import com.phone.first_page_module.bean.VideoListBean;
@@ -81,9 +81,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    private RcvOnItemViewClickListener rcvOnItemViewClickListener;
+    private OnItemViewClickListener onItemViewClickListener;
 
-    public void setRcvOnItemViewClickListener(RcvOnItemViewClickListener rcvOnItemViewClickListener) {
-        this.rcvOnItemViewClickListener = rcvOnItemViewClickListener;
+    public void setRcvOnItemViewClickListener(OnItemViewClickListener onItemViewClickListener) {
+        this.onItemViewClickListener = onItemViewClickListener;
     }
 }

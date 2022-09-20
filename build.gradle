@@ -15,8 +15,8 @@ buildscript {
 
 //        maven { url "https://kotlin.bintray.com/kotlinx/" }
         google()
-        jcenter()
         mavenCentral()
+        jcenter()
         maven { url 'https://jitpack.io' }
 //        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
 
@@ -30,9 +30,9 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
-        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
-        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        //GreenDao add plugin
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0'
 
 //        classpath "com.networkbench.newlens.agent.android:agent-gradle-plugin:$tingyun_sdk_version"
 
@@ -53,8 +53,8 @@ allprojects {
 
 //        maven { url "https://kotlin.bintray.com/kotlinx/" }
         google()
-        jcenter()
         mavenCentral()
+        jcenter()
         maven { url 'https://jitpack.io' }
         maven { url "https://oss.jfrog.org/libs-snapshot" }
 //        repositories {

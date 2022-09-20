@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.IBaseView
-import com.phone.common_library.callback.RcvOnItemViewClickListener
+import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
@@ -79,7 +79,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
         rcv_data.itemAnimator = DefaultItemAnimator()
 
         mineAdapter = MineAdapter(rxAppCompatActivity!!)
-        mineAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
+        mineAdapter!!.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
 //                bodyParams.clear()

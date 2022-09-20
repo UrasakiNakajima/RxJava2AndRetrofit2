@@ -2,9 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//kotlin noArg和allOpen插件
-apply plugin: 'kotlin-noarg'
-apply plugin: 'kotlin-allopen'
+//apply plugin:'newlens'
+//GreenDao apply plugin
+apply plugin: 'org.greenrobot.greendao'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -67,9 +67,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+//    kotlinOptions {
+//        jvmTarget = "1.8"
+//    }
 
     aaptOptions {
         additionalParameters "--no-version-vectors"
@@ -98,19 +98,25 @@ android {
         }
     }
 
-    noArg {
-        annotation("com.phone.common_library.no_arg_open_data.NoArgOpenDataClass")
-    }
-
-    allOpen {
-        annotation("com.phone.common_library.no_arg_open_data.NoArgOpenDataClass")
-    }
 }
 
 kapt {
     arguments {
         arg("AROUTER_MODULE_NAME", project.getName())
     }
+}
+
+greendao {
+    //数据库版本号
+    schemaVersion 5
+    // 设置DaoMaster、DaoSession、Dao 包名
+    daoPackage 'com.phone.common_library.greendao'
+    //设置DaoMaster、DaoSession、Dao目录,请注意，这里路径用/不要用.
+    targetGenDir 'src/main/java'
+    //设置为true以自动生成单元测试。
+    generateTests false
+    //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
+    //targetGenDirTests 'src/androidTest/java'
 }
 
 dependencies {
@@ -233,5 +239,10 @@ dependencies {
     //日志打印框架
     api 'com.orhanobut:logger:2.2.0'
 
+    //GreenDao apply plugin
+    api 'org.greenrobot:greendao:3.3.0'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    kapt 'org.projectlombok:lombok:1.18.24'
 
 }

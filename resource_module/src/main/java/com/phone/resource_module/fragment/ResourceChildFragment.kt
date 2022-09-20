@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.common_library.base.BaseMvpRxFragment
 import com.phone.common_library.base.IBaseView
-import com.phone.common_library.callback.RcvOnItemViewClickListener
+import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
@@ -80,7 +80,7 @@ class ResourceChildFragment : BaseMvpRxFragment<IBaseView, ResourcePresenterImpl
         (rcv_data.itemAnimator as DefaultItemAnimator).changeDuration = 0
 
         resourceAdapter = ResourceAdapter(rxAppCompatActivity!!)
-        resourceAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
+        resourceAdapter!!.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
 

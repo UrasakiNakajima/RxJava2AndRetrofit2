@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.EditTextInputLimitsActivity">
+    tools:context=".ui.CreateUserActivity"
+    tools:ignore="MissingDefaultResource">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -51,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
                     android:gravity="center"
-                    android:text="@string/edit_text_input_limits"
+                    android:text="@string/create_user"
                     android:textColor="@color/color_FFFFFFFF"
                     android:textSize="@dimen/sp_20" />
 
@@ -61,52 +62,58 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_user"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="550" />
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50" />
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/color_80000000" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:id="@+id/tev_create_user"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:background="@color/color_FFFFC73B"
         android:gravity="center"
-        android:paddingStart="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_10"
-        android:text="Android EditText限制只能输入整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）"
-        android:textColor="@color/black"
+        android:includeFontPadding="false"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_10"
+        android:text="@string/create_user"
+        android:textColor="@color/color_FFFFFFFF"
         android:textSize="@dimen/sp_16" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50" />
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/color_80000000" />
 
     <TextView
-        android:id="@+id/tev_show_input"
-        android:layout_width="@dimen/dp_280"
-        android:layout_height="@dimen/dp_40"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/corners_14_color_white_stroke_1_color_80000000"
+        android:id="@+id/tev_delete_all_user"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:background="@color/color_FFFFC73B"
         android:gravity="center"
-        android:textColor="@color/colorBlack333"
-        android:textSize="@dimen/sp_16"
-        tools:ignore="Autofill,LabelFor,TextFields" />
+        android:includeFontPadding="false"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_10"
+        android:text="@string/delete_all_user"
+        android:textColor="@color/color_FFFFFFFF"
+        android:textSize="@dimen/sp_16" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50" />
-
-    <TextView
-        android:id="@+id/tev_start_input"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_40"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/corners_14_color_white_stroke_1_color_80000000"
-        android:gravity="center"
-        android:paddingStart="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_10"
-        android:text="start input"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp_16" />
-
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/color_80000000" />
 
 </LinearLayout>

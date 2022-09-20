@@ -8,9 +8,6 @@ if (isModule.toBoolean()) {
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//kotlin noArg和allOpen插件
-apply plugin: 'kotlin-noarg'
-apply plugin: 'kotlin-allopen'
 
 android {
     compileSdkVersion 29
@@ -54,9 +51,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+//    kotlinOptions {
+//        jvmTarget = "1.8"
+//    }
 
     sourceSets {
         main {

@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.phone.common_library.callback.RcvOnItemViewClickListener
+import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.mine_module.R
 import com.phone.mine_module.bean.Data
 
@@ -63,7 +63,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
             Glide.with(context).load(imgRight).into(bodyHolder.newsSummaryPhotoIvRight)
 
             bodyHolder.llRoot.setOnClickListener(View.OnClickListener { view: View? ->
-                rcvOnItemViewClickListener!!.onItemClickListener(
+                onItemViewClickListener!!.onItemClickListener(
                     position,
                     view
                 )
@@ -102,9 +102,9 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    private var rcvOnItemViewClickListener: RcvOnItemViewClickListener? = null
+    private var onItemViewClickListener: OnItemViewClickListener? = null
 
-    fun setRcvOnItemViewClickListener(rcvOnItemViewClickListener: RcvOnItemViewClickListener) {
-        this.rcvOnItemViewClickListener = rcvOnItemViewClickListener
+    fun setRcvOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
+        this.onItemViewClickListener = onItemViewClickListener
     }
 }

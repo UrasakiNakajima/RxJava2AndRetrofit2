@@ -89,13 +89,21 @@
 
     <string name="information_details">資訊詳情</string>
     <string name="show_data">展示數據</string>
-    <string name="edit_text_input_limits">EditText输入限制</string>
+    <string name="edit_text_input_limit">EditText输入限制</string>
     <string name="decimal_operation">小数运算</string>
+    <string name="edit_text_input_limit_that_only_integers_and_decimals_can_be_entered_and_the_total_length_of_the_number_is_less_than_or_equal_to11_digits_customizable_integer5_digits_customizable_decimal5_digits_customizable">EditText输入限制只能整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）</string>
+    <string name="create_user">创建用户</string>
+    <string name="delete_user">删除用户</string>
+    <string name="delete_all_user">删除全部用户</string>
+
+    <string name="delete">删除</string>
+
+    <string name="ok">确定</string>
+    <string name="tips">提示</string>
+    <string name="user_id">用户ID</string>
+    <string name="date">日期</string>
 
 
-    <string name="edittext_input_limit">EditText输入限制</string>
-
-    <string name="edittext_input_limit_that_only_integers_and_decimals_can_be_entered_and_the_total_length_of_the_number_is_less_than_or_equal_to11_digits_customizable_integer5_digits_customizable_decimal5_digits_customizable">EditText输入限制只能整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）</string>
 
     <!--真正用于解析的属性-->
     <declare-styleable name="RCAttrs">

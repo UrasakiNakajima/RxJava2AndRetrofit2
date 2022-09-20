@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.phone.common_library.callback.RcvOnItemViewClickListener;
+import com.phone.common_library.callback.OnItemViewClickListener;
 import com.phone.first_page_module.R;
 import com.phone.common_library.bean.FirstPageResponse;
 
@@ -67,7 +67,7 @@ public class FirstPageAdapter
 			Glide.with(mContext).load(imgRight).into(bodyHolder.newsSummaryPhotoIvRight);
 			
 			bodyHolder.llRoot.setOnClickListener(view -> {
-				rcvOnItemViewClickListener.onItemClickListener(position, view);
+				onItemViewClickListener.onItemClickListener(position, view);
 			});
 		}
 	}
@@ -102,10 +102,10 @@ public class FirstPageAdapter
 		}
 	}
 	
-	private RcvOnItemViewClickListener rcvOnItemViewClickListener;
+	private OnItemViewClickListener onItemViewClickListener;
 	
-	public void setRcvOnItemViewClickListener(RcvOnItemViewClickListener rcvOnItemViewClickListener) {
-		this.rcvOnItemViewClickListener = rcvOnItemViewClickListener;
+	public void setRcvOnItemViewClickListener(OnItemViewClickListener onItemViewClickListener) {
+		this.onItemViewClickListener = onItemViewClickListener;
 	}
 	
 }

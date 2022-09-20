@@ -24,7 +24,7 @@ import com.mikepenz.fontawesome_typeface_library.FontAwesome
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
-import com.phone.common_library.callback.RcvOnItemViewClickListener
+import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.custom_view.ColorTextView
 import com.phone.common_library.manager.ScreenManager
 import com.phone.resource_module.R
@@ -68,7 +68,7 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
 //                        .into(holder.imvResource)
 
                 holder.layoutPicture.setOnClickListener() {
-                    rcvOnItemViewClickListener!!.onItemClickListener(position, it);
+                    onItemViewClickListener!!.onItemClickListener(position, it);
                 }
                 Glide.with(context).load(list.get(position).url)
                     .placeholder(R.mipmap.picture_miyawaki_sakura)
@@ -160,10 +160,10 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
         val imvResource: ImageView = itemView.findViewById(R.id.imv_resource)
     }
 
-    private var rcvOnItemViewClickListener: RcvOnItemViewClickListener? = null
+    private var onItemViewClickListener: OnItemViewClickListener? = null
 
-    fun setRcvOnItemViewClickListener(rcvOnItemViewClickListener: RcvOnItemViewClickListener) {
-        this.rcvOnItemViewClickListener = rcvOnItemViewClickListener
+    fun setRcvOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
+        this.onItemViewClickListener = onItemViewClickListener
     }
 
     private fun setIconDrawable(view: TextView, icon: IIcon) {

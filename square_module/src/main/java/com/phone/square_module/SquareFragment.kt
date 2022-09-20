@@ -24,10 +24,7 @@ import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.BaseMvvmRxFragment
-import com.phone.common_library.bean.DataX
-import com.phone.common_library.bean.User
-import com.phone.common_library.bean.User2
-import com.phone.common_library.bean.User3
+import com.phone.common_library.bean.*
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback
 import com.phone.common_library.common.DecimalInputFilter
 import com.phone.common_library.common.DecimalTextWatcher
@@ -35,10 +32,12 @@ import com.phone.common_library.manager.*
 import com.phone.common_library.service.FirstPageService
 import com.phone.common_library.service.SquareService
 import com.phone.square_module.databinding.FragmentSquareBinding
+import com.phone.square_module.ui.CreateUserActivity
 import com.phone.square_module.ui.DecimalOperationActivity
 import com.phone.square_module.ui.EditTextInputLimitsActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
 import kotlinx.android.synthetic.main.fragment_square.*
+import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -66,9 +65,9 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     private var number: Int? = null
 
     private var permissions = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_PHONE_STATE
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE
     )
 
     override fun initLayoutId(): Int {
@@ -139,15 +138,17 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 //            startActivity(SquareDetailsActivity::class.java)
 //            startActivity(PickerViewActivity::class.java)
             startActivity(Base64AndFileActivity::class.java)
-
 //            startActivity(ObserverActivity::class.java)
+        }
+        mDatabind.tevCreateUser.setOnClickListener {
+            startActivity(CreateUserActivity::class.java)
         }
     }
 
     private fun showDecimalOrIntegerDialog() {
         val view: View =
-            LayoutInflater.from(rxAppCompatActivity!!)
-                .inflate(R.layout.dialog_layout_edit_text_input_limits, null, false)
+                LayoutInflater.from(rxAppCompatActivity!!)
+                        .inflate(R.layout.dialog_layout_edit_text_input_limits, null, false)
         val edtInput = view.findViewById<View>(R.id.edt_input) as EditText
         val tevCancel = view.findViewById<View>(R.id.tev_cancel) as TextView
         val tevConfirm = view.findViewById<View>(R.id.tev_confirm) as TextView
@@ -160,24 +161,24 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         //输入的类型可以是整数或小数
         edtInput.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
         val decimalInputFilter =
-            DecimalInputFilter(
-                beforeDecimalNum,
-                afterDecimalNum
-            )
+                DecimalInputFilter(
+                        beforeDecimalNum,
+                        afterDecimalNum
+                )
         //输入总长度多少位，小数几位（修改这里可以自定义）
         val inputFilter = arrayOf(InputFilter.LengthFilter(maxLength), decimalInputFilter)
         edtInput.filters = inputFilter
         edtInput.addTextChangedListener(
-            DecimalTextWatcher(
-                edtInput,
-                afterDecimalNum
-            )
+                DecimalTextWatcher(
+                        edtInput,
+                        afterDecimalNum
+                )
         )
         @SuppressLint("RestrictedApi")
         val alertDialog =
-            AlertDialog.Builder(rxAppCompatActivity!!, R.style.dialog_decimal_style)
-                .setView(view, 0, 0, 0, 0)
-                .show()
+                AlertDialog.Builder(rxAppCompatActivity!!, R.style.dialog_decimal_style)
+                        .setView(view, 0, 0, 0, 0)
+                        .show()
 
         val widthPx = ScreenManager.getScreenWidth(rxAppCompatActivity!!)
         LogManager.i(TAG, "widthPx*****" + widthPx)
@@ -198,10 +199,10 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                     val afterDataArr = afterData.split("\\.".toRegex()).toTypedArray()
                     if ("" == afterDataArr[0]) {
                         Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT)
-                            .show()
+                                .show()
                     } else if (afterDataArr.size == 1) { //当afterData是这种类型的小数时（0. 100.）
                         Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT)
-                            .show()
+                                .show()
                     } else {
 //                        SquareFragment::tev_edit_text_decimal_or_integer.get(SquareFragment()).setText(edtInput.text.toString())
                         tev_edit_text_decimal_or_integer.setText(edtInput.text.toString())
@@ -212,16 +213,16 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                         val afterDataArr = afterData.split("".toRegex()).toTypedArray()
                         if (afterDataArr.size > 1 && "0" == afterDataArr[1]) {
                             Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT)
-                                .show()
+                                    .show()
                         } else {
                             tev_edit_text_decimal_or_integer.setText(edtInput.text.toString())
                             alertDialog.dismiss()
                         }
                     } else {
                         Toast.makeText(
-                            rxAppCompatActivity!!,
-                            "整数长度不能大于" + beforeDecimalNum + "位",
-                            Toast.LENGTH_SHORT
+                                rxAppCompatActivity!!,
+                                "整数长度不能大于" + beforeDecimalNum + "位",
+                                Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -254,11 +255,11 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         initSquareData("$currentPage")
 
         val firstPageService =
-            ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
-                .navigation() as FirstPageService
+                ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
+                        .navigation() as FirstPageService
         LogManager.i(
-            TAG,
-            "firstPageService.firstPageDataList******" + firstPageService.firstPageDataList.toString()
+                TAG,
+                "firstPageService.firstPageDataList******" + firstPageService.firstPageDataList.toString()
         );
 
 //        startAsyncTask()
@@ -306,8 +307,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 datax.link = success.get(1).link
                 datax.envelopePic = success.get(1).envelopePic
                 val squareService: SquareService =
-                    ARouter.getInstance().build("/square_module/SquareServiceImpl")
-                        .navigation() as SquareService
+                        ARouter.getInstance().build("/square_module/SquareServiceImpl")
+                                .navigation() as SquareService
                 squareService.squareDataList = success;
             }
             hideLoading()
@@ -317,14 +318,14 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     fun squareDataError(error: String) {
         if (!rxAppCompatActivity!!.isFinishing()) {
             showCustomToast(
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                18,
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
-                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                error
+                    ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                    ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                    18,
+                    ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
+                    ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                    ScreenManager.dpToPx(rxAppCompatActivity, 40f),
+                    ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                    error
             )
             hideLoading()
         }
@@ -336,62 +337,62 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     private fun initRxPermissionsRxFragment(number: Int) {
         val rxPermissionsManager = RxPermissionsManager.getInstance()
         rxPermissionsManager.initRxPermissionsRxFragment(
-            this,
-            permissions,
-            object : OnCommonRxPermissionsCallback {
-                override fun onRxPermissionsAllPass() {
-                    //所有的权限都授予
-                    if (number == 1) {
-                        val baseMvpRxAppActivity =
-                            rxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
-                        baseMvpRxAppActivity.getActivityPageManager().exitApp2();
-                    } else if (number == 2) {
-                        //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                        val user: User = User2()
-                        val user3 = user as User3
-                        LogManager.i(TAG, user3.toString())
-                    } else if (number == 3) {
-                        try {
-                            //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+                this,
+                permissions,
+                object : OnCommonRxPermissionsCallback {
+                    override fun onRxPermissionsAllPass() {
+                        //所有的权限都授予
+                        if (number == 1) {
+                            val baseMvpRxAppActivity =
+                                    rxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
+                            baseMvpRxAppActivity.getActivityPageManager().exitApp2();
+                        } else if (number == 2) {
+                            //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                             val user: User = User2()
                             val user3 = user as User3
                             LogManager.i(TAG, user3.toString())
-                        } catch (e: Exception) {
-                            ExceptionManager.getInstance().throwException(rxAppCompatActivity, e)
+                        } else if (number == 3) {
+                            try {
+                                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+                                val user: User = User2()
+                                val user3 = user as User3
+                                LogManager.i(TAG, user3.toString())
+                            } catch (e: Exception) {
+                                ExceptionManager.getInstance().throwException(rxAppCompatActivity, e)
+                            }
                         }
                     }
-                }
 
-                override fun onNotCheckNoMorePromptError() {
-                    //至少一个权限未授予且未勾选不再提示
-                    showSystemSetupDialog()
-                }
+                    override fun onNotCheckNoMorePromptError() {
+                        //至少一个权限未授予且未勾选不再提示
+                        showSystemSetupDialog()
+                    }
 
-                override fun onCheckNoMorePromptError() {
-                    //至少一个权限未授予且勾选了不再提示
-                    showSystemSetupDialog()
-                }
-            })
+                    override fun onCheckNoMorePromptError() {
+                        //至少一个权限未授予且勾选了不再提示
+                        showSystemSetupDialog()
+                    }
+                })
     }
 
     private fun showSystemSetupDialog() {
         cancelPermissionsDialog()
         if (mPermissionsDialog == null) {
             mPermissionsDialog = AlertDialog.Builder(rxAppCompatActivity!!)
-                .setTitle("权限设置")
-                .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
-                .setPositiveButton("去授权") { dialog, which ->
-                    cancelPermissionsDialog()
-                    intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts(
-                        "package",
-                        rxAppCompatActivity!!.applicationContext.packageName,
-                        null
-                    )
-                    intent!!.data = uri
-                    startActivityForResult(intent, 207)
-                }
-                .create()
+                    .setTitle("权限设置")
+                    .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
+                    .setPositiveButton("去授权") { dialog, which ->
+                        cancelPermissionsDialog()
+                        intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts(
+                                "package",
+                                rxAppCompatActivity!!.applicationContext.packageName,
+                                null
+                        )
+                        intent!!.data = uri
+                        startActivityForResult(intent, 207)
+                    }
+                    .create()
         }
         mPermissionsDialog?.setCancelable(false)
         mPermissionsDialog?.setCanceledOnTouchOutside(false)

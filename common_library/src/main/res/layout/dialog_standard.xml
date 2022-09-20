@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="301dp"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/corners_6_color_ffffff"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/tev_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:includeFontPadding="false"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/tips"
+            android:textColor="@color/color_333333"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tev_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:includeFontPadding="false"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/tips"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tev_title"
+            tools:ignore="MissingConstraints" />
+
+        <View
+            android:id="@+id/view_horizontal_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/color_ABABAB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tev_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_horizontal_line"
+            tools:ignore="UselessLeaf">
+
+            <TextView
+                android:id="@+id/tev_cancel"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="130"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/cancel"
+                android:textColor="@color/color_989898"
+                android:textSize="15sp"
+                tools:ignore="MissingConstraints" />
+
+            <View
+                android:id="@+id/view_vertical_line"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="@color/color_ABABAB" />
+
+            <TextView
+                android:id="@+id/tev_ok"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="130"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/ok"
+                android:textColor="@color/color_0000FF"
+                android:textSize="15sp"
+                tools:ignore="MissingConstraints" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

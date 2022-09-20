@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.aspsine.irecyclerview.universaladapter.ViewHolderHelper;
 import com.aspsine.irecyclerview.universaladapter.recyclerview.CommonRecycleViewAdapter;
-import com.phone.common_library.callback.RcvOnItemViewClickListener;
+import com.phone.common_library.callback.OnItemViewClickListener;
 import com.phone.first_page_module.R;
 import com.phone.common_library.bean.FirstPageResponse;
 
@@ -40,7 +40,7 @@ public class FirstPageAdapter2
 		holder.setOnClickListener(R.id.ll_root, new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				rcvOnItemViewClickListener.onItemClickListener(position, holder.itemView);
+				onItemViewClickListener.onItemClickListener(position, holder.itemView);
 			}
 		});
 	}
@@ -55,9 +55,9 @@ public class FirstPageAdapter2
 		notifyDataSetChanged();
 	}
 	
-	private RcvOnItemViewClickListener rcvOnItemViewClickListener;
+	private OnItemViewClickListener onItemViewClickListener;
 	
-	public void setRcvOnItemViewClickListener(RcvOnItemViewClickListener rcvOnItemViewClickListener) {
-		this.rcvOnItemViewClickListener = rcvOnItemViewClickListener;
+	public void setRcvOnItemViewClickListener(OnItemViewClickListener onItemViewClickListener) {
+		this.onItemViewClickListener = onItemViewClickListener;
 	}
 }
