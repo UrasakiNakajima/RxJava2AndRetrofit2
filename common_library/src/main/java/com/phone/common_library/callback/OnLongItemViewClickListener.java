@@ -5,11 +5,11 @@ import android.view.View;
 /**
  * author    : Urasaki
  * e-mail    : 1164688204@qq.com
- * date      : 2020/3/8 10:50
+ * date      : 2020/3/9 14:07
  * introduce :
  */
 
-public interface RcvOnItemItemViewClickListener {
+public interface OnLongItemViewClickListener {
 
-    void onItemItemClickListener(int position2, View view);
+    void onLongItemClickListener(int position, View view);
 }

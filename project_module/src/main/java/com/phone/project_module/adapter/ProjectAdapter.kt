@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.databinding.DataBindingUtil
-import com.phone.common_library.callback.RcvOnItemViewClickListener
+import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.project_module.R
 import com.phone.project_module.bean.DataX
 import com.phone.project_module.databinding.ItemProjectBinding
@@ -46,7 +46,7 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
         } else if (position == 2) {
             binding.itemProjectAuthor.setText("aaa")
         }
-        binding.itemProjectImageview.setOnClickListener { v -> rcvOnItemViewClickListener!!.onItemClickListener(position, v) }
+        binding.itemProjectImageview.setOnClickListener { v -> onItemViewClickListener!!.onItemClickListener(position, v) }
     }
 
     override fun getItemCount(): Int {
@@ -57,10 +57,10 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
 
     }
 
-    private var rcvOnItemViewClickListener: RcvOnItemViewClickListener? = null
+    private var onItemViewClickListener: OnItemViewClickListener? = null
 
-    fun setRcvOnItemViewClickListener(rcvOnItemViewClickListener: RcvOnItemViewClickListener) {
-        this.rcvOnItemViewClickListener = rcvOnItemViewClickListener
+    fun setRcvOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
+        this.onItemViewClickListener = onItemViewClickListener
     }
 
 }

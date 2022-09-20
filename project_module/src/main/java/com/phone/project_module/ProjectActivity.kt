@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvvmAppRxActivity
-import com.phone.common_library.callback.RcvOnItemViewClickListener
+import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
@@ -83,7 +83,7 @@ class ProjectActivity :
         setToolbar(false, R.color.color_FF198CFF)
 
         projectAdapter = ProjectAdapter(rxAppCompatActivity!!);
-        projectAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
+        projectAdapter!!.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
 //                startActivity(VideoViewActivity::class.java)

@@ -12,11 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.base.BaseMvpRxFragment
 import com.phone.common_library.base.IBaseView
-import com.phone.common_library.bean.User
-import com.phone.common_library.bean.User2
-import com.phone.common_library.bean.User3
-import com.phone.common_library.callback.RcvOnItemViewClickListener
-import com.phone.common_library.manager.ExceptionManager
+import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
@@ -95,7 +91,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
         rcv_data.itemAnimator = DefaultItemAnimator()
 
         mineAdapter = MineAdapter(rxAppCompatActivity!!)
-        mineAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
+        mineAdapter!!.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
 //                bodyParams.clear()

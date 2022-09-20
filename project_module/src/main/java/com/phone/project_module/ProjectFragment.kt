@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvvmRxFragment
-import com.phone.common_library.callback.RcvOnItemViewClickListener
+import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
@@ -81,7 +81,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
 
     override fun initViews() {
         projectAdapter = ProjectAdapter(rxAppCompatActivity!!);
-        projectAdapter!!.setRcvOnItemViewClickListener(object : RcvOnItemViewClickListener {
+        projectAdapter!!.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
 //                startActivity(VideoViewActivity::class.java)

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="301dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/corners_6_color_ffffff"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints,UselessParent">
+
+        <TextView
+            android:id="@+id/tev_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:includeFontPadding="false"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/tips"
+            android:textColor="@color/color_333333"
+            android:textSize="17sp"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/edt_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
+            android:hint="@string/user_name"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="2dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp"
+            tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields" />
+
+        <EditText
+            android:id="@+id/edt_user_id"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
+            android:hint="@string/user_id"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="2dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp"
+            tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields" />
+
+        <EditText
+            android:id="@+id/edt_date"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
+            android:hint="@string/date"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="2dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp"
+            tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields" />
+
+        <View
+            android:id="@+id/view_horizontal_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/color_ABABAB" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="UselessLeaf">
+
+            <TextView
+                android:id="@+id/tev_cancel"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="130"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/cancel"
+                android:textColor="@color/color_989898"
+                android:textSize="15sp"
+                tools:ignore="MissingConstraints" />
+
+            <View
+                android:id="@+id/view_vertical_line"
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="@color/color_ABABAB" />
+
+            <TextView
+                android:id="@+id/tev_ok"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="130"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/ok"
+                android:textColor="@color/color_0000FF"
+                android:textSize="15sp"
+                tools:ignore="MissingConstraints" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</FrameLayout>

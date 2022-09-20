@@ -40,7 +40,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
 
     @Override
     protected int initLayoutId() {
-        return R.layout.activity_edit_text_input_limits;
+        return R.layout.activity_edit_text_input_limit;
     }
 
     @Override

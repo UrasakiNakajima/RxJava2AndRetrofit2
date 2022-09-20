@@ -1,7 +1,6 @@
 package com.phone.common_library.manager;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +25,7 @@ public class DateManager {
      * @return
      */
     public static String dateToDataStr(Date date) {//可根据需要自行截取数据显示
-        Log.i(TAG, "getDate choice date millis: " + date.getTime());
+        LogManager.i(TAG, "getDate choice date millis: " + date.getTime());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
     }
@@ -38,7 +37,7 @@ public class DateManager {
      * @return
      */
     public static String dateToTimeStr(Date date) {//可根据需要自行截取数据显示
-        Log.i(TAG, "getTime date millis: " + date.getTime());
+        LogManager.i(TAG, "getTime date millis: " + date.getTime());
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         return format.format(date);
     }

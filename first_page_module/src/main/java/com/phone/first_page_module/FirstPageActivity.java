@@ -24,7 +24,7 @@ import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
-import com.phone.common_library.callback.RcvOnItemViewClickListener;
+import com.phone.common_library.callback.OnItemViewClickListener;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.common_library.manager.RxPermissionsManager;
@@ -135,7 +135,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
 
         firstPageAdapter = new FirstPageAdapter(rxAppCompatActivity);
         //		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page);
-        firstPageAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
+        firstPageAdapter.setRcvOnItemViewClickListener(new OnItemViewClickListener() {
             @Override
             public void onItemClickListener(int position, View view) {
                 //				if (view.getId() == R.id.tev_data) {
