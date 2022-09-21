@@ -108,7 +108,7 @@ kapt {
 
 greendao {
     //数据库版本号
-    schemaVersion 8
+    schemaVersion 9
     // 设置DaoMaster、DaoSession、Dao 包名
     daoPackage 'com.phone.common_library.greendao'
     //设置DaoMaster、DaoSession、Dao目录,请注意，这里路径用/不要用.

@@ -85,7 +85,7 @@
             android:exported="false"
             android:process=":pushcore">
             <intent-filter>
-                <action android:name="cn.jiguang.user.service.action" />
+                <action android:name="cn.jiguang.userBean.service.action" />
             </intent-filter>
         </service>
 

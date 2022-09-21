@@ -14,9 +14,9 @@ import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvvmAppRxActivity
 import com.phone.common_library.bean.DataX
-import com.phone.common_library.bean.User
-import com.phone.common_library.bean.User2
-import com.phone.common_library.bean.User3
+import com.phone.common_library.bean.UserBean
+import com.phone.common_library.bean.UserBean2
+import com.phone.common_library.bean.UserBean3
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback
 import com.phone.common_library.manager.*
 import com.phone.square_module.databinding.ActivitySquareBinding
@@ -201,14 +201,16 @@ class SquareActivity :
                             baseMvvmAppRxActivity.getActivityPageManager2()?.exitApp2();
                         } else if (number == 2) {
                             //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                            val user: User = User2()
-                            val user3 = user as User3
+                            val userBean: UserBean =
+                                UserBean2()
+                            val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } else if (number == 3) {
                             try {
                                 //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                                val user: User = User2()
-                                val user3 = user as User3
+                                val userBean: UserBean =
+                                    UserBean2()
+                                val user3 = userBean as UserBean3
                                 LogManager.i(TAG, user3.toString())
                             } catch (e: Exception) {
                                 ExceptionManager.getInstance().throwException(rxAppCompatActivity, e)
