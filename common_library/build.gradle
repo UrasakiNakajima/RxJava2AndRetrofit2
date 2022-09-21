@@ -108,7 +108,7 @@ kapt {
 
 greendao {
     //数据库版本号
-    schemaVersion 5
+    schemaVersion 8
     // 设置DaoMaster、DaoSession、Dao 包名
     daoPackage 'com.phone.common_library.greendao'
     //设置DaoMaster、DaoSession、Dao目录,请注意，这里路径用/不要用.
@@ -241,6 +241,9 @@ dependencies {
 
     //GreenDao apply plugin
     api 'org.greenrobot:greendao:3.3.0'
+
+    //jackson
+    api 'com.fasterxml.jackson.core:jackson-databind:2.13.2.1'
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
     kapt 'org.projectlombok:lombok:1.18.24'
