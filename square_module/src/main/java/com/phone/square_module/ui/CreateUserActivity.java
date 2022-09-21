@@ -48,7 +48,6 @@ public class CreateUserActivity extends BaseRxAppActivity {
     private StandardDialog deletUserDialog;//删除用户Dialog
     private StandardDialog deleteAllUserDialog;//删除全部用户Dialog
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +112,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
     @Override
     protected void initLoadData() {
         queryUserList();
+
     }
 
     private void queryUserList() {
