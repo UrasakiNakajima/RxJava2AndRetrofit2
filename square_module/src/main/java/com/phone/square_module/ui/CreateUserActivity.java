@@ -112,6 +112,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
     @Override
     protected void initLoadData() {
         queryUserList();
+
     }
 
     private void queryUserList() {
