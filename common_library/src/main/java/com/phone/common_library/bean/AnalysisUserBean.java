@@ -1,30 +1,25 @@
 package com.phone.common_library.bean;
 
 import org.greenrobot.greendao.annotation.Convert;
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.greenrobot.greendao.annotation.Generated;
+public class AnalysisUserBean implements Cloneable {
 
-@Entity
-public class User implements Cloneable {
-
-    @Id(autoincrement = true)
     private Long id;
     private String userId;
     private String userName;
     private String date;
     private int age;
-    private Double salary;
+    private String salary;
     @Convert(columnType = String.class, converter = AddressBeanListConverter.class)
     private List<AddressBean> addressBeanList = new ArrayList<>();
 
-    @Generated(hash = 1992107914)
-    public User(Long id, String userId, String userName, String date, int age,
-                Double salary, List<AddressBean> addressBeanList) {
+    public AnalysisUserBean() {
+    }
+
+    public AnalysisUserBean(Long id, String userId, String userName, String date, int age, String salary, List<AddressBean> addressBeanList) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
@@ -34,12 +29,8 @@ public class User implements Cloneable {
         this.addressBeanList = addressBeanList;
     }
 
-    @Generated(hash = 586692638)
-    public User() {
-    }
-
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -47,7 +38,7 @@ public class User implements Cloneable {
     }
 
     public String getUserId() {
-        return this.userId;
+        return userId;
     }
 
     public void setUserId(String userId) {
@@ -55,7 +46,7 @@ public class User implements Cloneable {
     }
 
     public String getUserName() {
-        return this.userName;
+        return userName;
     }
 
     public void setUserName(String userName) {
@@ -63,7 +54,7 @@ public class User implements Cloneable {
     }
 
     public String getDate() {
-        return this.date;
+        return date;
     }
 
     public void setDate(String date) {
@@ -71,23 +62,23 @@ public class User implements Cloneable {
     }
 
     public int getAge() {
-        return this.age;
+        return age;
     }
 
     public void setAge(int age) {
         this.age = age;
     }
 
-    public Double getSalary() {
-        return this.salary;
+    public String getSalary() {
+        return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
     }
 
     public List<AddressBean> getAddressBeanList() {
-        return this.addressBeanList;
+        return addressBeanList;
     }
 
     public void setAddressBeanList(List<AddressBean> addressBeanList) {
@@ -95,14 +86,26 @@ public class User implements Cloneable {
     }
 
     @Override
-    protected User clone() throws CloneNotSupportedException {
+    protected AnalysisUserBean clone() throws CloneNotSupportedException {
         List<AddressBean> addressBeanList = new ArrayList<>();
-        User user = (User) super.clone();
-        for (int i = 0; i < user.getAddressBeanList().size(); i++) {
-            addressBeanList.add(user.getAddressBeanList().get(i).clone());
+        AnalysisUserBean analysisUserBean = (AnalysisUserBean) super.clone();
+        for (int i = 0; i < analysisUserBean.getAddressBeanList().size(); i++) {
+            addressBeanList.add(analysisUserBean.getAddressBeanList().get(i).clone());
         }
-        user.setAddressBeanList(addressBeanList);
-        return user;
+        analysisUserBean.setAddressBeanList(addressBeanList);
+        return analysisUserBean;
     }
 
+    @Override
+    public String toString() {
+        return "AnalysisUserBean{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", date='" + date + '\'' +
+                ", age=" + age +
+                ", salary='" + salary + '\'' +
+                ", addressBeanList=" + addressBeanList +
+                '}';
+    }
 }

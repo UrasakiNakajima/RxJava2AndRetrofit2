@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.phone.common_library.R;
 import com.phone.common_library.bean.AddressBean;
-import com.phone.common_library.bean.User;
+import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.callback.OnItemViewClick2Listener;
 
 import java.util.ArrayList;
@@ -77,20 +77,20 @@ public class StandardCreateUserDialog {
                     && !TextUtils.isEmpty(date)
                     && !TextUtils.isEmpty(age)
                     && !TextUtils.isEmpty(salary)) {
-                User user = new User();
-                user.setUserId(userId);
-                user.setAge(Integer.parseInt(age));
-                user.setUserName(userName);
-                user.setDate(date);
-                user.setSalary(Double.parseDouble(salary));
+                UserBean userBean = new UserBean();
+                userBean.setUserId(userId);
+                userBean.setAge(Integer.parseInt(age));
+                userBean.setUserName(userName);
+                userBean.setDate(date);
+                userBean.setSalary(Double.parseDouble(salary));
 //                    Address address = new Address();
 //                    address.setCounty("北莱茵-威斯特法伦州");
 //                    address.setCity("波恩");
                 List<AddressBean> addressBeanList = new ArrayList<>();
                 addressBeanList.add(new AddressBean("北莱茵-威斯特法伦州", "波恩"));
                 addressBeanList.add(new AddressBean("汉堡州", "汉堡"));
-                user.setAddressBeanList(addressBeanList);
-                onItemViewClick2Listener.onItemClickListener(1, v, user);
+                userBean.setAddressBeanList(addressBeanList);
+                onItemViewClick2Listener.onItemClickListener(1, v, userBean);
             } else {
                 Toast.makeText(context, context.getResources().getString(R.string.please_fill_in_the_information_completely), Toast.LENGTH_SHORT).show();
             }
@@ -119,9 +119,9 @@ public class StandardCreateUserDialog {
         }
     }
 
-    private OnItemViewClick2Listener<User> onItemViewClick2Listener;
+    private OnItemViewClick2Listener<UserBean> onItemViewClick2Listener;
 
-    public void setOnItemViewClick2Listener(OnItemViewClick2Listener<User> onItemViewClick2Listener) {
+    public void setOnItemViewClick2Listener(OnItemViewClick2Listener<UserBean> onItemViewClick2Listener) {
         this.onItemViewClick2Listener = onItemViewClick2Listener;
     }
 }

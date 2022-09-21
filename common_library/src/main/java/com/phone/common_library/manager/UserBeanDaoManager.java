@@ -1,6 +1,6 @@
 package com.phone.common_library.manager;
 
-import com.phone.common_library.bean.User;
+import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.dao.DaoManager;
 import com.phone.common_library.greendao.UserDao;
 
@@ -8,50 +8,50 @@ import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
 
-public class UserDaoManager {
+public class UserBeanDaoManager {
 
-    private static final String TAG = UserDaoManager.class.getSimpleName();
+    private static final String TAG = UserBeanDaoManager.class.getSimpleName();
     private DaoManager daoManager;
-    private volatile static UserDaoManager userDaoManager;
+    private volatile static UserBeanDaoManager userBeanDaoManager;
 
-    private UserDaoManager() {
+    private UserBeanDaoManager() {
         daoManager = DaoManager.getInstance();
     }
 
-    public static UserDaoManager getInstance() {
-        if (userDaoManager == null) {
-            synchronized (UserDaoManager.class) {
-                if (userDaoManager == null) {
-                    userDaoManager = new UserDaoManager();
+    public static UserBeanDaoManager getInstance() {
+        if (userBeanDaoManager == null) {
+            synchronized (UserBeanDaoManager.class) {
+                if (userBeanDaoManager == null) {
+                    userBeanDaoManager = new UserBeanDaoManager();
                 }
             }
         }
-        return userDaoManager;
+        return userBeanDaoManager;
     }
 
     /**
      * 完成User记录的插入，如果表未创建，先创建User表
      *
-     * @param user
+     * @param userBean
      * @return
      */
-    public boolean insertUser(User user) {
+    public boolean insert(UserBean userBean) {
         boolean flag = false;
-        flag = daoManager.getDaoSession().getUserDao().insert(user) == -1 ? false : true;
-        LogManager.i(TAG, "insert User :" + flag + "-->" + user.toString());
+        flag = daoManager.getDaoSession().getUserBeanDao().insert(userBean) == -1 ? false : true;
+        LogManager.i(TAG, "insert User :" + flag + "-->" + userBean.toString());
         return flag;
     }
 
     /**
      * 修改一条数据
      *
-     * @param user
+     * @param userBean
      * @return
      */
-    public boolean updateUser(User user) {
+    public boolean update(UserBean userBean) {
         boolean flag = false;
         try {
-            daoManager.getDaoSession().getUserDao().update(user);
+            daoManager.getDaoSession().getUserBeanDao().update(userBean);
             flag = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,14 +62,14 @@ public class UserDaoManager {
     /**
      * 删除单条记录
      *
-     * @param user
+     * @param userBean
      * @return
      */
-    public boolean deleteUser(User user) {
+    public boolean delete(UserBean userBean) {
         boolean flag = false;
         try {
             //按照id删除
-            daoManager.getDaoSession().getUserDao().delete(user);
+            daoManager.getDaoSession().getUserBeanDao().delete(userBean);
             flag = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,11 +83,11 @@ public class UserDaoManager {
      * @param drawInventoryBeanList
      * @return
      */
-    public boolean deleteUserInTx(List<User> drawInventoryBeanList) {
+    public boolean deleteInTx(List<UserBean> drawInventoryBeanList) {
         boolean flag = false;
         try {
             //按照id删除
-            daoManager.getDaoSession().getUserDao().deleteInTx(drawInventoryBeanList);
+            daoManager.getDaoSession().getUserBeanDao().deleteInTx(drawInventoryBeanList);
             flag = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,7 +104,7 @@ public class UserDaoManager {
         boolean flag = false;
         try {
             //按照id删除
-            daoManager.getDaoSession().deleteAll(User.class);
+            daoManager.getDaoSession().deleteAll(UserBean.class);
             flag = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,8 +117,8 @@ public class UserDaoManager {
      *
      * @return
      */
-    public List<User> queryAllUser() {
-        return daoManager.getDaoSession().getUserDao().loadAll();
+    public List<UserBean> queryAll() {
+        return daoManager.getDaoSession().getUserBeanDao().loadAll();
     }
 
     /**
@@ -127,15 +127,15 @@ public class UserDaoManager {
      * @param key
      * @return
      */
-    public User queryUserById(long key) {
-        return daoManager.getDaoSession().getUserDao().load(key);
+    public UserBean queryById(long key) {
+        return daoManager.getDaoSession().getUserBeanDao().load(key);
     }
 
     /**
      * 使用native sql进行查询操作
      */
-    public List<User> queryUserByNativeSql(String sql, String[] conditions) {
-        return daoManager.getDaoSession().getUserDao().queryRaw(sql, conditions);
+    public List<UserBean> queryByNativeSql(String sql, String[] conditions) {
+        return daoManager.getDaoSession().getUserBeanDao().queryRaw(sql, conditions);
     }
 
     /**
@@ -143,8 +143,8 @@ public class UserDaoManager {
      *
      * @return
      */
-    public List<User> queryUserByQueryBuilder(String userId) {
-        QueryBuilder<User> queryBuilder = daoManager.getDaoSession().getUserDao().queryBuilder();
+    public List<UserBean> queryByQueryBuilder(String userId) {
+        QueryBuilder<UserBean> queryBuilder = daoManager.getDaoSession().getUserBeanDao().queryBuilder();
         return queryBuilder.where(UserDao.Properties.UserId.eq(userId)).list();
     }
 

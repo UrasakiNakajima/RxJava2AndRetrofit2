@@ -37,7 +37,6 @@ import com.phone.square_module.ui.DecimalOperationActivity
 import com.phone.square_module.ui.EditTextInputLimitsActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
 import kotlinx.android.synthetic.main.fragment_square.*
-import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -348,14 +347,16 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                             baseMvpRxAppActivity.getActivityPageManager().exitApp2();
                         } else if (number == 2) {
                             //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                            val user: User = User2()
-                            val user3 = user as User3
+                            val userBean: UserBean =
+                                UserBean2()
+                            val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } else if (number == 3) {
                             try {
                                 //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                                val user: User = User2()
-                                val user3 = user as User3
+                                val userBean: UserBean =
+                                    UserBean2()
+                                val user3 = userBean as UserBean3
                                 LogManager.i(TAG, user3.toString())
                             } catch (e: Exception) {
                                 ExceptionManager.getInstance().throwException(rxAppCompatActivity, e)
