@@ -35,12 +35,4 @@ public abstract class BaseManager<T> {
                 modelActivity.get() != null;
     }
 
-    protected boolean isEmpty(String dataStr) {
-        if (dataStr != null && !"".equals(dataStr)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
 }

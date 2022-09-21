@@ -160,7 +160,8 @@ public class RetrofitManager {
         //遍历map中所有参数到builder
         if (bodyParams != null && bodyParams.size() > 0) {
             for (String key : bodyParams.keySet()) {
-                if (bodyParams.get(key) != null && !"".equals(bodyParams.get(key))) {//如果参数不是null，才把参数传给后台
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(key, bodyParams.get(key));
                 }
             }
@@ -172,7 +173,6 @@ public class RetrofitManager {
                 File file = fileMap.get(key);
                 if (file != null && file.exists()) {//如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(key, file.getName(), RequestBody.create(MEDIA_TYPE, file));
-
                     LogManager.i(TAG, "file.getName()*****" + file.getName());
                 }
             }
@@ -199,7 +199,8 @@ public class RetrofitManager {
         //遍历map中所有参数到builder
         if (bodyParams != null && bodyParams.size() > 0) {
             for (String key : bodyParams.keySet()) {
-                if (bodyParams.get(key) != null && !"".equals(bodyParams.get(key))) {//如果参数不是null，才把参数传给后台
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(key, bodyParams.get(key));
                 }
             }
@@ -211,7 +212,6 @@ public class RetrofitManager {
                 File file = fileMap.get(key);
                 if (file != null && file.exists()) {//如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(key, file.getName(), RequestBody.create(MEDIA_TYPE, file));
-
                     LogManager.i(TAG, "file.getName()*****" + file.getName());
                 }
             }
@@ -226,7 +226,6 @@ public class RetrofitManager {
                         for (int i = 0; i < files.size(); i++) {
                             if (files.get(i) != null && files.get(i).exists()) {
                                 multipartBodyBuilder.addFormDataPart(key, files.get(i).getName(), RequestBody.create(MEDIA_TYPE, files.get(i)));
-
                                 LogManager.i(TAG, "files.get(i).getName()*****" + files.get(i).getName());
                             }
                         }
@@ -262,7 +261,7 @@ public class RetrofitManager {
                                    LogManager.i(TAG, "responseString*****" + responseString);
                                    onCommonSingleParamCallback.onSuccess(responseString);
 
-//                                   if (!isEmpty(responseString)) {
+//                                   if (!TextUtils.isEmpty(responseString)) {
 //                                       BaseResponse baseResponse;
 //                                       try {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -328,7 +327,7 @@ public class RetrofitManager {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
                                    onCommonSingleParamCallback.onSuccess(responseString);
-//                                   if (!isEmpty(responseString)) {
+//                                   if (!TextUtils.isEmpty(responseString)) {
 //                                       BaseResponse baseResponse;
 //                                       try {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -394,7 +393,7 @@ public class RetrofitManager {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
                                    onCommonSingleParamCallback.onSuccess(responseString);
-//                                   if (!isEmpty(responseString)) {
+//                                   if (!TextUtils.isEmpty(responseString)) {
 //                                       BaseResponse baseResponse;
 //                                       try {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -460,7 +459,7 @@ public class RetrofitManager {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
                                    onCommonSingleParamCallback.onSuccess(responseString);
-//                                   if (!isEmpty(responseString)) {
+//                                   if (!TextUtils.isEmpty(responseString)) {
 //                                       BaseResponse baseResponse;
 //                                       try {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -526,7 +525,7 @@ public class RetrofitManager {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
                                    onCommonSingleParamCallback.onSuccess(responseString);
-//                                   if (!isEmpty(responseString)) {
+//                                   if (!TextUtils.isEmpty(responseString)) {
 //                                       BaseResponse baseResponse;
 //                                       try {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -592,7 +591,7 @@ public class RetrofitManager {
                                    String responseString = responseBody.string();
                                    LogManager.i(TAG, "responseString*****" + responseString);
                                    onCommonSingleParamCallback.onSuccess(responseString);
-//                                   if (!isEmpty(responseString)) {
+//                                   if (!TextUtils.isEmpty(responseString)) {
 //                                       BaseResponse baseResponse;
 //                                       try {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -697,14 +696,6 @@ public class RetrofitManager {
             }
         }
         return false;
-    }
-
-    protected boolean isEmpty(String dataStr) {
-        if (!TextUtils.isEmpty(dataStr)) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
 }

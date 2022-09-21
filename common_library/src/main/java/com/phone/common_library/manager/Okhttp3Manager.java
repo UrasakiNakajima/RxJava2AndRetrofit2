@@ -63,8 +63,8 @@ public class Okhttp3Manager {
                 .writeTimeout(5000, TimeUnit.MILLISECONDS) //写入超时
                 .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于设置header
                 .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于接收并持久化cookie
-                .sslSocketFactory(SSLSocketManager.getSSLSocketFactory())//配置
-                .hostnameVerifier(SSLSocketManager.getHostnameVerifier())//配置
+                .sslSocketFactory(SSLSocketManager.getSSLSocketFactory())//配置（只有https请求需要配置）
+                .hostnameVerifier(SSLSocketManager.getHostnameVerifier())//配置（只有https请求需要配置）
 //                .proxy(Proxy.NO_PROXY)
                 .build();
     }
@@ -129,7 +129,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -194,7 +194,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -262,7 +262,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -375,7 +375,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -448,7 +448,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -534,7 +534,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -599,7 +599,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -682,7 +682,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -777,7 +777,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -884,7 +884,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -973,7 +973,7 @@ public class Okhttp3Manager {
                 mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
                     @Override
                     public void onSuccess() {
-                        if (!isEmpty(responseString)) {
+                        if (!TextUtils.isEmpty(responseString)) {
                             BaseResponse baseResponse;
                             try {
                                 baseResponse = JSON.parseObject(responseString, BaseResponse.class);
@@ -1353,14 +1353,6 @@ public class Okhttp3Manager {
             }
         }
         return false;
-    }
-
-    protected boolean isEmpty(String dataStr) {
-        if (!TextUtils.isEmpty(dataStr)) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
 }

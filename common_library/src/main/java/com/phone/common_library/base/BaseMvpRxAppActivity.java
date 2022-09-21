@@ -311,14 +311,6 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
         startActivityForResult(intent, requestCode);
     }
 
-    protected boolean isEmpty(String dataStr) {
-        if (dataStr != null && !"".equals(dataStr)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     protected void detachPresenter() {
         if (presenter != null) {
             presenter.detachView();
