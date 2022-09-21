@@ -9,7 +9,7 @@ import org.greenrobot.greendao.internal.DaoConfig;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseStatement;
 
-import com.phone.common_library.bean.AddressListConverter;
+import com.phone.common_library.bean.AddressBeanListConverter;
 import java.util.List;
 
 import com.phone.common_library.bean.User;
@@ -32,10 +32,11 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property UserName = new Property(2, String.class, "userName", false, "USER_NAME");
         public final static Property Date = new Property(3, String.class, "date", false, "DATE");
         public final static Property Age = new Property(4, int.class, "age", false, "AGE");
-        public final static Property AddressList = new Property(5, String.class, "addressList", false, "ADDRESS_LIST");
+        public final static Property Salary = new Property(5, Double.class, "salary", false, "SALARY");
+        public final static Property AddressBeanList = new Property(6, String.class, "addressBeanList", false, "ADDRESS_BEAN_LIST");
     }
 
-    private final AddressListConverter addressListConverter = new AddressListConverter();
+    private final AddressBeanListConverter addressBeanListConverter = new AddressBeanListConverter();
 
     public UserDao(DaoConfig config) {
         super(config);
@@ -54,7 +55,8 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"USER_NAME\" TEXT," + // 2: userName
                 "\"DATE\" TEXT," + // 3: date
                 "\"AGE\" INTEGER NOT NULL ," + // 4: age
-                "\"ADDRESS_LIST\" TEXT);"); // 5: addressList
+                "\"SALARY\" REAL," + // 5: salary
+                "\"ADDRESS_BEAN_LIST\" TEXT);"); // 6: addressBeanList
     }
 
     /** Drops the underlying database table. */
@@ -88,9 +90,14 @@ public class UserDao extends AbstractDao<User, Long> {
         }
         stmt.bindLong(5, entity.getAge());
  
-        List addressList = entity.getAddressList();
-        if (addressList != null) {
-            stmt.bindString(6, addressListConverter.convertToDatabaseValue(addressList));
+        Double salary = entity.getSalary();
+        if (salary != null) {
+            stmt.bindDouble(6, salary);
+        }
+ 
+        List addressBeanList = entity.getAddressBeanList();
+        if (addressBeanList != null) {
+            stmt.bindString(7, addressBeanListConverter.convertToDatabaseValue(addressBeanList));
         }
     }
 
@@ -119,9 +126,14 @@ public class UserDao extends AbstractDao<User, Long> {
         }
         stmt.bindLong(5, entity.getAge());
  
-        List addressList = entity.getAddressList();
-        if (addressList != null) {
-            stmt.bindString(6, addressListConverter.convertToDatabaseValue(addressList));
+        Double salary = entity.getSalary();
+        if (salary != null) {
+            stmt.bindDouble(6, salary);
+        }
+ 
+        List addressBeanList = entity.getAddressBeanList();
+        if (addressBeanList != null) {
+            stmt.bindString(7, addressBeanListConverter.convertToDatabaseValue(addressBeanList));
         }
     }
 
@@ -138,7 +150,8 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // userName
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // date
             cursor.getInt(offset + 4), // age
-            cursor.isNull(offset + 5) ? null : addressListConverter.convertToEntityProperty(cursor.getString(offset + 5)) // addressList
+            cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5), // salary
+            cursor.isNull(offset + 6) ? null : addressBeanListConverter.convertToEntityProperty(cursor.getString(offset + 6)) // addressBeanList
         );
         return entity;
     }
@@ -150,7 +163,8 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setUserName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setDate(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setAge(cursor.getInt(offset + 4));
-        entity.setAddressList(cursor.isNull(offset + 5) ? null : addressListConverter.convertToEntityProperty(cursor.getString(offset + 5)));
+        entity.setSalary(cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5));
+        entity.setAddressBeanList(cursor.isNull(offset + 6) ? null : addressBeanListConverter.convertToEntityProperty(cursor.getString(offset + 6)));
      }
     
     @Override

@@ -10,7 +10,7 @@ import java.util.List;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class User {
+public class User implements Cloneable {
 
     @Id(autoincrement = true)
     private Long id;
@@ -18,18 +18,20 @@ public class User {
     private String userName;
     private String date;
     private int age;
-    @Convert(columnType = String.class, converter = AddressListConverter.class)
-    private List<Address> addressList = new ArrayList<>();
+    private Double salary;
+    @Convert(columnType = String.class, converter = AddressBeanListConverter.class)
+    private List<AddressBean> addressBeanList = new ArrayList<>();
 
-    @Generated(hash = 2130539253)
+    @Generated(hash = 1992107914)
     public User(Long id, String userId, String userName, String date, int age,
-                List<Address> addressList) {
+                Double salary, List<AddressBean> addressBeanList) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.date = date;
         this.age = age;
-        this.addressList = addressList;
+        this.salary = salary;
+        this.addressBeanList = addressBeanList;
     }
 
     @Generated(hash = 586692638)
@@ -76,12 +78,31 @@ public class User {
         this.age = age;
     }
 
-    public List<Address> getAddressList() {
-        return this.addressList;
+    public Double getSalary() {
+        return this.salary;
     }
 
-    public void setAddressList(List<Address> addressList) {
-        this.addressList = addressList;
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
+
+    public List<AddressBean> getAddressBeanList() {
+        return this.addressBeanList;
+    }
+
+    public void setAddressBeanList(List<AddressBean> addressBeanList) {
+        this.addressBeanList = addressBeanList;
+    }
+
+    @Override
+    protected User clone() throws CloneNotSupportedException {
+        List<AddressBean> addressBeanList = new ArrayList<>();
+        User user = (User) super.clone();
+        for (int i = 0; i < user.getAddressBeanList().size(); i++) {
+            addressBeanList.add(user.getAddressBeanList().get(i).clone());
+        }
+        user.setAddressBeanList(addressBeanList);
+        return user;
     }
 
 }

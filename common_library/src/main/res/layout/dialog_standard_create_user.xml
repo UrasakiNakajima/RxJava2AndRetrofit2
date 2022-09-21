@@ -2,11 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="301dp"
+    android:layout_width="261dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="301dp"
+        android:layout_width="261dp"
         android:layout_height="wrap_content"
         android:background="@drawable/corners_6_color_ffffff"
         android:orientation="vertical"
@@ -73,6 +73,44 @@
             android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
             android:hint="@string/date"
             android:includeFontPadding="false"
+            android:lineSpacingExtra="2dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp"
+            tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields" />
+
+        <EditText
+            android:id="@+id/edt_age"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
+            android:hint="@string/age"
+            android:includeFontPadding="false"
+            android:inputType="number"
+            android:lineSpacingExtra="2dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp"
+            tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields" />
+
+        <EditText
+            android:id="@+id/edt_salary"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
+            android:hint="@string/salary"
+            android:includeFontPadding="false"
+            android:inputType="number|numberDecimal"
             android:lineSpacingExtra="2dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"

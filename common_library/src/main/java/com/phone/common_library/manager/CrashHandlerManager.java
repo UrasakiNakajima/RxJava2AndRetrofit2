@@ -113,6 +113,8 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 //            }
 //        }.start();
 
+        //2.打印异常堆栈（推薦使用，讓系統把異常日誌打印出來）
+        throwable.printStackTrace();
         //收集設備信息
         collectDeviceInfo(mContext);
         //保存異常日誌到文件

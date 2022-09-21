@@ -20,6 +20,7 @@ import com.phone.common_library.bean.User3
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback
 import com.phone.common_library.manager.*
 import com.phone.square_module.databinding.ActivitySquareBinding
+import com.phone.square_module.ui.CreateUserActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -30,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * introduce :
  */
 class SquareActivity :
-    BaseMvvmAppRxActivity<SquareViewModelImpl, ActivitySquareBinding>() {
+        BaseMvvmAppRxActivity<SquareViewModelImpl, ActivitySquareBinding>() {
 
     companion object {
         private val TAG: String = SquareActivity::class.java.simpleName
@@ -48,9 +49,9 @@ class SquareActivity :
     private var number: Int? = null
 
     private var permissions = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_PHONE_STATE
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE
     )
 
     override fun initLayoutId(): Int {
@@ -92,7 +93,7 @@ class SquareActivity :
 
 //        dataxSuccessObserver = null
         viewModel!!.getDataxRxAppCompatActivitySuccess()
-            .observe(this, dataxDetailsSuccessObserver!!)
+                .observe(this, dataxDetailsSuccessObserver!!)
         viewModel!!.getDataxRxAppCompatActivityError().observe(this, dataxDetailsErrorObserver!!)
     }
 
@@ -116,6 +117,9 @@ class SquareActivity :
 //            startActivity(SquareDetailsActivity::class.java)
 //            startActivity(PickerViewActivity::class.java)
             startActivity(Base64AndFileActivity::class.java)
+        }
+        mDatabind.tevCreateUser.setOnClickListener {
+            startActivity(CreateUserActivity::class.java)
         }
     }
 
@@ -159,15 +163,15 @@ class SquareActivity :
     fun squareDataError(error: String) {
         if (!rxAppCompatActivity!!.isFinishing()) {
             showCustomToast(
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                18,
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
-                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                error,
-                false
+                    ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                    ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                    18,
+                    ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
+                    ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                    ScreenManager.dpToPx(rxAppCompatActivity, 40f),
+                    ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                    error,
+                    false
             )
             hideLoading()
         }
@@ -186,62 +190,62 @@ class SquareActivity :
     private fun initRxPermissionsRxAppCompatActivity(number: Int) {
         val rxPermissionsManager = RxPermissionsManager.getInstance()
         rxPermissionsManager.initRxPermissionsRxAppCompatActivity(
-            this,
-            permissions,
-            object : OnCommonRxPermissionsCallback {
-                override fun onRxPermissionsAllPass() {
-                    //所有的权限都授予
-                    if (number == 1) {
-                        val baseMvvmAppRxActivity =
-                            rxAppCompatActivity as BaseMvvmAppRxActivity<*, *>;
-                        baseMvvmAppRxActivity.getActivityPageManager2()?.exitApp2();
-                    } else if (number == 2) {
-                        //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                        val user: User = User2()
-                        val user3 = user as User3
-                        LogManager.i(TAG, user3.toString())
-                    } else if (number == 3) {
-                        try {
-                            //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+                this,
+                permissions,
+                object : OnCommonRxPermissionsCallback {
+                    override fun onRxPermissionsAllPass() {
+                        //所有的权限都授予
+                        if (number == 1) {
+                            val baseMvvmAppRxActivity =
+                                    rxAppCompatActivity as BaseMvvmAppRxActivity<*, *>;
+                            baseMvvmAppRxActivity.getActivityPageManager2()?.exitApp2();
+                        } else if (number == 2) {
+                            //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                             val user: User = User2()
                             val user3 = user as User3
                             LogManager.i(TAG, user3.toString())
-                        } catch (e: Exception) {
-                            ExceptionManager.getInstance().throwException(rxAppCompatActivity, e)
+                        } else if (number == 3) {
+                            try {
+                                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+                                val user: User = User2()
+                                val user3 = user as User3
+                                LogManager.i(TAG, user3.toString())
+                            } catch (e: Exception) {
+                                ExceptionManager.getInstance().throwException(rxAppCompatActivity, e)
+                            }
                         }
                     }
-                }
 
-                override fun onNotCheckNoMorePromptError() {
-                    //至少一个权限未授予且未勾选不再提示
-                    showSystemSetupDialog()
-                }
+                    override fun onNotCheckNoMorePromptError() {
+                        //至少一个权限未授予且未勾选不再提示
+                        showSystemSetupDialog()
+                    }
 
-                override fun onCheckNoMorePromptError() {
-                    //至少一个权限未授予且勾选了不再提示
-                    showSystemSetupDialog()
-                }
-            })
+                    override fun onCheckNoMorePromptError() {
+                        //至少一个权限未授予且勾选了不再提示
+                        showSystemSetupDialog()
+                    }
+                })
     }
 
     private fun showSystemSetupDialog() {
         cancelPermissionsDialog()
         if (mPermissionsDialog == null) {
             mPermissionsDialog = AlertDialog.Builder(rxAppCompatActivity!!)
-                .setTitle("权限设置")
-                .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
-                .setPositiveButton("去授权") { dialog, which ->
-                    cancelPermissionsDialog()
-                    intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts(
-                        "package",
-                        rxAppCompatActivity!!.applicationContext.packageName,
-                        null
-                    )
-                    intent!!.data = uri
-                    startActivityForResult(intent, 207)
-                }
-                .create()
+                    .setTitle("权限设置")
+                    .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
+                    .setPositiveButton("去授权") { dialog, which ->
+                        cancelPermissionsDialog()
+                        intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts(
+                                "package",
+                                rxAppCompatActivity!!.applicationContext.packageName,
+                                null
+                        )
+                        intent!!.data = uri
+                        startActivityForResult(intent, 207)
+                    }
+                    .create()
         }
         mPermissionsDialog?.setCancelable(false)
         mPermissionsDialog?.setCanceledOnTouchOutside(false)

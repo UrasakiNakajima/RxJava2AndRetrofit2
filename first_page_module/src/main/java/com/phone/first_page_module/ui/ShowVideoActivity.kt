@@ -66,7 +66,7 @@ class ShowVideoActivity : AppCompatActivity() {
 
     private fun initViews() {
         tev_title.setText(resources.getString(R.string.video_play))
-        imv_share.setColorFilter(ContextCompat.getColor(this, R.color.color_FF474747))
+        imv_share.setColorFilter(ContextCompat.getColor(this, R.color.color_000000))
         setToolbar(true, R.color.white);
 
         dialog = ShowDownloadDialogFragment.newInstance();

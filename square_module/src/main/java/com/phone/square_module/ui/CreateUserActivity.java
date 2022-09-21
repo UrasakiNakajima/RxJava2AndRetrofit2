@@ -11,14 +11,21 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.bean.User;
+import com.phone.common_library.bean.UserCloneBean;
+import com.phone.common_library.bean.UserCloneListBean;
 import com.phone.common_library.dialog.StandardCreateUserDialog;
 import com.phone.common_library.dialog.StandardDialog;
+import com.phone.common_library.manager.CopyPropertiesManager;
+import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.UserDaoManager;
 import com.phone.square_module.R;
-import com.phone.square_module.adapter.UserAdapter;
+import com.phone.square_module.adapter.UserCloneAdapter;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,9 +42,10 @@ public class CreateUserActivity extends BaseRxAppActivity {
 
     private UserDaoManager userDaoManager = UserDaoManager.getInstance();
     private LinearLayoutManager linearLayoutManager;
-    private UserAdapter userAdapter;
+    private UserCloneAdapter userCloneAdapter;
 
     private StandardCreateUserDialog createUserDialog;//创建用户Dialog
+    private StandardDialog deletUserDialog;//删除用户Dialog
     private StandardDialog deleteAllUserDialog;//删除全部用户Dialog
 
 
@@ -69,6 +77,9 @@ public class CreateUserActivity extends BaseRxAppActivity {
         setToolbar(false, R.color.color_FF198CFF);
         imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
 
+        layoutBack.setOnClickListener(v -> {
+            finish();
+        });
         tevCreateUser.setOnClickListener(v -> {
             showCreateUserDialog();
         });
@@ -85,13 +96,18 @@ public class CreateUserActivity extends BaseRxAppActivity {
         rcvUser.setLayoutManager(linearLayoutManager);
         rcvUser.setItemAnimator(new DefaultItemAnimator());
 
-        userAdapter = new UserAdapter(this);
-        userAdapter.setOnItemViewClickListener((position, view) -> {
+        userCloneAdapter = new UserCloneAdapter(this);
+        userCloneAdapter.setOnItemViewClickListener((position, view) -> {
+//            switch (view.getId()){
+//                case R.id.tev_delete:
+//                    showDeleteUserDialog(position);
+//                    break;
+//            }
             if (view.getId() == R.id.tev_delete) {
                 showDeleteUserDialog(position);
             }
         });
-        rcvUser.setAdapter(userAdapter);
+        rcvUser.setAdapter(userCloneAdapter);
     }
 
     @Override
@@ -102,9 +118,29 @@ public class CreateUserActivity extends BaseRxAppActivity {
     private void queryUserList() {
         List<User> queryList = userDaoManager.queryAllUser();
         if (queryList != null && queryList.size() > 0) {
-            Collections.reverse(queryList);
-            userAdapter.clearData();
-            userAdapter.addAllData(queryList);
+            List<UserCloneBean> userCloneBeanList = new ArrayList<>();
+            for (int i = 0; i < queryList.size(); i++) {
+                UserCloneBean userCloneBean = new UserCloneBean();
+                try {
+                    CopyPropertiesManager.copyProperties(queryList.get(i), userCloneBean);
+//                    userCloneBean.setSalaryBigDecimal(userCloneBean.getSalary());
+                    userCloneBean.setSalaryBigDecimal(BigDecimal.valueOf(userCloneBean.getSalary()));
+                    userCloneBeanList.add(userCloneBean);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            Collections.reverse(userCloneBeanList);
+            userCloneAdapter.clearData();
+            userCloneAdapter.addAllData(userCloneBeanList);
+
+            UserCloneListBean userCloneListBean = new UserCloneListBean();
+            userCloneListBean.setCode(200);
+            userCloneListBean.setMessage("success");
+            userCloneListBean.setUserCloneBeanList(userCloneBeanList);
+            String jsonStr = JSONObject.toJSONString(userCloneListBean);
+
+            LogManager.i(TAG, "jsonStr******" + jsonStr);
         }
     }
 
@@ -124,9 +160,24 @@ public class CreateUserActivity extends BaseRxAppActivity {
 
                     List<User> queryList = userDaoManager.queryAllUser();
                     if (queryList != null && queryList.size() > 0) {
-                        Collections.reverse(queryList);
-                        userAdapter.clearData();
-                        userAdapter.addAllData(queryList);
+                        List<UserCloneBean> userCloneBeanList = new ArrayList<>();
+                        for (int i = 0; i < queryList.size(); i++) {
+                            UserCloneBean userCloneBean = new UserCloneBean();
+                            try {
+                                CopyPropertiesManager.copyProperties(queryList.get(i), userCloneBean);
+//                                userCloneBean.setSalaryBigDecimal(userCloneBean.getSalary());
+                                userCloneBean.setSalaryBigDecimal(BigDecimal.valueOf(userCloneBean.getSalary()));
+                                userCloneBeanList.add(userCloneBean);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        Collections.reverse(userCloneBeanList);
+                        userCloneAdapter.clearData();
+                        userCloneAdapter.addAllData(userCloneBeanList);
+                    } else {
+                        userCloneAdapter.clearData();
                     }
                 }
             });
@@ -134,24 +185,45 @@ public class CreateUserActivity extends BaseRxAppActivity {
     }
 
     private void showDeleteUserDialog(int position) {
-        if (createUserDialog == null) {
-            createUserDialog = new StandardCreateUserDialog(this);
-            createUserDialog.setTevTitle(getResources().getString(R.string.create_user));
-            createUserDialog.setCannotHide();
-            createUserDialog.setOnItemViewClick2Listener((position2, view, success) -> {
+        if (deletUserDialog == null) {
+            deletUserDialog = new StandardDialog(this);
+            deletUserDialog.setTevContent(getResources().getString(R.string.delete_user));
+            deletUserDialog.setCannotHide();
+            deletUserDialog.setOnItemViewClickListener((position2, view) -> {
                 if (position2 == 0) {
-                    createUserDialog.hideStandardDialog();
-                    createUserDialog = null;
+                    deletUserDialog.hideStandardDialog();
+                    deletUserDialog = null;
                 } else {
-                    createUserDialog.hideStandardDialog();
-                    createUserDialog = null;
+                    deletUserDialog.hideStandardDialog();
+                    deletUserDialog = null;
 
-                    userDaoManager.deleteUser(userAdapter.getUserList().get(position));
+                    User user = new User();
+                    try {
+                        CopyPropertiesManager.copyProperties(userCloneAdapter.getUserCloneList().get(position), user);
+                        userDaoManager.deleteUser(user);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     List<User> queryList = userDaoManager.queryAllUser();
                     if (queryList != null && queryList.size() > 0) {
-                        Collections.reverse(queryList);
-                        userAdapter.clearData();
-                        userAdapter.addAllData(queryList);
+                        List<UserCloneBean> userCloneBeanList = new ArrayList<>();
+                        for (int i = 0; i < queryList.size(); i++) {
+                            UserCloneBean userCloneBean = new UserCloneBean();
+                            try {
+                                CopyPropertiesManager.copyProperties(queryList.get(i), userCloneBean);
+//                                userCloneBean.setSalaryBigDecimal(userCloneBean.getSalary());
+                                userCloneBean.setSalaryBigDecimal(BigDecimal.valueOf(userCloneBean.getSalary()));
+                                userCloneBeanList.add(userCloneBean);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        Collections.reverse(userCloneBeanList);
+                        userCloneAdapter.clearData();
+                        userCloneAdapter.addAllData(userCloneBeanList);
+                    } else {
+                        userCloneAdapter.clearData();
                     }
                 }
             });
@@ -173,12 +245,26 @@ public class CreateUserActivity extends BaseRxAppActivity {
 
                     List<User> queryList = userDaoManager.queryAllUser();
                     userDaoManager.deleteUserInTx(queryList);
-                    if (queryList != null && queryList.size() > 0) {
-                        Collections.reverse(queryList);
-                        userAdapter.clearData();
-                        userAdapter.addAllData(queryList);
+                    List<User> queryNewList = userDaoManager.queryAllUser();
+                    if (queryNewList != null && queryNewList.size() > 0) {
+                        List<UserCloneBean> userCloneBeanList = new ArrayList<>();
+                        for (int i = 0; i < queryNewList.size(); i++) {
+                            UserCloneBean userCloneBean = new UserCloneBean();
+                            try {
+                                CopyPropertiesManager.copyProperties(queryNewList.get(i), userCloneBean);
+//                                userCloneBean.setSalaryBigDecimal(userCloneBean.getSalary());
+                                userCloneBean.setSalaryBigDecimal(BigDecimal.valueOf(userCloneBean.getSalary()));
+                                userCloneBeanList.add(userCloneBean);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        Collections.reverse(userCloneBeanList);
+                        userCloneAdapter.clearData();
+                        userCloneAdapter.addAllData(userCloneBeanList);
                     } else {
-                        userAdapter.clearData();
+                        userCloneAdapter.clearData();
                     }
                 }
             });
