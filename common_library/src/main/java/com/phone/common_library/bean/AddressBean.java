@@ -33,4 +33,12 @@ public class AddressBean implements Cloneable {
     protected AddressBean clone() throws CloneNotSupportedException {
         return (AddressBean) super.clone();
     }
+
+    @Override
+    public String toString() {
+        return "AddressBean{" +
+                "county='" + county + '\'' +
+                ", city='" + city + '\'' +
+                '}';
+    }
 }

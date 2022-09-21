@@ -50,7 +50,7 @@
                 android:paddingTop="@dimen/dp_17"
                 android:paddingEnd="@dimen/dp_17"
                 android:paddingBottom="@dimen/dp_17"
-                android:text="before_change:user"
+                android:text="before_change:userBean"
                 android:textColor="@color/color_FFFFFFFF"
                 android:textSize="@dimen/sp_16" />
 
@@ -124,7 +124,7 @@
                     android:paddingTop="@dimen/dp_17"
                     android:paddingEnd="@dimen/dp_17"
                     android:paddingBottom="@dimen/dp_17"
-                    android:text="after_change:user"
+                    android:text="after_change:userBean"
                     android:textColor="@color/color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
@@ -194,7 +194,7 @@
                 android:paddingTop="@dimen/dp_17"
                 android:paddingEnd="@dimen/dp_17"
                 android:paddingBottom="@dimen/dp_17"
-                android:text="after_change:user"
+                android:text="after_change:userBean"
                 android:textColor="@color/color_FFFFFFFF"
                 android:textSize="@dimen/sp_16" />
 

@@ -13,14 +13,17 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.phone.common_library.base.BaseRxAppActivity;
-import com.phone.common_library.bean.User;
+import com.phone.common_library.bean.AnalysisUserBean;
+import com.phone.common_library.bean.AnalysisUserListBean;
+import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.bean.UserCloneBean;
 import com.phone.common_library.bean.UserCloneListBean;
+import com.phone.common_library.bean.UserListBean;
 import com.phone.common_library.dialog.StandardCreateUserDialog;
 import com.phone.common_library.dialog.StandardDialog;
 import com.phone.common_library.manager.CopyPropertiesManager;
 import com.phone.common_library.manager.LogManager;
-import com.phone.common_library.manager.UserDaoManager;
+import com.phone.common_library.manager.UserBeanDaoManager;
 import com.phone.square_module.R;
 import com.phone.square_module.adapter.UserCloneAdapter;
 
@@ -40,7 +43,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
     private TextView tevDeleteAllUser;
     private RecyclerView rcvUser;
 
-    private UserDaoManager userDaoManager = UserDaoManager.getInstance();
+    private UserBeanDaoManager userBeanDaoManager = UserBeanDaoManager.getInstance();
     private LinearLayoutManager linearLayoutManager;
     private UserCloneAdapter userCloneAdapter;
 
@@ -116,8 +119,20 @@ public class CreateUserActivity extends BaseRxAppActivity {
     }
 
     private void queryUserList() {
-        List<User> queryList = userDaoManager.queryAllUser();
+        List<UserBean> queryList = userBeanDaoManager.queryAll();
         if (queryList != null && queryList.size() > 0) {
+            UserListBean userListBean = new UserListBean();
+            userListBean.setCode(200);
+            userListBean.setMessage("success");
+            userListBean.setUserBeanList(queryList);
+            String userListJsonStr = JSONObject.toJSONString(userListBean);
+            LogManager.i(TAG, "userListJsonStr******" + userListJsonStr);
+
+            AnalysisUserListBean analysisUserListBean = JSONObject.parseObject(userListJsonStr, AnalysisUserListBean.class);
+            LogManager.i(TAG, "analysisUserListBean******" + analysisUserListBean.toString());
+            String analysisUserListJsonStr = JSONObject.toJSONString(analysisUserListBean);
+            LogManager.i(TAG, "analysisUserListJsonStr******" + analysisUserListJsonStr);
+
             List<UserCloneBean> userCloneBeanList = new ArrayList<>();
             for (int i = 0; i < queryList.size(); i++) {
                 UserCloneBean userCloneBean = new UserCloneBean();
@@ -138,9 +153,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
             userCloneListBean.setCode(200);
             userCloneListBean.setMessage("success");
             userCloneListBean.setUserCloneBeanList(userCloneBeanList);
-            String jsonStr = JSONObject.toJSONString(userCloneListBean);
-
-            LogManager.i(TAG, "jsonStr******" + jsonStr);
+            String userCloneListJsonStr = JSONObject.toJSONString(userCloneListBean);
+            LogManager.i(TAG, "userCloneListJsonStr******" + userCloneListJsonStr);
         }
     }
 
@@ -156,9 +170,9 @@ public class CreateUserActivity extends BaseRxAppActivity {
                 } else {
                     createUserDialog.hideStandardDialog();
                     createUserDialog = null;
-                    userDaoManager.insertUser(success);
+                    userBeanDaoManager.insert(success);
 
-                    List<User> queryList = userDaoManager.queryAllUser();
+                    List<UserBean> queryList = userBeanDaoManager.queryAll();
                     if (queryList != null && queryList.size() > 0) {
                         List<UserCloneBean> userCloneBeanList = new ArrayList<>();
                         for (int i = 0; i < queryList.size(); i++) {
@@ -197,14 +211,14 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     deletUserDialog.hideStandardDialog();
                     deletUserDialog = null;
 
-                    User user = new User();
+                    UserBean userBean = new UserBean();
                     try {
-                        CopyPropertiesManager.copyProperties(userCloneAdapter.getUserCloneList().get(position), user);
-                        userDaoManager.deleteUser(user);
+                        CopyPropertiesManager.copyProperties(userCloneAdapter.getUserCloneList().get(position), userBean);
+                        userBeanDaoManager.delete(userBean);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    List<User> queryList = userDaoManager.queryAllUser();
+                    List<UserBean> queryList = userBeanDaoManager.queryAll();
                     if (queryList != null && queryList.size() > 0) {
                         List<UserCloneBean> userCloneBeanList = new ArrayList<>();
                         for (int i = 0; i < queryList.size(); i++) {
@@ -243,9 +257,9 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     deleteAllUserDialog.hideStandardDialog();
                     deleteAllUserDialog = null;
 
-                    List<User> queryList = userDaoManager.queryAllUser();
-                    userDaoManager.deleteUserInTx(queryList);
-                    List<User> queryNewList = userDaoManager.queryAllUser();
+                    List<UserBean> queryList = userBeanDaoManager.queryAll();
+                    userBeanDaoManager.deleteInTx(queryList);
+                    List<UserBean> queryNewList = userBeanDaoManager.queryAll();
                     if (queryNewList != null && queryNewList.size() > 0) {
                         List<UserCloneBean> userCloneBeanList = new ArrayList<>();
                         for (int i = 0; i < queryNewList.size(); i++) {

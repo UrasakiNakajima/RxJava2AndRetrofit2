@@ -1,6 +1,6 @@
 package com.phone.common_library.bean;
 
-public class User2 extends User {
+public class UserBean2 extends UserBean {
 
     private String userId;
 
