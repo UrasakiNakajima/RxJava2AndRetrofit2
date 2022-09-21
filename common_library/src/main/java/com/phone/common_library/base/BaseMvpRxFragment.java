@@ -200,14 +200,6 @@ public abstract class BaseMvpRxFragment<V, T extends BasePresenter<V>> extends R
         startActivityForResult(intent, requestCode);
     }
 
-    protected boolean isEmpty(String dataStr) {
-        if (dataStr != null && !"".equals(dataStr)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     protected void detachPresenter() {
         if (presenter != null) {
             presenter.detachView();

@@ -250,15 +250,7 @@ public abstract class BaseAppActivity extends AppCompatActivity {
 		}
 		startActivityForResult(intent, requestCode);
 	}
-	
-	protected boolean isEmpty(String dataStr) {
-		if (dataStr != null && !"".equals(dataStr)) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
+
 	@Override
 	protected void onDestroy() {
 		

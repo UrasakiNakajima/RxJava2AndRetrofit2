@@ -143,14 +143,6 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         startActivityForResult(intent, requestCode)
     }
 
-    protected fun isEmpty(dataStr: String?): Boolean {
-        return if (dataStr != null && "" != dataStr) {
-            false
-        } else {
-            true
-        }
-    }
-
     override fun onDestroyView() {
         if (rxAppCompatActivity != null) {
             rxAppCompatActivity = null

@@ -55,14 +55,6 @@ public class MineApplication extends BaseApplication {
         return (MineApplication) baseApplication;
     }
 
-    protected boolean isEmpty(String dataStr) {
-        if (dataStr != null && !"".equals(dataStr)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public String getUserName() {
         userName = sp.getString("userName", "");
         LogManager.i(TAG, "getUserName***" + userName);

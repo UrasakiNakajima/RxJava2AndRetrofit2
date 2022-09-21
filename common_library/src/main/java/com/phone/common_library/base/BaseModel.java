@@ -28,14 +28,6 @@ public class BaseModel<T> {
                 modelContext.get() != null;
     }
 
-    protected boolean isEmpty(String dataStr) {
-        if (dataStr != null && !"".equals(dataStr)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public void detachContext() {
         if (isAttach()) {
             modelContext.clear();
