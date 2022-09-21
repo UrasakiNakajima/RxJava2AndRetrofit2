@@ -78,7 +78,7 @@ public class UserDaoManager {
     }
 
     /**
-     * 删除单条记录
+     * 删除多条记录
      *
      * @param drawInventoryBeanList
      * @return

@@ -75,6 +75,9 @@ public class CreateUserActivity extends BaseRxAppActivity {
         setToolbar(false, R.color.color_FF198CFF);
         imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
 
+        layoutBack.setOnClickListener(v -> {
+            finish();
+        });
         tevCreateUser.setOnClickListener(v -> {
             showCreateUserDialog();
         });
