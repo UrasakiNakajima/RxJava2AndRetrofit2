@@ -45,6 +45,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
     private UserCloneAdapter userCloneAdapter;
 
     private StandardCreateUserDialog createUserDialog;//创建用户Dialog
+    private StandardDialog deletUserDialog;//删除用户Dialog
     private StandardDialog deleteAllUserDialog;//删除全部用户Dialog
 
 
@@ -97,6 +98,11 @@ public class CreateUserActivity extends BaseRxAppActivity {
 
         userCloneAdapter = new UserCloneAdapter(this);
         userCloneAdapter.setOnItemViewClickListener((position, view) -> {
+//            switch (view.getId()){
+//                case R.id.tev_delete:
+//                    showDeleteUserDialog(position);
+//                    break;
+//            }
             if (view.getId() == R.id.tev_delete) {
                 showDeleteUserDialog(position);
             }
@@ -179,17 +185,17 @@ public class CreateUserActivity extends BaseRxAppActivity {
     }
 
     private void showDeleteUserDialog(int position) {
-        if (createUserDialog == null) {
-            createUserDialog = new StandardCreateUserDialog(this);
-            createUserDialog.setTevTitle(getResources().getString(R.string.create_user));
-            createUserDialog.setCannotHide();
-            createUserDialog.setOnItemViewClick2Listener((position2, view, success) -> {
+        if (deletUserDialog == null) {
+            deletUserDialog = new StandardDialog(this);
+            deletUserDialog.setTevContent(getResources().getString(R.string.delete_user));
+            deletUserDialog.setCannotHide();
+            deletUserDialog.setOnItemViewClickListener((position2, view) -> {
                 if (position2 == 0) {
-                    createUserDialog.hideStandardDialog();
-                    createUserDialog = null;
+                    deletUserDialog.hideStandardDialog();
+                    deletUserDialog = null;
                 } else {
-                    createUserDialog.hideStandardDialog();
-                    createUserDialog = null;
+                    deletUserDialog.hideStandardDialog();
+                    deletUserDialog = null;
 
                     User user = new User();
                     try {
