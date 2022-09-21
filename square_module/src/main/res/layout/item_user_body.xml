@@ -1,154 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="92dp"
-    android:orientation="vertical">
+    android:layout_height="92dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="91dp"
-        android:orientation="horizontal">
+        android:layout_height="92dp"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="91dp"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal"
-                tools:ignore="UselessParent">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tev_user_name"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@color/color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:text="@string/user_name"
-                    android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    android:orientation="horizontal"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/tev_user_name"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:text="@string/user_name"
+                        android:textColor="@color/color_FFFFFF"
+                        android:textSize="@dimen/sp_16" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/tev_user_id"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:text="@string/user_id"
+                        android:textColor="@color/color_FFFFFF"
+                        android:textSize="@dimen/sp_16" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/tev_date"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:text="@string/date"
+                        android:textColor="@color/color_FFFFFF"
+                        android:textSize="@dimen/sp_16" />
+
+                </LinearLayout>
 
                 <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:background="@color/color_FFFFFF" />
 
-                <TextView
-                    android:id="@+id/tev_user_id"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@color/color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:text="@string/user_id"
-                    android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    android:orientation="horizontal"
+                    tools:ignore="UselessParent">
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_FFFFFF" />
+                    <TextView
+                        android:id="@+id/tev_salary"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:text="@string/salary"
+                        android:textColor="@color/color_FFFFFF"
+                        android:textSize="@dimen/sp_16" />
 
-                <TextView
-                    android:id="@+id/tev_date"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@color/color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:text="@string/date"
-                    android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/tev_address"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="2"
+                        android:background="@color/color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:text="@string/address"
+                        android:textColor="@color/color_FFFFFF"
+                        android:textSize="@dimen/sp_16" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color_FFFFFF" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal"
-                tools:ignore="UselessParent">
-
-                <TextView
-                    android:id="@+id/tev_salary"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@color/color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:text="@string/salary"
-                    android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/sp_16" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_FFFFFF" />
-
-                <TextView
-                    android:id="@+id/tev_address"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="2"
-                    android:background="@color/color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/dp_10"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:text="@string/address"
-                    android:textColor="@color/color_FFFFFF"
-                    android:textSize="@dimen/sp_16" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tev_delete"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@color/color_4876FF"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:text="@string/delete"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/sp_16" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tev_delete"
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:background="@color/color_4876FF"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_10"
-            android:text="@string/delete"
-            android:textColor="@color/color_FFFFFF"
-            android:textSize="@dimen/sp_16" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_555555" />
 
     </LinearLayout>
 
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/color_FFFFFF" />
-
-</LinearLayout>
+</FrameLayout>

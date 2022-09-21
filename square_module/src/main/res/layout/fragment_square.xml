@@ -107,7 +107,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_80000000"
+                    android:background="@color/color_555555"
                     android:layout_height="@dimen/dp_1" />
 
                 <TextView
@@ -124,7 +124,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_80000000"
+                    android:background="@color/color_555555"
                     android:layout_height="@dimen/dp_1" />
 
                 <TextView
@@ -141,7 +141,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_80000000"
+                    android:background="@color/color_555555"
                     android:layout_height="@dimen/dp_1" />
 
                 <TextView
@@ -162,7 +162,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_80000000"
+                    android:background="@color/color_555555"
                     android:layout_height="@dimen/dp_1" />
 
                 <TextView
@@ -183,7 +183,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_80000000"
+                    android:background="@color/color_555555"
                     android:layout_height="@dimen/dp_1" />
 
                 <TextView
@@ -204,7 +204,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_80000000"
+                    android:background="@color/color_555555"
                     android:layout_height="@dimen/dp_1" />
 
                 <View

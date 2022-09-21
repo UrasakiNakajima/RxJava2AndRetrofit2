@@ -39,8 +39,8 @@
 
                     <ImageView
                         android:id="@+id/imv_back"
-                        android:layout_width="@dimen/dp_6"
-                        android:layout_height="@dimen/dp_11"
+                        android:layout_width="@dimen/dp_9"
+                        android:layout_height="@dimen/dp_16"
                         android:layout_gravity="center"
                         android:src="@mipmap/icon_arrowhead_left"
                         tools:ignore="ContentDescription" />
@@ -69,11 +69,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="550" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/color_80000000" />
-
     <TextView
         android:id="@+id/tev_create_user"
         android:layout_width="match_parent"
@@ -87,13 +82,13 @@
         android:paddingEnd="@dimen/dp_15"
         android:paddingBottom="@dimen/dp_10"
         android:text="@string/create_user"
-        android:textColor="@color/color_FFFFFFFF"
+        android:textColor="@color/color_FFFFFF"
         android:textSize="@dimen/sp_16" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
-        android:background="@color/color_80000000" />
+        android:background="@color/color_FFFFFF" />
 
     <TextView
         android:id="@+id/tev_delete_all_user"
@@ -108,12 +103,7 @@
         android:paddingEnd="@dimen/dp_15"
         android:paddingBottom="@dimen/dp_10"
         android:text="@string/delete_all_user"
-        android:textColor="@color/color_FFFFFFFF"
+        android:textColor="@color/color_FFFFFF"
         android:textSize="@dimen/sp_16" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/color_80000000" />
 
 </LinearLayout>

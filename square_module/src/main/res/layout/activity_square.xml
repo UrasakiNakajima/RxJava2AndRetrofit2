@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".SquareActivity">
 
+
     <data>
 
         <variable
@@ -24,123 +25,207 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:background="@color/color_FF198CFF"
-                android:minHeight="?attr/actionBarSize"
-                android:orientation="vertical"
-                app:contentInsetStart="0dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tev_title"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
+                    android:background="@color/color_FF198CFF"
+                    android:minHeight="?attr/actionBarSize"
+                    android:orientation="vertical"
+                    app:contentInsetStart="0dp">
+
+                    <TextView
+                        android:id="@+id/tev_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_50"
+                        android:gravity="center"
+                        android:text="@string/square"
+                        android:textColor="@color/color_FFFFFFFF"
+                        android:textSize="@dimen/sp_20" />
+
+                </androidx.appcompat.widget.Toolbar>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:includeFontPadding="false"
+                    android:text="@={dataxRxAppCompatActivity.title}"
+                    android:textColor="@color/color_FFE066FF"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="@{dataxRxAppCompatActivity.collect? View.GONE:View.VISIBLE}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:includeFontPadding="false"
+                    android:text="@={dataxRxAppCompatActivity.chapterName}"
+                    android:textColor="@color/colorBlack333"
+                    android:textSize="@dimen/sp_16"
+                    android:visibility="@{dataxRxAppCompatActivity.collect? View.GONE:View.VISIBLE}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:includeFontPadding="false"
+                    android:text="@={dataxRxAppCompatActivity.link}"
+                    android:textColor="@color/colorBlack333"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:id="@+id/tev_kill_app"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFC73B"
                     android:gravity="center"
-                    android:text="@string/square"
+                    android:includeFontPadding="false"
+                    android:text="@string/kill_app"
                     android:textColor="@color/color_FFFFFFFF"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_16" />
 
-            </androidx.appcompat.widget.Toolbar>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10" />
+                <TextView
+                    android:id="@+id/tev_create_an_exception"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/create_an_exception"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_16" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:includeFontPadding="false"
-                android:text="@={dataxRxAppCompatActivity.title}"
-                android:textColor="@color/color_FFE066FF"
-                android:textSize="@dimen/sp_18"
-                android:visibility="@{dataxRxAppCompatActivity.collect? View.GONE:View.VISIBLE}" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10" />
+                <TextView
+                    android:id="@+id/tev_create_an_exception2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/create_an_exception2"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_16" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:includeFontPadding="false"
-                android:text="@={dataxRxAppCompatActivity.chapterName}"
-                android:textColor="@color/colorBlack333"
-                android:textSize="@dimen/sp_16"
-                android:visibility="@{dataxRxAppCompatActivity.collect? View.GONE:View.VISIBLE}" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10" />
+                <TextView
+                    android:id="@+id/tev_edit_text_decimal_or_integer"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="@string/edit_text_input_limit"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_16" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:includeFontPadding="false"
-                android:text="@={dataxRxAppCompatActivity.link}"
-                android:textColor="@color/colorBlack333"
-                android:textSize="@dimen/sp_16" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
-            <TextView
-                android:id="@+id/tev_kill_app"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:layout_gravity="center"
-                android:background="@color/color_FFFFC73B"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="@string/kill_app"
-                android:textColor="@color/color_FFFFFFFF"
-                android:textSize="@dimen/sp_16" />
+                <TextView
+                    android:id="@+id/tev_decimal_operation"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="@string/decimal_operation"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_16" />
 
-            <TextView
-                android:id="@+id/tev_create_an_exception"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:layout_gravity="center"
-                android:background="@color/color_FFFFC73B"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="@string/create_an_exception"
-                android:textColor="@color/color_FFFFFFFF"
-                android:textSize="@dimen/sp_16" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
-            <TextView
-                android:id="@+id/tev_create_an_exception2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
-                android:layout_gravity="center"
-                android:background="@color/color_FFFFC73B"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="@string/create_an_exception2"
-                android:textColor="@color/color_FFFFFFFF"
-                android:textSize="@dimen/sp_16" />
+                <TextView
+                    android:id="@+id/tev_create_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="@string/create_user"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_16" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_10" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
-            <ImageView
-                android:id="@+id/imv_picture"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_project_img"
-                app:imageUrl="@{dataxRxAppCompatActivity.envelopePic}"
-                tools:ignore="ContentDescription" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10" />
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/imv_picture"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_640"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/default_project_img"
+                    app:imageUrl="@{dataxRxAppCompatActivity.envelopePic}"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <com.qmuiteam.qmui.widget.QMUILoadingView
             android:id="@+id/load_view"

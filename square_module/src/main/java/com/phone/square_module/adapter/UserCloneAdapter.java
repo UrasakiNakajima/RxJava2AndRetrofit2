@@ -69,16 +69,42 @@ public class UserCloneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof BodyHolder) {
+        if (holder instanceof HeaderHolder) {
+            HeaderHolder headerHolder = (HeaderHolder) holder;
+
+            headerHolder.tevUserName.setText(userCloneBeanList.get(position).getUserName());
+            headerHolder.tevUserId.setText(userCloneBeanList.get(position).getUserId());
+            headerHolder.tevDate.setText(userCloneBeanList.get(position).getDate());
+            headerHolder.tevSalary.setText(userCloneBeanList.get(position).getSalaryBigDecimal().toPlainString());
+            headerHolder.tevAddress.setText(userCloneBeanList.get(position).getAddressBeanList().get(0).getCounty()
+                    + context.getResources().getString(R.string.chinese_colon)
+                    + userCloneBeanList.get(position).getAddressBeanList().get(0).getCity());
+            headerHolder.tevDelete.setOnClickListener(v -> {
+                onItemViewClickListener.onItemClickListener(position, v);
+            });
+        } else if (holder instanceof FooterHolder) {
+            FooterHolder footerHolder = (FooterHolder) holder;
+
+            footerHolder.tevUserName.setText(userCloneBeanList.get(position).getUserName());
+            footerHolder.tevUserId.setText(userCloneBeanList.get(position).getUserId());
+            footerHolder.tevDate.setText(userCloneBeanList.get(position).getDate());
+            footerHolder.tevSalary.setText(userCloneBeanList.get(position).getSalaryBigDecimal().toPlainString());
+            footerHolder.tevAddress.setText(userCloneBeanList.get(position).getAddressBeanList().get(0).getCounty()
+                    + context.getResources().getString(R.string.chinese_colon)
+                    + userCloneBeanList.get(position).getAddressBeanList().get(0).getCity());
+            footerHolder.tevDelete.setOnClickListener(v -> {
+                onItemViewClickListener.onItemClickListener(position, v);
+            });
+        } else {
             BodyHolder bodyHolder = (BodyHolder) holder;
 
-            bodyHolder.tevUserName.setText(userCloneBeanList.get(position - 1).getUserName());
-            bodyHolder.tevUserId.setText(userCloneBeanList.get(position - 1).getUserId());
-            bodyHolder.tevDate.setText(userCloneBeanList.get(position - 1).getDate());
-            bodyHolder.tevSalary.setText(userCloneBeanList.get(position - 1).getSalaryBigDecimal().toPlainString());
-            bodyHolder.tevAddress.setText(userCloneBeanList.get(position - 1).getAddressBeanList().get(0).getCounty()
+            bodyHolder.tevUserName.setText(userCloneBeanList.get(position).getUserName());
+            bodyHolder.tevUserId.setText(userCloneBeanList.get(position).getUserId());
+            bodyHolder.tevDate.setText(userCloneBeanList.get(position).getDate());
+            bodyHolder.tevSalary.setText(userCloneBeanList.get(position).getSalaryBigDecimal().toPlainString());
+            bodyHolder.tevAddress.setText(userCloneBeanList.get(position).getAddressBeanList().get(0).getCounty()
                     + context.getResources().getString(R.string.chinese_colon)
-                    + userCloneBeanList.get(position - 1).getAddressBeanList().get(0).getCity());
+                    + userCloneBeanList.get(position).getAddressBeanList().get(0).getCity());
             bodyHolder.tevDelete.setOnClickListener(v -> {
                 onItemViewClickListener.onItemClickListener(position, v);
             });
@@ -89,7 +115,7 @@ public class UserCloneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemViewType(int position) {
         if (position == 0) {
             return TYPE_HEADER;
-        } else if (position == userCloneBeanList.size() + 2 - 1) {
+        } else if (position == userCloneBeanList.size() - 1) {
             return TYPE_FOOTER;
         } else {
             return TYPE_BODY;
@@ -98,13 +124,27 @@ public class UserCloneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return userCloneBeanList.size() + 2;
+        return userCloneBeanList.size();
     }
 
     private static class HeaderHolder extends RecyclerView.ViewHolder {
 
+        private TextView tevUserName;
+        private TextView tevUserId;
+        private TextView tevDate;
+        private TextView tevSalary;
+        private TextView tevAddress;
+        private TextView tevDelete;
+
         public HeaderHolder(@NonNull View itemView) {
             super(itemView);
+
+            tevUserName = (TextView) itemView.findViewById(R.id.tev_user_name);
+            tevUserId = (TextView) itemView.findViewById(R.id.tev_user_id);
+            tevDate = (TextView) itemView.findViewById(R.id.tev_date);
+            tevSalary = (TextView) itemView.findViewById(R.id.tev_salary);
+            tevAddress = (TextView) itemView.findViewById(R.id.tev_address);
+            tevDelete = (TextView) itemView.findViewById(R.id.tev_delete);
         }
     }
 
@@ -131,8 +171,22 @@ public class UserCloneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private static class FooterHolder extends RecyclerView.ViewHolder {
 
+        private TextView tevUserName;
+        private TextView tevUserId;
+        private TextView tevDate;
+        private TextView tevSalary;
+        private TextView tevAddress;
+        private TextView tevDelete;
+
         public FooterHolder(@NonNull View itemView) {
             super(itemView);
+
+            tevUserName = (TextView) itemView.findViewById(R.id.tev_user_name);
+            tevUserId = (TextView) itemView.findViewById(R.id.tev_user_id);
+            tevDate = (TextView) itemView.findViewById(R.id.tev_date);
+            tevSalary = (TextView) itemView.findViewById(R.id.tev_salary);
+            tevAddress = (TextView) itemView.findViewById(R.id.tev_address);
+            tevDelete = (TextView) itemView.findViewById(R.id.tev_delete);
         }
     }
 
