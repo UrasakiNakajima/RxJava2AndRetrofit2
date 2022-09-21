@@ -40,7 +40,7 @@
                         android:paddingEnd="@dimen/dp_10"
                         android:text="@string/user_name"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_14" />
 
                     <View
                         android:layout_width="1dp"
@@ -60,7 +60,7 @@
                         android:paddingEnd="@dimen/dp_10"
                         android:text="@string/user_id"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_14" />
 
                     <View
                         android:layout_width="1dp"
@@ -80,7 +80,7 @@
                         android:paddingEnd="@dimen/dp_10"
                         android:text="@string/date"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>
 
@@ -108,7 +108,7 @@
                         android:paddingEnd="@dimen/dp_10"
                         android:text="@string/salary"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_14" />
 
                     <View
                         android:layout_width="1dp"
@@ -128,7 +128,7 @@
                         android:paddingEnd="@dimen/dp_10"
                         android:text="@string/address"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>
 
@@ -146,7 +146,7 @@
                 android:paddingEnd="@dimen/dp_10"
                 android:text="@string/delete"
                 android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/sp_14" />
 
         </LinearLayout>
 
