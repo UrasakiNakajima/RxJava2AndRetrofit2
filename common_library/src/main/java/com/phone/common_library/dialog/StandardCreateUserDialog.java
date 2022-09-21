@@ -2,22 +2,22 @@ package com.phone.common_library.dialog;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.phone.common_library.R;
-import com.phone.common_library.bean.Address;
+import com.phone.common_library.bean.AddressBean;
 import com.phone.common_library.bean.User;
 import com.phone.common_library.callback.OnItemViewClick2Listener;
-import com.phone.common_library.manager.DateManager;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class StandardCreateUserDialog {
@@ -27,10 +27,20 @@ public class StandardCreateUserDialog {
     private EditText edtUserName;
     private EditText edtUserId;
     private EditText edtDate;
+    private EditText edtAge;
+    private EditText edtSalary;
     private View viewHorizontalLine;
     private TextView tevCancel;
     private View viewVerticalLine;
     private TextView tevOk;
+
+    private String userName;
+    private String userId;
+    private String date;
+    private String age;
+    private String salary;
+//    private String userName;
+//    private String userName;
 
 
     @SuppressLint("RestrictedApi")
@@ -40,6 +50,8 @@ public class StandardCreateUserDialog {
         edtUserName = (EditText) view.findViewById(R.id.edt_user_name);
         edtUserId = (EditText) view.findViewById(R.id.edt_user_id);
         edtDate = (EditText) view.findViewById(R.id.edt_date);
+        edtAge = (EditText) view.findViewById(R.id.edt_age);
+        edtSalary = (EditText) view.findViewById(R.id.edt_salary);
         viewHorizontalLine = (View) view.findViewById(R.id.view_horizontal_line);
         tevCancel = (TextView) view.findViewById(R.id.tev_cancel);
         viewVerticalLine = (View) view.findViewById(R.id.view_vertical_line);
@@ -55,19 +67,33 @@ public class StandardCreateUserDialog {
             onItemViewClick2Listener.onItemClickListener(0, v, null);
         });
         tevOk.setOnClickListener(v -> {
-            User user = new User();
-            user.setUserId(edtUserId.getText().toString());
-            user.setAge(19);
-            user.setUserName(edtUserName.getText().toString());
-            user.setDate(edtDate.getText().toString());
+            userName = edtUserName.getText().toString();
+            userId = edtUserId.getText().toString();
+            date = edtDate.getText().toString();
+            age = edtAge.getText().toString();
+            salary = edtSalary.getText().toString();
+            if (!TextUtils.isEmpty(userName)
+                    && !TextUtils.isEmpty(userId)
+                    && !TextUtils.isEmpty(date)
+                    && !TextUtils.isEmpty(age)
+                    && !TextUtils.isEmpty(salary)) {
+                User user = new User();
+                user.setUserId(userId);
+                user.setAge(Integer.parseInt(age));
+                user.setUserName(userName);
+                user.setDate(date);
+                user.setSalary(Double.parseDouble(salary));
 //                    Address address = new Address();
 //                    address.setCounty("北莱茵-威斯特法伦州");
 //                    address.setCity("波恩");
-            List<Address> addressList = new ArrayList<>();
-            addressList.add(new Address("北莱茵-威斯特法伦州", "波恩"));
-            addressList.add(new Address("汉堡州", "汉堡"));
-            user.setAddressList(addressList);
-            onItemViewClick2Listener.onItemClickListener(1, v, user);
+                List<AddressBean> addressBeanList = new ArrayList<>();
+                addressBeanList.add(new AddressBean("北莱茵-威斯特法伦州", "波恩"));
+                addressBeanList.add(new AddressBean("汉堡州", "汉堡"));
+                user.setAddressBeanList(addressBeanList);
+                onItemViewClick2Listener.onItemClickListener(1, v, user);
+            } else {
+                Toast.makeText(context, context.getResources().getString(R.string.please_fill_in_the_information_completely), Toast.LENGTH_SHORT).show();
+            }
         });
         standardDialog.show();
     }
