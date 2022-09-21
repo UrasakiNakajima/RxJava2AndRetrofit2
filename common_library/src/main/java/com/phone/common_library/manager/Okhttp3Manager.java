@@ -96,7 +96,7 @@ public class Okhttp3Manager {
      * @param onCommonSingleParamCallback
      */
     public void getAsync(String url,
-                                OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                         OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         //2.创建Request对象，设置一个url地址（百度地址）,设置请求方式。
         Request request = new Request.Builder().url(url).method("GET", null).build();
 //        Request request = new Request.Builder()
@@ -157,8 +157,8 @@ public class Okhttp3Manager {
      * @param onCommonSingleParamCallback
      */
     public void getAsync(String url,
-                                Map<String, String> bodyParams,
-                                OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                         Map<String, String> bodyParams,
+                         OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         String urlNew = url;
         // 设置HTTP请求参数
         urlNew += getBodyParams(bodyParams);
@@ -223,9 +223,9 @@ public class Okhttp3Manager {
      * @param onCommonSingleParamCallback
      */
     public void getAsync(String url,
-                                Map<String, String> headerParams,
-                                Map<String, String> bodyParams,
-                                OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                         Map<String, String> headerParams,
+                         Map<String, String> bodyParams,
+                         OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         String urlNew = url;
         // 设置HTTP请求参数
         urlNew += getBodyParams(bodyParams);
@@ -294,7 +294,8 @@ public class Okhttp3Manager {
         if (bodyParams != null && bodyParams.size() > 0) {
             StringBuffer stringBuffer = new StringBuffer("?");
             for (String key : bodyParams.keySet()) {
-                if (bodyParams.get(key) != null) {//如果参数不是null，就拼接起来
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null并且不是""，就拼接起来
                     stringBuffer.append("&");
                     stringBuffer.append(key);
                     stringBuffer.append("=");
@@ -319,7 +320,8 @@ public class Okhttp3Manager {
         Headers.Builder headersbuilder = new Headers.Builder();
         if (headerParams != null && headerParams.size() > 0) {
             for (String key : headerParams.keySet()) {
-                if (headerParams.get(key) != null) {//如果参数不是null，就拼接起来
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(headerParams.get(key))) {
+                    //如果参数不是null并且不是""，就拼接起来
                     headersbuilder.add(key, headerParams.get(key));
                 }
             }
@@ -337,8 +339,8 @@ public class Okhttp3Manager {
      * @param onCommonSingleParamCallback
      */
     public void postAsyncString(String url,
-                                       Map<String, String> bodyParams,
-                                       OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                                Map<String, String> bodyParams,
+                                OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         JSONObject jsonObject = new JSONObject(bodyParams);
         String requestData = jsonObject.toString();
         LogManager.i(TAG, "postAsyncString requestData*****" + requestData);
@@ -401,8 +403,8 @@ public class Okhttp3Manager {
      * @param onCommonSingleParamCallback
      */
     public void postAsyncStream(String url,
-                                       String requestData,
-                                       OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                                String requestData,
+                                OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         LogManager.i(TAG, "requestData*****" + requestData);
 
         //2.通过new RequestBody 创建requestBody对象
@@ -474,8 +476,8 @@ public class Okhttp3Manager {
      * @param onCommonSingleParamCallback
      */
     public void postAsyncKeyValuePairs(String url,
-                                              Map<String, String> bodyParams,
-                                              OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                                       Map<String, String> bodyParams,
+                                       OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
             LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams*****" + bodyParams.toString());
             LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
@@ -487,7 +489,8 @@ public class Okhttp3Manager {
         //遍历map中所有参数到builder
         if (bodyParams != null && bodyParams.size() > 0) {
             for (String key : bodyParams.keySet()) {
-                if (bodyParams.get(key) != null) {//如果参数不是null，才把参数传给后台
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null，才把参数传给后台
                     formEncodingBuilder.add(key, bodyParams.get(key));
                 }
             }
@@ -558,7 +561,7 @@ public class Okhttp3Manager {
      * @param onCommonSingleParamCallback
      */
     public void postAsync(String url,
-                                 OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                          OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         //这句话是重点Request
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         Request request = new Request.Builder().post(RequestBody.create(null, "")).url(url).build();
@@ -625,8 +628,8 @@ public class Okhttp3Manager {
      * @param onCommonSingleParamCallback
      */
     public void postAsyncForm(String url,
-                                     Map<String, String> bodyParams,
-                                     OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                              Map<String, String> bodyParams,
+                              OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
             LogManager.i(TAG, "postAsyncForm bodyParams String*******" + bodyParams.toString());
             LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
@@ -638,7 +641,8 @@ public class Okhttp3Manager {
         //遍历map中所有参数到builder
         if (bodyParams != null && bodyParams.size() > 0) {
             for (String key : bodyParams.keySet()) {
-                if (bodyParams.get(key) != null) {//如果参数不是null，才把参数传给后台
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(key, bodyParams.get(key));
                 }
             }
@@ -711,9 +715,9 @@ public class Okhttp3Manager {
      * @param onCommonSingleParamCallback
      */
     public void postAsyncFormAndFiles(String url,
-                                             Map<String, String> bodyParams,
-                                             List<File> fileList,
-                                             OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                                      Map<String, String> bodyParams,
+                                      List<File> fileList,
+                                      OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
             LogManager.i(TAG, "postAsyncForm bodyParams String*******" + bodyParams.toString());
             LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
@@ -726,7 +730,8 @@ public class Okhttp3Manager {
         //遍历map中所有参数到builder
         if (bodyParams != null && bodyParams.size() > 0) {
             for (String key : bodyParams.keySet()) {
-                if (bodyParams.get(key) != null) {//如果参数不是null，才把参数传给后台
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(key, bodyParams.get(key));
                 }
             }
@@ -736,7 +741,6 @@ public class Okhttp3Manager {
         if (fileList != null && fileList.size() > 0) {
             for (int i = 0; i < fileList.size(); i++) {
                 if (fileList.get(i).exists()) {
-                    fileList.get(i).getPath();
                     multipartBodyBuilder.addFormDataPart("upload", fileList.get(i).getName(), RequestBody.create(MEDIA_TYPE, fileList.get(i)));
                 }
             }
@@ -801,10 +805,10 @@ public class Okhttp3Manager {
      * @param fileMap
      */
     public void postAsyncFormAndFiles(String url,
-                                             Map<String, String> bodyParams,
-                                             Map<String, File> fileMap,
-                                             Map<String, List<File>> filesMap,
-                                             OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                                      Map<String, String> bodyParams,
+                                      Map<String, File> fileMap,
+                                      Map<String, List<File>> filesMap,
+                                      OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
             LogManager.i(TAG, "postAsyncForm bodyParams String*******" + bodyParams.toString());
             LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
@@ -816,7 +820,8 @@ public class Okhttp3Manager {
         //遍历map中所有参数到builder
         if (bodyParams != null && bodyParams.size() > 0) {
             for (String key : bodyParams.keySet()) {
-                if (bodyParams.get(key) != null) {//如果参数不是null，才把参数传给后台
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(key, bodyParams.get(key));
                 }
             }
@@ -825,7 +830,8 @@ public class Okhttp3Manager {
         //遍历fileMap中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
         if (fileMap != null && fileMap.size() > 0) {
             for (String key : fileMap.keySet()) {
-                if (fileMap.get(key) != null) {//如果参数不是null，才把参数传给后台
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(key, fileMap.get(key).getName(), RequestBody.create(MEDIA_TYPE, fileMap.get(key)));
 
                     LogManager.i(TAG, "fileMap.get(key).getName()*****" + fileMap.get(key).getName());
@@ -836,7 +842,8 @@ public class Okhttp3Manager {
         //遍历filesMap中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
         if (filesMap != null && filesMap.size() > 0) {
             for (String key : filesMap.keySet()) {
-                if (filesMap.get(key) != null) {//如果参数不是null，才把参数传给后台
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null，才把参数传给后台
                     if (filesMap.get(key) != null && filesMap.get(key).size() > 0) {
                         for (int i = 0; i < filesMap.get(key).size(); i++) {
                             multipartBodyBuilder.addFormDataPart(key, filesMap.get(key).get(i).getName(), RequestBody.create(MEDIA_TYPE, filesMap.get(key).get(i)));
@@ -850,12 +857,7 @@ public class Okhttp3Manager {
 
         //构建请求体
         RequestBody requestBody = multipartBodyBuilder.build();
-        Request request;
-
-        request = new Request.Builder()
-                .post(requestBody)
-                .url(url).build();
-
+        Request request = new Request.Builder().post(requestBody).url(url).build();
         //3 将Request封装为Call
         Call call = client.newCall(request);
         //4 执行Call
@@ -911,9 +913,9 @@ public class Okhttp3Manager {
      * @param onCommonSingleParamCallback
      */
     public void postAsyncPhpFormAndFiles(String url,
-                                                Map<String, String> bodyParams,
-                                                List<File> fileList,
-                                                OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+                                         Map<String, String> bodyParams,
+                                         List<File> fileList,
+                                         OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
         if (bodyParams != null && bodyParams.size() > 0) {
             LogManager.i(TAG, "postAsyncForm bodyParams String*******" + bodyParams.toString());
             LogManager.i(TAG, "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams));
@@ -925,7 +927,8 @@ public class Okhttp3Manager {
         //遍历map中所有参数到builder
         if (bodyParams != null && bodyParams.size() > 0) {
             for (String key : bodyParams.keySet()) {
-                if (bodyParams.get(key) != null) {//如果参数不是null，才把参数传给后台
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(key, bodyParams.get(key));
                 }
             }
@@ -1054,7 +1057,8 @@ public class Okhttp3Manager {
 //        String appContentLength = null;
 //        //遍历map中所有参数到builder
 //        if (bodyParams != null && bodyParams.size() > 0) {
-//            for (String key : bodyParams.keySet()) {
+//            if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+//                    //如果参数不是null，才把参数传给后台
 //                if ("alreadyDownloadLength".equals(key)) {
 //                    alreadyDownloadLength = bodyParams.get(key);
 //                } else if ("appContentLength".equals(key)) {
@@ -1267,11 +1271,14 @@ public class Okhttp3Manager {
 //        //遍历map中所有参数到builder
 //        if (bodyParams != null && bodyParams.size() > 0) {
 //            for (String key : bodyParams.keySet()) {
+//    if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+//        //如果参数不是null，才把参数传给后台
 //                if ("alreadyDownloadLength".equals(key)) {
 //                    alreadyDownloadLength = bodyParams.get(key);
 //                } else if ("appContentLength".equals(key)) {
 //                    appContentLength = bodyParams.get(key);
 //                }
+//}
 //            }
 //        }
 //
@@ -1313,7 +1320,10 @@ public class Okhttp3Manager {
             String key = "";
             while (iterator.hasNext()) {
                 key = iterator.next();
-                formEncodingBuilder.add(key, bodyParams.get(key));
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
+                    //如果参数不是null，才把参数传给后台
+                    formEncodingBuilder.add(key, bodyParams.get(key));
+                }
             }
         }
         body = formEncodingBuilder.build();
