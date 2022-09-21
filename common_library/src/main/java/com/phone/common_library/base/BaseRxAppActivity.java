@@ -269,14 +269,6 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
         startActivityForResult(intent, requestCode);
     }
 
-    protected boolean isEmpty(String dataStr) {
-        if (dataStr != null && !"".equals(dataStr)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     private void killAppProcess(Context context) {
         LogManager.i(TAG, "killAppProcess");
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
