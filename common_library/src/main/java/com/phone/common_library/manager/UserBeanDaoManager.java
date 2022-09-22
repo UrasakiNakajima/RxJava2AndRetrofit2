@@ -2,7 +2,7 @@ package com.phone.common_library.manager;
 
 import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.dao.DaoManager;
-import com.phone.common_library.greendao.UserDao;
+import com.phone.common_library.greendao.UserBeanDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -145,7 +145,7 @@ public class UserBeanDaoManager {
      */
     public List<UserBean> queryByQueryBuilder(String userId) {
         QueryBuilder<UserBean> queryBuilder = daoManager.getDaoSession().getUserBeanDao().queryBuilder();
-        return queryBuilder.where(UserDao.Properties.UserId.eq(userId)).list();
+        return queryBuilder.where(UserBeanDao.Properties.UserId.eq(userId)).list();
     }
 
 }
