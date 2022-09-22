@@ -7,7 +7,7 @@ public class AnalysisUserListBean {
 
     private Integer code;
     private String message;
-    private List<AnalysisUserBean> analysisUserBeanList = new ArrayList<>();
+    private List<AnalysisUserBean> userBeanList = new ArrayList<>();
 
     public Integer getCode() {
         return code;
@@ -25,12 +25,12 @@ public class AnalysisUserListBean {
         this.message = message;
     }
 
-    public List<AnalysisUserBean> getAnalysisUserBeanList() {
-        return analysisUserBeanList;
+    public List<AnalysisUserBean> getUserBeanList() {
+        return userBeanList;
     }
 
-    public void setAnalysisUserBeanList(List<AnalysisUserBean> analysisUserBeanList) {
-        this.analysisUserBeanList = analysisUserBeanList;
+    public void setUserBeanList(List<AnalysisUserBean> userBeanList) {
+        this.userBeanList = userBeanList;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class AnalysisUserListBean {
         return "AnalysisUserListBean{" +
                 "code=" + code +
                 ", message='" + message + '\'' +
-                ", analysisUserBeanList=" + analysisUserBeanList +
+                ", userBeanList=" + userBeanList +
                 '}';
     }
 }
