@@ -89,7 +89,7 @@
 
     <string name="information_details">資訊詳情</string>
     <string name="show_data">展示數據</string>
-    <string name="edit_text_input_limit">EditText输入限制</string>
+    <string name="edit_text_input_limits">EditText输入限制</string>
     <string name="decimal_operation">小数运算</string>
     <string name="edit_text_input_limit_that_only_integers_and_decimals_can_be_entered_and_the_total_length_of_the_number_is_less_than_or_equal_to11_digits_customizable_integer5_digits_customizable_decimal5_digits_customizable">EditText输入限制只能整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）</string>
     <string name="create_user">创建用户</string>
@@ -110,6 +110,12 @@
     <string name="salary">薪资</string>
     <string name="address">地址</string>
     <string name="please_fill_in_the_information_completely">请把信息填写完整</string>
+    <string name="decimal_en">Decimal</string>
+    <string name="cancel_en">cancel</string>
+    <string name="confirm_en">confirm</string>
+    <string name="start_input_en">start input</string>
+    <string name="android_edit_text_limits_the_input_of_integers_and_decimals_and_the_total_number_length_is_less_than_or_equal_to_eleven_digits_customizable_five_digits_of_integers_customizable_and_five_digits_of_decimals_customizable">Android EditText限制只能输入整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）</string>
+
 
 
 

@@ -147,7 +147,7 @@
                     android:background="@color/color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_edit_text_decimal_or_integer"
+                    android:id="@+id/tev_edit_text_input_limits"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
@@ -158,7 +158,7 @@
                     android:paddingTop="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_15"
                     android:paddingBottom="@dimen/dp_10"
-                    android:text="@string/edit_text_input_limit"
+                    android:text="@string/edit_text_input_limits"
                     android:textColor="@color/color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 

@@ -24,7 +24,10 @@ import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.BaseMvvmRxFragment
-import com.phone.common_library.bean.*
+import com.phone.common_library.bean.DataX
+import com.phone.common_library.bean.UserBean
+import com.phone.common_library.bean.UserBean2
+import com.phone.common_library.bean.UserBean3
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback
 import com.phone.common_library.common.DecimalInputFilter
 import com.phone.common_library.common.DecimalTextWatcher
@@ -125,9 +128,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             number = 3;
             initRxPermissionsRxFragment(number!!)
         }
-        mDatabind.tevEditTextDecimalOrInteger.setOnClickListener {
-//            showDecimalOrIntegerDialog()
-
+        mDatabind.tevEditTextInputLimits.setOnClickListener {
+//            showEditTextInputLimitsDialog()
             startActivity(EditTextInputLimitsActivity::class.java)
         }
         mDatabind.tevDecimalOperation.setOnClickListener {
@@ -144,7 +146,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         }
     }
 
-    private fun showDecimalOrIntegerDialog() {
+    @SuppressLint("RestrictedApi")
+    private fun showEditTextInputLimitsDialog() {
         val view: View =
                 LayoutInflater.from(rxAppCompatActivity!!)
                         .inflate(R.layout.dialog_layout_edit_text_input_limits, null, false)
@@ -173,7 +176,6 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                         afterDecimalNum
                 )
         )
-        @SuppressLint("RestrictedApi")
         val alertDialog =
                 AlertDialog.Builder(rxAppCompatActivity!!, R.style.dialog_decimal_style)
                         .setView(view, 0, 0, 0, 0)
@@ -188,12 +190,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         val heightDp = ScreenManager.pxToDp(rxAppCompatActivity!!, heightPx.toFloat())
         LogManager.i(TAG, "heightDp*****" + heightDp)
         tevCancel.setOnClickListener { v: View? ->
-            MineInputMethodManager.hideInputMethod(rxAppCompatActivity);
+            SoftKeyboardManager.hideInputMethod(rxAppCompatActivity);
             alertDialog.dismiss()
         }
         tevConfirm.setOnClickListener { v: View? ->
             val afterData = edtInput.text.toString()
-            if (!"".equals(afterData)) {
+            if (!TextUtils.isEmpty(afterData)) {
                 if (afterData.contains(".")) {
                     val afterDataArr = afterData.split("\\.".toRegex()).toTypedArray()
                     if ("" == afterDataArr[0]) {
@@ -204,7 +206,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                                 .show()
                     } else {
 //                        SquareFragment::tev_edit_text_decimal_or_integer.get(SquareFragment()).setText(edtInput.text.toString())
-                        tev_edit_text_decimal_or_integer.setText(edtInput.text.toString())
+                        tev_edit_text_input_limits.setText(edtInput.text.toString())
+                        SoftKeyboardManager.hideInputMethod(rxAppCompatActivity);
                         alertDialog.dismiss()
                     }
                 } else {
@@ -214,7 +217,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                             Toast.makeText(rxAppCompatActivity!!, "请输入正常整数或小数", Toast.LENGTH_SHORT)
                                     .show()
                         } else {
-                            tev_edit_text_decimal_or_integer.setText(edtInput.text.toString())
+                            tev_edit_text_input_limits.setText(edtInput.text.toString())
+                            SoftKeyboardManager.hideInputMethod(rxAppCompatActivity);
                             alertDialog.dismiss()
                         }
                     } else {
@@ -242,7 +246,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 //                val heightDp = ScreenManager.pxToDp(rxAppCompatActivity!!, heightPx.toFloat())
 //                LogManager.i(TAG, "alertDialog widthDp*****" + widthDp)
 //                LogManager.i(TAG, "alertDialog heightDp*****" + heightDp)
-                MineInputMethodManager.showInputMethod(rxAppCompatActivity, edtInput);
+                SoftKeyboardManager.showInputMethod(rxAppCompatActivity, edtInput);
             } else {
 
             }
