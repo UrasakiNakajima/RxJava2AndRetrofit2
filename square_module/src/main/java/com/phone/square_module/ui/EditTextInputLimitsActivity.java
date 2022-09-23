@@ -3,6 +3,7 @@ package com.phone.square_module.ui;
 import android.annotation.SuppressLint;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,7 +20,7 @@ import androidx.core.content.ContextCompat;
 import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.common.DecimalInputFilter;
 import com.phone.common_library.common.DecimalTextWatcher;
-import com.phone.common_library.manager.MineInputMethodManager;
+import com.phone.common_library.manager.SoftKeyboardManager;
 import com.phone.square_module.R;
 
 /**
@@ -40,7 +41,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
 
     @Override
     protected int initLayoutId() {
-        return R.layout.activity_edit_text_input_limit;
+        return R.layout.activity_edit_text_input_limits;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
         imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
 
         tevStartInput.setOnClickListener(v -> {
-            showDecimalAlertDialog();
+            showEditTextInputLimitsDialog();
         });
     }
 
@@ -73,7 +74,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
      * 注意：如果输入特殊小数或整数，如：.或.15或10.或00035或输入21153.67589，然后删除中间小数点，整数就是10位了（整数不能大于5位），
      * 则要在点击Dialog确认按钮之前进行提示，这样就不会填入不符合规范的整数或小数了。
      */
-    private void showDecimalAlertDialog() {
+    private void showEditTextInputLimitsDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_layout_edit_text_input_limits, null, false);
         EditText edtInput = (EditText) view.findViewById(R.id.edt_input);
         TextView tevCancel = (TextView) view.findViewById(R.id.tev_cancel);
@@ -105,12 +106,12 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
 //        LogManager.i(TAG, "heightDp*****" + heightDp);
 
         tevCancel.setOnClickListener(v -> {
-            MineInputMethodManager.hideInputMethod(this);
+            SoftKeyboardManager.hideInputMethod(this);
             alertDialog.dismiss();
         });
         tevConfirm.setOnClickListener(v -> {
             String afterData = edtInput.getText().toString();
-            if (!"".equals(afterData)) {
+            if (!TextUtils.isEmpty(afterData)) {
                 if (afterData.contains(".")) {
                     String[] afterDataArr = afterData.split("\\.");
                     if ("".equals(afterDataArr[0])) {
@@ -119,6 +120,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
                         Toast.makeText(this, "请输入正常整数或小数", Toast.LENGTH_SHORT).show();
                     } else {
                         this.tevShowInput.setText(edtInput.getText().toString());
+                        SoftKeyboardManager.hideInputMethod(this);
                         alertDialog.dismiss();
                     }
                 } else {
@@ -128,6 +130,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
                             Toast.makeText(this, "请输入正常整数或小数", Toast.LENGTH_SHORT).show();
                         } else {
                             this.tevShowInput.setText(edtInput.getText().toString());
+                            SoftKeyboardManager.hideInputMethod(this);
                             alertDialog.dismiss();
                         }
                     } else {
@@ -148,7 +151,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    MineInputMethodManager.showInputMethod(EditTextInputLimitsActivity.this, edtInput);
+                    SoftKeyboardManager.showInputMethod(EditTextInputLimitsActivity.this, edtInput);
                 } else {
 
                 }

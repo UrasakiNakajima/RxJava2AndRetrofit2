@@ -5,7 +5,7 @@ import org.greenrobot.greendao.annotation.Convert;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnalysisUserBean implements Cloneable {
+public class UserResponse implements Cloneable {
 
     private Long id;
     private String userId;
@@ -16,10 +16,10 @@ public class AnalysisUserBean implements Cloneable {
     @Convert(columnType = String.class, converter = AddressBeanListConverter.class)
     private List<AddressBean> addressBeanList = new ArrayList<>();
 
-    public AnalysisUserBean() {
+    public UserResponse() {
     }
 
-    public AnalysisUserBean(Long id, String userId, String userName, String date, int age, String salary, List<AddressBean> addressBeanList) {
+    public UserResponse(Long id, String userId, String userName, String date, int age, String salary, List<AddressBean> addressBeanList) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
@@ -86,19 +86,19 @@ public class AnalysisUserBean implements Cloneable {
     }
 
     @Override
-    protected AnalysisUserBean clone() throws CloneNotSupportedException {
+    protected UserResponse clone() throws CloneNotSupportedException {
         List<AddressBean> addressBeanList = new ArrayList<>();
-        AnalysisUserBean analysisUserBean = (AnalysisUserBean) super.clone();
-        for (int i = 0; i < analysisUserBean.getAddressBeanList().size(); i++) {
-            addressBeanList.add(analysisUserBean.getAddressBeanList().get(i).clone());
+        UserResponse userResponse = (UserResponse) super.clone();
+        for (int i = 0; i < userResponse.getAddressBeanList().size(); i++) {
+            addressBeanList.add(userResponse.getAddressBeanList().get(i).clone());
         }
-        analysisUserBean.setAddressBeanList(addressBeanList);
-        return analysisUserBean;
+        userResponse.setAddressBeanList(addressBeanList);
+        return userResponse;
     }
 
     @Override
     public String toString() {
-        return "AnalysisUserBean{" +
+        return "UserResponse{" +
                 "id=" + id +
                 ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +

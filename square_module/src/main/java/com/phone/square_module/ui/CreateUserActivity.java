@@ -13,11 +13,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.phone.common_library.base.BaseRxAppActivity;
-import com.phone.common_library.bean.AnalysisUserBean;
-import com.phone.common_library.bean.AnalysisUserListBean;
-import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.bean.UserCloneBean;
-import com.phone.common_library.bean.UserCloneListBean;
+import com.phone.common_library.bean.UserResponseListBean;
+import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.bean.UserListBean;
 import com.phone.common_library.dialog.StandardCreateUserDialog;
 import com.phone.common_library.dialog.StandardDialog;
@@ -26,9 +24,8 @@ import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.TextViewStyleManager;
 import com.phone.common_library.manager.UserBeanDaoManager;
 import com.phone.square_module.R;
-import com.phone.square_module.adapter.UserCloneAdapter;
+import com.phone.square_module.adapter.UserBeanAdapter;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +43,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
 
     private UserBeanDaoManager userBeanDaoManager = UserBeanDaoManager.getInstance();
     private LinearLayoutManager linearLayoutManager;
-    private UserCloneAdapter userCloneAdapter;
+    private UserBeanAdapter userBeanAdapter;
 
     private StandardCreateUserDialog createUserDialog;//创建用户Dialog
     private StandardDialog deletUserDialog;//删除用户Dialog
@@ -99,8 +96,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
         rcvUser.setLayoutManager(linearLayoutManager);
         rcvUser.setItemAnimator(new DefaultItemAnimator());
 
-        userCloneAdapter = new UserCloneAdapter(this);
-        userCloneAdapter.setOnItemViewClickListener((position, view) -> {
+        userBeanAdapter = new UserBeanAdapter(this);
+        userBeanAdapter.setOnItemViewClickListener((position, view) -> {
 //            switch (view.getId()){
 //                case R.id.tev_delete:
 //                    showDeleteUserDialog(position);
@@ -110,7 +107,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                 showDeleteUserDialog(position);
             }
         });
-        rcvUser.setAdapter(userCloneAdapter);
+        rcvUser.setAdapter(userBeanAdapter);
     }
 
     @Override
@@ -122,6 +119,19 @@ public class CreateUserActivity extends BaseRxAppActivity {
     private void queryUserList() {
         List<UserBean> queryList = userBeanDaoManager.queryAll();
         if (queryList != null && queryList.size() > 0) {
+            /**
+             * 这里只是为了试一下拷贝对象属性（如果有这个属性才会拷贝，没有则无法拷贝）
+             */
+            UserCloneBean userCloneBean = new UserCloneBean();
+            try {
+                CopyPropertiesManager.copyProperties(queryList.get(0), userCloneBean);
+                String userCloneBeanJsonStr = JSONObject.toJSONString(userCloneBean);
+                LogManager.i(TAG, "userCloneBeanJsonStr******" + userCloneBeanJsonStr);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
             UserListBean userListBean = new UserListBean();
             userListBean.setCode(200);
             userListBean.setMessage("success");
@@ -129,47 +139,33 @@ public class CreateUserActivity extends BaseRxAppActivity {
             String userListJsonStr = JSONObject.toJSONString(userListBean);
             LogManager.i(TAG, "userListJsonStr******" + userListJsonStr);
 
-            AnalysisUserListBean analysisUserListBean = JSONObject.parseObject(userListJsonStr, AnalysisUserListBean.class);
-            LogManager.i(TAG, "analysisUserListBean******" + analysisUserListBean.toString());
-            String analysisUserListJsonStr = JSONObject.toJSONString(analysisUserListBean);
-            LogManager.i(TAG, "analysisUserListJsonStr******" + analysisUserListJsonStr);
+            /**
+             * 这里只是为了试一下UserListBean类中的UserBean类生成的json字符串的Double类型的字段salary，解析后变成UserResponse的String类型的字段salary
+             * 会不会报错（实际上不会报错，java的8种基本类型的字段都可以解析成String类型，只是这样做不规范）
+             */
+            UserResponseListBean userResponseListBean = JSONObject.parseObject(userListJsonStr, UserResponseListBean.class);
+            LogManager.i(TAG, "userResponseListBean******" + userResponseListBean.toString());
+            String userResponseListJsonStr = JSONObject.toJSONString(userResponseListBean);
+            LogManager.i(TAG, "userResponseListJsonStr******" + userResponseListJsonStr);
 
-            List<UserCloneBean> userCloneBeanList = new ArrayList<>();
-            for (int i = 0; i < queryList.size(); i++) {
-                UserCloneBean userCloneBean = new UserCloneBean();
-                try {
-                    CopyPropertiesManager.copyProperties(queryList.get(i), userCloneBean);
-//                    userCloneBean.setSalaryBigDecimal(userCloneBean.getSalary());
-                    userCloneBean.setSalaryBigDecimal(BigDecimal.valueOf(userCloneBean.getSalary()));
-                    userCloneBeanList.add(userCloneBean);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            Collections.reverse(userCloneBeanList);
-            userCloneAdapter.clearData();
-            userCloneAdapter.addAllData(userCloneBeanList);
-            TextViewStyleManager.setTextViewStyle(this,
-                    tevTitle, getResources().getString(R.string.create_b)
-                            + userCloneBeanList.size()
-                            + getResources().getString(R.string.users_b),
-                    getResources().getString(R.string.create_b).length() - 1,
-                    getResources().getString(R.string.create_b).length() + userCloneBeanList.size() - 1,
-                    23);
 
-            UserCloneListBean userCloneListBean = new UserCloneListBean();
-            userCloneListBean.setCode(200);
-            userCloneListBean.setMessage("success");
-            userCloneListBean.setUserCloneBeanList(userCloneBeanList);
-            String userCloneListJsonStr = JSONObject.toJSONString(userCloneListBean);
-            LogManager.i(TAG, "userCloneListJsonStr******" + userCloneListJsonStr);
-        } else {
+            Collections.reverse(queryList);
+            userBeanAdapter.clearData();
+            userBeanAdapter.addAllData(queryList);
             TextViewStyleManager.setTextViewStyle(this,
-                    tevTitle, getResources().getString(R.string.create_b)
+                    tevTitle, getResources().getString(R.string.created_b)
                             + queryList.size()
                             + getResources().getString(R.string.users_b),
-                    getResources().getString(R.string.create_b).length() - 1,
-                    getResources().getString(R.string.create_b).length() + queryList.size() - 1,
+                    getResources().getString(R.string.created_b).length() - 1,
+                    getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                    23);
+        } else {
+            TextViewStyleManager.setTextViewStyle(this,
+                    tevTitle, getResources().getString(R.string.created_b)
+                            + queryList.size()
+                            + getResources().getString(R.string.users_b),
+                    getResources().getString(R.string.created_b).length() - 1,
+                    getResources().getString(R.string.created_b).length() + queryList.size() - 1,
                     23);
         }
     }
@@ -187,40 +183,26 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     createUserDialog.hideStandardDialog();
                     createUserDialog = null;
                     userBeanDaoManager.insert(success);
-
                     List<UserBean> queryList = userBeanDaoManager.queryAll();
                     if (queryList != null && queryList.size() > 0) {
-                        List<UserCloneBean> userCloneBeanList = new ArrayList<>();
-                        for (int i = 0; i < queryList.size(); i++) {
-                            UserCloneBean userCloneBean = new UserCloneBean();
-                            try {
-                                CopyPropertiesManager.copyProperties(queryList.get(i), userCloneBean);
-//                                userCloneBean.setSalaryBigDecimal(userCloneBean.getSalary());
-                                userCloneBean.setSalaryBigDecimal(BigDecimal.valueOf(userCloneBean.getSalary()));
-                                userCloneBeanList.add(userCloneBean);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        Collections.reverse(userCloneBeanList);
-                        userCloneAdapter.clearData();
-                        userCloneAdapter.addAllData(userCloneBeanList);
+                        Collections.reverse(queryList);
+                        userBeanAdapter.clearData();
+                        userBeanAdapter.addAllData(queryList);
                         TextViewStyleManager.setTextViewStyle(this,
-                                tevTitle, getResources().getString(R.string.create_b)
-                                        + userCloneBeanList.size()
-                                        + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.create_b).length() - 1,
-                                getResources().getString(R.string.create_b).length() + userCloneBeanList.size() - 1,
-                                23);
-                    } else {
-                        userCloneAdapter.clearData();
-                        TextViewStyleManager.setTextViewStyle(this,
-                                tevTitle, getResources().getString(R.string.create_b)
+                                tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.create_b).length() - 1,
-                                getResources().getString(R.string.create_b).length() + queryList.size() - 1,
+                                getResources().getString(R.string.created_b).length() - 1,
+                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                                23);
+                    } else {
+                        userBeanAdapter.clearData();
+                        TextViewStyleManager.setTextViewStyle(this,
+                                tevTitle, getResources().getString(R.string.created_b)
+                                        + queryList.size()
+                                        + getResources().getString(R.string.users_b),
+                                getResources().getString(R.string.created_b).length() - 1,
+                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
                                 23);
                     }
                 }
@@ -241,46 +223,27 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     deletUserDialog.hideStandardDialog();
                     deletUserDialog = null;
 
-                    UserBean userBean = new UserBean();
-                    try {
-                        CopyPropertiesManager.copyProperties(userCloneAdapter.getUserCloneList().get(position), userBean);
-                        userBeanDaoManager.delete(userBean);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    userBeanDaoManager.delete(userBeanAdapter.getUserBeanList().get(position));
                     List<UserBean> queryList = userBeanDaoManager.queryAll();
                     if (queryList != null && queryList.size() > 0) {
-                        List<UserCloneBean> userCloneBeanList = new ArrayList<>();
-                        for (int i = 0; i < queryList.size(); i++) {
-                            UserCloneBean userCloneBean = new UserCloneBean();
-                            try {
-                                CopyPropertiesManager.copyProperties(queryList.get(i), userCloneBean);
-//                                userCloneBean.setSalaryBigDecimal(userCloneBean.getSalary());
-                                userCloneBean.setSalaryBigDecimal(BigDecimal.valueOf(userCloneBean.getSalary()));
-                                userCloneBeanList.add(userCloneBean);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        Collections.reverse(userCloneBeanList);
-                        userCloneAdapter.clearData();
-                        userCloneAdapter.addAllData(userCloneBeanList);
+                        Collections.reverse(queryList);
+                        userBeanAdapter.clearData();
+                        userBeanAdapter.addAllData(queryList);
                         TextViewStyleManager.setTextViewStyle(this,
-                                tevTitle, getResources().getString(R.string.create_b)
-                                        + userCloneBeanList.size()
-                                        + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.create_b).length() - 1,
-                                getResources().getString(R.string.create_b).length() + userCloneBeanList.size() - 1,
-                                23);
-                    } else {
-                        userCloneAdapter.clearData();
-                        TextViewStyleManager.setTextViewStyle(this,
-                                tevTitle, getResources().getString(R.string.create_b)
+                                tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.create_b).length() - 1,
-                                getResources().getString(R.string.create_b).length() + queryList.size() - 1,
+                                getResources().getString(R.string.created_b).length() - 1,
+                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                                23);
+                    } else {
+                        userBeanAdapter.clearData();
+                        TextViewStyleManager.setTextViewStyle(this,
+                                tevTitle, getResources().getString(R.string.created_b)
+                                        + queryList.size()
+                                        + getResources().getString(R.string.users_b),
+                                getResources().getString(R.string.created_b).length() - 1,
+                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
                                 23);
                     }
                 }
@@ -305,36 +268,24 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     userBeanDaoManager.deleteInTx(queryList);
                     List<UserBean> queryNewList = userBeanDaoManager.queryAll();
                     if (queryNewList != null && queryNewList.size() > 0) {
-                        List<UserCloneBean> userCloneBeanList = new ArrayList<>();
-                        for (int i = 0; i < queryNewList.size(); i++) {
-                            UserCloneBean userCloneBean = new UserCloneBean();
-                            try {
-                                CopyPropertiesManager.copyProperties(queryNewList.get(i), userCloneBean);
-//                                userCloneBean.setSalaryBigDecimal(userCloneBean.getSalary());
-                                userCloneBean.setSalaryBigDecimal(BigDecimal.valueOf(userCloneBean.getSalary()));
-                                userCloneBeanList.add(userCloneBean);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        Collections.reverse(userCloneBeanList);
-                        userCloneAdapter.clearData();
-                        userCloneAdapter.addAllData(userCloneBeanList);
-                        TextViewStyleManager.setTextViewStyle(this, tevTitle, getResources().getString(R.string.create_b)
-                                        + userCloneBeanList.size()
-                                        + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.create_b).length(),
-                                getResources().getString(R.string.create_b).length() + userCloneBeanList.size(),
-                                19);
-                    } else {
-                        userCloneAdapter.clearData();
+                        Collections.reverse(queryList);
+                        userBeanAdapter.clearData();
+                        userBeanAdapter.addAllData(queryList);
                         TextViewStyleManager.setTextViewStyle(this,
-                                tevTitle, getResources().getString(R.string.create_b)
+                                tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.create_b).length() - 1,
-                                getResources().getString(R.string.create_b).length() + queryList.size() - 1,
+                                getResources().getString(R.string.created_b).length() - 1,
+                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                                23);
+                    } else {
+                        userBeanAdapter.clearData();
+                        TextViewStyleManager.setTextViewStyle(this,
+                                tevTitle, getResources().getString(R.string.created_b)
+                                        + queryList.size()
+                                        + getResources().getString(R.string.users_b),
+                                getResources().getString(R.string.created_b).length() - 1,
+                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
                                 23);
                     }
                 }
