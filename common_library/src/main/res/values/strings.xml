@@ -93,8 +93,9 @@
     <string name="decimal_operation">小数运算</string>
     <string name="edit_text_input_limit_that_only_integers_and_decimals_can_be_entered_and_the_total_length_of_the_number_is_less_than_or_equal_to11_digits_customizable_integer5_digits_customizable_decimal5_digits_customizable">EditText输入限制只能整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）</string>
     <string name="create_user">创建用户</string>
-    <string name="create_b">创建&#8194;</string>
+    <string name="created_b">创建了&#8194;</string>
     <string name="users_b">&#8194;个用户</string>
+    <string name="user_b">&#8194;用户</string>
     <string name="delete_user">删除用户</string>
     <string name="delete_all_user">删除全部用户</string>
 
