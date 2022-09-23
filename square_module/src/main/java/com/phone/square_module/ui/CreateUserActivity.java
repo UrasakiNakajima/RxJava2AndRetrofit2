@@ -23,6 +23,7 @@ import com.phone.common_library.dialog.StandardCreateUserDialog;
 import com.phone.common_library.dialog.StandardDialog;
 import com.phone.common_library.manager.CopyPropertiesManager;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.TextViewStyleManager;
 import com.phone.common_library.manager.UserBeanDaoManager;
 import com.phone.square_module.R;
 import com.phone.square_module.adapter.UserCloneAdapter;
@@ -148,6 +149,13 @@ public class CreateUserActivity extends BaseRxAppActivity {
             Collections.reverse(userCloneBeanList);
             userCloneAdapter.clearData();
             userCloneAdapter.addAllData(userCloneBeanList);
+            TextViewStyleManager.setTextViewStyle(this,
+                    tevTitle, getResources().getString(R.string.create_b)
+                            + userCloneBeanList.size()
+                            + getResources().getString(R.string.users_b),
+                    getResources().getString(R.string.create_b).length() - 1,
+                    getResources().getString(R.string.create_b).length() + userCloneBeanList.size() - 1,
+                    23);
 
             UserCloneListBean userCloneListBean = new UserCloneListBean();
             userCloneListBean.setCode(200);
@@ -155,6 +163,14 @@ public class CreateUserActivity extends BaseRxAppActivity {
             userCloneListBean.setUserCloneBeanList(userCloneBeanList);
             String userCloneListJsonStr = JSONObject.toJSONString(userCloneListBean);
             LogManager.i(TAG, "userCloneListJsonStr******" + userCloneListJsonStr);
+        } else {
+            TextViewStyleManager.setTextViewStyle(this,
+                    tevTitle, getResources().getString(R.string.create_b)
+                            + queryList.size()
+                            + getResources().getString(R.string.users_b),
+                    getResources().getString(R.string.create_b).length() - 1,
+                    getResources().getString(R.string.create_b).length() + queryList.size() - 1,
+                    23);
         }
     }
 
@@ -190,8 +206,22 @@ public class CreateUserActivity extends BaseRxAppActivity {
                         Collections.reverse(userCloneBeanList);
                         userCloneAdapter.clearData();
                         userCloneAdapter.addAllData(userCloneBeanList);
+                        TextViewStyleManager.setTextViewStyle(this,
+                                tevTitle, getResources().getString(R.string.create_b)
+                                        + userCloneBeanList.size()
+                                        + getResources().getString(R.string.users_b),
+                                getResources().getString(R.string.create_b).length() - 1,
+                                getResources().getString(R.string.create_b).length() + userCloneBeanList.size() - 1,
+                                23);
                     } else {
                         userCloneAdapter.clearData();
+                        TextViewStyleManager.setTextViewStyle(this,
+                                tevTitle, getResources().getString(R.string.create_b)
+                                        + queryList.size()
+                                        + getResources().getString(R.string.users_b),
+                                getResources().getString(R.string.create_b).length() - 1,
+                                getResources().getString(R.string.create_b).length() + queryList.size() - 1,
+                                23);
                     }
                 }
             });
@@ -236,8 +266,22 @@ public class CreateUserActivity extends BaseRxAppActivity {
                         Collections.reverse(userCloneBeanList);
                         userCloneAdapter.clearData();
                         userCloneAdapter.addAllData(userCloneBeanList);
+                        TextViewStyleManager.setTextViewStyle(this,
+                                tevTitle, getResources().getString(R.string.create_b)
+                                        + userCloneBeanList.size()
+                                        + getResources().getString(R.string.users_b),
+                                getResources().getString(R.string.create_b).length() - 1,
+                                getResources().getString(R.string.create_b).length() + userCloneBeanList.size() - 1,
+                                23);
                     } else {
                         userCloneAdapter.clearData();
+                        TextViewStyleManager.setTextViewStyle(this,
+                                tevTitle, getResources().getString(R.string.create_b)
+                                        + queryList.size()
+                                        + getResources().getString(R.string.users_b),
+                                getResources().getString(R.string.create_b).length() - 1,
+                                getResources().getString(R.string.create_b).length() + queryList.size() - 1,
+                                23);
                     }
                 }
             });
@@ -277,8 +321,21 @@ public class CreateUserActivity extends BaseRxAppActivity {
                         Collections.reverse(userCloneBeanList);
                         userCloneAdapter.clearData();
                         userCloneAdapter.addAllData(userCloneBeanList);
+                        TextViewStyleManager.setTextViewStyle(this, tevTitle, getResources().getString(R.string.create_b)
+                                        + userCloneBeanList.size()
+                                        + getResources().getString(R.string.users_b),
+                                getResources().getString(R.string.create_b).length(),
+                                getResources().getString(R.string.create_b).length() + userCloneBeanList.size(),
+                                19);
                     } else {
                         userCloneAdapter.clearData();
+                        TextViewStyleManager.setTextViewStyle(this,
+                                tevTitle, getResources().getString(R.string.create_b)
+                                        + queryList.size()
+                                        + getResources().getString(R.string.users_b),
+                                getResources().getString(R.string.create_b).length() - 1,
+                                getResources().getString(R.string.create_b).length() + queryList.size() - 1,
+                                23);
                     }
                 }
             });
