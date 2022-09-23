@@ -3,11 +3,11 @@ package com.phone.common_library.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnalysisUserListBean {
+public class UserResponseListBean {
 
     private Integer code;
     private String message;
-    private List<AnalysisUserBean> userBeanList = new ArrayList<>();
+    private List<UserResponse> userBeanList = new ArrayList<>();
 
     public Integer getCode() {
         return code;
@@ -25,17 +25,17 @@ public class AnalysisUserListBean {
         this.message = message;
     }
 
-    public List<AnalysisUserBean> getUserBeanList() {
+    public List<UserResponse> getUserBeanList() {
         return userBeanList;
     }
 
-    public void setUserBeanList(List<AnalysisUserBean> userBeanList) {
+    public void setUserBeanList(List<UserResponse> userBeanList) {
         this.userBeanList = userBeanList;
     }
 
     @Override
     public String toString() {
-        return "AnalysisUserListBean{" +
+        return "UserResponseListBean{" +
                 "code=" + code +
                 ", message='" + message + '\'' +
                 ", userBeanList=" + userBeanList +

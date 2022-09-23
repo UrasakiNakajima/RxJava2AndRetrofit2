@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
                     android:gravity="center"
-                    android:text="@string/edit_text_input_limit"
+                    android:text="@string/edit_text_input_limits"
                     android:textColor="@color/color_FFFFFFFF"
                     android:textSize="@dimen/sp_20" />
 
@@ -72,7 +72,7 @@
         android:gravity="center"
         android:paddingStart="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_10"
-        android:text="Android EditText限制只能输入整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）"
+        android:text="@string/android_edit_text_limits_the_input_of_integers_and_decimals_and_the_total_number_length_is_less_than_or_equal_to_eleven_digits_customizable_five_digits_of_integers_customizable_and_five_digits_of_decimals_customizable"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_16" />
 
@@ -104,7 +104,7 @@
         android:gravity="center"
         android:paddingStart="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_10"
-        android:text="start input"
+        android:text="@string/start_input_en"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_16" />
 
