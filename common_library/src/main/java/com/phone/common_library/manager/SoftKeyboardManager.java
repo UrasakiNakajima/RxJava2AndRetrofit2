@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -20,14 +19,14 @@ import java.util.List;
  * introduce : 软键盘管理类
  */
 
-public class MineInputMethodManager {
+public class SoftKeyboardManager {
 
-    private static final String TAG = MineInputMethodManager.class.getSimpleName();
+    private static final String TAG = SoftKeyboardManager.class.getSimpleName();
     private View rootView;//activity的根视图
     private int rootViewVisibleHeight;//纪录根视图的显示高度
     private OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener;
 
-    public MineInputMethodManager(Activity activity) {
+    public SoftKeyboardManager(Activity activity) {
         //获取activity的根视图
         rootView = activity.getWindow().getDecorView();
 
@@ -78,12 +77,12 @@ public class MineInputMethodManager {
     }
 
     public static void setListener(Activity activity, OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener) {
-        MineInputMethodManager softKeyBoardListener = new MineInputMethodManager(activity);
+        SoftKeyboardManager softKeyBoardListener = new SoftKeyboardManager(activity);
         softKeyBoardListener.setOnSoftKeyBoardChangeListener(onSoftKeyBoardChangeListener);
     }
 
     /**
-     * 显示软键盘（输入法）
+     * 显示软键盘（输入法）（可用于Activity，Fragment）
      *
      * @param activity
      * @param editText
@@ -95,7 +94,7 @@ public class MineInputMethodManager {
 
 
     /**
-     * 隐藏软键盘（输入法）
+     * 隐藏软键盘（输入法）（可用于Activity，Fragment）
      *
      * @param activity
      */
@@ -110,7 +109,7 @@ public class MineInputMethodManager {
     }
 
     /**
-     * 显示软键盘(只适用于Activity，不适用于Fragment)
+     * 显示软键盘（输入法）（只适用于Activity，不适用于Fragment）
      */
     public static void showSoftKeyboard2(Activity activity) {
         View view = activity.getCurrentFocus();
@@ -123,7 +122,7 @@ public class MineInputMethodManager {
     }
 
     /**
-     * 隐藏软键盘(只适用于Activity，不适用于Fragment)
+     * 隐藏软键盘（输入法）（只适用于Activity，不适用于Fragment）
      */
     public static void hideSoftKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();
@@ -136,7 +135,7 @@ public class MineInputMethodManager {
     }
 
     /**
-     * 隐藏软键盘(可用于Activity，Fragment)
+     * 隐藏软键盘（输入法）（可用于Activity，Fragment）
      */
     public static void hideSoftKeyboard(Context context, List<View> viewList) {
         if (viewList == null) return;

@@ -23,7 +23,7 @@
             android:gravity="center"
             android:paddingStart="@dimen/dp_10"
             android:paddingEnd="@dimen/dp_10"
-            android:text="Decimal"
+            android:text="@string/decimal_en"
             android:textColor="@color/blue"
             android:textSize="@dimen/sp_16" />
 
@@ -41,7 +41,8 @@
             android:paddingStart="@dimen/dp_15"
             android:paddingEnd="@dimen/dp_15"
             android:textColor="@color/colorBlack333"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/sp_16"
+            tools:ignore="Autofill,LabelFor,TextFields" />
 
         <View
             android:layout_width="match_parent"
@@ -61,7 +62,7 @@
                 android:gravity="center"
                 android:paddingStart="@dimen/dp_10"
                 android:paddingEnd="@dimen/dp_10"
-                android:text="cancel"
+                android:text="@string/cancel_en"
                 android:textColor="@color/color_80000000"
                 android:textSize="@dimen/sp_16" />
 
@@ -74,7 +75,7 @@
                 android:gravity="center"
                 android:paddingStart="@dimen/dp_10"
                 android:paddingEnd="@dimen/dp_10"
-                android:text="confirm"
+                android:text="@string/confirm_en"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/sp_16" />
 

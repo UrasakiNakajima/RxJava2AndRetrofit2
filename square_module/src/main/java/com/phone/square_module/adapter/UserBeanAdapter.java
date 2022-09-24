@@ -9,33 +9,33 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.phone.common_library.bean.UserCloneBean;
+import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.callback.OnItemViewClickListener;
 import com.phone.square_module.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserCloneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String TAG = UserCloneAdapter.class.getSimpleName();
+    private static final String TAG = UserBeanAdapter.class.getSimpleName();
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_BODY = 1;
     private static final int TYPE_FOOTER = 2;
     private final Context context;
-    private List<UserCloneBean> userCloneBeanList = new ArrayList<>();
+    private List<UserBean> userBeanList = new ArrayList<>();
 
-    public UserCloneAdapter(Context context) {
+    public UserBeanAdapter(Context context) {
         this.context = context;
     }
 
     public void clearData() {
-        this.userCloneBeanList.clear();
+        this.userBeanList.clear();
         notifyDataSetChanged();
     }
 
-    public void addAllData(List<UserCloneBean> userCloneBeanList) {
-        this.userCloneBeanList.addAll(userCloneBeanList);
+    public void addAllData(List<UserBean> userBeanList) {
+        this.userBeanList.addAll(userBeanList);
         notifyDataSetChanged();
     }
 
@@ -47,8 +47,8 @@ public class UserCloneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyItemChanged(position);
     }
 
-    public List<UserCloneBean> getUserCloneList() {
-        return userCloneBeanList;
+    public List<UserBean> getUserBeanList() {
+        return userBeanList;
     }
 
     @NonNull
@@ -72,39 +72,39 @@ public class UserCloneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (holder instanceof HeaderHolder) {
             HeaderHolder headerHolder = (HeaderHolder) holder;
 
-            headerHolder.tevUserName.setText(userCloneBeanList.get(position).getUserName());
-            headerHolder.tevUserId.setText(userCloneBeanList.get(position).getUserId());
-            headerHolder.tevDate.setText(userCloneBeanList.get(position).getDate());
-            headerHolder.tevSalary.setText(userCloneBeanList.get(position).getSalaryBigDecimal().toPlainString());
-            headerHolder.tevAddress.setText(userCloneBeanList.get(position).getAddressBeanList().get(0).getCounty()
+            headerHolder.tevUserName.setText(userBeanList.get(position).getUserName());
+            headerHolder.tevUserId.setText(userBeanList.get(position).getUserId());
+            headerHolder.tevDate.setText(userBeanList.get(position).getDate());
+            headerHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
+            headerHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
                     + context.getResources().getString(R.string.chinese_colon)
-                    + userCloneBeanList.get(position).getAddressBeanList().get(0).getCity());
+                    + userBeanList.get(position).getAddressBeanList().get(0).getCity());
             headerHolder.tevDelete.setOnClickListener(v -> {
                 onItemViewClickListener.onItemClickListener(position, v);
             });
         } else if (holder instanceof FooterHolder) {
             FooterHolder footerHolder = (FooterHolder) holder;
 
-            footerHolder.tevUserName.setText(userCloneBeanList.get(position).getUserName());
-            footerHolder.tevUserId.setText(userCloneBeanList.get(position).getUserId());
-            footerHolder.tevDate.setText(userCloneBeanList.get(position).getDate());
-            footerHolder.tevSalary.setText(userCloneBeanList.get(position).getSalaryBigDecimal().toPlainString());
-            footerHolder.tevAddress.setText(userCloneBeanList.get(position).getAddressBeanList().get(0).getCounty()
+            footerHolder.tevUserName.setText(userBeanList.get(position).getUserName());
+            footerHolder.tevUserId.setText(userBeanList.get(position).getUserId());
+            footerHolder.tevDate.setText(userBeanList.get(position).getDate());
+            footerHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
+            footerHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
                     + context.getResources().getString(R.string.chinese_colon)
-                    + userCloneBeanList.get(position).getAddressBeanList().get(0).getCity());
+                    + userBeanList.get(position).getAddressBeanList().get(0).getCity());
             footerHolder.tevDelete.setOnClickListener(v -> {
                 onItemViewClickListener.onItemClickListener(position, v);
             });
         } else {
             BodyHolder bodyHolder = (BodyHolder) holder;
 
-            bodyHolder.tevUserName.setText(userCloneBeanList.get(position).getUserName());
-            bodyHolder.tevUserId.setText(userCloneBeanList.get(position).getUserId());
-            bodyHolder.tevDate.setText(userCloneBeanList.get(position).getDate());
-            bodyHolder.tevSalary.setText(userCloneBeanList.get(position).getSalaryBigDecimal().toPlainString());
-            bodyHolder.tevAddress.setText(userCloneBeanList.get(position).getAddressBeanList().get(0).getCounty()
+            bodyHolder.tevUserName.setText(userBeanList.get(position).getUserName());
+            bodyHolder.tevUserId.setText(userBeanList.get(position).getUserId());
+            bodyHolder.tevDate.setText(userBeanList.get(position).getDate());
+            bodyHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
+            bodyHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
                     + context.getResources().getString(R.string.chinese_colon)
-                    + userCloneBeanList.get(position).getAddressBeanList().get(0).getCity());
+                    + userBeanList.get(position).getAddressBeanList().get(0).getCity());
             bodyHolder.tevDelete.setOnClickListener(v -> {
                 onItemViewClickListener.onItemClickListener(position, v);
             });
@@ -115,7 +115,7 @@ public class UserCloneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemViewType(int position) {
         if (position == 0) {
             return TYPE_HEADER;
-        } else if (position == userCloneBeanList.size() - 1) {
+        } else if (position == userBeanList.size() - 1) {
             return TYPE_FOOTER;
         } else {
             return TYPE_BODY;
@@ -124,7 +124,7 @@ public class UserCloneAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return userCloneBeanList.size();
+        return userBeanList.size();
     }
 
     private static class HeaderHolder extends RecyclerView.ViewHolder {
