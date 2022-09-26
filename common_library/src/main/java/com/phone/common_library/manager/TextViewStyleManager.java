@@ -34,6 +34,21 @@ public class TextViewStyleManager {
         // 粗体
         spannable.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         spannable.setSpan(new AbsoluteSizeSpan(ScreenManager.spToPx(context, size)), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        // 显示
+        textView.setText(spannable);
+    }
+
+    public static void setTextViewStyleVerticalCenter(Context context,
+                                        TextView textView,
+                                        String data,
+                                        int start,
+                                        int end,
+                                        float size) {
+        Spannable spannable = new SpannableString(data);
+        // 粗体
+        spannable.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        spannable.setSpan(new AbsoluteSizeSpan(ScreenManager.spToPx(context, size)), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        //SpannableString字体大小不一致垂直居中显示
         spannable.setSpan(new VerticalAlignTextSpan(context, size), start, end, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         // 显示
         textView.setText(spannable);

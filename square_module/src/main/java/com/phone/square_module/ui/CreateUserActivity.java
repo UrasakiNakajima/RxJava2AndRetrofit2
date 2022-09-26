@@ -152,7 +152,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
             Collections.reverse(queryList);
             userBeanAdapter.clearData();
             userBeanAdapter.addAllData(queryList);
-            TextViewStyleManager.setTextViewStyle(this,
+            TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                     tevTitle, getResources().getString(R.string.created_b)
                             + queryList.size()
                             + getResources().getString(R.string.users_b),
@@ -160,7 +160,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     getResources().getString(R.string.created_b).length() + queryList.size() - 1,
                     28);
         } else {
-            TextViewStyleManager.setTextViewStyle(this,
+            TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                     tevTitle, getResources().getString(R.string.created_b)
                             + queryList.size()
                             + getResources().getString(R.string.users_b),
@@ -188,7 +188,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                         Collections.reverse(queryList);
                         userBeanAdapter.clearData();
                         userBeanAdapter.addAllData(queryList);
-                        TextViewStyleManager.setTextViewStyle(this,
+                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
@@ -197,7 +197,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                 28);
                     } else {
                         userBeanAdapter.clearData();
-                        TextViewStyleManager.setTextViewStyle(this,
+                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
@@ -229,7 +229,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                         Collections.reverse(queryList);
                         userBeanAdapter.clearData();
                         userBeanAdapter.addAllData(queryList);
-                        TextViewStyleManager.setTextViewStyle(this,
+                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
@@ -238,7 +238,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                 28);
                     } else {
                         userBeanAdapter.clearData();
-                        TextViewStyleManager.setTextViewStyle(this,
+                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
@@ -271,7 +271,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                         Collections.reverse(queryList);
                         userBeanAdapter.clearData();
                         userBeanAdapter.addAllData(queryList);
-                        TextViewStyleManager.setTextViewStyle(this,
+                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
@@ -280,7 +280,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                 28);
                     } else {
                         userBeanAdapter.clearData();
-                        TextViewStyleManager.setTextViewStyle(this,
+                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
