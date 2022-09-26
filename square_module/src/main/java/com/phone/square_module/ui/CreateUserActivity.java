@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -21,18 +23,21 @@ import com.phone.common_library.dialog.StandardCreateUserDialog;
 import com.phone.common_library.dialog.StandardDialog;
 import com.phone.common_library.manager.CopyPropertiesManager;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.PictureManager;
 import com.phone.common_library.manager.TextViewStyleManager;
 import com.phone.common_library.manager.UserBeanDaoManager;
 import com.phone.square_module.R;
 import com.phone.square_module.adapter.UserBeanAdapter;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CreateUserActivity extends BaseRxAppActivity {
 
     private static final String TAG = CreateUserActivity.class.getSimpleName();
+    private LinearLayout layoutRoot;
     private Toolbar toolbar;
     private FrameLayout layoutBack;
     private ImageView imvBack;
@@ -66,6 +71,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
 
     @Override
     protected void initViews() {
+        layoutRoot = (LinearLayout) findViewById(R.id.layout_root);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         layoutBack = (FrameLayout) findViewById(R.id.layout_back);
         imvBack = (ImageView) findViewById(R.id.imv_back);
@@ -156,15 +162,30 @@ public class CreateUserActivity extends BaseRxAppActivity {
                             + queryList.size()
                             + getResources().getString(R.string.users_b),
                     getResources().getString(R.string.created_b).length() - 1,
-                    getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                    getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
                     28);
+
+            Timer timer = new Timer();
+            TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Bitmap bitmap = PictureManager.getCacheBitmapFromView(CreateUserActivity.this, layoutRoot);
+                            PictureManager.saveImageToPath(CreateUserActivity.this, bitmap, "create_user");
+                        }
+                    });
+                }
+            };
+            timer.schedule(timerTask, 2000);
         } else {
             TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                     tevTitle, getResources().getString(R.string.created_b)
                             + queryList.size()
                             + getResources().getString(R.string.users_b),
                     getResources().getString(R.string.created_b).length() - 1,
-                    getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                    getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
                     28);
         }
     }
@@ -192,7 +213,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
                                 28);
                     } else {
                         userBeanAdapter.clearData();
@@ -201,7 +222,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
                                 28);
                     }
                 }
@@ -233,7 +254,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
                                 28);
                     } else {
                         userBeanAdapter.clearData();
@@ -242,7 +263,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
                                 28);
                     }
                 }
@@ -275,7 +296,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
                                 28);
                     } else {
                         userBeanAdapter.clearData();
@@ -284,7 +305,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + queryList.size() - 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
                                 28);
                     }
                 }
