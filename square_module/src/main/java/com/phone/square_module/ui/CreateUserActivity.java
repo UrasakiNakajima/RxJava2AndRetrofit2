@@ -158,7 +158,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                             + getResources().getString(R.string.users_b),
                     getResources().getString(R.string.created_b).length() - 1,
                     getResources().getString(R.string.created_b).length() + queryList.size() - 1,
-                    23);
+                    28);
         } else {
             TextViewStyleManager.setTextViewStyle(this,
                     tevTitle, getResources().getString(R.string.created_b)
@@ -166,7 +166,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                             + getResources().getString(R.string.users_b),
                     getResources().getString(R.string.created_b).length() - 1,
                     getResources().getString(R.string.created_b).length() + queryList.size() - 1,
-                    23);
+                    28);
         }
     }
 
@@ -194,7 +194,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
                                 getResources().getString(R.string.created_b).length() + queryList.size() - 1,
-                                23);
+                                28);
                     } else {
                         userBeanAdapter.clearData();
                         TextViewStyleManager.setTextViewStyle(this,
@@ -203,7 +203,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
                                 getResources().getString(R.string.created_b).length() + queryList.size() - 1,
-                                23);
+                                28);
                     }
                 }
             });
@@ -235,7 +235,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
                                 getResources().getString(R.string.created_b).length() + queryList.size() - 1,
-                                23);
+                                28);
                     } else {
                         userBeanAdapter.clearData();
                         TextViewStyleManager.setTextViewStyle(this,
@@ -244,7 +244,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
                                 getResources().getString(R.string.created_b).length() + queryList.size() - 1,
-                                23);
+                                28);
                     }
                 }
             });
@@ -277,7 +277,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
                                 getResources().getString(R.string.created_b).length() + queryList.size() - 1,
-                                23);
+                                28);
                     } else {
                         userBeanAdapter.clearData();
                         TextViewStyleManager.setTextViewStyle(this,
@@ -286,7 +286,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length() - 1,
                                 getResources().getString(R.string.created_b).length() + queryList.size() - 1,
-                                23);
+                                28);
                     }
                 }
             });

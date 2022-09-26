@@ -8,6 +8,8 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.StyleSpan;
 import android.widget.TextView;
 
+import com.phone.common_library.spannable.VerticalAlignTextSpan;
+
 public class TextViewStyleManager {
 
     private static final String TAG = TextViewStyleManager.class.getSimpleName();
@@ -32,6 +34,7 @@ public class TextViewStyleManager {
         // 粗体
         spannable.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         spannable.setSpan(new AbsoluteSizeSpan(ScreenManager.spToPx(context, size)), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        spannable.setSpan(new VerticalAlignTextSpan(context, size), start, end, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
         // 显示
         textView.setText(spannable);
     }
