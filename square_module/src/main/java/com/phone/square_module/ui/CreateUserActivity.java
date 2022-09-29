@@ -161,8 +161,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     tevTitle, getResources().getString(R.string.created_b)
                             + queryList.size()
                             + getResources().getString(R.string.users_b),
-                    getResources().getString(R.string.created_b).length() - 1,
-                    getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
+                    getResources().getString(R.string.created_b).length(),
+                    getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
                     28);
 
             Timer timer = new Timer();
@@ -184,8 +184,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     tevTitle, getResources().getString(R.string.created_b)
                             + queryList.size()
                             + getResources().getString(R.string.users_b),
-                    getResources().getString(R.string.created_b).length() - 1,
-                    getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
+                    getResources().getString(R.string.created_b).length(),
+                    getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
                     28);
         }
     }
@@ -212,8 +212,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
+                                getResources().getString(R.string.created_b).length(),
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
                                 28);
                     } else {
                         userBeanAdapter.clearData();
@@ -221,8 +221,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
+                                getResources().getString(R.string.created_b).length(),
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
                                 28);
                     }
                 }
@@ -253,8 +253,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
+                                getResources().getString(R.string.created_b).length(),
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
                                 28);
                     } else {
                         userBeanAdapter.clearData();
@@ -262,8 +262,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
+                                getResources().getString(R.string.created_b).length(),
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
                                 28);
                     }
                 }
@@ -295,8 +295,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
+                                getResources().getString(R.string.created_b).length(),
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
                                 28);
                     } else {
                         userBeanAdapter.clearData();
@@ -304,8 +304,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
                                 tevTitle, getResources().getString(R.string.created_b)
                                         + queryList.size()
                                         + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length() - 1,
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() - 1,
+                                getResources().getString(R.string.created_b).length(),
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
                                 28);
                     }
                 }
