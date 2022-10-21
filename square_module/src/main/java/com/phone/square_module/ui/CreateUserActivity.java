@@ -248,11 +248,11 @@ public class CreateUserActivity extends BaseRxAppActivity {
             deletUserDialog = new StandardDialog(this);
             deletUserDialog.setTevContent(getResources().getString(R.string.delete_user));
 //            deletUserDialog.setCannotHide();
-            createUserDialog.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<String>() {
+            deletUserDialog.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<String>() {
                 @Override
                 public void onSuccess(String success) {
-                    createUserDialog.hideStandardDialog();
-                    createUserDialog = null;
+                    deletUserDialog.hideStandardDialog();
+                    deletUserDialog = null;
                 }
 
                 @Override
@@ -301,6 +301,18 @@ public class CreateUserActivity extends BaseRxAppActivity {
             deleteAllUserDialog = new StandardDialog(this);
             deleteAllUserDialog.setTevContent(getResources().getString(R.string.delete_all_user));
 //            deleteAllUserDialog.setCannotHide();
+            deleteAllUserDialog.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<String>() {
+                @Override
+                public void onSuccess(String success) {
+                    deleteAllUserDialog.hideStandardDialog();
+                    deleteAllUserDialog = null;
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            });
             deleteAllUserDialog.setOnItemViewClickListener((position, view) -> {
                 if (position == 0) {
                     deleteAllUserDialog.hideStandardDialog();

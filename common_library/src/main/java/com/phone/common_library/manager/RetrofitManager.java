@@ -56,7 +56,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitManager {
 
-    private static final String TAG = "RetrofitManager";
+    private static final String TAG = RetrofitManager.class.getSimpleName();
     private static RetrofitManager manager;
     private Retrofit retrofit;
 
