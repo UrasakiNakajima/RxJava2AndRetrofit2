@@ -3,8 +3,11 @@ package com.phone.common_library.dialog;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +25,7 @@ import java.util.List;
 
 public class StandardCreateUserDialog {
 
-    private AlertDialog standardDialog;
+    private AlertDialog alertDialog;
     private TextView tevTitle;
     private EditText edtUserName;
     private EditText edtUserId;
@@ -60,8 +63,8 @@ public class StandardCreateUserDialog {
 
         //设置R.style.dialog_decimal_style和setView(view, 0, 0, 0, 0)就可以去掉
         //AlertDialog的默认边框，此时AlertDialog的layout的宽高就是AlertDialog的宽高
-        standardDialog = new AlertDialog.Builder(context, R.style.dialog_decimal_style)
-                .setView(view, 0, 0, 0, 0)
+        alertDialog = new AlertDialog.Builder(context, R.style.standard_dialog_style2)
+                .setView(view)
                 .create();
         tevCancel.setOnClickListener(v -> {
             onItemViewClick2Listener.onItemClickListener(0, v, null);
@@ -95,7 +98,19 @@ public class StandardCreateUserDialog {
                 Toast.makeText(context, context.getResources().getString(R.string.please_fill_in_the_information_completely), Toast.LENGTH_SHORT).show();
             }
         });
-        standardDialog.show();
+        alertDialog.show();
+
+
+        Window window = alertDialog.getWindow();
+        if (window != null) {
+//            window.setBackgroundDrawableResource(android.R.color.transparent);
+            window.setGravity(Gravity.CENTER);
+//            window.setWindowAnimations(R.style.PictureThemeDialogWindowStyle);
+            WindowManager.LayoutParams params = window.getAttributes();
+            window.setAttributes(params);
+            //把 DecorView 的默认 padding 取消，同时 DecorView 的默认大小也会取消
+            window.getDecorView().setPadding(0, 0, 0, 0);
+        }
     }
 
     public void setTevTitle(String content) {
@@ -108,14 +123,14 @@ public class StandardCreateUserDialog {
     }
 
     public void setCannotHide() {
-        standardDialog.setCancelable(false);
-        standardDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
+        alertDialog.setCanceledOnTouchOutside(false);
     }
 
     public void hideStandardDialog() {
-        if (standardDialog != null) {
-            standardDialog.dismiss();
-            standardDialog = null;
+        if (alertDialog != null) {
+            alertDialog.dismiss();
+            alertDialog = null;
         }
     }
 

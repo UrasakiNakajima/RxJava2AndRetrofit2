@@ -177,8 +177,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 )
         )
         val alertDialog =
-                AlertDialog.Builder(rxAppCompatActivity!!, R.style.dialog_decimal_style)
-                        .setView(view, 0, 0, 0, 0)
+                AlertDialog.Builder(rxAppCompatActivity!!, R.style.standard_dialog_style2)
+                        .setView(view)
                         .show()
 
         val widthPx = ScreenManager.getScreenWidth(rxAppCompatActivity!!)

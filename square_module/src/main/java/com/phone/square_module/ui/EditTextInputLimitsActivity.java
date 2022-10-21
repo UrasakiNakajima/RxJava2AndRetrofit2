@@ -94,8 +94,8 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
         edtInput.addTextChangedListener(new DecimalTextWatcher(edtInput, afterDecimalNum));
 
         @SuppressLint("RestrictedApi")
-        AlertDialog alertDialog = new AlertDialog.Builder(this, R.style.dialog_decimal_style)
-                .setView(view, 0, 0, 0, 0)
+        AlertDialog alertDialog = new AlertDialog.Builder(this, R.style.standard_dialog_style2)
+                .setView(view)
                 .show();
 
 //        int widthPx = ScreenManager.getScreenWidth(this);

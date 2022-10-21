@@ -194,7 +194,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
         if (createUserDialog == null) {
             createUserDialog = new StandardCreateUserDialog(this);
             createUserDialog.setTevTitle(getResources().getString(R.string.create_user));
-            createUserDialog.setCannotHide();
+//            createUserDialog.setCannotHide();
             createUserDialog.setOnItemViewClick2Listener((position, view, success) -> {
                 if (position == 0) {
                     createUserDialog.hideStandardDialog();
@@ -234,7 +234,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
         if (deletUserDialog == null) {
             deletUserDialog = new StandardDialog(this);
             deletUserDialog.setTevContent(getResources().getString(R.string.delete_user));
-            deletUserDialog.setCannotHide();
+//            deletUserDialog.setCannotHide();
             deletUserDialog.setOnItemViewClickListener((position2, view) -> {
                 if (position2 == 0) {
                     deletUserDialog.hideStandardDialog();
@@ -275,7 +275,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
         if (deleteAllUserDialog == null) {
             deleteAllUserDialog = new StandardDialog(this);
             deleteAllUserDialog.setTevContent(getResources().getString(R.string.delete_all_user));
-            deleteAllUserDialog.setCannotHide();
+//            deleteAllUserDialog.setCannotHide();
             deleteAllUserDialog.setOnItemViewClickListener((position, view) -> {
                 if (position == 0) {
                     deleteAllUserDialog.hideStandardDialog();

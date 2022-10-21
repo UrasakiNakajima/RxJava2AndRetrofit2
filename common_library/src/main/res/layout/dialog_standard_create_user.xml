@@ -23,7 +23,7 @@
             android:paddingEnd="20dp"
             android:text="@string/tips"
             android:textColor="@color/color_333333"
-            android:textSize="17sp"
+            android:textSize="15sp"
             tools:ignore="MissingConstraints" />
 
         <EditText
