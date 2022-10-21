@@ -54,9 +54,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class SingleLiveData<T> extends MutableLiveData<T> {
 
-
     private static final String TAG = SingleLiveData.class.getSimpleName();
-
     private final AtomicBoolean mPending = new AtomicBoolean(false);
 
     @MainThread

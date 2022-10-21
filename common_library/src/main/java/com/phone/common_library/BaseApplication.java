@@ -20,7 +20,7 @@ import com.phone.common_library.manager.RetrofitManager;
  */
 public class BaseApplication extends MultiDexApplication {
 
-    private static final String TAG = "BaseApplication";
+    private static final String TAG = BaseApplication.class.getSimpleName();
     //声明 初始化
     protected SharedPreferences sp;
     protected SharedPreferences.Editor editor;

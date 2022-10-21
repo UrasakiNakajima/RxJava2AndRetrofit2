@@ -16,6 +16,8 @@ import java.text.NumberFormat;
  */
 public class BigDecimalManager {
 
+    private static final String TAG = BigDecimalManager.class.getSimpleName();
+
     /**
      * double类型的加法运算（需要舍入，保留5位小数，小数位可自定义）
      * @param m1

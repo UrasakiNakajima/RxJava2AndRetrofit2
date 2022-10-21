@@ -16,6 +16,8 @@ import com.phone.common_library.custom_view.ColorUiInterface;
  */
 public class ViewAttributeManager {
 
+    private static final String TAG = ViewAttributeManager.class.getSimpleName();
+
     public static int getAttributeValue(AttributeSet attr, int paramInt) {
         int value = -1;
         int count = attr.getAttributeCount();
