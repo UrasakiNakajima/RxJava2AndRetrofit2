@@ -19,6 +19,7 @@ import com.phone.common_library.bean.UserCloneBean;
 import com.phone.common_library.bean.UserResponseListBean;
 import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.bean.UserListBean;
+import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.dialog.StandardCreateUserDialog;
 import com.phone.common_library.dialog.StandardDialog;
 import com.phone.common_library.manager.CopyPropertiesManager;
@@ -195,6 +196,18 @@ public class CreateUserActivity extends BaseRxAppActivity {
             createUserDialog = new StandardCreateUserDialog(this);
             createUserDialog.setTevTitle(getResources().getString(R.string.create_user));
 //            createUserDialog.setCannotHide();
+            createUserDialog.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<String>() {
+                @Override
+                public void onSuccess(String success) {
+                    createUserDialog.hideStandardDialog();
+                    createUserDialog = null;
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            });
             createUserDialog.setOnItemViewClick2Listener((position, view, success) -> {
                 if (position == 0) {
                     createUserDialog.hideStandardDialog();
@@ -235,6 +248,18 @@ public class CreateUserActivity extends BaseRxAppActivity {
             deletUserDialog = new StandardDialog(this);
             deletUserDialog.setTevContent(getResources().getString(R.string.delete_user));
 //            deletUserDialog.setCannotHide();
+            createUserDialog.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<String>() {
+                @Override
+                public void onSuccess(String success) {
+                    createUserDialog.hideStandardDialog();
+                    createUserDialog = null;
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            });
             deletUserDialog.setOnItemViewClickListener((position2, view) -> {
                 if (position2 == 0) {
                     deletUserDialog.hideStandardDialog();

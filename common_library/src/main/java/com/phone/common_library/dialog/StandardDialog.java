@@ -2,6 +2,7 @@ package com.phone.common_library.dialog;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.phone.common_library.R;
+import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.callback.OnItemViewClickListener;
 
 public class StandardDialog {
@@ -48,6 +50,12 @@ public class StandardDialog {
         });
         tevOk.setOnClickListener(v -> {
             onItemViewClickListener.onItemClickListener(1, v);
+        });
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                onCommonSingleParamCallback.onSuccess("");
+            }
         });
         alertDialog.show();
 
@@ -88,6 +96,12 @@ public class StandardDialog {
 
     public void setOnItemViewClickListener(OnItemViewClickListener onItemViewClickListener) {
         this.onItemViewClickListener = onItemViewClickListener;
+    }
+
+    private OnCommonSingleParamCallback<String> onCommonSingleParamCallback;
+
+    public void setOnCommonSingleParamCallback(OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+        this.onCommonSingleParamCallback = onCommonSingleParamCallback;
     }
 
 }

@@ -2,6 +2,7 @@ package com.phone.common_library.dialog;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.phone.common_library.R;
 import com.phone.common_library.bean.AddressBean;
 import com.phone.common_library.bean.UserBean;
+import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.callback.OnItemViewClick2Listener;
 
 import java.util.ArrayList;
@@ -98,6 +100,12 @@ public class StandardCreateUserDialog {
                 Toast.makeText(context, context.getResources().getString(R.string.please_fill_in_the_information_completely), Toast.LENGTH_SHORT).show();
             }
         });
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                onCommonSingleParamCallback.onSuccess("");
+            }
+        });
         alertDialog.show();
 
 
@@ -139,4 +147,11 @@ public class StandardCreateUserDialog {
     public void setOnItemViewClick2Listener(OnItemViewClick2Listener<UserBean> onItemViewClick2Listener) {
         this.onItemViewClick2Listener = onItemViewClick2Listener;
     }
+
+    private OnCommonSingleParamCallback<String> onCommonSingleParamCallback;
+
+    public void setOnCommonSingleParamCallback(OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
+        this.onCommonSingleParamCallback = onCommonSingleParamCallback;
+    }
+
 }
