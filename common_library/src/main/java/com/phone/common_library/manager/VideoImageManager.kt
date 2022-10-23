@@ -9,6 +9,7 @@ import java.io.File
 
 class VideoImageManager {
 
+
     companion object {
         fun getVideoImage(context: Context, url: String, isSD: Boolean): Bitmap? {
             var bitmap: Bitmap? = null
