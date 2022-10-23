@@ -263,7 +263,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         LogManager.i(
                 TAG,
                 "firstPageService.firstPageDataList******" + firstPageService.firstPageDataList.toString()
-        );
+        )
+        LogManager.i(TAG, "SquareFragment initLoadData")
 
 //        startAsyncTask()
 

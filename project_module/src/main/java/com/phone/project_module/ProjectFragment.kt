@@ -111,6 +111,8 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     override fun initLoadData() {
         LogManager.i(TAG, "initLoadData")
         mDatabind.refreshLayout.autoRefresh()
+
+        LogManager.i(TAG, "ProjectFragment initLoadData")
     }
 
     override fun showLoading() {

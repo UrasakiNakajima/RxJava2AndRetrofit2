@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.adapter.TabFragmentStatePagerAdapter
 import com.phone.common_library.base.BaseRxFragment
 import com.phone.common_library.custom_view.LazyViewPager
+import com.phone.common_library.manager.LogManager
 import com.phone.resource_module.fragment.AndroidAndJsFragment
 import com.phone.resource_module.fragment.ResourceChildFragment
 import kotlinx.android.synthetic.main.fragment_resource.*
@@ -461,6 +462,8 @@ class ResourceFragment : BaseRxFragment() {
         tev_ios.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FF999999))
         tev_h5.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FF999999))
 //        tev_app.setTextColor(ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FF999999))
+
+        LogManager.i(TAG, "ResourceFragment initLoadData")
     }
 
     override fun onDestroy() {

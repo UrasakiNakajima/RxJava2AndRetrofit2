@@ -130,6 +130,8 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
     override fun initLoadData() {
         refresh_layout.autoRefresh()
+
+        LogManager.i(TAG, "MineFragment initLoadData")
     }
 
     override fun attachPresenter(): MinePresenterImpl {

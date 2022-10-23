@@ -227,6 +227,8 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         LogManager.i(TAG,
                 "squareService.getSquareDataList()******" + squareService.getSquareDataList().toString());
 
+        LogManager.i(TAG, "FirstPageFragment initLoadData");
+
         //		startAsyncTask();
 
 //        try {
