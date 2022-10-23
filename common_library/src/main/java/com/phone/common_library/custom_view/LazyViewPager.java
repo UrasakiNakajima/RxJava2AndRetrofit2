@@ -68,7 +68,7 @@ public class LazyViewPager extends ViewGroup {
     private static final boolean DEBUG = false;
     private static final boolean USE_CACHE = false;
     //去掉预加载功能
-    private static final int DEFAULT_OFFSCREEN_PAGES = 0;//默认viewpager当前变量的值1
+    private static final int DEFAULT_OFFSCREEN_PAGES = 5;//默认viewpager当前变量的值1
     private static final int MAX_SETTLE_DURATION = 600; //
 
     static class ItemInfo {
