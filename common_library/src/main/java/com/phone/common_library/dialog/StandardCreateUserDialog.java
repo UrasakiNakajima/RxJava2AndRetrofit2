@@ -63,7 +63,7 @@ public class StandardCreateUserDialog {
         tevOk = (TextView) view.findViewById(R.id.tev_ok);
 
 
-        //设置R.style.dialog_decimal_style和setView(view, 0, 0, 0, 0)就可以去掉
+        //设置R.style.standard_dialog_style2就可以去掉
         //AlertDialog的默认边框，此时AlertDialog的layout的宽高就是AlertDialog的宽高
         alertDialog = new AlertDialog.Builder(context, R.style.standard_dialog_style2)
                 .setView(view)
