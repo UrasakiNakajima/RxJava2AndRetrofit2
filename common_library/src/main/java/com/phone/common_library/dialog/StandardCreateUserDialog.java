@@ -29,9 +29,9 @@ public class StandardCreateUserDialog {
 
     private AlertDialog alertDialog;
     private TextView tevTitle;
-    private EditText edtUserName;
     private EditText edtUserId;
-    private EditText edtDate;
+    private EditText edtPassword;
+    private EditText edtBirthday;
     private EditText edtAge;
     private EditText edtSalary;
     private View viewHorizontalLine;
@@ -39,12 +39,11 @@ public class StandardCreateUserDialog {
     private View viewVerticalLine;
     private TextView tevOk;
 
-    private String userName;
     private String userId;
-    private String date;
+    private String password;
+    private String birthday;
     private String age;
     private String salary;
-//    private String userName;
 //    private String userName;
 
 
@@ -52,9 +51,9 @@ public class StandardCreateUserDialog {
     public StandardCreateUserDialog(@NonNull Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_standard_create_user, null, false);
         tevTitle = (TextView) view.findViewById(R.id.tev_title);
-        edtUserName = (EditText) view.findViewById(R.id.edt_user_name);
         edtUserId = (EditText) view.findViewById(R.id.edt_user_id);
-        edtDate = (EditText) view.findViewById(R.id.edt_date);
+        edtPassword = (EditText) view.findViewById(R.id.edt_password);
+        edtBirthday = (EditText) view.findViewById(R.id.edt_birthday);
         edtAge = (EditText) view.findViewById(R.id.edt_age);
         edtSalary = (EditText) view.findViewById(R.id.edt_salary);
         viewHorizontalLine = (View) view.findViewById(R.id.view_horizontal_line);
@@ -72,21 +71,20 @@ public class StandardCreateUserDialog {
             onItemViewClick2Listener.onItemClickListener(0, v, null);
         });
         tevOk.setOnClickListener(v -> {
-            userName = edtUserName.getText().toString();
             userId = edtUserId.getText().toString();
-            date = edtDate.getText().toString();
+            password = edtPassword.getText().toString();
+            birthday = edtBirthday.getText().toString();
             age = edtAge.getText().toString();
             salary = edtSalary.getText().toString();
-            if (!TextUtils.isEmpty(userName)
-                    && !TextUtils.isEmpty(userId)
-                    && !TextUtils.isEmpty(date)
+            if (!TextUtils.isEmpty(userId)
+                    && !TextUtils.isEmpty(password)
+                    && !TextUtils.isEmpty(birthday)
                     && !TextUtils.isEmpty(age)
                     && !TextUtils.isEmpty(salary)) {
                 UserBean userBean = new UserBean();
                 userBean.setUserId(userId);
                 userBean.setAge(Integer.parseInt(age));
-                userBean.setUserName(userName);
-                userBean.setDate(date);
+                userBean.setBirthday(birthday);
                 userBean.setSalary(Double.parseDouble(salary));
 //                    Address address = new Address();
 //                    address.setCounty("北莱茵-威斯特法伦州");

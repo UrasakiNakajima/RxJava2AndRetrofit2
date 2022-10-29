@@ -17,6 +17,8 @@ public interface ILoginPresenter {
 
     void loginWithAuthCode(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams);
 
+    void login(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams);
+
     void register(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams);
 
 }

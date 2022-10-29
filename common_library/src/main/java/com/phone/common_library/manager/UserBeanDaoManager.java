@@ -1,7 +1,9 @@
 package com.phone.common_library.manager;
 
+import com.phone.common_library.BaseApplication;
 import com.phone.common_library.bean.UserBean;
-import com.phone.common_library.dao.DaoManager;
+import com.phone.common_library.greendao.DaoMaster;
+import com.phone.common_library.greendao.DaoSession;
 import com.phone.common_library.greendao.UserBeanDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -11,22 +13,15 @@ import java.util.List;
 public class UserBeanDaoManager {
 
     private static final String TAG = UserBeanDaoManager.class.getSimpleName();
-    private DaoManager daoManager;
-    private volatile static UserBeanDaoManager userBeanDaoManager;
+    private static final String DB_NAME = "user.db";
+    private DaoMaster.DevOpenHelper devOpenHelper;
+    private DaoMaster daoMaster;
+    private  DaoSession daoSession;
 
-    private UserBeanDaoManager() {
-        daoManager = DaoManager.getInstance();
-    }
-
-    public static UserBeanDaoManager getInstance() {
-        if (userBeanDaoManager == null) {
-            synchronized (UserBeanDaoManager.class) {
-                if (userBeanDaoManager == null) {
-                    userBeanDaoManager = new UserBeanDaoManager();
-                }
-            }
-        }
-        return userBeanDaoManager;
+    public UserBeanDaoManager() {
+        devOpenHelper = new DaoMaster.DevOpenHelper(BaseApplication.getInstance(), DB_NAME, null);
+        daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
+        daoSession = daoMaster.newSession();
     }
 
     /**
@@ -37,7 +32,7 @@ public class UserBeanDaoManager {
      */
     public boolean insert(UserBean userBean) {
         boolean flag = false;
-        flag = daoManager.getDaoSession().getUserBeanDao().insert(userBean) == -1 ? false : true;
+        flag = daoSession.getUserBeanDao().insert(userBean) == -1 ? false : true;
         LogManager.i(TAG, "insert User :" + flag + "-->" + userBean.toString());
         return flag;
     }
@@ -48,15 +43,8 @@ public class UserBeanDaoManager {
      * @param userBean
      * @return
      */
-    public boolean update(UserBean userBean) {
-        boolean flag = false;
-        try {
-            daoManager.getDaoSession().getUserBeanDao().update(userBean);
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return flag;
+    public void update(UserBean userBean) {
+        daoSession.getUserBeanDao().update(userBean);
     }
 
     /**
@@ -65,34 +53,19 @@ public class UserBeanDaoManager {
      * @param userBean
      * @return
      */
-    public boolean delete(UserBean userBean) {
-        boolean flag = false;
-        try {
-            //按照id删除
-            daoManager.getDaoSession().getUserBeanDao().delete(userBean);
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return flag;
+    public void delete(UserBean userBean) {
+        //按照id删除
+        daoSession.getUserBeanDao().delete(userBean);
     }
 
     /**
      * 删除多条记录
      *
-     * @param drawInventoryBeanList
-     * @return
+     * @param userBeanList
      */
-    public boolean deleteInTx(List<UserBean> drawInventoryBeanList) {
-        boolean flag = false;
-        try {
-            //按照id删除
-            daoManager.getDaoSession().getUserBeanDao().deleteInTx(drawInventoryBeanList);
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return flag;
+    public void deleteInTx(List<UserBean> userBeanList) {
+        //按照id删除
+        daoSession.getUserBeanDao().deleteInTx(userBeanList);
     }
 
     /**
@@ -100,16 +73,9 @@ public class UserBeanDaoManager {
      *
      * @return
      */
-    public boolean deleteAll() {
-        boolean flag = false;
-        try {
-            //按照id删除
-            daoManager.getDaoSession().deleteAll(UserBean.class);
-            flag = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return flag;
+    public void deleteAll() {
+        //按照id删除
+        daoSession.deleteAll(UserBean.class);
     }
 
     /**
@@ -118,7 +84,7 @@ public class UserBeanDaoManager {
      * @return
      */
     public List<UserBean> queryAll() {
-        return daoManager.getDaoSession().getUserBeanDao().loadAll();
+        return daoSession.getUserBeanDao().loadAll();
     }
 
     /**
@@ -128,14 +94,14 @@ public class UserBeanDaoManager {
      * @return
      */
     public UserBean queryById(long key) {
-        return daoManager.getDaoSession().getUserBeanDao().load(key);
+        return daoSession.getUserBeanDao().load(key);
     }
 
     /**
      * 使用native sql进行查询操作
      */
     public List<UserBean> queryByNativeSql(String sql, String[] conditions) {
-        return daoManager.getDaoSession().getUserBeanDao().queryRaw(sql, conditions);
+        return daoSession.getUserBeanDao().queryRaw(sql, conditions);
     }
 
     /**
@@ -144,8 +110,38 @@ public class UserBeanDaoManager {
      * @return
      */
     public List<UserBean> queryByQueryBuilder(String userId) {
-        QueryBuilder<UserBean> queryBuilder = daoManager.getDaoSession().getUserBeanDao().queryBuilder();
+        QueryBuilder<UserBean> queryBuilder = daoSession.getUserBeanDao().queryBuilder();
         return queryBuilder.where(UserBeanDao.Properties.UserId.eq(userId)).list();
+    }
+
+    /**
+     * 打开输出日志，默认关闭
+     */
+    public void setDebug() {
+        QueryBuilder.LOG_SQL = true;
+        QueryBuilder.LOG_VALUES = true;
+    }
+
+    /**
+     * 关闭所有的操作，数据库开启后，使用完毕要关闭
+     */
+    public void closeConnection() {
+        closeHelper();
+        closeDaoSession();
+    }
+
+    public void closeHelper() {
+        if (devOpenHelper != null) {
+            devOpenHelper.close();
+            devOpenHelper = null;
+        }
+    }
+
+    public void closeDaoSession() {
+        if (daoSession != null) {
+            daoSession.clear();
+            daoSession = null;
+        }
     }
 
 }

@@ -29,9 +29,9 @@ public class UserBeanDao extends AbstractDao<UserBean, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property UserId = new Property(1, String.class, "userId", false, "USER_ID");
-        public final static Property UserName = new Property(2, String.class, "userName", false, "USER_NAME");
-        public final static Property Date = new Property(3, String.class, "date", false, "DATE");
-        public final static Property Age = new Property(4, int.class, "age", false, "AGE");
+        public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
+        public final static Property Birthday = new Property(3, String.class, "birthday", false, "BIRTHDAY");
+        public final static Property Age = new Property(4, Integer.class, "age", false, "AGE");
         public final static Property Salary = new Property(5, Double.class, "salary", false, "SALARY");
         public final static Property AddressBeanList = new Property(6, String.class, "addressBeanList", false, "ADDRESS_BEAN_LIST");
     }
@@ -52,9 +52,9 @@ public class UserBeanDao extends AbstractDao<UserBean, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"USER_BEAN\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"USER_ID\" TEXT," + // 1: userId
-                "\"USER_NAME\" TEXT," + // 2: userName
-                "\"DATE\" TEXT," + // 3: date
-                "\"AGE\" INTEGER NOT NULL ," + // 4: age
+                "\"PASSWORD\" TEXT," + // 2: password
+                "\"BIRTHDAY\" TEXT," + // 3: birthday
+                "\"AGE\" INTEGER," + // 4: age
                 "\"SALARY\" REAL," + // 5: salary
                 "\"ADDRESS_BEAN_LIST\" TEXT);"); // 6: addressBeanList
     }
@@ -79,16 +79,20 @@ public class UserBeanDao extends AbstractDao<UserBean, Long> {
             stmt.bindString(2, userId);
         }
  
-        String userName = entity.getUserName();
-        if (userName != null) {
-            stmt.bindString(3, userName);
+        String password = entity.getPassword();
+        if (password != null) {
+            stmt.bindString(3, password);
         }
  
-        String date = entity.getDate();
-        if (date != null) {
-            stmt.bindString(4, date);
+        String birthday = entity.getBirthday();
+        if (birthday != null) {
+            stmt.bindString(4, birthday);
         }
-        stmt.bindLong(5, entity.getAge());
+ 
+        Integer age = entity.getAge();
+        if (age != null) {
+            stmt.bindLong(5, age);
+        }
  
         Double salary = entity.getSalary();
         if (salary != null) {
@@ -115,16 +119,20 @@ public class UserBeanDao extends AbstractDao<UserBean, Long> {
             stmt.bindString(2, userId);
         }
  
-        String userName = entity.getUserName();
-        if (userName != null) {
-            stmt.bindString(3, userName);
+        String password = entity.getPassword();
+        if (password != null) {
+            stmt.bindString(3, password);
         }
  
-        String date = entity.getDate();
-        if (date != null) {
-            stmt.bindString(4, date);
+        String birthday = entity.getBirthday();
+        if (birthday != null) {
+            stmt.bindString(4, birthday);
         }
-        stmt.bindLong(5, entity.getAge());
+ 
+        Integer age = entity.getAge();
+        if (age != null) {
+            stmt.bindLong(5, age);
+        }
  
         Double salary = entity.getSalary();
         if (salary != null) {
@@ -147,9 +155,9 @@ public class UserBeanDao extends AbstractDao<UserBean, Long> {
         UserBean entity = new UserBean( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // userId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // userName
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // date
-            cursor.getInt(offset + 4), // age
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // password
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // birthday
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // age
             cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5), // salary
             cursor.isNull(offset + 6) ? null : addressBeanListConverter.convertToEntityProperty(cursor.getString(offset + 6)) // addressBeanList
         );
@@ -160,9 +168,9 @@ public class UserBeanDao extends AbstractDao<UserBean, Long> {
     public void readEntity(Cursor cursor, UserBean entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setUserName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setDate(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setAge(cursor.getInt(offset + 4));
+        entity.setPassword(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setBirthday(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setAge(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
         entity.setSalary(cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5));
         entity.setAddressBeanList(cursor.isNull(offset + 6) ? null : addressBeanListConverter.convertToEntityProperty(cursor.getString(offset + 6)));
      }

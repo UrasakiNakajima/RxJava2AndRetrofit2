@@ -73,7 +73,7 @@ public class LaunchActivity extends BaseRxAppActivity {
         if (baseApplication.isLogin()) {
             startActivity(MainActivity.class);
         } else {
-            startActivity(MainActivity.class);
+            startActivity(LoginActivity.class);
         }
         finish();
     }

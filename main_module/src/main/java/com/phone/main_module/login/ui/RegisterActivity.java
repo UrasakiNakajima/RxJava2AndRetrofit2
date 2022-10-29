@@ -1,6 +1,7 @@
 package com.phone.main_module.login.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.main_module.R;
 import com.phone.main_module.login.presenter.LoginPresenterImpl;
@@ -23,7 +25,7 @@ public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPrese
     private Toolbar toolbar;
     private FrameLayout layoutBack;
     private ImageView imvBack;
-    private EditText edtUserName;
+    private EditText edtUserId;
     private EditText edtPassword;
     private EditText edtConfirmPassword;
     private TextView tevRegister;
@@ -47,7 +49,7 @@ public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPrese
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         layoutBack = (FrameLayout) findViewById(R.id.layout_back);
         imvBack = (ImageView) findViewById(R.id.imv_back);
-        edtUserName = (EditText) findViewById(R.id.edt_user_name);
+        edtUserId = (EditText) findViewById(R.id.edt_user_id);
         edtPassword = (EditText) findViewById(R.id.edt_password);
         edtConfirmPassword = (EditText) findViewById(R.id.edt_confirm_password);
         tevRegister = (TextView) findViewById(R.id.tev_register);
@@ -55,6 +57,7 @@ public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPrese
         addContentView(loadView, layoutParams);
         setToolbar(true, R.color.color_FFFFFFFF);
 
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_000000));
         layoutBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +74,7 @@ public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPrese
 
     @Override
     protected void initLoadData() {
-        edtUserName.setText("13510001000");
+        edtUserId.setText("13510001000");
         edtPassword.setText("12345678");
         edtConfirmPassword.setText("12345678");
     }
@@ -99,7 +102,7 @@ public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPrese
 
     @Override
     public void registerSuccess(String success) {
-
+        startActivity(LoginActivity.class);
     }
 
     @Override
@@ -109,14 +112,21 @@ public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPrese
 
     private void initRegister() {
         if (RetrofitManager.isNetworkAvailable(this)) {
-            bodyParams.clear();
-            bodyParams.put("username", edtUserName.getText().toString());
-            bodyParams.put("password", edtPassword.getText().toString());
-            bodyParams.put("repassword", edtConfirmPassword.getText().toString());
+            String password = edtPassword.getText().toString();
+            String confirmPassword = edtConfirmPassword.getText().toString();
+
+            if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(confirmPassword) && password.equals(confirmPassword)) {
+                bodyParams.clear();
+                bodyParams.put("userId", edtUserId.getText().toString());
+                bodyParams.put("password", edtPassword.getText().toString());
+                bodyParams.put("confirmPassword", edtConfirmPassword.getText().toString());
 //        String data = MapManager.mapToJsonStr(bodyParams);
 //        String requestData = JSONObject.toJSONString(bodyParams);
 //        LogManager.i(TAG, "requestData*****" + requestData);
-            presenter.register(this, bodyParams);
+                presenter.register(this, bodyParams);
+            } else {
+                showToast(getResources().getString(R.string.the_passwords_entered_twice_are_inconsistent), true);
+            }
         } else {
             showToast(getResources().getString(R.string.please_check_the_network_connection), true);
         }

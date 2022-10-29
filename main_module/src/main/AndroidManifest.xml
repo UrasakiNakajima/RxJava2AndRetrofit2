@@ -62,7 +62,8 @@
             android:screenOrientation="portrait" /> <!-- Launch页 -->
         <activity
             android:name=".login.ui.LaunchActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="IntentFilterExportedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

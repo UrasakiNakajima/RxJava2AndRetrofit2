@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.greendao.converter.PropertyConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddressBeanListConverter implements PropertyConverter<List<AddressBean>, String> {
@@ -13,7 +14,7 @@ public class AddressBeanListConverter implements PropertyConverter<List<AddressB
     @Override
     public List<AddressBean> convertToEntityProperty(String databaseValue) {
         if (databaseValue == null) {
-            return null;
+            return new ArrayList<>();
         }
 
 //        List<AddressBean> addressBeanList = JSONObject.parseArray(databaseValue, AddressBean.class);
@@ -29,7 +30,7 @@ public class AddressBeanListConverter implements PropertyConverter<List<AddressB
     @Override
     public String convertToDatabaseValue(List<AddressBean> arrays) {
         if (arrays == null || arrays.size() == 0) {
-            return null;
+            return "";
         } else {
 //            String str = JSONObject.toJSONString(arrays);
 //            return str;

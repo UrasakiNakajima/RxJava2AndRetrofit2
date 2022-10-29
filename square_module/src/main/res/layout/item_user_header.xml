@@ -32,26 +32,6 @@
                     tools:ignore="UselessParent">
 
                     <TextView
-                        android:id="@+id/tev_user_name"
-                        android:layout_width="0dp"
-                        android:layout_height="45dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:background="@color/color_FFFFC73B"
-                        android:gravity="center"
-                        android:includeFontPadding="false"
-                        android:paddingStart="@dimen/dp_10"
-                        android:paddingEnd="@dimen/dp_10"
-                        android:text="@string/user_name"
-                        android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/sp_14" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/color_FFFFFF" />
-
-                    <TextView
                         android:id="@+id/tev_user_id"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
@@ -72,7 +52,7 @@
                         android:background="@color/color_FFFFFF" />
 
                     <TextView
-                        android:id="@+id/tev_date"
+                        android:id="@+id/tev_birthday"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
@@ -82,7 +62,7 @@
                         android:includeFontPadding="false"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_10"
-                        android:text="@string/date"
+                        android:text="@string/birthday"
                         android:textColor="@color/color_FFFFFF"
                         android:textSize="@dimen/sp_14" />
 

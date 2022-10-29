@@ -1,13 +1,18 @@
 package com.phone.main_module.login.presenter;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSON;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.base.BasePresenter;
 import com.phone.common_library.base.BaseResponse;
 import com.phone.common_library.base.IBaseView;
+import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.RetrofitManager;
+import com.phone.common_library.manager.UserBeanDaoManager;
 import com.phone.main_module.R;
 import com.phone.main_module.login.bean.GetVerificationCode;
 import com.phone.main_module.login.bean.LoginResponse;
@@ -16,6 +21,7 @@ import com.phone.main_module.login.view.ILoginView;
 import com.phone.main_module.login.view.IRegisterView;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -178,41 +184,96 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
+    public void login(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
+        IBaseView baseView = obtainView();
+        if (baseView != null) {
+            if (baseView instanceof ILoginView) {
+                ILoginView loginView = (ILoginView) baseView;
+                loginView.showLoading();
+
+                String userId = bodyParams.get("userId");
+                String password = bodyParams.get("password");
+
+                UserBeanDaoManager userBeanDaoManager = new UserBeanDaoManager();
+                List<UserBean> userBeanList = userBeanDaoManager.queryByQueryBuilder(userId);
+                if (userBeanList != null && userBeanList.size() > 0) {
+                    UserBean userBean = userBeanList.get(0);
+                    if (userBean.getUserId().equals(userId)) {
+                        if (userBean.getPassword().equals(password)) {
+                            loginView.loginSuccess("");
+                        } else {
+                            loginView.loginError(ResourcesManager.getString(R.string.this_user_cannot_be_found));
+                        }
+                    } else {
+                        loginView.loginError(ResourcesManager.getString(R.string.this_user_cannot_be_found));
+                    }
+                } else {
+                    loginView.loginError(ResourcesManager.getString(R.string.this_user_cannot_be_found));
+                }
+                loginView.hideLoading();
+            }
+        }
+    }
+
+    @Override
     public void register(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IRegisterView) {
                 IRegisterView registerView = (IRegisterView) baseView;
                 registerView.showLoading();
-                RetrofitManager.getInstance()
-                        .responseStringRxAppActivityBindToLifecycle(rxAppCompatActivity, model.register(bodyParams), new OnCommonSingleParamCallback<String>() {
-                            @Override
-                            public void onSuccess(String success) {
-                                LogManager.i(TAG, "success*****" + success);
-                                BaseResponse baseResponse = JSON.parseObject(success, BaseResponse.class);
-                                if (baseResponse.getCode() == 200) {
-                                    //                                    LoginResponse loginResponse = JSON.parseObject(success, LoginResponse.class);
-                                    //                                    BaseApplication mineApplication = BaseApplication.getInstance();
-                                    //                                    mineApplication.setShopId(loginResponse.getData().getShopId() + "");
-                                    //                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
-                                    registerView.registerSuccess(success);
-                                } else {
-                                    registerView.registerError(BaseApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
-                                }
-                                registerView.hideLoading();
-                            }
+//                RetrofitManager.getInstance()
+//                        .responseStringRxAppActivityBindToLifecycle(rxAppCompatActivity, model.register(bodyParams), new OnCommonSingleParamCallback<String>() {
+//                            @Override
+//                            public void onSuccess(String success) {
+//                                LogManager.i(TAG, "success*****" + success);
+//                                BaseResponse baseResponse = JSON.parseObject(success, BaseResponse.class);
+//                                if (baseResponse.getCode() == 200) {
+//                                    //                                    LoginResponse loginResponse = JSON.parseObject(success, LoginResponse.class);
+//                                    //                                    BaseApplication mineApplication = BaseApplication.getInstance();
+//                                    //                                    mineApplication.setShopId(loginResponse.getData().getShopId() + "");
+//                                    //                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
+//                                    registerView.registerSuccess(success);
+//                                } else {
+//                                    registerView.registerError(BaseApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+//                                }
+//                                registerView.hideLoading();
+//                            }
+//
+//                            @Override
+//                            public void onError(String error) {
+//                                LogManager.i(TAG, "error*****" + error);
+//                                // 异常处理
+//                                registerView.registerError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+//                                registerView.hideLoading();
+//                            }
+//                        });
 
-                            @Override
-                            public void onError(String error) {
-                                LogManager.i(TAG, "error*****" + error);
-                                // 异常处理
-                                registerView.registerError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
-                                registerView.hideLoading();
-                            }
-                        });
-                //				compositeDisposable.add(disposable);
+
+                UserBeanDaoManager userBeanDaoManager = new UserBeanDaoManager();
+                String userId = bodyParams.get("userId");
+                String password = bodyParams.get("password");
+                if (!TextUtils.isEmpty(userId)) {
+                    if (!TextUtils.isEmpty(password)) {
+                        List<UserBean> userBeanList = userBeanDaoManager.queryByQueryBuilder(userId);
+                        if (userBeanList != null && userBeanList.size() > 0 && userId.equals(userBeanList.get(0).getUserId())) {
+                            registerView.registerError(ResourcesManager.getString(R.string.this_user_is_already_registered));
+                        } else {
+                            UserBean userBean = new UserBean();
+                            userBean.setUserId(userId);
+                            userBean.setPassword(password);
+                            userBeanDaoManager.insert(userBean);
+                            registerView.registerSuccess("");
+                        }
+                    } else {
+                        registerView.registerError(ResourcesManager.getString(R.string.please_input_a_password));
+                    }
+                } else {
+                    registerView.registerError(ResourcesManager.getString(R.string.please_enter_one_user_name));
+                }
+                userBeanDaoManager.closeConnection();
+                registerView.hideLoading();
             }
         }
     }
-
 }

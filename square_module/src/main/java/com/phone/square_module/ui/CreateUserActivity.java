@@ -25,6 +25,7 @@ import com.phone.common_library.dialog.StandardDialog;
 import com.phone.common_library.manager.CopyPropertiesManager;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.PictureManager;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.TextViewStyleManager;
 import com.phone.common_library.manager.UserBeanDaoManager;
 import com.phone.square_module.R;
@@ -47,13 +48,14 @@ public class CreateUserActivity extends BaseRxAppActivity {
     private TextView tevDeleteAllUser;
     private RecyclerView rcvUser;
 
-    private UserBeanDaoManager userBeanDaoManager = UserBeanDaoManager.getInstance();
+    private UserBeanDaoManager userBeanDaoManager;
     private LinearLayoutManager linearLayoutManager;
     private UserBeanAdapter userBeanAdapter;
 
     private StandardCreateUserDialog createUserDialog;//创建用户Dialog
     private StandardDialog deletUserDialog;//删除用户Dialog
     private StandardDialog deleteAllUserDialog;//删除全部用户Dialog
+    private List<UserBean> queryUserList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
 
     @Override
     protected void initData() {
-
+        userBeanDaoManager = new UserBeanDaoManager();
     }
 
     @Override
@@ -123,14 +125,14 @@ public class CreateUserActivity extends BaseRxAppActivity {
     }
 
     private void queryUserList() {
-        List<UserBean> queryList = userBeanDaoManager.queryAll();
-        if (queryList != null && queryList.size() > 0) {
+        queryUserList = userBeanDaoManager.queryAll();
+        if (queryUserList != null && queryUserList.size() > 0) {
             /**
              * 这里只是为了试一下拷贝对象属性（如果有这个属性才会拷贝，没有则无法拷贝）
              */
             UserCloneBean userCloneBean = new UserCloneBean();
             try {
-                CopyPropertiesManager.copyProperties(queryList.get(0), userCloneBean);
+                CopyPropertiesManager.copyProperties(queryUserList.get(0), userCloneBean);
                 String userCloneBeanJsonStr = JSONObject.toJSONString(userCloneBean);
                 LogManager.i(TAG, "userCloneBeanJsonStr******" + userCloneBeanJsonStr);
             } catch (Exception e) {
@@ -141,7 +143,7 @@ public class CreateUserActivity extends BaseRxAppActivity {
             UserListBean userListBean = new UserListBean();
             userListBean.setCode(200);
             userListBean.setMessage("success");
-            userListBean.setUserBeanList(queryList);
+            userListBean.setUserBeanList(queryUserList);
             String userListJsonStr = JSONObject.toJSONString(userListBean);
             LogManager.i(TAG, "userListJsonStr******" + userListJsonStr);
 
@@ -155,15 +157,15 @@ public class CreateUserActivity extends BaseRxAppActivity {
             LogManager.i(TAG, "userResponseListJsonStr******" + userResponseListJsonStr);
 
 
-            Collections.reverse(queryList);
+            Collections.reverse(queryUserList);
             userBeanAdapter.clearData();
-            userBeanAdapter.addAllData(queryList);
+            userBeanAdapter.addAllData(queryUserList);
             TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                     tevTitle, getResources().getString(R.string.created_b)
-                            + queryList.size()
+                            + queryUserList.size()
                             + getResources().getString(R.string.users_b),
                     getResources().getString(R.string.created_b).length(),
-                    getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
+                    getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
                     28);
 
             Timer timer = new Timer();
@@ -183,10 +185,10 @@ public class CreateUserActivity extends BaseRxAppActivity {
         } else {
             TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                     tevTitle, getResources().getString(R.string.created_b)
-                            + queryList.size()
+                            + queryUserList.size()
                             + getResources().getString(R.string.users_b),
                     getResources().getString(R.string.created_b).length(),
-                    getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
+                    getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
                     28);
         }
     }
@@ -215,27 +217,36 @@ public class CreateUserActivity extends BaseRxAppActivity {
                 } else {
                     createUserDialog.hideStandardDialog();
                     createUserDialog = null;
-                    userBeanDaoManager.insert(success);
-                    List<UserBean> queryList = userBeanDaoManager.queryAll();
-                    if (queryList != null && queryList.size() > 0) {
-                        Collections.reverse(queryList);
+
+                    List<UserBean> userBeanList = userBeanDaoManager.queryByQueryBuilder(success.getUserId());
+                    if (userBeanList != null && userBeanList.size() > 0 && userBeanList.get(0).getUserId().equals(success.getUserId())) {
+                        success.setId(userBeanList.get(0).getId());
+                        userBeanDaoManager.update(success);
+//                            showToast(ResourcesManager.getString(R.string.this_user_has_been_added), true);
+                        return;
+                    } else {
+                        userBeanDaoManager.insert(success);
+                    }
+                    queryUserList = userBeanDaoManager.queryByQueryBuilder(success.getUserId());
+                    if (queryUserList != null && queryUserList.size() > 0) {
+                        Collections.reverse(queryUserList);
                         userBeanAdapter.clearData();
-                        userBeanAdapter.addAllData(queryList);
+                        userBeanAdapter.addAllData(queryUserList);
                         TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
-                                        + queryList.size()
+                                        + queryUserList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
                                 28);
                     } else {
                         userBeanAdapter.clearData();
                         TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
-                                        + queryList.size()
+                                        + queryUserList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
                                 28);
                     }
                 }
@@ -269,26 +280,26 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     deletUserDialog = null;
 
                     userBeanDaoManager.delete(userBeanAdapter.getUserBeanList().get(position));
-                    List<UserBean> queryList = userBeanDaoManager.queryAll();
-                    if (queryList != null && queryList.size() > 0) {
-                        Collections.reverse(queryList);
+                    queryUserList = userBeanDaoManager.queryAll();
+                    if (queryUserList != null && queryUserList.size() > 0) {
+                        Collections.reverse(queryUserList);
                         userBeanAdapter.clearData();
-                        userBeanAdapter.addAllData(queryList);
+                        userBeanAdapter.addAllData(queryUserList);
                         TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
-                                        + queryList.size()
+                                        + queryUserList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
                                 28);
                     } else {
                         userBeanAdapter.clearData();
                         TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
-                                        + queryList.size()
+                                        + queryUserList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
                                 28);
                     }
                 }
@@ -321,28 +332,28 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     deleteAllUserDialog.hideStandardDialog();
                     deleteAllUserDialog = null;
 
-                    List<UserBean> queryList = userBeanDaoManager.queryAll();
-                    userBeanDaoManager.deleteInTx(queryList);
+                    queryUserList = userBeanDaoManager.queryAll();
+                    userBeanDaoManager.deleteInTx(queryUserList);
                     List<UserBean> queryNewList = userBeanDaoManager.queryAll();
                     if (queryNewList != null && queryNewList.size() > 0) {
-                        Collections.reverse(queryList);
+                        Collections.reverse(queryUserList);
                         userBeanAdapter.clearData();
-                        userBeanAdapter.addAllData(queryList);
+                        userBeanAdapter.addAllData(queryUserList);
                         TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
-                                        + queryList.size()
+                                        + queryUserList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
                                 28);
                     } else {
                         userBeanAdapter.clearData();
                         TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                 tevTitle, getResources().getString(R.string.created_b)
-                                        + queryList.size()
+                                        + queryUserList.size()
                                         + getResources().getString(R.string.users_b),
                                 getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryList.size()).length() + 1,
+                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
                                 28);
                     }
                 }
@@ -350,4 +361,9 @@ public class CreateUserActivity extends BaseRxAppActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        userBeanDaoManager.closeConnection();
+        super.onDestroy();
+    }
 }

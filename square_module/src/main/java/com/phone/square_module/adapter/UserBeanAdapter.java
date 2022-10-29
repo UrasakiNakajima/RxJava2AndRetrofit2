@@ -1,6 +1,7 @@
 package com.phone.square_module.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.callback.OnItemViewClickListener;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.square_module.R;
 
 import java.util.ArrayList;
@@ -72,39 +74,86 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof HeaderHolder) {
             HeaderHolder headerHolder = (HeaderHolder) holder;
 
-            headerHolder.tevUserName.setText(userBeanList.get(position).getUserName());
-            headerHolder.tevUserId.setText(userBeanList.get(position).getUserId());
-            headerHolder.tevDate.setText(userBeanList.get(position).getDate());
-            headerHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
-            headerHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
-                    + context.getResources().getString(R.string.chinese_colon)
-                    + userBeanList.get(position).getAddressBeanList().get(0).getCity());
+
+            if (!TextUtils.isEmpty(userBeanList.get(position).getUserId())) {
+                headerHolder.tevUserId.setText(userBeanList.get(position).getUserId());
+            } else {
+                headerHolder.tevUserId.setText(ResourcesManager.getString(R.string.empty_string));
+            }
+            if (!TextUtils.isEmpty(userBeanList.get(position).getBirthday())) {
+                headerHolder.tevBirthday.setText(userBeanList.get(position).getBirthday());
+            } else {
+                headerHolder.tevBirthday.setText(ResourcesManager.getString(R.string.empty_string));
+            }
+            if (userBeanList.get(position).getSalary() != null) {
+                headerHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
+            } else {
+                headerHolder.tevSalary.setText(ResourcesManager.getString(R.string.empty_string));
+            }
+            if (userBeanList.get(position).getAddressBeanList() != null && userBeanList.get(position).getAddressBeanList().size() > 0) {
+                headerHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
+                        + ResourcesManager.getString(R.string.chinese_colon)
+                        + userBeanList.get(position).getAddressBeanList().get(0).getCity());
+            } else {
+                headerHolder.tevAddress.setText(ResourcesManager.getString(R.string.empty_string));
+            }
             headerHolder.tevDelete.setOnClickListener(v -> {
                 onItemViewClickListener.onItemClickListener(position, v);
             });
         } else if (holder instanceof FooterHolder) {
             FooterHolder footerHolder = (FooterHolder) holder;
 
-            footerHolder.tevUserName.setText(userBeanList.get(position).getUserName());
-            footerHolder.tevUserId.setText(userBeanList.get(position).getUserId());
-            footerHolder.tevDate.setText(userBeanList.get(position).getDate());
-            footerHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
-            footerHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
-                    + context.getResources().getString(R.string.chinese_colon)
-                    + userBeanList.get(position).getAddressBeanList().get(0).getCity());
+            if (!TextUtils.isEmpty(userBeanList.get(position).getUserId())) {
+                footerHolder.tevUserId.setText(userBeanList.get(position).getUserId());
+            } else {
+                footerHolder.tevUserId.setText(ResourcesManager.getString(R.string.empty_string));
+            }
+            if (!TextUtils.isEmpty(userBeanList.get(position).getBirthday())) {
+                footerHolder.tevBirthday.setText(userBeanList.get(position).getBirthday());
+            } else {
+                footerHolder.tevBirthday.setText(ResourcesManager.getString(R.string.empty_string));
+            }
+            if (userBeanList.get(position).getSalary() != null) {
+                footerHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
+            } else {
+                footerHolder.tevSalary.setText(ResourcesManager.getString(R.string.empty_string));
+            }
+            if (userBeanList.get(position).getAddressBeanList() != null && userBeanList.get(position).getAddressBeanList().size() > 0) {
+                footerHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
+                        + ResourcesManager.getString(R.string.chinese_colon)
+                        + userBeanList.get(position).getAddressBeanList().get(0).getCity());
+            } else {
+                footerHolder.tevAddress.setText(ResourcesManager.getString(R.string.empty_string));
+            }
             footerHolder.tevDelete.setOnClickListener(v -> {
                 onItemViewClickListener.onItemClickListener(position, v);
             });
         } else {
             BodyHolder bodyHolder = (BodyHolder) holder;
 
-            bodyHolder.tevUserName.setText(userBeanList.get(position).getUserName());
-            bodyHolder.tevUserId.setText(userBeanList.get(position).getUserId());
-            bodyHolder.tevDate.setText(userBeanList.get(position).getDate());
-            bodyHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
-            bodyHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
-                    + context.getResources().getString(R.string.chinese_colon)
-                    + userBeanList.get(position).getAddressBeanList().get(0).getCity());
+
+            if (!TextUtils.isEmpty(userBeanList.get(position).getUserId())) {
+                bodyHolder.tevUserId.setText(userBeanList.get(position).getUserId());
+            } else {
+                bodyHolder.tevUserId.setText(ResourcesManager.getString(R.string.empty_string));
+            }
+            if (!TextUtils.isEmpty(userBeanList.get(position).getBirthday())) {
+                bodyHolder.tevBirthday.setText(userBeanList.get(position).getBirthday());
+            } else {
+                bodyHolder.tevBirthday.setText(ResourcesManager.getString(R.string.empty_string));
+            }
+            if (userBeanList.get(position).getSalary() != null) {
+                bodyHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
+            } else {
+                bodyHolder.tevSalary.setText(ResourcesManager.getString(R.string.empty_string));
+            }
+            if (userBeanList.get(position).getAddressBeanList() != null && userBeanList.get(position).getAddressBeanList().size() > 0) {
+                bodyHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
+                        + ResourcesManager.getString(R.string.chinese_colon)
+                        + userBeanList.get(position).getAddressBeanList().get(0).getCity());
+            } else {
+                bodyHolder.tevAddress.setText(ResourcesManager.getString(R.string.empty_string));
+            }
             bodyHolder.tevDelete.setOnClickListener(v -> {
                 onItemViewClickListener.onItemClickListener(position, v);
             });
@@ -129,9 +178,8 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private static class HeaderHolder extends RecyclerView.ViewHolder {
 
-        private TextView tevUserName;
         private TextView tevUserId;
-        private TextView tevDate;
+        private TextView tevBirthday;
         private TextView tevSalary;
         private TextView tevAddress;
         private TextView tevDelete;
@@ -139,9 +187,8 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public HeaderHolder(@NonNull View itemView) {
             super(itemView);
 
-            tevUserName = (TextView) itemView.findViewById(R.id.tev_user_name);
             tevUserId = (TextView) itemView.findViewById(R.id.tev_user_id);
-            tevDate = (TextView) itemView.findViewById(R.id.tev_date);
+            tevBirthday = (TextView) itemView.findViewById(R.id.tev_birthday);
             tevSalary = (TextView) itemView.findViewById(R.id.tev_salary);
             tevAddress = (TextView) itemView.findViewById(R.id.tev_address);
             tevDelete = (TextView) itemView.findViewById(R.id.tev_delete);
@@ -150,9 +197,8 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private static class BodyHolder extends RecyclerView.ViewHolder {
 
-        private TextView tevUserName;
         private TextView tevUserId;
-        private TextView tevDate;
+        private TextView tevBirthday;
         private TextView tevSalary;
         private TextView tevAddress;
         private TextView tevDelete;
@@ -160,9 +206,8 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public BodyHolder(@NonNull View itemView) {
             super(itemView);
 
-            tevUserName = (TextView) itemView.findViewById(R.id.tev_user_name);
             tevUserId = (TextView) itemView.findViewById(R.id.tev_user_id);
-            tevDate = (TextView) itemView.findViewById(R.id.tev_date);
+            tevBirthday = (TextView) itemView.findViewById(R.id.tev_birthday);
             tevSalary = (TextView) itemView.findViewById(R.id.tev_salary);
             tevAddress = (TextView) itemView.findViewById(R.id.tev_address);
             tevDelete = (TextView) itemView.findViewById(R.id.tev_delete);
@@ -171,9 +216,8 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private static class FooterHolder extends RecyclerView.ViewHolder {
 
-        private TextView tevUserName;
         private TextView tevUserId;
-        private TextView tevDate;
+        private TextView tevBirthday;
         private TextView tevSalary;
         private TextView tevAddress;
         private TextView tevDelete;
@@ -181,9 +225,8 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public FooterHolder(@NonNull View itemView) {
             super(itemView);
 
-            tevUserName = (TextView) itemView.findViewById(R.id.tev_user_name);
             tevUserId = (TextView) itemView.findViewById(R.id.tev_user_id);
-            tevDate = (TextView) itemView.findViewById(R.id.tev_date);
+            tevBirthday = (TextView) itemView.findViewById(R.id.tev_birthday);
             tevSalary = (TextView) itemView.findViewById(R.id.tev_salary);
             tevAddress = (TextView) itemView.findViewById(R.id.tev_address);
             tevDelete = (TextView) itemView.findViewById(R.id.tev_delete);

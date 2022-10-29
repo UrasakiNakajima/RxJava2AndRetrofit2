@@ -15,20 +15,20 @@ public class UserBean implements Cloneable {
     @Id(autoincrement = true)
     private Long id;
     private String userId;
-    private String userName;
-    private String date;
-    private int age;
+    private String password;
+    private String birthday;
+    private Integer age;
     private Double salary;
     @Convert(columnType = String.class, converter = AddressBeanListConverter.class)
     private List<AddressBean> addressBeanList = new ArrayList<>();
 
-    @Generated(hash = 1728701886)
-    public UserBean(Long id, String userId, String userName, String date, int age,
-                    Double salary, List<AddressBean> addressBeanList) {
+    @Generated(hash = 703739529)
+    public UserBean(Long id, String userId, String password, String birthday,
+                    Integer age, Double salary, List<AddressBean> addressBeanList) {
         this.id = id;
         this.userId = userId;
-        this.userName = userName;
-        this.date = date;
+        this.password = password;
+        this.birthday = birthday;
         this.age = age;
         this.salary = salary;
         this.addressBeanList = addressBeanList;
@@ -54,27 +54,27 @@ public class UserBean implements Cloneable {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return this.userName;
+    public String getPassword() {
+        return this.password;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getDate() {
-        return this.date;
+    public String getBirthday() {
+        return this.birthday;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return this.age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

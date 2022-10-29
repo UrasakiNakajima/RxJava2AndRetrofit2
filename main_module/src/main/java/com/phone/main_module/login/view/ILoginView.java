@@ -13,5 +13,9 @@ public interface ILoginView extends IBaseView {
 	void loginWithAuthCodeSuccess(LoginResponse.DataDTO success);
 	
 	void loginWithAuthCodeError(String error);
-	
+
+	void loginSuccess(String success);
+
+	void loginError(String error);
+
 }
