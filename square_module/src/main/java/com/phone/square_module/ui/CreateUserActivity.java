@@ -221,13 +221,13 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     List<UserBean> userBeanList = userBeanDaoManager.queryByQueryBuilder(success.getUserId());
                     if (userBeanList != null && userBeanList.size() > 0 && userBeanList.get(0).getUserId().equals(success.getUserId())) {
                         success.setId(userBeanList.get(0).getId());
+                        success.setPassword(userBeanList.get(0).getPassword());
                         userBeanDaoManager.update(success);
-//                            showToast(ResourcesManager.getString(R.string.this_user_has_been_added), true);
-                        return;
+                        showToast(ResourcesManager.getString(R.string.this_user_has_modified), true);
                     } else {
                         userBeanDaoManager.insert(success);
                     }
-                    queryUserList = userBeanDaoManager.queryByQueryBuilder(success.getUserId());
+                    queryUserList = userBeanDaoManager.queryAll();
                     if (queryUserList != null && queryUserList.size() > 0) {
                         Collections.reverse(queryUserList);
                         userBeanAdapter.clearData();

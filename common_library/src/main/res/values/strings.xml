@@ -22,7 +22,7 @@
     <string name="data_in_wrong_format">數據格式錯誤</string>
     <string name="request_was_aborted">请求失败</string>
     <string name="login">登錄</string>
-    <string name="sign_out">退出登錄</string>
+    <string name="logout">退出登錄</string>
     <string name="network_sneak_off">網絡開小差了</string>
     <string name="server_sneak_off">服務器開小差了</string>
     <string name="the_passwords_entered_twice_are_inconsistent">两次输入密码不一致</string>
@@ -125,6 +125,7 @@
     <string name="confirm_en">confirm</string>
     <string name="start_input_en">start input</string>
     <string name="this_user_has_been_added">此用户已添加</string>
+    <string name="this_user_has_modified">此用户已修改</string>
 
     <string name="android_edit_text_limits_the_input_of_integers_and_decimals_and_the_total_number_length_is_less_than_or_equal_to_eleven_digits_customizable_five_digits_of_integers_customizable_and_five_digits_of_decimals_customizable">Android EditText限制只能输入整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）</string>
 

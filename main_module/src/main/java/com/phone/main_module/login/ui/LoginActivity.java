@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.manager.ActivityPageManager;
@@ -60,6 +61,7 @@ public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresente
     @Override
     protected void initData() {
         ActivityPageManager.getInstance().finishAllActivityExcept(LoginActivity.class);
+        ARouter.getInstance().inject(this);
     }
 
     @Override
@@ -160,6 +162,7 @@ public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresente
 
     @Override
     public void loginSuccess(String success) {
+        baseApplication.setLogin(true);
         startActivity(MainActivity.class);
         finish();
     }

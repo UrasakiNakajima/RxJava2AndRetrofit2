@@ -199,10 +199,10 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                 if (userBeanList != null && userBeanList.size() > 0) {
                     UserBean userBean = userBeanList.get(0);
                     if (userBean.getUserId().equals(userId)) {
-                        if (userBean.getPassword().equals(password)) {
+                        if (password.equals(userBean.getPassword())) {
                             loginView.loginSuccess("");
                         } else {
-                            loginView.loginError(ResourcesManager.getString(R.string.this_user_cannot_be_found));
+                            loginView.loginError(ResourcesManager.getString(R.string.please_enter_the_correct_password));
                         }
                     } else {
                         loginView.loginError(ResourcesManager.getString(R.string.this_user_cannot_be_found));

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.common_library.base.BaseMvpRxFragment
 import com.phone.common_library.base.IBaseView
 import com.phone.common_library.callback.OnItemViewClickListener
@@ -74,6 +75,10 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                 startActivity(UserDataActivity::class.java)
             }
         })
+        tev_logout.setOnClickListener {
+            baseApplication.isLogin = false
+            ARouter.getInstance().build("/main_module/login").navigation()
+        }
         tev_thread_pool.setOnClickListener {
             startActivity(ThreadPoolActivity::class.java)
         }
