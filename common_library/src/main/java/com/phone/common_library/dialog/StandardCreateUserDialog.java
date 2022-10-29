@@ -83,6 +83,7 @@ public class StandardCreateUserDialog {
                     && !TextUtils.isEmpty(salary)) {
                 UserBean userBean = new UserBean();
                 userBean.setUserId(userId);
+                userBean.setPassword(password);
                 userBean.setAge(Integer.parseInt(age));
                 userBean.setBirthday(birthday);
                 userBean.setSalary(Double.parseDouble(salary));
