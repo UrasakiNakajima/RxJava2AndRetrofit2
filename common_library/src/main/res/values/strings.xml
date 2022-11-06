@@ -106,18 +106,24 @@
     <string name="user_b">&#8197;用户</string>
     <string name="delete_user">删除用户</string>
     <string name="delete_all_user">删除全部用户</string>
-
     <string name="delete">删除</string>
+    <string name="update">修改</string>
 
     <string name="ok">确定</string>
     <string name="tips">提示</string>
     <string name="user_id">用户ID</string>
+    <string name="user_id_b">用户ID：</string>
     <string name="date">日期</string>
+    <string name="date_b">日期：</string>
     <string name="birthday">生日</string>
+    <string name="birthday_b">生日：</string>
     <string name="chinese_colon">：</string>
     <string name="age">年龄</string>
+    <string name="age_b">年龄：</string>
     <string name="salary">薪资</string>
+    <string name="salary_b">薪资：</string>
     <string name="address">地址</string>
+    <string name="address_b">地址：</string>
     <string name="empty_string">""</string>
     <string name="please_fill_in_the_information_completely">请把信息填写完整</string>
     <string name="decimal_en">Decimal</string>
@@ -126,7 +132,6 @@
     <string name="start_input_en">start input</string>
     <string name="this_user_has_been_added">此用户已添加</string>
     <string name="this_user_has_modified">此用户已修改</string>
-
     <string name="android_edit_text_limits_the_input_of_integers_and_decimals_and_the_total_number_length_is_less_than_or_equal_to_eleven_digits_customizable_five_digits_of_integers_customizable_and_five_digits_of_decimals_customizable">Android EditText限制只能输入整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）</string>
 
 

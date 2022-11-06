@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -16,7 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.bean.UserBean;
-import com.phone.common_library.dialog.StandardCreateUserDialog;
+import com.phone.common_library.dialog.StandardUserDialog;
 import com.phone.common_library.dialog.StandardDialog;
 import com.phone.common_library.manager.MainThreadManager;
 import com.phone.common_library.manager.ResourcesManager;
@@ -47,7 +46,8 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
     private LinearLayoutManager linearLayoutManager;
     private UserBeanAdapter userBeanAdapter;
 
-    private StandardCreateUserDialog createUserDialog;//创建用户Dialog
+    private StandardUserDialog createUserDialog;//创建用户Dialog
+    private StandardUserDialog updateUserDialog;//修改用户Dialog
     private StandardDialog deleteUserDialog;//删除用户Dialog
     private StandardDialog deleteAllUserDialog;//删除全部用户Dialog
     private List<UserBean> queryUserList;
@@ -107,7 +107,9 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
 //                    showDeleteUserDialog(position);
 //                    break;
 //            }
-            if (view.getId() == R.id.tev_delete) {
+            if (view.getId() == R.id.tev_update) {
+                showUpdateUserDialog(position);
+            } else if (view.getId() == R.id.tev_delete) {
                 showDeleteUserDialog(position);
             }
         });
@@ -196,7 +198,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
 
     private void showCreateUserDialog() {
         if (createUserDialog == null) {
-            createUserDialog = new StandardCreateUserDialog(this);
+            createUserDialog = new StandardUserDialog(this);
             createUserDialog.setTevTitle(getResources().getString(R.string.create_user));
 //            createUserDialog.setCannotHide();
             createUserDialog.setOnCommonSuccessCallback(() -> {
@@ -212,6 +214,71 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                 if (position != 0) {
                     List<UserBean> userBeanList = userBeanDaoManager.queryByQueryBuilder(success.getUserId());
                     if (userBeanList != null && userBeanList.size() > 0 && userBeanList.get(0).getUserId().equals(success.getUserId())) {
+                        showToast(ResourcesManager.getString(R.string.this_user_has_been_added), true);
+                    } else {
+                        ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+//                            List<UserBean> userBeanAddList = new ArrayList<>();
+//                            for (int i = 0; i < 20000; i++) {
+                            String jsonStr = JSONObject.toJSONString(success);
+                            UserBean userBean = JSONObject.parseObject(jsonStr, UserBean.class);
+//                                userBeanAddList.add(userBean);
+//                            }
+//                            userBeanDaoManager.insertInTx(userBeanAddList);
+                            userBeanDaoManager.insert(userBean);
+                        });
+                    }
+
+                    ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                        queryUserList = userBeanDaoManager.queryAll();
+                        new MainThreadManager(() -> {
+                            if (queryUserList != null && queryUserList.size() > 0) {
+                                Collections.reverse(queryUserList);
+                                userBeanAdapter.clearData();
+                                userBeanAdapter.addAllData(queryUserList);
+                                TextViewStyleManager.setTextViewStyleVerticalCenter(this,
+                                        tevTitle, getResources().getString(R.string.created_b)
+                                                + queryUserList.size()
+                                                + getResources().getString(R.string.users_b),
+                                        getResources().getString(R.string.created_b).length(),
+                                        getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
+                                        28);
+                            } else {
+                                userBeanAdapter.clearData();
+                                TextViewStyleManager.setTextViewStyleVerticalCenter(this,
+                                        tevTitle, getResources().getString(R.string.created_b)
+                                                + 0
+                                                + getResources().getString(R.string.users_b),
+                                        getResources().getString(R.string.created_b).length(),
+                                        getResources().getString(R.string.created_b).length() + 2,
+                                        28);
+                            }
+                            hideLoading();
+                        }).subThreadToUIThread();
+                    });
+                }
+            });
+        }
+    }
+
+    private void showUpdateUserDialog(int position) {
+        if (updateUserDialog == null) {
+            updateUserDialog = new StandardUserDialog(this);
+            updateUserDialog.setTevTitle(getResources().getString(R.string.create_user));
+            updateUserDialog.setUserData(queryUserList.get(position));
+//            updateUserDialog.setCannotHide();
+            updateUserDialog.setOnCommonSuccessCallback(() -> {
+                updateUserDialog.hideStandardDialog();
+                updateUserDialog = null;
+            });
+            updateUserDialog.setOnItemViewClick2Listener((position2, view, success) -> {
+                updateUserDialog.hideStandardDialog();
+                updateUserDialog = null;
+
+
+                showLoading();
+                if (position2 != 0) {
+                    List<UserBean> userBeanList = userBeanDaoManager.queryByQueryBuilder(success.getUserId());
+                    if (userBeanList != null && userBeanList.size() > 0 && userBeanList.get(0).getUserId().equals(success.getUserId())) {
                         success.setId(userBeanList.get(0).getId());
                         ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
                             userBeanDaoManager.update(success);
@@ -220,15 +287,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                                     .subThreadToUIThread();
                         });
                     } else {
-                        ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
-                            List<UserBean> userBeanAddList = new ArrayList<>();
-                            for (int i = 0; i < 20000; i++) {
-                                String jsonStr = JSONObject.toJSONString(success);
-                                UserBean userBean = JSONObject.parseObject(jsonStr, UserBean.class);
-                                userBeanAddList.add(userBean);
-                            }
-                            userBeanDaoManager.insertInTx(userBeanAddList);
-                        });
+                        showToast(ResourcesManager.getString(R.string.this_user_cannot_be_found), true);
                     }
 
                     ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {

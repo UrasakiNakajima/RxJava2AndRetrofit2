@@ -3,6 +3,7 @@ package com.phone.common_library.dialog;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,7 +28,7 @@ import com.phone.common_library.manager.ResourcesManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StandardCreateUserDialog {
+public class StandardUserDialog {
 
     private AlertDialog alertDialog;
     private TextView tevTitle;
@@ -46,11 +47,10 @@ public class StandardCreateUserDialog {
     private String birthday;
     private String age;
     private String salary;
-//    private String userName;
 
 
     @SuppressLint("RestrictedApi")
-    public StandardCreateUserDialog(@NonNull Context context) {
+    public StandardUserDialog(@NonNull Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_standard_create_user, null, false);
         tevTitle = (TextView) view.findViewById(R.id.tev_title);
         edtUserId = (EditText) view.findViewById(R.id.edt_user_id);
@@ -63,7 +63,7 @@ public class StandardCreateUserDialog {
         viewVerticalLine = (View) view.findViewById(R.id.view_vertical_line);
         tevOk = (TextView) view.findViewById(R.id.tev_ok);
 
-
+        edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         //设置R.style.standard_dialog_style2就可以去掉
         //AlertDialog的默认边框，此时AlertDialog的layout的宽高就是AlertDialog的宽高
         alertDialog = new AlertDialog.Builder(context, R.style.standard_dialog_style)
@@ -134,6 +134,24 @@ public class StandardCreateUserDialog {
     public void setTevCancelHide() {
         viewVerticalLine.setVisibility(View.GONE);
         tevCancel.setVisibility(View.GONE);
+    }
+
+    public void setUserData(UserBean userBean) {
+        if (!TextUtils.isEmpty(userBean.getUserId())) {
+            edtUserId.setText(userBean.getUserId());
+        }
+        if (!TextUtils.isEmpty(userBean.getPassword())) {
+            edtPassword.setText(userBean.getPassword());
+        }
+        if (!TextUtils.isEmpty(userBean.getBirthday())) {
+            edtBirthday.setText(userBean.getBirthday());
+        }
+        if (userBean.getAge() != null) {
+            edtAge.setText(String.valueOf(userBean.getAge()));
+        }
+        if (userBean.getSalary() != null) {
+            edtSalary.setText(String.valueOf(userBean.getSalary()));
+        }
     }
 
     public void setCannotHide() {

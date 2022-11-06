@@ -74,29 +74,30 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof HeaderHolder) {
             HeaderHolder headerHolder = (HeaderHolder) holder;
 
-
             if (!TextUtils.isEmpty(userBeanList.get(position).getUserId())) {
-                headerHolder.tevUserId.setText(userBeanList.get(position).getUserId());
+                headerHolder.tevUserId.setText(ResourcesManager.getString(R.string.user_id_b) + userBeanList.get(position).getUserId());
             } else {
-                headerHolder.tevUserId.setText(ResourcesManager.getString(R.string.empty_string));
+                headerHolder.tevUserId.setText(ResourcesManager.getString(R.string.user_id_b));
             }
             if (!TextUtils.isEmpty(userBeanList.get(position).getBirthday())) {
-                headerHolder.tevBirthday.setText(userBeanList.get(position).getBirthday());
+                headerHolder.tevBirthday.setText(ResourcesManager.getString(R.string.birthday_b) + userBeanList.get(position).getBirthday());
             } else {
-                headerHolder.tevBirthday.setText(ResourcesManager.getString(R.string.empty_string));
+                headerHolder.tevBirthday.setText(ResourcesManager.getString(R.string.birthday_b));
             }
             if (userBeanList.get(position).getSalary() != null) {
-                headerHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
+                headerHolder.tevSalary.setText(ResourcesManager.getString(R.string.salary_b) + userBeanList.get(position).getSalary());
             } else {
-                headerHolder.tevSalary.setText(ResourcesManager.getString(R.string.empty_string));
+                headerHolder.tevSalary.setText(ResourcesManager.getString(R.string.salary_b));
             }
             if (userBeanList.get(position).getAddressBeanList() != null && userBeanList.get(position).getAddressBeanList().size() > 0) {
-                headerHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
-                        + ResourcesManager.getString(R.string.chinese_colon)
+                headerHolder.tevAddress.setText(ResourcesManager.getString(R.string.address_b)
                         + userBeanList.get(position).getAddressBeanList().get(0).getCity());
             } else {
-                headerHolder.tevAddress.setText(ResourcesManager.getString(R.string.empty_string));
+                headerHolder.tevAddress.setText(ResourcesManager.getString(R.string.address_b));
             }
+            headerHolder.tevUpdate.setOnClickListener(v -> {
+                onItemViewClickListener.onItemClickListener(position, v);
+            });
             headerHolder.tevDelete.setOnClickListener(v -> {
                 onItemViewClickListener.onItemClickListener(position, v);
             });
@@ -104,56 +105,59 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             FooterHolder footerHolder = (FooterHolder) holder;
 
             if (!TextUtils.isEmpty(userBeanList.get(position).getUserId())) {
-                footerHolder.tevUserId.setText(userBeanList.get(position).getUserId());
+                footerHolder.tevUserId.setText(ResourcesManager.getString(R.string.user_id_b) + userBeanList.get(position).getUserId());
             } else {
-                footerHolder.tevUserId.setText(ResourcesManager.getString(R.string.empty_string));
+                footerHolder.tevUserId.setText(ResourcesManager.getString(R.string.user_id_b));
             }
             if (!TextUtils.isEmpty(userBeanList.get(position).getBirthday())) {
-                footerHolder.tevBirthday.setText(userBeanList.get(position).getBirthday());
+                footerHolder.tevBirthday.setText(ResourcesManager.getString(R.string.birthday_b) + userBeanList.get(position).getBirthday());
             } else {
-                footerHolder.tevBirthday.setText(ResourcesManager.getString(R.string.empty_string));
+                footerHolder.tevBirthday.setText(ResourcesManager.getString(R.string.birthday_b));
             }
             if (userBeanList.get(position).getSalary() != null) {
-                footerHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
+                footerHolder.tevSalary.setText(ResourcesManager.getString(R.string.salary_b) + userBeanList.get(position).getSalary());
             } else {
-                footerHolder.tevSalary.setText(ResourcesManager.getString(R.string.empty_string));
+                footerHolder.tevSalary.setText(ResourcesManager.getString(R.string.salary_b));
             }
             if (userBeanList.get(position).getAddressBeanList() != null && userBeanList.get(position).getAddressBeanList().size() > 0) {
-                footerHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
-                        + ResourcesManager.getString(R.string.chinese_colon)
+                footerHolder.tevAddress.setText(ResourcesManager.getString(R.string.address_b)
                         + userBeanList.get(position).getAddressBeanList().get(0).getCity());
             } else {
-                footerHolder.tevAddress.setText(ResourcesManager.getString(R.string.empty_string));
+                footerHolder.tevAddress.setText(ResourcesManager.getString(R.string.address_b));
             }
+            footerHolder.tevUpdate.setOnClickListener(v -> {
+                onItemViewClickListener.onItemClickListener(position, v);
+            });
             footerHolder.tevDelete.setOnClickListener(v -> {
                 onItemViewClickListener.onItemClickListener(position, v);
             });
         } else {
             BodyHolder bodyHolder = (BodyHolder) holder;
 
-
             if (!TextUtils.isEmpty(userBeanList.get(position).getUserId())) {
-                bodyHolder.tevUserId.setText(userBeanList.get(position).getUserId());
+                bodyHolder.tevUserId.setText(ResourcesManager.getString(R.string.user_id_b) + userBeanList.get(position).getUserId());
             } else {
-                bodyHolder.tevUserId.setText(ResourcesManager.getString(R.string.empty_string));
+                bodyHolder.tevUserId.setText(ResourcesManager.getString(R.string.user_id_b));
             }
             if (!TextUtils.isEmpty(userBeanList.get(position).getBirthday())) {
-                bodyHolder.tevBirthday.setText(userBeanList.get(position).getBirthday());
+                bodyHolder.tevBirthday.setText(ResourcesManager.getString(R.string.birthday_b) + userBeanList.get(position).getBirthday());
             } else {
-                bodyHolder.tevBirthday.setText(ResourcesManager.getString(R.string.empty_string));
+                bodyHolder.tevBirthday.setText(ResourcesManager.getString(R.string.birthday_b));
             }
             if (userBeanList.get(position).getSalary() != null) {
-                bodyHolder.tevSalary.setText(String.valueOf(userBeanList.get(position).getSalary()));
+                bodyHolder.tevSalary.setText(ResourcesManager.getString(R.string.salary_b) + userBeanList.get(position).getSalary());
             } else {
-                bodyHolder.tevSalary.setText(ResourcesManager.getString(R.string.empty_string));
+                bodyHolder.tevSalary.setText(ResourcesManager.getString(R.string.salary_b));
             }
             if (userBeanList.get(position).getAddressBeanList() != null && userBeanList.get(position).getAddressBeanList().size() > 0) {
-                bodyHolder.tevAddress.setText(userBeanList.get(position).getAddressBeanList().get(0).getCounty()
-                        + ResourcesManager.getString(R.string.chinese_colon)
+                bodyHolder.tevAddress.setText(ResourcesManager.getString(R.string.address_b)
                         + userBeanList.get(position).getAddressBeanList().get(0).getCity());
             } else {
-                bodyHolder.tevAddress.setText(ResourcesManager.getString(R.string.empty_string));
+                bodyHolder.tevAddress.setText(ResourcesManager.getString(R.string.address_b));
             }
+            bodyHolder.tevUpdate.setOnClickListener(v -> {
+                onItemViewClickListener.onItemClickListener(position, v);
+            });
             bodyHolder.tevDelete.setOnClickListener(v -> {
                 onItemViewClickListener.onItemClickListener(position, v);
             });
@@ -180,6 +184,7 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         private TextView tevUserId;
         private TextView tevBirthday;
+        private TextView tevUpdate;
         private TextView tevSalary;
         private TextView tevAddress;
         private TextView tevDelete;
@@ -189,6 +194,7 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             tevUserId = (TextView) itemView.findViewById(R.id.tev_user_id);
             tevBirthday = (TextView) itemView.findViewById(R.id.tev_birthday);
+            tevUpdate = (TextView) itemView.findViewById(R.id.tev_update);
             tevSalary = (TextView) itemView.findViewById(R.id.tev_salary);
             tevAddress = (TextView) itemView.findViewById(R.id.tev_address);
             tevDelete = (TextView) itemView.findViewById(R.id.tev_delete);
@@ -199,6 +205,7 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         private TextView tevUserId;
         private TextView tevBirthday;
+        private TextView tevUpdate;
         private TextView tevSalary;
         private TextView tevAddress;
         private TextView tevDelete;
@@ -208,6 +215,7 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             tevUserId = (TextView) itemView.findViewById(R.id.tev_user_id);
             tevBirthday = (TextView) itemView.findViewById(R.id.tev_birthday);
+            tevUpdate = (TextView) itemView.findViewById(R.id.tev_update);
             tevSalary = (TextView) itemView.findViewById(R.id.tev_salary);
             tevAddress = (TextView) itemView.findViewById(R.id.tev_address);
             tevDelete = (TextView) itemView.findViewById(R.id.tev_delete);
@@ -218,6 +226,7 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         private TextView tevUserId;
         private TextView tevBirthday;
+        private TextView tevUpdate;
         private TextView tevSalary;
         private TextView tevAddress;
         private TextView tevDelete;
@@ -227,6 +236,7 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             tevUserId = (TextView) itemView.findViewById(R.id.tev_user_id);
             tevBirthday = (TextView) itemView.findViewById(R.id.tev_birthday);
+            tevUpdate = (TextView) itemView.findViewById(R.id.tev_update);
             tevSalary = (TextView) itemView.findViewById(R.id.tev_salary);
             tevAddress = (TextView) itemView.findViewById(R.id.tev_address);
             tevDelete = (TextView) itemView.findViewById(R.id.tev_delete);
