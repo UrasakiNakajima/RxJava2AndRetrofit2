@@ -9,7 +9,7 @@ package com.phone.common_library.callback;
  */
 
 
-public interface OnSubThreadToMainThreadCallback {
+public interface OnCommonSuccessCallback {
 
     void onSuccess();
 }

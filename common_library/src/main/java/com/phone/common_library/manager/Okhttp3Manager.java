@@ -13,7 +13,7 @@ import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
 import com.phone.common_library.base.BaseResponse;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
-import com.phone.common_library.callback.OnSubThreadToMainThreadCallback;
+import com.phone.common_library.callback.OnCommonSuccessCallback;
 import com.phone.common_library.interceptor.AddAccessTokenInterceptor;
 import com.phone.common_library.interceptor.ReceivedAccessTokenInterceptor;
 
@@ -112,7 +112,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "getAsync onFailure e*******" + e.toString());
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -126,7 +126,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
                 LogManager.i(TAG, "getAsync onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {
@@ -177,7 +177,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "getAsync onFailure e*******" + e.toString());
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -191,7 +191,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
                 LogManager.i(TAG, "getAsync onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {
@@ -245,7 +245,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "getAsync onFailure e*******" + e.toString());
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -259,7 +259,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
                 LogManager.i(TAG, "getAsync onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {
@@ -358,7 +358,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncString onFailure e*******" + e.toString());
                 LogManager.i(TAG, "postAsyncString onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -372,7 +372,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
                 LogManager.i(TAG, "postAsyncString onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {
@@ -431,7 +431,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncStream onFailure e*******" + e.toString());
                 LogManager.i(TAG, "postAsyncStream onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -445,7 +445,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
                 LogManager.i(TAG, "postAsyncStream onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {
@@ -509,7 +509,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncKeyValuePairs onFailure e*******" + e.toString());
                 LogManager.i(TAG, "postAsyncKeyValuePairs onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -531,7 +531,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
                 LogManager.i(TAG, "postAsyncKeyValuePairs onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {
@@ -574,7 +574,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncKeyValuePairs onFailure e*******" + e.toString());
                 LogManager.i(TAG, "postAsyncKeyValuePairs onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -596,7 +596,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
                 LogManager.i(TAG, "postAsyncKeyValuePairs onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {
@@ -660,7 +660,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncForm onFailure e*******" + e.toString());
                 LogManager.i(TAG, "postAsyncForm onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -679,7 +679,7 @@ public class Okhttp3Manager {
 //                    responseString = AESManager.aesDecrypt(dataEncrypt);
                 LogManager.i(TAG, "postAsyncForm onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {
@@ -760,7 +760,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncFormAndFiles onFailure e*******" + e.toString());
                 LogManager.i(TAG, "postAsyncFormAndFiles onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -774,7 +774,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
                 LogManager.i(TAG, "postAsyncFormAndFiles onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {
@@ -867,7 +867,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncFormAndFiles onFailure e*******" + e.toString());
                 LogManager.i(TAG, "postAsyncFormAndFiles onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -881,7 +881,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
                 LogManager.i(TAG, "postAsyncFormAndFiles onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {
@@ -956,7 +956,7 @@ public class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncFormAndFiles onFailure e*******" + e.toString());
                 LogManager.i(TAG, "postAsyncFormAndFiles onFailure e detailMessage*******" + e.getMessage());
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         onCommonSingleParamCallback.onError(BaseApplication.getInstance().getResources().getString(R.string.network_sneak_off));
@@ -970,7 +970,7 @@ public class Okhttp3Manager {
                 String responseString = response.body().string();
                 LogManager.i(TAG, "postAsyncFormAndFiles onResponse responseString*****" + responseString);
                 MainThreadManager mainThreadManager = new MainThreadManager();
-                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
+                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnCommonSuccessCallback() {
                     @Override
                     public void onSuccess() {
                         if (!TextUtils.isEmpty(responseString)) {

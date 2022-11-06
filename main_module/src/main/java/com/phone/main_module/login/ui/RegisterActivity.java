@@ -54,7 +54,6 @@ public class RegisterActivity extends BaseMvpRxAppActivity<IBaseView, LoginPrese
         edtConfirmPassword = (EditText) findViewById(R.id.edt_confirm_password);
         tevRegister = (TextView) findViewById(R.id.tev_register);
 
-        addContentView(loadView, layoutParams);
         setToolbar(true, R.color.color_FFFFFFFF);
 
         imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_000000));

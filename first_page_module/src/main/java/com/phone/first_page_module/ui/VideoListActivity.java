@@ -83,7 +83,6 @@ public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
         rcvData = (RecyclerView) findViewById(R.id.rcv_data);
 
         setToolbar(false, R.color.color_FFE066FF);
-        addContentView(loadView, layoutParams);
         imvBack.setColorFilter(getResources().getColor(R.color.color_FFFFFFFF));
 
         layoutBack.setOnClickListener(new View.OnClickListener() {

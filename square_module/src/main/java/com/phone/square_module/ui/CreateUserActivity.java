@@ -1,7 +1,6 @@
 package com.phone.square_module.ui;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,28 +14,23 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.phone.common_library.base.BaseRxAppActivity;
-import com.phone.common_library.bean.UserCloneBean;
-import com.phone.common_library.bean.UserResponseListBean;
+import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.bean.UserBean;
-import com.phone.common_library.bean.UserListBean;
-import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.dialog.StandardCreateUserDialog;
 import com.phone.common_library.dialog.StandardDialog;
-import com.phone.common_library.manager.CopyPropertiesManager;
-import com.phone.common_library.manager.LogManager;
-import com.phone.common_library.manager.PictureManager;
+import com.phone.common_library.manager.MainThreadManager;
 import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.TextViewStyleManager;
+import com.phone.common_library.manager.ThreadPoolManager;
 import com.phone.common_library.manager.UserBeanDaoManager;
 import com.phone.square_module.R;
 import com.phone.square_module.adapter.UserBeanAdapter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class CreateUserActivity extends BaseRxAppActivity {
+public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
 
     private static final String TAG = CreateUserActivity.class.getSimpleName();
     private LinearLayout layoutRoot;
@@ -44,16 +38,17 @@ public class CreateUserActivity extends BaseRxAppActivity {
     private FrameLayout layoutBack;
     private ImageView imvBack;
     private TextView tevTitle;
+    private RecyclerView rcvUser;
     private TextView tevCreateUser;
     private TextView tevDeleteAllUser;
-    private RecyclerView rcvUser;
+
 
     private UserBeanDaoManager userBeanDaoManager;
     private LinearLayoutManager linearLayoutManager;
     private UserBeanAdapter userBeanAdapter;
 
     private StandardCreateUserDialog createUserDialog;//创建用户Dialog
-    private StandardDialog deletUserDialog;//删除用户Dialog
+    private StandardDialog deleteUserDialog;//删除用户Dialog
     private StandardDialog deleteAllUserDialog;//删除全部用户Dialog
     private List<UserBean> queryUserList;
 
@@ -79,12 +74,12 @@ public class CreateUserActivity extends BaseRxAppActivity {
         layoutBack = (FrameLayout) findViewById(R.id.layout_back);
         imvBack = (ImageView) findViewById(R.id.imv_back);
         tevTitle = (TextView) findViewById(R.id.tev_title);
+        rcvUser = (RecyclerView) findViewById(R.id.rcv_user);
         tevCreateUser = (TextView) findViewById(R.id.tev_create_user);
         tevDeleteAllUser = (TextView) findViewById(R.id.tev_delete_all_user);
-        rcvUser = (RecyclerView) findViewById(R.id.rcv_user);
 
         setToolbar(false, R.color.color_FF198CFF);
-        imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
 
         layoutBack.setOnClickListener(v -> {
             finish();
@@ -125,72 +120,78 @@ public class CreateUserActivity extends BaseRxAppActivity {
     }
 
     private void queryUserList() {
-        queryUserList = userBeanDaoManager.queryAll();
-        if (queryUserList != null && queryUserList.size() > 0) {
-            /**
-             * 这里只是为了试一下拷贝对象属性（如果有这个属性才会拷贝，没有则无法拷贝）
-             */
-            UserCloneBean userCloneBean = new UserCloneBean();
-            try {
-                CopyPropertiesManager.copyProperties(queryUserList.get(0), userCloneBean);
-                String userCloneBeanJsonStr = JSONObject.toJSONString(userCloneBean);
-                LogManager.i(TAG, "userCloneBeanJsonStr******" + userCloneBeanJsonStr);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        showLoading();
+        ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+            queryUserList = userBeanDaoManager.queryAll();
+
+            new MainThreadManager(() -> {
+                if (queryUserList != null && queryUserList.size() > 0) {
+//            /**
+//             * 这里只是为了试一下拷贝对象属性（如果有这个属性才会拷贝，没有则无法拷贝）
+//             */
+//            UserCloneBean userCloneBean = new UserCloneBean();
+//            try {
+//                CopyPropertiesManager.copyProperties(queryUserList.get(0), userCloneBean);
+//                String userCloneBeanJsonStr = JSONObject.toJSONString(userCloneBean);
+//                LogManager.i(TAG, "userCloneBeanJsonStr******" + userCloneBeanJsonStr);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 
 
-            UserListBean userListBean = new UserListBean();
-            userListBean.setCode(200);
-            userListBean.setMessage("success");
-            userListBean.setUserBeanList(queryUserList);
-            String userListJsonStr = JSONObject.toJSONString(userListBean);
-            LogManager.i(TAG, "userListJsonStr******" + userListJsonStr);
+//            UserListBean userListBean = new UserListBean();
+//            userListBean.setCode(200);
+//            userListBean.setMessage("success");
+//            userListBean.setUserBeanList(queryUserList);
+//            String userListJsonStr = JSONObject.toJSONString(userListBean);
+//            LogManager.i(TAG, "userListJsonStr******" + userListJsonStr);
 
-            /**
-             * 这里只是为了试一下UserListBean类中的UserBean类生成的json字符串的Double类型的字段salary，解析后变成UserResponse的String类型的字段salary
-             * 会不会报错（实际上不会报错，java的8种基本类型的字段都可以解析成String类型，只是这样做不规范）
-             */
-            UserResponseListBean userResponseListBean = JSONObject.parseObject(userListJsonStr, UserResponseListBean.class);
-            LogManager.i(TAG, "userResponseListBean******" + userResponseListBean.toString());
-            String userResponseListJsonStr = JSONObject.toJSONString(userResponseListBean);
-            LogManager.i(TAG, "userResponseListJsonStr******" + userResponseListJsonStr);
+//            /**
+//             * 这里只是为了试一下UserListBean类中的UserBean类生成的json字符串的Double类型的字段salary，解析后变成UserResponse的String类型的字段salary
+//             * 会不会报错（实际上不会报错，java的8种基本类型的字段都可以解析成String类型，只是这样做不规范）
+//             */
+//            UserResponseListBean userResponseListBean = JSONObject.parseObject(userListJsonStr, UserResponseListBean.class);
+//            LogManager.i(TAG, "userResponseListBean******" + userResponseListBean.toString());
+//            String userResponseListJsonStr = JSONObject.toJSONString(userResponseListBean);
+//            LogManager.i(TAG, "userResponseListJsonStr******" + userResponseListJsonStr);
 
+                    Collections.reverse(queryUserList);
+                    userBeanAdapter.clearData();
+                    userBeanAdapter.addAllData(queryUserList);
+                    TextViewStyleManager.setTextViewStyleVerticalCenter(this,
+                            tevTitle, getResources().getString(R.string.created_b)
+                                    + queryUserList.size()
+                                    + getResources().getString(R.string.users_b),
+                            getResources().getString(R.string.created_b).length(),
+                            getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
+                            28);
 
-            Collections.reverse(queryUserList);
-            userBeanAdapter.clearData();
-            userBeanAdapter.addAllData(queryUserList);
-            TextViewStyleManager.setTextViewStyleVerticalCenter(this,
-                    tevTitle, getResources().getString(R.string.created_b)
-                            + queryUserList.size()
-                            + getResources().getString(R.string.users_b),
-                    getResources().getString(R.string.created_b).length(),
-                    getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
-                    28);
-
-            Timer timer = new Timer();
-            TimerTask timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Bitmap bitmap = PictureManager.getCacheBitmapFromView(CreateUserActivity.this, layoutRoot);
-                            PictureManager.saveImageToPath(CreateUserActivity.this, bitmap, "create_user");
-                        }
-                    });
+//            Timer timer = new Timer();
+//            TimerTask timerTask = new TimerTask() {
+//                @Override
+//                public void run() {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Bitmap bitmap = PictureManager.getCacheBitmapFromView(CreateUserActivity.this, layoutRoot);
+//                            PictureManager.saveImageToPath(CreateUserActivity.this, bitmap, "create_user");
+//                        }
+//                    });
+//                }
+//            };
+//            timer.schedule(timerTask, 2000);
+                } else {
+                    TextViewStyleManager.setTextViewStyleVerticalCenter(this,
+                            tevTitle, getResources().getString(R.string.created_b)
+                                    + 0
+                                    + getResources().getString(R.string.users_b),
+                            getResources().getString(R.string.created_b).length(),
+                            getResources().getString(R.string.created_b).length() + 2,
+                            28);
                 }
-            };
-            timer.schedule(timerTask, 2000);
-        } else {
-            TextViewStyleManager.setTextViewStyleVerticalCenter(this,
-                    tevTitle, getResources().getString(R.string.created_b)
-                            + queryUserList.size()
-                            + getResources().getString(R.string.users_b),
-                    getResources().getString(R.string.created_b).length(),
-                    getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
-                    28);
-        }
+                hideLoading();
+            }).subThreadToUIThread();
+        });
     }
 
     private void showCreateUserDialog() {
@@ -198,109 +199,117 @@ public class CreateUserActivity extends BaseRxAppActivity {
             createUserDialog = new StandardCreateUserDialog(this);
             createUserDialog.setTevTitle(getResources().getString(R.string.create_user));
 //            createUserDialog.setCannotHide();
-            createUserDialog.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<String>() {
-                @Override
-                public void onSuccess(String success) {
-                    createUserDialog.hideStandardDialog();
-                    createUserDialog = null;
-                }
-
-                @Override
-                public void onError(String error) {
-
-                }
+            createUserDialog.setOnCommonSuccessCallback(() -> {
+                createUserDialog.hideStandardDialog();
+                createUserDialog = null;
             });
             createUserDialog.setOnItemViewClick2Listener((position, view, success) -> {
-                if (position == 0) {
-                    createUserDialog.hideStandardDialog();
-                    createUserDialog = null;
-                } else {
-                    createUserDialog.hideStandardDialog();
-                    createUserDialog = null;
+                createUserDialog.hideStandardDialog();
+                createUserDialog = null;
 
+
+                showLoading();
+                if (position != 0) {
                     List<UserBean> userBeanList = userBeanDaoManager.queryByQueryBuilder(success.getUserId());
                     if (userBeanList != null && userBeanList.size() > 0 && userBeanList.get(0).getUserId().equals(success.getUserId())) {
                         success.setId(userBeanList.get(0).getId());
-                        userBeanDaoManager.update(success);
-                        showToast(ResourcesManager.getString(R.string.this_user_has_modified), true);
+                        ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                            userBeanDaoManager.update(success);
+                            new MainThreadManager(() ->
+                                    showToast(ResourcesManager.getString(R.string.this_user_has_modified), true))
+                                    .subThreadToUIThread();
+                        });
                     } else {
-                        userBeanDaoManager.insert(success);
+                        ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                            List<UserBean> userBeanAddList = new ArrayList<>();
+                            for (int i = 0; i < 20000; i++) {
+                                String jsonStr = JSONObject.toJSONString(success);
+                                UserBean userBean = JSONObject.parseObject(jsonStr, UserBean.class);
+                                userBeanAddList.add(userBean);
+                            }
+                            userBeanDaoManager.insertInTx(userBeanAddList);
+                        });
                     }
-                    queryUserList = userBeanDaoManager.queryAll();
-                    if (queryUserList != null && queryUserList.size() > 0) {
-                        Collections.reverse(queryUserList);
-                        userBeanAdapter.clearData();
-                        userBeanAdapter.addAllData(queryUserList);
-                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
-                                tevTitle, getResources().getString(R.string.created_b)
-                                        + queryUserList.size()
-                                        + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
-                                28);
-                    } else {
-                        userBeanAdapter.clearData();
-                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
-                                tevTitle, getResources().getString(R.string.created_b)
-                                        + queryUserList.size()
-                                        + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
-                                28);
-                    }
+
+                    ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                        queryUserList = userBeanDaoManager.queryAll();
+                        new MainThreadManager(() -> {
+                            if (queryUserList != null && queryUserList.size() > 0) {
+                                Collections.reverse(queryUserList);
+                                userBeanAdapter.clearData();
+                                userBeanAdapter.addAllData(queryUserList);
+                                TextViewStyleManager.setTextViewStyleVerticalCenter(this,
+                                        tevTitle, getResources().getString(R.string.created_b)
+                                                + queryUserList.size()
+                                                + getResources().getString(R.string.users_b),
+                                        getResources().getString(R.string.created_b).length(),
+                                        getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
+                                        28);
+                            } else {
+                                userBeanAdapter.clearData();
+                                TextViewStyleManager.setTextViewStyleVerticalCenter(this,
+                                        tevTitle, getResources().getString(R.string.created_b)
+                                                + 0
+                                                + getResources().getString(R.string.users_b),
+                                        getResources().getString(R.string.created_b).length(),
+                                        getResources().getString(R.string.created_b).length() + 2,
+                                        28);
+                            }
+                            hideLoading();
+                        }).subThreadToUIThread();
+                    });
                 }
             });
         }
     }
 
     private void showDeleteUserDialog(int position) {
-        if (deletUserDialog == null) {
-            deletUserDialog = new StandardDialog(this);
-            deletUserDialog.setTevContent(getResources().getString(R.string.delete_user));
-//            deletUserDialog.setCannotHide();
-            deletUserDialog.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<String>() {
-                @Override
-                public void onSuccess(String success) {
-                    deletUserDialog.hideStandardDialog();
-                    deletUserDialog = null;
-                }
-
-                @Override
-                public void onError(String error) {
-
-                }
+        if (deleteUserDialog == null) {
+            deleteUserDialog = new StandardDialog(this);
+            deleteUserDialog.setTevContent(getResources().getString(R.string.delete_user));
+//            deleteUserDialog.setCannotHide();
+            deleteUserDialog.setOnCommonSuccessCallback(() -> {
+                deleteUserDialog.hideStandardDialog();
+                deleteUserDialog = null;
             });
-            deletUserDialog.setOnItemViewClickListener((position2, view) -> {
+            deleteUserDialog.setOnItemViewClickListener((position2, view) -> {
                 if (position2 == 0) {
-                    deletUserDialog.hideStandardDialog();
-                    deletUserDialog = null;
+                    deleteUserDialog.hideStandardDialog();
+                    deleteUserDialog = null;
                 } else {
-                    deletUserDialog.hideStandardDialog();
-                    deletUserDialog = null;
+                    deleteUserDialog.hideStandardDialog();
+                    deleteUserDialog = null;
 
-                    userBeanDaoManager.delete(userBeanAdapter.getUserBeanList().get(position));
-                    queryUserList = userBeanDaoManager.queryAll();
-                    if (queryUserList != null && queryUserList.size() > 0) {
-                        Collections.reverse(queryUserList);
-                        userBeanAdapter.clearData();
-                        userBeanAdapter.addAllData(queryUserList);
-                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
-                                tevTitle, getResources().getString(R.string.created_b)
-                                        + queryUserList.size()
-                                        + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
-                                28);
-                    } else {
-                        userBeanAdapter.clearData();
-                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
-                                tevTitle, getResources().getString(R.string.created_b)
-                                        + queryUserList.size()
-                                        + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
-                                28);
-                    }
+                    showLoading();
+                    ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                        userBeanDaoManager.delete(userBeanAdapter.getUserBeanList().get(position));
+                        queryUserList = userBeanDaoManager.queryAll();
+
+                        new MainThreadManager(() -> {
+                            if (queryUserList != null && queryUserList.size() > 0) {
+                                Collections.reverse(queryUserList);
+                                userBeanAdapter.clearData();
+                                userBeanAdapter.addAllData(queryUserList);
+                                TextViewStyleManager.setTextViewStyleVerticalCenter(this,
+                                        tevTitle, getResources().getString(R.string.created_b)
+                                                + queryUserList.size()
+                                                + getResources().getString(R.string.users_b),
+                                        getResources().getString(R.string.created_b).length(),
+                                        getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
+                                        28);
+                            } else {
+                                userBeanAdapter.clearData();
+                                TextViewStyleManager.setTextViewStyleVerticalCenter(this,
+                                        tevTitle, getResources().getString(R.string.created_b)
+                                                + 0
+                                                + getResources().getString(R.string.users_b),
+                                        getResources().getString(R.string.created_b).length(),
+                                        getResources().getString(R.string.created_b).length() + 2,
+                                        28);
+                            }
+                            hideLoading();
+                        });
+                    });
                 }
             });
         }
@@ -311,17 +320,9 @@ public class CreateUserActivity extends BaseRxAppActivity {
             deleteAllUserDialog = new StandardDialog(this);
             deleteAllUserDialog.setTevContent(getResources().getString(R.string.delete_all_user));
 //            deleteAllUserDialog.setCannotHide();
-            deleteAllUserDialog.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<String>() {
-                @Override
-                public void onSuccess(String success) {
-                    deleteAllUserDialog.hideStandardDialog();
-                    deleteAllUserDialog = null;
-                }
-
-                @Override
-                public void onError(String error) {
-
-                }
+            deleteAllUserDialog.setOnCommonSuccessCallback(() -> {
+                deleteAllUserDialog.hideStandardDialog();
+                deleteAllUserDialog = null;
             });
             deleteAllUserDialog.setOnItemViewClickListener((position, view) -> {
                 if (position == 0) {
@@ -331,30 +332,38 @@ public class CreateUserActivity extends BaseRxAppActivity {
                     deleteAllUserDialog.hideStandardDialog();
                     deleteAllUserDialog = null;
 
-                    queryUserList = userBeanDaoManager.queryAll();
-                    userBeanDaoManager.deleteInTx(queryUserList);
-                    List<UserBean> queryNewList = userBeanDaoManager.queryAll();
-                    if (queryNewList != null && queryNewList.size() > 0) {
-                        Collections.reverse(queryUserList);
-                        userBeanAdapter.clearData();
-                        userBeanAdapter.addAllData(queryUserList);
-                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
-                                tevTitle, getResources().getString(R.string.created_b)
-                                        + queryUserList.size()
-                                        + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
-                                28);
-                    } else {
-                        userBeanAdapter.clearData();
-                        TextViewStyleManager.setTextViewStyleVerticalCenter(this,
-                                tevTitle, getResources().getString(R.string.created_b)
-                                        + queryUserList.size()
-                                        + getResources().getString(R.string.users_b),
-                                getResources().getString(R.string.created_b).length(),
-                                getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
-                                28);
-                    }
+                    showLoading();
+                    ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                        queryUserList = userBeanDaoManager.queryAll();
+                        userBeanDaoManager.deleteInTx(queryUserList);
+                        queryUserList = userBeanDaoManager.queryAll();
+
+
+                        new MainThreadManager(() -> {
+                            if (queryUserList != null && queryUserList.size() > 0) {
+                                Collections.reverse(queryUserList);
+                                userBeanAdapter.clearData();
+                                userBeanAdapter.addAllData(queryUserList);
+                                TextViewStyleManager.setTextViewStyleVerticalCenter(this,
+                                        tevTitle, getResources().getString(R.string.created_b)
+                                                + queryUserList.size()
+                                                + getResources().getString(R.string.users_b),
+                                        getResources().getString(R.string.created_b).length(),
+                                        getResources().getString(R.string.created_b).length() + String.valueOf(queryUserList.size()).length() + 1,
+                                        28);
+                            } else {
+                                userBeanAdapter.clearData();
+                                TextViewStyleManager.setTextViewStyleVerticalCenter(this,
+                                        tevTitle, getResources().getString(R.string.created_b)
+                                                + 0
+                                                + getResources().getString(R.string.users_b),
+                                        getResources().getString(R.string.created_b).length(),
+                                        getResources().getString(R.string.created_b).length() + 2,
+                                        28);
+                            }
+                            hideLoading();
+                        }).subThreadToUIThread();
+                    });
                 }
             });
         }
@@ -363,6 +372,8 @@ public class CreateUserActivity extends BaseRxAppActivity {
     @Override
     protected void onDestroy() {
         userBeanDaoManager.closeConnection();
+        ThreadPoolManager.getInstance().shutdownNow();
         super.onDestroy();
     }
+
 }

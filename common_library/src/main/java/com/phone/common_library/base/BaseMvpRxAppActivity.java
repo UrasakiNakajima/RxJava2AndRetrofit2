@@ -22,6 +22,7 @@ import com.phone.common_library.R;
 import com.phone.common_library.manager.ActivityPageManager;
 import com.phone.common_library.manager.CrashHandlerManager;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.ToolbarManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
@@ -34,7 +35,7 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
 
 
     private static final String TAG = BaseMvpRxAppActivity.class.getSimpleName();
-    public QMUILoadingView loadView;
+    protected QMUILoadingView loadView;
     protected FrameLayout.LayoutParams layoutParams;
 
     protected T presenter;
@@ -57,18 +58,19 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
 
         setContentView(initLayoutId());
 
-        loadView = new QMUILoadingView(this);
-        loadView.setVisibility(View.GONE);
-        loadView.setSize(100);
-        loadView.setColor(getResources().getColor(R.color.color_80000000));
-        layoutParams = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        layoutParams.gravity = Gravity.CENTER;
-
         //        setToolbar();
         presenter = attachPresenter();
         initData();
         initViews();
+
+        loadView = new QMUILoadingView(this);
+        loadView.setVisibility(View.GONE);
+        loadView.setSize(100);
+        loadView.setColor(ResourcesManager.getColor(R.color.color_333333));
+        layoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        layoutParams.gravity = Gravity.CENTER;
+        addContentView(loadView, layoutParams);
         initLoadData();
 
 //        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);

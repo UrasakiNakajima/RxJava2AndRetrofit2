@@ -9,6 +9,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,13 +22,15 @@ import com.phone.common_library.R;
 import com.phone.common_library.manager.ActivityPageManager;
 import com.phone.common_library.manager.CrashHandlerManager;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.ToolbarManager;
+import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseRxAppActivity extends RxAppCompatActivity {
+public abstract class BaseRxAppActivity extends RxAppCompatActivity implements IBaseView {
 
     private static final String TAG = BaseRxAppActivity.class.getSimpleName();
     //	protected QMUILoadingView          loadView;
@@ -37,6 +40,8 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
     protected RxAppCompatActivity rxAppCompatActivity;
     protected BaseApplication baseApplication;
     private ActivityPageManager activityPageManager;
+    protected QMUILoadingView loadView;
+    protected FrameLayout.LayoutParams layoutParams;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,18 +53,17 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
         activityPageManager.addActivity(rxAppCompatActivity);
 
         setContentView(initLayoutId());
-
-//		loadView = new QMUILoadingView(rxAppCompatActivity);
-//		loadView.setVisibility(View.GONE);
-//		loadView.setSize(100);
-//		loadView.setColor(getResources().getColor(R.color.color_80000000));
-//		layoutParams = new FrameLayout.LayoutParams(
-//			FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-//		layoutParams.gravity = Gravity.CENTER;
-
-        //        setToolbar();
         initData();
         initViews();
+
+        loadView = new QMUILoadingView(rxAppCompatActivity);
+        loadView.setVisibility(View.GONE);
+        loadView.setSize(100);
+        loadView.setColor(ResourcesManager.getColor(R.color.color_333333));
+        layoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        layoutParams.gravity = Gravity.CENTER;
+        addContentView(loadView, layoutParams);
         initLoadData();
     }
 
@@ -227,6 +231,22 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity {
 
     public boolean isOnMainThread() {
         return Looper.getMainLooper().getThread().getId() == Thread.currentThread().getId();
+    }
+
+    @Override
+    public void showLoading() {
+        if (loadView != null && !loadView.isShown()) {
+            loadView.setVisibility(View.VISIBLE);
+            loadView.start();
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        if (loadView != null && loadView.isShown()) {
+            loadView.stop();
+            loadView.setVisibility(View.GONE);
+        }
     }
 
     protected void startActivity(Class<?> cls) {

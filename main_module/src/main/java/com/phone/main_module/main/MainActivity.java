@@ -100,8 +100,6 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
         tevMine = (TextView) findViewById(R.id.tev_mine);
 
 
-        addContentView(loadView, layoutParams);
-
         fragmentStatePagerAdapter = new TabFragmentStatePagerAdapter(getSupportFragmentManager(), fragmentList);
         mineViewPager.setAdapter(fragmentStatePagerAdapter);
         mineViewPager.setOnPageChangeListener(new LazyViewPager.OnPageChangeListener() {

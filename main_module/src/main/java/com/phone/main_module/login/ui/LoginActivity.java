@@ -77,7 +77,6 @@ public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresente
         tevLogin = (TextView) findViewById(R.id.tev_login);
         tevJumpToRegister = (TextView) findViewById(R.id.tev_jump_to_register);
 
-        addContentView(loadView, layoutParams);
         setToolbar(true, R.color.color_FFFFFFFF);
 
         imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_000000));

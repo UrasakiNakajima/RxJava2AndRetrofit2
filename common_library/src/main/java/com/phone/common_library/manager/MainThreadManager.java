@@ -4,7 +4,7 @@ package com.phone.common_library.manager;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.phone.common_library.callback.OnSubThreadToMainThreadCallback;
+import com.phone.common_library.callback.OnCommonSuccessCallback;
 
 /**
  * author    : Urasaki
@@ -17,13 +17,13 @@ import com.phone.common_library.callback.OnSubThreadToMainThreadCallback;
 public class MainThreadManager {
 
     private Handler mainThreadHandler;
-    private OnSubThreadToMainThreadCallback onSubThreadToMainThreadCallback;
+    private OnCommonSuccessCallback onCommonSuccessCallback;
 
     public MainThreadManager() {
     }
 
-    public MainThreadManager(OnSubThreadToMainThreadCallback onSubThreadToMainThreadCallback) {
-        this.onSubThreadToMainThreadCallback = onSubThreadToMainThreadCallback;
+    public MainThreadManager(OnCommonSuccessCallback onCommonSuccessCallback) {
+        this.onCommonSuccessCallback = onCommonSuccessCallback;
         if (Looper.myLooper() != Looper.getMainLooper()) {
 
             // If we finish marking off of the main thread, we need to
@@ -32,18 +32,18 @@ public class MainThreadManager {
             mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    onSubThreadToMainThreadCallback.onSuccess();
+                    onCommonSuccessCallback.onSuccess();
                     mainThreadHandler.removeCallbacksAndMessages(null);
                     mainThreadHandler = null;
                 }
             });
         } else {
-            onSubThreadToMainThreadCallback.onSuccess();
+            onCommonSuccessCallback.onSuccess();
         }
     }
 
-    public void setOnSubThreadToMainThreadCallback(OnSubThreadToMainThreadCallback onSubThreadToMainThreadCallback) {
-        this.onSubThreadToMainThreadCallback = onSubThreadToMainThreadCallback;
+    public void setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback onCommonSuccessCallback) {
+        this.onCommonSuccessCallback = onCommonSuccessCallback;
     }
 
     /**
@@ -58,13 +58,14 @@ public class MainThreadManager {
             mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    onSubThreadToMainThreadCallback.onSuccess();
+                    onCommonSuccessCallback.onSuccess();
                     mainThreadHandler.removeCallbacksAndMessages(null);
                     mainThreadHandler = null;
                 }
             });
         } else {
-            onSubThreadToMainThreadCallback.onSuccess();
+            onCommonSuccessCallback.onSuccess();
         }
     }
+
 }

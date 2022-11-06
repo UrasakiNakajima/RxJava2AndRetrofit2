@@ -20,7 +20,9 @@ import com.phone.common_library.R;
 import com.phone.common_library.bean.AddressBean;
 import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
+import com.phone.common_library.callback.OnCommonSuccessCallback;
 import com.phone.common_library.callback.OnItemViewClick2Listener;
+import com.phone.common_library.manager.ResourcesManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +66,7 @@ public class StandardCreateUserDialog {
 
         //设置R.style.standard_dialog_style2就可以去掉
         //AlertDialog的默认边框，此时AlertDialog的layout的宽高就是AlertDialog的宽高
-        alertDialog = new AlertDialog.Builder(context, R.style.standard_dialog_style2)
+        alertDialog = new AlertDialog.Builder(context, R.style.standard_dialog_style)
                 .setView(view)
                 .create();
         tevCancel.setOnClickListener(v -> {
@@ -87,9 +89,14 @@ public class StandardCreateUserDialog {
                 userBean.setAge(Integer.parseInt(age));
                 userBean.setBirthday(birthday);
                 userBean.setSalary(Double.parseDouble(salary));
-//                    Address address = new Address();
-//                    address.setCounty("北莱茵-威斯特法伦州");
-//                    address.setCity("波恩");
+
+//                UserBean userBean = new UserBean();
+//                userBean.setUserId("13513311001");
+//                userBean.setPassword("12345678");
+//                userBean.setAge(Integer.parseInt("23"));
+//                userBean.setBirthday("2000-10-10");
+//                userBean.setSalary(Double.parseDouble("7000"));
+
                 List<AddressBean> addressBeanList = new ArrayList<>();
                 addressBeanList.add(new AddressBean("北莱茵-威斯特法伦州", "波恩"));
                 addressBeanList.add(new AddressBean("汉堡州", "汉堡"));
@@ -102,7 +109,7 @@ public class StandardCreateUserDialog {
         alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                onCommonSingleParamCallback.onSuccess("");
+                onCommonSuccessCallback.onSuccess();
             }
         });
         alertDialog.show();
@@ -110,7 +117,7 @@ public class StandardCreateUserDialog {
 
         Window window = alertDialog.getWindow();
         if (window != null) {
-//            window.setBackgroundDrawableResource(android.R.color.transparent);
+            window.setBackgroundDrawable(null);
             window.setGravity(Gravity.CENTER);
 //            window.setWindowAnimations(R.style.PictureThemeDialogWindowStyle);
             WindowManager.LayoutParams params = window.getAttributes();
@@ -147,10 +154,9 @@ public class StandardCreateUserDialog {
         this.onItemViewClick2Listener = onItemViewClick2Listener;
     }
 
-    private OnCommonSingleParamCallback<String> onCommonSingleParamCallback;
+    private OnCommonSuccessCallback onCommonSuccessCallback;
 
-    public void setOnCommonSingleParamCallback(OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
-        this.onCommonSingleParamCallback = onCommonSingleParamCallback;
+    public void setOnCommonSuccessCallback(OnCommonSuccessCallback onCommonSuccessCallback) {
+        this.onCommonSuccessCallback = onCommonSuccessCallback;
     }
-
 }

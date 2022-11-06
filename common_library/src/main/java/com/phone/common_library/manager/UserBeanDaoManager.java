@@ -8,12 +8,13 @@ import com.phone.common_library.greendao.UserBeanDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserBeanDaoManager {
 
     private static final String TAG = UserBeanDaoManager.class.getSimpleName();
-    private static final String DB_NAME = "user.db";
+    private static final String DB_NAME = "user_bean.db";
     private DaoMaster.DevOpenHelper devOpenHelper;
     private DaoMaster daoMaster;
     private  DaoSession daoSession;
@@ -38,6 +39,16 @@ public class UserBeanDaoManager {
     }
 
     /**
+     * 完成User记录的插入，如果表未创建，先创建User表
+     *
+     * @param userBeanList
+     * @return
+     */
+    public void insertInTx(List<UserBean> userBeanList) {
+        daoSession.getUserBeanDao().insertInTx(userBeanList);
+    }
+
+    /**
      * 修改一条数据
      *
      * @param userBean
@@ -45,6 +56,16 @@ public class UserBeanDaoManager {
      */
     public void update(UserBean userBean) {
         daoSession.getUserBeanDao().update(userBean);
+    }
+
+    /**
+     * 修改一条数据
+     *
+     * @param userBeanList
+     * @return
+     */
+    public void update(List<UserBean> userBeanList) {
+        daoSession.getUserBeanDao().updateInTx(userBeanList);
     }
 
     /**
@@ -84,6 +105,9 @@ public class UserBeanDaoManager {
      * @return
      */
     public List<UserBean> queryAll() {
+        if (daoSession.getUserBeanDao().loadAll() == null){
+            return new ArrayList<>();
+        }
         return daoSession.getUserBeanDao().loadAll();
     }
 

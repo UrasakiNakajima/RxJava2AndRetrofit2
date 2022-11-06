@@ -15,7 +15,9 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.phone.common_library.R;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
+import com.phone.common_library.callback.OnCommonSuccessCallback;
 import com.phone.common_library.callback.OnItemViewClickListener;
+import com.phone.common_library.manager.ResourcesManager;
 
 public class StandardDialog {
 
@@ -54,14 +56,14 @@ public class StandardDialog {
         alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                onCommonSingleParamCallback.onSuccess("");
+                onCommonSuccessCallback.onSuccess();
             }
         });
         alertDialog.show();
 
         Window window = alertDialog.getWindow();
         if (window != null) {
-//            window.setBackgroundDrawableResource(android.R.color.transparent);
+            window.setBackgroundDrawable(null);
             window.setGravity(Gravity.CENTER);
 //            window.setWindowAnimations(R.style.PictureThemeDialogWindowStyle);
             WindowManager.LayoutParams params = window.getAttributes();
@@ -98,10 +100,9 @@ public class StandardDialog {
         this.onItemViewClickListener = onItemViewClickListener;
     }
 
-    private OnCommonSingleParamCallback<String> onCommonSingleParamCallback;
+    private OnCommonSuccessCallback onCommonSuccessCallback;
 
-    public void setOnCommonSingleParamCallback(OnCommonSingleParamCallback<String> onCommonSingleParamCallback) {
-        this.onCommonSingleParamCallback = onCommonSingleParamCallback;
+    public void setOnCommonSuccessCallback(OnCommonSuccessCallback onCommonSuccessCallback) {
+        this.onCommonSuccessCallback = onCommonSuccessCallback;
     }
-
 }
