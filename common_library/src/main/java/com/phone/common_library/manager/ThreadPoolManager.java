@@ -29,12 +29,13 @@ public class ThreadPoolManager {
     }
 
     /**
-     * 复用单一线程池，同步执行任务的线程池
+     * 复用单一线程的线程池，同步执行任务的线程池
+     *
      * @param keepAliveTime
      * @param onCommonSuccessCallback
      */
     public void multiplexSyncThreadPool(long keepAliveTime,
-                                    OnCommonSuccessCallback onCommonSuccessCallback) {
+                                        OnCommonSuccessCallback onCommonSuccessCallback) {
         if (multiplexSingleThreadPool == null) {
             multiplexSingleThreadPool = new ThreadPoolExecutor(1,
                     1,
