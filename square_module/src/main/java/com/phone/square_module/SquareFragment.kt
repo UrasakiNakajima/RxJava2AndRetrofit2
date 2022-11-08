@@ -32,8 +32,8 @@ import com.phone.common_library.callback.OnCommonRxPermissionsCallback
 import com.phone.common_library.common.DecimalInputFilter
 import com.phone.common_library.common.DecimalTextWatcher
 import com.phone.common_library.manager.*
-import com.phone.common_library.service.FirstPageService
-import com.phone.common_library.service.SquareService
+import com.phone.common_library.service.IFirstPageService
+import com.phone.common_library.service.ISquareService
 import com.phone.square_module.databinding.FragmentSquareBinding
 import com.phone.square_module.ui.CreateUserActivity
 import com.phone.square_module.ui.DecimalOperationActivity
@@ -259,7 +259,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
         val firstPageService =
                 ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
-                        .navigation() as FirstPageService
+                        .navigation() as IFirstPageService
         LogManager.i(
                 TAG,
                 "firstPageService.firstPageDataList******" + firstPageService.firstPageDataList.toString()
@@ -310,10 +310,10 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 datax.chapterName = success.get(1).chapterName
                 datax.link = success.get(1).link
                 datax.envelopePic = success.get(1).envelopePic
-                val squareService: SquareService =
+                val ISquareService: ISquareService =
                         ARouter.getInstance().build("/square_module/SquareServiceImpl")
-                                .navigation() as SquareService
-                squareService.squareDataList = success;
+                                .navigation() as ISquareService
+                ISquareService.squareDataList = success;
             }
             hideLoading()
         }

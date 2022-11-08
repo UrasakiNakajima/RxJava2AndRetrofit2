@@ -4,12 +4,12 @@ import android.content.Context;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.common_library.bean.DataX;
-import com.phone.common_library.service.SquareService;
+import com.phone.common_library.service.ISquareService;
 
 import java.util.List;
 
 @Route(path = "/square_module/SquareServiceImpl")
-public class SquareServiceImpl implements SquareService {
+public class SquareServiceImpl implements ISquareService {
 
     private static final String TAG = SquareServiceImpl.class.getSimpleName();
 

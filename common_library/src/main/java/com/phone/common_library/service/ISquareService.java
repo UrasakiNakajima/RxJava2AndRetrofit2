@@ -6,7 +6,7 @@ import com.phone.common_library.bean.DataX;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface SquareService extends IProvider {
+public interface ISquareService extends IProvider {
 
     List<DataX> squareDataList = new ArrayList<>();
 

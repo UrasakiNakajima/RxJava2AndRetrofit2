@@ -35,8 +35,8 @@ import com.phone.common_library.manager.RetrofitManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.ScreenManager;
 import com.phone.common_library.manager.SystemManager;
-import com.phone.common_library.service.FirstPageService;
-import com.phone.common_library.service.SquareService;
+import com.phone.common_library.service.IFirstPageService;
+import com.phone.common_library.service.ISquareService;
 import com.phone.common_library.ui.NewsDetailActivity;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
 import com.phone.common_library.bean.FirstPageResponse;
@@ -221,11 +221,11 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     protected void initLoadData() {
         refreshLayout.autoRefresh();
 
-        SquareService squareService =
-                (SquareService) ARouter.getInstance().build("/square_module/SquareServiceImpl")
+        ISquareService ISquareService =
+                (ISquareService) ARouter.getInstance().build("/square_module/SquareServiceImpl")
                         .navigation();
         LogManager.i(TAG,
-                "squareService.getSquareDataList()******" + squareService.getSquareDataList().toString());
+                "squareService.getSquareDataList()******" + ISquareService.getSquareDataList().toString());
 
         LogManager.i(TAG, "FirstPageFragment initLoadData");
 
@@ -282,7 +282,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     @Override
     public void firstPageDataSuccess(List<FirstPageResponse.ResultData.JuheNewsBean> success) {
         if (!rxAppCompatActivity.isFinishing()) {
-            FirstPageService firstPageService = (FirstPageService) ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl").navigation();
+            IFirstPageService IFirstPageService = (IFirstPageService) ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl").navigation();
             if (isRefresh) {
                 mJuheNewsBeanList.clear();
                 mJuheNewsBeanList.addAll(success);
@@ -295,7 +295,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
                 firstPageAdapter.addAllData(mJuheNewsBeanList);
                 refreshLayout.finishLoadMore();
             }
-            firstPageService.setFirstPageDataList(mJuheNewsBeanList);
+            IFirstPageService.setFirstPageDataList(mJuheNewsBeanList);
             hideLoading();
         }
     }

@@ -6,7 +6,7 @@ import com.phone.common_library.bean.FirstPageResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface FirstPageService extends IProvider {
+public interface IFirstPageService extends IProvider {
 
     List<FirstPageResponse.ResultData.JuheNewsBean> firstPageDataList = new ArrayList<>();
 

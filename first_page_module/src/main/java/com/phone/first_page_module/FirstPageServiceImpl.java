@@ -3,13 +3,13 @@ package com.phone.first_page_module;
 import android.content.Context;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.phone.common_library.service.FirstPageService;
+import com.phone.common_library.service.IFirstPageService;
 import com.phone.common_library.bean.FirstPageResponse;
 
 import java.util.List;
 
 @Route(path = "/first_page_module/FirstPageServiceImpl")
-public class FirstPageServiceImpl implements FirstPageService {
+public class FirstPageServiceImpl implements IFirstPageService {
 
     private static final String TAG = FirstPageServiceImpl.class.getSimpleName();
 
