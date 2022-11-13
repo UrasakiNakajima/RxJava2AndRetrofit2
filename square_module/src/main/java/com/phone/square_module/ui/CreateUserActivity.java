@@ -17,6 +17,7 @@ import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.bean.UserBean;
 import com.phone.common_library.dialog.StandardUserDialog;
 import com.phone.common_library.dialog.StandardDialog;
+import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.MainThreadManager;
 import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.TextViewStyleManager;
@@ -92,6 +93,20 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
         });
 
         initAdapter();
+
+//        int[] arr = {10, 7, 8, 5, 17, 11, 18, 29, 21, 16, 26};
+//        for (int i = 0; i < arr.length - 1; i++) {
+//            for (int j = 0; j < arr.length - 1 - i; j++) {
+//                if (arr[j] > arr[j + 1]) {
+//                    int temp = arr[j];
+//                    arr[j] = arr[j + 1];
+//                    arr[j + 1] = temp;
+//                }
+//            }
+//        }
+//        for (int i = 0; i < arr.length; i++) {
+//            LogManager.i(TAG, "number" + i + "*****" + arr[i]);
+//        }
     }
 
     private void initAdapter() {
