@@ -38,7 +38,7 @@ class ShowVideoActivity : AppCompatActivity() {
         private const val TAG = "ShowVideoActivity"
     }
 
-    private var manager: DownloadManger? = null
+    private lateinit var manager: DownloadManger
     private var dialog: ShowDownloadDialogFragment? = null
     private var mBundle: Bundle? = null
     private var url: String? = null
@@ -51,89 +51,103 @@ class ShowVideoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_video)
 
-        initData();
-        initViews();
+        initData()
+        initViews()
     }
 
     private fun initData() {
-        mBundle = intent.extras;
-        if (mBundle != null) {
-            url = mBundle!!.getString("url");
-            suffix = mBundle!!.getString("suffix");
+        if (intent.extras != null) {
+            mBundle = intent.extras!!
+            url = mBundle?.getString("url")
+            suffix = mBundle?.getString("suffix")
         }
-        manager = DownloadManger.get();
+        manager = DownloadManger.get()
     }
 
     private fun initViews() {
         tev_title.setText(resources.getString(R.string.video_play))
         imv_share.setColorFilter(ContextCompat.getColor(this, R.color.color_000000))
-        setToolbar(true, R.color.white);
+        setToolbar(true, R.color.white)
 
-        dialog = ShowDownloadDialogFragment.newInstance();
+        dialog = ShowDownloadDialogFragment.newInstance()
         initVideo(url!!)
 
         layout_back.setOnClickListener {
             finish()
         }
         layout_share.setOnClickListener {
-            dialog!!.setOnDialogCallback(object : OnDialogCallback<Int> {
+            dialog?.setOnDialogCallback(object : OnDialogCallback<Int> {
 
                 override fun onDialogClick(view: View?, success: Int?) {
                     if (success != null) {
                         if (success == 1) {
                             progress_bar.visibility = View.VISIBLE
-                            manager!!.download(url!!, suffix!!, getExternalFilesDir(null)!!.getAbsolutePath(),
-                                    object : OnDownloadListener {
-                                        override fun onDownloadSuccess() {
-                                            Toast.makeText(this@ShowVideoActivity, resources.getString(R.string.saved_successfully), Toast.LENGTH_LONG)
-                                            progress_bar.visibility = View.GONE
-                                        }
+                            manager.download(url!!,
+                                suffix!!,
+                                getExternalFilesDir(null)!!.getAbsolutePath(),
+                                object : OnDownloadListener {
+                                    override fun onDownloadSuccess() {
+                                        Toast.makeText(
+                                            this@ShowVideoActivity,
+                                            resources.getString(R.string.saved_successfully),
+                                            Toast.LENGTH_LONG
+                                        )
+                                        progress_bar.visibility = View.GONE
+                                    }
 
-                                        override fun onDownloading(progress: Int) {
-                                            LogManager.i(TAG, "progress*****$progress")
+                                    override fun onDownloading(progress: Int) {
+                                        LogManager.i(TAG, "progress*****$progress")
 
-                                            progress_bar.setProgress(progress);
-                                        }
+                                        progress_bar.setProgress(progress)
+                                    }
 
-                                        override fun onDownloadError() {
-                                            Toast.makeText(this@ShowVideoActivity, resources.getString(R.string.failed_to_save_please_try_again), Toast.LENGTH_LONG)
-                                            progress_bar.visibility = View.GONE
-                                        }
-                                    })
+                                    override fun onDownloadError() {
+                                        Toast.makeText(
+                                            this@ShowVideoActivity,
+                                            resources.getString(R.string.failed_to_save_please_try_again),
+                                            Toast.LENGTH_LONG
+                                        )
+                                        progress_bar.visibility = View.GONE
+                                    }
+                                })
                         }
                     }
                 }
 
-                override fun onDialogClick(view: View?, success: Int?, params: MutableMap<String, String>?) {
+                override fun onDialogClick(
+                    view: View?,
+                    success: Int?,
+                    params: MutableMap<String, String>?
+                ) {
 
                 }
             })
-            dialog!!.show(supportFragmentManager, "FOF")
+            dialog?.show(supportFragmentManager, "FOF")
         }
     }
 
     protected fun setToolbar(isDarkFont: Boolean, color: Int) {
         if (isDarkFont) {
             ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                    .statusBarDarkFont(isDarkFont)
-                    .statusBarColor(color) //状态栏颜色，不写默认透明色
-                    //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
-                    .init()
+                .statusBarDarkFont(isDarkFont)
+                .statusBarColor(color) //状态栏颜色，不写默认透明色
+                //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                .init()
         } else {
             ImmersionBar.with(this)
-                    .statusBarDarkFont(isDarkFont)
-                    .statusBarColor(color) //状态栏颜色，不写默认透明色
-                    //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
-                    .init()
+                .statusBarDarkFont(isDarkFont)
+                .statusBarColor(color) //状态栏颜色，不写默认透明色
+                //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                .init()
         }
     }
 
 
-    private fun initVideo(videoUrl: String) {
+    private fun initVideo(videoUrl: String?) {
         //外部辅助的旋转，帮助全屏
         orientationUtils = OrientationUtils(this, detail_player)
         //初始化不打开外部的旋转
-        orientationUtils!!.setEnable(false)
+        orientationUtils?.setEnable(false)
 
         //增加封面
         val imvVideo = ImageView(this)
@@ -143,40 +157,38 @@ class ShowVideoActivity : AppCompatActivity() {
         CacheFactory.setCacheManager(ExoPlayerCacheManager::class.java) //exo缓存模式，支持m3u8，只支持exo
         val gsyVideoOption = GSYVideoOptionBuilder()
         gsyVideoOption
-                .setThumbImageView(imvVideo)
-                .setIsTouchWiget(true)
-                .setRotateViewAuto(false)
-                .setLockLand(false)
-                .setAutoFullWithSize(true)
-                .setShowFullAnimation(false)
-                .setNeedLockFull(true)
-                .setUrl(videoUrl)
-                .setCacheWithPlay(false)
-                .setVideoTitle("")
-                .setVideoAllCallBack(object : GSYSampleCallBack() {
-                    override fun onPrepared(url: String, vararg objects: Any) {
-                        super.onPrepared(url, *objects)
-                        //开始播放了才能旋转和全屏
-                        orientationUtils!!.setEnable(true)
-                        isPlay = true
-                    }
+            .setThumbImageView(imvVideo)
+            .setIsTouchWiget(true)
+            .setRotateViewAuto(false)
+            .setLockLand(false)
+            .setAutoFullWithSize(true)
+            .setShowFullAnimation(false)
+            .setNeedLockFull(true)
+            .setUrl(videoUrl)
+            .setCacheWithPlay(false)
+            .setVideoTitle("")
+            .setVideoAllCallBack(object : GSYSampleCallBack() {
+                override fun onPrepared(url: String, vararg objects: Any) {
+                    super.onPrepared(url, *objects)
+                    //开始播放了才能旋转和全屏
+                    orientationUtils?.setEnable(true)
+                    isPlay = true
+                }
 
-                    override fun onQuitFullscreen(url: String, vararg objects: Any) {
-                        super.onQuitFullscreen(url, *objects)
-                        Debuger.printfError("***** onQuitFullscreen **** " + objects[0]) //title
-                        Debuger.printfError("***** onQuitFullscreen **** " + objects[1]) //当前非全屏player
-                        if (orientationUtils!! != null) {
-                            orientationUtils!!.backToProtVideo()
-                        }
-                    }
-                }).setLockClickListener { view, lock ->
-                    if (orientationUtils != null) {
-                        //配合下方的onConfigurationChanged
-                        orientationUtils!!.setEnable(!lock)
-                    }
-                }.build(detail_player)
+                override fun onQuitFullscreen(url: String, vararg objects: Any) {
+                    super.onQuitFullscreen(url, *objects)
+                    Debuger.printfError("***** onQuitFullscreen **** " + objects[0]) //title
+                    Debuger.printfError("***** onQuitFullscreen **** " + objects[1]) //当前非全屏player
+                    orientationUtils?.backToProtVideo()
+                }
+            }).setLockClickListener { view, lock ->
+                if (orientationUtils != null) {
+                    //配合下方的onConfigurationChanged
+                    orientationUtils?.setEnable(!lock)
+                }
+            }.build(detail_player)
         detail_player.getFullscreenButton().setOnClickListener(View.OnClickListener { //直接横屏
-            orientationUtils!!.resolveByClick()
+            orientationUtils?.resolveByClick()
 
             //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
             detail_player.startWindowFullscreen(this, true, true)
@@ -188,41 +200,39 @@ class ShowVideoActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (orientationUtils != null) {
-            orientationUtils!!.backToProtVideo();
+            orientationUtils?.backToProtVideo()
         }
         if (GSYVideoManager.backFromWindowFull(this)) {
-            return;
+            return
         }
         super.onBackPressed()
     }
 
     override fun onResume() {
-        detail_player.getCurrentPlayer().onVideoResume(false);
-        super.onResume();
-        isPause = false;
+        detail_player.getCurrentPlayer().onVideoResume(false)
+        super.onResume()
+        isPause = false
     }
 
     override fun onPause() {
-        detail_player.getCurrentPlayer().onVideoPause();
-        super.onPause();
-        isPause = true;
+        detail_player.getCurrentPlayer().onVideoPause()
+        super.onPause()
+        isPause = true
     }
 
     override fun onDestroy() {
         super.onDestroy()
         if (isPlay) {
-            detail_player.getCurrentPlayer().release();
+            detail_player.getCurrentPlayer().release()
         }
-        if (orientationUtils != null) {
-            orientationUtils!!.releaseListener();
-        }
+        orientationUtils?.releaseListener()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         //如果旋转了就全屏
         if (isPlay && !isPause) {
-            detail_player.onConfigurationChanged(this, newConfig, orientationUtils, true, true);
+            detail_player.onConfigurationChanged(this, newConfig, orientationUtils!!, true, true)
         }
     }
 }
