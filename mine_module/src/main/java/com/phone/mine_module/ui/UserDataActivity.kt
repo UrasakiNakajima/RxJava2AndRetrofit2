@@ -15,12 +15,9 @@ class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), I
         private val TAG = UserDataActivity::class.java.simpleName
     }
 
-    override fun initLayoutId(): Int {
-        return R.layout.activity_user_data
-    }
+    override fun initLayoutId() = R.layout.activity_user_data
 
     override fun initData() {
-
     }
 
     override fun initViews() {
@@ -36,9 +33,7 @@ class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), I
         initUserData();
     }
 
-    override fun attachPresenter(): MinePresenterImpl {
-        return MinePresenterImpl(this)
-    }
+    override fun attachPresenter() = MinePresenterImpl(this)
 
     override fun showLoading() {
         if (loadView != null && !loadView.isShown) {

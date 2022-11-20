@@ -513,4 +513,11 @@
     <dimen name="sp_42">42sp</dimen>
     <dimen name="sp_48">48sp</dimen>
 
+
+
+    <dimen name="padding">16dp</dimen>
+    <dimen name="text_1">15.5dp</dimen>
+    <dimen name="text_2">13.5dp</dimen>
+    <dimen name="text_3">11.5dp</dimen>
+
 </resources>

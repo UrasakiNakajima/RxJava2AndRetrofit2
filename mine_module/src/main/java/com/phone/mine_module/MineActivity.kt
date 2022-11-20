@@ -44,9 +44,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     private var linearLayoutManager: LinearLayoutManager? = null
     private var isRefresh: Boolean = true
 
-    override fun initLayoutId(): Int {
-        return R.layout.activity_mine
-    }
+    override fun initLayoutId() = R.layout.activity_mine
 
     override fun initData() {
 //        mainActivity = rxAppCompatActivity as MainActivity
@@ -158,11 +156,17 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
 
     override fun mineDataError(error: String) {
         if (!rxAppCompatActivity!!.isFinishing()) {
-            showCustomToast(ScreenManager.dpToPx(rxAppCompatActivity, 20f), ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                    18, ContextCompat.getColor(rxAppCompatActivity!!,R.color.white),
-                    ContextCompat.getColor(rxAppCompatActivity!!,R.color.color_FFE066FF), ScreenManager.dpToPx(rxAppCompatActivity, 40f),
-                    ScreenManager.dpToPx(rxAppCompatActivity, 20f), error,
-                    true)
+            showCustomToast(
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                18,
+                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
+                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
+                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                error,
+                true
+            )
 
             if (isRefresh) {
                 refresh_layout.finishRefresh(false)

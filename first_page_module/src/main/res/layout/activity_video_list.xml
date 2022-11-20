@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".first_page.ui.VideoListActivity">
+    tools:context=".ui.VideoListActivity">
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="@dimen/dp_48"
         android:background="@color/color_FFE066FF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
@@ -20,7 +20,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50">
+            android:layout_height="@dimen/dp_48">
 
             <FrameLayout
                 android:id="@+id/layout_back"
@@ -42,7 +42,7 @@
             <TextView
                 android:id="@+id/tev_title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
+                android:layout_height="@dimen/dp_48"
                 android:gravity="center"
                 android:text="@string/first_page_details"
                 android:textColor="@color/color_FF198CFF"

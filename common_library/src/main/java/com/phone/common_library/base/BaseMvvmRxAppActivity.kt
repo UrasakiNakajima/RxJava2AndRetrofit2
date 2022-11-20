@@ -32,7 +32,7 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
 
     //该类绑定的ViewDataBinding
     lateinit var mDatabind: DB
-    var viewModel: VM? = null
+    lateinit var viewModel: VM
     protected var rxAppCompatActivity: RxAppCompatActivity? = null
     protected var baseApplication: BaseApplication? = null
     var activityPageManager: ActivityPageManager? = null

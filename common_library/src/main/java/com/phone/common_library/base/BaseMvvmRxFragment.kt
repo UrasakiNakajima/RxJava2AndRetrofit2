@@ -22,11 +22,12 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     companion object {
         private val TAG = BaseMvvmRxFragment::class.java.simpleName
     }
+
     //该类绑定的ViewDataBinding
-    lateinit var mDatabind: DB
-    var viewModel: VM? = null
-    protected var rxAppCompatActivity: RxAppCompatActivity? = null
-    protected var baseApplication: BaseApplication? = null
+    protected lateinit var mDatabind: DB
+    protected lateinit var viewModel: VM
+    protected lateinit var rxAppCompatActivity: RxAppCompatActivity
+    protected lateinit var baseApplication: BaseApplication
     protected var intent: Intent? = null
     protected var bundle: Bundle? = null
 //    private var isFirstLoad = true
@@ -44,8 +45,8 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rxAppCompatActivity = getActivity() as RxAppCompatActivity?;
-        baseApplication = rxAppCompatActivity?.application as BaseApplication?;
+        rxAppCompatActivity = (getActivity() as RxAppCompatActivity?)!!
+        baseApplication = (rxAppCompatActivity.application as BaseApplication?)!!
         viewModel = initViewModel()
         initData()
         initObservers()
@@ -69,9 +70,9 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         left: Int, right: Int,
         textSize: Int, textColor: Int,
         bgColor: Int, height: Int,
-        roundRadius: Int, message: String
+        roundRadius: Int, message: String, b: Boolean
     ) {
-        val frameLayout = FrameLayout(rxAppCompatActivity!!)
+        val frameLayout = FrameLayout(rxAppCompatActivity)
         val layoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
@@ -141,22 +142,6 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
             intent!!.putExtras(bundle!!)
         }
         startActivityForResult(intent, requestCode)
-    }
-
-    override fun onDestroyView() {
-        if (rxAppCompatActivity != null) {
-            rxAppCompatActivity = null
-        }
-        if (baseApplication != null) {
-            baseApplication = null
-        }
-        if (mDatabind != null) {
-            mDatabind.unbind()
-        }
-        if (viewModel != null) {
-            viewModel = null
-        }
-        super.onDestroyView()
     }
 
 }

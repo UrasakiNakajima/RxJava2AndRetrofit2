@@ -37,7 +37,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_48"
                     android:background="@color/color_FF198CFF"
                     android:minHeight="?attr/actionBarSize"
                     android:orientation="vertical"
@@ -46,7 +46,7 @@
                     <TextView
                         android:id="@+id/tev_title"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_48"
                         android:gravity="center"
                         android:text="@string/square"
                         android:textColor="@color/color_FFFFFFFF"

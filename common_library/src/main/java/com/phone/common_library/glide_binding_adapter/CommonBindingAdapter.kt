@@ -1,7 +1,9 @@
 package com.phone.common_library.glide_binding_adapter
 
+import android.text.TextUtils
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.phone.common_library.R
 import com.phone.common_library.okhttp3_app_glide_module.GlideApp
 
 
@@ -12,11 +14,12 @@ object CommonBindingAdapter {
     @JvmStatic
     @BindingAdapter("imageUrl")
     fun bindImage(imageView: ImageView, url: String?) {
-        if (url != null) {
+        if (!TextUtils.isEmpty(url)) {
             GlideApp.with(imageView.context)
-                    .load(url)
-                    .error(GlideApp.with(imageView.context).load(url))
-                    .into(imageView)
+                .load(url)
+                .error(GlideApp.with(imageView.context).load(url))
+                .into(imageView)
+        }
 
 //        var numberOfTimes: Int = 0;
 //            GlideApp.with(imageView.context).load(url)
@@ -59,6 +62,20 @@ object CommonBindingAdapter {
 //                            LogManager.i(TAG, "设置资源");
 //                        }
 //                    })
+    }
+
+
+    /**
+     * 加载图片,做高斯模糊处理
+     */
+
+    @JvmStatic
+    @BindingAdapter("articleCollect")
+    fun imgPlayBlur(view: ImageView, collect: Boolean) {
+        if (collect) {
+            view.setImageResource(R.mipmap.collect)
+        } else {
+            view.setImageResource(R.mipmap.un_collect)
         }
     }
 

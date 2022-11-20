@@ -30,20 +30,16 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
         private val TAG: String = ProjectFragment::class.java.simpleName
     }
 
-    private var projectAdapter: ProjectAdapter? = null
+    private val projectAdapter by lazy { ProjectAdapter(rxAppCompatActivity) }
     private var dataList: MutableList<DataX> = mutableListOf()
     private var isRefresh: Boolean = true
     private var currentPage: Int = 1
     private var dataxSuccessObserver: Observer<List<DataX>>? = null;
     private var dataxErrorObserver: Observer<String>? = null;
 
-    override fun initLayoutId(): Int {
-        return R.layout.fragment_project
-    }
+    override fun initLayoutId() = R.layout.fragment_project
 
-    override fun initViewModel(): ProjectViewModelImpl {
-        return ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
-    }
+    override fun initViewModel() = ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
 
     override fun initData() {
 //        mDatabind.setVariable()
@@ -75,20 +71,20 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
 
         }
 
-        viewModel!!.getDataxRxFragmentSuccess().observe(this, dataxSuccessObserver!!)
-        viewModel!!.getDataxRxFragmentError().observe(this, dataxErrorObserver!!)
+        viewModel.getDataxRxFragmentSuccess().observe(this, dataxSuccessObserver!!)
+        viewModel.getDataxRxFragmentError().observe(this, dataxErrorObserver!!)
     }
 
     override fun initViews() {
-        projectAdapter = ProjectAdapter(rxAppCompatActivity!!);
-        projectAdapter!!.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
+        projectAdapter.apply {
+            setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
-            override fun onItemClickListener(position: Int, view: View?) {
-//                startActivity(VideoViewActivity::class.java)
-                startActivity(EventScheduleActivity::class.java)
-            }
-
-        })
+                override fun onItemClickListener(position: Int, view: View?) {
+                    //                startActivity(VideoViewActivity::class.java)
+                    startActivity(EventScheduleActivity::class.java)
+                }
+            })
+        }
         mDatabind.rcvData.itemAnimator = DefaultItemAnimator()
         mDatabind.rcvData.adapter = projectAdapter
 
@@ -116,8 +112,8 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     }
 
     override fun showLoading() {
-        if (!rxAppCompatActivity!!.isFinishing()) {
-            if (mDatabind.loadView != null && !mDatabind.loadView.isShown()) {
+        if (!rxAppCompatActivity.isFinishing()) {
+            if (!mDatabind.loadView.isShown()) {
                 mDatabind.loadView.setVisibility(View.VISIBLE)
                 mDatabind.loadView.start()
             }
@@ -125,8 +121,8 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     }
 
     override fun hideLoading() {
-        if (!rxAppCompatActivity!!.isFinishing()) {
-            if (mDatabind.loadView != null && mDatabind.loadView.isShown()) {
+        if (!rxAppCompatActivity.isFinishing()) {
+            if (mDatabind.loadView.isShown()) {
                 mDatabind.loadView.stop()
                 mDatabind.loadView.setVisibility(View.GONE)
             }
@@ -134,17 +130,17 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     }
 
     override fun projectDataSuccess(success: List<DataX>) {
-        if (!rxAppCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
                 dataList.clear()
                 dataList.addAll(success)
-                projectAdapter!!.clearData();
-                projectAdapter!!.addAllData(dataList)
+                projectAdapter.clearData();
+                projectAdapter.addAllData(dataList)
                 mDatabind.refreshLayout.finishRefresh()
             } else {
                 dataList.addAll(success)
-                projectAdapter!!.clearData();
-                projectAdapter!!.addAllData(dataList)
+                projectAdapter.clearData();
+                projectAdapter.addAllData(dataList)
                 mDatabind.refreshLayout.finishLoadMore()
             }
             currentPage++;
@@ -152,16 +148,17 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     }
 
     override fun projectDataError(error: String) {
-        if (!rxAppCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 18,
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                ContextCompat.getColor(rxAppCompatActivity, R.color.white),
+                ContextCompat.getColor(rxAppCompatActivity, R.color.color_FFE066FF),
                 ScreenManager.dpToPx(rxAppCompatActivity, 40f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                error
+                error,
+                true
             )
 
             if (isRefresh) {
@@ -175,7 +172,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     private fun initProject(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel!!.projectDataRxFragment(this, currentPage)
+            viewModel.projectDataRxFragment(this, currentPage)
         } else {
             projectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }

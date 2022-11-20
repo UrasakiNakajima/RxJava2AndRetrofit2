@@ -1,6 +1,5 @@
 package com.phone.project_module.view_model
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.phone.project_module.bean.DataX
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity

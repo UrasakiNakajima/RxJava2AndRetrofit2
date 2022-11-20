@@ -35,7 +35,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_48"
                     android:background="@color/color_FF198CFF"
                     android:minHeight="?attr/actionBarSize"
                     android:orientation="vertical"
@@ -44,7 +44,7 @@
                     <TextView
                         android:id="@+id/tev_title"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_48"
                         android:gravity="center"
                         android:text="@string/square"
                         android:textColor="@color/color_FFFFFFFF"
@@ -199,6 +199,27 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@string/create_user"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/color_555555"
+                    android:layout_height="@dimen/dp_1" />
+
+                <TextView
+                    android:id="@+id/tev_kotlin_coroutine"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/kotlin_coroutine"
                     android:textColor="@color/color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 

@@ -13,7 +13,7 @@ public class GsonManager {
     private GsonManager() {
         gson = new Gson();
     }
-    
+
     /**
      * 线程安全的单例模式
      *
@@ -34,7 +34,7 @@ public class GsonManager {
      * 将json转化为对应的实体对象
      * new TypeToken<HashMap<String, Object>>(){}.getType()
      */
-    private <T> T fromJson(String json, Type type) {
+    public <T> T fromJson(String json, Type type) {
         return gson.fromJson(json, type);
     }
 

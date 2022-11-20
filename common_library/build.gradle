@@ -156,9 +156,9 @@ dependencies {
     api 'com.squareup.okhttp3:okhttp:3.12.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.12.0'
     //retrofit2框架導入
-    api 'com.squareup.retrofit2:retrofit:2.3.0'
-    api 'com.squareup.retrofit2:converter-gson:2.3.0'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    api 'com.squareup.retrofit2:retrofit:2.6.0'
+    api 'com.squareup.retrofit2:converter-gson:2.6.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.6.0'
     //rxjava2框架導入
     api 'io.reactivex.rxjava2:rxjava:2.2.19'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
@@ -233,8 +233,8 @@ dependencies {
 //    //leakcanary导入（检测内存泄漏框架，直接導入框架就可以了，2.7版本的不用配置）
 //    debugApi 'com.squareup.leakcanary:leakcanary-android:2.7'
 
-    //工具库
-    implementation 'com.blankj:utilcodex:1.29.0'
+//    //工具库
+//    implementation 'com.blankj:utilcodex:1.29.0'
 
     //日志打印框架
     api 'com.orhanobut:logger:2.2.0'
@@ -247,5 +247,7 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
     kapt 'org.projectlombok:lombok:1.18.24'
+
+    api 'com.github.hackware1993:MagicIndicator:1.5.0'
 
 }

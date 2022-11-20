@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_75"
+        android:layout_height="@dimen/dp_73"
         android:background="@color/color_FFE066FF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_75"
+            android:layout_height="@dimen/dp_73"
             android:orientation="vertical">
 
             <View
@@ -27,7 +27,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50">
+                android:layout_height="@dimen/dp_48">
 
                 <FrameLayout
                     android:id="@+id/layout_back"

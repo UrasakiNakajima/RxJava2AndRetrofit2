@@ -23,9 +23,7 @@ class EventScheduleActivity : BaseRxAppActivity() {
     private var tevTitle: TextView? = null
     private var tevEventSchedule: TextView? = null
 
-    override fun initLayoutId(): Int {
-        return R.layout.activity_event_schedule
-    }
+    override fun initLayoutId() = R.layout.activity_event_schedule
 
     override fun initData() {
 
@@ -43,7 +41,8 @@ class EventScheduleActivity : BaseRxAppActivity() {
             finish()
         }
         tevEventSchedule!!.setOnClickListener {
-            val eventScheduleDialogFragment: EventScheduleDialogFragment = EventScheduleDialogFragment.newInstance()
+            val eventScheduleDialogFragment: EventScheduleDialogFragment =
+                EventScheduleDialogFragment.newInstance()
             //			ReserveSpaceDialogFragment reserveSpaceDialogFragment=ReserveSpaceDialogFragment.newInstance();
             //			ReserveSpaceDialogFragment reserveSpaceDialogFragment=ReserveSpaceDialogFragment.newInstance();
             eventScheduleDialogFragment.setOnDialogCallback(object : OnDialogCallback<Int?> {
@@ -58,7 +57,11 @@ class EventScheduleActivity : BaseRxAppActivity() {
                     }
                 }
 
-                override fun onDialogClick(view: View?, success: Int?, params: Map<String?, String?>?) {
+                override fun onDialogClick(
+                    view: View?,
+                    success: Int?,
+                    params: Map<String?, String?>?
+                ) {
 
                 }
             })

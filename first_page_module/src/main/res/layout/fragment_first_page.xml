@@ -16,8 +16,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:background="@color/color_FFE066FF"
+            android:layout_height="@dimen/dp_48"
+            android:background="@color/color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
             app:contentInsetStart="0dp">
@@ -25,10 +25,10 @@
             <TextView
                 android:id="@+id/tev_title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
+                android:layout_height="@dimen/dp_48"
                 android:gravity="center"
                 android:text="@string/first_page"
-                android:textColor="@color/color_FF198CFF"
+                android:textColor="@color/color_FFFFFFFF"
                 android:textSize="@dimen/sp_20" />
 
         </androidx.appcompat.widget.Toolbar>

@@ -17,6 +17,7 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
     companion object {
         private val TAG = ProjectAdapter::class.java.simpleName
     }
+
     private var list: MutableList<DataX> = mutableListOf()
 
     fun clearData() {
@@ -30,15 +31,16 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding: ItemProjectBinding = DataBindingUtil.inflate<ItemProjectBinding>(
-                LayoutInflater.from(this.context),
-                R.layout.item_project, parent,
-                false)
+        val binding = DataBindingUtil.inflate<ItemProjectBinding>(
+            LayoutInflater.from(context),
+            R.layout.item_project, parent,
+            false
+        )
         return BodyHolder(binding.getRoot())
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val binding: ItemProjectBinding = DataBindingUtil.getBinding<ItemProjectBinding>(holder.itemView)!!
+        val binding = DataBindingUtil.getBinding<ItemProjectBinding>(holder.itemView)!!
         binding.datax = list.get(position)
         binding.executePendingBindings()
         if (position == 1) {
@@ -46,7 +48,12 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
         } else if (position == 2) {
             binding.itemProjectAuthor.setText("aaa")
         }
-        binding.itemProjectImageview.setOnClickListener { v -> onItemViewClickListener!!.onItemClickListener(position, v) }
+        binding.itemProjectImageview.setOnClickListener { v ->
+            onItemViewClickListener!!.onItemClickListener(
+                position,
+                v
+            )
+        }
     }
 
     override fun getItemCount(): Int {

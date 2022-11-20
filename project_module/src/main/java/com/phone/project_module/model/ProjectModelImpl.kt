@@ -4,6 +4,7 @@ import com.phone.common_library.manager.RetrofitManager
 import com.phone.project_module.request.ProjectRequest
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import retrofit2.Call
 
 class ProjectModelImpl() : IProjectModel {
 
@@ -15,6 +16,12 @@ class ProjectModelImpl() : IProjectModel {
         return RetrofitManager.getInstance().retrofit
                 .create(ProjectRequest::class.java)
                 .getProjectData(currentPage)
+    }
+
+    override fun projectData2(currentPage: String): Call<ResponseBody> {
+        return RetrofitManager.getInstance().retrofit
+            .create(ProjectRequest::class.java)
+            .getProjectData2(currentPage)
     }
 
 }

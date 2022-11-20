@@ -13,5 +13,6 @@ public class ConstantData {
 	public static final String TO_RESOURCE_URL   = ConstantUrl.BASE_URL2;
 	public static final String TO_MINE_URL       = ConstantUrl.BASE_URL;
 	public static final String TO_USER_DATA_URL  = ConstantUrl.BASE_URL0;
-	
+
+
 }

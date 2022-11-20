@@ -2,14 +2,14 @@ package com.phone.common_library.adapter;
 
 import android.view.ViewGroup;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * author    : Urasaki

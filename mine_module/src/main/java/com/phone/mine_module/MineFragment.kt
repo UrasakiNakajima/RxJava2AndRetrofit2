@@ -54,14 +54,11 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // TODO: inflate a fragment view
         rootView = super.onCreateView(inflater, container, savedInstanceState)
         return rootView
     }
 
-    override fun initLayoutId(): Int {
-        return R.layout.fragment_mine
-    }
+    override fun initLayoutId() = R.layout.fragment_mine
 
     override fun initData() {
 //        mainActivity = rxAppCompatActivity as MainActivity
@@ -139,9 +136,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
         LogManager.i(TAG, "MineFragment initLoadData")
     }
 
-    override fun attachPresenter(): MinePresenterImpl {
-        return MinePresenterImpl(this)
-    }
+    override fun attachPresenter() = MinePresenterImpl(this)
 
     override fun showLoading() {
         if (load_view != null && !load_view.isShown()) {

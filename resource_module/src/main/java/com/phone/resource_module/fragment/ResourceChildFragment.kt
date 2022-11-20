@@ -1,71 +1,86 @@
 package com.phone.resource_module.fragment
 
-import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.common_library.base.BaseMvpRxFragment
-import com.phone.common_library.base.IBaseView
-import com.phone.common_library.callback.OnItemViewClickListener
+import com.phone.common_library.BaseApplication
+import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.resource_module.R
 import com.phone.resource_module.adapter.ResourceAdapter
-import com.phone.resource_module.bean.Result2
-import com.phone.resource_module.presenter.ResourcePresenterImpl
+import com.phone.resource_module.bean.ArticleListBean
+import com.phone.resource_module.databinding.FragmentResourceChildBinding
 import com.phone.resource_module.view.IResourceChildView
+import com.phone.square_module.view_model.ResourceChildViewModelImpl
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import kotlinx.android.synthetic.main.fragment_resource_child.*
 
-class ResourceChildFragment : BaseMvpRxFragment<IBaseView, ResourcePresenterImpl>(),
+class ResourceChildFragment :
+    BaseMvvmRxFragment<ResourceChildViewModelImpl, FragmentResourceChildBinding>(),
     IResourceChildView {
 
     private val TAG = ResourceChildFragment::class.java.simpleName
 
-    private var resultList: MutableList<Result2> = mutableListOf()
-    private var resourceAdapter: ResourceAdapter? = null
-    private var linearLayoutManager: LinearLayoutManager? = null
+    private lateinit var dataxSuccessObserver: Observer<MutableList<ArticleListBean>>
+    private lateinit var dataxErrorObserver: Observer<String>
+
+    private val resourceAdapter by lazy { ResourceAdapter(rxAppCompatActivity) }
+    private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
-    private var type: String = "all"
-    private val pageSize: String = "20";
-    private var currentPage: Int = 1;
 
-    companion object {
-        fun getInstance(type: String): ResourceChildFragment {
-            val fragment = ResourceChildFragment()
-            val bundle = Bundle()
-            bundle.putString("type", type)
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
+    /**
+     * fragment类型，项目或公号
+     */
+    private var type = 0
 
-    override fun initLayoutId(): Int {
-        return R.layout.fragment_resource_child
-    }
+    /**
+     * tab的id
+     */
+    private var tabId: Int = 0
+    private var pageNum: Int = 1
+
+    override fun initLayoutId() = R.layout.fragment_resource_child
+
+    override fun initViewModel() =
+        ViewModelProvider(this).get(ResourceChildViewModelImpl::class.java)
 
     override fun initData() {
-        bundle = arguments
-        type = bundle.getString("type")!!
+        type = arguments?.getInt("type") ?: 0
+        tabId = arguments?.getInt("tabId") ?: 0
+    }
 
-//        if (resources.getString(R.string.all_resources).equals(type)) {
-//
-//        } else if (resources.getString(R.string.beautiful_woman).equals(type)) {
-//
-//        } else if (resources.getString(R.string.android).equals(type)) {
-//
-//        } else if (resources.getString(R.string.ios).equals(type)) {
-//
-//        } else if (resources.getString(R.string.video).equals(type)) {
-//
-//        } else if (resources.getString(R.string.app).equals(type)) {
-//
-//        }
+    override fun initObservers() {
+        dataxSuccessObserver = object : Observer<MutableList<ArticleListBean>> {
+            override fun onChanged(t: MutableList<ArticleListBean>?) {
+                if (t != null && t.size > 0) {
+                    LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
+//                    LogManager.i(TAG, "onChanged*****${t.toString()}")
+                    resourceDataSuccess(t)
+                } else {
+                    resourceDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                }
+            }
+        }
+
+        dataxErrorObserver = object : Observer<String> {
+            override fun onChanged(t: String?) {
+                if (!TextUtils.isEmpty(t)) {
+                    LogManager.i(TAG, "onChanged*****dataxErrorObserver")
+                    resourceDataError(t!!)
+                }
+            }
+        }
+
+        viewModel.dataxRxFragmentSuccess.observe(this, dataxSuccessObserver)
+        viewModel.dataxRxFragmentError.observe(this, dataxErrorObserver)
     }
 
     override fun initViews() {
@@ -74,92 +89,89 @@ class ResourceChildFragment : BaseMvpRxFragment<IBaseView, ResourcePresenterImpl
 
     private fun initAdapter() {
         linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
-        linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
-        rcv_data.layoutManager = (linearLayoutManager)
-        rcv_data.itemAnimator = DefaultItemAnimator()
-        (rcv_data.itemAnimator as DefaultItemAnimator).changeDuration = 0
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
+        mDatabind.rcvData.layoutManager = linearLayoutManager
+        mDatabind.rcvData.itemAnimator = DefaultItemAnimator()
+        (mDatabind.rcvData.itemAnimator as DefaultItemAnimator).changeDuration = 0
 
-        resourceAdapter = ResourceAdapter(rxAppCompatActivity!!)
-        resourceAdapter!!.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
-
-            override fun onItemClickListener(position: Int, view: View?) {
-
-                //Jump with parameters
-                ARouter.getInstance().build("/common_library/ui/android_and_js")
-                    .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())
-                    .navigation()
+        resourceAdapter.apply {
+            setRcvOnItemViewClickListener { i, view ->
+                when (view.id) {
+                    //收藏
+                    R.id.ivCollect -> {
+//                        this@ResourceChildFragment.resourceAdapter.list[i].apply {
+//                            //已收藏取消收藏
+//                            if (collect) {
+//                                viewModel.unCollect(id)
+//                            } else {
+//                                viewModel.collect(id)
+//                            }
+//                        }
+                    }
+                }
             }
-        })
-        resourceAdapter!!.setHasStableIds(true)
-        rcv_data.setAdapter(resourceAdapter)
-        resourceAdapter!!.clearData()
-        resourceAdapter!!.addAllData(resultList)
+        }
+        mDatabind.rcvData.setAdapter(resourceAdapter)
 
-        refresh_layout.setOnRefreshLoadMoreListener(
+        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(
             object : OnRefreshLoadMoreListener {
-                override fun onLoadMore(refresh_layout: RefreshLayout) {
+                override fun onLoadMore(refreshLayout: RefreshLayout) {
                     LogManager.i(TAG, "onLoadMore")
                     isRefresh = false
-                    initResource(type, pageSize, currentPage.toString())
+                    pageNum++
+                    initResource(tabId, pageNum)
                 }
 
-                override fun onRefresh(refresh_layout: RefreshLayout) {
+                override fun onRefresh(refreshLayout: RefreshLayout) {
                     LogManager.i(TAG, "onRefresh")
                     isRefresh = true
-                    currentPage = 1;
-                    initResource(type, pageSize, currentPage.toString())
+                    pageNum = 1
+                    initResource(tabId, pageNum)
                 }
             })
     }
 
     override fun initLoadData() {
-        refresh_layout.autoRefresh()
-    }
-
-    override fun attachPresenter(): ResourcePresenterImpl {
-        return ResourcePresenterImpl(this)
+        mDatabind.refreshLayout.autoRefresh()
     }
 
     override fun showLoading() {
-        if (load_view != null && !load_view.isShown()) {
+        if (!mDatabind.loadView.isShown()) {
             load_view.setVisibility(View.VISIBLE)
             load_view.start()
         }
     }
 
     override fun hideLoading() {
-        if (load_view != null && load_view.isShown()) {
+        if (mDatabind.loadView.isShown()) {
             load_view.stop()
             load_view.setVisibility(View.GONE)
         }
     }
 
-    override fun resourceDataSuccess(success: List<Result2>) {
-        if (!rxAppCompatActivity!!.isFinishing()) {
+    override fun resourceDataSuccess(success: MutableList<ArticleListBean>) {
+        if (!rxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                resultList.clear()
-                resultList.addAll(success)
-                resourceAdapter!!.clearData();
-                resourceAdapter!!.addAllData(resultList)
-                refresh_layout.finishRefresh()
+                resourceAdapter.clearData()
+                resourceAdapter.addData(success)
+                mDatabind.refreshLayout.finishRefresh()
             } else {
-                resultList.addAll(success)
-                resourceAdapter!!.clearData();
-                resourceAdapter!!.addAllData(resultList)
-                refresh_layout.finishLoadMore()
+                resourceAdapter.addData(success)
+                mDatabind.refreshLayout.finishLoadMore()
             }
-            currentPage++;
+
         }
+        hideLoading()
     }
 
     override fun resourceDataError(error: String) {
-        if (!rxAppCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 18,
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                ContextCompat.getColor(rxAppCompatActivity, R.color.white),
+                ContextCompat.getColor(rxAppCompatActivity, R.color.color_FFE066FF),
                 ScreenManager.dpToPx(rxAppCompatActivity, 40f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 error,
@@ -167,37 +179,27 @@ class ResourceChildFragment : BaseMvpRxFragment<IBaseView, ResourcePresenterImpl
             )
 
             if (isRefresh) {
-                refresh_layout.finishRefresh(false)
+                mDatabind.refreshLayout.finishRefresh(false)
             } else {
-                refresh_layout.finishLoadMore(false)
+                mDatabind.refreshLayout.finishLoadMore(false)
             }
         }
+        hideLoading()
     }
 
-    private fun initResource(type: String, pageSize: String, currentPage: String) {
+    private fun initResource(tabId: Int, pageNum: Int) {
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-//            bodyParams.clear()
-//            bodyParams.put("max_behot_time", System.currentTimeMillis() / 1000 + "");
-            presenter.resourceData(this, type, pageSize, currentPage)
+            showLoading()
+            viewModel.resourceData(this, tabId, pageNum)
         } else {
-            showToast(resources.getString(R.string.please_check_the_network_connection), true)
+            resourceDataError(resources.getString(R.string.please_check_the_network_connection))
             if (isRefresh) {
-                refresh_layout.finishRefresh()
+                mDatabind.refreshLayout.finishRefresh()
             } else {
-                refresh_layout.finishLoadMore()
+                mDatabind.refreshLayout.finishLoadMore()
             }
         }
     }
 
-    override fun onDestroyView() {
 
-        super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        if (resultList != null) {
-            resultList.clear()
-        }
-        super.onDestroy()
-    }
 }

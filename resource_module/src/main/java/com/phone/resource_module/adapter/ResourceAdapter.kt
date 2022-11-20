@@ -1,34 +1,21 @@
 package com.phone.resource_module.adapter
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.text.Html
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Priority
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import com.mikepenz.fontawesome_typeface_library.FontAwesome
-import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.typeface.IIcon
-import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 import com.phone.common_library.callback.OnItemViewClickListener
-import com.phone.common_library.custom_view.ColorTextView
-import com.phone.common_library.manager.ScreenManager
+import com.phone.common_library.common.Constants
 import com.phone.resource_module.R
-import com.phone.resource_module.bean.Result2
+import com.phone.resource_module.bean.ArticleListBean
+import com.phone.resource_module.databinding.ItemHomeArticleBinding
+import com.phone.resource_module.databinding.ItemResourceBinding
 
 class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -36,111 +23,68 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
         private val TAG = ResourceAdapter::class.java.simpleName
     }
 
-    private var list: MutableList<Result2> = mutableListOf()
+    var list: MutableList<ArticleListBean> = mutableListOf()
 
     fun clearData() {
         this.list.clear()
-        notifyDataSetChanged()
+        notifyItemMoved(0, this.list.size)
     }
 
-    fun addAllData(list: MutableList<Result2>) {
+    fun addData(list: MutableList<ArticleListBean>) {
         this.list.addAll(list)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(this.list.size, list.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_resource, parent, false)
-        return BodyHolder(view)
+        return if (viewType == Constants.ITEM_ARTICLE) {
+            val binding: ItemHomeArticleBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(context),
+                R.layout.item_home_article,
+                parent,
+                false
+            )
+            ArticleViewHolder(binding.root)
+        } else {
+            val binding: ItemResourceBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(context),
+                R.layout.item_resource,
+                parent,
+                false
+            )
+            ArticlePicViewHolder(binding.root)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is BodyHolder) {
-            if (list.get(position).type.equals("福利")) {
-                holder.layoutCardView.setVisibility(View.GONE)
-                holder.layoutPicture.setVisibility(View.VISIBLE)
-//                Picasso.with(context).load(list.get(position).url).placeholder(R.mipmap.ic_launcher_round).into(imvResource)
-
-//                Glide.with(context).load(list.get(position).url)
-//                        .placeholder(R.mipmap.picture_miyawaki_sakura)
-//                        .error(R.mipmap.picture_miyawaki_sakura)
-//                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) //自动选择缓存策略
-//                        .priority(Priority.NORMAL)     // 设置加载的优先级
-//                        .into(holder.imvResource)
-
-                holder.layoutPicture.setOnClickListener() {
-                    onItemViewClickListener!!.onItemClickListener(position, it);
+        if (holder is ArticleViewHolder) {
+//            val articleViewHolder = holder as ArticleViewHolder
+//            //收藏
+//            articleViewHolder.ivCollect.setOnClickListener {
+//
+//            }
+            //获取ViewDataBinding
+            val binding =
+                DataBindingUtil.getBinding<ItemHomeArticleBinding>(holder.itemView)?.apply {
+                    dataBean = list[position]
                 }
-                Glide.with(context).load(list.get(position).url)
-                    .placeholder(R.mipmap.picture_miyawaki_sakura)
-                    .error(R.mipmap.picture_miyawaki_sakura)
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC) //自动选择缓存策略
-                    .priority(Priority.NORMAL)     // 设置加载的优先级
-                    .listener(object : RequestListener<Drawable> {
-
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            holder.imvResource.visibility = View.VISIBLE
-                            return false
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            return false
-                        }
-                    })
-                    .into(holder.imvResource)
-            } else {
-                holder.layoutCardView.setVisibility(View.VISIBLE)
-                holder.layoutPicture.setVisibility(View.GONE)
-                holder.tevResource.setLinkTextColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.color_4876FF
-                    )
-                )
-                holder.tevResource.setText(
-                    Html.fromHtml(
-                        "<a href=\""
-                                + list.get(position).url + "\">"
-                                + list.get(position).desc + "</a>"
-                                + "[" + list.get(position).who + "]"
-                    )
-                )
-                holder.tevResource.setMovementMethod(LinkMovementMethod.getInstance())
-                when (list.get(position).type) {
-                    "Android" -> setIconDrawable(
-                        holder.tevResource,
-                        MaterialDesignIconic.Icon.gmi_android
-                    )
-                    "iOS" -> setIconDrawable(
-                        holder.tevResource,
-                        MaterialDesignIconic.Icon.gmi_apple
-                    )
-                    "休息视频" -> setIconDrawable(
-                        holder.tevResource,
-                        MaterialDesignIconic.Icon.gmi_collection_video
-                    )
-                    "前端" -> setIconDrawable(
-                        holder.tevResource,
-                        MaterialDesignIconic.Icon.gmi_language_javascript
-                    )
-                    "拓展资源" -> setIconDrawable(
-                        holder.tevResource,
-                        FontAwesome.Icon.faw_location_arrow
-                    )
-                    "App" -> setIconDrawable(holder.tevResource, MaterialDesignIconic.Icon.gmi_apps)
-                    "瞎推荐" -> setIconDrawable(holder.tevResource, MaterialDesignIconic.Icon.gmi_more)
-                }
+            binding?.executePendingBindings()
+        } else {
+            //获取ViewDataBinding
+            val binding = DataBindingUtil.getBinding<ItemResourceBinding>(holder.itemView)?.apply {
+                dataBean = list[position]
             }
+            binding?.executePendingBindings()
+        }
+
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (list[position].getItemType() == Constants.ITEM_ARTICLE) {
+            //普通类型
+            Constants.ITEM_ARTICLE
+        } else {
+            //带图片类型
+            Constants.ITEM_ARTICLE_PIC
         }
     }
 
@@ -152,28 +96,59 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
         return position.toLong()
     }
 
-    private class BodyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    /**
+     * 默认viewHolder
+     */
+    class ArticleViewHolder constructor(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
 
-        val layoutCardView: CardView = itemView.findViewById(R.id.layout_card_view)
-        val tevResource: ColorTextView = itemView.findViewById(R.id.tev_resource)
-        val layoutPicture: FrameLayout = itemView.findViewById(R.id.layout_picture)
-        val imvResource: ImageView = itemView.findViewById(R.id.imv_resource)
+        lateinit var root: RelativeLayout
+        lateinit var tvTag: TextView
+        lateinit var tvAuthor: TextView
+        lateinit var tvDate: TextView
+        lateinit var tvTitle: TextView
+        lateinit var tvChapterName: TextView
+        lateinit var ivCollect: ImageView
+
+        init {
+            root = itemView.findViewById(R.id.root)
+            tvTag = itemView.findViewById(R.id.tvTag)
+            tvAuthor = itemView.findViewById(R.id.tvAuthor)
+            tvDate = itemView.findViewById(R.id.tvDate)
+            tvTitle = itemView.findViewById(R.id.tvTitle)
+            tvChapterName = itemView.findViewById(R.id.tvChapterName)
+            ivCollect = itemView.findViewById(R.id.ivCollect)
+        }
+    }
+
+    /**
+     * 带图片viewHolder
+     */
+    class ArticlePicViewHolder constructor(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+
+        lateinit var root: ConstraintLayout
+        lateinit var ivTitle: ImageView
+        lateinit var tvTitle: TextView
+        lateinit var tvDes: TextView
+        lateinit var tvNameData: TextView
+        lateinit var ivCollect: ImageView
+
+        init {
+            root = itemView.findViewById(R.id.root)
+            ivTitle = itemView.findViewById(R.id.ivTitle)
+            tvTitle = itemView.findViewById(R.id.tvTitle)
+            tvDes = itemView.findViewById(R.id.tvDes)
+            tvNameData = itemView.findViewById(R.id.tvNameData)
+            ivCollect = itemView.findViewById(R.id.ivCollect)
+        }
+
     }
 
     private var onItemViewClickListener: OnItemViewClickListener? = null
 
     fun setRcvOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
         this.onItemViewClickListener = onItemViewClickListener
-    }
-
-    private fun setIconDrawable(view: TextView, icon: IIcon) {
-        view.setCompoundDrawablesWithIntrinsicBounds(
-            IconicsDrawable(context)
-                .icon(icon)
-                .color(ContextCompat.getColor(context, R.color.color_4876FF))
-                .sizeDp(14), null, null, null
-        )
-        view.compoundDrawablePadding = ScreenManager.dpToPx(context, 5f)
     }
 
 }

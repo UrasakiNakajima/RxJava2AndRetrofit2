@@ -10,14 +10,14 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_75"
+        android:layout_height="@dimen/dp_73"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         app:contentInsetStart="0dp">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
+            android:layout_height="@dimen/dp_48"
             android:layout_marginTop="@dimen/dp_25">
 
             <FrameLayout

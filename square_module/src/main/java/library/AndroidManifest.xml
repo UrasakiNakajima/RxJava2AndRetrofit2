@@ -12,6 +12,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ui.KotlinCoroutineActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.CreateUserActivity"
             android:exported="false" />
         <activity
