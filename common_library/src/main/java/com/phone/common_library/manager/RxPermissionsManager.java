@@ -14,13 +14,6 @@ public class RxPermissionsManager {
 
     private static final String TAG = RxPermissionsManager.class.getSimpleName();
         private static RxPermissionsManager rxPermissionsManager;
-    //    private RxPermissions rxPermissions;
-    private RxPermissions rxActivityPermissions;
-    private RxPermissions rxFragmentPermissions;
-
-
-//    private RxPermissionsManager() {
-//    }
 
     public static RxPermissionsManager getInstance() {
         if (rxPermissionsManager == null) {
@@ -37,8 +30,9 @@ public class RxPermissionsManager {
     /**
      * RxAppCompatActivity里需要的时候直接调用就行了（不會拋出異常）
      */
-    public void initRxPermissionsRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, String[] permissions, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
-        rxActivityPermissions = new RxPermissions(rxAppCompatActivity);
+    public void initRxPermissions(RxAppCompatActivity rxAppCompatActivity, String[] permissions, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
+        //    private RxPermissions rxPermissions;
+        RxPermissions rxActivityPermissions = new RxPermissions(rxAppCompatActivity);
         rxActivityPermissions
                 .requestEachCombined(permissions)
                 //解决rxjava导致的内存泄漏问题
@@ -81,8 +75,8 @@ public class RxPermissionsManager {
     /**
      * RxFragment里需要的时候直接调用就行了（不會拋出異常）
      */
-    public void initRxPermissionsRxFragment(RxFragment rxFragment, String[] permissions, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
-        rxFragmentPermissions = new RxPermissions(rxFragment);
+    public void initRxPermissions2(RxFragment rxFragment, String[] permissions, OnCommonRxPermissionsCallback onCommonRxPermissionsCallback) {
+        RxPermissions rxFragmentPermissions = new RxPermissions(rxFragment);
         rxFragmentPermissions
                 .requestEachCombined(permissions)
                 //解决rxjava导致的内存泄漏问题

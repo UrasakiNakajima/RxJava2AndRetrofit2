@@ -119,7 +119,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
             @Override
             public void onClick(View v) {
                 LogManager.i(TAG, "tevRequestPermissions");
-                initRxPermissionsRxAppCompatActivity();
+                initRxPermissions();
             }
         });
         initAdapter();
@@ -256,9 +256,9 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
     /**
      * RxAppCompatActivity里需要的时候直接调用就行了
      */
-    private void initRxPermissionsRxAppCompatActivity() {
+    private void initRxPermissions() {
         RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
-        rxPermissionsManager.initRxPermissionsRxAppCompatActivity(this, permissions, new OnCommonRxPermissionsCallback() {
+        rxPermissionsManager.initRxPermissions(this, permissions, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
                 //所有的权限都授予
@@ -333,7 +333,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
 
             bodyParams.put("type", "yule");
             bodyParams.put("key", "d5cc661633a28f3cf4b1eccff3ee7bae");
-            presenter.firstPageRxAppCompatActivity(rxAppCompatActivity, bodyParams);
+            presenter.firstPage2(rxAppCompatActivity, bodyParams);
         } else {
             firstPageDataError(getResources().getString(R.string.please_check_the_network_connection));
             hideLoading();

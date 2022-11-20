@@ -171,7 +171,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
 
             bodyParams["type"] = "keji"
             bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.mineDataRxAppCompatActivity(rxAppCompatActivity, bodyParams)
+            presenter.mineData2(rxAppCompatActivity, bodyParams)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {

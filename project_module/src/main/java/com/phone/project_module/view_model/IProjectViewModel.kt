@@ -7,8 +7,8 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 
 interface IProjectViewModel {
 
-    fun projectDataRxFragment(rxFragment: RxFragment, currentPage: String)
+    fun projectData(rxFragment: RxFragment, currentPage: String)
 
-    fun projectDataRxAppCompatActivity(rxAppCompatActivity: RxAppCompatActivity, currentPage: String)
+    fun projectData2(rxAppCompatActivity: RxAppCompatActivity, currentPage: String)
 
 }

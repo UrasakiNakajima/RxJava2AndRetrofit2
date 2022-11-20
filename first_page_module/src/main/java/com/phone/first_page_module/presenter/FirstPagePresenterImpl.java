@@ -38,7 +38,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void firstPageRxFragment(RxFragment fragment, Map<String, String> bodyParams) {
+    public void firstPage(RxFragment fragment, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IFirstPageView) {
@@ -105,7 +105,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    public void firstPageRxAppCompatActivity(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
+    public void firstPage2(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
         IBaseView baseView = obtainView();
         if (baseView != null) {
             if (baseView instanceof IFirstPageView) {

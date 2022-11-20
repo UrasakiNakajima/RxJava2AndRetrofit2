@@ -33,10 +33,10 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
     val dataxRxFragmentError: SingleLiveData<String> = SingleLiveData()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxAppCompatActivitySuccess: SingleLiveData<MutableList<DataX>> = SingleLiveData()
-    val dataxRxAppCompatActivityError: SingleLiveData<String> = SingleLiveData()
+    val dataxRxActivitySuccess: SingleLiveData<MutableList<DataX>> = SingleLiveData()
+    val dataxRxActivityError: SingleLiveData<String> = SingleLiveData()
 
-    override fun projectDataRxFragment(rxFragment: RxFragment, currentPage: String) {
+    override fun projectData(rxFragment: RxFragment, currentPage: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val success = model.projectData2(currentPage).execute().body()?.string()
@@ -105,11 +105,9 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
 //                        dataxRxFragmentError.value = error
 //                    }
 //                })
-
-//        compositeDisposable.add(disposable!!)
     }
 
-    override fun projectDataRxAppCompatActivity(
+    override fun projectData2(
         rxAppCompatActivity: RxAppCompatActivity,
         currentPage: String
     ) {
@@ -121,45 +119,23 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
                     override fun onSuccess(success: String) {
                         LogManager.i(TAG, "success*****$success")
                         if (!TextUtils.isEmpty(success)) {
-//                            val response2: ProjectBean = GsonManager.getInstance().convert(success, ProjectBean::class.java)
-//                            response2.data.datas.get(0).author = null
-//                            val jsonString: String = GsonManager.getInstance().toJson(response2)
-//                            LogManager.i(TAG, "jsonString*****${jsonString}")
-//                            val manager: ReadAndWriteManager = ReadAndWriteManager.getInstance()
-//                            manager.writeExternal("mineLog.txt",
-//                                    jsonString,
-//                                    object : OnCommonSingleParamCallback<Boolean> {
-//                                        override fun onSuccess(success: Boolean?) {
-//                                            LogManager.i(TAG, "success*****" + success!!)
-//                                            manager.unSubscribe()
-//                                        }
-//
-//                                        override fun onError(error: String) {
-//                                            LogManager.i(TAG, "error*****$error")
-//                                            manager.unSubscribe()
-//                                        }
-//                                    })
-//                            val response: ProjectBean = GsonManager.getInstance().convert(jsonString, ProjectBean::class.java)
-
                             val response: ProjectBean =
                                 GsonManager.getInstance().convert(success, ProjectBean::class.java)
                             if (response.data.datas.size > 0) {
-//                                LogManager.i(TAG, "response*****${response.toString()}")
-
-                                dataxRxAppCompatActivitySuccess.value = response.data.datas
+                                dataxRxActivitySuccess.value = response.data.datas
                             } else {
-                                dataxRxAppCompatActivityError.value =
+                                dataxRxActivityError.value =
                                     BaseApplication.getInstance().resources.getString(R.string.no_data_available)
                             }
                         } else {
-                            dataxRxAppCompatActivityError.value =
+                            dataxRxActivityError.value =
                                 BaseApplication.getInstance().resources.getString(R.string.loading_failed)
                         }
                     }
 
                     override fun onError(error: String) {
                         LogManager.i(TAG, "error*****$error")
-                        dataxRxAppCompatActivityError.value = error
+                        dataxRxActivityError.value = error
                     }
                 })
     }

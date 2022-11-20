@@ -179,9 +179,9 @@ dependencies {
     api 'com.trello.rxlifecycle3:rxlifecycle-kotlin:3.1.0'
     // If you want to use Kotlin syntax with Android Lifecycle
     api 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:3.1.0'
-    // If you want to use Navi for providers
-    // DEPRECATED: Use rxlifecycle-android-lifecycle instead. This will be removed in a future release.
-    api 'com.trello.rxlifecycle3:rxlifecycle-navi:3.1.0'
+//    // If you want to use Navi for providers
+//    // DEPRECATED: Use rxlifecycle-android-lifecycle instead. This will be removed in a future release.
+//    api 'com.trello.rxlifecycle3:rxlifecycle-navi:3.1.0'
 
     //2.AutoDispose解决rxjava导致的内存泄漏的框架
     api 'com.uber.autodispose:autodispose-android-archcomponents:1.0.0-RC2'
@@ -212,20 +212,15 @@ dependencies {
     //刷新和加载Layout导入,核心必须依赖
     api 'com.scwang.smart:refresh-layout-kernel:2.0.1'
     api 'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
-    api 'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
-    api 'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
-    api 'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
-    api 'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
-    api 'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
-    api 'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+//    api 'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
+//    api 'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
+//    api 'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
+//    api 'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
+//    api 'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
+//    api 'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
 
     //选择时间和省市县三级联动框架
     api 'com.contrarywind:Android-PickerView:4.1.8'
-
-    api 'com.mikepenz:iconics-core:2.5.5@aar'
-    api 'com.mikepenz:material-design-iconic-typeface:2.2.0.1@aar'
-    api 'com.mikepenz:fontawesome-typeface:4.5.0.1@aar'
-    api 'com.mikepenz:foundation-icons-typeface:3.0.0.1@aar'
 
     //Android路由（用于不同app之间的跳转）
     api 'com.alibaba:arouter-api:1.5.0'

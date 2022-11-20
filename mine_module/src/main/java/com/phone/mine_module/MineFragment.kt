@@ -188,7 +188,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
             bodyParams["type"] = "keji"
             bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.mineDataRxFragment(rxFragment, bodyParams)
+            presenter.mineData(rxFragment, bodyParams)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {

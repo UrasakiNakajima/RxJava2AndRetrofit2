@@ -22,7 +22,6 @@ public class AMAPLocationManager {
     //声明AMapLocationClientOption对象
     private AMapLocationClientOption mLocationOption = null;
 
-
     private AMAPLocationManager(Context context) {
         initLocation(context);
     }

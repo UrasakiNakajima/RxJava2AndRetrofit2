@@ -1,27 +1,45 @@
 package com.phone.square_module
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import android.text.InputFilter
+import android.text.InputType
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.launcher.ARouter
+import com.gyf.immersionbar.ImmersionBar
 import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.common_library.BaseApplication
+import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.BaseMvvmAppRxActivity
 import com.phone.common_library.bean.DataX
 import com.phone.common_library.bean.UserBean
 import com.phone.common_library.bean.UserBean2
 import com.phone.common_library.bean.UserBean3
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback
+import com.phone.common_library.common.DecimalInputFilter
+import com.phone.common_library.common.DecimalTextWatcher
 import com.phone.common_library.manager.*
+import com.phone.common_library.service.ISquareService
 import com.phone.square_module.databinding.ActivitySquareBinding
 import com.phone.square_module.ui.CreateUserActivity
+import com.phone.square_module.ui.DecimalOperationActivity
+import com.phone.square_module.ui.EditTextInputLimitsActivity
+import com.phone.square_module.ui.KotlinCoroutineActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
+import kotlinx.android.synthetic.main.fragment_square.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -38,8 +56,8 @@ class SquareActivity :
     }
 
     private var currentPage: Int = 1
-    private lateinit var dataxDetailsSuccessObserver: Observer<List<DataX>>
-    private lateinit var dataxDetailsErrorObserver: Observer<String>
+    private lateinit var dataxSuccessObserver: Observer<MutableList<DataX>>
+    private lateinit var dataxErrorObserver: Observer<String>
     private var datax: DataX = DataX()
     private var atomicBoolean: AtomicBoolean = AtomicBoolean(false)
 
@@ -54,21 +72,21 @@ class SquareActivity :
 
     override fun initLayoutId() = R.layout.activity_square
 
-    override fun initViewModel() = ViewModelProvider(this).get(SquareViewModelImpl::class.java)
+    override fun initViewModel() =
+        ViewModelProvider(rxAppCompatActivity).get(SquareViewModelImpl::class.java)
 
     override fun initData() {
         mDatabind.viewModel = viewModel
-        mDatabind.dataxRxAppCompatActivity = datax
+        mDatabind.datax = datax
 
         mDatabind.executePendingBindings()
     }
 
     override fun initObservers() {
-        dataxDetailsSuccessObserver = object : Observer<List<DataX>> {
-            override fun onChanged(t: List<DataX>?) {
+        dataxSuccessObserver = object : Observer<MutableList<DataX>> {
+            override fun onChanged(t: MutableList<DataX>?) {
                 if (t != null && t.size > 0) {
                     LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
-//                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                     squareDataSuccess(t)
                 } else {
                     squareDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
@@ -76,7 +94,7 @@ class SquareActivity :
             }
         }
 
-        dataxDetailsErrorObserver = object : Observer<String> {
+        dataxErrorObserver = object : Observer<String> {
             override fun onChanged(t: String?) {
                 if (!TextUtils.isEmpty(t)) {
                     LogManager.i(TAG, "onChanged*****dataxErrorObserver")
@@ -85,26 +103,36 @@ class SquareActivity :
             }
         }
 
-        viewModel.dataxRxAppCompatActivitySuccess
-            .observe(this, dataxDetailsSuccessObserver)
-        viewModel.dataxRxAppCompatActivityError.observe(this, dataxDetailsErrorObserver)
+        viewModel.dataxRxActivitySuccess.observe(this, dataxSuccessObserver)
+        viewModel.dataxRxActivityError.observe(this, dataxErrorObserver)
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.color_FF198CFF)
+        ImmersionBar.with(rxAppCompatActivity)
+            .keyboardEnable(false)
+            .statusBarDarkFont(false)
+            .statusBarColor(R.color.color_FF198CFF)
+            .navigationBarColor(R.color.color_FF198CFF).init()
 
         mDatabind.tevKillApp.setOnClickListener {
-            LogManager.i(TAG, "tevKillApp")
-            number = 1
-            initRxPermissionsRxAppCompatActivity(number)
+            LogManager.i(TAG, "tevKillApp");
+            number = 1;
+            initRxPermissionsRxFragment(number)
         }
         mDatabind.tevCreateAnException.setOnClickListener {
-            number = 2
-            initRxPermissionsRxAppCompatActivity(number)
+            number = 2;
+            initRxPermissionsRxFragment(number)
         }
         mDatabind.tevCreateAnException2.setOnClickListener {
-            number = 3
-            initRxPermissionsRxAppCompatActivity(number)
+            number = 3;
+            initRxPermissionsRxFragment(number)
+        }
+        mDatabind.tevEditTextInputLimits.setOnClickListener {
+//            showEditTextInputLimitsDialog()
+            startActivity(EditTextInputLimitsActivity::class.java)
+        }
+        mDatabind.tevDecimalOperation.setOnClickListener {
+            startActivity(DecimalOperationActivity::class.java)
         }
         mDatabind.imvPicture.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
@@ -114,10 +142,15 @@ class SquareActivity :
         mDatabind.tevCreateUser.setOnClickListener {
             startActivity(CreateUserActivity::class.java)
         }
+        mDatabind.tevKotlinCoroutine.setOnClickListener {
+            startActivity(KotlinCoroutineActivity::class.java)
+        }
     }
 
     override fun initLoadData() {
         initSquareData("$currentPage")
+
+        LogManager.i(TAG, "SquareActivity initLoadData")
 
 //        startAsyncTask()
 
@@ -126,6 +159,20 @@ class SquareActivity :
 //        val user3 = user as User3
 //        LogManager.i(TAG, user3.toString())
     }
+
+//    private fun startAsyncTask() {
+//        // This async task is an anonymous class and therefore has a hidden reference to the outer
+//        // class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
+//        // the activity instance will leak.
+//        object : AsyncTask<Void?, Void?, Void?>() {
+//            override fun doInBackground(vararg p0: Void?): Void? {
+//                // Do some slow work in background
+//                SystemClock.sleep(10000)
+//                return null
+//            }
+//        }.execute()
+//        Toast.makeText(rxAppCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
+//    }
 
     fun showLoading() {
         if (!mDatabind.loadView.isShown()) {
@@ -148,6 +195,10 @@ class SquareActivity :
                 datax.chapterName = success.get(1).chapterName
                 datax.link = success.get(1).link
                 datax.envelopePic = success.get(1).envelopePic
+                val ISquareService: ISquareService =
+                    ARouter.getInstance().build("/square_module/SquareServiceImpl")
+                        .navigation() as ISquareService
+                ISquareService.squareDataList = success;
             }
             hideLoading()
         }
@@ -164,34 +215,27 @@ class SquareActivity :
                 ScreenManager.dpToPx(rxAppCompatActivity, 40f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 error,
-                false
+                true
             )
             hideLoading()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 207) {
-//            initRxPermissions()
         }
     }
 
     /**
      * 請求權限，RxFragment里需要的时候直接调用就行了
      */
-    private fun initRxPermissionsRxAppCompatActivity(number: Int) {
+    private fun initRxPermissionsRxFragment(number: Int) {
         val rxPermissionsManager = RxPermissionsManager.getInstance()
-        rxPermissionsManager.initRxPermissionsRxAppCompatActivity(
+        rxPermissionsManager.initRxPermissions(
             this,
             permissions,
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
                     //所有的权限都授予
                     if (number == 1) {
-                        val baseMvvmAppRxActivity =
-                            rxAppCompatActivity as BaseMvvmAppRxActivity<*, *>
-                        baseMvvmAppRxActivity.getActivityPageManager2()?.exitApp2()
+                        val baseMvpRxAppActivity =
+                            rxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
+                        baseMvpRxAppActivity.getActivityPageManager().exitApp2();
                     } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                         val userBean: UserBean =
@@ -237,7 +281,7 @@ class SquareActivity :
                         rxAppCompatActivity.applicationContext.packageName,
                         null
                     )
-                    intent.data = uri
+                    intent!!.data = uri
                     startActivityForResult(intent, 207)
                 }
                 .create()
@@ -251,23 +295,21 @@ class SquareActivity :
      * 关闭对话框
      */
     private fun cancelPermissionsDialog() {
-        if (mPermissionsDialog != null) {
-            mPermissionsDialog?.cancel()
-            mPermissionsDialog = null
-        }
+        mPermissionsDialog?.cancel()
+        mPermissionsDialog = null
     }
 
     private fun initSquareData(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel.squareDataRxAppCompatActivity(this, currentPage)
+            viewModel.squareData2(this, currentPage)
         } else {
-            squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection))
+            squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }
 
-        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())
-        atomicBoolean.compareAndSet(atomicBoolean.get(), true)
-        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get())
+        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get());
+        atomicBoolean.compareAndSet(atomicBoolean.get(), true);
+        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get());
     }
 
 }

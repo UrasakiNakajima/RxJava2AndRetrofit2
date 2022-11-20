@@ -21,15 +21,15 @@ interface ResourceRequest {
     ): Observable<ResponseBody>
 
     @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
-    @GET("/wxarticle/chapters/json")
-    fun getResourceTabData(): Call<ResponseBody>
-
-    @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
     @GET("/wxarticle/list/{id}/{pageNum}/json")
     fun getResourceData2(
         @Path("id") tabId: Int,
         @Path("pageNum") pageNum: Int
     ): Call<ResponseBody>
+
+    @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
+    @GET("/wxarticle/chapters/json")
+    fun getResourceTabData(): Call<ResponseBody>
 
 
 }

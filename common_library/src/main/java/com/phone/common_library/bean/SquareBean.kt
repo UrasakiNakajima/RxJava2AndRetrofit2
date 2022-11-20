@@ -12,7 +12,7 @@ class SquareBean {
 
 class Data {
     var curPage: Int? = null
-    var datas: List<DataX>? = null
+    var datas: MutableList<DataX>? = null
     var offset: Int? = null
     var over: Boolean? = null
     var pageCount: Int? = null

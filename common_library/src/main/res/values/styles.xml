@@ -16,6 +16,23 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@android:color/white</item>
+
+        <item name="main_bg_1">#2C2C2C</item>
+        <item name="main_bg_2">#FA3C3C3C</item>
+        <item name="main_bg_3">#5E5E5E</item>
+
+        <item name="theme_color_1">#BDBDBD</item>
+        <item name="theme_color_2">#939393</item>
+        <item name="theme_color_3">#737272</item>
+
+        <item name="ripple_gray">#808080</item>
+
+        <item name="float_bg">#D64C4C4C</item>
+
+        <item name="division_line">#424242</item>
+
+        <item name="android:navigationBarColor">#2C2C2C</item>
+
     </style>
 
     <!--资讯频道-->

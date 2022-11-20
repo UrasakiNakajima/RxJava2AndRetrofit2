@@ -95,15 +95,9 @@ dependencies {
     implementation project(path: ':common_library')
     implementation project(path: ':base64_and_file')
 
-    //kotlin databinding
-    kapt "com.android.databinding:compiler:4.1.1"
-
     //Android路由（用于不同app之间的跳转）
 //    implementation 'com.alibaba:arouter-api:1.5.0'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
-
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    kapt 'org.projectlombok:lombok:1.18.24'
 
     kapt 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
     kapt 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'

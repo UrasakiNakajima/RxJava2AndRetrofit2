@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.gyf.immersionbar.ImmersionBar;
 import com.phone.common_library.adapter.TabFragmentStatePagerAdapter;
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
@@ -143,11 +142,7 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
         tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
         tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
 
-        ImmersionBar.with(rxAppCompatActivity)
-                .keyboardEnable(false)
-                .statusBarDarkFont(false)
-                .statusBarColor(R.color.color_FF198CFF)
-                .navigationBarColor(R.color.color_FF198CFF).init();
+        setToolbar(false, R.color.color_FF198CFF);
         switch (position) {
             case 0:
                 tevFirstPage.setTextColor(getResources().getColor(R.color.color_FFE066FF));
@@ -188,11 +183,7 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
             tevResourceCenter.setTextColor(getResources().getColor(R.color.color_FF999999));
             tevMine.setTextColor(getResources().getColor(R.color.color_FF999999));
 
-            ImmersionBar.with(rxAppCompatActivity)
-                    .keyboardEnable(false)
-                    .statusBarDarkFont(false)
-                    .statusBarColor(R.color.color_FF198CFF)
-                    .navigationBarColor(R.color.color_FF198CFF).init();
+            setToolbar(false, R.color.color_FF198CFF);
         } else {
             tevPleaseAddComponents.setVisibility(View.VISIBLE);
             layoutMain.setVisibility(View.GONE);

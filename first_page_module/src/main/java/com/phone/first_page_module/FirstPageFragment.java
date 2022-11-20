@@ -322,7 +322,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
      */
     private void initRxPermissionsRxFragment() {
         RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
-        rxPermissionsManager.initRxPermissionsRxFragment(this, permissions, new OnCommonRxPermissionsCallback() {
+        rxPermissionsManager.initRxPermissions2(this, permissions, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
                 //所有的权限都授予
@@ -397,7 +397,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
 
             bodyParams.put("type", "yule");
             bodyParams.put("key", "d5cc661633a28f3cf4b1eccff3ee7bae");
-            presenter.firstPageRxFragment(this, bodyParams);
+            presenter.firstPage(this, bodyParams);
         } else {
             firstPageDataError(getResources().getString(R.string.please_check_the_network_connection));
         }

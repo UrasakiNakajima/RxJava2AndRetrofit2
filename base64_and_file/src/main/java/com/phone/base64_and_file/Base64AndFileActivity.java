@@ -152,13 +152,13 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
             @Override
             public void onClick(View v) {
                 LogManager.i(TAG, "tevRequestPermissions");
-                initRxPermissionsRxAppCompatActivity();
+                initRxPermissions();
             }
         });
 //        tevCompressedPicture.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                initRxPermissionsRxAppCompatActivity();
+//                initRxPermissions();
 //            }
 //        });
 //        tevPictureToBase64.setOnClickListener(new View.OnClickListener() {
@@ -237,9 +237,9 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     /**
      * 請求權限，RxAppCompatActivity里需要的时候直接调用就行了
      */
-    private void initRxPermissionsRxAppCompatActivity() {
+    private void initRxPermissions() {
         RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance();
-        rxPermissionsManager.initRxPermissionsRxAppCompatActivity(this, permissions, new OnCommonRxPermissionsCallback() {
+        rxPermissionsManager.initRxPermissions(this, permissions, new OnCommonRxPermissionsCallback() {
             @Override
             public void onRxPermissionsAllPass() {
                 //所有的权限都授予

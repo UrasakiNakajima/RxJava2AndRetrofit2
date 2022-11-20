@@ -168,7 +168,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     private fun initProject(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel.projectDataRxFragment(this, currentPage)
+            viewModel.projectData(this, currentPage)
         } else {
             projectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }

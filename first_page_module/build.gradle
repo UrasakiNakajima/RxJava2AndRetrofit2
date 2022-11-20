@@ -91,16 +91,16 @@ kapt {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':common_library')
-    implementation project(path: ':irecyclerview')
+//    implementation project(path: ':irecyclerview')
 
     //Android路由（用于不同app之间的跳转）
 //    implementation 'com.alibaba:arouter-api:1.5.0'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
 
-    //播放器框架
-    implementation 'com.shuyu:GSYVideoPlayer:8.0.0'
-    implementation 'com.shuyu:gsyVideoPlayer-armv7a:8.0.0'
-    implementation 'com.shuyu:gsyVideoPlayer-arm64:8.0.0'
+//    //播放器框架
+//    implementation 'com.shuyu:GSYVideoPlayer:8.0.0'
+//    implementation 'com.shuyu:gsyVideoPlayer-armv7a:8.0.0'
+//    implementation 'com.shuyu:gsyVideoPlayer-arm64:8.0.0'
 
     //百分比进度条
     implementation 'cn.bingoogolapple:bga-progressbar:1.0.1@aar'

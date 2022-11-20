@@ -28,14 +28,14 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     private var model: SquareModelImpl = SquareModelImpl()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragmentSuccess: SingleLiveData<List<DataX>> = SingleLiveData()
+    val dataxRxFragmentSuccess: SingleLiveData<MutableList<DataX>> = SingleLiveData()
     val dataxRxFragmentError: SingleLiveData<String> = SingleLiveData()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxAppCompatActivitySuccess: SingleLiveData<List<DataX>> = SingleLiveData()
-    val dataxRxAppCompatActivityError: SingleLiveData<String> = SingleLiveData()
+    val dataxRxActivitySuccess: SingleLiveData<MutableList<DataX>> = SingleLiveData()
+    val dataxRxActivityError: SingleLiveData<String> = SingleLiveData()
 
-    override fun squareDataRxFragment(rxFragment: RxFragment, currentPage: String) {
+    override fun squareData(rxFragment: RxFragment, currentPage: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val success = model.squareData2(currentPage).execute().body()?.string()
@@ -46,8 +46,6 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                             GsonManager.getInstance()
                                 .convert(success, SquareBean::class.java)
                         if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
-//                                LogManager.i(TAG, "response*****${response.toString()}")
-
                             dataxRxFragmentSuccess.value = response.data!!.datas
                         } else {
                             dataxRxFragmentError.value =
@@ -58,43 +56,6 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                             BaseApplication.getInstance().resources.getString(R.string.loading_failed)
                     }
                 }
-
-//                model.squareData2(currentPage).enqueue(object : Callback<ResponseBody> {
-//                    override fun onResponse(
-//                        call: Call<ResponseBody>,
-//                        response: Response<ResponseBody>
-//                    ) {
-//                        launch(Dispatchers.Main) {
-//                            val success = response.body()?.string()
-//                            LogManager.i(TAG, "success*****$success")
-//                            if (!TextUtils.isEmpty(success)) {
-//                                val response: SquareBean =
-//                                    GsonManager.getInstance()
-//                                        .convert(success, SquareBean::class.java)
-//                                if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
-////                                LogManager.i(TAG, "response*****${response.toString()}")
-//
-//                                    dataxRxFragmentSuccess.value = response.data!!.datas
-//                                } else {
-//                                    dataxRxFragmentError.value =
-//                                        BaseApplication.getInstance().resources.getString(R.string.no_data_available)
-//                                }
-//                            } else {
-//                                dataxRxFragmentError.value =
-//                                    BaseApplication.getInstance().resources.getString(R.string.loading_failed)
-//                            }
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-//                        launch(Dispatchers.Main) {
-//                            val error = t.toString()
-//                            LogManager.i(TAG, "error*****$error")
-//                            dataxRxFragmentError.value = error
-//                        }
-//                    }
-//
-//                })
             }
         }
 
@@ -130,7 +91,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 //        }
     }
 
-    override fun squareDataRxAppCompatActivity(
+    override fun squareData2(
         rxAppCompatActivity: RxAppCompatActivity,
         currentPage: String
     ) {
@@ -144,23 +105,20 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                             val response: SquareBean =
                                 GsonManager.getInstance().convert(success, SquareBean::class.java)
                             if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
-//                                LogManager.i(TAG, "response*****${response.toString()}")
-
-
-                                dataxRxAppCompatActivitySuccess.value = response.data!!.datas
+                                dataxRxActivitySuccess.value = response.data!!.datas
                             } else {
-                                dataxRxAppCompatActivityError.value =
+                                dataxRxActivityError.value =
                                     BaseApplication.getInstance().resources.getString(R.string.no_data_available)
                             }
                         } else {
-                            dataxRxAppCompatActivityError.value =
+                            dataxRxActivityError.value =
                                 BaseApplication.getInstance().resources.getString(R.string.loading_failed)
                         }
                     }
 
                     override fun onError(error: String) {
                         LogManager.i(TAG, "error*****$error")
-                        dataxRxAppCompatActivityError.value = error
+                        dataxRxActivityError.value = error
                     }
                 })
     }

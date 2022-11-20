@@ -40,11 +40,13 @@
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
+        <!--
+         <activity
             android:name=".ui.ShowVideoActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+         -->
 
         <!-- 高德地图 -->
         <service android:name="com.amap.api.location.APSService" />

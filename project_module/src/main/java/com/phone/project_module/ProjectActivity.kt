@@ -74,8 +74,8 @@ class ProjectActivity :
 
         }
 
-        viewModel.dataxRxAppCompatActivitySuccess.observe(this, dataxSuccessObserver)
-        viewModel.dataxRxAppCompatActivityError.observe(this, dataxErrorObserver)
+        viewModel.dataxRxActivitySuccess.observe(this, dataxSuccessObserver)
+        viewModel.dataxRxActivityError.observe(this, dataxErrorObserver)
     }
 
     override fun initViews() {
@@ -170,7 +170,7 @@ class ProjectActivity :
     private fun initProject(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel.projectDataRxAppCompatActivity(this, currentPage)
+            viewModel.projectData2(this, currentPage)
         } else {
             projectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }

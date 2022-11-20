@@ -5,9 +5,9 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 
 interface IMinePresenter {
 
-    fun mineDataRxFragment(rxFragment: RxFragment, bodyParams: Map<String, String>)
+    fun mineData(rxFragment: RxFragment, bodyParams: Map<String, String>)
 
-    fun mineDataRxAppCompatActivity(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
+    fun mineData2(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
 
     fun userData(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
 

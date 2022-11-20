@@ -8,8 +8,8 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 
 interface ISquareViewModel {
 
-    fun squareDataRxFragment(rxFragment: RxFragment, currentPage: String)
+    fun squareData(rxFragment: RxFragment, currentPage: String)
 
-    fun squareDataRxAppCompatActivity(rxAppCompatActivity: RxAppCompatActivity, currentPage: String)
+    fun squareData2(rxAppCompatActivity: RxAppCompatActivity, currentPage: String)
 
 }

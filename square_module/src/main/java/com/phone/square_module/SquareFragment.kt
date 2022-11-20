@@ -57,7 +57,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     private var currentPage: Int = 1
-    private lateinit var dataxSuccessObserver: Observer<List<DataX>>
+    private lateinit var dataxSuccessObserver: Observer<MutableList<DataX>>
     private lateinit var dataxErrorObserver: Observer<String>
     private var datax: DataX = DataX()
     private var atomicBoolean: AtomicBoolean = AtomicBoolean(false)
@@ -73,7 +73,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
     override fun initLayoutId() = R.layout.fragment_square
 
-    override fun initViewModel() = ViewModelProvider(rxAppCompatActivity).get(SquareViewModelImpl::class.java)
+    override fun initViewModel() =
+        ViewModelProvider(rxAppCompatActivity).get(SquareViewModelImpl::class.java)
 
     override fun initData() {
         mDatabind.viewModel = viewModel
@@ -83,8 +84,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     override fun initObservers() {
-        dataxSuccessObserver = object : Observer<List<DataX>> {
-            override fun onChanged(t: List<DataX>?) {
+        dataxSuccessObserver = object : Observer<MutableList<DataX>> {
+            override fun onChanged(t: MutableList<DataX>?) {
                 if (t != null && t.size > 0) {
                     LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
                     squareDataSuccess(t)
@@ -139,114 +140,6 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         mDatabind.tevKotlinCoroutine.setOnClickListener {
             startActivity(KotlinCoroutineActivity::class.java)
         }
-    }
-
-    @SuppressLint("RestrictedApi")
-    private fun showEditTextInputLimitsDialog() {
-        val view: View =
-            LayoutInflater.from(rxAppCompatActivity)
-                .inflate(R.layout.dialog_layout_edit_text_input_limits, null, false)
-        val edtInput = view.findViewById<View>(R.id.edt_input) as EditText
-        val tevCancel = view.findViewById<View>(R.id.tev_cancel) as TextView
-        val tevConfirm = view.findViewById<View>(R.id.tev_confirm) as TextView
-        //小数点前边几位（修改这里可以自定义）
-        val beforeDecimalNum = 5
-        //小数点后边几位（修改这里可以自定义）
-        val afterDecimalNum = 5
-        //最大长度是多少位（修改这里可以自定义）
-        val maxLength = 11
-        //输入的类型可以是整数或小数
-        edtInput.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        val decimalInputFilter =
-            DecimalInputFilter(
-                beforeDecimalNum,
-                afterDecimalNum
-            )
-        //输入总长度多少位，小数几位（修改这里可以自定义）
-        val inputFilter = arrayOf(InputFilter.LengthFilter(maxLength), decimalInputFilter)
-        edtInput.filters = inputFilter
-        edtInput.addTextChangedListener(
-            DecimalTextWatcher(
-                edtInput,
-                afterDecimalNum
-            )
-        )
-        val alertDialog =
-            AlertDialog.Builder(rxAppCompatActivity, R.style.standard_dialog_style2)
-                .setView(view)
-                .show()
-
-        val widthPx = ScreenManager.getScreenWidth(rxAppCompatActivity)
-        LogManager.i(TAG, "widthPx*****" + widthPx)
-        val widthDp = ScreenManager.pxToDp(rxAppCompatActivity, widthPx.toFloat())
-        LogManager.i(TAG, "widthDp*****" + widthDp)
-        val heightPx = ScreenManager.getScreenHeight(rxAppCompatActivity)
-        LogManager.i(TAG, "heightPx*****" + heightPx)
-        val heightDp = ScreenManager.pxToDp(rxAppCompatActivity, heightPx.toFloat())
-        LogManager.i(TAG, "heightDp*****" + heightDp)
-        tevCancel.setOnClickListener { v: View? ->
-            SoftKeyboardManager.hideInputMethod(rxAppCompatActivity);
-            alertDialog.dismiss()
-        }
-        tevConfirm.setOnClickListener { v: View? ->
-            val afterData = edtInput.text.toString()
-            if (!TextUtils.isEmpty(afterData)) {
-                if (afterData.contains(".")) {
-                    val afterDataArr = afterData.split("\\.".toRegex()).toTypedArray()
-                    if ("" == afterDataArr[0]) {
-                        Toast.makeText(rxAppCompatActivity, "请输入正常整数或小数", Toast.LENGTH_SHORT)
-                            .show()
-                    } else if (afterDataArr.size == 1) { //当afterData是这种类型的小数时（0. 100.）
-                        Toast.makeText(rxAppCompatActivity, "请输入正常整数或小数", Toast.LENGTH_SHORT)
-                            .show()
-                    } else {
-//                        SquareFragment::tev_edit_text_decimal_or_integer.get(SquareFragment()).setText(edtInput.text.toString())
-                        tev_edit_text_input_limits.setText(edtInput.text.toString())
-                        SoftKeyboardManager.hideInputMethod(rxAppCompatActivity);
-                        alertDialog.dismiss()
-                    }
-                } else {
-                    if (afterData.length <= beforeDecimalNum) {
-                        val afterDataArr = afterData.split("".toRegex()).toTypedArray()
-                        if (afterDataArr.size > 1 && "0" == afterDataArr[1]) {
-                            Toast.makeText(rxAppCompatActivity, "请输入正常整数或小数", Toast.LENGTH_SHORT)
-                                .show()
-                        } else {
-                            tev_edit_text_input_limits.setText(edtInput.text.toString())
-                            SoftKeyboardManager.hideInputMethod(rxAppCompatActivity);
-                            alertDialog.dismiss()
-                        }
-                    } else {
-                        Toast.makeText(
-                            rxAppCompatActivity,
-                            "整数长度不能大于" + beforeDecimalNum + "位",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            } else {
-                Toast.makeText(rxAppCompatActivity, "请输入整数或小数", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        alertDialog.window!!.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
-        alertDialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-        edtInput.setFocusable(true)
-        edtInput.setFocusableInTouchMode(true)
-        edtInput.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-//                val widthPx = alertDialog.window!!.getAttributes().width
-//                val widthDp = ScreenManager.pxToDp(rxAppCompatActivity, widthPx.toFloat())
-//                val heightPx = alertDialog.window!!.getAttributes().height
-//                val heightDp = ScreenManager.pxToDp(rxAppCompatActivity, heightPx.toFloat())
-//                LogManager.i(TAG, "alertDialog widthDp*****" + widthDp)
-//                LogManager.i(TAG, "alertDialog heightDp*****" + heightDp)
-                SoftKeyboardManager.showInputMethod(rxAppCompatActivity, edtInput);
-            } else {
-
-            }
-        }
-        edtInput.requestFocus();
     }
 
     override fun initLoadData() {
@@ -335,7 +228,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
      */
     private fun initRxPermissionsRxFragment(number: Int) {
         val rxPermissionsManager = RxPermissionsManager.getInstance()
-        rxPermissionsManager.initRxPermissionsRxFragment(
+        rxPermissionsManager.initRxPermissions2(
             this,
             permissions,
             object : OnCommonRxPermissionsCallback {
@@ -404,16 +297,14 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
      * 关闭对话框
      */
     private fun cancelPermissionsDialog() {
-        if (mPermissionsDialog != null) {
-            mPermissionsDialog?.cancel()
-            mPermissionsDialog = null
-        }
+        mPermissionsDialog?.cancel()
+        mPermissionsDialog = null
     }
 
     private fun initSquareData(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel.squareDataRxFragment(this, currentPage)
+            viewModel.squareData(this, currentPage)
         } else {
             squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }

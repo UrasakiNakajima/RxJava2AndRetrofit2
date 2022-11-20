@@ -22,10 +22,13 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
         private val TAG: String = ResourceViewModelImpl::class.java.simpleName
     }
 
-    private var model = ResourceModelImpl()
+    private val model = ResourceModelImpl()
 
     val tabRxFragmentSuccess = SingleLiveData<MutableList<TabBean>>()
     val tabRxFragmentError = SingleLiveData<String>()
+
+    val tabRxActivitySuccess = SingleLiveData<MutableList<TabBean>>()
+    val tabRxActivityError = SingleLiveData<String>()
 
     override fun resourceTabData() {
         viewModelScope.launch {
@@ -50,6 +53,38 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                         }
                     } else {
                         tabRxFragmentError.value =
+                            BaseApplication.getInstance().resources.getString(
+                                R.string.loading_failed
+                            )
+                    }
+                }
+            }
+        }
+    }
+
+    override fun resourceTabData2() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val success =
+                    model.resourceTabData().execute().body()?.string()
+                launch(Dispatchers.Main) {
+                    LogManager.i(TAG, "resourceTabData response*****$success")
+                    if (!TextUtils.isEmpty(success)) {
+                        val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
+                        val response: ApiResponse<MutableList<TabBean>> = GsonManager.getInstance()
+                            .fromJson(success, type2)
+                        response.let {
+                            if (response.data().size > 0) {
+                                tabRxActivitySuccess.value = response.data()
+                            } else {
+                                tabRxActivityError.value =
+                                    BaseApplication.getInstance().resources.getString(
+                                        R.string.no_data_available
+                                    )
+                            }
+                        }
+                    } else {
+                        tabRxActivityError.value =
                             BaseApplication.getInstance().resources.getString(
                                 R.string.loading_failed
                             )

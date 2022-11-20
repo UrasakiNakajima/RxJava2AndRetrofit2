@@ -41,11 +41,11 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
 
         rxAppCompatActivity = this;
         activityPageManager = ActivityPageManager.getInstance();
-        activityPageManager.addActivity(this)
+        activityPageManager.addActivity(rxAppCompatActivity)
         baseApplication = application as BaseApplication
 
-        mDatabind = DataBindingUtil.setContentView(this, initLayoutId())
-        mDatabind.lifecycleOwner = this
+        mDatabind = DataBindingUtil.setContentView(rxAppCompatActivity, initLayoutId())
+        mDatabind.lifecycleOwner = rxAppCompatActivity
 
         viewModel = initViewModel()
         initData()
