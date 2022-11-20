@@ -29,12 +29,11 @@ class ProjectActivity :
         private val TAG: String = ProjectActivity::class.java.simpleName
     }
 
-    private var projectAdapter: ProjectAdapter? = null
-    private var dataList: MutableList<DataX> = mutableListOf()
+    private val projectAdapter by lazy { ProjectAdapter(rxAppCompatActivity) }
     private var isRefresh: Boolean = true
     private var currentPage: Int = 1
-    private var dataxSuccessObserver: Observer<List<DataX>>? = null;
-    private var dataxErrorObserver: Observer<String>? = null;
+    private lateinit var dataxSuccessObserver: Observer<MutableList<DataX>>
+    private lateinit var dataxErrorObserver: Observer<String>
 
     override fun initLayoutId(): Int {
         return R.layout.activity_project
@@ -49,8 +48,8 @@ class ProjectActivity :
     }
 
     override fun initObservers() {
-        dataxSuccessObserver = object : Observer<List<DataX>> {
-            override fun onChanged(t: List<DataX>?) {
+        dataxSuccessObserver = object : Observer<MutableList<DataX>> {
+            override fun onChanged(t: MutableList<DataX>?) {
                 if (t != null && t.size > 0) {
                     LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
@@ -75,15 +74,14 @@ class ProjectActivity :
 
         }
 
-        viewModel!!.getDataxRxAppCompatActivitySuccess().observe(this, dataxSuccessObserver!!)
-        viewModel!!.getDataxRxAppCompatActivityError().observe(this, dataxErrorObserver!!)
+        viewModel.dataxRxAppCompatActivitySuccess.observe(this, dataxSuccessObserver)
+        viewModel.dataxRxAppCompatActivityError.observe(this, dataxErrorObserver)
     }
 
     override fun initViews() {
         setToolbar(false, R.color.color_FF198CFF)
 
-        projectAdapter = ProjectAdapter(rxAppCompatActivity!!);
-        projectAdapter!!.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
+        projectAdapter.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
 //                startActivity(VideoViewActivity::class.java)
@@ -116,8 +114,8 @@ class ProjectActivity :
     }
 
     override fun showLoading() {
-        if (!rxAppCompatActivity!!.isFinishing()) {
-            if (mDatabind.loadView != null && !mDatabind.loadView.isShown()) {
+        if (!rxAppCompatActivity.isFinishing()) {
+            if (!mDatabind.loadView.isShown()) {
                 mDatabind.loadView.setVisibility(View.VISIBLE)
                 mDatabind.loadView.start()
             }
@@ -125,26 +123,22 @@ class ProjectActivity :
     }
 
     override fun hideLoading() {
-        if (!rxAppCompatActivity!!.isFinishing()) {
-            if (mDatabind.loadView != null && mDatabind.loadView.isShown()) {
+        if (!rxAppCompatActivity.isFinishing()) {
+            if (mDatabind.loadView.isShown()) {
                 mDatabind.loadView.stop()
                 mDatabind.loadView.setVisibility(View.GONE)
             }
         }
     }
 
-    override fun projectDataSuccess(success: List<DataX>) {
-        if (!rxAppCompatActivity!!.isFinishing()) {
+    override fun projectDataSuccess(success: MutableList<DataX>) {
+        if (!rxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                dataList.clear()
-                dataList.addAll(success)
-                projectAdapter!!.clearData();
-                projectAdapter!!.addAllData(dataList)
+                projectAdapter.clearData();
+                projectAdapter.addData(success)
                 mDatabind.refreshLayout.finishRefresh()
             } else {
-                dataList.addAll(success)
-                projectAdapter!!.clearData();
-                projectAdapter!!.addAllData(dataList)
+                projectAdapter.addData(success)
                 mDatabind.refreshLayout.finishLoadMore()
             }
             currentPage++;
@@ -152,13 +146,13 @@ class ProjectActivity :
     }
 
     override fun projectDataError(error: String) {
-        if (!rxAppCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 18,
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                ContextCompat.getColor(rxAppCompatActivity, R.color.white),
+                ContextCompat.getColor(rxAppCompatActivity, R.color.color_FFE066FF),
                 ScreenManager.dpToPx(rxAppCompatActivity, 40f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 error,
@@ -176,7 +170,7 @@ class ProjectActivity :
     private fun initProject(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel!!.projectDataRxAppCompatActivity(this, currentPage)
+            viewModel.projectDataRxAppCompatActivity(this, currentPage)
         } else {
             projectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
         }

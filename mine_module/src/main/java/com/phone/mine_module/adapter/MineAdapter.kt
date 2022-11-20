@@ -19,24 +19,16 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         private val TAG = MineAdapter::class.java.simpleName
     }
 
-    private var mJuheNewsBeanList: MutableList<Data>? = null
-
-    init {
-        mJuheNewsBeanList = mutableListOf()
-    }
-
-//    fun MineAdapter(context: Context) {
-//        this.context = context
-//    }
+    val mJuheNewsBeanList = mutableListOf<Data>()
 
     fun clearData() {
-        this.mJuheNewsBeanList!!.clear()
-        notifyDataSetChanged()
+        notifyItemRangeRemoved(0, this.mJuheNewsBeanList.size)
+        this.mJuheNewsBeanList.clear()
     }
 
-    fun addAllData(mJuheNewsBeanList: MutableList<Data>) {
-        this.mJuheNewsBeanList!!.addAll(mJuheNewsBeanList)
-        notifyDataSetChanged()
+    fun addData(mJuheNewsBeanList: MutableList<Data>) {
+        notifyItemRangeInserted(this.mJuheNewsBeanList.size, mJuheNewsBeanList.size)
+        this.mJuheNewsBeanList.addAll(mJuheNewsBeanList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -47,7 +39,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is BodyHolder) {
             val bodyHolder: BodyHolder = holder as BodyHolder
-            val juheNewsBean: Data = mJuheNewsBeanList!!.get(position)
+            val juheNewsBean: Data = mJuheNewsBeanList.get(position)
             val title: String = juheNewsBean.title
             val author: String = juheNewsBean.author_name
             val time: String = juheNewsBean.date
@@ -63,7 +55,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
             Glide.with(context).load(imgRight).into(bodyHolder.newsSummaryPhotoIvRight)
 
             bodyHolder.llRoot.setOnClickListener(View.OnClickListener { view: View? ->
-                onItemViewClickListener!!.onItemClickListener(
+                onItemViewClickListener.onItemClickListener(
                     position,
                     view
                 )
@@ -72,7 +64,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
     }
 
     override fun getItemCount(): Int {
-        return mJuheNewsBeanList!!.size
+        return mJuheNewsBeanList.size
     }
 
     private class BodyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -102,7 +94,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    private var onItemViewClickListener: OnItemViewClickListener? = null
+    private lateinit var onItemViewClickListener: OnItemViewClickListener
 
     fun setRcvOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
         this.onItemViewClickListener = onItemViewClickListener

@@ -37,8 +37,6 @@ class SquareActivity :
         private val TAG: String = SquareActivity::class.java.simpleName
     }
 
-    //    private var mainActivity: MainActivity? = null
-    //    private var dataList: MutableList<DataX> = mutableListOf()
     private var currentPage: Int = 1
     private lateinit var dataxDetailsSuccessObserver: Observer<List<DataX>>
     private lateinit var dataxDetailsErrorObserver: Observer<String>
@@ -46,7 +44,7 @@ class SquareActivity :
     private var atomicBoolean: AtomicBoolean = AtomicBoolean(false)
 
     private var mPermissionsDialog: AlertDialog? = null
-    private var number: Int? = null
+    private var number: Int = 1
 
     private var permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -98,15 +96,15 @@ class SquareActivity :
         mDatabind.tevKillApp.setOnClickListener {
             LogManager.i(TAG, "tevKillApp")
             number = 1
-            initRxPermissionsRxAppCompatActivity(number!!)
+            initRxPermissionsRxAppCompatActivity(number)
         }
         mDatabind.tevCreateAnException.setOnClickListener {
             number = 2
-            initRxPermissionsRxAppCompatActivity(number!!)
+            initRxPermissionsRxAppCompatActivity(number)
         }
         mDatabind.tevCreateAnException2.setOnClickListener {
             number = 3
-            initRxPermissionsRxAppCompatActivity(number!!)
+            initRxPermissionsRxAppCompatActivity(number)
         }
         mDatabind.imvPicture.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
@@ -144,7 +142,7 @@ class SquareActivity :
     }
 
     fun squareDataSuccess(success: List<DataX>) {
-        if (!rxAppCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity.isFinishing()) {
             if (success.size > 0) {
                 datax.title = success.get(1).title
                 datax.chapterName = success.get(1).chapterName
@@ -156,13 +154,13 @@ class SquareActivity :
     }
 
     fun squareDataError(error: String) {
-        if (!rxAppCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 18,
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                ContextCompat.getColor(rxAppCompatActivity, R.color.white),
+                ContextCompat.getColor(rxAppCompatActivity, R.color.color_FFE066FF),
                 ScreenManager.dpToPx(rxAppCompatActivity, 40f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 error,
@@ -228,7 +226,7 @@ class SquareActivity :
     private fun showSystemSetupDialog() {
         cancelPermissionsDialog()
         if (mPermissionsDialog == null) {
-            mPermissionsDialog = AlertDialog.Builder(rxAppCompatActivity!!)
+            mPermissionsDialog = AlertDialog.Builder(rxAppCompatActivity)
                 .setTitle("权限设置")
                 .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
                 .setPositiveButton("去授权") { dialog, which ->
@@ -236,10 +234,10 @@ class SquareActivity :
                     intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri = Uri.fromParts(
                         "package",
-                        rxAppCompatActivity!!.applicationContext.packageName,
+                        rxAppCompatActivity.applicationContext.packageName,
                         null
                     )
-                    intent!!.data = uri
+                    intent.data = uri
                     startActivityForResult(intent, 207)
                 }
                 .create()
@@ -262,7 +260,7 @@ class SquareActivity :
     private fun initSquareData(currentPage: String) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel!!.squareDataRxAppCompatActivity(this, currentPage)
+            viewModel.squareDataRxAppCompatActivity(this, currentPage)
         } else {
             squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection))
         }

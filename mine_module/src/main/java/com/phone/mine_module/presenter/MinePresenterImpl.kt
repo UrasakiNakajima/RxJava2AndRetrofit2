@@ -35,7 +35,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             if (baseView is IMineView) {
                 baseView.showLoading()
                 RetrofitManager.getInstance()
-                    .responseStringRxFragmentBindUntilEvent(
+                    .responseString7(
                         rxFragment,
                         model.mineData(bodyParams),
                         object : OnCommonSingleParamCallback<String> {
@@ -80,7 +80,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             if (baseView is IMineView) {
                 baseView.showLoading()
                 RetrofitManager.getInstance()
-                    .responseStringRxAppActivityBindUntilEvent(
+                    .responseString5(
                         rxAppCompatActivity,
                         model.mineData(bodyParams),
                         object : OnCommonSingleParamCallback<String> {
@@ -125,7 +125,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             if (baseView is IUserDataView) {
                 baseView.showLoading()
                 RetrofitManager.getInstance()
-                    .responseStringRxAppActivityBindUntilEvent(
+                    .responseString5(
                         rxAppCompatActivity,
                         model.userData(bodyParams),
                         object : OnCommonSingleParamCallback<String> {
@@ -169,7 +169,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             if (baseView is IUserDataView) {
                 baseView.showLoading()
                 RetrofitManager.getInstance()
-                    .responseStringRxAppActivityBindUntilEvent(
+                    .responseString5(
                         rxAppCompatActivity,
                         model.userData(accessToken, bodyParams),
                         object : OnCommonSingleParamCallback<String> {

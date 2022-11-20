@@ -3,8 +3,9 @@ package com.phone.common_library.manager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Environment;
 import android.util.ArrayMap;
+
+import androidx.annotation.NonNull;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -33,17 +34,22 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     //系统默认的UncaughtException处理类 
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     private static CrashHandlerManager instance;
-    private Context mContext;
+    private final Context mContext;
 
     /*使用Properties 来保存设备的信息和错误堆栈信息*/
-    private Properties mDeviceCrashInfo = new Properties();
+    private final Properties mDeviceCrashInfo = new Properties();
 
-    //存储设备信息 
-    private Map<String, String> mDevInfoMap = new ArrayMap<>();
-    private SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    //存储设备信息
+    private final Map<String, String> mDevInfoMap = new ArrayMap<>();
+    private final SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
     private CrashHandlerManager(Context context) {
         mContext = context;
+
+        //获得默认的handle
+        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+        //重新设置handle  设置该CrashHandler为程序的默认处理器
+        Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
     /**
@@ -64,18 +70,11 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         return instance;
     }
 
-    public void init() {
-        //获得默认的handle 
-        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-        //重新设置handle  设置该CrashHandler为程序的默认处理器 
-        Thread.setDefaultUncaughtExceptionHandler(this);
-    }
-
     /**
      * 当UncaughtException发生时会转入该函数来处理
      */
     @Override
-    public void uncaughtException(Thread t, Throwable e) {
+    public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
         //如果開發人員没有处理则让系统默认的异常处理器来处理
         if (!handleException(e) && mDefaultHandler != null) {
             mDefaultHandler.uncaughtException(t, e);
@@ -198,31 +197,28 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
             String time = formatdate.format(new Date(timestamp));
 
             String fileName = "crash-" + time + "-" + timestamp + ".txt";
-            // 判断SD卡是否存在，并且是否具有读写权限 
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/crash_xy/";//     /sdcard/crash/crash-time-timestamp.log
-                File dirs = new File(path);
-                if (!dirs.exists()) {
-                    dirs.mkdirs();
-                }
-                File file = new File(path, fileName);
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
+            String path = mContext.getExternalCacheDir() + "/crash_xy/";//     /sdcard/crash/crash-time-timestamp.log
+            File dirs = new File(path);
+            if (!dirs.exists()) {
+                dirs.mkdirs();
+            }
+            File file = new File(path, fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
 
 //                FileOutputStream trace = new FileOutputStream(file);
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-                mDeviceCrashInfo.store(bufferedOutputStream, "");
-                bufferedOutputStream.flush();
-                bufferedOutputStream.close();
-                //output 针对内存来说的 output到file中 
-                FileOutputStream fos = new FileOutputStream(file);
-                BufferedOutputStream bos = new BufferedOutputStream(fos);
-                bos.write(buffer.toString().getBytes());
-                bos.flush();
-                bos.close();
-            }
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+            mDeviceCrashInfo.store(bufferedOutputStream, "");
+            bufferedOutputStream.flush();
+            bufferedOutputStream.close();
+            //output 针对内存来说的 output到file中
+            FileOutputStream fos = new FileOutputStream(file);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            bos.write(buffer.toString().getBytes());
+            bos.flush();
+            bos.close();
             return fileName;
         } catch (Exception e) {
             LogManager.i(TAG, "an error occured while writing file...", e);
@@ -252,25 +248,22 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
             String time = formatdate.format(new Date(timestamp));
 
             String fileName = "aCrash-" + time + "-" + timestamp + ".txt";
-            // 判断SD卡是否存在，并且是否具有读写权限
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/aCrash_xy/";//     /sdcard/crash/crash-time-timestamp.log
-                File dirs = new File(path);
-                if (!dirs.exists()) {
-                    dirs.mkdirs();
-                }
-                File file = new File(path, fileName);
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
-
-                //output 针对内存来说的 output到file中
-                FileOutputStream fos = new FileOutputStream(file);
-                BufferedOutputStream bos = new BufferedOutputStream(fos);
-                bos.write(buffer.toString().getBytes());
-                bos.flush();
-                bos.close();
+            String path = mContext.getExternalCacheDir() + "/aCrash_xy/";//     /sdcard/crash/crash-time-timestamp.log
+            File dirs = new File(path);
+            if (!dirs.exists()) {
+                dirs.mkdirs();
             }
+            File file = new File(path, fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            //output 针对内存来说的 output到file中
+            FileOutputStream fos = new FileOutputStream(file);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            bos.write(buffer.toString().getBytes());
+            bos.flush();
+            bos.close();
             return fileName;
         } catch (Exception e) {
             LogManager.i(TAG, "an error occured while writing file...", e);

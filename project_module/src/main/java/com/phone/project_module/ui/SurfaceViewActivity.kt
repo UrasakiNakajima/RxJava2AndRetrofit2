@@ -80,17 +80,22 @@ class SurfaceViewActivity : BaseRxAppActivity() {
         surface_view.holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
         surface_view.holder.addCallback(object : SurfaceHolder.Callback {
 
-            override fun surfaceChanged(p0: SurfaceHolder?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun surfaceDestroyed(p0: SurfaceHolder?) {
-
-            }
-
-            override fun surfaceCreated(p0: SurfaceHolder?) {
+            override fun surfaceCreated(holder: SurfaceHolder) {
                 setVideoParam(url, VIDEO_TYPE_URI)
                 seekBarListener()
+            }
+
+            override fun surfaceChanged(
+                holder: SurfaceHolder,
+                format: Int,
+                width: Int,
+                height: Int
+            ) {
+
+            }
+
+            override fun surfaceDestroyed(holder: SurfaceHolder) {
+
             }
 
         })
@@ -122,33 +127,34 @@ class SurfaceViewActivity : BaseRxAppActivity() {
         mediaPlayer!!.setDisplay(surface_view.holder);
 
         disposable = Flowable.create(FlowableOnSubscribe<Bitmap> { emitter ->
-            val bitmap: Bitmap = VideoImageManager.getVideoImage(this@SurfaceViewActivity, url, false)!!
+            val bitmap: Bitmap =
+                VideoImageManager.getVideoImage(this@SurfaceViewActivity, url, false)!!
 
             emitter.onNext(bitmap)
             emitter.onComplete()
         }, BackpressureStrategy.BUFFER)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Consumer<Bitmap> {
-                    @Throws(Exception::class)
-                    override fun accept(b: Bitmap) {
-                        imv_place_holder.setImageBitmap(b)
-                        mediaPlayer!!.prepareAsync();
-                        /*准备完成后回调*/
-                        mediaPlayer!!.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
-                            override fun onPrepared(mp: MediaPlayer?) {
-                                if (mediaPlayer != null) {
-                                    isPlaying = false
-                                    tev_total_time.setText(durationTime())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Consumer<Bitmap> {
+                @Throws(Exception::class)
+                override fun accept(b: Bitmap) {
+                    imv_place_holder.setImageBitmap(b)
+                    mediaPlayer!!.prepareAsync();
+                    /*准备完成后回调*/
+                    mediaPlayer!!.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
+                        override fun onPrepared(mp: MediaPlayer?) {
+                            if (mediaPlayer != null) {
+                                isPlaying = false
+                                tev_total_time.setText(durationTime())
 //                                    sendTime()
-                                    startTimer()
-                                    progress_circular.visibility = View.GONE
-                                    imv_play.visibility = View.VISIBLE
-                                    layout_play_control.visibility = View.VISIBLE
-                                }
+                                startTimer()
+                                progress_circular.visibility = View.GONE
+                                imv_play.visibility = View.VISIBLE
+                                layout_play_control.visibility = View.VISIBLE
                             }
+                        }
 
-                        })
+                    })
 
 //                        //播放内容监听
 //                        mediaPlayer!!.setOnInfoListener((object : MediaPlayer.OnInfoListener {
@@ -175,51 +181,52 @@ class SurfaceViewActivity : BaseRxAppActivity() {
 //
 //                        })
 
-                        //播放完成回调
-                        mediaPlayer!!.setOnCompletionListener(object : MediaPlayer.OnCompletionListener {
-                            override fun onCompletion(mp: MediaPlayer?) {
-                                isCompletion = true
-                                isPlaying = false
-                                imv_place_holder.visibility = View.VISIBLE
-                                imv_play.visibility = View.VISIBLE
-                                layout_play_control.visibility = View.VISIBLE
+                    //播放完成回调
+                    mediaPlayer!!.setOnCompletionListener(object :
+                        MediaPlayer.OnCompletionListener {
+                        override fun onCompletion(mp: MediaPlayer?) {
+                            isCompletion = true
+                            isPlaying = false
+                            imv_place_holder.visibility = View.VISIBLE
+                            imv_play.visibility = View.VISIBLE
+                            layout_play_control.visibility = View.VISIBLE
 //                                resetPlay()
-                                resetVideo()
-                            }
-                        })
+                            resetVideo()
+                        }
+                    })
 
-                        surface_view.setOnClickListener(View.OnClickListener {
-                            if (isPlaying) {
-                                if (isShowImvPlay) {
-                                    isShowImvPlay = false
+                    surface_view.setOnClickListener(View.OnClickListener {
+                        if (isPlaying) {
+                            if (isShowImvPlay) {
+                                isShowImvPlay = false
 //                                    stopTimerImvPlay()
-                                    imv_play.visibility = View.GONE
-                                    layout_play_control.visibility = View.GONE
-                                    LogManager.i(TAG, "surface_view OnClickListener")
-                                } else {
-                                    isShowImvPlay = true
+                                imv_play.visibility = View.GONE
+                                layout_play_control.visibility = View.GONE
+                                LogManager.i(TAG, "surface_view OnClickListener")
+                            } else {
+                                isShowImvPlay = true
 //                                    stopTimerImvPlay()
 //                                    startTimerImvPlay();
-                                    imv_play.visibility = View.VISIBLE
-                                    layout_play_control.visibility = View.VISIBLE
-                                }
-                            }
-                        })
-                        imv_play.setOnClickListener(View.OnClickListener {
-                            if (isPlaying) {
-                                pausePlay()
-//                                stopTimerImvPlay()
-                                isShowImvPlay = false
                                 imv_play.visibility = View.VISIBLE
                                 layout_play_control.visibility = View.VISIBLE
-                            } else {
-                                startPlay()
-//                                startTimerImvPlay()
-                                isShowImvPlay = true
                             }
-                        })
-                    }
-                })
+                        }
+                    })
+                    imv_play.setOnClickListener(View.OnClickListener {
+                        if (isPlaying) {
+                            pausePlay()
+//                                stopTimerImvPlay()
+                            isShowImvPlay = false
+                            imv_play.visibility = View.VISIBLE
+                            layout_play_control.visibility = View.VISIBLE
+                        } else {
+                            startPlay()
+//                                startTimerImvPlay()
+                            isShowImvPlay = true
+                        }
+                    })
+                }
+            })
 
     }
 
@@ -283,28 +290,28 @@ class SurfaceViewActivity : BaseRxAppActivity() {
                 emitter.onComplete()
             }, BackpressureStrategy.BUFFER)
 //                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : Consumer<String> {
-                        @Throws(Exception::class)
-                        override fun accept(s: String) {
-                            LogManager.i(TAG, "accept current thread***" + Thread.currentThread().name)
-                            val currentPosition = mediaPlayer!!.currentPosition
-                            if (isPlaying) {
-                                tev_current_time.text = playCurrentTime()
-                                if (currentPosition == oldPosition) {
-                                    if (isPlaying) {
-                                        progress_circular.visibility = View.VISIBLE
-                                    } else {
-                                        progress_circular.visibility = View.GONE
-                                    }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Consumer<String> {
+                    @Throws(Exception::class)
+                    override fun accept(s: String) {
+                        LogManager.i(TAG, "accept current thread***" + Thread.currentThread().name)
+                        val currentPosition = mediaPlayer!!.currentPosition
+                        if (isPlaying) {
+                            tev_current_time.text = playCurrentTime()
+                            if (currentPosition == oldPosition) {
+                                if (isPlaying) {
+                                    progress_circular.visibility = View.VISIBLE
                                 } else {
                                     progress_circular.visibility = View.GONE
-                                    imv_place_holder.visibility = View.GONE
                                 }
-                                oldPosition = currentPosition
+                            } else {
+                                progress_circular.visibility = View.GONE
+                                imv_place_holder.visibility = View.GONE
                             }
+                            oldPosition = currentPosition
                         }
-                    })
+                    }
+                })
         }
 
         timer!!.schedule(timerTask2, 0, 500)

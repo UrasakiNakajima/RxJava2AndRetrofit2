@@ -9,13 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.EventScheduleActivity"></activity>
+        <activity
+            android:name=".ui.EventScheduleActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.SurfaceViewActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity
             android:name=".ui.VideoViewActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
     </application>

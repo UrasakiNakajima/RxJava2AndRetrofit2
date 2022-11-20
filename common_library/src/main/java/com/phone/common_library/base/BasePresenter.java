@@ -13,11 +13,9 @@ import java.lang.ref.WeakReference;
 public class BasePresenter<T> {
 
     private WeakReference<T> modelView;
-    //    protected CompositeDisposable compositeDisposable;
 
     protected void attachView(T view) {
         modelView = new WeakReference<>(view);
-//        compositeDisposable = new CompositeDisposable();
     }
 
     protected T obtainView() {
@@ -34,15 +32,6 @@ public class BasePresenter<T> {
             modelView.clear();
             modelView = null;
         }
-//        unSubscribe();
     }
-
-//    protected void unSubscribe() {
-//        if (compositeDisposable != null && compositeDisposable.size() > 0) {
-//            compositeDisposable.clear();
-//            compositeDisposable = null;
-//        }
-//    }
-
 
 }

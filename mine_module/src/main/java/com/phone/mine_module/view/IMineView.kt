@@ -5,7 +5,7 @@ import com.phone.mine_module.bean.Data
 
 interface IMineView : IBaseView {
 
-    fun mineDataSuccess(success: List<Data>)
+    fun mineDataSuccess(success: MutableList<Data>)
 
     fun mineDataError(error: String)
 

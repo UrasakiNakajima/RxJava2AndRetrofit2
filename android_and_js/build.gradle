@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 31
+//    buildToolsVersion "31.0.3"
 
     defaultConfig {
         applicationId "com.phone.android_and_js"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -23,7 +23,7 @@ android {
         }
     }
 
-    //开启Java1.8 能够使用lambda表达式
+    //开启Java11 能够使用lambda表达式
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -31,8 +31,8 @@ android {
 }
 
 dependencies {
-
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.+'

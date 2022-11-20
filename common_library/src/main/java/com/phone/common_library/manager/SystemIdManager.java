@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Environment;
 import android.telephony.TelephonyManager;
 
 import androidx.core.app.ActivityCompat;
@@ -258,7 +257,7 @@ public class SystemIdManager {
      */
     private static File getSystemIdDir(Context context) {
         File file = null;
-        File dirs = new File(Environment.getExternalStorageDirectory(), CACHE_IMAGE_DIR);
+        File dirs = new File(context.getExternalCacheDir(), CACHE_IMAGE_DIR);
         if (!dirs.exists()) {
             LogManager.i(TAG, "!dir.exists()");
 //            dir.mkdirs();

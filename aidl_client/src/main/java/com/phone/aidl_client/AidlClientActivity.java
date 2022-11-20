@@ -100,7 +100,7 @@ public class AidlClientActivity extends BaseRxAppActivity {
             mBookList.clear();
             mBookList.addAll(mBookManager.getBookList());
             mBookAdapter.clearData();
-            mBookAdapter.addAllData(mBookList);
+            mBookAdapter.addData(mBookList);
             LogManager.i(TAG, "initAddBook*****" + book.toString());
         } catch (RemoteException e) {
             e.printStackTrace();

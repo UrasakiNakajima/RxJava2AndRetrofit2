@@ -37,7 +37,7 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
                 mainView.showLoading();
 
                 RetrofitManager.getInstance()
-                        .responseStringRxAppActivityBindToLifecycle(rxAppCompatActivity, model.mainData(bodyParams), new OnCommonSingleParamCallback<String>() {
+                        .responseString3(rxAppCompatActivity, model.mainData(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
 

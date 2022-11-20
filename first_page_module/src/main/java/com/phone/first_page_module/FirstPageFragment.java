@@ -27,6 +27,7 @@ import com.amap.api.location.AMapLocation;
 import com.phone.common_library.BaseApplication;
 import com.phone.common_library.base.BaseMvpRxFragment;
 import com.phone.common_library.base.IBaseView;
+import com.phone.common_library.bean.FirstPageResponse;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.callback.OnItemViewClickListener;
@@ -39,7 +40,6 @@ import com.phone.common_library.service.IFirstPageService;
 import com.phone.common_library.service.ISquareService;
 import com.phone.common_library.ui.NewsDetailActivity;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
-import com.phone.common_library.bean.FirstPageResponse;
 import com.phone.first_page_module.manager.AMAPLocationManager;
 import com.phone.first_page_module.presenter.FirstPagePresenterImpl;
 import com.phone.first_page_module.view.IFirstPageView;
@@ -48,7 +48,6 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +71,6 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     private RecyclerView rcvData;
     private QMUILoadingView loadView;
 
-
-    private List<FirstPageResponse.ResultData.JuheNewsBean> mJuheNewsBeanList = new ArrayList<>();
     private FirstPageAdapter firstPageAdapter;
     //	private FirstPageAdapter2                              firstPageAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -192,14 +189,12 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
 
                 if (view.getId() == R.id.ll_root) {
                     Intent intent = new Intent(rxAppCompatActivity, NewsDetailActivity.class);
-                    intent.putExtra("detailUrl", mJuheNewsBeanList.get(position).getUrl());
+                    intent.putExtra("detailUrl", firstPageAdapter.mJuheNewsBeanList.get(position).getUrl());
                     startActivity(intent);
                 }
             }
         });
         rcvData.setAdapter(firstPageAdapter);
-        firstPageAdapter.clearData();
-        firstPageAdapter.addAllData(mJuheNewsBeanList);
 
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -284,18 +279,14 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         if (!rxAppCompatActivity.isFinishing()) {
             IFirstPageService IFirstPageService = (IFirstPageService) ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl").navigation();
             if (isRefresh) {
-                mJuheNewsBeanList.clear();
-                mJuheNewsBeanList.addAll(success);
                 firstPageAdapter.clearData();
-                firstPageAdapter.addAllData(mJuheNewsBeanList);
+                firstPageAdapter.addData(success);
                 refreshLayout.finishRefresh();
             } else {
-                mJuheNewsBeanList.addAll(success);
-                firstPageAdapter.clearData();
-                firstPageAdapter.addAllData(mJuheNewsBeanList);
+                firstPageAdapter.addData(success);
                 refreshLayout.finishLoadMore();
             }
-            IFirstPageService.setFirstPageDataList(mJuheNewsBeanList);
+            IFirstPageService.setFirstPageDataList(firstPageAdapter.mJuheNewsBeanList);
             hideLoading();
         }
     }

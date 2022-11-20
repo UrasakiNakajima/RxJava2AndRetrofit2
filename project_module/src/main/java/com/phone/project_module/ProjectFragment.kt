@@ -31,23 +31,23 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     }
 
     private val projectAdapter by lazy { ProjectAdapter(rxAppCompatActivity) }
-    private var dataList: MutableList<DataX> = mutableListOf()
     private var isRefresh: Boolean = true
     private var currentPage: Int = 1
-    private var dataxSuccessObserver: Observer<List<DataX>>? = null;
+    private var dataxSuccessObserver: Observer<MutableList<DataX>>? = null;
     private var dataxErrorObserver: Observer<String>? = null;
 
     override fun initLayoutId() = R.layout.fragment_project
 
-    override fun initViewModel() = ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
+    override fun initViewModel() =
+        ViewModelProvider(rxAppCompatActivity).get(ProjectViewModelImpl::class.java)
 
     override fun initData() {
 //        mDatabind.setVariable()
     }
 
     override fun initObservers() {
-        dataxSuccessObserver = object : Observer<List<DataX>> {
-            override fun onChanged(t: List<DataX>?) {
+        dataxSuccessObserver = object : Observer<MutableList<DataX>> {
+            override fun onChanged(t: MutableList<DataX>?) {
                 if (t != null && t.size > 0) {
                     LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
@@ -71,8 +71,8 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
 
         }
 
-        viewModel.getDataxRxFragmentSuccess().observe(this, dataxSuccessObserver!!)
-        viewModel.getDataxRxFragmentError().observe(this, dataxErrorObserver!!)
+        viewModel.dataxRxFragmentSuccess.observe(this, dataxSuccessObserver!!)
+        viewModel.dataxRxFragmentError.observe(this, dataxErrorObserver!!)
     }
 
     override fun initViews() {
@@ -129,18 +129,14 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
         }
     }
 
-    override fun projectDataSuccess(success: List<DataX>) {
+    override fun projectDataSuccess(success: MutableList<DataX>) {
         if (!rxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                dataList.clear()
-                dataList.addAll(success)
                 projectAdapter.clearData();
-                projectAdapter.addAllData(dataList)
+                projectAdapter.addData(success)
                 mDatabind.refreshLayout.finishRefresh()
             } else {
-                dataList.addAll(success)
-                projectAdapter.clearData();
-                projectAdapter.addAllData(dataList)
+                projectAdapter.addData(success)
                 mDatabind.refreshLayout.finishLoadMore()
             }
             currentPage++;

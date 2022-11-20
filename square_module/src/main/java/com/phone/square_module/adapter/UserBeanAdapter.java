@@ -25,28 +25,20 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_BODY = 1;
     private static final int TYPE_FOOTER = 2;
     private final Context context;
-    private List<UserBean> userBeanList = new ArrayList<>();
+    private final List<UserBean> userBeanList = new ArrayList<>();
 
     public UserBeanAdapter(Context context) {
         this.context = context;
     }
 
     public void clearData() {
+        notifyItemRangeRemoved(0, this.userBeanList.size());
         this.userBeanList.clear();
-        notifyDataSetChanged();
     }
 
-    public void addAllData(List<UserBean> userBeanList) {
+    public void addData(List<UserBean> userBeanList) {
+        notifyItemRangeInserted(this.userBeanList.size(), userBeanList.size());
         this.userBeanList.addAll(userBeanList);
-        notifyDataSetChanged();
-    }
-
-    public void refreshData() {
-        notifyDataSetChanged();
-    }
-
-    public void refreshSingleData(int position) {
-        notifyItemChanged(position);
     }
 
     public List<UserBean> getUserBeanList() {

@@ -42,11 +42,8 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
         private val TAG: String = MineFragment::class.java.name
     }
 
-//    private var mainActivity: MainActivity? = null
-
-    private var juheNewsBeanList: MutableList<Data> = mutableListOf()
-    private var mineAdapter: MineAdapter? = null
-    private var linearLayoutManager: LinearLayoutManager? = null
+    private val mineAdapter by lazy { MineAdapter(rxAppCompatActivity) }
+    private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
 
     override fun onCreateView(
@@ -88,12 +85,11 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
     private fun initAdapter() {
         linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
-        linearLayoutManager!!.setOrientation(RecyclerView.VERTICAL)
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
         rcv_data.layoutManager = (linearLayoutManager)
         rcv_data.itemAnimator = DefaultItemAnimator()
 
-        mineAdapter = MineAdapter(rxAppCompatActivity!!)
-        mineAdapter!!.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
+        mineAdapter.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
 //                bodyParams.clear()
@@ -107,14 +103,12 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
                 if (view?.id == R.id.ll_root) {
                     val intent = Intent(rxAppCompatActivity, NewsDetailActivity::class.java)
-                    intent.putExtra("detailUrl", juheNewsBeanList.get(position).url)
+                    intent.putExtra("detailUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
                     startActivity(intent)
                 }
             }
         })
         rcv_data.setAdapter(mineAdapter)
-        mineAdapter!!.clearData()
-        mineAdapter!!.addAllData(juheNewsBeanList)
 
         refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refresh_layout: RefreshLayout) {
@@ -152,31 +146,28 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
         }
     }
 
-    override fun mineDataSuccess(success: List<Data>) {
-        if (!rxAppCompatActivity!!.isFinishing()) {
+    override fun mineDataSuccess(success: MutableList<Data>) {
+        if (!rxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                juheNewsBeanList.clear()
-                juheNewsBeanList.addAll(success)
-                mineAdapter!!.clearData();
-                mineAdapter!!.addAllData(juheNewsBeanList)
+                mineAdapter.clearData();
+                mineAdapter.addData(mineAdapter.mJuheNewsBeanList)
                 refresh_layout.finishRefresh()
             } else {
-                juheNewsBeanList.addAll(success)
-                mineAdapter!!.clearData();
-                mineAdapter!!.addAllData(juheNewsBeanList)
+                mineAdapter.clearData();
+                mineAdapter.addData(mineAdapter.mJuheNewsBeanList)
                 refresh_layout.finishLoadMore()
             }
         }
     }
 
     override fun mineDataError(error: String) {
-        if (!rxAppCompatActivity!!.isFinishing()) {
+        if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 18,
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity!!, R.color.color_FFE066FF),
+                ContextCompat.getColor(rxAppCompatActivity, R.color.white),
+                ContextCompat.getColor(rxAppCompatActivity, R.color.color_FFE066FF),
                 ScreenManager.dpToPx(rxAppCompatActivity, 40f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 error,

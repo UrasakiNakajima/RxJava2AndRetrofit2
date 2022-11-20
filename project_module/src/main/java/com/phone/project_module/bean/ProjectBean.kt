@@ -8,7 +8,7 @@ data class ProjectBean(
 
 data class Data(
         val curPage: Int,
-        val datas: List<DataX>,
+        val datas: MutableList<DataX>,
         val offset: Int,
         val over: Boolean,
         val pageCount: Int,

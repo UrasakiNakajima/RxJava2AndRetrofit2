@@ -35,13 +35,13 @@ public class VideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void clearData() {
+        notifyItemRangeRemoved(0, this.videoListBeanList.size());
         this.videoListBeanList.clear();
-        notifyDataSetChanged();
     }
 
-    public void addAllData(List<VideoListBean.LargeImageListBean> videoListBeanList) {
+    public void addData(List<VideoListBean.LargeImageListBean> videoListBeanList) {
+        notifyItemRangeInserted(this.videoListBeanList.size(), videoListBeanList.size());
         this.videoListBeanList.addAll(videoListBeanList);
-        notifyDataSetChanged();
     }
 
     @NonNull

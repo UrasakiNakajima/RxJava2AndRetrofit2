@@ -15,6 +15,7 @@
         tools:replace="android:name">
         <activity
             android:name=".SquareActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>

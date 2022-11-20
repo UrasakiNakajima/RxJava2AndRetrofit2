@@ -26,13 +26,13 @@ class ResourceAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
     var list: MutableList<ArticleListBean> = mutableListOf()
 
     fun clearData() {
+        notifyItemRangeRemoved(0, this.list.size)
         this.list.clear()
-        notifyItemMoved(0, this.list.size)
     }
 
     fun addData(list: MutableList<ArticleListBean>) {
-        this.list.addAll(list)
         notifyItemRangeInserted(this.list.size, list.size)
+        this.list.addAll(list)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

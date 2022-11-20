@@ -5,7 +5,7 @@ import com.phone.project_module.bean.DataX
 
 interface IProjectChildView : IBaseView {
 
-    fun projectDataSuccess(success: List<DataX>)
+    fun projectDataSuccess(success: MutableList<DataX>)
 
     fun projectDataError(error: String)
 

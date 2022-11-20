@@ -10,7 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.WebViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".ResourceActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
     </application>

@@ -22,6 +22,7 @@
 
         <activity
             android:name=".FirstPageActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -32,10 +33,12 @@
         </activity>
         <activity
             android:name=".ui.VideoListActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ShowVideoActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 

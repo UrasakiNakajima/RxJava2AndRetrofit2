@@ -47,7 +47,7 @@ public class PictureManager {
                                           Bitmap bitmap,
                                           String fileName) {
         //一定要是外部目录
-//		String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+//		String path = context.getExternalCacheDir()
 //						  + File.separator + "Pictures";
         String path = File.separator + "storage"
                 + File.separator + "emulated"
@@ -167,7 +167,7 @@ public class PictureManager {
                                           String fileName,
                                           OnCommonSingleParamCallback<Integer> onCommonSingleParamCallback) {
         //一定要是外部目录
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+        String path = context.getExternalCacheDir()
                 + File.separator + "Pictures";
         String filesDir = context.getFilesDir().getAbsolutePath();
         //先判断是否是沙盒内部目录

@@ -17,7 +17,7 @@ import java.util.List;
 public class Base64StrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = Base64StrAdapter.class.getSimpleName();
-    private List<String> base64StrList = new ArrayList<>();
+    public List<String> base64StrList = new ArrayList<>();
     private Context context;
 
     public Base64StrAdapter(Context context) {
@@ -30,13 +30,13 @@ public class Base64StrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void clearData() {
+        notifyItemRangeRemoved(0, this.base64StrList.size());
         this.base64StrList.clear();
-        notifyDataSetChanged();
     }
 
-    public void addAllData(List<String> base64StrList) {
+    public void addData(List<String> base64StrList) {
+        notifyItemRangeInserted(this.base64StrList.size(), base64StrList.size());
         this.base64StrList.addAll(base64StrList);
-        notifyDataSetChanged();
     }
 
     @NonNull

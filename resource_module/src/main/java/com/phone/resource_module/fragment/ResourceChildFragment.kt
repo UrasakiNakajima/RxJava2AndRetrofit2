@@ -31,7 +31,6 @@ class ResourceChildFragment :
 
     private lateinit var dataxSuccessObserver: Observer<MutableList<ArticleListBean>>
     private lateinit var dataxErrorObserver: Observer<String>
-
     private val resourceAdapter by lazy { ResourceAdapter(rxAppCompatActivity) }
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
@@ -50,7 +49,7 @@ class ResourceChildFragment :
     override fun initLayoutId() = R.layout.fragment_resource_child
 
     override fun initViewModel() =
-        ViewModelProvider(this).get(ResourceChildViewModelImpl::class.java)
+        ViewModelProvider(rxAppCompatActivity).get(ResourceChildViewModelImpl::class.java)
 
     override fun initData() {
         type = arguments?.getInt("type") ?: 0

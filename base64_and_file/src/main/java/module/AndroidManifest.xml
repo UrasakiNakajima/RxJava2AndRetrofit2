@@ -11,7 +11,9 @@
             android:name=".Base64AndFileActivity"
             android:exported="false" />
 
-        <service android:name=".service.Base64AndFileService" />
+        <service
+            android:name=".service.Base64AndFileService"
+            android:exported="false" />
     </application>
 
 </manifest>

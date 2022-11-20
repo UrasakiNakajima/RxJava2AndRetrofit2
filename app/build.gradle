@@ -12,13 +12,13 @@ tasks.withType(JavaCompile) {
 }
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 31
+//    buildToolsVersion "31.0.3"
 
     defaultConfig {
         applicationId "com.phone.rxjava2andretrofit2"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 31
         versionCode 2
         versionName "2.0"
 
@@ -53,7 +53,7 @@ android {
         experimental = true
     }
 
-    //开启Java1.8 能够使用lambda表达式
+    //开启Java11 能够使用lambda表达式
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

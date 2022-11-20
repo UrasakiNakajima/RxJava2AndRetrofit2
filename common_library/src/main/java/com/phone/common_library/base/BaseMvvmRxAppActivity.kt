@@ -29,20 +29,19 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         private val TAG = BaseMvvmAppRxActivity::class.java.simpleName
     }
 
-
     //该类绑定的ViewDataBinding
-    lateinit var mDatabind: DB
-    lateinit var viewModel: VM
-    protected var rxAppCompatActivity: RxAppCompatActivity? = null
-    protected var baseApplication: BaseApplication? = null
-    var activityPageManager: ActivityPageManager? = null
+    protected lateinit var mDatabind: DB
+    protected lateinit var viewModel: VM
+    protected lateinit var rxAppCompatActivity: RxAppCompatActivity
+    protected lateinit var baseApplication: BaseApplication
+    private lateinit var activityPageManager: ActivityPageManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         rxAppCompatActivity = this;
         activityPageManager = ActivityPageManager.getInstance();
-        activityPageManager!!.addActivity(this)
+        activityPageManager.addActivity(this)
         baseApplication = application as BaseApplication
 
         mDatabind = DataBindingUtil.setContentView(this, initLayoutId())
@@ -288,12 +287,11 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     override fun onDestroy() {
         mDatabind.unbind()
         viewModelStore.clear()
-        if (activityPageManager != null) {
-            if (activityPageManager!!.isLastAliveActivity.get()) {
-                killAppProcess(baseApplication!!)
-            }
-            activityPageManager!!.removeActivity(rxAppCompatActivity)
+        if (activityPageManager.isLastAliveActivity.get()) {
+            killAppProcess(baseApplication)
         }
+        activityPageManager.removeActivity(rxAppCompatActivity)
         super.onDestroy()
     }
+
 }

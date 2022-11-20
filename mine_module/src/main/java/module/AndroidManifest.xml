@@ -21,6 +21,7 @@
             android:exported="false" />
         <activity
             android:name=".MineActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -31,6 +32,7 @@
         </activity>
         <activity
             android:name=".ui.UserDataActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
     </application>

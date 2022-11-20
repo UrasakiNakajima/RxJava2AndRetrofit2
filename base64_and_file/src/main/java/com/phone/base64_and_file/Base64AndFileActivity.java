@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
@@ -55,8 +54,6 @@ import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -94,15 +91,9 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     private TextView tevResetData;
     private QMUILoadingView loadView;
 
-
     // where this is an Activity or Fragment instance
     //    private Binder binder;
     private String dirsPath;
-    private String dirsPathCompressed;
-    private String dirsPathCompressedRecover;
-
-    private List<String> base64StrList = new ArrayList<>();
-    private LinearLayoutManager linearLayoutManager;
     private Base64StrAdapter base64StrAdapter;
 
     private Timer timer;
@@ -111,7 +102,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
     private AlertDialog mPermissionsDialog;
     private Base64AndFileBean base64AndFileBean;
-    private String[] permissions = new String[]{
+    private final String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE};
@@ -128,11 +119,11 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
     @Override
     protected void initData() {
-        dirsPath = Environment.getExternalStorageDirectory().getAbsolutePath()
+        dirsPath = baseApplication.getExternalCacheDir()
                 + File.separator + "Pictures";
-        dirsPathCompressed = Environment.getExternalStorageDirectory().getAbsolutePath()
+        String dirsPathCompressed = baseApplication.getExternalCacheDir()
                 + File.separator + "PicturesCompressed";
-        dirsPathCompressedRecover = Environment.getExternalStorageDirectory().getAbsolutePath()
+        String dirsPathCompressedRecover = baseApplication.getExternalCacheDir()
                 + File.separator + "PicturesCompressedRecover";
         base64AndFileBean = new Base64AndFileBean();
         base64AndFileBean.setDirsPath(dirsPath);
@@ -199,15 +190,13 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     }
 
     private void initAdapter() {
-        linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvBase64Str.setLayoutManager(linearLayoutManager);
         rcvBase64Str.setItemAnimator(new DefaultItemAnimator());
 
-        base64StrAdapter = new Base64StrAdapter(this);
+        base64StrAdapter = new Base64StrAdapter(rxAppCompatActivity);
         rcvBase64Str.setAdapter(base64StrAdapter);
-        base64StrAdapter.clearData();
-        base64StrAdapter.addAllData(base64StrList);
     }
 
     @Override
@@ -441,7 +430,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                         rcvBase64Str.setVisibility(View.VISIBLE);
 
                         base64StrAdapter.clearData();
-                        base64StrAdapter.addAllData(base64AndFileBean.getBase64StrList());
+                        base64StrAdapter.addData(base64AndFileBean.getBase64StrList());
 
                         Observable.timer(1000, TimeUnit.MILLISECONDS)
                                 .subscribeOn(Schedulers.io()) //给上面分配了异步线程
@@ -709,9 +698,9 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            if (base64StrList.size() > 0) {
+                            if (base64StrAdapter.base64StrList.size() > 0) {
                                 //RecyclerView自動滑動到底部，看看最後一個字符串和打印出來的字符串是否一致
-                                rcvBase64Str.scrollToPosition(base64StrList.size() - 1);
+                                rcvBase64Str.scrollToPosition(base64StrAdapter.base64StrList.size() - 1);
                             }
                         }
                     });
@@ -763,10 +752,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         tevPictureToBase64.setVisibility(View.GONE);
 
         rcvBase64Str.setVisibility(View.VISIBLE);
-        this.base64StrList.clear();
-        this.base64StrList.addAll(base64AndFileBean.getBase64StrList());
-        base64StrAdapter.clearData();
-        base64StrAdapter.addAllData(this.base64StrList);
+        base64StrAdapter.addData(success.getBase64StrList());
         hideLoading();
         startTimer();
 
@@ -816,9 +802,9 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         tevCompressedPicture.setVisibility(View.VISIBLE);
         imvCompressedPicture.setVisibility(View.GONE);
         tevPictureToBase64.setVisibility(View.VISIBLE);
-        if (base64StrList.size() > 0) {
+        if (base64StrAdapter.base64StrList.size() > 0) {
             rcvBase64Str.scrollToPosition(0);
-            base64StrList.clear();
+            base64StrAdapter.base64StrList.clear();
             base64StrAdapter.clearData();
         }
         rcvBase64Str.setVisibility(View.GONE);

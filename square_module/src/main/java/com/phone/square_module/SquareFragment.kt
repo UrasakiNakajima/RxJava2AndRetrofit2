@@ -57,13 +57,13 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     private var currentPage: Int = 1
-    private var dataxSuccessObserver: Observer<List<DataX>>? = null
-    private var dataxErrorObserver: Observer<String>? = null
+    private lateinit var dataxSuccessObserver: Observer<List<DataX>>
+    private lateinit var dataxErrorObserver: Observer<String>
     private var datax: DataX = DataX()
     private var atomicBoolean: AtomicBoolean = AtomicBoolean(false)
 
     private var mPermissionsDialog: AlertDialog? = null
-    private var number: Int? = null
+    private var number: Int = 1
 
     private var permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -73,7 +73,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
     override fun initLayoutId() = R.layout.fragment_square
 
-    override fun initViewModel() = ViewModelProvider(this).get(SquareViewModelImpl::class.java)
+    override fun initViewModel() = ViewModelProvider(rxAppCompatActivity).get(SquareViewModelImpl::class.java)
 
     override fun initData() {
         mDatabind.viewModel = viewModel
@@ -103,24 +103,23 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             }
         }
 
-//        dataxSuccessObserver = null
-        viewModel.dataxRxFragmentSuccess.observe(this, dataxSuccessObserver!!)
-        viewModel.dataxRxFragmentError.observe(this, dataxErrorObserver!!)
+        viewModel.dataxRxFragmentSuccess.observe(this, dataxSuccessObserver)
+        viewModel.dataxRxFragmentError.observe(this, dataxErrorObserver)
     }
 
     override fun initViews() {
         mDatabind.tevKillApp.setOnClickListener {
             LogManager.i(TAG, "tevKillApp");
             number = 1;
-            initRxPermissionsRxFragment(number!!)
+            initRxPermissionsRxFragment(number)
         }
         mDatabind.tevCreateAnException.setOnClickListener {
             number = 2;
-            initRxPermissionsRxFragment(number!!)
+            initRxPermissionsRxFragment(number)
         }
         mDatabind.tevCreateAnException2.setOnClickListener {
             number = 3;
-            initRxPermissionsRxFragment(number!!)
+            initRxPermissionsRxFragment(number)
         }
         mDatabind.tevEditTextInputLimits.setOnClickListener {
 //            showEditTextInputLimitsDialog()

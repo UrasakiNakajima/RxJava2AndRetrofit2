@@ -10,7 +10,7 @@ data class MineResponse(
 )
 
 data class Result(
-        val `data`: List<Data>,
+        val `data`: MutableList<Data>,
         val page: String,
         val pageSize: String,
         val stat: String

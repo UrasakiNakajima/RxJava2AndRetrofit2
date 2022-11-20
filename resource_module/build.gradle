@@ -10,8 +10,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 31
+//    buildToolsVersion "31.0.3"
 
     defaultConfig {
         if (isModule.toBoolean()) {
@@ -21,7 +21,7 @@ android {
             //被依赖的library
         }
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -45,7 +45,7 @@ android {
         experimental = true
     }
 
-    //开启Java1.8 能够使用lambda表达式
+    //开启Java11 能够使用lambda表达式
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

@@ -46,7 +46,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                 //                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
                 RetrofitManager.getInstance()
-                        .responseStringAutoDispose(fragment, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
+                        .responseString2(fragment, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
@@ -113,7 +113,7 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                 //                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
                 RetrofitManager.getInstance()
-                        .responseStringAutoDispose(rxAppCompatActivity, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
+                        .responseString(rxAppCompatActivity, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);

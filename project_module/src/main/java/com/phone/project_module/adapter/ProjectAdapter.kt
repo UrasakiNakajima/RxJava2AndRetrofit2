@@ -21,13 +21,13 @@ class ProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.V
     private var list: MutableList<DataX> = mutableListOf()
 
     fun clearData() {
+        notifyItemRangeRemoved(0, this.list.size)
         this.list.clear()
-        notifyDataSetChanged()
     }
 
-    fun addAllData(list: MutableList<DataX>) {
+    fun addData(list: MutableList<DataX>) {
+        notifyItemRangeInserted(this.list.size, list.size)
         this.list.addAll(list)
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

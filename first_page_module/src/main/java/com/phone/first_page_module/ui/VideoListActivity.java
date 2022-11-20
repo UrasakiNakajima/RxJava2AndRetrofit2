@@ -44,7 +44,7 @@ public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
     private RecyclerView rcvData;
 
     private String data;
-    private List<VideoListBean.LargeImageListBean> videoListBeanList;
+    private List<VideoListBean.LargeImageListBean> videoListBeanList = new ArrayList<>();
     private VideoListAdapter videoListAdapter;
     private LinearLayoutManager linearLayoutManager;
     //    private boolean isRefresh;
@@ -67,7 +67,6 @@ public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
         data = bundle.getString("data");
         LogManager.i(TAG, "data*****" + data);
         VideoListBean videoListBean = JSONObject.parseObject(data, VideoListBean.class);
-        videoListBeanList = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
             videoListBeanList.add(videoListBean.getLarge_image_list().get(0));
         }
@@ -125,7 +124,7 @@ public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
         //        });
         rcvData.setAdapter(videoListAdapter);
         videoListAdapter.clearData();
-        videoListAdapter.addAllData(videoListBeanList);
+        videoListAdapter.addData(videoListBeanList);
 
         refreshLayout.setEnableRefresh(false);
         refreshLayout.setEnableLoadMore(false);

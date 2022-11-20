@@ -1,23 +1,22 @@
 package com.phone.square_module.ui;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.bean.UserBean;
-import com.phone.common_library.dialog.StandardUserDialog;
 import com.phone.common_library.dialog.StandardDialog;
-import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.dialog.StandardUserDialog;
 import com.phone.common_library.manager.MainThreadManager;
 import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.TextViewStyleManager;
@@ -26,7 +25,6 @@ import com.phone.common_library.manager.UserBeanDaoManager;
 import com.phone.square_module.R;
 import com.phone.square_module.adapter.UserBeanAdapter;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,7 +42,6 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
 
 
     private UserBeanDaoManager userBeanDaoManager;
-    private LinearLayoutManager linearLayoutManager;
     private UserBeanAdapter userBeanAdapter;
 
     private StandardUserDialog createUserDialog;//创建用户Dialog
@@ -110,7 +107,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
     }
 
     private void initAdapter() {
-        linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvUser.setLayoutManager(linearLayoutManager);
         rcvUser.setItemAnimator(new DefaultItemAnimator());
@@ -174,7 +171,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
 
                     Collections.reverse(queryUserList);
                     userBeanAdapter.clearData();
-                    userBeanAdapter.addAllData(queryUserList);
+                    userBeanAdapter.addData(queryUserList);
                     TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                             tevTitle, getResources().getString(R.string.created_b)
                                     + queryUserList.size()
@@ -249,7 +246,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                             if (queryUserList != null && queryUserList.size() > 0) {
                                 Collections.reverse(queryUserList);
                                 userBeanAdapter.clearData();
-                                userBeanAdapter.addAllData(queryUserList);
+                                userBeanAdapter.addData(queryUserList);
                                 TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                         tevTitle, getResources().getString(R.string.created_b)
                                                 + queryUserList.size()
@@ -311,7 +308,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                             if (queryUserList != null && queryUserList.size() > 0) {
                                 Collections.reverse(queryUserList);
                                 userBeanAdapter.clearData();
-                                userBeanAdapter.addAllData(queryUserList);
+                                userBeanAdapter.addData(queryUserList);
                                 TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                         tevTitle, getResources().getString(R.string.created_b)
                                                 + queryUserList.size()
@@ -363,7 +360,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                             if (queryUserList != null && queryUserList.size() > 0) {
                                 Collections.reverse(queryUserList);
                                 userBeanAdapter.clearData();
-                                userBeanAdapter.addAllData(queryUserList);
+                                userBeanAdapter.addData(queryUserList);
                                 TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                         tevTitle, getResources().getString(R.string.created_b)
                                                 + queryUserList.size()
@@ -417,7 +414,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                             if (queryUserList != null && queryUserList.size() > 0) {
                                 Collections.reverse(queryUserList);
                                 userBeanAdapter.clearData();
-                                userBeanAdapter.addAllData(queryUserList);
+                                userBeanAdapter.addData(queryUserList);
                                 TextViewStyleManager.setTextViewStyleVerticalCenter(this,
                                         tevTitle, getResources().getString(R.string.created_b)
                                                 + queryUserList.size()

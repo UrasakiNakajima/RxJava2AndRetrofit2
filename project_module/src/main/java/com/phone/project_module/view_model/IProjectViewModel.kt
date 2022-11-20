@@ -9,14 +9,6 @@ interface IProjectViewModel {
 
     fun projectDataRxFragment(rxFragment: RxFragment, currentPage: String)
 
-    fun getDataxRxFragmentSuccess(): MutableLiveData<List<DataX>>
-
-    fun getDataxRxFragmentError(): MutableLiveData<String>
-
     fun projectDataRxAppCompatActivity(rxAppCompatActivity: RxAppCompatActivity, currentPage: String)
-
-    fun getDataxRxAppCompatActivitySuccess(): MutableLiveData<List<DataX>>
-
-    fun getDataxRxAppCompatActivityError(): MutableLiveData<String>
 
 }

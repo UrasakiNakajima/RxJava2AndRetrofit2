@@ -135,7 +135,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         currentPage: String
     ) {
         RetrofitManager.getInstance()
-            .responseStringRxAppActivityBindUntilEvent(rxAppCompatActivity,
+            .responseString5(rxAppCompatActivity,
                 model.squareData(currentPage),
                 object : OnCommonSingleParamCallback<String> {
                     override fun onSuccess(success: String) {

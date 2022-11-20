@@ -28,10 +28,12 @@
             android:exported="false" />
         <activity
             android:name=".ui.PickerViewActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SquareActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
     </application>

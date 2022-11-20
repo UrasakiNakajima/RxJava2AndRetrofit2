@@ -33,7 +33,7 @@ public class LaunchActivity extends BaseRxAppActivity {
 
     private static final String TAG = LaunchActivity.class.getSimpleName();
 
-    private String[] permissions = new String[]{
+    private final String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
@@ -42,7 +42,7 @@ public class LaunchActivity extends BaseRxAppActivity {
             Manifest.permission.CAMERA,};
     private static final int REQUEST_CODE = 0xa1;//请求多个权限
     //2、创建一个mPermissionList，逐个判断哪些权限未授予，未授予的权限存储到mPerrrmissionList中
-    private List<String> mPermissionList = new ArrayList<>();
+    private final List<String> mPermissionList = new ArrayList<>();
     private AlertDialog mPermissionsDialog;
     private Intent intent;
 

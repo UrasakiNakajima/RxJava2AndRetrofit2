@@ -51,7 +51,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                 ILoginView loginView = (ILoginView) baseView;
                 loginView.showLoading();
                 RetrofitManager.getInstance()
-                        .responseStringAutoDispose(rxAppCompatActivity, model.getAuthCode(bodyParams), new OnCommonSingleParamCallback<String>() {
+                        .responseString(rxAppCompatActivity, model.getAuthCode(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);
@@ -119,7 +119,7 @@ public class LoginPresenterImpl extends BasePresenter<IBaseView>
                 ILoginView loginView = (ILoginView) baseView;
                 loginView.showLoading();
                 RetrofitManager.getInstance()
-                        .responseStringAutoDispose(rxAppCompatActivity, model.loginWithAuthCode(bodyParams), new OnCommonSingleParamCallback<String>() {
+                        .responseString(rxAppCompatActivity, model.loginWithAuthCode(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
                                 LogManager.i(TAG, "success*****" + success);

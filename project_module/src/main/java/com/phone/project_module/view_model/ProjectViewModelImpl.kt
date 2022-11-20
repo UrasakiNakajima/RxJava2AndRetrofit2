@@ -1,8 +1,6 @@
 package com.phone.project_module.view_model
 
 import android.text.TextUtils
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseViewModel
@@ -31,12 +29,12 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
     private var model: ProjectModelImpl = ProjectModelImpl()
 
     //1.首先定义两个SingleLiveData的实例
-    private val dataxRxFragmentSuccess: SingleLiveData<List<DataX>> = SingleLiveData()
-    private val dataxRxFragmentError: SingleLiveData<String> = SingleLiveData()
+    val dataxRxFragmentSuccess: SingleLiveData<MutableList<DataX>> = SingleLiveData()
+    val dataxRxFragmentError: SingleLiveData<String> = SingleLiveData()
 
     //1.首先定义两个SingleLiveData的实例
-    private val dataxRxAppCompatActivitySuccess: SingleLiveData<List<DataX>> = SingleLiveData()
-    private val dataxRxAppCompatActivityError: SingleLiveData<String> = SingleLiveData()
+    val dataxRxAppCompatActivitySuccess: SingleLiveData<MutableList<DataX>> = SingleLiveData()
+    val dataxRxAppCompatActivityError: SingleLiveData<String> = SingleLiveData()
 
     override fun projectDataRxFragment(rxFragment: RxFragment, currentPage: String) {
         viewModelScope.launch {
@@ -111,20 +109,12 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
 //        compositeDisposable.add(disposable!!)
     }
 
-    override fun getDataxRxFragmentSuccess(): SingleLiveData<List<DataX>> {
-        return dataxRxFragmentSuccess
-    }
-
-    override fun getDataxRxFragmentError(): SingleLiveData<String> {
-        return dataxRxFragmentError
-    }
-
     override fun projectDataRxAppCompatActivity(
         rxAppCompatActivity: RxAppCompatActivity,
         currentPage: String
     ) {
         RetrofitManager.getInstance()
-            .responseStringRxAppActivityBindUntilEvent(
+            .responseString5(
                 rxAppCompatActivity,
                 model.projectData(currentPage),
                 object : OnCommonSingleParamCallback<String> {
@@ -172,14 +162,6 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
                         dataxRxAppCompatActivityError.value = error
                     }
                 })
-    }
-
-    override fun getDataxRxAppCompatActivitySuccess(): MutableLiveData<List<DataX>> {
-        return dataxRxAppCompatActivitySuccess
-    }
-
-    override fun getDataxRxAppCompatActivityError(): MutableLiveData<String> {
-        return dataxRxAppCompatActivityError
     }
 
 

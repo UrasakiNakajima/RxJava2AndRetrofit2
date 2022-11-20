@@ -12,9 +12,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ProjectActivity"
+            android:exported="false"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,12 +23,14 @@
         </activity>
         <activity
             android:name=".ui.SurfaceViewActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
             android:name=".ui.VideoViewActivity"
+            android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
     </application>
