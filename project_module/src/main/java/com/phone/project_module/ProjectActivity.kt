@@ -81,31 +81,36 @@ class ProjectActivity :
     override fun initViews() {
         setToolbar(false, R.color.color_FF198CFF)
 
-        projectAdapter.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
+        projectAdapter.apply {
+            setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
-            override fun onItemClickListener(position: Int, view: View?) {
+                override fun onItemClickListener(position: Int, view: View?) {
 //                startActivity(VideoViewActivity::class.java)
-                startActivity(EventScheduleActivity::class.java)
-            }
+                    startActivity(EventScheduleActivity::class.java)
+                }
+            })
+        }
+        mDatabind.rcvData.apply {
+            itemAnimator = DefaultItemAnimator()
+            adapter = projectAdapter
+        }
 
-        })
-        mDatabind.rcvData.itemAnimator = DefaultItemAnimator()
-        mDatabind.rcvData.adapter = projectAdapter
+        mDatabind.refreshLayout.apply {
+            setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+                override fun onLoadMore(refreshLayout: RefreshLayout) {
+                    LogManager.i(TAG, "onLoadMore")
+                    isRefresh = false
+                    initProject("$currentPage")
+                }
 
-        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-            override fun onLoadMore(refreshLayout: RefreshLayout) {
-                LogManager.i(TAG, "onLoadMore")
-                isRefresh = false
-                initProject("$currentPage")
-            }
-
-            override fun onRefresh(refreshLayout: RefreshLayout) {
-                LogManager.i(TAG, "onRefresh")
-                isRefresh = true
-                currentPage = 1;
-                initProject("$currentPage")
-            }
-        })
+                override fun onRefresh(refreshLayout: RefreshLayout) {
+                    LogManager.i(TAG, "onRefresh")
+                    isRefresh = true
+                    currentPage = 1;
+                    initProject("$currentPage")
+                }
+            })
+        }
     }
 
     override fun initLoadData() {

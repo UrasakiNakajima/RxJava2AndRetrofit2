@@ -141,8 +141,7 @@ public class BigDecimalManager {
      */
     public static double getDoubleKeepDecimals(double m1, int scale) {
         BigDecimal p1 = new BigDecimal(Double.toString(m1));
-        double value = p1.setScale(scale, BigDecimal.ROUND_HALF_UP).doubleValue();
-        return value;
+        return p1.setScale(scale, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     /**
@@ -152,8 +151,7 @@ public class BigDecimalManager {
      */
     public static String getDoubleKeepDecimalsToStr(double m1, int scale) {
         BigDecimal p1 = new BigDecimal(Double.toString(m1));
-        String value = p1.setScale(scale, BigDecimal.ROUND_HALF_UP).toPlainString();
-        return value;
+        return p1.setScale(scale, BigDecimal.ROUND_HALF_UP).toPlainString();
     }
 
 

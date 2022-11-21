@@ -4,16 +4,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.phone.common_library.custom_view.GlideRoundTransform;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 /**
  * author    : Urasaki
@@ -40,12 +40,7 @@ public class GlideRoundManager {
 							.into(new CustomTarget<Drawable>() {
 								@Override
 								public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-									if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-										view.setBackgroundDrawable(resource);
-									} else {
-										view.setBackground(resource);
-									}
-									
+									view.setBackground(resource);
 								}
 								
 								@Override
@@ -65,11 +60,7 @@ public class GlideRoundManager {
 						@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 						@Override
 						public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-							if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-								view.setBackgroundDrawable(resource);
-							} else {
-								view.setBackground(resource);
-							}
+							view.setBackground(resource);
 						}
 						
 						@Override
@@ -94,11 +85,7 @@ public class GlideRoundManager {
 								@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 								@Override
 								public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-									if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-										view.setBackgroundDrawable(resource);
-									} else {
-										view.setBackground(resource);
-									}
+									view.setBackground(resource);
 								}
 								
 								@Override
@@ -117,11 +104,7 @@ public class GlideRoundManager {
 						@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 						@Override
 						public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-							if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-								view.setBackgroundDrawable(resource);
-							} else {
-								view.setBackground(resource);
-							}
+							view.setBackground(resource);
 						}
 						
 						@Override
@@ -149,11 +132,7 @@ public class GlideRoundManager {
 								@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 								@Override
 								public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-									if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-										view.setBackgroundDrawable(resource);
-									} else {
-										view.setBackground(resource);
-									}
+									view.setBackground(resource);
 								}
 								
 								@Override
@@ -200,11 +179,7 @@ public class GlideRoundManager {
 								@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 								@Override
 								public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-									if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-										view.setBackgroundDrawable(resource);
-									} else {
-										view.setBackground(resource);
-									}
+									view.setBackground(resource);
 								}
 								
 								@Override
@@ -225,11 +200,7 @@ public class GlideRoundManager {
 						@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 						@Override
 						public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-							if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-								view.setBackgroundDrawable(resource);
-							} else {
-								view.setBackground(resource);
-							}
+							view.setBackground(resource);
 						}
 						
 						@Override

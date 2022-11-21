@@ -109,7 +109,7 @@ public class BaseApplication extends MultiDexApplication {
 
         //步骤2. 选择加载方式
         //方式1. 加载一个网页：
-        webView.loadUrl("http://www.google.com/");
+        webView.loadUrl("http://www.baidu.com/");
 
 //        //方式2：加载apk包中的html页面
 //        webView.loadUrl("file:///android_asset/test.html");

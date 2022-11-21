@@ -44,9 +44,10 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         activityPageManager.addActivity(rxAppCompatActivity)
         baseApplication = application as BaseApplication
 
-        mDatabind = DataBindingUtil.setContentView(rxAppCompatActivity, initLayoutId())
-        mDatabind.lifecycleOwner = rxAppCompatActivity
-
+        initLayoutId()?.let {
+            mDatabind = DataBindingUtil.setContentView(rxAppCompatActivity, it)
+            mDatabind.lifecycleOwner = rxAppCompatActivity
+        }
         viewModel = initViewModel()
         initData()
         initObservers()
@@ -73,7 +74,7 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         return res
     }
 
-    protected abstract fun initLayoutId(): Int
+    protected abstract fun initLayoutId(): Int?
 
     protected abstract fun initViewModel(): VM
 

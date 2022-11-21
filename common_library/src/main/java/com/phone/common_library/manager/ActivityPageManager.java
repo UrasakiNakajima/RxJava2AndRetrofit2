@@ -27,17 +27,17 @@ public class ActivityPageManager {
     /**
      * Activity栈 Stack:线程安全
      */
-    private Stack<Activity> mActivityStack = new Stack<>();
+    private final Stack<Activity> mActivityStack = new Stack<>();
 
     /**
      * 還存活的Activity栈
      */
-    private Stack<Activity> mActivityAliveStack = new Stack<>();
+    private final Stack<Activity> mActivityAliveStack = new Stack<>();
 
     /**
      * 是否是棧中最後一個存活的Activity
      */
-    private AtomicBoolean isLastAliveActivity = new AtomicBoolean(false);
+    private final AtomicBoolean isLastAliveActivity = new AtomicBoolean(false);
 
     /**
      * 私有构造器 无法外部创建
@@ -92,12 +92,11 @@ public class ActivityPageManager {
      * 获取指定类名的Activity
      */
     public Activity getActivity(Class<?> cls) {
-        if (mActivityStack != null)
-            for (Activity activity : mActivityStack) {
-                if (activity.getClass().equals(cls)) {
-                    return activity;
-                }
+        for (Activity activity : mActivityStack) {
+            if (activity.getClass().equals(cls)) {
+                return activity;
             }
+        }
         return null;
     }
 
@@ -227,9 +226,7 @@ public class ActivityPageManager {
         List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(1);
         if (list != null && list.size() > 0) {
             ComponentName cpn = list.get(0).topActivity;
-            if (className.equals(cpn.getClassName())) {
-                return true;
-            }
+            return className.equals(cpn.getClassName());
         }
         return false;
     }

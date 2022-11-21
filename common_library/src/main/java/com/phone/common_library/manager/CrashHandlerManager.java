@@ -1,5 +1,6 @@
 package com.phone.common_library.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -32,7 +33,7 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     public static final String TAG = CrashHandlerManager.class.getSimpleName();
 
     //系统默认的UncaughtException处理类 
-    private Thread.UncaughtExceptionHandler mDefaultHandler;
+    private final Thread.UncaughtExceptionHandler mDefaultHandler;
     private static CrashHandlerManager instance;
     private final Context mContext;
 
@@ -41,6 +42,7 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 
     //存储设备信息
     private final Map<String, String> mDevInfoMap = new ArrayMap<>();
+    @SuppressLint("SimpleDateFormat")
     private final SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
     private CrashHandlerManager(Context context) {
@@ -136,8 +138,7 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     private void sendCrashReportsToServer(Context mContext) {
         String[] crFiles = getCrashReportFiles(mContext);
         if (crFiles != null && crFiles.length > 0) {
-            TreeSet<String> sortedFiles = new TreeSet<String>();
-            sortedFiles.addAll(Arrays.asList(crFiles));
+            TreeSet<String> sortedFiles = new TreeSet<String>(Arrays.asList(crFiles));
             for (String fileName : sortedFiles) {
                 File cr = new File(mContext.getFilesDir(), fileName);
                 postReport(cr);
@@ -175,7 +176,7 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         for (Map.Entry<String, String> entry : mDevInfoMap.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            buffer.append(key + "=" + value + '\n');
+            buffer.append(key).append("=").append(value).append('\n');
         }
         //可以用其回收在字符串缓冲区中的输出来构造字符串 
         Writer writer = new StringWriter();
@@ -235,11 +236,11 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     public String saveTrimMemoryInfoToFile(String info) {
         collectDeviceInfo(mContext);
         LogManager.i(TAG, "saveTrimMemoryInfoToFile");
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         for (Map.Entry<String, String> entry : mDevInfoMap.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            buffer.append(key + "=" + value + '\n');
+            buffer.append(key).append("=").append(value).append('\n');
         }
 
         buffer.append(info);

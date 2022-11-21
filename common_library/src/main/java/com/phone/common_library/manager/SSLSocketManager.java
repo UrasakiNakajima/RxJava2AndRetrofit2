@@ -36,7 +36,7 @@ public class SSLSocketManager {
      * @return
      */
     public static TrustManager[] getTrustManager() {
-        TrustManager[] trustManager = new TrustManager[]{
+        return new TrustManager[]{
                 new X509TrustManager() {
                     @Override
                     public void checkClientTrusted(X509Certificate[] chain, String authType) {
@@ -52,7 +52,6 @@ public class SSLSocketManager {
                     }
                 }
         };
-        return trustManager;
     }
 
     /**
@@ -61,13 +60,12 @@ public class SSLSocketManager {
      * @return
      */
     public static HostnameVerifier getHostnameVerifier() {
-        HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+        return new HostnameVerifier() {
             @Override
             public boolean verify(String s, SSLSession sslSession) {
                 return true;
             }
         };
-        return hostnameVerifier;
     }
 
 }

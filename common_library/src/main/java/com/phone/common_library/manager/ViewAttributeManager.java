@@ -25,7 +25,7 @@ public class ViewAttributeManager {
             if (attr.getAttributeNameResource(i) == paramInt) {
                 String str = attr.getAttributeValue(i);
                 if (null != str && str.startsWith("?")) {
-                    value = Integer.valueOf(str.substring(1, str.length())).intValue();
+                    value = Integer.parseInt(str.substring(1, str.length()));
                     return value;
                 }
             }
@@ -82,7 +82,7 @@ public class ViewAttributeManager {
     public static void applyTextAppearance(ColorUiInterface ci, Resources.Theme theme, int paramInt) {
         TypedArray ta = theme.obtainStyledAttributes(new int[]{paramInt});
         int resourceId = ta.getResourceId(0, 0);
-        if (null != ci && ci instanceof TextView) {
+        if (ci instanceof TextView) {
             ((TextView) ci.getView()).setTextAppearance(ci.getView().getContext(), resourceId);
         }
         ta.recycle();
@@ -91,7 +91,7 @@ public class ViewAttributeManager {
     public static void applyTextColor(ColorUiInterface ci, Resources.Theme theme, int paramInt) {
         TypedArray ta = theme.obtainStyledAttributes(new int[]{paramInt});
         int resourceId = ta.getColor(0, 0);
-        if (null != ci && ci instanceof TextView) {
+        if (ci instanceof TextView) {
             ((TextView) ci.getView()).setTextColor(resourceId);
         }
         ta.recycle();
@@ -100,7 +100,7 @@ public class ViewAttributeManager {
     public static void applyTextLinkColor(ColorUiInterface ci, Resources.Theme theme, int paramInt) {
         TypedArray ta = theme.obtainStyledAttributes(new int[]{paramInt});
         int resourceId = ta.getColor(0, 0);
-        if (null != ci && ci instanceof TextView) {
+        if (ci instanceof TextView) {
             ((TextView) ci.getView()).setLinkTextColor(resourceId);
         }
         ta.recycle();

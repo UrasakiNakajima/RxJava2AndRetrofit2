@@ -13,7 +13,7 @@ public class LogManager {
 
     private static boolean isOpenLog = true;
     //规定每段显示的长度
-    private static int LOG_MAXLENGTH = 2000;
+    private static final int LOG_MAXLENGTH = 2000;
 
     public static void i(String TAG, String message) {
         if (isOpenLog) {

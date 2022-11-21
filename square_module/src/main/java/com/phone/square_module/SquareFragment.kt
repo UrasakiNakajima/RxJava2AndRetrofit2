@@ -1,19 +1,11 @@
 package com.phone.square_module
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import android.text.InputFilter
-import android.text.InputType
 import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -29,8 +21,6 @@ import com.phone.common_library.bean.UserBean
 import com.phone.common_library.bean.UserBean2
 import com.phone.common_library.bean.UserBean3
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback
-import com.phone.common_library.common.DecimalInputFilter
-import com.phone.common_library.common.DecimalTextWatcher
 import com.phone.common_library.manager.*
 import com.phone.common_library.service.IFirstPageService
 import com.phone.common_library.service.ISquareService
@@ -40,7 +30,6 @@ import com.phone.square_module.ui.DecimalOperationActivity
 import com.phone.square_module.ui.EditTextInputLimitsActivity
 import com.phone.square_module.ui.KotlinCoroutineActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
-import kotlinx.android.synthetic.main.fragment_square.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -109,37 +98,48 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     override fun initViews() {
-        mDatabind.tevKillApp.setOnClickListener {
-            LogManager.i(TAG, "tevKillApp");
-            number = 1;
-            initRxPermissionsRxFragment(number)
-        }
-        mDatabind.tevCreateAnException.setOnClickListener {
-            number = 2;
-            initRxPermissionsRxFragment(number)
-        }
-        mDatabind.tevCreateAnException2.setOnClickListener {
-            number = 3;
-            initRxPermissionsRxFragment(number)
-        }
-        mDatabind.tevEditTextInputLimits.setOnClickListener {
+        mDatabind.apply {
+            tevKillApp.setOnClickListener {
+                LogManager.i(TAG, "tevKillApp");
+                number = 1;
+                initRxPermissionsRxFragment(number)
+            }
+            tevCreateAnException.setOnClickListener {
+                number = 2;
+                initRxPermissionsRxFragment(number)
+            }
+            tevCreateAnException.apply {
+                setOnClickListener {
+                    number = 2;
+                    initRxPermissionsRxFragment(number)
+                }
+            }
+            tevCreateAnException2.setOnClickListener {
+                number = 3;
+                initRxPermissionsRxFragment(number)
+            }
+            tevEditTextInputLimits.run {
+                setOnClickListener {
 //            showEditTextInputLimitsDialog()
-            startActivity(EditTextInputLimitsActivity::class.java)
-        }
-        mDatabind.tevDecimalOperation.setOnClickListener {
-            startActivity(DecimalOperationActivity::class.java)
-        }
-        mDatabind.imvPicture.setOnClickListener {
+                    startActivity(EditTextInputLimitsActivity::class.java)
+                }
+            }
+            tevDecimalOperation.setOnClickListener {
+                startActivity(DecimalOperationActivity::class.java)
+            }
+            imvPicture.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
 //            startActivity(PickerViewActivity::class.java)
-            startActivity(Base64AndFileActivity::class.java)
+                startActivity(Base64AndFileActivity::class.java)
+            }
+            tevCreateUser.setOnClickListener {
+                startActivity(CreateUserActivity::class.java)
+            }
+            tevKotlinCoroutine.setOnClickListener {
+                startActivity(KotlinCoroutineActivity::class.java)
+            }
         }
-        mDatabind.tevCreateUser.setOnClickListener {
-            startActivity(CreateUserActivity::class.java)
-        }
-        mDatabind.tevKotlinCoroutine.setOnClickListener {
-            startActivity(KotlinCoroutineActivity::class.java)
-        }
+
     }
 
     override fun initLoadData() {
@@ -193,10 +193,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     fun squareDataSuccess(success: List<DataX>) {
         if (!rxAppCompatActivity.isFinishing()) {
             if (success.size > 0) {
-                datax.title = success.get(1).title
-                datax.chapterName = success.get(1).chapterName
-                datax.link = success.get(1).link
-                datax.envelopePic = success.get(1).envelopePic
+                datax.apply {
+                    title = success.get(1).title
+                    chapterName = success.get(1).chapterName
+                    link = success.get(1).link
+                    envelopePic = success.get(1).envelopePic
+                }
                 val ISquareService: ISquareService =
                     ARouter.getInstance().build("/square_module/SquareServiceImpl")
                         .navigation() as ISquareService

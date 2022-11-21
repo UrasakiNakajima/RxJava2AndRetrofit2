@@ -61,12 +61,12 @@ public class MapManager {
         if (map == null) {
             return "";
         }
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            stringBuffer.append(entry.getKey() + "=" + entry.getValue());
-            stringBuffer.append("&");
+            stringBuilder.append(entry.getKey()).append("=").append(entry.getValue());
+            stringBuilder.append("&");
         }
-        String s = stringBuffer.toString();
+        String s = stringBuilder.toString();
         if (s.endsWith("&")) {
             s = StringUtils.substringBeforeLast(s, "&");
         }

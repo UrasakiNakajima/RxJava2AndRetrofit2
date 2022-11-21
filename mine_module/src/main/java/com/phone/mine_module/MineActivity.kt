@@ -133,8 +133,10 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     override fun mineDataSuccess(success: MutableList<Data>) {
         if (!rxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                mineAdapter.clearData();
-                mineAdapter.addData(success)
+                mineAdapter.apply {
+                    clearData();
+                    addData(success)
+                }
                 refresh_layout.finishRefresh()
             } else {
                 mineAdapter.addData(success)

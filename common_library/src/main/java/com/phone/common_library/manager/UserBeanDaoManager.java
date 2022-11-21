@@ -16,12 +16,11 @@ public class UserBeanDaoManager {
     private static final String TAG = UserBeanDaoManager.class.getSimpleName();
     private static final String DB_NAME = "user_bean.db";
     private DaoMaster.DevOpenHelper devOpenHelper;
-    private DaoMaster daoMaster;
-    private  DaoSession daoSession;
+    private DaoSession daoSession;
 
     public UserBeanDaoManager() {
         devOpenHelper = new DaoMaster.DevOpenHelper(BaseApplication.getInstance(), DB_NAME, null);
-        daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
+        DaoMaster daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
         daoSession = daoMaster.newSession();
     }
 
@@ -33,7 +32,7 @@ public class UserBeanDaoManager {
      */
     public boolean insert(UserBean userBean) {
         boolean flag = false;
-        flag = daoSession.getUserBeanDao().insert(userBean) == -1 ? false : true;
+        flag = daoSession.getUserBeanDao().insert(userBean) != -1;
         LogManager.i(TAG, "insert User :" + flag + "-->" + userBean.toString());
         return flag;
     }
@@ -105,7 +104,7 @@ public class UserBeanDaoManager {
      * @return
      */
     public List<UserBean> queryAll() {
-        if (daoSession.getUserBeanDao().loadAll() == null){
+        if (daoSession.getUserBeanDao().loadAll() == null) {
             return new ArrayList<>();
         }
         return daoSession.getUserBeanDao().loadAll();

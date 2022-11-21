@@ -89,9 +89,10 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
         rcv_data.layoutManager = (linearLayoutManager)
         rcv_data.itemAnimator = DefaultItemAnimator()
 
-        mineAdapter.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
+        mineAdapter.apply {
+            setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
-            override fun onItemClickListener(position: Int, view: View?) {
+                override fun onItemClickListener(position: Int, view: View?) {
 //                bodyParams.clear()
 //                bodyParams["max_behot_time"] = "1000"
 //                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
@@ -101,13 +102,14 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 //                        .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())
 //                        .navigation()
 
-                if (view?.id == R.id.ll_root) {
-                    val intent = Intent(rxAppCompatActivity, NewsDetailActivity::class.java)
-                    intent.putExtra("detailUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
-                    startActivity(intent)
+                    if (view?.id == R.id.ll_root) {
+                        val intent = Intent(rxAppCompatActivity, NewsDetailActivity::class.java)
+                        intent.putExtra("detailUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
+                        startActivity(intent)
+                    }
                 }
-            }
-        })
+            })
+        }
         rcv_data.setAdapter(mineAdapter)
 
         refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {

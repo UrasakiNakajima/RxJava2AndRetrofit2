@@ -19,6 +19,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.UUID;
 
@@ -42,7 +43,7 @@ public class SystemIdManager {
         //读取保存的在sd卡中的唯一标识符
         String systemId = readSystemId(context);
         //用于生成最终的唯一标识符
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         //判断是否已经生成过,
         if (systemId != null && !"".equals(systemId)) {
             LogManager.i(TAG, "已经生成过");
@@ -51,7 +52,7 @@ public class SystemIdManager {
         try {
             //获取IMES(也就是常说的SystemId)
             systemId = getIMIEStatus(context);
-            stringBuffer.append(systemId);
+            stringBuilder.append(systemId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,24 +60,22 @@ public class SystemIdManager {
         try {
             //获取设备的MACAddress地址 去掉中间相隔的冒号
             systemId = getLocalMac(context).replace(":", "");
-            stringBuffer.append(systemId);
+            stringBuilder.append(systemId);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         //如果以上搜没有获取相应的则自己生成相应的UUID作为相应设备唯一标识符
-        if (stringBuffer == null || stringBuffer.length() <= 0) {
+        if (stringBuilder.length() <= 0) {
             UUID uuid = UUID.randomUUID();
             systemId = uuid.toString().replace("-", "");
-            stringBuffer.append(systemId);
+            stringBuilder.append(systemId);
         }
         //为了统一格式对设备的唯一标识进行md5加密 最终生成32位字符串
-        String md5 = getMD5(stringBuffer.toString(), false);
-        if (stringBuffer.length() > 0) {
+        String md5 = getMD5(stringBuilder.toString(), false);
+        if (stringBuilder.length() > 0) {
             //持久化操作, 进行保存到SD卡中
             saveSystemId(md5, context);
-        } else {
-
         }
         return md5;
     }
@@ -160,7 +159,7 @@ public class SystemIdManager {
 //        return info.getMacAddress();
 
         String macAddress = null;
-        StringBuffer buf = new StringBuffer();
+        StringBuffer buffer = new StringBuffer();
         NetworkInterface networkInterface = null;
         try {
             networkInterface = NetworkInterface.getByName("eth1");
@@ -174,12 +173,12 @@ public class SystemIdManager {
 
 
             for (byte b : addr) {
-                buf.append(String.format("%02X:", b));
+                buffer.append(String.format("%02X:", b));
             }
-            if (buf.length() > 0) {
-                buf.deleteCharAt(buf.length() - 1);
+            if (buffer.length() > 0) {
+                buffer.deleteCharAt(buffer.length() - 1);
             }
-            macAddress = buf.toString();
+            macAddress = buffer.toString();
         } catch (SocketException e) {
             e.printStackTrace();
             return "";
@@ -197,7 +196,7 @@ public class SystemIdManager {
         File file = getSystemIdDir(context);
         try {
             FileOutputStream fos = new FileOutputStream(file);
-            Writer out = new OutputStreamWriter(fos, "UTF-8");
+            Writer out = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
             out.write(str);
             out.close();
         } catch (IOException e) {
@@ -216,13 +215,9 @@ public class SystemIdManager {
         String md5str = "";
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-
             byte[] input = message.getBytes();
-
             byte[] buff = md.digest(input);
-
             md5str = bytesToHex(buff, upperCase);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -230,10 +225,10 @@ public class SystemIdManager {
     }
 
     public static String bytesToHex(byte[] bytes, boolean upperCase) {
-        StringBuffer md5str = new StringBuffer();
+        StringBuilder md5str = new StringBuilder();
         int digital;
-        for (int i = 0; i < bytes.length; i++) {
-            digital = bytes[i];
+        for (byte aByte : bytes) {
+            digital = aByte;
 
             if (digital < 0) {
                 digital += 256;
@@ -256,7 +251,7 @@ public class SystemIdManager {
      * @return
      */
     private static File getSystemIdDir(Context context) {
-        File file = null;
+        File file;
         File dirs = new File(context.getExternalCacheDir(), CACHE_IMAGE_DIR);
         if (!dirs.exists()) {
             LogManager.i(TAG, "!dir.exists()");

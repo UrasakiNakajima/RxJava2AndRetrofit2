@@ -312,7 +312,7 @@ public class MediaFileManager {
      */
     public static int getFileTypeForMimeType(String mimeType) {
         Integer value = sMimeTypeMap.get(mimeType);
-        return (value == null ? 0 : value.intValue());
+        return (value == null ? 0 : value);
     }
 
     /**

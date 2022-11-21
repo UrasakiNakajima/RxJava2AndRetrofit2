@@ -55,7 +55,6 @@ public abstract class BaseMvpRxAppActivity<V, T extends BasePresenter<V>> extend
         baseApplication = (BaseApplication) getApplication();
         activityPageManager = ActivityPageManager.getInstance();
         activityPageManager.addActivity(this);
-
         setContentView(initLayoutId());
 
         //        setToolbar();

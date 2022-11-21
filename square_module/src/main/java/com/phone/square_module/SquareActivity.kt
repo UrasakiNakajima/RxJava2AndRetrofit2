@@ -114,36 +114,40 @@ class SquareActivity :
             .statusBarColor(R.color.color_FF198CFF)
             .navigationBarColor(R.color.color_FF198CFF).init()
 
-        mDatabind.tevKillApp.setOnClickListener {
-            LogManager.i(TAG, "tevKillApp");
-            number = 1;
-            initRxPermissionsRxFragment(number)
-        }
-        mDatabind.tevCreateAnException.setOnClickListener {
-            number = 2;
-            initRxPermissionsRxFragment(number)
-        }
-        mDatabind.tevCreateAnException2.setOnClickListener {
-            number = 3;
-            initRxPermissionsRxFragment(number)
-        }
-        mDatabind.tevEditTextInputLimits.setOnClickListener {
+        mDatabind.apply {
+            tevKillApp.setOnClickListener {
+                LogManager.i(TAG, "tevKillApp");
+                number = 1;
+                initRxPermissionsRxFragment(number)
+            }
+            tevCreateAnException.run {
+                setOnClickListener {
+                    number = 2;
+                    initRxPermissionsRxFragment(number)
+                }
+            }
+            tevCreateAnException2.setOnClickListener {
+                number = 3;
+                initRxPermissionsRxFragment(number)
+            }
+            tevEditTextInputLimits.setOnClickListener {
 //            showEditTextInputLimitsDialog()
-            startActivity(EditTextInputLimitsActivity::class.java)
-        }
-        mDatabind.tevDecimalOperation.setOnClickListener {
-            startActivity(DecimalOperationActivity::class.java)
-        }
-        mDatabind.imvPicture.setOnClickListener {
+                startActivity(EditTextInputLimitsActivity::class.java)
+            }
+            tevDecimalOperation.setOnClickListener {
+                startActivity(DecimalOperationActivity::class.java)
+            }
+            imvPicture.setOnClickListener {
 //            startActivity(SquareDetailsActivity::class.java)
 //            startActivity(PickerViewActivity::class.java)
-            startActivity(Base64AndFileActivity::class.java)
-        }
-        mDatabind.tevCreateUser.setOnClickListener {
-            startActivity(CreateUserActivity::class.java)
-        }
-        mDatabind.tevKotlinCoroutine.setOnClickListener {
-            startActivity(KotlinCoroutineActivity::class.java)
+                startActivity(Base64AndFileActivity::class.java)
+            }
+            tevCreateUser.setOnClickListener {
+                startActivity(CreateUserActivity::class.java)
+            }
+            tevKotlinCoroutine.setOnClickListener {
+                startActivity(KotlinCoroutineActivity::class.java)
+            }
         }
     }
 
@@ -191,10 +195,12 @@ class SquareActivity :
     fun squareDataSuccess(success: List<DataX>) {
         if (!rxAppCompatActivity.isFinishing()) {
             if (success.size > 0) {
-                datax.title = success.get(1).title
-                datax.chapterName = success.get(1).chapterName
-                datax.link = success.get(1).link
-                datax.envelopePic = success.get(1).envelopePic
+                datax.apply {
+                    title = success.get(1).title
+                    chapterName = success.get(1).chapterName
+                    link = success.get(1).link
+                    envelopePic = success.get(1).envelopePic
+                }
                 val ISquareService: ISquareService =
                     ARouter.getInstance().build("/square_module/SquareServiceImpl")
                         .navigation() as ISquareService

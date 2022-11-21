@@ -85,23 +85,27 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
                 }
             })
         }
-        mDatabind.rcvData.itemAnimator = DefaultItemAnimator()
-        mDatabind.rcvData.adapter = projectAdapter
+        mDatabind.rcvData.apply {
+            itemAnimator = DefaultItemAnimator()
+            adapter = projectAdapter
+        }
 
-        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-            override fun onLoadMore(refreshLayout: RefreshLayout) {
-                LogManager.i(TAG, "onLoadMore")
-                isRefresh = false
-                initProject("$currentPage")
-            }
+        mDatabind.refreshLayout.apply {
+            setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+                override fun onLoadMore(refreshLayout: RefreshLayout) {
+                    LogManager.i(TAG, "onLoadMore")
+                    isRefresh = false
+                    initProject("$currentPage")
+                }
 
-            override fun onRefresh(refreshLayout: RefreshLayout) {
-                LogManager.i(TAG, "onRefresh")
-                isRefresh = true
-                currentPage = 1;
-                initProject("$currentPage")
-            }
-        })
+                override fun onRefresh(refreshLayout: RefreshLayout) {
+                    LogManager.i(TAG, "onRefresh")
+                    isRefresh = true
+                    currentPage = 1;
+                    initProject("$currentPage")
+                }
+            })
+        }
     }
 
     override fun initLoadData() {

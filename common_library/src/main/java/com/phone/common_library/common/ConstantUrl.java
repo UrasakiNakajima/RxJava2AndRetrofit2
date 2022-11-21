@@ -17,7 +17,7 @@ public class ConstantUrl {
 	//base地址
 	public static final String BASE_URL2 = "https://www.wanandroid.com";
 	//base地址
-	public static final String BASE_URL3 = "https://wanandroid.com";
+	public static final String BASE_URL3 = "https://www.wanandroid.com";
 	//    public static final String BASE_URL = "http://baobab.kaiyanapp.com/api/";
 	
 	public static final String GET_VERIFICATION_CODE_URL = "/unifiedlogin/api/login/getCaptcha";//获取登录短信验证码

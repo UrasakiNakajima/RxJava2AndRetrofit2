@@ -58,7 +58,7 @@ public class RetrofitManager {
 
     private static final String TAG = RetrofitManager.class.getSimpleName();
     private static RetrofitManager manager;
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
 
     /**
      * 设缓存有效期为两天
