@@ -45,13 +45,15 @@ class ProjectViewModelImpl() : BaseViewModel(), IProjectViewModel {
                 LogManager.i(TAG, "thread name*****${Thread.currentThread().name}")
 
                 launch(Dispatchers.Main) {
-                    if (response.data.datas.size > 0) {
-                        dataxRxFragmentSuccess.value = response.data.datas
-                    } else {
-                        dataxRxFragmentError.value =
-                            BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                    response.data.let {
+                        if (it.datas.size > 0) {
+                            dataxRxFragmentSuccess.value = it.datas
+                        } else {
+                            dataxRxFragmentError.value =
+                                BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                        }
+                        LogManager.i(TAG, "thread2 name*****${Thread.currentThread().name}")
                     }
-                    LogManager.i(TAG, "thread2 name*****${Thread.currentThread().name}")
                 }
             }
         }

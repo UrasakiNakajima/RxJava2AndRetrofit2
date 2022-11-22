@@ -45,11 +45,13 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                         val response: SquareBean =
                             GsonManager.getInstance()
                                 .convert(success, SquareBean::class.java)
-                        if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
-                            dataxRxFragmentSuccess.value = response.data!!.datas
-                        } else {
-                            dataxRxFragmentError.value =
-                                BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                        response.data?.datas.also {
+                            if (it != null && it.size > 0) {
+                                dataxRxFragmentSuccess.value = it
+                            } else {
+                                dataxRxFragmentError.value =
+                                    BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                            }
                         }
                     } else {
                         dataxRxFragmentError.value =

@@ -41,9 +41,9 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                         val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
                         val response: ApiResponse<MutableList<TabBean>> = GsonManager.getInstance()
                             .fromJson(success, type2)
-                        response.let {
-                            if (response.data().size > 0) {
-                                tabRxFragmentSuccess.value = response.data()
+                        response.data().let {
+                            if (it.size > 0) {
+                                tabRxFragmentSuccess.value = it
                             } else {
                                 tabRxFragmentError.value =
                                     BaseApplication.getInstance().resources.getString(
