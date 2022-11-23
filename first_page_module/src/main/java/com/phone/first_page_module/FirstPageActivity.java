@@ -61,13 +61,12 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
     private QMUILoadingView loadView;
 
     private FirstPageAdapter firstPageAdapter;
-    private LinearLayoutManager linearLayoutManager;
     private boolean isRefresh;
 
     private AMAPLocationManager amapLocationManager;
 
     private AlertDialog mPermissionsDialog;
-    private String[] permissions = new String[]{
+    private final String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
@@ -126,7 +125,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
     }
 
     private void initAdapter() {
-        linearLayoutManager = new LinearLayoutManager(rxAppCompatActivity);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rxAppCompatActivity);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvData.setLayoutManager(linearLayoutManager);
         rcvData.setItemAnimator(new DefaultItemAnimator());

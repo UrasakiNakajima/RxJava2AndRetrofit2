@@ -14,11 +14,7 @@ import com.phone.common_library.manager.LogManager;
 public class Base64AndFileModelImpl implements IBase64AndFileModel {
 
     private static final String TAG = Base64AndFileModelImpl.class.getSimpleName();
-    private CompressedPictureThreadPool compressedPictureThreadPool;
-    private PictureToBase64ThreadPool pictureToBase64ThreadPool;
-    private Base64ToPictureThreadPool base64ToPictureThreadPool;
-
-    private Handler handler;
+    private static Handler handler;
 
     public Base64AndFileModelImpl() {
         handler = new Handler(Looper.getMainLooper());
@@ -30,7 +26,7 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                                       OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback) {
         LogManager.i(TAG, "showCompressedPicture");
 
-        compressedPictureThreadPool = new CompressedPictureThreadPool(
+        CompressedPictureThreadPool compressedPictureThreadPool = new CompressedPictureThreadPool(
                 context,
                 base64AndFileBean);
         compressedPictureThreadPool.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<Base64AndFileBean>() {
@@ -62,7 +58,7 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                                     OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback) {
         LogManager.i(TAG, "showPictureToBase64");
 
-        pictureToBase64ThreadPool = new PictureToBase64ThreadPool(base64AndFileBean);
+        PictureToBase64ThreadPool pictureToBase64ThreadPool = new PictureToBase64ThreadPool(base64AndFileBean);
         pictureToBase64ThreadPool.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<Base64AndFileBean>() {
             @Override
             public void onSuccess(Base64AndFileBean success) {
@@ -92,7 +88,7 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
                                     OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback) {
         LogManager.i(TAG, "showBase64ToPicture");
 
-        base64ToPictureThreadPool = new Base64ToPictureThreadPool(base64AndFileBean);
+        Base64ToPictureThreadPool base64ToPictureThreadPool = new Base64ToPictureThreadPool(base64AndFileBean);
         base64ToPictureThreadPool.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<Base64AndFileBean>() {
             @Override
             public void onSuccess(Base64AndFileBean success) {
@@ -115,5 +111,13 @@ public class Base64AndFileModelImpl implements IBase64AndFileModel {
             }
         });
         base64ToPictureThreadPool.submit();
+    }
+
+    @Override
+    public void detachViewModel() {
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
     }
 }

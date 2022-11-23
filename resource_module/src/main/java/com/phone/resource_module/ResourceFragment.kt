@@ -10,15 +10,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.adapter.TabFragmentStatePagerAdapter
+import com.phone.common_library.adapter.TabNavigatorAdapter
 import com.phone.common_library.base.BaseMvvmRxFragment
+import com.phone.common_library.bean.TabBean
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.MagicIndicatorManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
-import com.phone.resource_module.adapter.TabNavigatorAdapter
-import com.phone.resource_module.bean.TabBean
 import com.phone.resource_module.databinding.FragmentResourceBinding
-import com.phone.resource_module.fragment.ResourceChildFragment
+import com.phone.resource_module.fragment.SubResourceFragment
 import com.phone.resource_module.view.IResourceView
 import com.phone.resource_module.view_model.ResourceViewModelImpl
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -29,41 +29,31 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
     IResourceView {
 
     private val TAG = ResourceFragment::class.java.simpleName
-
-    private lateinit var tabSuccessObserver: Observer<MutableList<TabBean>>
-    private lateinit var tabErrorObserver: Observer<String>
     private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
     override fun initLayoutId() = R.layout.fragment_resource
 
-    override fun initViewModel() = ViewModelProvider(rxAppCompatActivity).get(ResourceViewModelImpl::class.java)
+    override fun initViewModel() =
+        ViewModelProvider(rxAppCompatActivity).get(ResourceViewModelImpl::class.java)
 
     override fun initData() {
     }
 
     override fun initObservers() {
-        tabSuccessObserver = object : Observer<MutableList<TabBean>> {
-            override fun onChanged(t: MutableList<TabBean>?) {
-                if (t != null && t.size > 0) {
-                    LogManager.i(TAG, "onChanged*****tabSuccessObserver")
-                    resourceTabDataSuccess(t)
-                } else {
-                    resourceTabDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
-                }
+        viewModel.tabRxFragmentSuccess.observe(this, {
+            if (it != null && it.size > 0) {
+                LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
+                resourceTabDataSuccess(it)
+            } else {
+                resourceTabDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
             }
-        }
-
-        tabErrorObserver = object : Observer<String> {
-            override fun onChanged(t: String?) {
-                if (!TextUtils.isEmpty(t)) {
-                    LogManager.i(TAG, "onChanged*****dataxErrorObserver")
-                    resourceTabDataError(t!!)
-                }
+        })
+        viewModel.tabRxFragmentError.observe(this, {
+            if (!TextUtils.isEmpty(it)) {
+                LogManager.i(TAG, "onChanged*****tabRxFragmentError")
+                resourceTabDataError(it)
             }
-        }
-
-        viewModel.tabRxFragmentSuccess.observe(this, tabSuccessObserver)
-        viewModel.tabRxFragmentError.observe(this, tabErrorObserver)
+        })
     }
 
     override fun initViews() {
@@ -91,7 +81,7 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
     override fun resourceTabDataSuccess(success: MutableList<TabBean>) {
         val fragmentList = mutableListOf<Fragment>()
         success.forEach {
-            fragmentList.add(ResourceChildFragment().apply {
+            fragmentList.add(SubResourceFragment().apply {
                 //想各个fragment传递信息
                 val bundle = Bundle()
                 bundle.putInt("type", 20)

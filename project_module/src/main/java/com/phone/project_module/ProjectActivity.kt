@@ -1,156 +1,120 @@
 package com.phone.project_module
 
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.phone.common_library.BaseApplication
+import com.phone.common_library.adapter.TabFragmentStatePagerAdapter
+import com.phone.common_library.adapter.TabNavigatorAdapter
 import com.phone.common_library.base.BaseMvvmAppRxActivity
+import com.phone.common_library.bean.TabBean
 import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.manager.LogManager
+import com.phone.common_library.manager.MagicIndicatorManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
-import com.phone.project_module.adapter.ProjectAdapter
-import com.phone.project_module.bean.DataX
+import com.phone.project_module.adapter.SubProjectAdapter
 import com.phone.project_module.databinding.ActivityProjectBinding
+import com.phone.project_module.fragment.SubProjectFragment
 import com.phone.project_module.ui.EventScheduleActivity
-import com.phone.project_module.view.IProjectChildView
+import com.phone.project_module.view.IProjectView
 import com.phone.project_module.view_model.ProjectViewModelImpl
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 
 class ProjectActivity :
     BaseMvvmAppRxActivity<ProjectViewModelImpl, ActivityProjectBinding>(),
-    IProjectChildView {
+    IProjectView {
 
-    companion object {
-        private val TAG: String = ProjectActivity::class.java.simpleName
-    }
+    private val TAG = ProjectFragment::class.java.simpleName
 
-    private val projectAdapter by lazy { ProjectAdapter(rxAppCompatActivity) }
-    private var isRefresh: Boolean = true
-    private var currentPage: Int = 1
-    private lateinit var dataxSuccessObserver: Observer<MutableList<DataX>>
-    private lateinit var dataxErrorObserver: Observer<String>
+    private lateinit var tabSuccessObserver: Observer<MutableList<TabBean>>
+    private lateinit var tabErrorObserver: Observer<String>
+    private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
-    override fun initLayoutId(): Int {
-        return R.layout.activity_project
-    }
+    override fun initLayoutId() = R.layout.activity_project
 
-    override fun initViewModel(): ProjectViewModelImpl {
-        return ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
-    }
+    override fun initViewModel() =
+        ViewModelProvider(rxAppCompatActivity).get(ProjectViewModelImpl::class.java)
 
     override fun initData() {
-//        mDatabind.setVariable()
     }
 
     override fun initObservers() {
-        dataxSuccessObserver = object : Observer<MutableList<DataX>> {
-            override fun onChanged(t: MutableList<DataX>?) {
-                if (t != null && t.size > 0) {
-                    LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
-//                    LogManager.i(TAG, "onChanged*****${t.toString()}")
-                    projectDataSuccess(t)
-                    hideLoading()
-                } else {
-                    projectDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
-                    hideLoading()
-                }
+        viewModel.tabRxFragmentSuccess.observe(this, {
+            if (it != null && it.size > 0) {
+                LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
+                projectTabDataSuccess(it)
+            } else {
+                projectTabDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
             }
-
-        }
-
-        dataxErrorObserver = object : Observer<String> {
-            override fun onChanged(t: String?) {
-                if (!TextUtils.isEmpty(t)) {
-                    LogManager.i(TAG, "onChanged*****dataxErrorObserver")
-                    projectDataError(t!!)
-                    hideLoading()
-                }
+        })
+        viewModel.tabRxFragmentError.observe(this, {
+            if (!TextUtils.isEmpty(it)) {
+                LogManager.i(TAG, "onChanged*****tabRxFragmentError")
+                projectTabDataError(it)
             }
-
-        }
-
-        viewModel.dataxRxActivitySuccess.observe(this, dataxSuccessObserver)
-        viewModel.dataxRxActivityError.observe(this, dataxErrorObserver)
+        })
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.color_FF198CFF)
-
-        projectAdapter.apply {
-            setRcvOnItemViewClickListener(object : OnItemViewClickListener {
-
-                override fun onItemClickListener(position: Int, view: View?) {
-//                startActivity(VideoViewActivity::class.java)
-                    startActivity(EventScheduleActivity::class.java)
-                }
-            })
-        }
-        mDatabind.rcvData.apply {
-            itemAnimator = DefaultItemAnimator()
-            adapter = projectAdapter
-        }
-
-        mDatabind.refreshLayout.apply {
-            setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-                override fun onLoadMore(refreshLayout: RefreshLayout) {
-                    LogManager.i(TAG, "onLoadMore")
-                    isRefresh = false
-                    initProject("$currentPage")
-                }
-
-                override fun onRefresh(refreshLayout: RefreshLayout) {
-                    LogManager.i(TAG, "onRefresh")
-                    isRefresh = true
-                    currentPage = 1;
-                    initProject("$currentPage")
-                }
-            })
-        }
     }
 
     override fun initLoadData() {
-        LogManager.i(TAG, "initLoadData")
-        mDatabind.refreshLayout.autoRefresh()
+        LogManager.i(TAG, "ProjectFragment initLoadData")
+        initProjectTabData()
     }
 
     override fun showLoading() {
-        if (!rxAppCompatActivity.isFinishing()) {
-            if (!mDatabind.loadView.isShown()) {
-                mDatabind.loadView.setVisibility(View.VISIBLE)
-                mDatabind.loadView.start()
-            }
+        if (!mDatabind.loadView.isShown()) {
+            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (!rxAppCompatActivity.isFinishing()) {
-            if (mDatabind.loadView.isShown()) {
-                mDatabind.loadView.stop()
-                mDatabind.loadView.setVisibility(View.GONE)
-            }
+        if (mDatabind.loadView.isShown()) {
+            mDatabind.loadView.stop()
+            mDatabind.loadView.setVisibility(View.GONE)
         }
     }
 
-    override fun projectDataSuccess(success: MutableList<DataX>) {
-        if (!rxAppCompatActivity.isFinishing()) {
-            if (isRefresh) {
-                projectAdapter.clearData();
-                projectAdapter.addData(success)
-                mDatabind.refreshLayout.finishRefresh()
-            } else {
-                projectAdapter.addData(success)
-                mDatabind.refreshLayout.finishLoadMore()
-            }
-            currentPage++;
+    override fun projectTabDataSuccess(success: MutableList<TabBean>) {
+        val fragmentList = mutableListOf<Fragment>()
+        success.forEach {
+            fragmentList.add(SubProjectFragment().apply {
+                //想各个fragment传递信息
+                val bundle = Bundle()
+                bundle.putInt("type", 20)
+                bundle.putInt("tabId", it.id)
+                bundle.putString("name", it.name)
+                arguments = bundle
+            })
         }
+        fragmentStatePagerAdapter =
+            TabFragmentStatePagerAdapter(
+                supportFragmentManager,
+                fragmentList
+            )
+        mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
+
+        //下划线绑定
+        val commonNavigator = CommonNavigator(rxAppCompatActivity)
+        commonNavigator.adapter = getCommonNavigatorAdapter(success)
+        mDatabind.tabLayout.navigator = commonNavigator
+        MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
+
+        hideLoading()
     }
 
-    override fun projectDataError(error: String) {
+    override fun projectTabDataError(error: String) {
         if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
@@ -161,23 +125,32 @@ class ProjectActivity :
                 ScreenManager.dpToPx(rxAppCompatActivity, 40f),
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
                 error,
-                false
+                true
             )
+        }
+        hideLoading()
+    }
 
-            if (isRefresh) {
-                mDatabind.refreshLayout.finishRefresh(false)
-            } else {
-                mDatabind.refreshLayout.finishLoadMore(false)
-            }
+    private fun initProjectTabData() {
+        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
+            showLoading()
+            viewModel.projectTabData()
+        } else {
+            projectTabDataError(resources!!.getString(R.string.please_check_the_network_connection))
         }
     }
 
-    private fun initProject(currentPage: String) {
-        showLoading()
-        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            viewModel.projectData2(this, currentPage)
-        } else {
-            projectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
+    /**
+     * 获取下划线根跟字适配器
+     */
+    private fun getCommonNavigatorAdapter(tabList: MutableList<TabBean>): CommonNavigatorAdapter {
+        return TabNavigatorAdapter(mutableListOf<String>().apply {
+            //将tab转换为String
+            tabList.forEach {
+                it.name?.let { it1 -> add(it1) }
+            }
+        }) {
+            mDatabind.mineViewPager2.currentItem = it
         }
     }
 

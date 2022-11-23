@@ -31,6 +31,7 @@ public class Base64StrAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void clearData() {
         notifyItemRangeRemoved(0, this.base64StrList.size());
+        notifyItemRangeChanged(0, this.base64StrList.size());
         this.base64StrList.clear();
     }
 

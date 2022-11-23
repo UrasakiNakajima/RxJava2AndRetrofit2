@@ -45,7 +45,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
-                                    val response = GsonManager.getInstance()
+                                    val response = GsonManager()
                                         .convert(success, MineResponse::class.java)
 
                                     if (response.error_code == 0) {
@@ -74,7 +74,10 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun mineData2(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>) {
+    override fun mineData2(
+        rxAppCompatActivity: RxAppCompatActivity,
+        bodyParams: Map<String, String>
+    ) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {
@@ -90,7 +93,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
-                                    val response = GsonManager.getInstance()
+                                    val response = GsonManager()
                                         .convert(success, MineResponse::class.java)
 //                                    String jsonStr = GsonManager . getInstance ().toJson(response);
                                     if (response.error_code == 0) {
@@ -119,7 +122,10 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun userData(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>) {
+    override fun userData(
+        rxAppCompatActivity: RxAppCompatActivity,
+        bodyParams: Map<String, String>
+    ) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
@@ -135,7 +141,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
-//                                    val response = GsonManager.getInstance().convert(success, MineResponse::class.java)
+//                                    val response = new GsonManager().convert(success, MineResponse::class.java)
 
 //                                    if (response.ans_list != null && response.ans_list.size > 0) {
 //                                        baseView.mineDataSuccess(response.ans_list)
@@ -163,7 +169,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun userData(rxAppCompatActivity: RxAppCompatActivity, accessToken: String, bodyParams: Map<String, String>) {
+    override fun userData(
+        rxAppCompatActivity: RxAppCompatActivity,
+        accessToken: String,
+        bodyParams: Map<String, String>
+    ) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
@@ -179,7 +189,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
-//                                    val response = GsonManager.getInstance().convert(success, MineResponse::class.java)
+//                                    val response = new GsonManager().convert(success, MineResponse::class.java)
 
 //                                    if (response.ans_list != null && response.ans_list.size > 0) {
 //                                        baseView.mineDataSuccess(response.ans_list)

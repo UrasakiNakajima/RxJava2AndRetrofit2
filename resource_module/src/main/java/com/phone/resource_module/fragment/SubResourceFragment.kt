@@ -10,28 +10,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseMvvmRxFragment
+import com.phone.common_library.bean.ArticleListBean
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.resource_module.R
-import com.phone.resource_module.adapter.ResourceAdapter
-import com.phone.resource_module.bean.ArticleListBean
-import com.phone.resource_module.databinding.FragmentResourceChildBinding
-import com.phone.resource_module.view.IResourceChildView
-import com.phone.square_module.view_model.ResourceChildViewModelImpl
+import com.phone.resource_module.adapter.SubResourceAdapter
+import com.phone.resource_module.databinding.FragmentResourceSubBinding
+import com.phone.resource_module.view.ISubResourceView
+import com.phone.square_module.view_model.SubResourceViewModelImpl
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import kotlinx.android.synthetic.main.fragment_resource_child.*
 
-class ResourceChildFragment :
-    BaseMvvmRxFragment<ResourceChildViewModelImpl, FragmentResourceChildBinding>(),
-    IResourceChildView {
+class SubResourceFragment :
+    BaseMvvmRxFragment<SubResourceViewModelImpl, FragmentResourceSubBinding>(),
+    ISubResourceView {
 
-    private val TAG = ResourceChildFragment::class.java.simpleName
+    private val TAG = SubResourceFragment::class.java.simpleName
 
-    private lateinit var dataxSuccessObserver: Observer<MutableList<ArticleListBean>>
-    private lateinit var dataxErrorObserver: Observer<String>
-    private val resourceAdapter by lazy { ResourceAdapter(rxAppCompatActivity) }
+    private val subResourceAdapter by lazy { SubResourceAdapter(rxAppCompatActivity) }
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
 
@@ -46,10 +43,10 @@ class ResourceChildFragment :
     private var tabId: Int = 0
     private var pageNum: Int = 1
 
-    override fun initLayoutId() = R.layout.fragment_resource_child
+    override fun initLayoutId() = R.layout.fragment_resource_sub
 
     override fun initViewModel() =
-        ViewModelProvider(rxAppCompatActivity).get(ResourceChildViewModelImpl::class.java)
+        ViewModelProvider(rxAppCompatActivity).get(SubResourceViewModelImpl::class.java)
 
     override fun initData() {
         type = arguments?.getInt("type") ?: 0
@@ -57,29 +54,21 @@ class ResourceChildFragment :
     }
 
     override fun initObservers() {
-        dataxSuccessObserver = object : Observer<MutableList<ArticleListBean>> {
-            override fun onChanged(t: MutableList<ArticleListBean>?) {
-                if (t != null && t.size > 0) {
-                    LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
+        viewModel.dataxRxFragmentSuccess.observe(this, {
+            if (it != null && it.size > 0) {
+                LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
-                    resourceDataSuccess(t)
-                } else {
-                    resourceDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
-                }
+                subResourceDataSuccess(it)
+            } else {
+                subResourceDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
             }
-        }
-
-        dataxErrorObserver = object : Observer<String> {
-            override fun onChanged(t: String?) {
-                if (!TextUtils.isEmpty(t)) {
-                    LogManager.i(TAG, "onChanged*****dataxErrorObserver")
-                    resourceDataError(t!!)
-                }
+        })
+        viewModel.dataxRxFragmentError.observe(this, {
+            if (!TextUtils.isEmpty(it)) {
+                LogManager.i(TAG, "onChanged*****dataxErrorObserver")
+                subResourceDataError(it)
             }
-        }
-
-        viewModel.dataxRxFragmentSuccess.observe(this, dataxSuccessObserver)
-        viewModel.dataxRxFragmentError.observe(this, dataxErrorObserver)
+        })
     }
 
     override fun initViews() {
@@ -89,16 +78,16 @@ class ResourceChildFragment :
     private fun initAdapter() {
         linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
-        mDatabind.rcvData.layoutManager = linearLayoutManager
-        mDatabind.rcvData.itemAnimator = DefaultItemAnimator()
-        (mDatabind.rcvData.itemAnimator as DefaultItemAnimator).changeDuration = 0
-
-        resourceAdapter.apply {
-            setRcvOnItemViewClickListener { i, view ->
-                when (view.id) {
-                    //收藏
-                    R.id.ivCollect -> {
-//                        this@ResourceChildFragment.resourceAdapter.list[i].apply {
+        mDatabind.rcvData.apply {
+            layoutManager = linearLayoutManager
+            itemAnimator = DefaultItemAnimator()
+            (itemAnimator as DefaultItemAnimator).changeDuration = 0
+            subResourceAdapter.apply {
+                setRcvOnItemViewClickListener { i, view ->
+                    when (view.id) {
+                        //收藏
+                        R.id.ivCollect -> {
+//                        this@ResourceChildFragment.subResourceAdapter.list[i].apply {
 //                            //已收藏取消收藏
 //                            if (collect) {
 //                                viewModel.unCollect(id)
@@ -106,11 +95,12 @@ class ResourceChildFragment :
 //                                viewModel.collect(id)
 //                            }
 //                        }
+                        }
                     }
                 }
             }
+            setAdapter(subResourceAdapter)
         }
-        mDatabind.rcvData.setAdapter(resourceAdapter)
 
         mDatabind.refreshLayout.setOnRefreshLoadMoreListener(
             object : OnRefreshLoadMoreListener {
@@ -118,14 +108,14 @@ class ResourceChildFragment :
                     LogManager.i(TAG, "onLoadMore")
                     isRefresh = false
                     pageNum++
-                    initResource(tabId, pageNum)
+                    initSubResource(tabId, pageNum)
                 }
 
                 override fun onRefresh(refreshLayout: RefreshLayout) {
                     LogManager.i(TAG, "onRefresh")
                     isRefresh = true
                     pageNum = 1
-                    initResource(tabId, pageNum)
+                    initSubResource(tabId, pageNum)
                 }
             })
     }
@@ -136,26 +126,26 @@ class ResourceChildFragment :
 
     override fun showLoading() {
         if (!mDatabind.loadView.isShown()) {
-            load_view.setVisibility(View.VISIBLE)
-            load_view.start()
+            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.start()
         }
     }
 
     override fun hideLoading() {
         if (mDatabind.loadView.isShown()) {
-            load_view.stop()
-            load_view.setVisibility(View.GONE)
+            mDatabind.loadView.stop()
+            mDatabind.loadView.setVisibility(View.GONE)
         }
     }
 
-    override fun resourceDataSuccess(success: MutableList<ArticleListBean>) {
+    override fun subResourceDataSuccess(success: MutableList<ArticleListBean>) {
         if (!rxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                resourceAdapter.clearData()
-                resourceAdapter.addData(success)
+                subResourceAdapter.clearData()
+                subResourceAdapter.addData(success)
                 mDatabind.refreshLayout.finishRefresh()
             } else {
-                resourceAdapter.addData(success)
+                subResourceAdapter.addData(success)
                 mDatabind.refreshLayout.finishLoadMore()
             }
 
@@ -163,7 +153,7 @@ class ResourceChildFragment :
         hideLoading()
     }
 
-    override fun resourceDataError(error: String) {
+    override fun subResourceDataError(error: String) {
         if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(rxAppCompatActivity, 20f),
@@ -186,12 +176,12 @@ class ResourceChildFragment :
         hideLoading()
     }
 
-    private fun initResource(tabId: Int, pageNum: Int) {
+    private fun initSubResource(tabId: Int, pageNum: Int) {
         if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
             showLoading()
-            viewModel.resourceData(this, tabId, pageNum)
+            viewModel.subResourceData(tabId, pageNum)
         } else {
-            resourceDataError(resources.getString(R.string.please_check_the_network_connection))
+            subResourceDataError(resources.getString(R.string.please_check_the_network_connection))
             if (isRefresh) {
                 mDatabind.refreshLayout.finishRefresh()
             } else {

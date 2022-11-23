@@ -1,4 +1,4 @@
-package com.phone.resource_module.bean
+package com.phone.common_library.bean
 
 class CollectBean {
 

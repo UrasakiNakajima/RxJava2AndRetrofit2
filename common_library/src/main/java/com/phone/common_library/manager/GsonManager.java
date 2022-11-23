@@ -7,28 +7,29 @@ import java.lang.reflect.Type;
 public class GsonManager {
 
     public static final String TAG = GsonManager.class.getSimpleName();
-    private static Gson gson;
-    private static GsonManager gsonManager;
+    private Gson gson;
+//    private static Gson gson;
+//    private static GsonManager gsonManager;
 
-    private GsonManager() {
+    public GsonManager() {
         gson = new Gson();
     }
 
-    /**
-     * 线程安全的单例模式
-     *
-     * @return
-     */
-    public static GsonManager getInstance() {
-        if (gsonManager == null) {
-            synchronized (GsonManager.class) {
-                if (gsonManager == null) {
-                    gsonManager = new GsonManager();
-                }
-            }
-        }
-        return gsonManager;
-    }
+//    /**
+//     * 线程安全的单例模式
+//     *
+//     * @return
+//     */
+//    public static GsonManager getInstance() {
+//        if (gsonManager == null) {
+//            synchronized (GsonManager.class) {
+//                if (gsonManager == null) {
+//                    gsonManager = new GsonManager();
+//                }
+//            }
+//        }
+//        return gsonManager;
+//    }
 
     /**
      * 将json转化为对应的实体对象

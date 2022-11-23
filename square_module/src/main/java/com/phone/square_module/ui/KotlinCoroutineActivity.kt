@@ -32,7 +32,7 @@ class KotlinCoroutineActivity : BaseRxAppActivity() {
 //        test()
 //        test2()
 
-        coroutine()
+//        coroutine()
     }
 
     fun coroutine() {

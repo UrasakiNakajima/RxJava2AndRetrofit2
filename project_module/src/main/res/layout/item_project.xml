@@ -6,171 +6,87 @@
     <data>
 
         <variable
-            name="datax"
-            type="com.phone.project_module.bean.DataX" />
-
+            name="dataBean"
+            type="com.phone.common_library.bean.ArticleListBean" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_8"
-        android:layout_marginTop="@dimen/dp_8"
-        android:layout_marginEnd="@dimen/dp_8"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/dp_4"
-        app:cardElevation="@dimen/dp_4">
+        android:background="@drawable/ripple_bg"
+        android:paddingTop="@dimen/padding">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/ivTitle"
+            android:layout_width="@dimen/dp_95"
+            android:layout_height="@dimen/dp_95"
+            android:layout_marginStart="@dimen/dp_16"
+            android:scaleType="center"
+            app:imageUrl="@{dataBean.picUrl}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/text_1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:text="@{dataBean.title}"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/ivTitle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginLeft="@dimen/dp_16"
+            tools:text="标题" />
 
-            <LinearLayout
-                android:id="@+id/item_project_toplinear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tvDes"
+            style="@style/text_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:maxLines="2"
+            android:text="@{dataBean.desc}"
+            app:layout_constraintLeft_toLeftOf="@+id/tvTitle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:text="描述" />
 
-                <TextView
-                    android:id="@+id/item_project_author"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/item_imgselector"
-                    android:text="@{datax.author}"
-                    android:textColor="@color/colorBlack666"
-                    android:textSize="@dimen/sp_14" />
+        <TextView
+            android:id="@+id/tvNameData"
+            style="@style/text_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{dataBean.date}"
+            app:layout_constraintBottom_toBottomOf="@+id/ivTitle"
+            app:layout_constraintLeft_toLeftOf="@+id/tvTitle"
+            tools:text="2020-03-14 | zskingking" />
 
-                <TextView
-                    android:id="@+id/item_project_top"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/title_lable_shap"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:text="@{String.valueOf(datax.type)}"
-                    android:textColor="@android:color/holo_red_light"
-                    android:textSize="@dimen/sp_10" />
+        <ImageView
+            android:id="@+id/ivCollect"
+            articleCollect="@{dataBean.collect}"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@id/ivTitle"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="ContentDescription" />
 
-                <TextView
-                    android:id="@+id/item_project_new"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/title_lable_shap"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:text="新"
-                    android:textColor="@android:color/holo_red_light"
-                    android:textSize="@dimen/sp_10" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/dp_16"
+            android:background="?attr/division_line"
+            app:layout_constraintTop_toBottomOf="@+id/ivTitle" />
 
-                <TextView
-                    android:id="@+id/item_project_type1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/title_lable_shap1"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:text="@{String.valueOf(datax.type)}"
-                    android:textColor="@android:color/holo_green_dark"
-                    android:textSize="@dimen/sp_10" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/item_project_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@{datax.niceDate}"
-                    android:textColor="@color/colorBlack666"
-                    android:textSize="@dimen/sp_14"
-                    tools:text="1小时前" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/item_project_imageview"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="12dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/default_project_img"
-                    app:imageUrl="@{datax.envelopePic}"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/item_project_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="8dp"
-                    android:layout_toEndOf="@+id/item_project_imageview"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="@{datax.title}"
-                    android:textColor="@color/colorBlack333"
-                    android:textSize="@dimen/sp_14"
-                    android:textStyle="bold"
-                    tools:text="这是一个菜的扣jio的人写的项目" />
-
-                <TextView
-                    android:id="@+id/item_project_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/item_project_title"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_toEndOf="@+id/item_project_imageview"
-                    android:ellipsize="end"
-                    android:includeFontPadding="true"
-                    android:lineSpacingMultiplier="1.4"
-                    android:maxLines="3"
-                    android:text="@{datax.desc}"
-                    android:textColor="@color/colorBlack666"
-                    android:textSize="@dimen/sp_14"
-                    tools:text="一个Jetpack结合MVVM的快速开发框架，基于MVVM模式集成谷歌官方推荐的JetPack组件库：LiveData、ViewModel、Lifecycle组件 使用Kotlin语言，添加大量拓展函数，简化代码 加入Retrofit网络请求,协程，帮你简化各种操作，让你快速开发项目" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/item_project_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:text="@{String.valueOf(datax.type)}"
-                    android:textColor="@color/colorBlack666"
-                    android:textSize="@dimen/sp_14"
-                    tools:ignore="RelativeOverlap"
-                    tools:text="分类·项目" />
-
-            </RelativeLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

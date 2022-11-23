@@ -4,12 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.FaceDetector;
 import android.os.Handler;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
 import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.mine_module.R;
 
 import java.util.Vector;
@@ -27,6 +30,8 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
 
     private static final String TAG = ThreadPoolActivity.class.getSimpleName();
     private Toolbar toolbar;
+    private FrameLayout layoutBack;
+    private ImageView imvBack;
     private TextView tevTitle;
     private TextView tevStartThreadPool;
     private TextView tevStopThreadPool;
@@ -53,12 +58,18 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
     @Override
     protected void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        layoutBack = (FrameLayout) findViewById(R.id.layout_back);
+        imvBack = (ImageView) findViewById(R.id.imv_back);
         tevTitle = (TextView) findViewById(R.id.tev_title);
         tevStartThreadPool = (TextView) findViewById(R.id.tev_start_thread_pool);
         tevStopThreadPool = (TextView) findViewById(R.id.tev_stop_thread_pool);
         tevStartThreadPool2 = (TextView) findViewById(R.id.tev_start_thread_pool2);
         tevStopThreadPool2 = (TextView) findViewById(R.id.tev_stop_thread_pool2);
-        setToolbar(false, R.color.color_FFE066FF);
+        setToolbar(false, R.color.color_FF198CFF);
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
+        layoutBack.setOnClickListener(v -> {
+            finish();
+        });
 
         tevStartThreadPool.setOnClickListener(v -> {
             startThreadPool();

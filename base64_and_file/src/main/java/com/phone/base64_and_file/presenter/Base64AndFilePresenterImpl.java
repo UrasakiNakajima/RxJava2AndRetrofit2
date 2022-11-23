@@ -84,4 +84,10 @@ public class Base64AndFilePresenterImpl extends BasePresenter<IBaseView>
             }
         }
     }
+
+    @Override
+    protected void detachView() {
+        super.detachView();
+        model.detachViewModel();
+    }
 }

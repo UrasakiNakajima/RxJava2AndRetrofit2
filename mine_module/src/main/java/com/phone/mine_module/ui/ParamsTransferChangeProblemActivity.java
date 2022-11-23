@@ -1,6 +1,8 @@
 package com.phone.mine_module.ui;
 
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -8,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.mine_module.R;
 import com.phone.mine_module.bean.User;
 
@@ -24,6 +27,8 @@ public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
 
     private static final String TAG = ParamsTransferChangeProblemActivity.class.getSimpleName();
     private Toolbar toolbar;
+    private FrameLayout layoutBack;
+    private ImageView imvBack;
     private TextView tevTitle;
     private TextView tevUserBeforeChange;
     private TextView tevNumberBeforeChange;
@@ -63,6 +68,8 @@ public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
     @Override
     protected void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        layoutBack = (FrameLayout) findViewById(R.id.layout_back);
+        imvBack = (ImageView) findViewById(R.id.imv_back);
         tevTitle = (TextView) findViewById(R.id.tev_title);
         tevUserBeforeChange = (TextView) findViewById(R.id.tev_user_before_change);
         tevNumberBeforeChange = (TextView) findViewById(R.id.tev_number_before_change);
@@ -75,9 +82,11 @@ public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
         tevStringListAfterChange = (TextView) findViewById(R.id.tev_stringList_after_change);
         tevUserAfterChange2 = (TextView) findViewById(R.id.tev_user_after_change2);
         tevStringListAfterChange2 = (TextView) findViewById(R.id.tev_stringList_after_change2);
-
-        setToolbar(false, R.color.color_FFE066FF);
-
+        setToolbar(false, R.color.color_FF198CFF);
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
+        layoutBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     @Override

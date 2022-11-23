@@ -46,8 +46,6 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     private var currentPage: Int = 1
-    private lateinit var dataxSuccessObserver: Observer<MutableList<DataX>>
-    private lateinit var dataxErrorObserver: Observer<String>
     private var datax: DataX = DataX()
     private var atomicBoolean: AtomicBoolean = AtomicBoolean(false)
 
@@ -73,28 +71,20 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     override fun initObservers() {
-        dataxSuccessObserver = object : Observer<MutableList<DataX>> {
-            override fun onChanged(t: MutableList<DataX>?) {
-                if (t != null && t.size > 0) {
-                    LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
-                    squareDataSuccess(t)
-                } else {
-                    squareDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
-                }
+        viewModel.dataxRxFragmentSuccess.observe(this, {
+            if (it != null && it.size > 0) {
+                LogManager.i(TAG, "onChanged*****dataxRxFragmentSuccess")
+                squareDataSuccess(it)
+            } else {
+                squareDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
             }
-        }
-
-        dataxErrorObserver = object : Observer<String> {
-            override fun onChanged(t: String?) {
-                if (!TextUtils.isEmpty(t)) {
-                    LogManager.i(TAG, "onChanged*****dataxErrorObserver")
-                    squareDataError(t!!)
-                }
+        })
+        viewModel.dataxRxFragmentError.observe(this, {
+            if (!TextUtils.isEmpty(it)) {
+                LogManager.i(TAG, "onChanged*****dataxRxFragmentError")
+                squareDataError(it)
             }
-        }
-
-        viewModel.dataxRxFragmentSuccess.observe(this, dataxSuccessObserver)
-        viewModel.dataxRxFragmentError.observe(this, dataxErrorObserver)
+        })
     }
 
     override fun initViews() {

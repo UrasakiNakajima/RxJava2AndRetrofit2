@@ -33,7 +33,7 @@ public class CompressedPictureThreadPool {
                 LogManager.i(TAG, "CompressedPictureThreadPool*******" + Thread.currentThread().getName());
 
                 //先取出资源文件保存在本地
-                File file = BitmapManager.getAssetFile(context, base64AndFileBean.getDirsPath(), "picture_large.png");
+                File file = BitmapManager.getAssetFile(context, base64AndFileBean.getDirsPath(), "picture_large.webp");
                 LogManager.i(TAG, "file size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(file)));
                 base64AndFileBean.setFile(file);
 

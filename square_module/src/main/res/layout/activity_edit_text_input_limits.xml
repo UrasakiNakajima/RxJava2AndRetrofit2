@@ -38,8 +38,8 @@
 
                     <ImageView
                         android:id="@+id/imv_back"
-                        android:layout_width="@dimen/dp_6"
-                        android:layout_height="@dimen/dp_11"
+                        android:layout_width="@dimen/dp_9"
+                        android:layout_height="@dimen/dp_16"
                         android:layout_gravity="center"
                         android:src="@mipmap/icon_arrowhead_left"
                         tools:ignore="ContentDescription" />

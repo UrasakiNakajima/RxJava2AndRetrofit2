@@ -6,11 +6,11 @@ import com.google.gson.reflect.TypeToken
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.base.BaseViewModel
 import com.phone.common_library.bean.ApiResponse
+import com.phone.common_library.bean.TabBean
 import com.phone.common_library.manager.GsonManager
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.SingleLiveData
 import com.phone.resource_module.R
-import com.phone.resource_module.bean.TabBean
 import com.phone.resource_module.model.ResourceModelImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,8 +39,8 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                     LogManager.i(TAG, "resourceTabData response*****$success")
                     if (!TextUtils.isEmpty(success)) {
                         val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
-                        val response: ApiResponse<MutableList<TabBean>> = GsonManager.getInstance()
-                            .fromJson(success, type2)
+                        val response: ApiResponse<MutableList<TabBean>> =
+                            GsonManager().fromJson(success, type2)
                         response.data().let {
                             if (it.size > 0) {
                                 tabRxFragmentSuccess.value = it
@@ -71,8 +71,8 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                     LogManager.i(TAG, "resourceTabData response*****$success")
                     if (!TextUtils.isEmpty(success)) {
                         val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
-                        val response: ApiResponse<MutableList<TabBean>> = GsonManager.getInstance()
-                            .fromJson(success, type2)
+                        val response: ApiResponse<MutableList<TabBean>> =
+                            GsonManager().fromJson(success, type2)
                         response.let {
                             if (response.data().size > 0) {
                                 tabRxActivitySuccess.value = response.data()

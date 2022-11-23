@@ -32,6 +32,7 @@ public class FirstPageAdapter
 
     public void clearData() {
         notifyItemRangeRemoved(0, this.mJuheNewsBeanList.size());
+        notifyItemRangeChanged(0, this.mJuheNewsBeanList.size());
         this.mJuheNewsBeanList.clear();
     }
 

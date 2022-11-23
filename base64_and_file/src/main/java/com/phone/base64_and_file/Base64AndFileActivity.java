@@ -12,6 +12,7 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.manager.LogManager;
 import com.phone.common_library.manager.MediaFileManager;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.SystemManager;
 import com.qmuiteam.qmui.widget.QMUILoadingView;
@@ -80,6 +82,8 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
     private static final String TAG = Base64AndFileActivity.class.getSimpleName();
     private Toolbar toolbar;
+    private FrameLayout layoutBack;
+    private ImageView imvBack;
     private TextView tevTitle;
     private TextView tevRequestPermissions;
     private TextView tevCompressedPicture;
@@ -94,14 +98,15 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     // where this is an Activity or Fragment instance
     //    private Binder binder;
     private String dirsPath;
+    private String dirsPathCompressed;
+    private String dirsPathCompressedRecover;
     private Base64StrAdapter base64StrAdapter;
 
     private Timer timer;
     private TimerTask timerTask;
-    private Handler handler;
+    private static Handler handler;
 
     private AlertDialog mPermissionsDialog;
-    private Base64AndFileBean base64AndFileBean;
     private final String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -119,23 +124,21 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
     @Override
     protected void initData() {
+        handler = new Handler(Looper.getMainLooper());
+
         dirsPath = baseApplication.getExternalCacheDir()
                 + File.separator + "Pictures";
-        String dirsPathCompressed = baseApplication.getExternalCacheDir()
+        dirsPathCompressed = baseApplication.getExternalCacheDir()
                 + File.separator + "PicturesCompressed";
-        String dirsPathCompressedRecover = baseApplication.getExternalCacheDir()
+        dirsPathCompressedRecover = baseApplication.getExternalCacheDir()
                 + File.separator + "PicturesCompressedRecover";
-        base64AndFileBean = new Base64AndFileBean();
-        base64AndFileBean.setDirsPath(dirsPath);
-        base64AndFileBean.setDirsPathCompressed(dirsPathCompressed);
-        base64AndFileBean.setDirsPathCompressedRecover(dirsPathCompressedRecover);
-
-        handler = new Handler(Looper.getMainLooper());
     }
 
     @Override
     protected void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        layoutBack = (FrameLayout) findViewById(R.id.layout_back);
+        imvBack = (ImageView) findViewById(R.id.imv_back);
         tevTitle = (TextView) findViewById(R.id.tev_title);
         tevRequestPermissions = (TextView) findViewById(R.id.tev_request_permissions);
         tevCompressedPicture = (TextView) findViewById(R.id.tev_compressed_picture);
@@ -146,7 +149,11 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         imvBase64ToPicture = (ImageView) findViewById(R.id.imv_base64_to_picture);
         tevResetData = (TextView) findViewById(R.id.tev_reset_data);
         loadView = (QMUILoadingView) findViewById(R.id.load_view);
-        setToolbar(false, R.color.color_FFE066FF);
+        setToolbar(false, R.color.color_FF198CFF);
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
+        layoutBack.setOnClickListener(v -> {
+            finish();
+        });
 
         tevRequestPermissions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,8 +216,6 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 ////            // 绑定服务和活动，之后活动就可以去调服务的方法了
 ////            bindService(bindIntent, connection, BIND_AUTO_CREATE);
 //        }
-
-
     }
 
     @Override
@@ -255,6 +260,10 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 //                if (presenter != null) {
 //                    showLoading();
 //
+//                    Base64AndFileBean base64AndFileBean = new Base64AndFileBean();
+//                    base64AndFileBean.setDirsPath(dirsPath);
+//                    base64AndFileBean.setDirsPathCompressed(dirsPathCompressed);
+//                    base64AndFileBean.setDirsPathCompressedRecover(dirsPathCompressedRecover);
 //                    presenter.showCompressedPicture(baseApplication,
 //                            base64AndFileBean);
 //                }
@@ -336,7 +345,12 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                     @Override
                     public Base64AndFileBean apply(Integer integer) throws Exception {
                         LogManager.i(TAG, "threadName2*****" + Thread.currentThread().getName());
-                        File file = BitmapManager.getAssetFile(baseApplication, dirsPath, "picture_large.png");
+                        File file = BitmapManager.getAssetFile(baseApplication, dirsPath, "picture_large.webp");
+
+                        Base64AndFileBean base64AndFileBean = new Base64AndFileBean();
+                        base64AndFileBean.setDirsPath(dirsPath);
+                        base64AndFileBean.setDirsPathCompressed(dirsPathCompressed);
+                        base64AndFileBean.setDirsPathCompressedRecover(dirsPathCompressedRecover);
                         base64AndFileBean.setFile(file);
                         return base64AndFileBean;
                     }
@@ -727,16 +741,15 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
     @Override
     public void showCompressedPictureSuccess(Base64AndFileBean success) {
-        base64AndFileBean = success;
         tevCompressedPicture.setVisibility(View.GONE);
         imvCompressedPicture.setVisibility(View.VISIBLE);
-        imvCompressedPicture.setImageBitmap(base64AndFileBean.getBitmapCompressed());
+        imvCompressedPicture.setImageBitmap(success.getBitmapCompressed());
         hideLoading();
         LogManager.i(TAG, "showCompressedPictureSuccess");
 
         if (presenter != null) {
             showLoading();
-            presenter.showPictureToBase64(base64AndFileBean);
+            presenter.showPictureToBase64(success);
         }
     }
 
@@ -748,7 +761,6 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
     @Override
     public void showPictureToBase64Success(Base64AndFileBean success) {
-        base64AndFileBean = success;
         tevPictureToBase64.setVisibility(View.GONE);
 
         rcvBase64Str.setVisibility(View.VISIBLE);
@@ -770,7 +782,6 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 
     @Override
     public void showBase64ToPictureSuccess(Base64AndFileBean success) {
-        base64AndFileBean = success;
         tevBase64ToPicture.setVisibility(View.GONE);
         imvBase64ToPicture.setVisibility(View.VISIBLE);
         imvBase64ToPicture.setImageBitmap(success.getBitmap());
@@ -785,20 +796,6 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     }
 
     private void resetData() {
-        if (base64AndFileBean.getBitmap() != null && !base64AndFileBean.getBitmap().isRecycled()) {
-            base64AndFileBean.getBitmap().recycle();
-            base64AndFileBean.setBitmap(null);
-        }
-        if (base64AndFileBean.getBitmapCompressed() != null && !base64AndFileBean.getBitmapCompressed().isRecycled()) {
-            base64AndFileBean.getBitmapCompressed().recycle();
-            base64AndFileBean.setBitmapCompressed(null);
-        }
-        if (base64AndFileBean.getBitmapCompressedRecover() != null && !base64AndFileBean.getBitmapCompressedRecover().isRecycled()) {
-            base64AndFileBean.getBitmapCompressedRecover().recycle();
-            base64AndFileBean.setBitmapCompressedRecover(null);
-        }
-
-
         tevCompressedPicture.setVisibility(View.VISIBLE);
         imvCompressedPicture.setVisibility(View.GONE);
         tevPictureToBase64.setVisibility(View.VISIBLE);
@@ -815,17 +812,9 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     @Override
     protected void onDestroy() {
         stopTimer();
-        if (base64AndFileBean.getBitmap() != null && !base64AndFileBean.getBitmap().isRecycled()) {
-            base64AndFileBean.getBitmap().recycle();
-            base64AndFileBean.setBitmap(null);
-        }
-        if (base64AndFileBean.getBitmapCompressed() != null && !base64AndFileBean.getBitmapCompressed().isRecycled()) {
-            base64AndFileBean.getBitmapCompressed().recycle();
-            base64AndFileBean.setBitmapCompressed(null);
-        }
-        if (base64AndFileBean.getBitmapCompressedRecover() != null && !base64AndFileBean.getBitmapCompressedRecover().isRecycled()) {
-            base64AndFileBean.getBitmapCompressedRecover().recycle();
-            base64AndFileBean.setBitmapCompressedRecover(null);
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
         }
 //        if (connection != null) {
 //            // 解绑服务，服务要记得解绑，不要造成内存泄漏

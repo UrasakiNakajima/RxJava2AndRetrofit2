@@ -33,8 +33,9 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void clearData() {
-        notifyItemRangeRemoved(0, mBookList.size());
-        mBookList.clear();
+        notifyItemRangeRemoved(0, this.mBookList.size());
+        notifyItemRangeChanged(0, this.mBookList.size());
+        this.mBookList.clear();
     }
 
     public void addData(List<Book> bookList) {

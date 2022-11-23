@@ -17,15 +17,14 @@ public class FileManager {
 
     // 将字符串写入到文本文件中
     public static String writeStrToTextFile(String strContent,
-                                        String filePath,
-                                        String fileName) {
+                                            String filePath,
+                                            String fileName) {
         //生成文件夹之后，再生成文件，不然会出错
         makeFilePath(filePath, fileName);
 
         String strFilePath = filePath + fileName;
         // 每次写入时，都换行写
         String strContent2 = strContent + "\r\n";
-
         String filePath2 = null;
         File file;
         try {

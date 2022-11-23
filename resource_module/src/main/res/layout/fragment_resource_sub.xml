@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.phone.square_module.view_model.ResourceChildViewModelImpl" />
+            type="com.phone.square_module.view_model.SubResourceViewModelImpl" />
     </data>
 
 

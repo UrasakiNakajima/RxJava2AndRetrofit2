@@ -6,27 +6,26 @@ import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Call
 
-class ResourceChildModelImpl : IResourceChildModel {
+class SubResourceModelImpl : ISubResourceModel {
 
-    private val TAG = ResourceChildModelImpl::class.java.simpleName
+    private val TAG = SubResourceModelImpl::class.java.simpleName
 
-    override fun resourceData(
-        type: String,
-        pageSize: String,
-        currentPage: String
+    override fun subResourceData(
+        tabId: Int,
+        pageNum: Int
     ): Observable<ResponseBody> {
         return RetrofitManager.getInstance().retrofit
             .create(ResourceRequest::class.java)
-            .getResourceData(type, pageSize, currentPage)
+            .getSubResourceData(tabId, pageNum)
     }
 
-    override fun resourceData2(
+    override fun subResourceData2(
         tabId: Int,
         pageNum: Int
     ): Call<ResponseBody> {
         return RetrofitManager.getInstance().retrofit
             .create(ResourceRequest::class.java)
-            .getResourceData2(tabId, pageNum)
+            .getSubResourceData2(tabId, pageNum)
     }
 
 }

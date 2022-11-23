@@ -21,19 +21,38 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_73"
-                android:background="@color/color_FFE066FF"
+                android:background="@color/color_FF198CFF"
                 android:minHeight="?attr/actionBarSize"
                 android:orientation="vertical"
                 app:contentInsetStart="0dp">
 
+                <FrameLayout
+                    android:id="@+id/layout_back"
+                    android:layout_width="@dimen/dp_36"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:gravity="start"
+                    tools:ignore="UselessParent">
+
+                    <ImageView
+                        android:id="@+id/imv_back"
+                        android:layout_width="@dimen/dp_9"
+                        android:layout_height="@dimen/dp_16"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/icon_arrowhead_left"
+                        tools:ignore="ContentDescription" />
+
+                </FrameLayout>
+
                 <TextView
                     android:id="@+id/tev_title"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_48"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/dp_25"
                     android:gravity="center"
                     android:text="@string/params_transfer_change_problem"
-                    android:textColor="@color/color_FF198CFF"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/sp_20" />
 
             </androidx.appcompat.widget.Toolbar>

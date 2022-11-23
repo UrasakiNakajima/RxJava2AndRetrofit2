@@ -33,6 +33,7 @@ public class UserBeanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public void clearData() {
         notifyItemRangeRemoved(0, this.userBeanList.size());
+        notifyItemRangeChanged(0, this.userBeanList.size());
         this.userBeanList.clear();
     }
 

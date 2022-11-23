@@ -43,10 +43,10 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                     LogManager.i(TAG, "success*****$success")
                     if (!TextUtils.isEmpty(success)) {
                         val response: SquareBean =
-                            GsonManager.getInstance()
+                            GsonManager()
                                 .convert(success, SquareBean::class.java)
-                        response.data?.datas.also {
-                            if (it != null && it.size > 0) {
+                        response.data?.datas?.also {
+                            if (it.size > 0) {
                                 dataxRxFragmentSuccess.value = it
                             } else {
                                 dataxRxFragmentError.value =
@@ -69,7 +69,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 //                            LogManager.i(TAG, "success*****$success")
 //                            if (!TextUtils.isEmpty(success)) {
 //                                val response: SquareBean =
-//                                    GsonManager.getInstance().convert(success, SquareBean::class.java)
+//                                    new GsonManager().convert(success, SquareBean::class.java)
 //                                if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
 ////                                LogManager.i(TAG, "response*****${response.toString()}")
 //
@@ -105,12 +105,14 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                         LogManager.i(TAG, "success*****$success")
                         if (!TextUtils.isEmpty(success)) {
                             val response: SquareBean =
-                                GsonManager.getInstance().convert(success, SquareBean::class.java)
-                            if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
-                                dataxRxActivitySuccess.value = response.data!!.datas
-                            } else {
-                                dataxRxActivityError.value =
-                                    BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                                GsonManager().convert(success, SquareBean::class.java)
+                            response.data?.datas?.apply {
+                                if (this.size > 0) {
+                                    dataxRxActivitySuccess.value = this
+                                } else {
+                                    dataxRxActivityError.value =
+                                        BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                                }
                             }
                         } else {
                             dataxRxActivityError.value =

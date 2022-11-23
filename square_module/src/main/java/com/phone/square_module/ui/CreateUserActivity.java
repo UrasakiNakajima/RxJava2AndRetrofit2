@@ -40,7 +40,6 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
     private TextView tevCreateUser;
     private TextView tevDeleteAllUser;
 
-
     private UserBeanDaoManager userBeanDaoManager;
     private UserBeanAdapter userBeanAdapter;
 
@@ -75,13 +74,12 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
         rcvUser = (RecyclerView) findViewById(R.id.rcv_user);
         tevCreateUser = (TextView) findViewById(R.id.tev_create_user);
         tevDeleteAllUser = (TextView) findViewById(R.id.tev_delete_all_user);
-
         setToolbar(false, R.color.color_FF198CFF);
         imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
-
         layoutBack.setOnClickListener(v -> {
             finish();
         });
+
         tevCreateUser.setOnClickListener(v -> {
             showCreateUserDialog();
         });

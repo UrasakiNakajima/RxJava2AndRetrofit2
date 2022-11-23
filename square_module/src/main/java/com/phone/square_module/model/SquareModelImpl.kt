@@ -20,11 +20,5 @@ class SquareModelImpl() : ISquareModel {
             .getSquareData2(currentPage)
     }
 
-    override fun squareDetails(currentPage: String): Observable<ResponseBody> {
-        return RetrofitManager.getInstance().retrofit
-                .create(SquareRequest::class.java)
-                .getSquareDetails(currentPage)
-    }
-
 
 }

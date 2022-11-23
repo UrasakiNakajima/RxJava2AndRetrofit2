@@ -1,10 +1,10 @@
-package com.phone.resource_module.adapter
+package com.phone.common_library.adapter
 
 import android.content.Context
 import android.content.res.TypedArray
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import com.phone.resource_module.R
+import com.phone.common_library.R
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator

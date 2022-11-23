@@ -17,4 +17,5 @@ public interface IBase64AndFileModel {
     void showBase64ToPicture(Base64AndFileBean base64AndFileBean,
                              OnCommonSingleParamCallback<Base64AndFileBean> onCommonSingleParamCallback);
 
+    void detachViewModel();
 }

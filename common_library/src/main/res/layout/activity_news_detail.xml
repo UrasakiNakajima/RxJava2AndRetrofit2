@@ -10,14 +10,14 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_75"
-        android:background="@color/color_FFE066FF"
+        android:layout_height="@dimen/dp_73"
+        android:background="@color/color_FF198CFF"
         android:minHeight="?attr/actionBarSize"
         app:contentInsetStart="0dp">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
+            android:layout_height="@dimen/dp_48"
             android:layout_marginTop="@dimen/dp_25">
 
             <FrameLayout
@@ -27,8 +27,8 @@
 
                 <ImageView
                     android:id="@+id/imv_back"
-                    android:layout_width="@dimen/dp_6"
-                    android:layout_height="@dimen/dp_11"
+                    android:layout_width="@dimen/dp_9"
+                    android:layout_height="@dimen/dp_16"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/dp_12"
                     android:layout_marginEnd="@dimen/dp_12"

@@ -37,8 +37,6 @@ public class NewsDetailActivity extends BaseRxAppActivity {
     private ProgressBar activityWebProgressbar;
     private WebView llWebContent;
 
-    private WebSettings webSettings;
-
     private String detailUrl;
 
     @Override
@@ -57,20 +55,20 @@ public class NewsDetailActivity extends BaseRxAppActivity {
 
     @Override
     protected void initViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        layoutBack = (FrameLayout) findViewById(R.id.layout_back);
-        imvBack = (ImageView) findViewById(R.id.imv_back);
-        tevTitle = (TextView) findViewById(R.id.tev_title);
-        activityWebProgressbar = (ProgressBar) findViewById(R.id.activity_web_progressbar);
-        llWebContent = (WebView) findViewById(R.id.ll_web_content);
+        toolbar = findViewById(R.id.toolbar);
+        layoutBack = findViewById(R.id.layout_back);
+        imvBack = findViewById(R.id.imv_back);
+        tevTitle = findViewById(R.id.tev_title);
+        activityWebProgressbar = findViewById(R.id.activity_web_progressbar);
+        llWebContent = findViewById(R.id.ll_web_content);
 
-        setToolbar(true, R.color.color_FFE066FF);
+        setToolbar(true, R.color.color_FF198CFF);
         imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
         layoutBack.setOnClickListener(view -> {
             finish();
         });
 
-        webSettings = llWebContent.getSettings();
+        WebSettings webSettings = llWebContent.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setUseWideViewPort(true);
         llWebContent.clearFormData();

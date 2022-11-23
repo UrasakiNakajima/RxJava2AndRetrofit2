@@ -72,15 +72,12 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     private QMUILoadingView loadView;
 
     private FirstPageAdapter firstPageAdapter;
-    //	private FirstPageAdapter2                              firstPageAdapter;
-    private LinearLayoutManager linearLayoutManager;
     private boolean isRefresh;
-    private Map<String, String> paramMap = new HashMap<>();
 
     private AlertDialog mPermissionsDialog;
     private AMAPLocationManager amapLocationManager;
 
-    private String[] permissions = new String[]{
+    private final String[] permissions = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
@@ -134,7 +131,6 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
         rcvData = (RecyclerView) rootView.findViewById(R.id.rcv_data);
         loadView = (QMUILoadingView) rootView.findViewById(R.id.loadView);
 
-
         tevTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,7 +150,8 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     }
 
     private void initAdapter() {
-        linearLayoutManager = new LinearLayoutManager(rxAppCompatActivity);
+        //	private FirstPageAdapter2                              firstPageAdapter;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rxAppCompatActivity);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvData.setLayoutManager(linearLayoutManager);
         rcvData.setItemAnimator(new DefaultItemAnimator());

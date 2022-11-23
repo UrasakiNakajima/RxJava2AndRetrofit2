@@ -23,6 +23,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
 
     fun clearData() {
         notifyItemRangeRemoved(0, this.mJuheNewsBeanList.size)
+        notifyItemRangeChanged(0, this.mJuheNewsBeanList.size)
         this.mJuheNewsBeanList.clear()
     }
 

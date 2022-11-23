@@ -21,13 +21,11 @@ public class MineApplication extends BaseApplication {
     private String userName;
     //用户Id
     private String userId;
-    private boolean isCopyDatabase;
     private String date;
     //经度
     private String longitude;
     //纬度
     private String latitude;
-
     private String registrationId;
 
     @Override
@@ -37,7 +35,6 @@ public class MineApplication extends BaseApplication {
         if (date == null || "".equals(date)) {
             date = "0";
         }
-
 
         //极光推送初始化
         JPushInterface.setDebugMode(true);
@@ -86,16 +83,6 @@ public class MineApplication extends BaseApplication {
     public void setUserId(String userId) {
         LogManager.i(TAG, "setUserId***" + userId);
         editor.putString("userId", userId);
-        editor.commit();
-    }
-
-    public boolean isCopyDatabase() {
-        isCopyDatabase = sp.getBoolean("isCopyDatabase", false);
-        return isCopyDatabase;
-    }
-
-    public void setCopyDatabase(boolean isCopyDatabase) {
-        editor.putBoolean("isCopyDatabase", isCopyDatabase);
         editor.commit();
     }
 

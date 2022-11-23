@@ -52,7 +52,6 @@ public class PickerViewActivity extends BaseRxAppActivity {
     private TextView tevShow;
 
     protected Map<String, String> bodyParams;
-
     private OptionsPickerView pvOptions;
     private List<ProvincesBean> options1Items;
     private ArrayList<ArrayList<String>> options2Items;
@@ -92,14 +91,14 @@ public class PickerViewActivity extends BaseRxAppActivity {
         imvBack = (ImageView) findViewById(R.id.imv_back);
         tevTitle = (TextView) findViewById(R.id.tev_title);
         tevShow = (TextView) findViewById(R.id.tev_show);
-
-        eventScheduleDialogFragment = EventScheduleDialogFragment.newInstance();
-
         setToolbar(false, R.color.color_FF198CFF);
         imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
         layoutBack.setOnClickListener(view -> {
             finish();
         });
+
+
+        eventScheduleDialogFragment = EventScheduleDialogFragment.newInstance();
         tevShow.setOnClickListener(v -> {
 
 //            pvOptions.show();

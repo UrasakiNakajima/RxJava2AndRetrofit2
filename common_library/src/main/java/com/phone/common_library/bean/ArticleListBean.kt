@@ -1,4 +1,4 @@
-package com.phone.resource_module.bean
+package com.phone.common_library.bean
 
 import android.text.Html
 import android.text.TextUtils
@@ -9,6 +9,7 @@ import com.phone.common_library.common.Constants
  * @date 2020/9/10
  */
 data class ArticleListBean(
+
     var id: Int = 0,
 
     /**

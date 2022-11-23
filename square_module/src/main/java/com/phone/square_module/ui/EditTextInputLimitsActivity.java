@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.common.DecimalInputFilter;
 import com.phone.common_library.common.DecimalTextWatcher;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.SoftKeyboardManager;
 import com.phone.square_module.R;
 
@@ -57,10 +58,11 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
         tevTitle = (TextView) findViewById(R.id.tev_title);
         tevShowInput = (TextView) findViewById(R.id.tev_show_input);
         tevStartInput = (TextView) findViewById(R.id.tev_start_input);
-
         setToolbar(false, R.color.color_FF198CFF);
-        imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
-
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
+        layoutBack.setOnClickListener(v -> {
+            finish();
+        });
         tevStartInput.setOnClickListener(v -> {
             showEditTextInputLimitsDialog();
         });

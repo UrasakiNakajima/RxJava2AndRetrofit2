@@ -52,9 +52,9 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                 LogManager.i(TAG, "success*****" + success);
                                 if (!TextUtils.isEmpty(success)) {
                                     //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
-                                    FirstPageResponse response = GsonManager.getInstance().convert(success, FirstPageResponse.class);
+                                    FirstPageResponse response = new GsonManager().convert(success, FirstPageResponse.class);
 
-                                    //											 String jsonStr = GsonManager.getInstance().toJson(response);
+                                    //											 String jsonStr = new GsonManager().toJson(response);
                                     if (response.getError_code() == 0) {
                                         firstPageView.firstPageDataSuccess(response.getResult().getData());
                                     } else {
@@ -120,8 +120,8 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
                                 if (!TextUtils.isEmpty(success)) {
 
                                     //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
-                                    FirstPageResponse response = GsonManager.getInstance().convert(success, FirstPageResponse.class);
-                                    //											 String jsonStr = GsonManager.getInstance().toJson(response);
+                                    FirstPageResponse response = new GsonManager().convert(success, FirstPageResponse.class);
+                                    //											 String jsonStr = new GsonManager().toJson(response);
                                     if (response.getError_code() == 0) {
                                         firstPageView.firstPageDataSuccess(response.getResult().getData());
                                     } else {

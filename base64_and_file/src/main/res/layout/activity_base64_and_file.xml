@@ -25,8 +25,8 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_75"
-                    android:background="@color/color_FFE066FF"
+                    android:layout_height="@dimen/dp_73"
+                    android:background="@color/color_FF198CFF"
                     android:minHeight="?attr/actionBarSize"
                     android:orientation="vertical"
                     app:contentInsetStart="0dp">
@@ -34,15 +34,15 @@
                     <FrameLayout
                         android:id="@+id/layout_back"
                         android:layout_width="@dimen/dp_36"
-                        android:layout_height="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_48"
                         android:layout_marginTop="@dimen/dp_25"
                         android:gravity="start"
                         tools:ignore="UselessParent">
 
                         <ImageView
                             android:id="@+id/imv_back"
-                            android:layout_width="@dimen/dp_6"
-                            android:layout_height="@dimen/dp_11"
+                            android:layout_width="@dimen/dp_9"
+                            android:layout_height="@dimen/dp_16"
                             android:layout_gravity="center"
                             android:src="@mipmap/icon_arrowhead_left"
                             tools:ignore="ContentDescription" />
@@ -52,11 +52,11 @@
                     <TextView
                         android:id="@+id/tev_title"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_48"
                         android:layout_marginTop="@dimen/dp_25"
                         android:gravity="center"
                         android:text="@string/base64_and_file_title"
-                        android:textColor="@color/color_FF198CFF"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/sp_20" />
 
                 </androidx.appcompat.widget.Toolbar>

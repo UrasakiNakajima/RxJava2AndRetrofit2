@@ -47,9 +47,11 @@ public class DecimalOperationActivity extends BaseRxAppActivity {
         tevTitle = (TextView) findViewById(R.id.tev_title);
         tevDecimalOperationRounding = (TextView) findViewById(R.id.tev_decimal_operation_rounding);
         tevDecimalOperationRejection = (TextView) findViewById(R.id.tev_decimal_operation_rejection);
-
         setToolbar(false, R.color.color_FF198CFF);
         imvBack.setColorFilter(ContextCompat.getColor(rxAppCompatActivity, R.color.white));
+        layoutBack.setOnClickListener(view -> {
+            finish();
+        });
 
 
         tevDecimalOperationRounding.setOnClickListener(v -> {

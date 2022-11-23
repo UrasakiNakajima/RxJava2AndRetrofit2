@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="dataBean"
-            type="com.phone.resource_module.bean.ArticleListBean" />
+            type="com.phone.common_library.bean.ArticleListBean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

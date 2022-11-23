@@ -12,24 +12,23 @@ import retrofit2.http.Path
 interface ResourceRequest {
 
     @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
+    @GET(ConstantUrl.RESOURCE_TAB_URL)
+    fun getResourceTabData(): Call<ResponseBody>
+
+    @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
 //    @FormUrlEncoded
-    @GET(ConstantUrl.RESOURCE_URL + "/{type}/{pageSize}/{currentPage}")
-    fun getResourceData(
-        @Path("type") type: String,
-        @Path("pageSize") pageSize: String,
-        @Path("currentPage") currentPage: String
+    @GET(ConstantUrl.SUB_RESOURCE_URL)
+    fun getSubResourceData(
+        @Path("id") id: Int,
+        @Path("pageNum") pageNum: Int
     ): Observable<ResponseBody>
 
     @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
-    @GET("/wxarticle/list/{id}/{pageNum}/json")
-    fun getResourceData2(
-        @Path("id") tabId: Int,
+    @GET(ConstantUrl.SUB_RESOURCE_URL)
+    fun getSubResourceData2(
+        @Path("id") id: Int,
         @Path("pageNum") pageNum: Int
     ): Call<ResponseBody>
-
-    @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
-    @GET("/wxarticle/chapters/json")
-    fun getResourceTabData(): Call<ResponseBody>
 
 
 }
