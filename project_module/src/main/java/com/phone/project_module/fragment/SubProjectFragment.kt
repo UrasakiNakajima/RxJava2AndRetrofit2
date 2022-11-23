@@ -3,19 +3,18 @@ package com.phone.project_module.fragment
 import android.text.TextUtils
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.phone.common_library.BaseApplication
+import com.phone.common_library.adapter.ProjectAndResourceAdapter
 import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.bean.ArticleListBean
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.project_module.R
-import com.phone.project_module.adapter.SubProjectAdapter
 import com.phone.project_module.databinding.FragmentProjectSubBinding
 import com.phone.project_module.view.ISubProjectView
 import com.phone.project_module.view_model.SubProjectViewModelImpl
@@ -29,7 +28,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
         private val TAG: String = SubProjectFragment::class.java.simpleName
     }
 
-    private val subProjectAdapter by lazy { SubProjectAdapter(rxAppCompatActivity) }
+    private var subProjectAdapter: ProjectAndResourceAdapter? = null
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     private var isRefresh: Boolean = true
@@ -47,8 +46,11 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
 
     override fun initLayoutId() = R.layout.fragment_project_sub
 
+    /**
+     * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
+     */
     override fun initViewModel() =
-        ViewModelProvider(rxAppCompatActivity).get(SubProjectViewModelImpl::class.java)
+        ViewModelProvider(this).get(SubProjectViewModelImpl::class.java)
 
     override fun initData() {
         type = arguments?.getInt("type") ?: 0
@@ -61,10 +63,8 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
                 LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                 subProjectDataSuccess(it)
-                hideLoading()
             } else {
                 subProjectDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
-                hideLoading()
             }
         })
         viewModel.dataxRxFragmentError.observe(this, {
@@ -76,17 +76,38 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
     }
 
     override fun initViews() {
-        initAdapter()
+        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(
+            object : OnRefreshLoadMoreListener {
+                override fun onLoadMore(refreshLayout: RefreshLayout) {
+                    LogManager.i(TAG, "onLoadMore")
+                    isRefresh = false
+                    pageNum++
+                    initSubProject(pageNum, tabId)
+                }
+
+                override fun onRefresh(refreshLayout: RefreshLayout) {
+                    LogManager.i(TAG, "onRefresh")
+                    isRefresh = true
+                    pageNum = 1
+                    initSubProject(pageNum, tabId)
+                }
+            })
     }
 
-    private fun initAdapter() {
+    private fun initAdapter(list: MutableList<ArticleListBean>) {
         linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
         mDatabind.rcvData.apply {
             layoutManager = linearLayoutManager
             itemAnimator = DefaultItemAnimator()
-            (itemAnimator as DefaultItemAnimator).changeDuration = 0
-            subProjectAdapter.apply {
+//            (itemAnimator as DefaultItemAnimator).changeDuration = 0
+//            (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+
+            subProjectAdapter = ProjectAndResourceAdapter(rxAppCompatActivity, list)
+            subProjectAdapter?.apply {
+                //kotlin 使用这个方法需要初始化ProjectAndResourceAdapter 的时候把list 传进去，
+                //不然就会报VirtualLayout：Cannot change whether this adapter has stable IDs while the adapter has registered observers.
+                setHasStableIds(true)
                 setRcvOnItemViewClickListener { i, view ->
                     when (view.id) {
                         //收藏
@@ -105,23 +126,6 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
             }
             setAdapter(subProjectAdapter)
         }
-
-        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(
-            object : OnRefreshLoadMoreListener {
-                override fun onLoadMore(refreshLayout: RefreshLayout) {
-                    LogManager.i(TAG, "onLoadMore")
-                    isRefresh = false
-                    pageNum++
-                    initSubProject(pageNum, tabId)
-                }
-
-                override fun onRefresh(refreshLayout: RefreshLayout) {
-                    LogManager.i(TAG, "onRefresh")
-                    isRefresh = true
-                    pageNum = 1
-                    initSubProject(pageNum, tabId)
-                }
-            })
     }
 
     override fun initLoadData() {
@@ -152,13 +156,13 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
     override fun subProjectDataSuccess(success: MutableList<ArticleListBean>) {
         if (!rxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                subProjectAdapter.clearData();
-                subProjectAdapter.addData(success)
+                initAdapter(success)
                 mDatabind.refreshLayout.finishRefresh()
             } else {
-                subProjectAdapter.addData(success)
+                subProjectAdapter?.addData(success)
                 mDatabind.refreshLayout.finishLoadMore()
             }
+            hideLoading()
         }
     }
 
@@ -181,6 +185,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
             } else {
                 mDatabind.refreshLayout.finishLoadMore(false)
             }
+            hideLoading()
         }
     }
 

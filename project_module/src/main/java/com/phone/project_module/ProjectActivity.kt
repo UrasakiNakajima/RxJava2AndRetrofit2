@@ -5,27 +5,20 @@ import android.text.TextUtils
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DefaultItemAnimator
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.adapter.TabFragmentStatePagerAdapter
 import com.phone.common_library.adapter.TabNavigatorAdapter
 import com.phone.common_library.base.BaseMvvmAppRxActivity
 import com.phone.common_library.bean.TabBean
-import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.MagicIndicatorManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
-import com.phone.project_module.adapter.SubProjectAdapter
 import com.phone.project_module.databinding.ActivityProjectBinding
 import com.phone.project_module.fragment.SubProjectFragment
-import com.phone.project_module.ui.EventScheduleActivity
 import com.phone.project_module.view.IProjectView
 import com.phone.project_module.view_model.ProjectViewModelImpl
-import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 
@@ -34,9 +27,6 @@ class ProjectActivity :
     IProjectView {
 
     private val TAG = ProjectFragment::class.java.simpleName
-
-    private lateinit var tabSuccessObserver: Observer<MutableList<TabBean>>
-    private lateinit var tabErrorObserver: Observer<String>
     private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
     override fun initLayoutId() = R.layout.activity_project

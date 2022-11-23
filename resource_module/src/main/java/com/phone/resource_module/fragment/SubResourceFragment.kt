@@ -3,19 +3,18 @@ package com.phone.resource_module.fragment
 import android.text.TextUtils
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.phone.common_library.BaseApplication
+import com.phone.common_library.adapter.ProjectAndResourceAdapter
 import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.bean.ArticleListBean
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.resource_module.R
-import com.phone.resource_module.adapter.SubResourceAdapter
 import com.phone.resource_module.databinding.FragmentResourceSubBinding
 import com.phone.resource_module.view.ISubResourceView
 import com.phone.square_module.view_model.SubResourceViewModelImpl
@@ -28,7 +27,7 @@ class SubResourceFragment :
 
     private val TAG = SubResourceFragment::class.java.simpleName
 
-    private val subResourceAdapter by lazy { SubResourceAdapter(rxAppCompatActivity) }
+    private var subResourceAdapter: ProjectAndResourceAdapter? = null
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
 
@@ -45,8 +44,11 @@ class SubResourceFragment :
 
     override fun initLayoutId() = R.layout.fragment_resource_sub
 
+    /**
+     * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
+     */
     override fun initViewModel() =
-        ViewModelProvider(rxAppCompatActivity).get(SubResourceViewModelImpl::class.java)
+        ViewModelProvider(this).get(SubResourceViewModelImpl::class.java)
 
     override fun initData() {
         type = arguments?.getInt("type") ?: 0
@@ -72,17 +74,38 @@ class SubResourceFragment :
     }
 
     override fun initViews() {
-        initAdapter()
+        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(
+            object : OnRefreshLoadMoreListener {
+                override fun onLoadMore(refreshLayout: RefreshLayout) {
+                    LogManager.i(TAG, "onLoadMore")
+                    isRefresh = false
+                    pageNum++
+                    initSubResource(tabId, pageNum)
+                }
+
+                override fun onRefresh(refreshLayout: RefreshLayout) {
+                    LogManager.i(TAG, "onRefresh")
+                    isRefresh = true
+                    pageNum = 1
+                    initSubResource(tabId, pageNum)
+                }
+            })
     }
 
-    private fun initAdapter() {
+    private fun initAdapter(list: MutableList<ArticleListBean>) {
         linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
         mDatabind.rcvData.apply {
             layoutManager = linearLayoutManager
             itemAnimator = DefaultItemAnimator()
-            (itemAnimator as DefaultItemAnimator).changeDuration = 0
-            subResourceAdapter.apply {
+//            (itemAnimator as DefaultItemAnimator).changeDuration = 0
+//            (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+
+            subResourceAdapter = ProjectAndResourceAdapter(rxAppCompatActivity, list)
+            subResourceAdapter?.apply {
+                //kotlin 使用这个方法需要初始化ProjectAndResourceAdapter 的时候把list 传进去，
+                //不然就会报VirtualLayout：Cannot change whether this adapter has stable IDs while the adapter has registered observers.
+                setHasStableIds(true)
                 setRcvOnItemViewClickListener { i, view ->
                     when (view.id) {
                         //收藏
@@ -101,23 +124,6 @@ class SubResourceFragment :
             }
             setAdapter(subResourceAdapter)
         }
-
-        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(
-            object : OnRefreshLoadMoreListener {
-                override fun onLoadMore(refreshLayout: RefreshLayout) {
-                    LogManager.i(TAG, "onLoadMore")
-                    isRefresh = false
-                    pageNum++
-                    initSubResource(tabId, pageNum)
-                }
-
-                override fun onRefresh(refreshLayout: RefreshLayout) {
-                    LogManager.i(TAG, "onRefresh")
-                    isRefresh = true
-                    pageNum = 1
-                    initSubResource(tabId, pageNum)
-                }
-            })
     }
 
     override fun initLoadData() {
@@ -141,16 +147,14 @@ class SubResourceFragment :
     override fun subResourceDataSuccess(success: MutableList<ArticleListBean>) {
         if (!rxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                subResourceAdapter.clearData()
-                subResourceAdapter.addData(success)
+                initAdapter(success)
                 mDatabind.refreshLayout.finishRefresh()
             } else {
-                subResourceAdapter.addData(success)
+                subResourceAdapter?.addData(success)
                 mDatabind.refreshLayout.finishLoadMore()
             }
-
+            hideLoading()
         }
-        hideLoading()
     }
 
     override fun subResourceDataError(error: String) {
@@ -172,8 +176,8 @@ class SubResourceFragment :
             } else {
                 mDatabind.refreshLayout.finishLoadMore(false)
             }
+            hideLoading()
         }
-        hideLoading()
     }
 
     private fun initSubResource(tabId: Int, pageNum: Int) {

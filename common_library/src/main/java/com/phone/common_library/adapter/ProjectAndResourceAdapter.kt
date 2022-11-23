@@ -1,28 +1,24 @@
-package com.phone.project_module.adapter
+package com.phone.common_library.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.databinding.DataBindingUtil
+import com.phone.common_library.R
 import com.phone.common_library.bean.ArticleListBean
 import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.common.Constants
-import com.phone.project_module.R
-import com.phone.project_module.databinding.ItemProjectBinding
+import com.phone.common_library.databinding.ItemProjectBinding
+import com.phone.common_library.databinding.ItemResourceBinding
 
-
-class SubProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProjectAndResourceAdapter(val context: Context, val list: MutableList<ArticleListBean>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        private val TAG = SubProjectAdapter::class.java.simpleName
+        private val TAG = ProjectAndResourceAdapter::class.java.simpleName
     }
-
-    var list: MutableList<ArticleListBean> = mutableListOf()
 
     fun clearData() {
         notifyItemRangeRemoved(0, this.list.size)
@@ -42,13 +38,23 @@ class SubProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding: ItemProjectBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(context),
-            R.layout.item_project,
-            parent,
-            false
-        )
-        return ArticlePicViewHolder(binding.root)
+        return if (viewType == Constants.ITEM_ARTICLE) {
+            val binding: ItemResourceBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(context),
+                R.layout.item_resource,
+                parent,
+                false
+            )
+            ArticleViewHolder(binding.root)
+        } else {
+            val binding: ItemProjectBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(context),
+                R.layout.item_project,
+                parent,
+                false
+            )
+            ArticlePicViewHolder(binding.root)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -60,9 +66,15 @@ class SubProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
 //            onItemChildClickListener?.invoke(position,it)
 //        }
 
-        //获取ViewDataBinding
-        val binding = DataBindingUtil.getBinding<ItemProjectBinding>(holder.itemView)?.apply {
-            dataBean = list[position]
+        val binding = if (holder is ArticleViewHolder) {
+            //获取ViewDataBinding
+            DataBindingUtil.getBinding<ItemResourceBinding>(holder.itemView)?.apply {
+                dataBean = list[position]
+            }
+        } else {
+            DataBindingUtil.getBinding<ItemProjectBinding>(holder.itemView)?.apply {
+                dataBean = list[position]
+            }
         }
         binding?.executePendingBindings()
     }
@@ -79,6 +91,10 @@ class SubProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
     /**
@@ -99,26 +115,19 @@ class SubProjectAdapter(val context: Context) : RecyclerView.Adapter<RecyclerVie
     }
 
     /**
+     * 默认viewHolder
+     */
+    class ArticleViewHolder constructor(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+
+    }
+
+    /**
      * 带图片viewHolder
      */
     class ArticlePicViewHolder constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
-        var root: ConstraintLayout
-        var ivTitle: ImageView
-        var tvTitle: TextView
-        var tvDes: TextView
-        var tvNameData: TextView
-        var ivCollect: ImageView
-
-        init {
-            root = itemView.findViewById(R.id.root)
-            ivTitle = itemView.findViewById(R.id.ivTitle)
-            tvTitle = itemView.findViewById(R.id.tvTitle)
-            tvDes = itemView.findViewById(R.id.tvDes)
-            tvNameData = itemView.findViewById(R.id.tvNameData)
-            ivCollect = itemView.findViewById(R.id.ivCollect)
-        }
     }
 
     private var onItemViewClickListener: OnItemViewClickListener? = null

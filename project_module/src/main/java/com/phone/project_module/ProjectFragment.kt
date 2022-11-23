@@ -5,7 +5,6 @@ import android.text.TextUtils
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.BaseApplication
@@ -29,15 +28,15 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, FragmentProject
     IProjectView {
 
     private val TAG = ProjectFragment::class.java.simpleName
-
-    private lateinit var tabSuccessObserver: Observer<MutableList<TabBean>>
-    private lateinit var tabErrorObserver: Observer<String>
     private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
     override fun initLayoutId() = R.layout.fragment_project
 
+    /**
+     * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
+     */
     override fun initViewModel() =
-        ViewModelProvider(rxAppCompatActivity).get(ProjectViewModelImpl::class.java)
+        ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
 
     override fun initData() {
     }

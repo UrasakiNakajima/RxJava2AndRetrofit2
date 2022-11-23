@@ -33,8 +33,11 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
 
     override fun initLayoutId() = R.layout.fragment_resource
 
+    /**
+     * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
+     */
     override fun initViewModel() =
-        ViewModelProvider(rxAppCompatActivity).get(ResourceViewModelImpl::class.java)
+        ViewModelProvider(this).get(ResourceViewModelImpl::class.java)
 
     override fun initData() {
     }

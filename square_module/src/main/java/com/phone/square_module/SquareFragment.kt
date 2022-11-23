@@ -60,8 +60,11 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
     override fun initLayoutId() = R.layout.fragment_square
 
+    /**
+     * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
+     */
     override fun initViewModel() =
-        ViewModelProvider(rxAppCompatActivity).get(SquareViewModelImpl::class.java)
+        ViewModelProvider(this).get(SquareViewModelImpl::class.java)
 
     override fun initData() {
         mDatabind.viewModel = viewModel
