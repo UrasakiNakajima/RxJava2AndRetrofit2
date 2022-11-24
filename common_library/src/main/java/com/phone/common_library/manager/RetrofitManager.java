@@ -89,23 +89,25 @@ public class RetrofitManager {
         // 包含header、body数据
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 //        HeaderInterceptor headerInterceptor = new HeaderInterceptor();
+
         // 初始化okhttp
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(5 * 1000, TimeUnit.MILLISECONDS)
-                .readTimeout(5 * 1000, TimeUnit.MILLISECONDS)
-                .writeTimeout(5 * 1000, TimeUnit.MILLISECONDS)
+                .connectTimeout(15 * 1000, TimeUnit.MILLISECONDS) //连接超时
+                .readTimeout(15 * 1000, TimeUnit.MILLISECONDS) //读取超时
+                .writeTimeout(15 * 1000, TimeUnit.MILLISECONDS) //写入超时
                 .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
-                .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance()))
-                .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance()))
+                .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于设置header
+                .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于接收并持久化cookie
                 .addInterceptor(new BaseUrlManagerInterceptor(BaseApplication.getInstance()))
                 .addInterceptor(rewriteCacheControlInterceptor)
 //                .addNetworkInterceptor(rewriteCacheControlInterceptor)
 //                .addInterceptor(headerInterceptor)
                 .addInterceptor(loggingInterceptor)
+//                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
                 .cache(cache)
-                .sslSocketFactory(SSLSocketManager.getSSLSocketFactory())//配置
-                .hostnameVerifier(SSLSocketManager.getHostnameVerifier())//配置
-                //								  .proxy(Proxy.NO_PROXY)
+                .sslSocketFactory(SSLSocketManager.getSSLSocketFactory()) //配置
+                .hostnameVerifier(SSLSocketManager.getHostnameVerifier()) //配置
+//                .proxy(Proxy.NO_PROXY)
                 .build();
 
         // 初始化Retrofit

@@ -50,7 +50,7 @@ public class Okhttp3Manager {
     private static final String TAG = Okhttp3Manager.class.getSimpleName();
     private final OkHttpClient client;
     private static Okhttp3Manager manager;
-    public static final int UPDATA = 666;
+    public static final int UPDATA = 111;
 
     /**
      * 单例模式，所以构造函数私有化
@@ -58,13 +58,14 @@ public class Okhttp3Manager {
     private Okhttp3Manager() {
         //创建OkHttpClient对象
         client = new OkHttpClient.Builder()
-                .connectTimeout(5000, TimeUnit.MILLISECONDS) //连接超时
-                .readTimeout(5000, TimeUnit.MILLISECONDS) //读取超时
-                .writeTimeout(5000, TimeUnit.MILLISECONDS) //写入超时
+                .connectTimeout(15 * 1000, TimeUnit.MILLISECONDS) //连接超时
+                .readTimeout(15 * 1000, TimeUnit.MILLISECONDS) //读取超时
+                .writeTimeout(15 * 1000, TimeUnit.MILLISECONDS) //写入超时
                 .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于设置header
                 .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于接收并持久化cookie
-                .sslSocketFactory(SSLSocketManager.getSSLSocketFactory())//配置（只有https请求需要配置）
-                .hostnameVerifier(SSLSocketManager.getHostnameVerifier())//配置（只有https请求需要配置）
+//                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
+                .sslSocketFactory(SSLSocketManager.getSSLSocketFactory()) //配置（只有https请求需要配置）
+                .hostnameVerifier(SSLSocketManager.getHostnameVerifier()) //配置（只有https请求需要配置）
 //                .proxy(Proxy.NO_PROXY)
                 .build();
     }
