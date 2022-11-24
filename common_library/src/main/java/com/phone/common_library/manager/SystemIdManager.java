@@ -8,6 +8,8 @@ import android.telephony.TelephonyManager;
 
 import androidx.core.app.ActivityCompat;
 
+import com.phone.common_library.BaseApplication;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,12 +38,11 @@ public class SystemIdManager {
     /**
      * 获取设备唯一标识符
      *
-     * @param context
      * @return
      */
-    public static String getSystemId(Context context) {
+    public static String getSystemId() {
         //读取保存的在sd卡中的唯一标识符
-        String systemId = readSystemId(context);
+        String systemId = readSystemId();
         //用于生成最终的唯一标识符
         StringBuilder stringBuilder = new StringBuilder();
         //判断是否已经生成过,
@@ -51,7 +52,7 @@ public class SystemIdManager {
         }
         try {
             //获取IMES(也就是常说的SystemId)
-            systemId = getIMIEStatus(context);
+            systemId = getIMIEStatus(BaseApplication.getInstance());
             stringBuilder.append(systemId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,7 +60,7 @@ public class SystemIdManager {
 
         try {
             //获取设备的MACAddress地址 去掉中间相隔的冒号
-            systemId = getLocalMac(context).replace(":", "");
+            systemId = getLocalMac().replace(":", "");
             stringBuilder.append(systemId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,7 +76,7 @@ public class SystemIdManager {
         String md5 = getMD5(stringBuilder.toString(), false);
         if (stringBuilder.length() > 0) {
             //持久化操作, 进行保存到SD卡中
-            saveSystemId(md5, context);
+            saveSystemId(md5);
         }
         return md5;
     }
@@ -83,11 +84,10 @@ public class SystemIdManager {
     /**
      * 读取固定的文件中的内容,这里就是读取sd卡中保存的设备唯一标识符
      *
-     * @param context
      * @return
      */
-    public static String readSystemId(Context context) {
-        File file = getSystemIdDir(context);
+    public static String readSystemId() {
+        File file = getSystemIdDir();
         if (file.exists()) {
             LogManager.i(TAG, "file.exists()");
             if (file.length() > 1) {
@@ -149,10 +149,9 @@ public class SystemIdManager {
      * 获取设备MAC 地址 由于 6.0 以后 WifiManager 得到的 MacAddress得到都是 相同的没有意义的内容
      * 所以采用以下方法获取Mac地址
      *
-     * @param context
      * @return
      */
-    private static String getLocalMac(Context context) {
+    private static String getLocalMac() {
 //        WifiManager wifi = (WifiManager) context
 //                .getSystemService(Context.WIFI_SERVICE);
 //        WifiInfo info = wifi.getConnectionInfo();
@@ -190,10 +189,9 @@ public class SystemIdManager {
      * 保存 内容到 SD卡中,  这里保存的就是 设备唯一标识符
      *
      * @param str
-     * @param context
      */
-    public static void saveSystemId(String str, Context context) {
-        File file = getSystemIdDir(context);
+    public static void saveSystemId(String str) {
+        File file = getSystemIdDir();
         try {
             FileOutputStream fos = new FileOutputStream(file);
             Writer out = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
@@ -247,18 +245,17 @@ public class SystemIdManager {
     /**
      * 统一处理设备唯一标识 保存的文件的地址
      *
-     * @param context
      * @return
      */
-    private static File getSystemIdDir(Context context) {
+    private static File getSystemIdDir() {
         File file;
-        File dirs = new File(context.getExternalCacheDir(), CACHE_IMAGE_DIR);
+        File dirs = new File(BaseApplication.getInstance().getExternalCacheDir(), CACHE_IMAGE_DIR);
         if (!dirs.exists()) {
             LogManager.i(TAG, "!dir.exists()");
 //            dir.mkdirs();
 
             //适配android 9
-            boolean isCreateDirsSuccess = DocumentManager.mkdirs(context, dirs);
+            boolean isCreateDirsSuccess = DocumentManager.mkdirs(dirs);
             LogManager.i(TAG, "getSystemIdDir isCreateDirsSuccess*****" + isCreateDirsSuccess);
         }
 

@@ -110,6 +110,8 @@
     <string name="delete_all_user">删除全部用户</string>
     <string name="delete">删除</string>
     <string name="update">修改</string>
+    <string name="this_function_can_only_be_used_under_componentization">组件化下才能使用此功能</string>
+
 
     <string name="ok">确定</string>
     <string name="tips">提示</string>
@@ -135,9 +137,6 @@
     <string name="this_user_has_been_added">此用户已添加</string>
     <string name="this_user_has_modified">此用户已修改</string>
     <string name="android_edit_text_limits_the_input_of_integers_and_decimals_and_the_total_number_length_is_less_than_or_equal_to_eleven_digits_customizable_five_digits_of_integers_customizable_and_five_digits_of_decimals_customizable">Android EditText限制只能输入整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）</string>
-
-
-
 
 
     <!--真正用于解析的属性-->

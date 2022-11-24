@@ -30,7 +30,7 @@ public class ExceptionManager {
      *
      * @param throwable
      */
-    public void throwException(Context context, Throwable throwable) {
+    public void throwException(Throwable throwable) {
 //        //1.调试打印堆栈而不退出（推薦使用，開發人員用Log就可以把異常日誌打印出來）
 //        LogManager.i(TAG, Log.getStackTraceString(throwable));
 
@@ -46,7 +46,7 @@ public class ExceptionManager {
 //        throwable.fillInStackTrace();
 //        LogManager.i(TAG, "stackTrace", throwable);
 
-        CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(context.getApplicationContext());
+        CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance();
         //收集設備信息和保存異常日誌到文件
         crashHandlerManager.handleException(throwable);
     }

@@ -50,7 +50,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_10"
-                android:background="@color/color_54E066FF" />
+                android:background="@color/color_4876FF" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_50"
                 android:layout_marginStart="@dimen/dp_50"
-                android:background="@drawable/corners_25_color_ffe066ff"
+                android:background="@drawable/corners_25_color_ff198cff"
                 android:gravity="center"
                 android:paddingStart="@dimen/dp_25"
                 android:paddingEnd="@dimen/dp_25"
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_50"
                 android:layout_marginStart="@dimen/dp_50"
-                android:background="@drawable/corners_25_color_ffe066ff"
+                android:background="@drawable/corners_25_color_ff198cff"
                 android:gravity="center"
                 android:paddingStart="@dimen/dp_25"
                 android:paddingEnd="@dimen/dp_25"
@@ -103,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_50"
                 android:layout_marginStart="@dimen/dp_50"
-                android:background="@drawable/corners_25_color_ffe066ff"
+                android:background="@drawable/corners_25_color_ff198cff"
                 android:gravity="center"
                 android:paddingStart="@dimen/dp_25"
                 android:paddingEnd="@dimen/dp_25"

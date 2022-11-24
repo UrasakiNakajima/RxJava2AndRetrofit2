@@ -14,6 +14,7 @@ import com.phone.common_library.adapter.ProjectAndResourceAdapter
 import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.bean.ArticleListBean
 import com.phone.common_library.manager.LogManager
+import com.phone.common_library.manager.ResourcesManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.common_library.ui.WebViewActivity
@@ -197,13 +198,13 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
     override fun subProjectDataError(error: String) {
         if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ScreenManager.dpToPx(20f),
+                ScreenManager.dpToPx(20f),
                 18,
-                ContextCompat.getColor(rxAppCompatActivity, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity, R.color.color_FFE066FF),
-                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ResourcesManager.getColor(R.color.white),
+                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ScreenManager.dpToPx(40f),
+                ScreenManager.dpToPx(20f),
                 error,
                 true
             )
@@ -219,7 +220,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
 
     private fun initSubProject(pageNum: Int, tabId: Int) {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
+        if (RetrofitManager.isNetworkAvailable()) {
             viewModel.subProjectData(pageNum, tabId)
         } else {
             subProjectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));

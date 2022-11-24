@@ -9,6 +9,7 @@ import com.phone.common_library.manager.LogManager;
 import java.io.IOException;
 
 import androidx.annotation.NonNull;
+
 import okhttp3.Interceptor;
 import okhttp3.Response;
 
@@ -20,36 +21,33 @@ import okhttp3.Response;
  */
 
 public class ReceivedAccessTokenInterceptor implements Interceptor {
-	
-	private static final String          TAG = ReceivedAccessTokenInterceptor.class.getSimpleName();
-	private              BaseApplication baseApplication;
-	
-	public ReceivedAccessTokenInterceptor(Context context) {
-		super();
-		baseApplication = (BaseApplication) context.getApplicationContext();
-	}
-	
-	@NonNull
-	@Override
-	public Response intercept(@NonNull Chain chain) throws IOException {
-		
-		Response originalResponse = chain.proceed(chain.request());
-		//这里获取请求返回的accessToken
-		String accessToken = originalResponse.header("accessToken");
-		LogManager.i(TAG, "originalResponse accessToken*****" + accessToken);
-		if (!TextUtils.isEmpty(accessToken)) {
-			baseApplication.setAccessToken(accessToken);
-			LogManager.i(TAG, "appToken*****" + accessToken);
-		}
-		
-		//        //这里获取请求返回的cookie
-		//        if (!originalResponse.headers("set-cookie").isEmpty()) {
-		//            String cookie = originalResponse.header("set-cookie").split(";")[0];
-		//            baseApplication.setCookie(cookie);
-		//            LogManager.i(TAG, "cookie*****" + cookie);
-		//        }
-		
-		Response.Builder builder = originalResponse.newBuilder();
-		return builder.build();
-	}
+
+    private static final String TAG = ReceivedAccessTokenInterceptor.class.getSimpleName();
+
+    public ReceivedAccessTokenInterceptor() {
+        super();
+    }
+
+    @NonNull
+    @Override
+    public Response intercept(@NonNull Chain chain) throws IOException {
+        Response originalResponse = chain.proceed(chain.request());
+        //这里获取请求返回的accessToken
+        String accessToken = originalResponse.header("accessToken");
+        LogManager.i(TAG, "originalResponse accessToken*****" + accessToken);
+        if (!TextUtils.isEmpty(accessToken)) {
+            BaseApplication.getInstance().setAccessToken(accessToken);
+            LogManager.i(TAG, "appToken*****" + accessToken);
+        }
+
+        //        //这里获取请求返回的cookie
+        //        if (!originalResponse.headers("set-cookie").isEmpty()) {
+        //            String cookie = originalResponse.header("set-cookie").split(";")[0];
+        //            baseApplication.setCookie(cookie);
+        //            LogManager.i(TAG, "cookie*****" + cookie);
+        //        }
+
+        Response.Builder builder = originalResponse.newBuilder();
+        return builder.build();
+    }
 }

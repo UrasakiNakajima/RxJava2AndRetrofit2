@@ -10,6 +10,8 @@ import android.provider.DocumentsContract;
 
 import androidx.documentfile.provider.DocumentFile;
 
+import com.phone.common_library.BaseApplication;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -162,11 +164,11 @@ public class DocumentManager {
         return document;
     }
 
-    public static boolean mkdirs(Context context, File dir) {
+    public static boolean mkdirs(File dir) {
         boolean res = dir.mkdirs();
         if (!res) {
-            if (DocumentManager.isOnExtSdCard(dir, context)) {
-                DocumentFile documentFile = DocumentManager.getDocumentFile(dir, true, context);
+            if (DocumentManager.isOnExtSdCard(dir, BaseApplication.getInstance())) {
+                DocumentFile documentFile = DocumentManager.getDocumentFile(dir, true, BaseApplication.getInstance());
                 res = documentFile != null && documentFile.canWrite();
             }
         }

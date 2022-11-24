@@ -11,10 +11,7 @@ import com.phone.common_library.adapter.TabFragmentStatePagerAdapter
 import com.phone.common_library.adapter.TabNavigatorAdapter
 import com.phone.common_library.base.BaseMvvmAppRxActivity
 import com.phone.common_library.bean.TabBean
-import com.phone.common_library.manager.LogManager
-import com.phone.common_library.manager.MagicIndicatorManager
-import com.phone.common_library.manager.RetrofitManager
-import com.phone.common_library.manager.ScreenManager
+import com.phone.common_library.manager.*
 import com.phone.project_module.databinding.ActivityProjectBinding
 import com.phone.project_module.fragment.SubProjectFragment
 import com.phone.project_module.view.IProjectView
@@ -38,7 +35,7 @@ class ProjectActivity :
     }
 
     override fun initObservers() {
-        viewModel.tabRxFragmentSuccess.observe(this, {
+        viewModel.tabRxActivitySuccess.observe(this, {
             if (it != null && it.size > 0) {
                 LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
                 projectTabDataSuccess(it)
@@ -46,7 +43,7 @@ class ProjectActivity :
                 projectTabDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
             }
         })
-        viewModel.tabRxFragmentError.observe(this, {
+        viewModel.tabRxActivityError.observe(this, {
             if (!TextUtils.isEmpty(it)) {
                 LogManager.i(TAG, "onChanged*****tabRxFragmentError")
                 projectTabDataError(it)
@@ -94,26 +91,24 @@ class ProjectActivity :
                 fragmentList
             )
         mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
-
         //下划线绑定
         val commonNavigator = CommonNavigator(rxAppCompatActivity)
         commonNavigator.adapter = getCommonNavigatorAdapter(success)
         mDatabind.tabLayout.navigator = commonNavigator
         MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
-
         hideLoading()
     }
 
     override fun projectTabDataError(error: String) {
         if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ScreenManager.dpToPx(20f),
+                ScreenManager.dpToPx(20f),
                 18,
-                ContextCompat.getColor(rxAppCompatActivity, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity, R.color.color_FFE066FF),
-                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ResourcesManager.getColor(R.color.white),
+                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ScreenManager.dpToPx(40f),
+                ScreenManager.dpToPx(20f),
                 error,
                 true
             )
@@ -122,9 +117,9 @@ class ProjectActivity :
     }
 
     private fun initProjectTabData() {
-        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
+        if (RetrofitManager.isNetworkAvailable()) {
             showLoading()
-            viewModel.projectTabData()
+            viewModel.projectTabData2()
         } else {
             projectTabDataError(resources!!.getString(R.string.please_check_the_network_connection))
         }

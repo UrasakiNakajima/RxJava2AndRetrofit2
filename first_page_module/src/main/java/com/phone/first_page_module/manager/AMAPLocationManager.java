@@ -17,28 +17,29 @@ public class AMAPLocationManager {
     private static AMAPLocationManager amapLocationManager;
     //声明AMapLocationClient类对象
     private AMapLocationClient mLocationClient = null;
-    //声明定位回调监听器
-    private AMapLocationListener mLocationListener;
     //声明AMapLocationClientOption对象
     private AMapLocationClientOption mLocationOption = null;
 
-    private AMAPLocationManager(Context context) {
-        initLocation(context);
+    private AMAPLocationManager() {
+        initLocation();
     }
 
-    public static AMAPLocationManager getInstance(BaseApplication baseApplication) {
+    public static AMAPLocationManager getInstance() {
         if (amapLocationManager == null) {
             synchronized (AMAPLocationManager.class) {
                 if (amapLocationManager == null) {
-                    amapLocationManager = new AMAPLocationManager(baseApplication);
+                    amapLocationManager = new AMAPLocationManager();
                 }
             }
         }
         return amapLocationManager;
     }
 
-    private void initLocation(Context context) {
-        mLocationListener = new AMapLocationListener() {
+    private void initLocation() {
+        //可在其中解析amapLocation获取相应内容。
+        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+        //声明定位回调监听器
+        AMapLocationListener mLocationListener = new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
                 if (aMapLocation != null) {
@@ -46,6 +47,7 @@ public class AMAPLocationManager {
                         LogManager.i(TAG, "address*****" + aMapLocation.getAddress());
                         //可在其中解析amapLocation获取相应内容。
                         onCommonSingleParamCallback.onSuccess(aMapLocation);
+                        stopLocation();
                     } else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                         String errorMessage = "location Error, ErrCode:"
@@ -58,14 +60,14 @@ public class AMAPLocationManager {
             }
         };
 
-        AMapLocationClient.updatePrivacyShow(context, true, true);
-        AMapLocationClient.updatePrivacyAgree(context, true);
+        AMapLocationClient.updatePrivacyShow(BaseApplication.getInstance(), true, true);
+        AMapLocationClient.updatePrivacyAgree(BaseApplication.getInstance(), true);
         //初始化定位
         try {
-            mLocationClient = new AMapLocationClient(context);
+            mLocationClient = new AMapLocationClient(BaseApplication.getInstance());
         } catch (Exception e) {
             e.printStackTrace();
-            ExceptionManager.getInstance().throwException(context, e);
+            ExceptionManager.getInstance().throwException(e);
         }
         //设置定位回调监听
         mLocationClient.setLocationListener(mLocationListener);
@@ -108,6 +110,7 @@ public class AMAPLocationManager {
 
     public void destoryLocation() {
         if (null != mLocationClient) {
+            stopLocation();
             mLocationClient.onDestroy();
         }
     }

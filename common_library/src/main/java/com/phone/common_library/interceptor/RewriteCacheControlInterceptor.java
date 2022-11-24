@@ -28,13 +28,13 @@ public class RewriteCacheControlInterceptor implements Interceptor {
 	public Response intercept(@NotNull Chain chain) throws IOException {
 		Request request = chain.request();
 		String cacheControl = request.cacheControl().toString();
-		if (!RetrofitManager.isNetworkAvailable(BaseApplication.getInstance())) {
+		if (!RetrofitManager.isNetworkAvailable()) {
 			request = request.newBuilder()
 						  .cacheControl(TextUtils.isEmpty(cacheControl) ? CacheControl.FORCE_NETWORK : CacheControl.FORCE_CACHE)
 						  .build();
 		}
 		Response originalResponse = chain.proceed(request);
-		if (RetrofitManager.isNetworkAvailable(BaseApplication.getInstance())) {
+		if (RetrofitManager.isNetworkAvailable()) {
 			//有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
 			
 			return originalResponse.newBuilder()

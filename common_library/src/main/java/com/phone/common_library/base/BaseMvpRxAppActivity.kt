@@ -1,7 +1,6 @@
 package com.phone.common_library.base
 
 import android.app.ActivityManager
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -14,8 +13,6 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import com.gyf.immersionbar.ImmersionBar
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.R
@@ -23,14 +20,16 @@ import com.phone.common_library.manager.*
 import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
-abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActivity() {
+abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivity() {
 
-    private val TAG = BaseBindingRxAppActivity::class.java.simpleName
+    private val TAG = BaseMvpRxAppActivity::class.java.simpleName
     protected lateinit var loadView: QMUILoadingView
-    protected lateinit var layoutParams: FrameLayout.LayoutParams
+    protected var layoutParams: FrameLayout.LayoutParams? = null
 
-    //该类绑定的ViewDataBinding
-    protected lateinit var mDatabind: DB
+    protected var presenter: T? = null
+
+    protected var url: String? = null
+    protected var bodyParams: MutableMap<String, String> = HashMap()
     protected lateinit var rxAppCompatActivity: RxAppCompatActivity
     protected var baseApplication: BaseApplication? = null
     private var activityPageManager: ActivityPageManager? = null
@@ -41,25 +40,42 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
         baseApplication = application as BaseApplication
         activityPageManager = ActivityPageManager.getInstance()
         activityPageManager?.addActivity(this)
+        setContentView(initLayoutId())
 
-        initLayoutId()?.let {
-            mDatabind = DataBindingUtil.setContentView(this, it)
-            mDatabind.lifecycleOwner = rxAppCompatActivity
-        }
+        //        setToolbar();
+        presenter = attachPresenter()
         initData()
         initViews()
         loadView = QMUILoadingView(this)
-        loadView.also {
-            it.visibility = View.GONE
-            it.setSize(100)
-            it.setColor(ResourcesManager.getColor(R.color.color_333333))
-        }
+        loadView.visibility = View.GONE
+        loadView.setSize(100)
+        loadView.setColor(ResourcesManager.getColor(R.color.color_333333))
         layoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
         )
-        layoutParams.gravity = Gravity.CENTER
+        layoutParams!!.gravity = Gravity.CENTER
         addContentView(loadView, layoutParams)
         initLoadData()
+
+//        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
+//        rxPermissionsManager.initRxPermissionsActivity(new OnCommonRxPermissionsCallback() {
+//            @Override
+//            public void onRxPermissionsAllPass() {
+//                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(rxAppCompatActivity);
+//                crashHandlerManager.sendPreviousReportsToServer();
+//                crashHandlerManager.init();
+//            }
+//
+//            @Override
+//            public void onNotCheckNoMorePromptError() {
+//
+//            }
+//
+//            @Override
+//            public void onCheckNoMorePromptError() {
+//
+//            }
+//        });
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -81,7 +97,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
         return res
     }
 
-    protected abstract fun initLayoutId(): Int?
+    protected abstract fun initLayoutId(): Int
 
     protected open fun setToolbar(isDarkFont: Boolean) {
         if (isDarkFont) {
@@ -169,9 +185,16 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
 
     protected abstract fun initLoadData()
 
+    /**
+     * 适配为不同的view 装载不同的presenter
+     *
+     * @return
+     */
+    protected abstract fun attachPresenter(): T
+
     protected open fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!rxAppCompatActivity.isFinishing) {
+        if (!rxAppCompatActivity!!.isFinishing) {
             val toast: Toast
             val duration: Int
             duration = if (isLongToast) {
@@ -213,7 +236,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
         textView.text = message
         frameLayout.addView(textView)
         val toast = Toast(this)
-        toast.setView(frameLayout)
+        toast.view = frameLayout
         if (isLongToast) {
             toast.duration = Toast.LENGTH_LONG
         } else {
@@ -227,13 +250,49 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     }
 
     protected open fun startActivity(cls: Class<*>?) {
-        intent = Intent(this, cls)
+        val intent = Intent(this, cls)
+        startActivity(intent)
+    }
+
+    protected open fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
+        val intent = Intent(this, cls)
+        val bundle = Bundle()
+        if (params != null && params.size > 0) {
+            for (key in params.keys) {
+                if (params[key] != null) { //如果参数不是null，才把参数传给后台
+                    bundle.putString(key, params[key])
+                }
+            }
+            intent.putExtras(bundle)
+        }
         startActivity(intent)
     }
 
     protected open fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
-        intent = Intent(this, cls)
+        val intent = Intent(this, cls)
         startActivityForResult(intent, requestCode)
+    }
+
+    protected open fun startActivityForResultCarryParams(
+        cls: Class<*>?,
+        params: Map<String?, String?>?,
+        requestCode: Int
+    ) {
+        val intent = Intent(this, cls)
+        val bundle = Bundle()
+        if (params != null && params.size > 0) {
+            for (key in params.keys) {
+                if (params[key] != null) { //如果参数不是null，才把参数传给后台
+                    bundle.putString(key, params[key])
+                }
+            }
+            intent.putExtras(bundle)
+        }
+        startActivityForResult(intent, requestCode)
+    }
+
+    protected fun detachPresenter() {
+        presenter?.detachView()
     }
 
     open fun getActivityPageManager(): ActivityPageManager? {
@@ -243,8 +302,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     private fun killAppProcess() {
         LogManager.i(TAG, "killAppProcess")
         baseApplication?.let {
-            val manager =
-                baseApplication?.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+            val manager = it.getSystemService(ACTIVITY_SERVICE) as ActivityManager
             val processInfos = manager.runningAppProcesses
             // 先杀掉相关进程，最后再杀掉主进程
             for (runningAppProcessInfo in processInfos) {
@@ -267,11 +325,12 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     }
 
     override fun onDestroy() {
+        detachPresenter()
+        bodyParams.clear()
         if (activityPageManager?.isLastAliveActivity?.get() == true) {
             killAppProcess()
         }
         activityPageManager?.removeActivity(rxAppCompatActivity)
         super.onDestroy()
     }
-
 }

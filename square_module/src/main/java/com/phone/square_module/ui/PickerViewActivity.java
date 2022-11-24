@@ -225,7 +225,7 @@ public class PickerViewActivity extends BaseRxAppActivity {
          * 关键逻辑在于循环体
          *
          * */
-        String JsonData = new GetJsonDataManager().getJson(baseApplication, "province.json");//获取assets目录下的json文件数据
+        String JsonData = new GetJsonDataManager().getJson("province.json");//获取assets目录下的json文件数据
 
         ArrayList<ProvincesBean> jsonBean = parseData(JsonData);//用Gson 转成实体
 

@@ -25,8 +25,6 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
     protected lateinit var mDatabind: DB
     protected var rxAppCompatActivity: RxAppCompatActivity? = null
     protected var baseApplication: BaseApplication? = null
-    private var intent: Intent? = null
-    private var bundle: Bundle? = null
 
     protected var rootView: View? = null
 
@@ -115,28 +113,28 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
     }
 
     protected fun startActivity(cls: Class<*>?) {
-        intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(rxAppCompatActivity, cls)
         startActivity(intent)
     }
 
     protected fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
-        intent = Intent(rxAppCompatActivity, cls)
-        bundle = Bundle()
+        val intent = Intent(rxAppCompatActivity, cls)
+        val bundle = Bundle()
         if (params != null && params.size > 0) {
             for (key in params.keys) {
                 if (params[key] != null) { //如果参数不是null，才把参数传给后台
-                    bundle!!.putString(key, params[key])
+                    bundle.putString(key, params[key])
                 }
             }
-            bundle?.let {
-                intent?.putExtras(it)
+            bundle.let {
+                intent.putExtras(it)
             }
         }
         startActivity(intent)
     }
 
     protected fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
-        intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(rxAppCompatActivity, cls)
         startActivityForResult(intent, requestCode)
     }
 

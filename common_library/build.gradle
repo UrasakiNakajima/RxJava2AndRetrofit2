@@ -78,9 +78,6 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
-            java {//移除module包下的代码
-                exclude 'module'
-            }
         }
     }
 

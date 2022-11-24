@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -26,6 +27,8 @@ import com.phone.main_module.login.bean.LoginResponse;
 import com.phone.main_module.login.presenter.LoginPresenterImpl;
 import com.phone.main_module.login.view.ILoginView;
 import com.phone.main_module.main.MainActivity;
+
+import java.util.Objects;
 
 @Route(path = "/main_module/login")
 public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>
@@ -110,6 +113,7 @@ public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresente
         edtPassword.setText("12345678");
     }
 
+    @NonNull
     @Override
     protected LoginPresenterImpl attachPresenter() {
         return new LoginPresenterImpl(this);
@@ -117,17 +121,17 @@ public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresente
 
     @Override
     public void showLoading() {
-        if (loadView != null && !loadView.isShown()) {
-            loadView.setVisibility(View.VISIBLE);
-            loadView.start();
+        if (getLoadView() != null && !getLoadView().isShown()) {
+            getLoadView().setVisibility(View.VISIBLE);
+            getLoadView().start();
         }
     }
 
     @Override
     public void hideLoading() {
-        if (loadView != null && loadView.isShown()) {
-            loadView.stop();
-            loadView.setVisibility(View.GONE);
+        if (getLoadView() != null && getLoadView().isShown()) {
+            getLoadView().stop();
+            getLoadView().setVisibility(View.GONE);
         }
     }
 
@@ -161,7 +165,7 @@ public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresente
 
     @Override
     public void loginSuccess(String success) {
-        baseApplication.setLogin(true);
+        Objects.requireNonNull(getBaseApplication()).setLogin(true);
         startActivity(MainActivity.class);
         finish();
     }
@@ -176,43 +180,43 @@ public class LoginActivity extends BaseMvpRxAppActivity<IBaseView, LoginPresente
         //		verificationCode = edtVerificationCode.getText().toString();
         //		phoneDevice = UIUtils.getDeviceUUid().toString();
 
-        bodyParams.clear();
-        bodyParams.put("account", userId);
-        presenter.getAuthCode(this, bodyParams);
+        getBodyParams().clear();
+        getBodyParams().put("account", userId);
+        Objects.requireNonNull(getPresenter()).getAuthCode(this, getBodyParams());
     }
 
     private void initLoginWithAuthCode() {
         userId = edtUserId.getText().toString();
         verificationCode = edtVerificationCode.getText().toString();
-        phoneDevice = SystemManager.getSystemId(this);
+        phoneDevice = SystemManager.getSystemId();
 
-        bodyParams.clear();
-        bodyParams.put("account", userId);
-        bodyParams.put("captcha", verificationCode);
-        bodyParams.put("type", "1");//1 APP
-        bodyParams.put("phoneDevice", phoneDevice);
-        presenter.loginWithAuthCode(this, bodyParams);
+        getBodyParams().clear();
+        getBodyParams().put("account", userId);
+        getBodyParams().put("captcha", verificationCode);
+        getBodyParams().put("type", "1");//1 APP
+        getBodyParams().put("phoneDevice", phoneDevice);
+        Objects.requireNonNull(getPresenter()).loginWithAuthCode(this, getBodyParams());
     }
 
     private void initLogin() {
-        if (RetrofitManager.isNetworkAvailable(this)) {
+        if (RetrofitManager.isNetworkAvailable()) {
             userId = edtUserId.getText().toString();
             password = edtPassword.getText().toString();
 
             if (TextUtils.isEmpty(userId)) {
-                showToast(getResources().getString(R.string.please_enter_one_user_name), true);
+                showToast(ResourcesManager.getString(R.string.please_enter_one_user_name), true);
                 return;
             }
             if (TextUtils.isEmpty(password)) {
-                showToast(getResources().getString(R.string.please_input_a_password), true);
+                showToast(ResourcesManager.getString(R.string.please_input_a_password), true);
                 return;
             }
-            bodyParams.clear();
-            bodyParams.put("userId", userId);
-            bodyParams.put("password", password);
-            presenter.login(this, bodyParams);
+            getBodyParams().clear();
+            getBodyParams().put("userId", userId);
+            getBodyParams().put("password", password);
+            Objects.requireNonNull(getPresenter()).login(this, getBodyParams());
         } else {
-            showToast(getResources().getString(R.string.please_check_the_network_connection), true);
+            showToast(ResourcesManager.getString(R.string.please_check_the_network_connection), true);
         }
     }
 

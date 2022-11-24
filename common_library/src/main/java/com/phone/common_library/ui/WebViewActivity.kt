@@ -51,39 +51,41 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
             layoutBack.setOnClickListener(View.OnClickListener { v: View? -> finish() })
 
             mDatabind.activityWebProgressbar.progress = 100
-            layoutWeb.addView(baseApplication.webView)
+            baseApplication?.let {
+                layoutWeb.addView(it.webView)
 //            val layoutParams = FrameLayout.LayoutParams(
 //                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
 //            )
 //            layoutWeb.addView(baseApplication.webView, layoutParams)
-            baseApplication.setOnCommonSingleParamCallback(object :
-                OnCommonSingleParamCallback<Int> {
-                override fun onSuccess(success: Int?) {
-                    //进度小于100，显示进度条
-                    success?.let {
-                        if (success < 100) {
-                            if (startTime == 0L) {
-                                startTime = System.currentTimeMillis()
+                it.setOnCommonSingleParamCallback(object :
+                    OnCommonSingleParamCallback<Int> {
+                    override fun onSuccess(success: Int?) {
+                        //进度小于100，显示进度条
+                        success?.let {
+                            if (success < 100) {
+                                if (startTime == 0L) {
+                                    startTime = System.currentTimeMillis()
+                                }
+                                mDatabind.activityWebProgressbar.visibility = View.VISIBLE
+                            } else if (success == 100) {
+                                if (requiredTime == 0L) {
+                                    requiredTime = System.currentTimeMillis() - startTime
+                                    LogManager.i(TAG, "requiredTime*****" + requiredTime)
+                                }
+                                //等于100隐藏
+                                mDatabind.activityWebProgressbar.visibility = View.GONE
                             }
-                            mDatabind.activityWebProgressbar.visibility = View.VISIBLE
-                        } else if (success == 100) {
-                            if (requiredTime == 0L) {
-                                requiredTime = System.currentTimeMillis() - startTime
-                                LogManager.i(TAG, "requiredTime*****" + requiredTime)
-                            }
-                            //等于100隐藏
-                            mDatabind.activityWebProgressbar.visibility = View.GONE
+                            //改变进度
+                            mDatabind.activityWebProgressbar.progress = success
                         }
-                        //改变进度
-                        mDatabind.activityWebProgressbar.progress = success
                     }
-                }
 
-                override fun onError(error: String?) {
+                    override fun onError(error: String?) {
 
-                }
+                    }
 
-            })
+                })
+            }
         }
     }
 
@@ -98,19 +100,18 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
 //            //这个api仅仅清除自动完成填充的表单数据，并不会清除WebView存储到本地的数据
 //            baseApplication.webView.clearFormData()
 
-            baseApplication.webView.loadUrl(it)
+            baseApplication?.webView?.loadUrl(it)
         }
     }
 
     override fun onDestroy() {
-        baseApplication.webView.apply {
+        baseApplication?.webView?.apply {
             loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             clearCache(true)
             clearHistory();
+            //从父容器中移除webview
+            mDatabind.layoutWeb.removeView(this)
         }
-
-        //从父容器中移除webview
-        mDatabind.layoutWeb.removeView(baseApplication.webView)
         super.onDestroy()
     }
 

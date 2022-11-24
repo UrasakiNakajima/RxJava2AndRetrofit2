@@ -17,7 +17,8 @@ class AndroidAndJsFragment : BaseBindingRxFragment<FragmentAndroidAndJsBinding>(
         return R.layout.fragment_android_and_js
     }
 
-    override fun initData() {}
+    override fun initData() {
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun initViews() {

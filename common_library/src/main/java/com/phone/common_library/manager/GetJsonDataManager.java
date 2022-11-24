@@ -4,6 +4,8 @@ package com.phone.common_library.manager;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import com.phone.common_library.BaseApplication;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,11 +20,11 @@ import java.io.InputStreamReader;
 
 public class GetJsonDataManager {
 
-    public String getJson(Context context, String fileName) {
+    public String getJson(String fileName) {
 
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            AssetManager assetManager = context.getAssets();
+            AssetManager assetManager = BaseApplication.getInstance().getAssets();
             BufferedReader bf = new BufferedReader(new InputStreamReader(
                     assetManager.open(fileName)));
             String line;

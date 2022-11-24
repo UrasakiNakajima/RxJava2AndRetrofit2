@@ -10,6 +10,8 @@ import androidx.core.app.ActivityCompat;
 
 //import com.blankj.utilcode.util.DeviceUtils;
 
+import com.phone.common_library.BaseApplication;
+
 import java.util.Locale;
 //import java.util.UUID;
 
@@ -70,10 +72,10 @@ public class SystemManager {
      * @return 手机IMEI
      */
 
-    public static String getIMEI(Context context) {
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Activity.TELEPHONY_SERVICE);
+    public static String getIMEI() {
+        TelephonyManager telephonyManager = (TelephonyManager) BaseApplication.getInstance().getSystemService(Activity.TELEPHONY_SERVICE);
         if (telephonyManager != null) {
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(BaseApplication.getInstance(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding
@@ -102,8 +104,8 @@ public class SystemManager {
      *
      * @return
      */
-    public static String getSystemId(Context context) {
-        return SystemIdManager.getSystemId(context);
+    public static String getSystemId() {
+        return SystemIdManager.getSystemId();
     }
 
 //    /**

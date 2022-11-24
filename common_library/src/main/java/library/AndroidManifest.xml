@@ -31,11 +31,6 @@
 
     <application>
         <activity
-            android:name=".ui.AndroidAndJsActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.WebViewActivity"
             android:exported="false"
             android:launchMode="singleTask"

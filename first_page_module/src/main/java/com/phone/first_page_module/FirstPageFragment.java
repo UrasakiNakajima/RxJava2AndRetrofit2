@@ -103,8 +103,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     @Override
     protected void initData() {
         isRefresh = true;
-
-        amapLocationManager = AMAPLocationManager.getInstance(BaseApplication.getInstance());
+        amapLocationManager = AMAPLocationManager.getInstance();
         amapLocationManager.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<AMapLocation>() {
             @Override
             public void onSuccess(AMapLocation success) {
@@ -116,7 +115,6 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
                 LogManager.i(TAG, "error*****" + error);
             }
         });
-
     }
 
     @Override
@@ -290,10 +288,10 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
     public void firstPageDataError(String error) {
         if (!rxAppCompatActivity.isFinishing()) {
             //            showToast(error, true);
-            showCustomToast(ScreenManager.dpToPx(rxAppCompatActivity, 20f), ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+            showCustomToast(ScreenManager.dpToPx(20f), ScreenManager.dpToPx(20f),
                     18, getResources().getColor(R.color.white),
-                    getResources().getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(rxAppCompatActivity, 40f),
-                    ScreenManager.dpToPx(rxAppCompatActivity, 20f), error,
+                    getResources().getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(40f),
+                    ScreenManager.dpToPx(20f), error,
                     true);
             if (isRefresh) {
                 refreshLayout.finishRefresh(false);
@@ -327,7 +325,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
 //                LogManager.i(TAG, user3.toString());
 
                 if (TextUtils.isEmpty(baseApplication.getSystemId())) {
-                    String systemId = SystemManager.getSystemId(baseApplication);
+                    String systemId = SystemManager.getSystemId();
                     baseApplication.setSystemId(systemId);
                     LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
                 } else {
@@ -387,7 +385,7 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
 
     private void initFirstPage() {
         showLoading();
-        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
+        if (RetrofitManager.isNetworkAvailable()) {
             bodyParams.clear();
 
             bodyParams.put("type", "yule");

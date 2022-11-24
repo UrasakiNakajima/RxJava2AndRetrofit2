@@ -96,7 +96,7 @@
                 <TextView
                     android:id="@+id/tev_kill_app"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_45"
                     android:layout_gravity="center"
                     android:background="@color/color_FFFFC73B"
                     android:gravity="center"
@@ -107,13 +107,13 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_555555"
-                    android:layout_height="@dimen/dp_1" />
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
                 <TextView
                     android:id="@+id/tev_create_an_exception"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_45"
                     android:layout_gravity="center"
                     android:background="@color/color_FFFFC73B"
                     android:gravity="center"
@@ -124,13 +124,13 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_555555"
-                    android:layout_height="@dimen/dp_1" />
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
                 <TextView
                     android:id="@+id/tev_create_an_exception2"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_45"
                     android:layout_gravity="center"
                     android:background="@color/color_FFFFC73B"
                     android:gravity="center"
@@ -141,92 +141,109 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_555555"
-                    android:layout_height="@dimen/dp_1" />
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_edit_text_input_limits"
+                    android:id="@+id/tev_android_and_js"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:paddingTop="@dimen/dp_10"
-                    android:paddingBottom="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_45"
                     android:layout_gravity="center"
                     android:background="@color/color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
+                    android:text="@string/android_and_js"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
+
+                <TextView
+                    android:id="@+id/tev_edit_text_input_limits"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_10"
                     android:text="@string/edit_text_input_limits"
                     android:textColor="@color/color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_555555"
-                    android:layout_height="@dimen/dp_1" />
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
                 <TextView
                     android:id="@+id/tev_decimal_operation"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:paddingTop="@dimen/dp_10"
-                    android:paddingBottom="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_45"
                     android:layout_gravity="center"
                     android:background="@color/color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_10"
                     android:text="@string/decimal_operation"
                     android:textColor="@color/color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_555555"
-                    android:layout_height="@dimen/dp_1" />
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
                 <TextView
                     android:id="@+id/tev_create_user"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:paddingTop="@dimen/dp_10"
-                    android:paddingBottom="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_45"
                     android:layout_gravity="center"
                     android:background="@color/color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_10"
                     android:text="@string/create_user"
                     android:textColor="@color/color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_555555"
-                    android:layout_height="@dimen/dp_1" />
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
                 <TextView
                     android:id="@+id/tev_kotlin_coroutine"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingEnd="@dimen/dp_15"
-                    android:paddingTop="@dimen/dp_10"
-                    android:paddingBottom="@dimen/dp_10"
+                    android:layout_height="@dimen/dp_45"
                     android:layout_gravity="center"
                     android:background="@color/color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_10"
                     android:text="@string/kotlin_coroutine"
                     android:textColor="@color/color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/color_555555"
-                    android:layout_height="@dimen/dp_1" />
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
 
                 <View
                     android:layout_width="match_parent"
@@ -236,8 +253,8 @@
                     android:id="@+id/imv_picture"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_640"
-                    android:scaleType="fitXY"
                     android:layout_gravity="center_horizontal"
+                    android:scaleType="fitXY"
                     android:src="@drawable/default_project_img"
                     app:imageUrl="@{datax.envelopePic}"
                     tools:ignore="ContentDescription" />

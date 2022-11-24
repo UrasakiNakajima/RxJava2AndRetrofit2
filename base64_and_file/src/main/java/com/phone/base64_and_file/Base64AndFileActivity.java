@@ -44,6 +44,7 @@ import com.phone.base64_and_file.manager.BitmapManager;
 import com.phone.base64_and_file.manager.FileManager;
 import com.phone.base64_and_file.presenter.Base64AndFilePresenterImpl;
 import com.phone.base64_and_file.view.IBase64AndFileView;
+import com.phone.common_library.BaseApplication;
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
@@ -56,6 +57,7 @@ import com.qmuiteam.qmui.widget.QMUILoadingView;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -126,11 +128,11 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
     protected void initData() {
         handler = new Handler(Looper.getMainLooper());
 
-        dirsPath = baseApplication.getExternalCacheDir()
+        dirsPath = Objects.requireNonNull(getBaseApplication()).getExternalCacheDir()
                 + File.separator + "Pictures";
-        dirsPathCompressed = baseApplication.getExternalCacheDir()
+        dirsPathCompressed = getBaseApplication().getExternalCacheDir()
                 + File.separator + "PicturesCompressed";
-        dirsPathCompressedRecover = baseApplication.getExternalCacheDir()
+        dirsPathCompressedRecover = getBaseApplication().getExternalCacheDir()
                 + File.separator + "PicturesCompressedRecover";
     }
 
@@ -171,18 +173,18 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
 //        tevPictureToBase64.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                if (presenter != null) {
+//                if (getPresenter() != null) {
 //                    showLoading();
-//                    presenter.showPictureToBase64(compressedPicturePath);
+//                    getPresenter().showPictureToBase64(compressedPicturePath);
 //                }
 //            }
 //        });
 //        tevBase64ToPicture.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                if (presenter != null) {
+//                if (getPresenter() != null) {
 //                    showLoading();
-//                    presenter.showBase64ToPicture(compressedPicturePath, base64Str);
+//                    getPresenter().showBase64ToPicture(compressedPicturePath, base64Str);
 //                }
 //            }
 //        });
@@ -202,7 +204,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         rcvBase64Str.setLayoutManager(linearLayoutManager);
         rcvBase64Str.setItemAnimator(new DefaultItemAnimator());
 
-        base64StrAdapter = new Base64StrAdapter(rxAppCompatActivity);
+        base64StrAdapter = new Base64StrAdapter(getRxAppCompatActivity());
         rcvBase64Str.setAdapter(base64StrAdapter);
     }
 
@@ -248,23 +250,23 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
             @Override
             public void onRxPermissionsAllPass() {
                 //所有的权限都授予
-                if (TextUtils.isEmpty(baseApplication.getSystemId())) {
-                    String systemId = SystemManager.getSystemId(baseApplication);
-                    baseApplication.setSystemId(systemId);
-                    LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
+                if (TextUtils.isEmpty(getBaseApplication().getSystemId())) {
+                    String systemId = SystemManager.getSystemId();
+                    getBaseApplication().setSystemId(systemId);
+                    LogManager.i(TAG, "isEmpty systemId*****" + getBaseApplication().getSystemId());
                 } else {
-                    LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
+                    LogManager.i(TAG, "systemId*****" + getBaseApplication().getSystemId());
                 }
 
 //                //第一种方法
-//                if (presenter != null) {
+//                if (getPresenter() != null) {
 //                    showLoading();
 //
 //                    Base64AndFileBean base64AndFileBean = new Base64AndFileBean();
 //                    base64AndFileBean.setDirsPath(dirsPath);
 //                    base64AndFileBean.setDirsPathCompressed(dirsPathCompressed);
 //                    base64AndFileBean.setDirsPathCompressedRecover(dirsPathCompressedRecover);
-//                    presenter.showCompressedPicture(baseApplication,
+//                    getPresenter().showCompressedPicture(getBaseApplication(),
 //                            base64AndFileBean);
 //                }
 
@@ -296,8 +298,8 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             cancelPermissionsDialog();
-                            intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", BaseApplication.getInstance().getPackageName(), null);
                             intent.setData(uri);
                             startActivityForResult(intent, 207);
                         }
@@ -345,7 +347,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                     @Override
                     public Base64AndFileBean apply(Integer integer) throws Exception {
                         LogManager.i(TAG, "threadName2*****" + Thread.currentThread().getName());
-                        File file = BitmapManager.getAssetFile(baseApplication, dirsPath, "picture_large.webp");
+                        File file = BitmapManager.getAssetFile(getBaseApplication(), dirsPath, "picture_large.webp");
 
                         Base64AndFileBean base64AndFileBean = new Base64AndFileBean();
                         base64AndFileBean.setDirsPath(dirsPath);
@@ -609,7 +611,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                 if (clientExcepion != null) {
                     // 本地异常，如网络异常等。
                     clientExcepion.printStackTrace();
-//                    ExceptionManager.getInstance().throwException(rxAppCompatActivity, clientExcepion);
+//                    ExceptionManager.getInstance().throwException(getRxAppCompatActivity(), clientExcepion);
                 }
                 if (serviceException != null) {
                     // 服务异常。
@@ -619,7 +621,7 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
                     LogManager.i(TAG, "onFailure RawMessage*****" + serviceException.getRawMessage());
                     LogManager.i(TAG, "onFailure threadName*****" + Thread.currentThread().getName());
                     LogManager.i(TAG, "onFailure serviceException*****" + serviceException.toString());
-//                    ExceptionManager.getInstance().throwException(rxAppCompatActivity, clientExcepion);
+//                    ExceptionManager.getInstance().throwException(getRxAppCompatActivity(), clientExcepion);
                 }
 
                 Observable.create(new ObservableOnSubscribe<Integer>() {
@@ -747,9 +749,9 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         hideLoading();
         LogManager.i(TAG, "showCompressedPictureSuccess");
 
-        if (presenter != null) {
+        if (getPresenter() != null) {
             showLoading();
-            presenter.showPictureToBase64(success);
+            getPresenter().showPictureToBase64(success);
         }
     }
 
@@ -768,9 +770,9 @@ public class Base64AndFileActivity extends BaseMvpRxAppActivity<IBaseView, Base6
         hideLoading();
         startTimer();
 
-        if (presenter != null) {
+        if (getPresenter() != null) {
             showLoading();
-            presenter.showBase64ToPicture(success);
+            getPresenter().showBase64ToPicture(success);
         }
     }
 

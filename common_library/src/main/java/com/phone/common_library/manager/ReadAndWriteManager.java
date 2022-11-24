@@ -68,7 +68,7 @@ public class ReadAndWriteManager {
             @Override
             public void subscribe(@NonNull ObservableEmitter<Boolean> e) throws Exception {
                 LogManager.i(TAG, "Observable thread is*****" + Thread.currentThread().getName());
-                String FILEPATH = rxAppCompatActivity.getExternalCacheDir()
+                String FILEPATH = BaseApplication.getInstance().getExternalCacheDir()
                         + File.separator
                         + "Mine";
                 File dirs = new File(FILEPATH);

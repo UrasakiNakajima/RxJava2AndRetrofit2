@@ -34,17 +34,16 @@ public class ThreadPoolManager {
     /**
      * 复用单一线程的线程池，同步执行任务的线程池
      *
-     * @param keepAliveTime
      * @param onCommonSuccessCallback
      */
-    public void createSyncThreadPool(long keepAliveTime,
-                                     OnCommonSuccessCallback onCommonSuccessCallback) {
+    public void createSyncThreadPool(OnCommonSuccessCallback onCommonSuccessCallback) {
         if (syncThreadPool == null) {
+//            syncThreadPool = Executors.newSingleThreadExecutor();
             syncThreadPool = new ThreadPoolExecutor(1,
                     1,
-                    keepAliveTime,
-                    TimeUnit.SECONDS,
-                    new LinkedBlockingDeque<>(2),
+                    0L,
+                    TimeUnit.MILLISECONDS,
+                    new LinkedBlockingDeque<>(100),
                     new ThreadPoolExecutor.CallerRunsPolicy());
         }
         //        for (int i = 0; i < 1; i++) {
@@ -55,6 +54,12 @@ public class ThreadPoolManager {
 //        }
     }
 
+    /**
+     * 延迟执行的线程池
+     *
+     * @param delay
+     * @param onCommonSuccessCallback
+     */
     public void createScheduledThreadPool(long delay,
                                           OnCommonSuccessCallback onCommonSuccessCallback) {
         if (scheduledThreadPool == null) {

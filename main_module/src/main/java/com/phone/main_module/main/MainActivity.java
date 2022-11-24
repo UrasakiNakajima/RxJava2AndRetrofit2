@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -191,6 +192,7 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
 
     }
 
+    @NonNull
     @Override
     protected MainPresenterImpl attachPresenter() {
         return new MainPresenterImpl(this);
@@ -198,17 +200,17 @@ public class MainActivity extends BaseMvpRxAppActivity<IBaseView, MainPresenterI
 
     @Override
     public void showLoading() {
-        if (loadView != null && !loadView.isShown()) {
-            loadView.setVisibility(View.VISIBLE);
-            loadView.start();
+        if (getLoadView() != null && !getLoadView().isShown()) {
+            getLoadView().setVisibility(View.VISIBLE);
+            getLoadView().start();
         }
     }
 
     @Override
     public void hideLoading() {
-        if (loadView != null && loadView.isShown()) {
-            loadView.stop();
-            loadView.setVisibility(View.GONE);
+        if (getLoadView() != null && getLoadView().isShown()) {
+            getLoadView().stop();
+            getLoadView().setVisibility(View.GONE);
         }
     }
 

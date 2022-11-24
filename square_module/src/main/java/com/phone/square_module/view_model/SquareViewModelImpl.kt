@@ -42,7 +42,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                 launch(Dispatchers.Main) {
                     LogManager.i(TAG, "success*****$success")
                     if (!TextUtils.isEmpty(success)) {
-                        val response: SquareBean =
+                        val response =
                             GsonManager()
                                 .convert(success, SquareBean::class.java)
                         response.data?.datas?.also {
@@ -104,8 +104,9 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                     override fun onSuccess(success: String) {
                         LogManager.i(TAG, "success*****$success")
                         if (!TextUtils.isEmpty(success)) {
-                            val response: SquareBean =
-                                GsonManager().convert(success, SquareBean::class.java)
+                            val response =
+                                GsonManager()
+                                    .convert(success, SquareBean::class.java)
                             response.data?.datas?.apply {
                                 if (this.size > 0) {
                                     dataxRxActivitySuccess.value = this

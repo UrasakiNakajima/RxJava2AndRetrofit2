@@ -154,8 +154,6 @@ public class ShadowLinearLayout extends LinearLayout {
                     }
                     paint.setColor(clickAbleFalseColor);
                     postInvalidate();
-
-
                 } else if (clickAbleFalseDrawable != null) {
                     //说明设置了背景图
                     setmBackGround(clickAbleFalseDrawable);
@@ -1476,7 +1474,6 @@ public class ShadowLinearLayout extends LinearLayout {
                 } else {
                     rightBottom = (int) mCornerRadius_rightBottom;
                 }
-
                 GlideRoundManager.setCorners(firstView, drawable, leftTop, leftBottom, rightTop, rightBottom);
             }
         }

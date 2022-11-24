@@ -7,10 +7,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 
+import com.phone.common_library.BaseApplication;
 import com.phone.common_library.R;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 
@@ -38,168 +38,150 @@ public class PictureManager {
     /**
      * 保存文件到指定路径
      *
-     * @param context
      * @param bitmap
      * @param fileName
      * @return
      */
-    public static boolean saveImageToPath(Context context,
-                                          Bitmap bitmap,
+    public static boolean saveImageToPath(Bitmap bitmap,
                                           String fileName) {
-        //一定要是外部目录
-//		String path = context.getExternalCacheDir()
-//						  + File.separator + "Pictures";
-        String path = File.separator + "storage"
-                + File.separator + "emulated"
-                + File.separator + "0"
+        String path = BaseApplication.getInstance().getExternalCacheDir()
                 + File.separator + "Pictures";
-        String filesDir = context.getFilesDir().getAbsolutePath();
-        //先判断是否是沙盒内部目录
-        StringBuilder stringBuilder = new StringBuilder();
-        String[] filesDirArr = filesDir.split("/");
-        for (int i = 0; i < filesDirArr.length - 1; i++) {
-            if (i == 0) {
-                stringBuilder.append(filesDirArr[i]);
-            } else {
-                stringBuilder.append("/").append(filesDirArr[i]);
-            }
+        File appDir = new File(path);
+        if (!appDir.exists()) {
+            appDir.mkdirs();
         }
-        String pathInternal = stringBuilder.toString();
-        boolean isPathInternal = path.contains(pathInternal);
-        if (isPathInternal) {//是沙盒内部目录
-            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal);
-            //首先创建路径（有则不创建，没有则创建）
-            File appDir = new File(path);
-            if (!appDir.exists()) {
-                appDir.mkdirs();
-            }
 
-            //这个才是文件
-            fileName = fileName + ".png";
-            File file = new File(appDir, fileName);
-            try {
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
-                FileOutputStream fos = new FileOutputStream(file);
-                BufferedOutputStream bos = new BufferedOutputStream(fos);
-                //通过io流的方式来压缩保存图片
-                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                bos.flush();
-                bos.close();
-
-                //保存图片后发送广播通知更新数据库
-                Uri uri = Uri.fromFile(file);
-                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-                return isSuccess;
-            } catch (IOException e) {
-                e.printStackTrace();
+        //这个才是文件
+        fileName = fileName + ".png";
+        File file = new File(appDir, fileName);
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
             }
-        } else {//不是沙盒内部目录
-            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal);
-//			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//				ContentValues values = new ContentValues();
-//				String mimeType = "image/png";
-//				values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
-//				values.put(MediaStore.Files.FileColumns.TITLE, fileName);
-//				values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
-//				values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
-//
-//				ContentResolver contentResolver = context.getContentResolver();
-//				Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//				if (uri != null) {
-//					try {
-//						OutputStream os = contentResolver.openOutputStream(uri);
-//						BufferedOutputStream bos = new BufferedOutputStream(os);
-//						//通过io流的方式来压缩保存图片
-//						boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-//						bos.flush();
-//						bos.close();
-//						return isSuccess;
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			} else {
-            //首先创建路径（有则不创建，没有则创建）
-            File appDir = new File(path);
-            if (!appDir.exists()) {
-                appDir.mkdirs();
-            }
+            FileOutputStream fos = new FileOutputStream(file);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            //通过io流的方式来压缩保存图片
+            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            bos.flush();
+            bos.close();
 
-            //这个才是文件
-            fileName = fileName + ".png";
-            File file = new File(appDir, fileName);
-            try {
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
-                FileOutputStream fos = new FileOutputStream(file);
-                BufferedOutputStream bos = new BufferedOutputStream(fos);
-                //通过io流的方式来压缩保存图片
-                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                bos.flush();
-                bos.close();
-
-                //保存图片后发送广播通知更新数据库
-                Uri uri = Uri.fromFile(file);
-                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-                return isSuccess;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-//			}
+            //保存图片后发送广播通知更新数据库
+            Uri uri = Uri.fromFile(file);
+            BaseApplication.getInstance().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+            return isSuccess;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return false;
     }
 
+//        //一定要是外部目录
+//		String path = context.getExternalCacheDir()
+//						  + File.separator + "Pictures";
+//        String path = File.separator + "storage"
+//                + File.separator + "emulated"
+//                + File.separator + "0"
+//                + File.separator + "Pictures";
+//        String filesDir = context.getFilesDir().getAbsolutePath();
+//        //先判断是否是沙盒内部目录
+//        StringBuilder stringBuilder = new StringBuilder();
+//        String[] filesDirArr = filesDir.split("/");
+//        for (int i = 0; i < filesDirArr.length - 1; i++) {
+//            if (i == 0) {
+//                stringBuilder.append(filesDirArr[i]);
+//            } else {
+//                stringBuilder.append("/").append(filesDirArr[i]);
+//            }
+//        }
+//        String pathInternal = stringBuilder.toString();
+//        boolean isPathInternal = path.contains(pathInternal);
+//        if (isPathInternal) {//是沙盒内部目录
+//            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal);
+//            //首先创建路径（有则不创建，没有则创建）
+//            File appDir = new File(path);
+//            if (!appDir.exists()) {
+//                appDir.mkdirs();
+//            }
+//
+//            //这个才是文件
+//            fileName = fileName + ".png";
+//            File file = new File(appDir, fileName);
+//            try {
+//                if (!file.exists()) {
+//                    file.createNewFile();
+//                }
+//                FileOutputStream fos = new FileOutputStream(file);
+//                BufferedOutputStream bos = new BufferedOutputStream(fos);
+//                //通过io流的方式来压缩保存图片
+//                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+//                bos.flush();
+//                bos.close();
+//
+//                //保存图片后发送广播通知更新数据库
+//                Uri uri = Uri.fromFile(file);
+//                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+//                return isSuccess;
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        } else {//不是沙盒内部目录
+//            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                ContentValues values = new ContentValues();
+//                String mimeType = "image/png";
+//                values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
+//                values.put(MediaStore.Files.FileColumns.TITLE, fileName);
+//                values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
+//                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+//
+//                ContentResolver contentResolver = context.getContentResolver();
+//                Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//                if (uri != null) {
+//                    try {
+//                        OutputStream os = contentResolver.openOutputStream(uri);
+//                        BufferedOutputStream bos = new BufferedOutputStream(os);
+//                        //通过io流的方式来压缩保存图片
+//                        boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+//                        bos.flush();
+//                        bos.close();
+//                        return isSuccess;
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }
+//        return false;
+//    }
+
     /**
      * 保存文件到指定路径
      *
-     * @param context
      * @param responseBody
      * @param fileName
      * @param onCommonSingleParamCallback
      * @return
      */
-    public static boolean saveImageToPath(Context context,
-                                          ResponseBody responseBody,
+    public static boolean saveImageToPath(ResponseBody responseBody,
                                           String fileName,
                                           OnCommonSingleParamCallback<Integer> onCommonSingleParamCallback) {
-        //一定要是外部目录
-        String path = context.getExternalCacheDir()
+        String path = BaseApplication.getInstance().getExternalCacheDir()
                 + File.separator + "Pictures";
-        String filesDir = context.getFilesDir().getAbsolutePath();
-        //先判断是否是沙盒内部目录
-        StringBuilder stringBuilder = new StringBuilder();
-        String[] filesDirArr = filesDir.split("/");
-        for (int i = 0; i < filesDirArr.length - 1; i++) {
-            if (i == 0) {
-                stringBuilder.append(filesDirArr[i]);
-            } else {
-                stringBuilder.append("/").append(filesDirArr[i]);
-            }
+        //首先创建路径（有则不创建，没有则创建）
+        File appDir = new File(path);
+        if (!appDir.exists()) {
+            appDir.mkdirs();
         }
-        String pathInternal = stringBuilder.toString();
-        boolean isPathInternal = path.contains(pathInternal);
-        Bitmap bitmap = null;
-        if (isPathInternal) {//是沙盒内部目录
-            try {
-                //首先创建路径（有则不创建，没有则创建）
-                File appDir = new File(path);
-                if (!appDir.exists()) {
-                    appDir.mkdirs();
-                }
 
-                //这个才是文件
-                fileName = fileName + ".png";
-                File file = new File(appDir, fileName);
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
+        //这个才是文件
+        fileName = fileName + ".png";
+        File file = new File(appDir, fileName);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
                 InputStream inputStream = responseBody.byteStream();
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-                bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+                Bitmap bitmap = BitmapFactory.decodeStream(bufferedInputStream);
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
 
@@ -209,103 +191,104 @@ public class PictureManager {
                 bufferedOutputStream.close();
                 //保存图片后发送广播通知更新数据库
                 Uri uri = Uri.fromFile(file);
-                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+                BaseApplication.getInstance().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
                 return isSuccess;
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
-        } else {//不是沙盒内部目录
-//			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//				//Android 外部目录
-//				String mimeType = "image/png";
-//				ContentValues values = new ContentValues();
-//				values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
-//				values.put(MediaStore.Files.FileColumns.TITLE, fileName);
-//				values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
-//				values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
-//
-//				Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-//				ContentResolver resolver = context.getContentResolver();
-//				Uri insertUri = resolver.insert(external, values);
-//
-//				//			long total = responseBody.contentLength();
-//				try {
-//					InputStream is = responseBody.byteStream();
-//					BufferedInputStream bufferedInputStream = null;
-//					OutputStream outputStream = null;
-//					BufferedOutputStream bufferedOutputStream = null;
-//					bufferedInputStream = new BufferedInputStream(is);
-//					bitmap = BitmapFactory.decodeStream(bufferedInputStream);
-//					if (insertUri != null) {
-//						outputStream = resolver.openOutputStream(insertUri);
-//						if (outputStream != null) {
-//							bufferedOutputStream = new BufferedOutputStream(outputStream);
-//						}
-//					}
-//					if (bufferedOutputStream != null) {
-//						//					byte[] buffer = new byte[1024 * 2];
-//						//					int len = 0;
-//						//					int sum = 0;
-//						//					while ((len = bis.read(buffer)) != -1) {
-//						//						bos.write(buffer, 0, len);
-//						//						sum += len;
-//						//						MainThreadManager mainThreadManager = new MainThreadManager();
-//						//						int finalSum = sum;
-//						//						mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
-//						//							@Override
-//						//							public void onSuccess() {
-//						//								int progress = (int) (finalSum * 1.0f / total * 100);
-//						//								onCommonSingleParamCallback.onSuccess(progress);
-//						//							}
-//						//						});
-//						//						mainThreadManager.subThreadToUIThread();
-//						//					}
-//
-//						//通过io流的方式来压缩保存图片
-//						boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
-//						bufferedOutputStream.flush();
-//						bufferedInputStream.close();
-//						bufferedOutputStream.close();
-//						return isSuccess;
-//					}
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			} else {
-            try {
-                //首先创建路径（有则不创建，没有则创建）
-                File appDir = new File(path);
-                if (!appDir.exists()) {
-                    appDir.mkdirs();
-                }
-
-                //这个才是文件
-                fileName = fileName + ".png";
-                File file = new File(appDir, fileName);
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
-                InputStream inputStream = responseBody.byteStream();
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-                bitmap = BitmapFactory.decodeStream(bufferedInputStream);
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-
-                //通过io流的方式来压缩保存图片
-                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
-                bufferedOutputStream.flush();
-                bufferedOutputStream.close();
-                //保存图片后发送广播通知更新数据库
-                Uri uri = Uri.fromFile(file);
-                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-                return isSuccess;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-//			}
         }
         return false;
     }
+
+
+//        //一定要是外部目录
+//        String path = context.getExternalCacheDir()
+//                + File.separator + "Pictures";
+//        String filesDir = context.getFilesDir().getAbsolutePath();
+//        //先判断是否是沙盒内部目录
+//        StringBuilder stringBuilder = new StringBuilder();
+//        String[] filesDirArr = filesDir.split("/");
+//        for (int i = 0; i < filesDirArr.length - 1; i++) {
+//            if (i == 0) {
+//                stringBuilder.append(filesDirArr[i]);
+//            } else {
+//                stringBuilder.append("/").append(filesDirArr[i]);
+//            }
+//        }
+//        String pathInternal = stringBuilder.toString();
+//        boolean isPathInternal = path.contains(pathInternal);
+//        Bitmap bitmap = null;
+//        if (isPathInternal) {//是沙盒内部目录
+//            try {
+//                //首先创建路径（有则不创建，没有则创建）
+//                File appDir = new File(path);
+//                if (!appDir.exists()) {
+//                    appDir.mkdirs();
+//                }
+//
+//                //这个才是文件
+//                fileName = fileName + ".png";
+//                File file = new File(appDir, fileName);
+//                if (!file.exists()) {
+//                    file.createNewFile();
+//                }
+//                InputStream inputStream = responseBody.byteStream();
+//                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+//                bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+//                FileOutputStream fileOutputStream = new FileOutputStream(file);
+//                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+//
+//                //通过io流的方式来压缩保存图片
+//                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
+//                bufferedOutputStream.flush();
+//                bufferedOutputStream.close();
+//                //保存图片后发送广播通知更新数据库
+//                Uri uri = Uri.fromFile(file);
+//                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+//                return isSuccess;
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        } else {//不是沙盒内部目录
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                //Android 外部目录
+//                String mimeType = "image/png";
+//                ContentValues values = new ContentValues();
+//                values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
+//                values.put(MediaStore.Files.FileColumns.TITLE, fileName);
+//                values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
+//                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+//
+//                Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+//                ContentResolver resolver = context.getContentResolver();
+//                Uri insertUri = resolver.insert(external, values);
+//                try {
+//                    InputStream is = responseBody.byteStream();
+//                    BufferedInputStream bufferedInputStream = null;
+//                    OutputStream outputStream = null;
+//                    BufferedOutputStream bufferedOutputStream = null;
+//                    bufferedInputStream = new BufferedInputStream(is);
+//                    bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+//                    if (insertUri != null) {
+//                        outputStream = resolver.openOutputStream(insertUri);
+//                        if (outputStream != null) {
+//                            bufferedOutputStream = new BufferedOutputStream(outputStream);
+//                        }
+//                    }
+//                    if (bufferedOutputStream != null) {
+//                        //通过io流的方式来压缩保存图片
+//                        boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
+//                        bufferedOutputStream.flush();
+//                        bufferedInputStream.close();
+//                        bufferedOutputStream.close();
+//                        return isSuccess;
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return false;
 
     /**
      * 得到绝对地址
@@ -343,8 +326,51 @@ public class PictureManager {
      * @param context
      * @param fileName
      */
-    public static boolean copyPublicDirectoryFile(Context context, String resourcesPath, String fileName) {
-        Bitmap bitmap = null;
+    public static boolean copyExternalCacheDirFile(Context context, String
+            fileName) {
+        String resourcesPath = context.getExternalCacheDir()
+                + File.separator + "Cache";
+        //一定要是外部目录
+        String path = context.getExternalCacheDir()
+                + File.separator + "Pictures";
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        FileOutputStream fos = null;
+        BufferedOutputStream bos = null;
+        try {
+            //首先创建路径（有则不创建，没有则创建）
+            File appDir = new File(path);
+            if (!appDir.exists()) {
+                appDir.mkdirs();
+            }
+            //这个才是文件
+            fileName = fileName + ".png";
+            File fileUpdate = new File(appDir, fileName);
+
+            if (!fileUpdate.exists()) {
+                fileUpdate.createNewFile();
+            }
+
+            File resourcesFile = new File(resourcesPath);
+            fis = new FileInputStream(resourcesFile);
+            bis = new BufferedInputStream(fis);
+            Bitmap bitmap = BitmapFactory.decodeStream(bis);
+            fos = new FileOutputStream(fileUpdate);
+            bos = new BufferedOutputStream(fos);
+
+            //通过io流的方式来压缩保存图片
+            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            bos.flush();
+            bos.close();
+            //保存图片后发送广播通知更新数据库
+            PictureManager.updatePhotoMedia(context, fileUpdate);
+            return isSuccess;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 //		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
 //			String fileId = PictureManager.queryFile(context, resourcesPath);
 //			if (!TextUtils.isEmpty(fileId)) {
@@ -396,49 +422,49 @@ public class PictureManager {
 //				}
 //			}
 //		} else {
-        //一定要是外部目录
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "Pictures";
-
-        FileInputStream fis = null;
-        BufferedInputStream bis = null;
-        FileOutputStream fos = null;
-        BufferedOutputStream bos = null;
-        try {
-            //首先创建路径（有则不创建，没有则创建）
-            File appDir = new File(path);
-            if (!appDir.exists()) {
-                appDir.mkdirs();
-            }
-
-            //这个才是文件
-            fileName = fileName + ".png";
-            File fileUpdate = new File(appDir, fileName);
-
-            if (!fileUpdate.exists()) {
-                fileUpdate.createNewFile();
-            }
-
-            File resourcesFile = new File(resourcesPath);
-            fis = new FileInputStream(resourcesFile);
-            bis = new BufferedInputStream(fis);
-            bitmap = BitmapFactory.decodeStream(bis);
-            fos = new FileOutputStream(fileUpdate);
-            bos = new BufferedOutputStream(fos);
-
-            //通过io流的方式来压缩保存图片
-            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-            bos.flush();
-            bos.close();
-            //保存图片后发送广播通知更新数据库
-            PictureManager.updatePhotoMedia(context, fileUpdate);
-            return isSuccess;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        //一定要是外部目录
+//        String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+//                + File.separator + "Pictures";
+//
+//        FileInputStream fis = null;
+//        BufferedInputStream bis = null;
+//        FileOutputStream fos = null;
+//        BufferedOutputStream bos = null;
+//        try {
+//            //首先创建路径（有则不创建，没有则创建）
+//            File appDir = new File(path);
+//            if (!appDir.exists()) {
+//                appDir.mkdirs();
+//            }
+//
+//            //这个才是文件
+//            fileName = fileName + ".png";
+//            File fileUpdate = new File(appDir, fileName);
+//
+//            if (!fileUpdate.exists()) {
+//                fileUpdate.createNewFile();
+//            }
+//
+//            File resourcesFile = new File(resourcesPath);
+//            fis = new FileInputStream(resourcesFile);
+//            bis = new BufferedInputStream(fis);
+//            bitmap = BitmapFactory.decodeStream(bis);
+//            fos = new FileOutputStream(fileUpdate);
+//            bos = new BufferedOutputStream(fos);
+//
+//            //通过io流的方式来压缩保存图片
+//            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+//            bos.flush();
+//            bos.close();
+//            //保存图片后发送广播通知更新数据库
+//            PictureManager.updatePhotoMedia(context, fileUpdate);
+//            return isSuccess;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 //		}
-        return false;
-    }
+//        return false;
+//    }
 
 //	/**
 //	 * 查询外部存储所有媒体文件

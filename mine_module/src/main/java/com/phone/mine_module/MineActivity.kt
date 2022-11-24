@@ -2,14 +2,15 @@ package com.phone.mine_module
 
 import android.content.Intent
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.IBaseView
 import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.manager.LogManager
+import com.phone.common_library.manager.ResourcesManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.common_library.ui.WebViewActivity
@@ -56,6 +57,14 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
                 startActivity(UserDataActivity::class.java)
             }
         })
+        tev_logout.setOnClickListener {
+            showToast(
+                ResourcesManager.getString(R.string.this_function_can_only_be_used_under_componentization),
+                false
+            )
+//            baseApplication?.isLogin = false
+//            ARouter.getInstance().build("/main_module/login").navigation()
+        }
         tev_thread_pool.setOnClickListener {
             startActivity(ThreadPoolActivity::class.java)
         }
@@ -148,13 +157,13 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     override fun mineDataError(error: String) {
         if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ScreenManager.dpToPx(20f),
+                ScreenManager.dpToPx(20f),
                 18,
-                ContextCompat.getColor(rxAppCompatActivity, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity, R.color.color_FFE066FF),
-                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ResourcesManager.getColor(R.color.white),
+                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ScreenManager.dpToPx(40f),
+                ScreenManager.dpToPx(20f),
                 error,
                 true
             )
@@ -168,14 +177,17 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     private fun initMine() {
-        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
+        if (RetrofitManager.isNetworkAvailable()) {
             bodyParams.clear()
 
             bodyParams["type"] = "keji"
             bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.mineData2(rxAppCompatActivity, bodyParams)
+            presenter?.mineData2(rxAppCompatActivity, bodyParams)
         } else {
-            showToast(resources.getString(R.string.please_check_the_network_connection), true)
+            showToast(
+                ResourcesManager.getString(R.string.please_check_the_network_connection),
+                true
+            )
             if (isRefresh) {
                 refresh_layout.finishRefresh()
             } else {

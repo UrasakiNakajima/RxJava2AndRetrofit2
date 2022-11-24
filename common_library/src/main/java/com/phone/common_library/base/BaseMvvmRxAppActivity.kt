@@ -13,7 +13,6 @@ import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.gyf.immersionbar.ImmersionBar
@@ -33,15 +32,15 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     protected lateinit var mDatabind: DB
     protected lateinit var viewModel: VM
     protected lateinit var rxAppCompatActivity: RxAppCompatActivity
-    protected lateinit var baseApplication: BaseApplication
-    private lateinit var activityPageManager: ActivityPageManager
+    protected var baseApplication: BaseApplication? = null
+    private var activityPageManager: ActivityPageManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         rxAppCompatActivity = this;
         activityPageManager = ActivityPageManager.getInstance()
-        activityPageManager.addActivity(rxAppCompatActivity)
+        activityPageManager?.addActivity(rxAppCompatActivity)
         baseApplication = application as BaseApplication
 
         initLayoutId()?.let {
@@ -158,16 +157,6 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         }
     }
 
-    /**
-     * 初始化沉浸式
-     * Init immersion bar.
-     */
-    protected fun initImmersionBar() {
-        //设置共同沉浸式样式
-        ImmersionBar.with(this)
-            .navigationBarColor(R.color.color_FFE066FF).init()
-    }
-
     protected abstract fun initData()
 
     protected abstract fun initObservers()
@@ -186,17 +175,17 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         val textView = TextView(this)
         val layoutParams1 = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
-            ScreenManager.dpToPx(this, 40f)
+            ScreenManager.dpToPx(40f)
         )
         textView.layoutParams = layoutParams1
-        textView.setPadding(ScreenManager.dpToPx(this, 20f), 0, ScreenManager.dpToPx(this, 20f), 0)
+        textView.setPadding(ScreenManager.dpToPx(20f), 0, ScreenManager.dpToPx(20f), 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.toFloat())
-        textView.setTextColor(ContextCompat.getColor(this, R.color.white))
+        textView.setTextColor(ResourcesManager.getColor(R.color.white))
         textView.gravity = Gravity.CENTER
         textView.includeFontPadding = false
         val gradientDrawable = GradientDrawable()//创建drawable
-        gradientDrawable.setColor(ContextCompat.getColor(this, R.color.color_FFE066FF))
-        gradientDrawable.cornerRadius = ScreenManager.dpToPx(this, 20f).toFloat()
+        gradientDrawable.setColor(ResourcesManager.getColor(R.color.color_989898))
+        gradientDrawable.cornerRadius = ScreenManager.dpToPx(20f).toFloat()
         textView.background = gradientDrawable
         textView.text = message
         frameLayout.addView(textView)
@@ -260,38 +249,40 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         return activityPageManager
     }
 
-    private fun killAppProcess(context: Context) {
+    private fun killAppProcess() {
         LogManager.i(TAG, "killAppProcess")
-        val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val processInfos = manager.runningAppProcesses
-        // 先杀掉相关进程，最后再杀掉主进程
-        for (runningAppProcessInfo in processInfos) {
-            if (runningAppProcessInfo.pid != Process.myPid()) {
-                Process.killProcess(runningAppProcessInfo.pid)
+        baseApplication?.let {
+            val manager = it.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val processInfos = manager.runningAppProcesses
+            // 先杀掉相关进程，最后再杀掉主进程
+            for (runningAppProcessInfo in processInfos) {
+                if (runningAppProcessInfo.pid != Process.myPid()) {
+                    Process.killProcess(runningAppProcessInfo.pid)
+                }
             }
-        }
 
-        LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
-        val crashHandlerManager = CrashHandlerManager.getInstance(context)
-        crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
-        try {
-            Thread.sleep(1000)
-        } catch (e: InterruptedException) {
-            LogManager.i(TAG, "error")
-        }
+            LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
+            val crashHandlerManager = CrashHandlerManager.getInstance()
+            crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
+            try {
+                Thread.sleep(1000)
+            } catch (e: InterruptedException) {
+                LogManager.i(TAG, "error")
+            }
 
-        Process.killProcess(Process.myPid())
-        // 正常退出程序，也就是结束当前正在运行的 java 虚拟机
-        System.exit(0)
+            Process.killProcess(Process.myPid())
+            // 正常退出程序，也就是结束当前正在运行的 java 虚拟机
+            System.exit(0)
+        }
     }
 
     override fun onDestroy() {
         mDatabind.unbind()
         viewModelStore.clear()
-        if (activityPageManager.isLastAliveActivity.get()) {
-            killAppProcess(baseApplication)
+        if (activityPageManager?.isLastAliveActivity?.get() == true) {
+            killAppProcess()
         }
-        activityPageManager.removeActivity(rxAppCompatActivity)
+        activityPageManager?.removeActivity(rxAppCompatActivity)
         super.onDestroy()
     }
 

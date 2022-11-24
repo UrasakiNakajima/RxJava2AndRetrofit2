@@ -18,11 +18,11 @@
         <!-- 高德地图，这里的value是高德地图开放平台你的应用的Key -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="xxxxxxx" />
+            android:value="356a1587ceff55b9378d7ad70923b553" />
 
         <activity
             android:name=".FirstPageActivity"
-            android:exported="false"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -33,11 +33,6 @@
         </activity>
         <activity
             android:name=".ui.VideoListActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.ShowVideoActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

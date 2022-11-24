@@ -15,6 +15,7 @@ import com.phone.common_library.base.BaseMvpRxFragment
 import com.phone.common_library.base.IBaseView
 import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.manager.LogManager
+import com.phone.common_library.manager.ResourcesManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
 import com.phone.common_library.ui.WebViewActivity
@@ -165,13 +166,13 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     override fun mineDataError(error: String) {
         if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ScreenManager.dpToPx(20f),
+                ScreenManager.dpToPx(20f),
                 18,
-                ContextCompat.getColor(rxAppCompatActivity, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity, R.color.color_FFE066FF),
-                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ResourcesManager.getColor(R.color.white),
+                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ScreenManager.dpToPx(40f),
+                ScreenManager.dpToPx(20f),
                 error,
                 true
             )
@@ -185,7 +186,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     private fun initMine() {
-        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
+        if (RetrofitManager.isNetworkAvailable()) {
             bodyParams.clear()
 
             bodyParams["type"] = "keji"

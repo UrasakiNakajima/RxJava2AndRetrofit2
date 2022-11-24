@@ -13,8 +13,7 @@ public class Base64AndFilePresenterImpl extends BasePresenter<IBaseView>
         implements IBase64AndFilePresenter {
 
     private static final String TAG = Base64AndFilePresenterImpl.class.getSimpleName();
-    private Base64AndFileModelImpl model;
-    private Object IBase64AndFileView;
+    private final Base64AndFileModelImpl model;
 
     public Base64AndFilePresenterImpl(IBaseView baseView) {
         attachView(baseView);
@@ -86,7 +85,7 @@ public class Base64AndFilePresenterImpl extends BasePresenter<IBaseView>
     }
 
     @Override
-    protected void detachView() {
+    public void detachView() {
         super.detachView();
         model.detachViewModel();
     }

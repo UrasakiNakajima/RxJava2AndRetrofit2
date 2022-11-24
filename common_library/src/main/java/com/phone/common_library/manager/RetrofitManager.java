@@ -31,6 +31,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -95,10 +96,10 @@ public class RetrofitManager {
                 .connectTimeout(15 * 1000, TimeUnit.MILLISECONDS) //连接超时
                 .readTimeout(15 * 1000, TimeUnit.MILLISECONDS) //读取超时
                 .writeTimeout(15 * 1000, TimeUnit.MILLISECONDS) //写入超时
-                .addInterceptor(new CacheControlInterceptor(BaseApplication.getInstance()))
-                .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于设置header
-                .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于接收并持久化cookie
-                .addInterceptor(new BaseUrlManagerInterceptor(BaseApplication.getInstance()))
+                .addInterceptor(new CacheControlInterceptor())
+                .addInterceptor(new AddAccessTokenInterceptor()) //拦截器用于设置header
+                .addInterceptor(new ReceivedAccessTokenInterceptor()) //拦截器用于接收并持久化cookie
+                .addInterceptor(new BaseUrlManagerInterceptor())
                 .addInterceptor(rewriteCacheControlInterceptor)
 //                .addNetworkInterceptor(rewriteCacheControlInterceptor)
 //                .addInterceptor(headerInterceptor)
@@ -163,7 +164,7 @@ public class RetrofitManager {
             for (String key : bodyParams.keySet()) {
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
                     //如果参数不是null，才把参数传给后台
-                    multipartBodyBuilder.addFormDataPart(key, bodyParams.get(key));
+                    multipartBodyBuilder.addFormDataPart(key, Objects.requireNonNull(bodyParams.get(key)));
                 }
             }
         }
@@ -202,7 +203,7 @@ public class RetrofitManager {
             for (String key : bodyParams.keySet()) {
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
                     //如果参数不是null，才把参数传给后台
-                    multipartBodyBuilder.addFormDataPart(key, bodyParams.get(key));
+                    multipartBodyBuilder.addFormDataPart(key, Objects.requireNonNull(bodyParams.get(key)));
                 }
             }
         }
@@ -560,49 +561,45 @@ public class RetrofitManager {
 
     public static String buildSign(String secret, long time) {
         //        Map treeMap = new TreeMap(params);// treeMap默认会以key值升序排序
-        StringBuilder sb = new StringBuilder();
-        sb.append(secret);
-        sb.append(time + "");
-        sb.append("1.1.0");
-        sb.append("861875048330495");
-        sb.append("android");
-        Log.d("GlobalConfiguration", "sting:" + sb.toString());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(secret);
+        stringBuilder.append(time);
+        stringBuilder.append("1.1.0");
+        stringBuilder.append("861875048330495");
+        stringBuilder.append("android");
+        Log.d("GlobalConfiguration", "sting:" + stringBuilder.toString());
         MessageDigest md5;
         byte[] bytes = null;
         try {
             md5 = MessageDigest.getInstance("MD5");
-            bytes = md5.digest(sb.toString().getBytes("UTF-8"));// md5加密
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+            bytes = md5.digest(stringBuilder.toString().getBytes("utf-8"));// md5加密
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         // 将MD5输出的二进制结果转换为小写的十六进制
         StringBuilder sign = new StringBuilder();
-        for (int i = 0; i < bytes.length; i++) {
+        for (int i = 0; i < Objects.requireNonNull(bytes).length; i++) {
             String hex = Integer.toHexString(bytes[i] & 0xFF);
             if (hex.length() == 1) {
                 sign.append("0");
             }
             sign.append(hex);
         }
-
         Log.d("GlobalConfiguration", "MD5:" + sign.toString());
         return sign.toString();
     }
 
     public static String getCacheControl() {
-        return isNetworkAvailable(BaseApplication.getInstance()) ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
+        return isNetworkAvailable() ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
     }
 
     /**
      * 判断网络是否可用
      *
-     * @param context
      * @return
      */
-    public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext()
+    public static boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) BaseApplication.getInstance().getApplicationContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             //如果仅仅是用来判断网络连接

@@ -8,6 +8,8 @@ import android.util.ArrayMap;
 
 import androidx.annotation.NonNull;
 
+import com.phone.common_library.BaseApplication;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,7 +37,6 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     //系统默认的UncaughtException处理类 
     private final Thread.UncaughtExceptionHandler mDefaultHandler;
     private static CrashHandlerManager instance;
-    private final Context mContext;
 
     /*使用Properties 来保存设备的信息和错误堆栈信息*/
     private final Properties mDeviceCrashInfo = new Properties();
@@ -45,9 +46,7 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     @SuppressLint("SimpleDateFormat")
     private final SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-    private CrashHandlerManager(Context context) {
-        mContext = context;
-
+    private CrashHandlerManager() {
         //获得默认的handle
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         //重新设置handle  设置该CrashHandler为程序的默认处理器
@@ -57,14 +56,13 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
     /**
      * 保证只有一个实例
      *
-     * @param context
      * @return
      */
-    public static CrashHandlerManager getInstance(Context context) {
+    public static CrashHandlerManager getInstance() {
         if (instance == null) {
             synchronized (CrashHandlerManager.class) {
                 if (instance == null) {
-                    instance = new CrashHandlerManager(context);
+                    instance = new CrashHandlerManager();
                 }
             }
         }
@@ -117,30 +115,28 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
         //2.打印异常堆栈（推薦使用，讓系統把異常日誌打印出來）
         throwable.printStackTrace();
         //收集設備信息
-        collectDeviceInfo(mContext);
+        collectDeviceInfo();
         //保存異常日誌到文件
         saveCrashInfoToFile(throwable);
         //使用HTTP Post發送錯誤報告
-        sendCrashReportsToServer(mContext);
+        sendCrashReportsToServer();
         return true;
     }
 
     public void sendPreviousReportsToServer() {
         //使用HTTP Post發送錯誤報告
-        sendCrashReportsToServer(mContext);
+        sendCrashReportsToServer();
     }
 
     /**
      * 使用HTTP Post發送錯誤報告
-     *
-     * @param mContext
      */
-    private void sendCrashReportsToServer(Context mContext) {
-        String[] crFiles = getCrashReportFiles(mContext);
+    private void sendCrashReportsToServer() {
+        String[] crFiles = getCrashReportFiles();
         if (crFiles != null && crFiles.length > 0) {
             TreeSet<String> sortedFiles = new TreeSet<String>(Arrays.asList(crFiles));
             for (String fileName : sortedFiles) {
-                File cr = new File(mContext.getFilesDir(), fileName);
+                File cr = new File(BaseApplication.getInstance().getFilesDir(), fileName);
                 postReport(cr);
                 //cr.delete(); 
             }
@@ -154,8 +150,8 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 
     private static final String CRASH_REPORTER_EXTENSION = ".cr";
 
-    private String[] getCrashReportFiles(Context mContext) {
-        File filesDir = mContext.getFilesDir();
+    private String[] getCrashReportFiles() {
+        File filesDir = BaseApplication.getInstance().getExternalCacheDir();
         FilenameFilter filter = new FilenameFilter() {
 
             public boolean accept(File dir, String filename) {
@@ -198,7 +194,7 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
             String time = formatdate.format(new Date(timestamp));
 
             String fileName = "crash-" + time + "-" + timestamp + ".txt";
-            String path = mContext.getExternalCacheDir() + "/crash_xy/";//     /sdcard/crash/crash-time-timestamp.log
+            String path = BaseApplication.getInstance().getExternalCacheDir() + "/crash_xy/";//     /sdcard/crash/crash-time-timestamp.log
             File dirs = new File(path);
             if (!dirs.exists()) {
                 dirs.mkdirs();
@@ -234,7 +230,7 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
      * @return
      */
     public String saveTrimMemoryInfoToFile(String info) {
-        collectDeviceInfo(mContext);
+        collectDeviceInfo();
         LogManager.i(TAG, "saveTrimMemoryInfoToFile");
         StringBuilder buffer = new StringBuilder();
         for (Map.Entry<String, String> entry : mDevInfoMap.entrySet()) {
@@ -249,7 +245,7 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
             String time = formatdate.format(new Date(timestamp));
 
             String fileName = "aCrash-" + time + "-" + timestamp + ".txt";
-            String path = mContext.getExternalCacheDir() + "/aCrash_xy/";//     /sdcard/crash/crash-time-timestamp.log
+            String path = BaseApplication.getInstance().getExternalCacheDir() + "/aCrash_xy/";//     /sdcard/crash/crash-time-timestamp.log
             File dirs = new File(path);
             if (!dirs.exists()) {
                 dirs.mkdirs();
@@ -274,13 +270,11 @@ public class CrashHandlerManager implements Thread.UncaughtExceptionHandler {
 
     /**
      * 收集設備信息
-     *
-     * @param context
      */
-    private void collectDeviceInfo(Context context) {
+    private void collectDeviceInfo() {
         try {
-            PackageManager packageManager = context.getPackageManager();
-            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+            PackageManager packageManager = BaseApplication.getInstance().getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(BaseApplication.getInstance().getPackageName(), PackageManager.GET_ACTIVITIES);
             if (packageInfo != null) {
                 String versionName = packageInfo.versionName == null ? "null" : packageInfo.versionName;
                 String versionCode = packageInfo.versionCode + "";

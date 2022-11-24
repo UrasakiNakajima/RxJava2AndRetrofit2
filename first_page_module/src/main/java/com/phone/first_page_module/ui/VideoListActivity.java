@@ -1,11 +1,13 @@
 package com.phone.first_page_module.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.first_page_module.R;
 import com.phone.first_page_module.adapter.VideoListAdapter;
 import com.phone.first_page_module.bean.VideoListBean;
@@ -43,10 +46,7 @@ public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
     private SmartRefreshLayout refreshLayout;
     private RecyclerView rcvData;
 
-    private String data;
-    private List<VideoListBean.LargeImageListBean> videoListBeanList = new ArrayList<>();
-    private VideoListAdapter videoListAdapter;
-    private LinearLayoutManager linearLayoutManager;
+    private final List<VideoListBean.LargeImageListBean> videoListBeanList = new ArrayList<>();
     //    private boolean isRefresh;
 
     @Override
@@ -62,9 +62,9 @@ public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
     @Override
     protected void initData() {
         //        isRefresh = true;
-        intent = getIntent();
-        bundle = intent.getExtras();
-        data = bundle.getString("data");
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        String data = bundle.getString("data");
         LogManager.i(TAG, "data*****" + data);
         VideoListBean videoListBean = JSONObject.parseObject(data, VideoListBean.class);
         for (int i = 0; i < 15; i++) {
@@ -82,7 +82,7 @@ public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
         rcvData = (RecyclerView) findViewById(R.id.rcv_data);
 
         setToolbar(false, R.color.color_FFE066FF);
-        imvBack.setColorFilter(getResources().getColor(R.color.color_FFFFFFFF));
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_FFFFFFFF));
 
         layoutBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,12 +110,12 @@ public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
     }
 
     private void initAdapter() {
-        linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvData.setLayoutManager(linearLayoutManager);
         rcvData.setItemAnimator(new DefaultItemAnimator());
 
-        videoListAdapter = new VideoListAdapter(this);
+        VideoListAdapter videoListAdapter = new VideoListAdapter(this);
         //        videoListAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
         //            @Override
         //            public void onItemClickListener(int position, View view) {
@@ -149,6 +149,7 @@ public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
 
     }
 
+    @NonNull
     @Override
     protected FirstPagePresenterImpl attachPresenter() {
         return new FirstPagePresenterImpl(this);
@@ -166,17 +167,17 @@ public class VideoListActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
 
     @Override
     public void showLoading() {
-        if (loadView != null && !loadView.isShown()) {
-            loadView.setVisibility(View.VISIBLE);
-            loadView.start();
+        if (getLoadView() != null && !getLoadView().isShown()) {
+            getLoadView().setVisibility(View.VISIBLE);
+            getLoadView().start();
         }
     }
 
     @Override
     public void hideLoading() {
-        if (loadView != null && loadView.isShown()) {
-            loadView.stop();
-            loadView.setVisibility(View.GONE);
+        if (getLoadView() != null && getLoadView().isShown()) {
+            getLoadView().stop();
+            getLoadView().setVisibility(View.GONE);
         }
     }
 

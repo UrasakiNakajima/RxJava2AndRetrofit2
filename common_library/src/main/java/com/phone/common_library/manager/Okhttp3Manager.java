@@ -61,8 +61,8 @@ public class Okhttp3Manager {
                 .connectTimeout(15 * 1000, TimeUnit.MILLISECONDS) //连接超时
                 .readTimeout(15 * 1000, TimeUnit.MILLISECONDS) //读取超时
                 .writeTimeout(15 * 1000, TimeUnit.MILLISECONDS) //写入超时
-                .addInterceptor(new AddAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于设置header
-                .addInterceptor(new ReceivedAccessTokenInterceptor(BaseApplication.getInstance())) //拦截器用于接收并持久化cookie
+                .addInterceptor(new AddAccessTokenInterceptor()) //拦截器用于设置header
+                .addInterceptor(new ReceivedAccessTokenInterceptor()) //拦截器用于接收并持久化cookie
 //                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
                 .sslSocketFactory(SSLSocketManager.getSSLSocketFactory()) //配置（只有https请求需要配置）
                 .hostnameVerifier(SSLSocketManager.getHostnameVerifier()) //配置（只有https请求需要配置）

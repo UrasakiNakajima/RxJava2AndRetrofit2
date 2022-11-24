@@ -170,15 +170,6 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity implements I
         }
     }
 
-    /**
-     * 初始化沉浸式
-     * Init immersion bar.
-     */
-    protected void initImmersionBar() {
-        //设置共同沉浸式样式
-        ImmersionBar.with(rxAppCompatActivity).navigationBarColor(R.color.color_FFE066FF).init();
-    }
-
     protected abstract void initData();
 
     protected abstract void initViews();
@@ -289,9 +280,9 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity implements I
         startActivityForResult(intent, requestCode);
     }
 
-    private void killAppProcess(Context context) {
+    private void killAppProcess() {
         LogManager.i(TAG, "killAppProcess");
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager manager = (ActivityManager) baseApplication.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> processInfos = manager.getRunningAppProcesses();
         // 先杀掉相关进程，最后再杀掉主进程
         for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : processInfos) {
@@ -301,7 +292,7 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity implements I
         }
 
         LogManager.i(TAG, "执行killAppProcess，應用開始自殺");
-        CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(context);
+        CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance();
         crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺");
         try {
             Thread.sleep(1000);
@@ -318,7 +309,7 @@ public abstract class BaseRxAppActivity extends RxAppCompatActivity implements I
     protected void onDestroy() {
         if (activityPageManager != null) {
             if (activityPageManager.isLastAliveActivity().get()) {
-                killAppProcess(baseApplication);
+                killAppProcess();
             }
             activityPageManager.removeActivity(rxAppCompatActivity);
         }

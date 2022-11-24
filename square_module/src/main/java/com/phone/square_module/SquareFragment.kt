@@ -7,8 +7,6 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -45,12 +43,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         private val TAG: String = SquareFragment::class.java.simpleName
     }
 
-    private var currentPage: Int = 1
-    private var datax: DataX = DataX()
-    private var atomicBoolean: AtomicBoolean = AtomicBoolean(false)
+    private var currentPage = 1
+    private var datax = DataX()
+    private var atomicBoolean = AtomicBoolean(false)
 
     private var mPermissionsDialog: AlertDialog? = null
-    private var number: Int = 1
+    private var number = 1
 
     private var permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -110,6 +108,10 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             tevCreateAnException2.setOnClickListener {
                 number = 3;
                 initRxPermissionsRxFragment(number)
+            }
+            tevAndroidAndJs.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance().build("/android_and_js/ui").navigation()
             }
             tevEditTextInputLimits.run {
                 setOnClickListener {
@@ -204,13 +206,13 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     fun squareDataError(error: String) {
         if (!rxAppCompatActivity.isFinishing()) {
             showCustomToast(
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ScreenManager.dpToPx(20f),
+                ScreenManager.dpToPx(20f),
                 18,
-                ContextCompat.getColor(rxAppCompatActivity, R.color.white),
-                ContextCompat.getColor(rxAppCompatActivity, R.color.color_FFE066FF),
-                ScreenManager.dpToPx(rxAppCompatActivity, 40f),
-                ScreenManager.dpToPx(rxAppCompatActivity, 20f),
+                ResourcesManager.getColor(R.color.white),
+                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ScreenManager.dpToPx(40f),
+                ScreenManager.dpToPx(20f),
                 error,
                 true
             )
@@ -232,7 +234,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                     if (number == 1) {
                         val baseMvpRxAppActivity =
                             rxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
-                        baseMvpRxAppActivity.getActivityPageManager().exitApp2();
+                        baseMvpRxAppActivity.getActivityPageManager()?.exitApp2();
                     } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                         val userBean: UserBean =
@@ -247,7 +249,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } catch (e: Exception) {
-                            ExceptionManager.getInstance().throwException(rxAppCompatActivity, e)
+                            ExceptionManager.getInstance().throwException(e)
                         }
                     }
                 }
@@ -298,7 +300,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
     private fun initSquareData(currentPage: String) {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
+        if (RetrofitManager.isNetworkAvailable()) {
             viewModel.squareData(this, currentPage)
         } else {
             squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));

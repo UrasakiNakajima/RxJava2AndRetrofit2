@@ -63,7 +63,7 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
         }
         //收藏
         holder.itemView.findViewById<View>(R.id.ivCollect)?.clickNoRepeat {
-            onItemViewClickListener?.onItemClickListener(position,it)
+            onItemViewClickListener?.onItemClickListener(position, it)
         }
 
         val binding = if (holder is ArticleViewHolder) {

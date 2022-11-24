@@ -146,6 +146,23 @@
                     android:background="@color/color_555555" />
 
                 <TextView
+                    android:id="@+id/tev_android_and_js"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/android_and_js"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
+
+                <TextView
                     android:id="@+id/tev_edit_text_input_limits"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"

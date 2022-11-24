@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.location.AMapLocation;
-import com.phone.common_library.BaseApplication;
 import com.phone.common_library.base.BaseMvpRxAppActivity;
 import com.phone.common_library.base.IBaseView;
 import com.phone.common_library.bean.FirstPageResponse;
@@ -27,6 +26,7 @@ import com.phone.common_library.callback.OnCommonRxPermissionsCallback;
 import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.callback.OnItemViewClickListener;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.ResourcesManager;
 import com.phone.common_library.manager.RetrofitManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.ScreenManager;
@@ -42,6 +42,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * author    : Urasaki
@@ -58,7 +59,6 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
     private TextView tevRequestPermissionAndStartLocating;
     private SmartRefreshLayout refreshLayout;
     private RecyclerView rcvData;
-    private QMUILoadingView loadView;
 
     private FirstPageAdapter firstPageAdapter;
     private boolean isRefresh;
@@ -86,8 +86,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
     @Override
     protected void initData() {
         isRefresh = true;
-
-        amapLocationManager = AMAPLocationManager.getInstance(BaseApplication.getInstance());
+        amapLocationManager = AMAPLocationManager.getInstance();
         amapLocationManager.setOnCommonSingleParamCallback(new OnCommonSingleParamCallback<AMapLocation>() {
             @Override
             public void onSuccess(AMapLocation success) {
@@ -99,7 +98,6 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
                 LogManager.i(TAG, "error*****" + error);
             }
         });
-
     }
 
     @Override
@@ -117,20 +115,20 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
         tevRequestPermissionAndStartLocating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogManager.i(TAG, "tevRequestPermissions");
-                initRxPermissions();
+                showToast(ResourcesManager.getString(R.string.this_function_can_only_be_used_under_componentization), false);
+//                initRxPermissions();
             }
         });
         initAdapter();
     }
 
     private void initAdapter() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rxAppCompatActivity);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getRxAppCompatActivity());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rcvData.setLayoutManager(linearLayoutManager);
         rcvData.setItemAnimator(new DefaultItemAnimator());
 
-        firstPageAdapter = new FirstPageAdapter(rxAppCompatActivity);
+        firstPageAdapter = new FirstPageAdapter(getRxAppCompatActivity());
         //		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page);
         firstPageAdapter.setRcvOnItemViewClickListener(new OnItemViewClickListener() {
             @Override
@@ -159,7 +157,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
                 //				}
 
                 if (view.getId() == R.id.ll_root) {
-                    Intent intent = new Intent(rxAppCompatActivity, WebViewActivity.class);
+                    Intent intent = new Intent(getRxAppCompatActivity(), WebViewActivity.class);
                     intent.putExtra("loadUrl", firstPageAdapter.mJuheNewsBeanList.get(position).getUrl());
                     startActivity(intent);
                 }
@@ -188,6 +186,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
         refreshLayout.autoRefresh();
     }
 
+    @NonNull
     @Override
     protected FirstPagePresenterImpl attachPresenter() {
         return new FirstPagePresenterImpl(this);
@@ -230,10 +229,10 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
     public void firstPageDataError(String error) {
         if (!this.isFinishing()) {
             //            showToast(error, true);
-            showCustomToast(ScreenManager.dpToPx(this, 20f), ScreenManager.dpToPx(this, 20f),
+            showCustomToast(ScreenManager.dpToPx(20f), ScreenManager.dpToPx(20f),
                     16, getResources().getColor(R.color.white),
-                    getResources().getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(this, 40f),
-                    ScreenManager.dpToPx(this, 20f), error,
+                    getResources().getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(40f),
+                    ScreenManager.dpToPx(20f), error,
                     true);
             if (isRefresh) {
                 refreshLayout.finishRefresh(false);
@@ -266,12 +265,12 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
 //                User3 user3 = (User3) user;
 //                LogManager.i(TAG, user3.toString());
 
-                if (TextUtils.isEmpty(baseApplication.getSystemId())) {
-                    String systemId = SystemManager.getSystemId(baseApplication);
-                    baseApplication.setSystemId(systemId);
-                    LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId());
+                if (TextUtils.isEmpty(Objects.requireNonNull(getBaseApplication()).getSystemId())) {
+                    String systemId = SystemManager.getSystemId();
+                    getBaseApplication().setSystemId(systemId);
+                    LogManager.i(TAG, "isEmpty systemId*****" + getBaseApplication().getSystemId());
                 } else {
-                    LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId());
+                    LogManager.i(TAG, "systemId*****" + getBaseApplication().getSystemId());
                 }
 
                 amapLocationManager.startLocation();
@@ -301,7 +300,7 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             cancelPermissionsDialog();
-                            intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                             Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
                             intent.setData(uri);
                             startActivityForResult(intent, 207);
@@ -327,14 +326,14 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
 
     private void initFirstPage() {
         showLoading();
-        if (RetrofitManager.isNetworkAvailable(rxAppCompatActivity)) {
-            bodyParams.clear();
+        if (RetrofitManager.isNetworkAvailable()) {
+            getBodyParams().clear();
 
-            bodyParams.put("type", "yule");
-            bodyParams.put("key", "d5cc661633a28f3cf4b1eccff3ee7bae");
-            presenter.firstPage2(rxAppCompatActivity, bodyParams);
+            getBodyParams().put("type", "yule");
+            getBodyParams().put("key", "d5cc661633a28f3cf4b1eccff3ee7bae");
+            Objects.requireNonNull(getPresenter()).firstPage2(getRxAppCompatActivity(), getBodyParams());
         } else {
-            firstPageDataError(getResources().getString(R.string.please_check_the_network_connection));
+            firstPageDataError(ResourcesManager.getString(R.string.please_check_the_network_connection));
             hideLoading();
         }
     }

@@ -17,9 +17,7 @@ import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.ActivityPageManager;
 import com.phone.common_library.manager.CrashHandlerManager;
 import com.phone.common_library.manager.LogManager;
-import com.phone.common_library.manager.MainThreadManager;
 import com.phone.common_library.manager.RetrofitManager;
-import com.phone.common_library.manager.ThreadPoolManager;
 
 /**
  * author    : Urasaki
@@ -56,7 +54,7 @@ public class BaseApplication extends MultiDexApplication {
         RetrofitManager.getInstance();
         activityPageManager = ActivityPageManager.getInstance();
 
-        CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(this);
+        CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance();
         crashHandlerManager.sendPreviousReportsToServer();
 
         if (true) {
