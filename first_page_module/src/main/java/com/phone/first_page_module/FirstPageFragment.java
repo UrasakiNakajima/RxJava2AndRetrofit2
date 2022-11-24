@@ -38,7 +38,7 @@ import com.phone.common_library.manager.ScreenManager;
 import com.phone.common_library.manager.SystemManager;
 import com.phone.common_library.service.IFirstPageService;
 import com.phone.common_library.service.ISquareService;
-import com.phone.common_library.ui.NewsDetailActivity;
+import com.phone.common_library.ui.WebViewActivity;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
 import com.phone.first_page_module.manager.AMAPLocationManager;
 import com.phone.first_page_module.presenter.FirstPagePresenterImpl;
@@ -48,9 +48,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * author    : Urasaki
@@ -185,8 +183,8 @@ public class FirstPageFragment extends BaseMvpRxFragment<IBaseView, FirstPagePre
                 //				}
 
                 if (view.getId() == R.id.ll_root) {
-                    Intent intent = new Intent(rxAppCompatActivity, NewsDetailActivity.class);
-                    intent.putExtra("detailUrl", firstPageAdapter.mJuheNewsBeanList.get(position).getUrl());
+                    Intent intent = new Intent(rxAppCompatActivity, WebViewActivity.class);
+                    intent.putExtra("loadUrl", firstPageAdapter.mJuheNewsBeanList.get(position).getUrl());
                     startActivity(intent);
                 }
             }

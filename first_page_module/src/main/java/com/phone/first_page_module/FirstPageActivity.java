@@ -31,7 +31,7 @@ import com.phone.common_library.manager.RetrofitManager;
 import com.phone.common_library.manager.RxPermissionsManager;
 import com.phone.common_library.manager.ScreenManager;
 import com.phone.common_library.manager.SystemManager;
-import com.phone.common_library.ui.NewsDetailActivity;
+import com.phone.common_library.ui.WebViewActivity;
 import com.phone.first_page_module.adapter.FirstPageAdapter;
 import com.phone.first_page_module.manager.AMAPLocationManager;
 import com.phone.first_page_module.presenter.FirstPagePresenterImpl;
@@ -159,8 +159,8 @@ public class FirstPageActivity extends BaseMvpRxAppActivity<IBaseView, FirstPage
                 //				}
 
                 if (view.getId() == R.id.ll_root) {
-                    Intent intent = new Intent(rxAppCompatActivity, NewsDetailActivity.class);
-                    intent.putExtra("detailUrl", firstPageAdapter.mJuheNewsBeanList.get(position).getUrl());
+                    Intent intent = new Intent(rxAppCompatActivity, WebViewActivity.class);
+                    intent.putExtra("loadUrl", firstPageAdapter.mJuheNewsBeanList.get(position).getUrl());
                     startActivity(intent);
                 }
             }

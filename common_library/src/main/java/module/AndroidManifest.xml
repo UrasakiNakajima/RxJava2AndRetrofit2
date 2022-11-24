@@ -32,7 +32,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.NewsDetailActivity"
+            android:name=".ui.WebViewActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

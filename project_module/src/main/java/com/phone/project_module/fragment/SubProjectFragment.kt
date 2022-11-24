@@ -1,5 +1,7 @@
 package com.phone.project_module.fragment
 
+import android.content.Intent
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -14,6 +16,7 @@ import com.phone.common_library.bean.ArticleListBean
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
+import com.phone.common_library.ui.WebViewActivity
 import com.phone.project_module.R
 import com.phone.project_module.databinding.FragmentProjectSubBinding
 import com.phone.project_module.view.ISubProjectView
@@ -110,6 +113,31 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
                 setHasStableIds(true)
                 setRcvOnItemViewClickListener { i, view ->
                     when (view.id) {
+                        //子项
+                        R.id.root -> {
+                            val intent = Intent(rxAppCompatActivity, WebViewActivity::class.java)
+                            intent.putExtras(Bundle().apply {
+                                subProjectAdapter?.list?.get(i)?.let {
+                                    putString(
+                                        "loadUrl",
+                                        it.link
+                                    )
+                                    putString(
+                                        "title",
+                                        it.title
+                                    )
+                                    putString(
+                                        "author",
+                                        it.author
+                                    )
+                                    putInt(
+                                        "id",
+                                        it.id
+                                    )
+                                }
+                            })
+                            startActivity(intent)
+                        }
                         //收藏
                         R.id.ivCollect -> {
 //                        this@ResourceChildFragment.subProjectAdapter.list[i].apply {

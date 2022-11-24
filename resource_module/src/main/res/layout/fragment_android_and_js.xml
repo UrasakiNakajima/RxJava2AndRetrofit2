@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -12,14 +13,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
-                android:background="@color/color_FFE066FF"
+                android:background="@color/color_FF198CFF"
                 android:minHeight="?attr/actionBarSize"
                 android:orientation="vertical"
                 app:contentInsetStart="0dp">
@@ -31,10 +32,10 @@
                     <TextView
                         android:id="@+id/tev_title"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_48"
                         android:gravity="center"
                         android:text="@string/android_and_js_interactive"
-                        android:textColor="@color/color_FF198CFF"
+                        android:textColor="@color/color_FFFFFFFF"
                         android:textSize="@dimen/sp_20" />
 
                 </FrameLayout>
@@ -117,4 +118,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</LinearLayout>
+</layout>

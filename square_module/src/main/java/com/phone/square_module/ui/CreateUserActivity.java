@@ -133,7 +133,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
 
     private void queryUserList() {
         showLoading();
-        ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+        ThreadPoolManager.getInstance().createSyncThreadPool(60, () -> {
             queryUserList = userBeanDaoManager.queryAll();
 
             new MainThreadManager(() -> {
@@ -226,7 +226,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                     if (userBeanList != null && userBeanList.size() > 0 && userBeanList.get(0).getUserId().equals(success.getUserId())) {
                         showToast(ResourcesManager.getString(R.string.this_user_has_been_added), true);
                     } else {
-                        ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                        ThreadPoolManager.getInstance().createSyncThreadPool(60, () -> {
 //                            List<UserBean> userBeanAddList = new ArrayList<>();
 //                            for (int i = 0; i < 20000; i++) {
                             String jsonStr = JSONObject.toJSONString(success);
@@ -238,7 +238,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                         });
                     }
 
-                    ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                    ThreadPoolManager.getInstance().createSyncThreadPool(60, () -> {
                         queryUserList = userBeanDaoManager.queryAll();
                         new MainThreadManager(() -> {
                             if (queryUserList != null && queryUserList.size() > 0) {
@@ -290,7 +290,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                     List<UserBean> userBeanList = userBeanDaoManager.queryByQueryBuilder(success.getUserId());
                     if (userBeanList != null && userBeanList.size() > 0 && userBeanList.get(0).getUserId().equals(success.getUserId())) {
                         success.setId(userBeanList.get(0).getId());
-                        ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                        ThreadPoolManager.getInstance().createSyncThreadPool(60, () -> {
                             userBeanDaoManager.update(success);
                             new MainThreadManager(() ->
                                     showToast(ResourcesManager.getString(R.string.this_user_has_modified), true))
@@ -300,7 +300,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                         showToast(ResourcesManager.getString(R.string.this_user_cannot_be_found), true);
                     }
 
-                    ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                    ThreadPoolManager.getInstance().createSyncThreadPool(60, () -> {
                         queryUserList = userBeanDaoManager.queryAll();
                         new MainThreadManager(() -> {
                             if (queryUserList != null && queryUserList.size() > 0) {
@@ -350,7 +350,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                     deleteUserDialog = null;
 
                     showLoading();
-                    ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                    ThreadPoolManager.getInstance().createSyncThreadPool(60, () -> {
                         userBeanDaoManager.delete(userBeanAdapter.getUserBeanList().get(position));
                         queryUserList = userBeanDaoManager.queryAll();
 
@@ -402,7 +402,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
                     deleteAllUserDialog = null;
 
                     showLoading();
-                    ThreadPoolManager.getInstance().multiplexSyncThreadPool(60, () -> {
+                    ThreadPoolManager.getInstance().createSyncThreadPool(60, () -> {
                         queryUserList = userBeanDaoManager.queryAll();
                         userBeanDaoManager.deleteInTx(queryUserList);
                         queryUserList = userBeanDaoManager.queryAll();
@@ -441,7 +441,7 @@ public class CreateUserActivity extends BaseRxAppActivity implements IBaseView {
     @Override
     protected void onDestroy() {
         userBeanDaoManager.closeConnection();
-        ThreadPoolManager.getInstance().shutdownNow();
+        ThreadPoolManager.getInstance().shutdownNowSyncThreadPool();
         super.onDestroy();
     }
 

@@ -12,7 +12,7 @@ import com.phone.common_library.callback.OnItemViewClickListener
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
-import com.phone.common_library.ui.NewsDetailActivity
+import com.phone.common_library.ui.WebViewActivity
 import com.phone.mine_module.adapter.MineAdapter
 import com.phone.mine_module.bean.Data
 import com.phone.mine_module.presenter.MinePresenterImpl
@@ -85,8 +85,8 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
 //                        .navigation()
 
                 if (view?.id == R.id.ll_root) {
-                    val intent = Intent(rxAppCompatActivity, NewsDetailActivity::class.java)
-                    intent.putExtra("detailUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
+                    val intent = Intent(rxAppCompatActivity, WebViewActivity::class.java)
+                    intent.putExtra("loadUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
                     startActivity(intent)
                 }
 //                startActivity(UserDataActivity::class.java)

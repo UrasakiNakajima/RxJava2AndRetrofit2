@@ -3,14 +3,17 @@ package com.phone.common_library.manager;
 import com.phone.common_library.callback.OnCommonSuccessCallback;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class ThreadPoolManager {
 
     private static final String TAG = ThreadPoolManager.class.getSimpleName();
-    private ExecutorService multiplexSingleThreadPool;
+    private ExecutorService syncThreadPool;
+    private ScheduledExecutorService scheduledThreadPool;
     private static volatile ThreadPoolManager threadPoolManager;
 
     private ThreadPoolManager() {
@@ -34,10 +37,10 @@ public class ThreadPoolManager {
      * @param keepAliveTime
      * @param onCommonSuccessCallback
      */
-    public void multiplexSyncThreadPool(long keepAliveTime,
-                                        OnCommonSuccessCallback onCommonSuccessCallback) {
-        if (multiplexSingleThreadPool == null) {
-            multiplexSingleThreadPool = new ThreadPoolExecutor(1,
+    public void createSyncThreadPool(long keepAliveTime,
+                                     OnCommonSuccessCallback onCommonSuccessCallback) {
+        if (syncThreadPool == null) {
+            syncThreadPool = new ThreadPoolExecutor(1,
                     1,
                     keepAliveTime,
                     TimeUnit.SECONDS,
@@ -48,21 +51,45 @@ public class ThreadPoolManager {
         //创建任务
         Runnable runnable = onCommonSuccessCallback::onSuccess;
         // 将任务交给线程池管理
-        multiplexSingleThreadPool.execute(runnable);
+        syncThreadPool.execute(runnable);
 //        }
     }
 
-    public void shutdown() {
-        if (multiplexSingleThreadPool != null) {
-            multiplexSingleThreadPool.shutdown();
-            multiplexSingleThreadPool = null;
+    public void createScheduledThreadPool(long delay,
+                                          OnCommonSuccessCallback onCommonSuccessCallback) {
+        if (scheduledThreadPool == null) {
+            scheduledThreadPool = Executors.newScheduledThreadPool(1);
+        }
+        //创建任务
+        Runnable runnable = onCommonSuccessCallback::onSuccess;
+        scheduledThreadPool.schedule(runnable, delay, TimeUnit.MILLISECONDS);
+    }
+
+    public void shutdownScheduledThreadPool() {
+        if (scheduledThreadPool != null) {
+            scheduledThreadPool.shutdown();
+            scheduledThreadPool = null;
         }
     }
 
-    public void shutdownNow() {
-        if (multiplexSingleThreadPool != null) {
-            multiplexSingleThreadPool.shutdownNow();
-            multiplexSingleThreadPool = null;
+    public void shutdownNowScheduledThreadPool() {
+        if (scheduledThreadPool != null) {
+            scheduledThreadPool.shutdownNow();
+            scheduledThreadPool = null;
+        }
+    }
+
+    public void shutdownSyncThreadPool() {
+        if (syncThreadPool != null) {
+            syncThreadPool.shutdown();
+            syncThreadPool = null;
+        }
+    }
+
+    public void shutdownNowSyncThreadPool() {
+        if (syncThreadPool != null) {
+            syncThreadPool.shutdownNow();
+            syncThreadPool = null;
         }
     }
 

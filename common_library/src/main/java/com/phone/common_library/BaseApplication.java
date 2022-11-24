@@ -13,10 +13,13 @@ import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.phone.common_library.callback.OnCommonSingleParamCallback;
 import com.phone.common_library.manager.ActivityPageManager;
 import com.phone.common_library.manager.CrashHandlerManager;
 import com.phone.common_library.manager.LogManager;
+import com.phone.common_library.manager.MainThreadManager;
 import com.phone.common_library.manager.RetrofitManager;
+import com.phone.common_library.manager.ThreadPoolManager;
 
 /**
  * author    : Urasaki
@@ -71,7 +74,16 @@ public class BaseApplication extends MultiDexApplication {
         //			}
         //		});
 
+        initWebView();
+    }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    private void initWebView() {
         webView = new WebView(this);
         //声明WebSettings子类
         WebSettings webSettings = webView.getSettings();
@@ -97,19 +109,20 @@ public class BaseApplication extends MultiDexApplication {
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
 
-//        //优先使用缓存:
-//        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        //优先使用缓存:
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         //缓存模式如下：
         //LOAD_CACHE_ONLY: 不使用网络，只读取本地缓存数据
         //LOAD_DEFAULT: （默认）根据cache-control决定是否从网络上取数据。
         //LOAD_NO_CACHE: 不使用缓存，只从网络获取数据.
         //LOAD_CACHE_ELSE_NETWORK，只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。
-        //不使用缓存:
-        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+
+//        //不使用缓存:
+//        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 
         //步骤2. 选择加载方式
         //方式1. 加载一个网页：
-        webView.loadUrl("http://www.baidu.com/");
+//        webView.loadUrl("http://www.baidu.com/");
 
 //        //方式2：加载apk包中的html页面
 //        webView.loadUrl("file:///android_asset/test.html");
@@ -135,7 +148,7 @@ public class BaseApplication extends MultiDexApplication {
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
 
-                view.loadUrl("file:///android_assets/error_handle.html");
+//                view.loadUrl("file:///android_assets/error_handle.html");
             }
         });
 
@@ -144,12 +157,7 @@ public class BaseApplication extends MultiDexApplication {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                if (newProgress < 100) {
-//                    String progress = newProgress + "%";
-//                    progress.setText(progress);
-                } else {
-
-                }
+                onCommonSingleParamCallback.onSuccess(newProgress);
             }
 
             @Override
@@ -166,13 +174,12 @@ public class BaseApplication extends MultiDexApplication {
 //            webView.destroy();
 //            webView = null;
 //        }
-
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
+    private OnCommonSingleParamCallback<Integer> onCommonSingleParamCallback;
+
+    public void setOnCommonSingleParamCallback(OnCommonSingleParamCallback<Integer> onCommonSingleParamCallback) {
+        this.onCommonSingleParamCallback = onCommonSingleParamCallback;
     }
 
     public static BaseApplication getInstance() {

@@ -58,13 +58,13 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.clickNoRepeat {
+        holder.itemView.findViewById<View>(R.id.root)?.clickNoRepeat {
             onItemViewClickListener?.onItemClickListener(position, it)
         }
-//        //收藏
-//        holder.itemView.findViewById<View>(R.id.ivCollect)?.clickNoRepeat {
-//            onItemChildClickListener?.invoke(position,it)
-//        }
+        //收藏
+        holder.itemView.findViewById<View>(R.id.ivCollect)?.clickNoRepeat {
+            onItemViewClickListener?.onItemClickListener(position,it)
+        }
 
         val binding = if (holder is ArticleViewHolder) {
             //获取ViewDataBinding

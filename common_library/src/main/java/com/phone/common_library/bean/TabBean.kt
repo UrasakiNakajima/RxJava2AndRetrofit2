@@ -1,6 +1,11 @@
 package com.phone.common_library.bean
 
-class TabBean {
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import com.phone.common_library.BR
+
+class TabBean() : BaseObservable() {
+
     /**
      * children : []
      * courseId : 13
@@ -13,7 +18,13 @@ class TabBean {
      */
     var courseId = 0
     var id = 0
+
+    @get:Bindable
     var name: String? = null
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.chapterName); //通知系统数据源发生变化，刷新UI界面
+        }
     var order = 0
     var parentChapterId = 0
     var userControlSetTop = false

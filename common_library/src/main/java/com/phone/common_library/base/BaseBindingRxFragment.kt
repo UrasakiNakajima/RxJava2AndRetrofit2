@@ -3,7 +3,7 @@ package com.phone.common_library.base
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.TypedValue
+import android.os.Looper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -17,20 +17,18 @@ import com.phone.common_library.BaseApplication
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 
-abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : RxFragment() {
+abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
 
-    companion object {
-        private val TAG = BaseMvvmRxFragment::class.java.simpleName
-    }
+    private val TAG = BaseBindingRxFragment::class.java.simpleName
 
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
-    protected lateinit var viewModel: VM
-    protected lateinit var rxAppCompatActivity: RxAppCompatActivity
-    protected lateinit var baseApplication: BaseApplication
-    protected var intent: Intent? = null
-    protected var bundle: Bundle? = null
-//    private var isFirstLoad = true
+    protected var rxAppCompatActivity: RxAppCompatActivity? = null
+    protected var baseApplication: BaseApplication? = null
+    private var intent: Intent? = null
+    private var bundle: Bundle? = null
+
+    protected var rootView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,35 +45,46 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        rxAppCompatActivity = (getActivity() as RxAppCompatActivity?)!!
-        baseApplication = (rxAppCompatActivity.application as BaseApplication?)!!
-        viewModel = initViewModel()
+        rxAppCompatActivity = activity as RxAppCompatActivity?
+        if (rxAppCompatActivity != null) {
+            baseApplication = rxAppCompatActivity!!.application as BaseApplication
+        }
         initData()
-        initObservers()
         initViews()
         initLoadData()
     }
 
     protected abstract fun initLayoutId(): Int?
 
-    protected abstract fun initViewModel(): VM
-
     protected abstract fun initData()
-
-    protected abstract fun initObservers()
 
     protected abstract fun initViews()
 
     protected abstract fun initLoadData()
 
+    protected fun showToast(message: String?, isLongToast: Boolean) {
+        //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        if (!rxAppCompatActivity!!.isFinishing) {
+            val toast: Toast
+            val duration: Int
+            duration = if (isLongToast) {
+                Toast.LENGTH_LONG
+            } else {
+                Toast.LENGTH_SHORT
+            }
+            toast = Toast.makeText(rxAppCompatActivity, message, duration)
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
+        }
+    }
+
     protected fun showCustomToast(
         left: Int, right: Int,
         textSize: Int, textColor: Int,
         bgColor: Int, height: Int,
-        roundRadius: Int, message: String, b: Boolean
+        roundRadius: Int, message: String?
     ) {
-        val frameLayout = FrameLayout(rxAppCompatActivity)
+        val frameLayout = FrameLayout(rxAppCompatActivity!!)
         val layoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
@@ -85,37 +94,38 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
         textView.layoutParams = layoutParams1
         textView.setPadding(left, 0, right, 0)
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize.toFloat())
+        textView.textSize = textSize.toFloat()
         textView.setTextColor(textColor)
         textView.gravity = Gravity.CENTER
         textView.includeFontPadding = false
-        val gradientDrawable = GradientDrawable()//创建drawable
+        val gradientDrawable = GradientDrawable() //创建drawable
         gradientDrawable.setColor(bgColor)
         gradientDrawable.cornerRadius = roundRadius.toFloat()
         textView.background = gradientDrawable
         textView.text = message
         frameLayout.addView(textView)
-
         val toast = Toast(rxAppCompatActivity)
         toast.view = frameLayout
         toast.duration = Toast.LENGTH_LONG
-        toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
     }
 
-    protected fun startActivity(cls: Class<*>) {
+    fun isOnMainThread(): Boolean {
+        return Looper.getMainLooper().thread.id == Thread.currentThread().id
+    }
+
+    protected fun startActivity(cls: Class<*>?) {
         intent = Intent(rxAppCompatActivity, cls)
         startActivity(intent)
     }
 
-    protected fun startActivityCarryParams(cls: Class<*>, params: Map<String, String>?) {
+    protected fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
         intent = Intent(rxAppCompatActivity, cls)
         bundle = Bundle()
-
         if (params != null && params.size > 0) {
             for (key in params.keys) {
-                if (params[key] != null) {//如果参数不是null，才把参数传给后台
-                    bundle?.putString(key, params[key])
+                if (params[key] != null) { //如果参数不是null，才把参数传给后台
+                    bundle!!.putString(key, params[key])
                 }
             }
             bundle?.let {
@@ -125,30 +135,33 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         startActivity(intent)
     }
 
-    protected fun startActivityForResult(cls: Class<*>, requestCode: Int) {
+    protected fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
         intent = Intent(rxAppCompatActivity, cls)
         startActivityForResult(intent, requestCode)
     }
 
-    protected fun startActivityForResultCarryParams(
-        cls: Class<*>,
-        params: Map<String, String>?,
-        requestCode: Int
-    ) {
-        intent = Intent(rxAppCompatActivity, cls)
-        bundle = Bundle()
-
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) {//如果参数不是null，才把参数传给后台
-                    bundle?.putString(key, params[key])
-                }
-            }
-            bundle?.let {
-                intent?.putExtras(it)
-            }
+    protected fun isEmpty(dataStr: String?): Boolean {
+        return if (dataStr != null && "" != dataStr) {
+            false
+        } else {
+            true
         }
-        startActivityForResult(intent, requestCode)
     }
 
+    override fun onDestroyView() {
+        if (rxAppCompatActivity != null) {
+            rxAppCompatActivity = null
+        }
+        if (baseApplication != null) {
+            baseApplication = null
+        }
+        if (rootView != null) {
+            rootView = null
+        }
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }

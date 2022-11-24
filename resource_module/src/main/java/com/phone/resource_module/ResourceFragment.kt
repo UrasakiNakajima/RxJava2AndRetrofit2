@@ -5,7 +5,6 @@ import android.text.TextUtils
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.BaseApplication
@@ -13,11 +12,9 @@ import com.phone.common_library.adapter.TabFragmentStatePagerAdapter
 import com.phone.common_library.adapter.TabNavigatorAdapter
 import com.phone.common_library.base.BaseMvvmRxFragment
 import com.phone.common_library.bean.TabBean
-import com.phone.common_library.manager.LogManager
-import com.phone.common_library.manager.MagicIndicatorManager
-import com.phone.common_library.manager.RetrofitManager
-import com.phone.common_library.manager.ScreenManager
+import com.phone.common_library.manager.*
 import com.phone.resource_module.databinding.FragmentResourceBinding
+import com.phone.resource_module.fragment.AndroidAndJsFragment
 import com.phone.resource_module.fragment.SubResourceFragment
 import com.phone.resource_module.view.IResourceView
 import com.phone.resource_module.view_model.ResourceViewModelImpl
@@ -83,16 +80,27 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
 
     override fun resourceTabDataSuccess(success: MutableList<TabBean>) {
         val fragmentList = mutableListOf<Fragment>()
-        success.forEach {
-            fragmentList.add(SubResourceFragment().apply {
-                //想各个fragment传递信息
-                val bundle = Bundle()
-                bundle.putInt("type", 20)
-                bundle.putInt("tabId", it.id)
-                bundle.putString("name", it.name)
-                arguments = bundle
-            })
+        val dataList = mutableListOf<TabBean>()
+        val tabBean = TabBean()
+        tabBean.name = ResourcesManager.getString(R.string.android_and_js_interactive)
+        dataList.add(tabBean)
+        dataList.addAll(success)
+
+        for (i in dataList) {
+            if (ResourcesManager.getString(R.string.android_and_js_interactive).equals(i.name)) {
+                fragmentList.add(AndroidAndJsFragment())
+            } else {
+                fragmentList.add(SubResourceFragment().apply {
+                    //想各个fragment传递信息
+                    val bundle = Bundle()
+                    bundle.putInt("type", 20)
+                    bundle.putInt("tabId", i.id)
+                    bundle.putString("name", i.name)
+                    arguments = bundle
+                })
+            }
         }
+
         fragmentStatePagerAdapter =
             TabFragmentStatePagerAdapter(
                 childFragmentManager,
@@ -102,7 +110,7 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
 
         //下划线绑定
         val commonNavigator = CommonNavigator(rxAppCompatActivity)
-        commonNavigator.adapter = getCommonNavigatorAdapter(success)
+        commonNavigator.adapter = getCommonNavigatorAdapter(dataList)
         mDatabind.tabLayout.navigator = commonNavigator
         MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
 
