@@ -2,10 +2,12 @@ package com.phone.mine_module
 
 import android.content.Intent
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.IBaseView
 import com.phone.common_library.callback.OnItemViewClickListener
@@ -21,9 +23,9 @@ import com.phone.mine_module.ui.ParamsTransferChangeProblemActivity
 import com.phone.mine_module.ui.ThreadPoolActivity
 import com.phone.mine_module.ui.UserDataActivity
 import com.phone.mine_module.view.IMineView
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import kotlinx.android.synthetic.main.fragment_mine.*
 
 /**
  * author    : Urasaki
@@ -38,6 +40,15 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
         private val TAG: String = MineActivity::class.java.simpleName
     }
 
+    private var layoutOutLayer: FrameLayout? = null
+    private var toolbar: Toolbar? = null
+    private var tevTitle: TextView? = null
+    private var tevLogout: TextView? = null
+    private var tevThreadPool: TextView? = null
+    private var tevParamsTransferChangeProblem: TextView? = null
+    private var refreshLayout: SmartRefreshLayout? = null
+    private var rcvData: RecyclerView? = null
+
     private val mineAdapter by lazy { MineAdapter(rxAppCompatActivity) }
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
@@ -48,16 +59,26 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.color_FFE066FF)
+        layoutOutLayer = findViewById(R.id.layout_out_layer)
+        toolbar = findViewById(R.id.toolbar)
+        tevTitle = findViewById(R.id.tev_title)
+        tevLogout = findViewById(R.id.tev_logout)
+        tevThreadPool = findViewById(R.id.tev_thread_pool)
+        tevParamsTransferChangeProblem =
+            findViewById(R.id.tev_params_transfer_change_problem)
+        refreshLayout = findViewById(R.id.refresh_layout)
+        rcvData = findViewById(R.id.rcv_data)
+        loadView = findViewById(R.id.load_view)
 
-        tev_title.setOnClickListener(object : View.OnClickListener {
+        setToolbar(false, R.color.color_FF198CFF)
+        tevTitle?.setOnClickListener(object : View.OnClickListener {
 
             override fun onClick(v: View?) {
 //                initMine()
                 startActivity(UserDataActivity::class.java)
             }
         })
-        tev_logout.setOnClickListener {
+        tevLogout?.setOnClickListener {
             showToast(
                 ResourcesManager.getString(R.string.this_function_can_only_be_used_under_componentization),
                 false
@@ -65,21 +86,20 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
 //            baseApplication?.isLogin = false
 //            ARouter.getInstance().build("/main_module/login").navigation()
         }
-        tev_thread_pool.setOnClickListener {
+        tevThreadPool?.setOnClickListener {
             startActivity(ThreadPoolActivity::class.java)
         }
-        tev_params_transfer_change_problem.setOnClickListener {
+        tevParamsTransferChangeProblem?.setOnClickListener {
             startActivity(ParamsTransferChangeProblemActivity::class.java)
         }
-
         initAdapter()
     }
 
     private fun initAdapter() {
         linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
-        rcv_data.layoutManager = (linearLayoutManager)
-        rcv_data.itemAnimator = DefaultItemAnimator()
+        rcvData?.layoutManager = (linearLayoutManager)
+        rcvData?.itemAnimator = DefaultItemAnimator()
 
         mineAdapter.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
@@ -101,16 +121,16 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
 //                startActivity(UserDataActivity::class.java)
             }
         })
-        rcv_data.setAdapter(mineAdapter)
+        rcvData?.setAdapter(mineAdapter)
 
-        refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-            override fun onLoadMore(refresh_layout: RefreshLayout) {
+        refreshLayout?.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
                 isRefresh = false
                 initMine()
             }
 
-            override fun onRefresh(refresh_layout: RefreshLayout) {
+            override fun onRefresh(refreshLayout: RefreshLayout) {
                 isRefresh = true
                 initMine()
             }
@@ -118,7 +138,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     override fun initLoadData() {
-        refresh_layout.autoRefresh()
+        refreshLayout?.autoRefresh()
     }
 
     override fun attachPresenter(): MinePresenterImpl {
@@ -126,16 +146,16 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     override fun showLoading() {
-        if (load_view != null && !load_view.isShown()) {
-            load_view.setVisibility(View.VISIBLE)
-            load_view.start()
+        if (!loadView.isShown()) {
+            loadView.setVisibility(View.VISIBLE)
+            loadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (load_view != null && load_view.isShown()) {
-            load_view.stop()
-            load_view.setVisibility(View.GONE)
+        if (loadView.isShown()) {
+            loadView.stop()
+            loadView.setVisibility(View.GONE)
         }
     }
 
@@ -146,10 +166,10 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
                     clearData();
                     addData(success)
                 }
-                refresh_layout.finishRefresh()
+                refreshLayout?.finishRefresh()
             } else {
                 mineAdapter.addData(success)
-                refresh_layout.finishLoadMore()
+                refreshLayout?.finishLoadMore()
             }
         }
     }
@@ -169,9 +189,9 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
             )
 
             if (isRefresh) {
-                refresh_layout.finishRefresh(false)
+                refreshLayout?.finishRefresh(false)
             } else {
-                refresh_layout.finishLoadMore(false)
+                refreshLayout?.finishLoadMore(false)
             }
         }
     }
@@ -189,9 +209,9 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
                 true
             )
             if (isRefresh) {
-                refresh_layout.finishRefresh()
+                refreshLayout?.finishRefresh()
             } else {
-                refresh_layout.finishLoadMore()
+                refreshLayout?.finishLoadMore()
             }
         }
     }

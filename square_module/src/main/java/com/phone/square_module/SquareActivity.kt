@@ -27,7 +27,6 @@ import com.phone.square_module.ui.DecimalOperationActivity
 import com.phone.square_module.ui.EditTextInputLimitsActivity
 import com.phone.square_module.ui.KotlinCoroutineActivity
 import com.phone.square_module.view_model.SquareViewModelImpl
-import kotlinx.android.synthetic.main.fragment_square.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**

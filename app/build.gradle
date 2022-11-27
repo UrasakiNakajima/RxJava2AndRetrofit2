@@ -1,8 +1,12 @@
-//body app（不可单独运行）
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+plugins {
+    //body app（不可单独运行）
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+//apply plugin: 'com.android.application'
+//apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-kapt'
 
 //apply plugin: 'com.google.gms.google-services'
 //apply plugin: 'com.huawei.agconnect'
@@ -36,9 +40,9 @@ android {
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
         manifestPlaceholders = [
-                JPUSH_PKGNAME : "com.phone.rxjava2andretrofit2",
+                JPUSH_PKGNAME: "com.phone.rxjava2andretrofit2",
                 JPUSH_APPKEY : "8e2573e36e6e9c4d624d29d4", //JPush 上注册的包名对应的 Appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 
     }
@@ -48,12 +52,7 @@ android {
         enabled = true
     }
 
-    //使用Kotlin实验特性
-    androidExtensions {
-        experimental = true
-    }
-
-    //开启Java11 能够使用lambda表达式
+    //开启Java1_8 能够使用lambda表达式
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -93,7 +92,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     if (isModule.toBoolean()) {
         //可独立运行的app
         implementation project(path: ':main_module')
@@ -106,7 +104,7 @@ dependencies {
         implementation project(path: ':resource_module')
         implementation project(path: ':project_module')
     }
-    
+
     //极光推送JPush
     implementation 'cn.jiguang.sdk:jpush:4.7.0'
     //极光推送JCore

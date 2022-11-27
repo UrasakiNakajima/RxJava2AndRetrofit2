@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_73"
-            android:background="@color/color_FFE066FF"
+            android:background="@color/color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
             app:contentInsetStart="0dp">
@@ -28,7 +28,7 @@
                 android:layout_marginTop="@dimen/dp_25"
                 android:gravity="center"
                 android:text="@string/mine"
-                android:textColor="@color/color_FF198CFF"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_20" />
 
         </androidx.appcompat.widget.Toolbar>

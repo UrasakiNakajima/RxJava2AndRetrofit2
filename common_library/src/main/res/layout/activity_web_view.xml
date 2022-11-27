@@ -22,7 +22,7 @@
             android:minHeight="?attr/actionBarSize"
             app:contentInsetStart="0dp">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
                 android:layout_marginTop="@dimen/dp_25"
@@ -48,11 +48,9 @@
 
                 <TextView
                     android:id="@+id/tev_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_40"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:includeFontPadding="false"
@@ -63,7 +61,7 @@
                     android:textStyle="bold"
                     android:visibility="visible" />
 
-            </LinearLayout>
+            </FrameLayout>
 
         </androidx.appcompat.widget.Toolbar>
 

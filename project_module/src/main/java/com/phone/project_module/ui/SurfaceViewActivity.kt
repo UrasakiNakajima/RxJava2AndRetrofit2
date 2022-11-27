@@ -6,8 +6,9 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
 import android.view.SurfaceHolder
+import android.view.SurfaceView
 import android.view.View
-import android.widget.SeekBar
+import android.widget.*
 import com.phone.common_library.base.BaseRxAppActivity
 import com.phone.common_library.manager.LogManager
 import com.phone.project_module.R
@@ -19,7 +20,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_surface_view.*
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -27,17 +27,26 @@ import kotlin.concurrent.timerTask
 class SurfaceViewActivity : BaseRxAppActivity() {
 
     companion object {
-        private val TAG: String = "SurfaceViewActivity"
+        @JvmStatic
+        private val TAG: String = SurfaceViewActivity::class.java.simpleName
     }
+
+    private var surfaceView: SurfaceView? = null
+    private var mcurrentProgressBar: ProgressBar? = null
+    private var imvPlaceHolder: ImageView? = null
+    private var imvPlay: ImageView? = null
+    private var progressCircular: ProgressBar? = null
+    private var layoutPlayControl: LinearLayout? = null
+    private var tevCurrentTime: TextView? = null
+    private var mseekBar: SeekBar? = null
+    private var tevTotalTime: TextView? = null
 
     /*测试地址*/
 //    val url = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
-//    val url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
-//    val url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
-//    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/hidden_corner.mp4";
+//    val url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4"
+//    val url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4"
+//    val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/hidden_corner.mp4"
     val url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4"
-
-
     val VIDEO_TYPE_URI = 1
     val VIDEO_TYPE_FILE_PATH = 2
     var VIDEO_TYPE: Int = 0
@@ -55,7 +64,7 @@ class SurfaceViewActivity : BaseRxAppActivity() {
 
     private var isPlaying: Boolean = false
 
-    //    private var playProgress: Int = 0;
+    //    private var playProgress: Int = 0
     private var timer: Timer? = null
     private var timerTask2: TimerTask? = null
 
@@ -66,19 +75,27 @@ class SurfaceViewActivity : BaseRxAppActivity() {
     //    private var isStopTimerImvPlay: Boolean = false
     private var disposable: Disposable? = null
 
-    override fun initLayoutId(): Int {
-        return R.layout.activity_surface_view
-    }
+    override fun initLayoutId() = R.layout.activity_surface_view
 
     override fun initData() {
 //        playProgress = 0
     }
 
     override fun initViews() {
-        progress_circular.visibility = View.VISIBLE
-        surface_view.holder.setKeepScreenOn(true)
-        surface_view.holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
-        surface_view.holder.addCallback(object : SurfaceHolder.Callback {
+        surfaceView = findViewById(R.id.surface_view)
+        mcurrentProgressBar = findViewById(R.id.mcurrent_progress_bar)
+        imvPlaceHolder = findViewById(R.id.imv_place_holder)
+        imvPlay = findViewById(R.id.imv_play)
+        progressCircular = findViewById(R.id.progress_circular)
+        layoutPlayControl = findViewById(R.id.layout_play_control)
+        tevCurrentTime = findViewById(R.id.tev_current_time)
+        mseekBar = findViewById(R.id.mseek_bar)
+        tevTotalTime = findViewById(R.id.tev_total_time)
+
+        progressCircular?.visibility = View.VISIBLE
+        surfaceView?.holder?.setKeepScreenOn(true)
+        surfaceView?.holder?.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
+        surfaceView?.holder?.addCallback(object : SurfaceHolder.Callback {
 
             override fun surfaceCreated(holder: SurfaceHolder) {
                 setVideoParam(url, VIDEO_TYPE_URI)
@@ -112,19 +129,19 @@ class SurfaceViewActivity : BaseRxAppActivity() {
      */
     fun setVideoParam(url: String, TYPE: Int) {
         mediaPlayer = MediaPlayer()
-        mediaPlayer!!.reset();
-        mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mediaPlayer?.reset()
+        mediaPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
         val uri = Uri.parse(url)
         this.VIDEO_TYPE = TYPE
         when (TYPE) {
             VIDEO_TYPE_FILE_PATH ->
                 /*设置播放源*/
-                mediaPlayer!!.setDataSource(this, uri)
+                mediaPlayer?.setDataSource(this, uri)
             VIDEO_TYPE_URI ->
                 /*设置播放源*/
-                mediaPlayer!!.setDataSource(this, uri)
+                mediaPlayer?.setDataSource(this, uri)
         }
-        mediaPlayer!!.setDisplay(surface_view.holder);
+        mediaPlayer?.setDisplay(surfaceView?.holder)
 
         disposable = Flowable.create(FlowableOnSubscribe<Bitmap> { emitter ->
             val bitmap: Bitmap =
@@ -138,19 +155,19 @@ class SurfaceViewActivity : BaseRxAppActivity() {
             .subscribe(object : Consumer<Bitmap> {
                 @Throws(Exception::class)
                 override fun accept(b: Bitmap) {
-                    imv_place_holder.setImageBitmap(b)
-                    mediaPlayer!!.prepareAsync();
+                    imvPlaceHolder?.setImageBitmap(b)
+                    mediaPlayer!!.prepareAsync()
                     /*准备完成后回调*/
                     mediaPlayer!!.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
                         override fun onPrepared(mp: MediaPlayer?) {
                             if (mediaPlayer != null) {
                                 isPlaying = false
-                                tev_total_time.setText(durationTime())
+                                tevTotalTime?.setText(durationTime())
 //                                    sendTime()
                                 startTimer()
-                                progress_circular.visibility = View.GONE
-                                imv_play.visibility = View.VISIBLE
-                                layout_play_control.visibility = View.VISIBLE
+                                progressCircular?.visibility = View.GONE
+                                imvPlay?.visibility = View.VISIBLE
+                                layoutPlayControl?.visibility = View.VISIBLE
                             }
                         }
 
@@ -160,12 +177,12 @@ class SurfaceViewActivity : BaseRxAppActivity() {
 //                        mediaPlayer!!.setOnInfoListener((object : MediaPlayer.OnInfoListener {
 //                            override fun onInfo(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
 //                                if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-//                                  progress_circular.visibility = View.VISIBLE
+//                                  progressCircular?.visibility = View.VISIBLE
 //                                } else {
 //                                    if (isPlaying) {
-//                                     progress_circular.visibility = View.GONE
-////                                            imv_play.visibility = View.GONE
-////                                            layout_play_control.visibility = View.GONE
+//                                     progressCircular?.visibility = View.GONE
+////                                            imvPlay?.visibility = View.GONE
+////                                            layoutPlayControl?.visibility = View.GONE
 //                                    }
 //                                }
 //                                return true
@@ -187,38 +204,38 @@ class SurfaceViewActivity : BaseRxAppActivity() {
                         override fun onCompletion(mp: MediaPlayer?) {
                             isCompletion = true
                             isPlaying = false
-                            imv_place_holder.visibility = View.VISIBLE
-                            imv_play.visibility = View.VISIBLE
-                            layout_play_control.visibility = View.VISIBLE
+                            imvPlaceHolder?.visibility = View.VISIBLE
+                            imvPlay?.visibility = View.VISIBLE
+                            layoutPlayControl?.visibility = View.VISIBLE
 //                                resetPlay()
                             resetVideo()
                         }
                     })
 
-                    surface_view.setOnClickListener(View.OnClickListener {
+                    surfaceView?.setOnClickListener(View.OnClickListener {
                         if (isPlaying) {
                             if (isShowImvPlay) {
                                 isShowImvPlay = false
 //                                    stopTimerImvPlay()
-                                imv_play.visibility = View.GONE
-                                layout_play_control.visibility = View.GONE
-                                LogManager.i(TAG, "surface_view OnClickListener")
+                                imvPlay?.visibility = View.GONE
+                                layoutPlayControl?.visibility = View.GONE
+                                LogManager.i(TAG, "surfaceView? OnClickListener")
                             } else {
                                 isShowImvPlay = true
 //                                    stopTimerImvPlay()
-//                                    startTimerImvPlay();
-                                imv_play.visibility = View.VISIBLE
-                                layout_play_control.visibility = View.VISIBLE
+//                                    startTimerImvPlay()
+                                imvPlay?.visibility = View.VISIBLE
+                                layoutPlayControl?.visibility = View.VISIBLE
                             }
                         }
                     })
-                    imv_play.setOnClickListener(View.OnClickListener {
+                    imvPlay?.setOnClickListener(View.OnClickListener {
                         if (isPlaying) {
                             pausePlay()
 //                                stopTimerImvPlay()
                             isShowImvPlay = false
-                            imv_play.visibility = View.VISIBLE
-                            layout_play_control.visibility = View.VISIBLE
+                            imvPlay?.visibility = View.VISIBLE
+                            layoutPlayControl?.visibility = View.VISIBLE
                         } else {
                             startPlay()
 //                                startTimerImvPlay()
@@ -234,7 +251,7 @@ class SurfaceViewActivity : BaseRxAppActivity() {
      *
      */
     private fun seekBarListener() {
-        mseek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        mseekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (isTrackingTouch) {
@@ -264,12 +281,12 @@ class SurfaceViewActivity : BaseRxAppActivity() {
 //        sendTime()
 //        val currentPosition = mediaPlayer!!.currentPosition
 //        if (isPlaying) {
-//            tev_current_time!!.text = playCurrentTime()
+//            tevCurrentTime?!!.text = playCurrentTime()
 //            if (currentPosition == oldPosition) {
-//                progress_circular.visibility = View.VISIBLE
+//                progressCircular?.visibility = View.VISIBLE
 //            } else {
-//                progress_circular.visibility = View.GONE
-//                 imv_place_holder.visibility = View.GONE
+//                progressCircular?.visibility = View.GONE
+//                 imvPlaceHolder?.visibility = View.GONE
 //            }
 //            oldPosition = currentPosition
 //        }
@@ -297,16 +314,16 @@ class SurfaceViewActivity : BaseRxAppActivity() {
                         LogManager.i(TAG, "accept current thread***" + Thread.currentThread().name)
                         val currentPosition = mediaPlayer!!.currentPosition
                         if (isPlaying) {
-                            tev_current_time.text = playCurrentTime()
+                            tevCurrentTime?.text = playCurrentTime()
                             if (currentPosition == oldPosition) {
                                 if (isPlaying) {
-                                    progress_circular.visibility = View.VISIBLE
+                                    progressCircular?.visibility = View.VISIBLE
                                 } else {
-                                    progress_circular.visibility = View.GONE
+                                    progressCircular?.visibility = View.GONE
                                 }
                             } else {
-                                progress_circular.visibility = View.GONE
-                                imv_place_holder.visibility = View.GONE
+                                progressCircular?.visibility = View.GONE
+                                imvPlaceHolder?.visibility = View.GONE
                             }
                             oldPosition = currentPosition
                         }
@@ -329,12 +346,12 @@ class SurfaceViewActivity : BaseRxAppActivity() {
 ////
 ////                            val currentPosition = mediaPlayer!!.currentPosition
 ////                            if (isPlaying) {
-////                                tev_current_time!!.text = playCurrentTime()
+////                                tevCurrentTime?!!.text = playCurrentTime()
 ////                                if (currentPosition == oldPosition) {
-////                                    progress_circular.visibility = View.VISIBLE
+////                                    progressCircular?.visibility = View.VISIBLE
 ////                                } else {
-////                                    progress_circular.visibility = View.GONE
-////                                    imv_place_holder.visibility = View.GONE
+////                                    progressCircular?.visibility = View.GONE
+////                                    imvPlaceHolder?.visibility = View.GONE
 ////                                }
 ////                                oldPosition = currentPosition
 ////                            }
@@ -368,8 +385,8 @@ class SurfaceViewActivity : BaseRxAppActivity() {
 //                        override fun accept(s: String) {
 //
 //                            if (!isStopTimerImvPlay) {
-//                                imv_play.visibility = View.GONE
-//                                layout_play_control.visibility = View.GONE
+//                                imvPlay?.visibility = View.GONE
+//                                layoutPlayControl?.visibility = View.GONE
 //                                LogManager.i(TAG, "startTimerImvPlay accept")
 //                                isShowImvPlay = false
 //                                stopTimerImvPlay()
@@ -402,10 +419,10 @@ class SurfaceViewActivity : BaseRxAppActivity() {
             isPlaying = true
         }
 //        stopTimerImvPlay()
-        imv_play.visibility = View.GONE
-        layout_play_control.visibility = View.VISIBLE
+        imvPlay?.visibility = View.GONE
+        layoutPlayControl?.visibility = View.VISIBLE
 //        startTimerImvPlay()
-        progress_circular.visibility = View.GONE
+        progressCircular?.visibility = View.GONE
     }
 
 //    /**
@@ -417,10 +434,10 @@ class SurfaceViewActivity : BaseRxAppActivity() {
 //            mediaPlayer!!.start()
 //            isPlaying = true
 //        }
-//        imv_play.visibility = View.GONE
+//        imvPlay?.visibility = View.GONE
 //
-////        imv_place_holder.visibility = View.VISIBLE
-//        progress_circular.visibility = View.VISIBLE
+////        imvPlaceHolder?.visibility = View.VISIBLE
+//        progressCircular?.visibility = View.VISIBLE
 //    }
 
     /**
@@ -428,14 +445,14 @@ class SurfaceViewActivity : BaseRxAppActivity() {
      */
     fun pausePlay() {
         if (isPlaying && mediaPlayer != null) {
-//            playProgress = mediaPlayer!!.currentPosition;
+//            playProgress = mediaPlayer!!.currentPosition
             mediaPlayer!!.pause()
             isPlaying = false
         }
 //        stopTimerImvPlay()
-        imv_play.visibility = View.VISIBLE
-        layout_play_control.visibility = View.VISIBLE
-        progress_circular.visibility = View.GONE
+        imvPlay?.visibility = View.VISIBLE
+        layoutPlayControl?.visibility = View.VISIBLE
+        progressCircular?.visibility = View.GONE
     }
 
     /**
@@ -447,8 +464,8 @@ class SurfaceViewActivity : BaseRxAppActivity() {
         if (mediaPlayer != null) {
             mediaPlayer!!.seekTo(m.toInt())
         }
-//        imv_play.visibility = View.VISIBLE
-//        layout_play_control.visibility = View.VISIBLE
+//        imvPlay?.visibility = View.VISIBLE
+//        layoutPlayControl?.visibility = View.VISIBLE
 //        startTimerImvPlay()
     }
 
@@ -465,14 +482,14 @@ class SurfaceViewActivity : BaseRxAppActivity() {
      */
     fun resetStartPlay() {
         if (mediaPlayer != null && isCompletion) {
-            mseek_bar.progress = 0
-            mcurrent_progress_bar.progress = 0
+            mseekBar?.progress = 0
+            mcurrentProgressBar?.progress = 0
             pausePlay()
             seekTo(0f)
             if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
-                tev_current_time.text = resources.getString(R.string.start_time)
+                tevCurrentTime?.text = resources.getString(R.string.start_time)
             } else {
-                tev_current_time.text = resources.getString(R.string.start_time2)
+                tevCurrentTime?.text = resources.getString(R.string.start_time2)
             }
             startPlay()
         }
@@ -482,16 +499,16 @@ class SurfaceViewActivity : BaseRxAppActivity() {
      * 重置
      */
     fun resetVideo() {
-        mseek_bar.progress = 0
-        mcurrent_progress_bar.progress = 0
+        mseekBar?.progress = 0
+        mcurrentProgressBar?.progress = 0
         pausePlay()
         seekTo(0f)
         if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
-            tev_current_time.text = resources.getString(R.string.start_time)
+            tevCurrentTime?.text = resources.getString(R.string.start_time)
         } else {
-            tev_current_time.text = resources.getString(R.string.start_time2)
+            tevCurrentTime?.text = resources.getString(R.string.start_time2)
         }
-        progress_circular.visibility = View.GONE
+        progressCircular?.visibility = View.GONE
     }
 
     /**
@@ -505,7 +522,7 @@ class SurfaceViewActivity : BaseRxAppActivity() {
             mediaPlayer!!.stop()
             mediaPlayer!!.release()
         }
-        progress_circular.visibility = View.GONE
+        progressCircular?.visibility = View.GONE
     }
 
     /**
@@ -524,7 +541,7 @@ class SurfaceViewActivity : BaseRxAppActivity() {
         }
         bitmap = retriever.frameAtTime
         val finalBitmap = bitmap
-        imv_place_holder.setImageBitmap(finalBitmap)
+        imvPlaceHolder?.setImageBitmap(finalBitmap)
         retriever.release()
     }
 
@@ -536,8 +553,8 @@ class SurfaceViewActivity : BaseRxAppActivity() {
     fun playCurrentTime(): String {
         val currentPosition = mediaPlayer!!.currentPosition
         val scale = (currentPosition * 1.0 / mediaPlayer!!.duration).toFloat()
-        mseek_bar.progress = (scale * 100).toInt()
-        mcurrent_progress_bar.progress = (scale * 100).toInt()
+        mseekBar?.progress = (scale * 100).toInt()
+        mcurrentProgressBar?.progress = (scale * 100).toInt()
         return stringForTime(currentPosition)
     }
 
@@ -550,13 +567,13 @@ class SurfaceViewActivity : BaseRxAppActivity() {
     fun durationTime(): String? {
         if (mediaPlayer !== null) {
             if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
-                tev_current_time.setText(getString(R.string.start_time))
+                tevCurrentTime?.setText(getString(R.string.start_time))
             } else {
-                tev_current_time.setText(getString(R.string.start_time2))
+                tevCurrentTime?.setText(getString(R.string.start_time2))
             }
             return stringForTime(mediaPlayer!!.duration)
         } else {
-            return null;
+            return null
         }
     }
 
@@ -582,7 +599,7 @@ class SurfaceViewActivity : BaseRxAppActivity() {
 
     override fun onStop() {
         pausePlay()
-//        playProgress = mediaPlayer!!.currentPosition;
+//        playProgress = mediaPlayer!!.currentPosition
         super.onStop()
     }
 

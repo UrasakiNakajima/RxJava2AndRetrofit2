@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     android:orientation="vertical"
     tools:context=".ui.UserDataActivity">
 
@@ -16,7 +15,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
-        android:background="@color/color_FFE066FF"
+        android:background="@color/color_FF198CFF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
         app:contentInsetStart="0dp">
@@ -44,11 +43,12 @@
 
             <TextView
                 android:id="@+id/tev_title"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_48"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/user_details"
-                android:textColor="@color/color_FF198CFF"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_20" />
 
         </FrameLayout>

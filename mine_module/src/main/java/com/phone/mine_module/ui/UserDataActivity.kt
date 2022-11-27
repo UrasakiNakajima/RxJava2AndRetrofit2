@@ -1,13 +1,17 @@
 package com.phone.mine_module.ui
 
 import android.view.View
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.IBaseView
+import com.phone.common_library.manager.ResourcesManager
 import com.phone.mine_module.R
 import com.phone.mine_module.presenter.MinePresenterImpl
 import com.phone.mine_module.view.IUserDataView
-import kotlinx.android.synthetic.main.activity_user_data.*
 
 class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IUserDataView {
 
@@ -15,22 +19,31 @@ class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), I
         private val TAG = UserDataActivity::class.java.simpleName
     }
 
+    private var toolbar: Toolbar? = null
+    private var layoutBack: FrameLayout? = null
+    private var imvBack: ImageView? = null
+    private var tevTitle: TextView? = null
+
     override fun initLayoutId() = R.layout.activity_user_data
 
     override fun initData() {
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.color_FFE066FF)
-        imv_back.setColorFilter(ContextCompat.getColor(this, R.color.color_FF198CFF))
+        toolbar = findViewById(R.id.toolbar)
+        layoutBack = findViewById(R.id.layout_back)
+        imvBack = findViewById(R.id.imv_back)
+        tevTitle = findViewById(R.id.tev_title)
 
-        layout_back.setOnClickListener {
+        setToolbar(false, R.color.color_FF198CFF)
+        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.color_FF198CFF))
+        layoutBack?.setOnClickListener {
             finish()
         }
     }
 
     override fun initLoadData() {
-        initUserData();
+        initUserData()
     }
 
     override fun attachPresenter() = MinePresenterImpl(this)

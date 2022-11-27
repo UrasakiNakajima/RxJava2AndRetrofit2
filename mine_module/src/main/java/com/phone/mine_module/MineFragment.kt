@@ -1,11 +1,10 @@
 package com.phone.mine_module
 
 import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.widget.FrameLayout
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,9 +25,10 @@ import com.phone.mine_module.ui.ParamsTransferChangeProblemActivity
 import com.phone.mine_module.ui.ThreadPoolActivity
 import com.phone.mine_module.ui.UserDataActivity
 import com.phone.mine_module.view.IMineView
+import com.qmuiteam.qmui.widget.QMUILoadingView
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import kotlinx.android.synthetic.main.fragment_mine.*
 
 /**
  * author    : Urasaki
@@ -43,41 +43,52 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
         private val TAG: String = MineFragment::class.java.name
     }
 
+    private var layoutOutLayer: FrameLayout? = null
+    private var toolbar: Toolbar? = null
+    private var tevTitle: TextView? = null
+    private var tevLogout: TextView? = null
+    private var tevThreadPool: TextView? = null
+    private var tevParamsTransferChangeProblem: TextView? = null
+    private var refreshLayout: SmartRefreshLayout? = null
+    private var rcvData: RecyclerView? = null
+    private var loadView: QMUILoadingView? = null
+
     private val mineAdapter by lazy { MineAdapter(rxAppCompatActivity) }
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        rootView = super.onCreateView(inflater, container, savedInstanceState)
-        return rootView
-    }
-
     override fun initLayoutId() = R.layout.fragment_mine
 
     override fun initData() {
-//        mainActivity = rxAppCompatActivity as MainActivity
     }
 
     override fun initViews() {
-        tev_title.setOnClickListener(object : View.OnClickListener {
+        layoutOutLayer = rootView.findViewById(R.id.layout_out_layer)
+        toolbar = rootView.findViewById(R.id.toolbar)
+        tevTitle = rootView.findViewById(R.id.tev_title)
+        tevLogout = rootView.findViewById(R.id.tev_logout)
+        tevThreadPool = rootView.findViewById(R.id.tev_thread_pool)
+        tevParamsTransferChangeProblem =
+            rootView.findViewById(R.id.tev_params_transfer_change_problem)
+        refreshLayout = rootView.findViewById(R.id.refresh_layout)
+        rcvData = rootView.findViewById(R.id.rcv_data)
+        loadView = rootView.findViewById(R.id.load_view)
+
+        tevTitle?.setOnClickListener(object : View.OnClickListener {
 
             override fun onClick(v: View?) {
 //                initMine()
                 startActivity(UserDataActivity::class.java)
             }
         })
-        tev_logout.setOnClickListener {
+        tevLogout?.setOnClickListener {
             baseApplication.isLogin = false
             ARouter.getInstance().build("/main_module/login").navigation()
         }
-        tev_thread_pool.setOnClickListener {
+        tevThreadPool?.setOnClickListener {
             startActivity(ThreadPoolActivity::class.java)
         }
-        tev_params_transfer_change_problem.setOnClickListener {
+        tevParamsTransferChangeProblem?.setOnClickListener {
             startActivity(ParamsTransferChangeProblemActivity::class.java)
         }
 
@@ -87,8 +98,8 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     private fun initAdapter() {
         linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
-        rcv_data.layoutManager = (linearLayoutManager)
-        rcv_data.itemAnimator = DefaultItemAnimator()
+        rcvData?.layoutManager = (linearLayoutManager)
+        rcvData?.itemAnimator = DefaultItemAnimator()
 
         mineAdapter.apply {
             setRcvOnItemViewClickListener(object : OnItemViewClickListener {
@@ -111,16 +122,16 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                 }
             })
         }
-        rcv_data.setAdapter(mineAdapter)
+        rcvData?.setAdapter(mineAdapter)
 
-        refresh_layout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
-            override fun onLoadMore(refresh_layout: RefreshLayout) {
+        refreshLayout?.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
                 isRefresh = false
                 initMine()
             }
 
-            override fun onRefresh(refresh_layout: RefreshLayout) {
+            override fun onRefresh(refreshLayout: RefreshLayout) {
                 isRefresh = true
                 initMine()
             }
@@ -128,7 +139,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     override fun initLoadData() {
-        refresh_layout.autoRefresh()
+        refreshLayout?.autoRefresh()
 
         LogManager.i(TAG, "MineFragment initLoadData")
     }
@@ -136,29 +147,33 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     override fun attachPresenter() = MinePresenterImpl(this)
 
     override fun showLoading() {
-        if (load_view != null && !load_view.isShown()) {
-            load_view.setVisibility(View.VISIBLE)
-            load_view.start()
+        loadView?.let {
+            if (!it.isShown()) {
+                it.setVisibility(View.VISIBLE)
+                it.start()
+            }
         }
     }
 
     override fun hideLoading() {
-        if (load_view != null && load_view.isShown()) {
-            load_view.stop()
-            load_view.setVisibility(View.GONE)
+        loadView?.let {
+            if (it.isShown()) {
+                it.stop()
+                it.setVisibility(View.GONE)
+            }
         }
     }
 
     override fun mineDataSuccess(success: MutableList<Data>) {
         if (!rxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                mineAdapter.clearData();
+                mineAdapter.clearData()
                 mineAdapter.addData(mineAdapter.mJuheNewsBeanList)
-                refresh_layout.finishRefresh()
+                refreshLayout?.finishRefresh()
             } else {
-                mineAdapter.clearData();
+                mineAdapter.clearData()
                 mineAdapter.addData(mineAdapter.mJuheNewsBeanList)
-                refresh_layout.finishLoadMore()
+                refreshLayout?.finishLoadMore()
             }
         }
     }
@@ -178,9 +193,9 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
             )
 
             if (isRefresh) {
-                refresh_layout.finishRefresh(false)
+                refreshLayout?.finishRefresh(false)
             } else {
-                refresh_layout.finishLoadMore(false)
+                refreshLayout?.finishLoadMore(false)
             }
         }
     }
@@ -195,15 +210,15 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {
-                refresh_layout.finishRefresh()
+                refreshLayout?.finishRefresh()
             } else {
-                refresh_layout.finishLoadMore()
+                refreshLayout?.finishLoadMore()
             }
         }
     }
 
     override fun onDestroyView() {
-        layout_out_layer.removeAllViews()
+        layoutOutLayer?.removeAllViews()
         rootView = null
         super.onDestroyView()
     }
