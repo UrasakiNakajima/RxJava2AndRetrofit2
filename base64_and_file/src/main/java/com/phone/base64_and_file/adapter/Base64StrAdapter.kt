@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.phone.base64_and_file.R
 
-class Base64StrAdapter(var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class Base64StrAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = Base64StrAdapter::class.java.simpleName
     var base64StrList = mutableListOf<String>()

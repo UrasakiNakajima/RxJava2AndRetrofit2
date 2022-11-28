@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.alibaba.sdk.android.oss.*
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
@@ -42,6 +43,7 @@ import com.phone.common_library.manager.MediaFileManager
 import com.phone.common_library.manager.ResourcesManager
 import com.phone.common_library.manager.RxPermissionsManager
 import com.phone.common_library.manager.SystemManager.getSystemId
+import com.phone.common_library.service.IFirstPageService
 import com.trello.rxlifecycle3.android.ActivityEvent
 import io.reactivex.*
 import io.reactivex.Observable
@@ -158,6 +160,14 @@ class Base64AndFileActivity :
     }
 
     override fun initLoadData() {
+        val firstPageService =
+            ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
+                .navigation() as IFirstPageService
+        LogManager.i(
+            TAG,
+            "firstPageService.firstPageDataList******" + firstPageService.mFirstPageDataList.toString()
+        )
+
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            initRxPermissions();
 //        } else {

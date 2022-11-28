@@ -37,7 +37,7 @@ import kotlin.experimental.and
 class RetrofitManager {
 
     private val TAG = RetrofitManager::class.java.simpleName
-    private var retrofit: Retrofit
+    private var mRetrofit: Retrofit
 
     /**
      * 私有构造器 无法外部创建
@@ -72,7 +72,7 @@ class RetrofitManager {
             .build()
 
         // 初始化Retrofit
-        retrofit = Retrofit.Builder()
+        mRetrofit = Retrofit.Builder()
             .client(client)
             .baseUrl(ConstantUrl.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -175,7 +175,7 @@ class RetrofitManager {
     }
 
     fun getRetrofit(): Retrofit {
-        return retrofit
+        return mRetrofit
     }
 
     /**
@@ -294,7 +294,7 @@ class RetrofitManager {
         }
 
         //遍历filesMap中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
-        if (filesMap != null && filesMap.size > 0) {
+        if (filesMap.size > 0) {
             for (key in filesMap.keys) {
                 val files = filesMap[key]
                 if (files != null && files.size > 0) { //如果参数不是null，才把参数传给后台

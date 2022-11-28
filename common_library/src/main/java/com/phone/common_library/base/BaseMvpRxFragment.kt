@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Looper
+import android.util.ArrayMap
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -22,9 +23,9 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
     protected var presenter: T? = null
 
     protected var url: String? = null
-    protected var bodyParams = HashMap<String, String>()
-    protected lateinit var rxAppCompatActivity: RxAppCompatActivity
-    protected lateinit var baseApplication: BaseApplication
+    protected var mBodyParams = ArrayMap<String, String>()
+    protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
+    protected lateinit var mBaseApplication: BaseApplication
 
     protected var rootView: View? = null
     protected lateinit var rxFragment: RxFragment
@@ -51,8 +52,8 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rxAppCompatActivity = activity as RxAppCompatActivity
-        baseApplication = rxAppCompatActivity.application as BaseApplication
+        mRxAppCompatActivity = activity as RxAppCompatActivity
+        mBaseApplication = mRxAppCompatActivity.application as BaseApplication
         initData()
         presenter = attachPresenter()
         initViews()
@@ -62,7 +63,7 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
 //        rxPermissionsManager.initRxPermissionsRxFragment(new OnCommonRxPermissionsCallback() {
 //            @Override
 //            public void onRxPermissionsAllPass() {
-//                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(rxAppCompatActivity);
+//                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(mRxAppCompatActivity);
 //                crashHandlerManager.sendPreviousReportsToServer();
 //                crashHandlerManager.init();
 //            }
@@ -96,7 +97,7 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
 
     protected fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!rxAppCompatActivity.isFinishing) {
+        if (!mRxAppCompatActivity.isFinishing) {
             val toast: Toast
             val duration: Int
             duration = if (isLongToast) {
@@ -104,7 +105,7 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
             } else {
                 Toast.LENGTH_SHORT
             }
-            toast = Toast.makeText(rxAppCompatActivity, message, duration)
+            toast = Toast.makeText(mRxAppCompatActivity, message, duration)
             toast.setGravity(Gravity.CENTER, 0, 0)
             toast.show()
         }
@@ -117,13 +118,13 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
         roundRadius: Int, message: String?,
         isLongToast: Boolean
     ) {
-        val frameLayout = FrameLayout(rxAppCompatActivity)
+        val frameLayout = FrameLayout(mRxAppCompatActivity)
         val layoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
         frameLayout.layoutParams = layoutParams
-        val textView = TextView(rxAppCompatActivity)
+        val textView = TextView(mRxAppCompatActivity)
         val layoutParams1 =
             FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
         textView.layoutParams = layoutParams1
@@ -138,7 +139,7 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
         textView.background = gradientDrawable
         textView.text = message
         frameLayout.addView(textView)
-        val toast = Toast(rxAppCompatActivity)
+        val toast = Toast(mRxAppCompatActivity)
         toast.view = frameLayout
         if (isLongToast) {
             toast.duration = Toast.LENGTH_LONG
@@ -154,12 +155,12 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
     }
 
     protected fun startActivity(cls: Class<*>?) {
-        val intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         startActivity(intent)
     }
 
     protected fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
-        val intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         val bundle = Bundle()
         if (params != null && params.size > 0) {
             for (key in params.keys) {
@@ -173,7 +174,7 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
     }
 
     protected fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
-        val intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         startActivityForResult(intent, requestCode)
     }
 
@@ -182,7 +183,7 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
         params: Map<String?, String?>?,
         requestCode: Int
     ) {
-        val intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         val bundle = Bundle()
         if (params != null && params.size > 0) {
             for (key in params.keys) {
@@ -201,7 +202,7 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
 
     override fun onDestroyView() {
         detachPresenter()
-        bodyParams.clear()
+        mBodyParams.clear()
         rootView?.let {
             rootView = null
         }

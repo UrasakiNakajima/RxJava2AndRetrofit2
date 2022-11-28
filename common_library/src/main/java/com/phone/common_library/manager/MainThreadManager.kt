@@ -29,7 +29,7 @@ class MainThreadManager {
         }
     }
 
-    fun setOnSubThreadToMainThreadCallback(onCommonSuccessCallback: OnCommonSuccessCallback?) {
+    fun setOnSubThreadToMainThreadCallback(onCommonSuccessCallback: OnCommonSuccessCallback) {
         this.onCommonSuccessCallback = onCommonSuccessCallback
     }
 

@@ -1,23 +1,20 @@
-package com.phone.first_page_module.presenter;
+package com.phone.first_page_module.presenter
 
-import android.text.TextUtils;
-
-import com.phone.common_library.BaseApplication;
-import com.phone.common_library.base.BasePresenter;
-import com.phone.common_library.base.IBaseView;
-import com.phone.common_library.bean.FirstPageResponse;
-import com.phone.common_library.callback.OnCommonSingleParamCallback;
-import com.phone.common_library.manager.GsonManager;
-import com.phone.common_library.manager.LogManager;
-import com.phone.common_library.manager.RetrofitManager;
-import com.phone.first_page_module.R;
-import com.phone.first_page_module.model.FirstPageModelImpl;
-import com.phone.first_page_module.view.IFirstPageView;
-import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
-import com.trello.rxlifecycle3.components.support.RxFragment;
-
-import java.util.Map;
-import java.util.Objects;
+import android.text.TextUtils
+import com.phone.common_library.base.BasePresenter
+import com.phone.common_library.base.IBaseView
+import com.phone.common_library.bean.FirstPageResponse
+import com.phone.common_library.callback.OnCommonSingleParamCallback
+import com.phone.common_library.manager.GsonManager
+import com.phone.common_library.manager.LogManager.i
+import com.phone.common_library.manager.ResourcesManager
+import com.phone.common_library.manager.RetrofitManager
+import com.phone.first_page_module.R
+import com.phone.first_page_module.model.FirstPageModelImpl
+import com.phone.first_page_module.view.IFirstPageView
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
+import com.trello.rxlifecycle3.components.support.RxFragment
+import java.util.*
 
 /**
  * author    : Urasaki
@@ -26,52 +23,62 @@ import java.util.Objects;
  * introduce : Presenter登录模块的（一个小模块对应一个Presenter）
  */
 
-public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
-        implements IFirstPagePresenter {
+class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
+    IFirstPagePresenter {
 
-    private static final String TAG = "FirstPagePresenterImpl";
+    private val TAG = "FirstPagePresenterImpl"
+
     //    private IFirstPageView firstPageView;//P需要与V 交互，所以需要持有V的引用
-    private final FirstPageModelImpl model;
+    private var model: FirstPageModelImpl
 
-    public FirstPagePresenterImpl(IBaseView baseView) {
-        attachView(baseView);
-        model = new FirstPageModelImpl();
+    init {
+        attachView(baseView)
+        model = FirstPageModelImpl()
     }
 
-    @Override
-    public void firstPage(RxFragment fragment, Map<String, String> bodyParams) {
-        IBaseView baseView = obtainView();
+    override fun firstPage(rxFragment: RxFragment, bodyParams: Map<String?, String?>) {
+        val baseView = obtainView()
         if (baseView != null) {
-            if (baseView instanceof IFirstPageView) {
-                IFirstPageView firstPageView = (IFirstPageView) baseView;
+            if (baseView is IFirstPageView) {
+                val firstPageView = baseView
                 //                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
-                Objects.requireNonNull(RetrofitManager.Companion.get())
-                        .responseString2(fragment, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
-                            @Override
-                            public void onSuccess(String success) {
-                                LogManager.INSTANCE.i(TAG, "success*****" + success);
+                RetrofitManager.get()
+                    .responseString2(
+                        rxFragment,
+                        model.firstPage(bodyParams),
+                        object : OnCommonSingleParamCallback<String> {
+                            override fun onSuccess(success: String) {
+                                i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
                                     //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
-                                    FirstPageResponse response = new GsonManager().convert(success, FirstPageResponse.class);
+                                    val response = GsonManager().convert(
+                                        success,
+                                        FirstPageResponse::class.java
+                                    )
 
                                     //											 String jsonStr = new GsonManager().toJson(response);
-                                    if (response.getError_code() == 0) {
-                                        firstPageView.firstPageDataSuccess(response.getResult().getData());
+                                    if (response.error_code == 0) {
+                                        firstPageView.firstPageDataSuccess(
+                                            response.getResult().getData()
+                                        )
                                     } else {
-                                        firstPageView.firstPageDataError(response.getReason());
+                                        firstPageView.firstPageDataError(response.getReason())
                                     }
                                 } else {
-                                    firstPageView.firstPageDataError(BaseApplication.Companion.get().getResources().getString(R.string.loading_failed));
+                                    firstPageView.firstPageDataError(
+                                        ResourcesManager.getString(
+                                            R.string.loading_failed
+                                        )
+                                    )
                                 }
                             }
 
-                            @Override
-                            public void onError(String error) {
-                                LogManager.INSTANCE.i(TAG, "error*****" + error);
-                                firstPageView.firstPageDataError(error);
+                            override fun onError(error: String) {
+                                i(TAG, "error*****$error")
+                                firstPageView.firstPageDataError(error)
                             }
-                        });
+                        })
                 //				compositeDisposable.add(disposable);
 
                 ////                rxjava2+retrofit2请求（响应速度更快）
@@ -105,40 +112,52 @@ public class FirstPagePresenterImpl extends BasePresenter<IBaseView>
         }
     }
 
-    @Override
-    public void firstPage2(RxAppCompatActivity rxAppCompatActivity, Map<String, String> bodyParams) {
-        IBaseView baseView = obtainView();
+    override fun firstPage2(
+        rxAppCompatActivity: RxAppCompatActivity,
+        bodyParams: Map<String?, String?>
+    ) {
+        val baseView = obtainView()
         if (baseView != null) {
-            if (baseView instanceof IFirstPageView) {
-                IFirstPageView firstPageView = (IFirstPageView) baseView;
+            if (baseView is IFirstPageView) {
+                val firstPageView = baseView
                 //                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
-                Objects.requireNonNull(RetrofitManager.Companion.get())
-                        .responseString(rxAppCompatActivity, model.firstPage(bodyParams), new OnCommonSingleParamCallback<String>() {
-                            @Override
-                            public void onSuccess(String success) {
-                                LogManager.INSTANCE.i(TAG, "success*****" + success);
+                RetrofitManager.get()
+                    .responseString(
+                        rxAppCompatActivity,
+                        model.firstPage(bodyParams),
+                        object : OnCommonSingleParamCallback<String> {
+                            override fun onSuccess(success: String) {
+                                i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
 
                                     //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
-                                    FirstPageResponse response = new GsonManager().convert(success, FirstPageResponse.class);
+                                    val response = GsonManager().convert(
+                                        success,
+                                        FirstPageResponse::class.java
+                                    )
                                     //											 String jsonStr = new GsonManager().toJson(response);
-                                    if (response.getError_code() == 0) {
-                                        firstPageView.firstPageDataSuccess(response.getResult().getData());
+                                    if (response.error_code == 0) {
+                                        firstPageView.firstPageDataSuccess(
+                                            response.getResult().getData()
+                                        )
                                     } else {
-                                        firstPageView.firstPageDataError(response.getReason());
+                                        firstPageView.firstPageDataError(response.getReason())
                                     }
                                 } else {
-                                    firstPageView.firstPageDataError(BaseApplication.Companion.get().getResources().getString(R.string.loading_failed));
+                                    firstPageView.firstPageDataError(
+                                        ResourcesManager.getString(
+                                            R.string.loading_failed
+                                        )
+                                    )
                                 }
                             }
 
-                            @Override
-                            public void onError(String error) {
-                                LogManager.INSTANCE.i(TAG, "error*****" + error);
-                                firstPageView.firstPageDataError(error);
+                            override fun onError(error: String) {
+                                i(TAG, "error*****$error")
+                                firstPageView.firstPageDataError(error)
                             }
-                        });
+                        })
                 //				compositeDisposable.add(disposable);
 
                 ////                rxjava2+retrofit2请求（响应速度更快）

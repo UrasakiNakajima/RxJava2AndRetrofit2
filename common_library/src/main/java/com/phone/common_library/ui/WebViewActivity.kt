@@ -80,7 +80,7 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
                         }
                     }
 
-                    override fun onError(error: String?) {
+                    override fun onError(error: String) {
 
                     }
 

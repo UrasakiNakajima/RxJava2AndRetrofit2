@@ -35,11 +35,6 @@ android {
 
 
     defaultConfig {
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
         if (isModule.toBoolean()) {
             //可独立运行的app
             applicationId "com.phone.square_module"
@@ -50,9 +45,14 @@ android {
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
-
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     //android 模块下开启DataBinding

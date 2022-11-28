@@ -55,7 +55,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     private var loadView: QMUILoadingView? = null
 
     private val mineAdapter by lazy {
-        MineAdapter(rxAppCompatActivity)
+        MineAdapter(mRxAppCompatActivity)
     }
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
@@ -86,7 +86,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                 }
             })
             tevLogout?.setOnClickListener {
-                baseApplication.setLogin(false)
+                mBaseApplication.setLogin(false)
                 ARouter.getInstance().build("/main_module/login").navigation()
             }
             tevThreadPool?.setOnClickListener {
@@ -101,7 +101,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     private fun initAdapter() {
-        linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
+        linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
         rcvData?.layoutManager = (linearLayoutManager)
         rcvData?.itemAnimator = DefaultItemAnimator()
@@ -110,9 +110,9 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
             setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
                 override fun onItemClickListener(position: Int, view: View?) {
-                    //                bodyParams.clear()
-                    //                bodyParams["max_behot_time"] = "1000"
-                    //                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
+                    //                mBodyParams.clear()
+                    //                mBodyParams["max_behot_time"] = "1000"
+                    //                startActivityCarryParams(MineDetailsActivity::class.java, mBodyParams)
 
                     //                //Jump with parameters
                     //                ARouter.getInstance().build("/mine_module/ui/mine_details")
@@ -120,7 +120,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                     //                        .navigation()
 
                     if (view?.id == R.id.ll_root) {
-                        val intent = Intent(rxAppCompatActivity, WebViewActivity::class.java)
+                        val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
                         intent.putExtra(
                             "loadUrl",
                             mineAdapter.mJuheNewsBeanList.get(position).url
@@ -208,11 +208,11 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
     private fun initMine() {
         if (RetrofitManager.isNetworkAvailable()) {
-            bodyParams.clear()
+            mBodyParams.clear()
 
-            bodyParams["type"] = "keji"
-            bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter?.mineData(rxFragment, bodyParams)
+            mBodyParams["type"] = "keji"
+            mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
+            presenter?.mineData(rxFragment, mBodyParams)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {

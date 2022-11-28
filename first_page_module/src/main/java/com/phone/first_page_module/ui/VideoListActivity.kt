@@ -36,11 +36,6 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
     private val videoListBeanList: MutableList<LargeImageListBean> = ArrayList()
     //    private boolean isRefresh;
 
-    //    private boolean isRefresh;
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun initLayoutId(): Int {
         return R.layout.activity_video_list
     }

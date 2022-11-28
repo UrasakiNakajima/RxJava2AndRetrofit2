@@ -98,8 +98,8 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         LogManager.i(TAG, "onNewIntent")
     }
 
-    override fun getAuthCodeSuccess(success: GetVerificationCode.DataDTO) {
-        showToast(success.content, true)
+    override fun getAuthCodeSuccess(success: GetVerificationCode.DataDTO?) {
+        showToast(success?.content, true)
     }
 
     override fun getAuthCodeError(error: String?) {

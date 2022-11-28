@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
  */
 class DownloadManger private constructor() {
 
-    private var client: OkHttpClient? = null
+    private lateinit var client: OkHttpClient
 
     init {
         client = OkHttpClient.Builder()
@@ -51,7 +51,7 @@ class DownloadManger private constructor() {
 
     fun download(url: String, suffix: String, saveDir: String, listener: OnDownloadListener) {
         val request = Request.Builder().url(url).get().build()
-        client!!.newCall(request).enqueue(object : Callback {
+        client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 // 下载失败
                 listener.onDownloadError()
@@ -79,16 +79,16 @@ class DownloadManger private constructor() {
                 try {
                     val buf = ByteArray(1024 * 1024 * 2)
                     var len = 0
-                    val total = response.body()!!.contentLength()
-                    `is` = response.body()!!.byteStream()
+                    val total = response.body()?.contentLength()
+                    `is` = response.body()?.byteStream()
                     bis = BufferedInputStream(`is`)
                     fos = FileOutputStream(file, false)
                     bos = BufferedOutputStream(fos)
                     var sum: Long = 0
-                    while (`is`.read(buf).also { len = it } != -1) {
+                    while (`is`?.read(buf).also { len = it!! } != -1) {
                         fos.write(buf, 0, len)
                         sum += len.toLong()
-                        val progress = (sum * 1.0f / total * 100).toInt()
+                        val progress = (sum * 1.0f / total!! * 100).toInt()
                         // 下载中
                         val mainThreadManager = MainThreadManager()
                         mainThreadManager.setOnSubThreadToMainThreadCallback {

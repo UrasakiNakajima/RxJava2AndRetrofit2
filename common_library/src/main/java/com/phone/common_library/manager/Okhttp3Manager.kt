@@ -12,7 +12,6 @@ import com.phone.common_library.callback.OnCommonSingleParamCallback
 import com.phone.common_library.callback.OnCommonSuccessCallback
 import com.phone.common_library.interceptor.AddAccessTokenInterceptor
 import com.phone.common_library.interceptor.ReceivedAccessTokenInterceptor
-import com.phone.common_library.manager.LogManager.i
 import okhttp3.*
 import okio.BufferedSink
 import org.json.JSONObject
@@ -30,8 +29,7 @@ import java.util.concurrent.TimeUnit
 class Okhttp3Manager {
 
     private val TAG = Okhttp3Manager::class.java.simpleName
-    private var client: OkHttpClient? = null
-    private var manager: Okhttp3Manager? = null
+    private var client: OkHttpClient
     val UPDATA = 100
 
     init {
@@ -59,15 +57,15 @@ class Okhttp3Manager {
 
         //       Synchronized添加后就是线程安全的的懒汉模式
         @Synchronized
-        fun get(): Okhttp3Manager? {
+        fun get(): Okhttp3Manager {
             if (instance == null) {
                 instance = Okhttp3Manager();
             }
-            return instance;
+            return instance as Okhttp3Manager
         }
     }
 
-    fun getClient(): OkHttpClient? {
+    fun getClient(): OkHttpClient {
         return client
     }
 
@@ -88,12 +86,12 @@ class Okhttp3Manager {
 //                .get()//默认就是GET请求，可以不写（最好写上，要清晰表达出来）
 //                .build();
         //3.创建一个call对象,参数就是Request请求对象
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(TAG, "getAsync onFailure e*******$e")
-                i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
+                LogManager.i(TAG, "getAsync onFailure e*******$e")
+                LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -105,8 +103,8 @@ class Okhttp3Manager {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseString = response.body()!!.string()
-                i(
+                val responseString = response.body()?.string()
+                LogManager.i(
                     TAG,
                     "getAsync onResponse responseString*****$responseString"
                 )
@@ -164,12 +162,12 @@ class Okhttp3Manager {
 //                .get()//默认就是GET请求，可以不写（最好写上，要清晰表达出来）
 //                .build();
         //3.创建一个call对象,参数就是Request请求对象
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(TAG, "getAsync onFailure e*******$e")
-                i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
+                LogManager.i(TAG, "getAsync onFailure e*******$e")
+                LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -181,8 +179,8 @@ class Okhttp3Manager {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseString = response.body()!!.string()
-                i(
+                val responseString = response.body()?.string()
+                LogManager.i(
                     TAG,
                     "getAsync onResponse responseString*****$responseString"
                 )
@@ -243,12 +241,12 @@ class Okhttp3Manager {
 //                .get()//默认就是GET请求，可以不写（最好写上，要清晰表达出来）
 //                .build();
         //3.创建一个call对象,参数就是Request请求对象
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(TAG, "getAsync onFailure e*******$e")
-                i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
+                LogManager.i(TAG, "getAsync onFailure e*******$e")
+                LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -260,8 +258,8 @@ class Okhttp3Manager {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseString = response.body()!!.string()
-                i(
+                val responseString = response.body()?.string()
+                LogManager.i(
                     TAG,
                     "getAsync onResponse responseString*****$responseString"
                 )
@@ -303,7 +301,7 @@ class Okhttp3Manager {
      * @param bodyParams
      * @return
      */
-    private fun getBodyParams(bodyParams: Map<String, String>?): String? {
+    private fun getBodyParams(bodyParams: Map<String, String>?): String {
         //1.添加请求参数
         //遍历map中所有参数到builder
         return if (bodyParams != null && bodyParams.size > 0) {
@@ -358,7 +356,7 @@ class Okhttp3Manager {
     ) {
         val jsonObject = JSONObject(bodyParams)
         val requestData = jsonObject.toString()
-        i(
+        LogManager.i(
             TAG,
             "postAsyncString requestData*****$requestData"
         )
@@ -368,15 +366,15 @@ class Okhttp3Manager {
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         val request = Request.Builder().url(url).post(requestBody).build()
         //4.创建一个call对象,参数就是Request请求对象
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(
+                LogManager.i(
                     TAG,
                     "postAsyncString onFailure e*******$e"
                 )
-                i(TAG, "postAsyncString onFailure e detailMessage*******" + e.message)
+                LogManager.i(TAG, "postAsyncString onFailure e detailMessage*******" + e.message)
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -388,8 +386,8 @@ class Okhttp3Manager {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseString = response.body()!!.string()
-                i(
+                val responseString = response.body()?.string()
+                LogManager.i(
                     TAG,
                     "postAsyncString onResponse responseString*****$responseString"
                 )
@@ -437,7 +435,7 @@ class Okhttp3Manager {
         requestData: String,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
     ) {
-        i(TAG, "requestData*****$requestData")
+        LogManager.i(TAG, "requestData*****$requestData")
 
         //2.通过new RequestBody 创建requestBody对象
         val requestBody: RequestBody = object : RequestBody() {
@@ -453,15 +451,15 @@ class Okhttp3Manager {
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         val request = Request.Builder().url(url).post(requestBody).build()
         //4.创建一个call对象,参数就是Request请求对象
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(
+                LogManager.i(
                     TAG,
                     "postAsyncStream onFailure e*******$e"
                 )
-                i(TAG, "postAsyncStream onFailure e detailMessage*******" + e.message)
+                LogManager.i(TAG, "postAsyncStream onFailure e detailMessage*******" + e.message)
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -473,8 +471,8 @@ class Okhttp3Manager {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseString = response.body()!!.string()
-                i(
+                val responseString = response.body()?.string()
+                LogManager.i(
                     TAG,
                     "postAsyncStream onResponse responseString*****$responseString"
                 )
@@ -523,11 +521,11 @@ class Okhttp3Manager {
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
     ) {
         if (bodyParams != null && bodyParams.size > 0) {
-            i(
+            LogManager.i(
                 TAG,
                 "postAsyncKeyValuePairs bodyParams*****$bodyParams"
             )
-            i(
+            LogManager.i(
                 TAG,
                 "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams)
             )
@@ -551,15 +549,18 @@ class Okhttp3Manager {
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         val request = Request.Builder().url(url).post(requestBody).build()
         //4.创建一个call对象,参数就是Request请求对象
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(
+                LogManager.i(
                     TAG,
                     "postAsyncKeyValuePairs onFailure e*******$e"
                 )
-                i(TAG, "postAsyncKeyValuePairs onFailure e detailMessage*******" + e.message)
+                LogManager.i(
+                    TAG,
+                    "postAsyncKeyValuePairs onFailure e detailMessage*******" + e.message
+                )
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -579,8 +580,8 @@ class Okhttp3Manager {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseString = response.body()!!.string()
-                i(
+                val responseString = response.body()?.string()
+                LogManager.i(
                     TAG,
                     "postAsyncKeyValuePairs onResponse responseString*****$responseString"
                 )
@@ -630,15 +631,18 @@ class Okhttp3Manager {
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         val request = Request.Builder().post(RequestBody.create(null, "")).url(url).build()
         //4.创建一个call对象,参数就是Request请求对象
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(
+                LogManager.i(
                     TAG,
                     "postAsyncKeyValuePairs onFailure e*******$e"
                 )
-                i(TAG, "postAsyncKeyValuePairs onFailure e detailMessage*******" + e.message)
+                LogManager.i(
+                    TAG,
+                    "postAsyncKeyValuePairs onFailure e detailMessage*******" + e.message
+                )
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -658,8 +662,8 @@ class Okhttp3Manager {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseString = response.body()!!.string()
-                i(
+                val responseString = response.body()?.string()
+                LogManager.i(
                     TAG,
                     "postAsyncKeyValuePairs onResponse responseString*****$responseString"
                 )
@@ -709,11 +713,11 @@ class Okhttp3Manager {
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
     ) {
         if (bodyParams != null && bodyParams.size > 0) {
-            i(
+            LogManager.i(
                 TAG,
                 "postAsyncForm bodyParams String*******$bodyParams"
             )
-            i(
+            LogManager.i(
                 TAG,
                 "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams)
             )
@@ -736,12 +740,12 @@ class Okhttp3Manager {
         val requestBody: RequestBody = multipartBodyBuilder.build()
         val request = Request.Builder().post(requestBody).url(url).build()
         //3 将Request封装为Call
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(TAG, "postAsyncForm onFailure e*******$e")
-                i(TAG, "postAsyncForm onFailure e detailMessage*******" + e.message)
+                LogManager.i(TAG, "postAsyncForm onFailure e*******$e")
+                LogManager.i(TAG, "postAsyncForm onFailure e detailMessage*******" + e.message)
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -754,12 +758,12 @@ class Okhttp3Manager {
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
 //                //服务器返回的是加密字符串，要解密
-//                String dataEncrypt = response.body().string();
-//                LogManager.i(TAG, "login onResponse dataEncrypt*****" + dataEncrypt);
-                val responseString = response.body()!!.string()
+//                String dataEncrypt = response.body()?.string();
+//                LogManager.LogManager.i(TAG, "login onResponse dataEncrypt*****" + dataEncrypt);
+                val responseString = response.body()?.string()
                 //                try {
 //                    responseString = AESManager.aesDecrypt(dataEncrypt);
-                i(
+                LogManager.i(
                     TAG,
                     "postAsyncForm onResponse responseString*****$responseString"
                 )
@@ -814,11 +818,11 @@ class Okhttp3Manager {
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
     ) {
         if (bodyParams != null && bodyParams.size > 0) {
-            i(
+            LogManager.i(
                 TAG,
                 "postAsyncForm bodyParams String*******$bodyParams"
             )
-            i(
+            LogManager.i(
                 TAG,
                 "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams)
             )
@@ -851,22 +855,25 @@ class Okhttp3Manager {
                 }
             }
         } else {
-            i(TAG, "postAsyncFormAndFile fileList.size() = 0")
+            LogManager.i(TAG, "postAsyncFormAndFile fileList.size() = 0")
         }
 
         //构建请求体
         val requestBody: RequestBody = multipartBodyBuilder.build()
         val request = Request.Builder().post(requestBody).url(url).build()
         //3 将Request封装为Call
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(
+                LogManager.i(
                     TAG,
                     "postAsyncFormAndFiles onFailure e*******$e"
                 )
-                i(TAG, "postAsyncFormAndFiles onFailure e detailMessage*******" + e.message)
+                LogManager.i(
+                    TAG,
+                    "postAsyncFormAndFiles onFailure e detailMessage*******" + e.message
+                )
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -878,8 +885,8 @@ class Okhttp3Manager {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseString = response.body()!!.string()
-                i(
+                val responseString = response.body()?.string()
+                LogManager.i(
                     TAG,
                     "postAsyncFormAndFiles onResponse responseString*****$responseString"
                 )
@@ -930,11 +937,11 @@ class Okhttp3Manager {
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
     ) {
         if (bodyParams != null && bodyParams.size > 0) {
-            i(
+            LogManager.i(
                 TAG,
                 "postAsyncForm bodyParams String*******$bodyParams"
             )
-            i(
+            LogManager.i(
                 TAG,
                 "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams)
             )
@@ -944,7 +951,7 @@ class Okhttp3Manager {
         val multipartBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
         //1.添加请求参数
         //遍历map中所有参数到builder
-        if (bodyParams != null && bodyParams.size > 0) {
+        if (bodyParams.size > 0) {
             for (key in bodyParams.keys) {
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams[key])) {
                     //如果参数不是null，才把参数传给后台
@@ -954,41 +961,44 @@ class Okhttp3Manager {
         }
 
         //遍历fileMap中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
-        if (fileMap != null && fileMap.size > 0) {
+        if (fileMap.size > 0) {
             for (key in fileMap.keys) {
-                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams!![key])) {
-                    //如果参数不是null，才把参数传给后台
-                    multipartBodyBuilder.addFormDataPart(
-                        key, fileMap[key]!!.name, RequestBody.create(
-                            MEDIA_TYPE,
-                            fileMap[key]
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams[key])) {
+                    bodyParams[key]?.let {
+                        //如果参数不是null，才把参数传给后台
+                        multipartBodyBuilder.addFormDataPart(
+                            key, fileMap[key]?.name, RequestBody.create(
+                                MEDIA_TYPE,
+                                it
+                            )
                         )
-                    )
-                    i(
-                        TAG, "fileMap.get(key).getName()*****" + fileMap[key]!!
-                            .name
-                    )
+                        LogManager.i(
+                            TAG, "fileMap.get(key).getName()*****" + fileMap[key]?.name
+                        )
+                    }
                 }
             }
         }
 
         //遍历filesMap中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
-        if (filesMap != null && filesMap.size > 0) {
+        if (filesMap.size > 0) {
             for (key in filesMap.keys) {
-                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams!![key])) {
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams[key])) {
                     //如果参数不是null，才把参数传给后台
-                    if (filesMap[key] != null && filesMap[key]!!.size > 0) {
-                        for (i in filesMap[key]!!.indices) {
-                            multipartBodyBuilder.addFormDataPart(
-                                key, filesMap[key]!![i].name, RequestBody.create(
-                                    MEDIA_TYPE,
-                                    filesMap[key]!![i]
+                    filesMap[key]?.let {
+                        if (filesMap[key] != null && it.size > 0) {
+                            for (i in it.indices) {
+                                multipartBodyBuilder.addFormDataPart(
+                                    key, it[i].name, RequestBody.create(
+                                        MEDIA_TYPE,
+                                        it[i]
+                                    )
                                 )
-                            )
-                            i(
-                                TAG,
-                                "filesMap.get(key).get(i).getName()*****" + filesMap[key]!![i].name
-                            )
+                                LogManager.i(
+                                    TAG,
+                                    "filesMap.get(key).get(i).getName()*****" + it[i].name
+                                )
+                            }
                         }
                     }
                 }
@@ -999,15 +1009,18 @@ class Okhttp3Manager {
         val requestBody: RequestBody = multipartBodyBuilder.build()
         val request = Request.Builder().post(requestBody).url(url).build()
         //3 将Request封装为Call
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(
+                LogManager.i(
                     TAG,
                     "postAsyncFormAndFiles onFailure e*******$e"
                 )
-                i(TAG, "postAsyncFormAndFiles onFailure e detailMessage*******" + e.message)
+                LogManager.i(
+                    TAG,
+                    "postAsyncFormAndFiles onFailure e detailMessage*******" + e.message
+                )
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -1019,8 +1032,8 @@ class Okhttp3Manager {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseString = response.body()!!.string()
-                i(
+                val responseString = response.body()?.string()
+                LogManager.i(
                     TAG,
                     "postAsyncFormAndFiles onResponse responseString*****$responseString"
                 )
@@ -1071,11 +1084,11 @@ class Okhttp3Manager {
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
     ) {
         if (bodyParams != null && bodyParams.size > 0) {
-            i(
+            LogManager.i(
                 TAG,
                 "postAsyncForm bodyParams String*******$bodyParams"
             )
-            i(
+            LogManager.i(
                 TAG,
                 "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams)
             )
@@ -1113,15 +1126,18 @@ class Okhttp3Manager {
         val requestBody: RequestBody = multipartBodyBuilder.build()
         val request = Request.Builder().post(requestBody).url(url).build()
         //3 将Request封装为Call
-        val call = client!!.newCall(request)
+        val call = client.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                i(
+                LogManager.i(
                     TAG,
                     "postAsyncFormAndFiles onFailure e*******$e"
                 )
-                i(TAG, "postAsyncFormAndFiles onFailure e detailMessage*******" + e.message)
+                LogManager.i(
+                    TAG,
+                    "postAsyncFormAndFiles onFailure e detailMessage*******" + e.message
+                )
                 val mainThreadManager = MainThreadManager()
                 mainThreadManager.setOnSubThreadToMainThreadCallback {
                     onCommonSingleParamCallback.onError(
@@ -1133,8 +1149,8 @@ class Okhttp3Manager {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                val responseString = response.body()!!.string()
-                i(
+                val responseString = response.body()?.string()
+                LogManager.i(
                     TAG,
                     "postAsyncFormAndFiles onResponse responseString*****$responseString"
                 )
@@ -1206,7 +1222,7 @@ class Okhttp3Manager {
 //            @Override
 //            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 //                if (response != null && response.isSuccessful()) {
-//                    long contentLength = response.body().contentLength();
+//                    long contentLength = response.body()?.contentLength();
 //                    LogManager.i(TAG, "getAppContentLength onResponse contentLength*******" + contentLength);
 //                    MainThreadManager mainThreadManager = new MainThreadManager();
 //                    mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
@@ -1359,7 +1375,7 @@ class Okhttp3Manager {
 //                        FileOutputStream fileOutputStream = null;
 //                        BufferedOutputStream bufferedOutputStream = null;
 //                        try {
-//                            inputStream = response.body().byteStream();
+//                            inputStream = response.body()?.byteStream();
 //                            bufferedInputStream = new BufferedInputStream(inputStream);
 //                            fileOutputStream = new FileOutputStream(file, false);
 //                            bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
@@ -1519,7 +1535,7 @@ class Okhttp3Manager {
     //            @Override
     //            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
     //                if (response != null && response.isSuccessful()) {
-    //                    long contentLength = response.body().contentLength();
+    //                    long contentLength = response.body()?.contentLength();
     //                    LogManager.i(TAG, "getAppContentLength onResponse contentLength*******" + contentLength);
     //                    MainThreadManager mainThreadManager = new MainThreadManager();
     //                    mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
@@ -1672,7 +1688,7 @@ class Okhttp3Manager {
     //                        FileOutputStream fileOutputStream = null;
     //                        BufferedOutputStream bufferedOutputStream = null;
     //                        try {
-    //                            inputStream = response.body().byteStream();
+    //                            inputStream = response.body()?.byteStream();
     //                            bufferedInputStream = new BufferedInputStream(inputStream);
     //                            fileOutputStream = new FileOutputStream(file, false);
     //                            bufferedOutputStream = new BufferedOutputStream(fileOutputStream);

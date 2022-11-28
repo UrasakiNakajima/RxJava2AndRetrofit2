@@ -138,14 +138,6 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 
     override fun initLoadData() {
         initSquareData("$currentPage")
-
-        val firstPageService =
-            ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
-                .navigation() as IFirstPageService
-        LogManager.i(
-            TAG,
-            "firstPageService.firstPageDataList******" + firstPageService.firstPageDataList.toString()
-        )
         LogManager.i(TAG, "SquareFragment initLoadData")
 
 //        startAsyncTask()

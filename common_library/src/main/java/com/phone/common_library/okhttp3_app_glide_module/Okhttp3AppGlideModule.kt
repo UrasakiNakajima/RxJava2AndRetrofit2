@@ -41,11 +41,10 @@ class Okhttp3AppGlideModule : AppGlideModule() {
     //    }
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-        Okhttp3Manager.get()?.getClient()?.let {
-            val client: OkHttpClient = it
+        Okhttp3Manager.get().getClient().let {
             registry.replace(
                 GlideUrl::class.java,
-                InputStream::class.java, OkHttpUrlLoader.Factory(client)
+                InputStream::class.java, OkHttpUrlLoader.Factory(it)
             )
         }
     }

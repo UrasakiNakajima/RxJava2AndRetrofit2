@@ -67,8 +67,8 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
         amapLocationManager = AMAPLocationManager.get()
         amapLocationManager?.setOnCommonSingleParamCallback(object :
             OnCommonSingleParamCallback<AMapLocation> {
-            override fun onSuccess(success: AMapLocation) {
-                LogManager.i(TAG, "address*****" + success.address)
+            override fun onSuccess(success: AMapLocation?) {
+                LogManager.i(TAG, "address*****" + success?.address)
             }
 
             override fun onError(error: String) {
@@ -98,11 +98,11 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     }
 
     private fun initAdapter() {
-        val linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
+        val linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
         rcvData?.layoutManager = linearLayoutManager
         rcvData?.itemAnimator = DefaultItemAnimator()
-        firstPageAdapter = FirstPageAdapter(rxAppCompatActivity)
+        firstPageAdapter = FirstPageAdapter(mRxAppCompatActivity)
         firstPageAdapter?.setRcvOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
             //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
             //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
@@ -126,7 +126,7 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
             //
             //				}
             if (view.id == R.id.ll_root) {
-                val intent = Intent(rxAppCompatActivity, WebViewActivity::class.java)
+                val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
                 intent.putExtra(
                     "loadUrl",
                     firstPageAdapter?.mJuheNewsBeanList?.get(position)?.getUrl()
@@ -228,10 +228,11 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     }
 
     override fun firstPageDataSuccess(success: List<JuheNewsBean?>?) {
-        if (!rxAppCompatActivity.isFinishing) {
+        if (!mRxAppCompatActivity.isFinishing) {
             val IFirstPageService =
                 ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
                     .navigation() as IFirstPageService
+
             if (isRefresh) {
                 firstPageAdapter?.clearData()
                 firstPageAdapter?.addData(success)
@@ -240,13 +241,18 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
                 firstPageAdapter?.addData(success)
                 refreshLayout?.finishLoadMore()
             }
-            IFirstPageService.firstPageDataList = firstPageAdapter?.mJuheNewsBeanList
+            LogManager.i(
+                TAG,
+                "firstPageAdapter?.mJuheNewsBeanList*****" + firstPageAdapter?.mJuheNewsBeanList.toString()
+            )
+            IFirstPageService.mFirstPageDataList =
+                firstPageAdapter?.mJuheNewsBeanList as MutableList<JuheNewsBean?>
             hideLoading()
         }
     }
 
     override fun firstPageDataError(error: String?) {
-        if (!rxAppCompatActivity.isFinishing) {
+        if (!mRxAppCompatActivity.isFinishing) {
 //            showToast(error, true);
             showCustomToast(
                 ScreenManager.dpToPx(20f), ScreenManager.dpToPx(20f),
@@ -286,12 +292,12 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
 //                User user = new User2();
 //                User3 user3 = (User3) user;
 //                LogManager.i(TAG, user3.toString());
-                    if (TextUtils.isEmpty(baseApplication.getSystemId())) {
+                    if (TextUtils.isEmpty(mBaseApplication.getSystemId())) {
                         val systemId = SystemManager.getSystemId()
-                        baseApplication.setSystemId(systemId)
-                        LogManager.i(TAG, "isEmpty systemId*****" + baseApplication.getSystemId())
+                        mBaseApplication.setSystemId(systemId)
+                        LogManager.i(TAG, "isEmpty systemId*****" + mBaseApplication.getSystemId())
                     } else {
-                        LogManager.i(TAG, "systemId*****" + baseApplication.getSystemId())
+                        LogManager.i(TAG, "systemId*****" + mBaseApplication.getSystemId())
                     }
                     amapLocationManager?.startLocation()
                 }
@@ -311,14 +317,14 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     private fun showSystemSetupDialog() {
         cancelPermissionsDialog()
         if (mPermissionsDialog == null) {
-            mPermissionsDialog = AlertDialog.Builder(rxAppCompatActivity)
+            mPermissionsDialog = AlertDialog.Builder(mRxAppCompatActivity)
                 .setTitle("权限设置")
                 .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
                 .setPositiveButton("去授权") { dialog, which ->
                     cancelPermissionsDialog()
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri = Uri.fromParts(
-                        "package", baseApplication.packageName, null
+                        "package", mBaseApplication.packageName, null
                     )
                     intent.data = uri
                     startActivityForResult(intent, 207)
@@ -341,10 +347,10 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     private fun initFirstPage() {
         showLoading()
         if (RetrofitManager.isNetworkAvailable()) {
-            bodyParams.clear()
-            bodyParams["type"] = "yule"
-            bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter?.firstPage(this, bodyParams)
+            mBodyParams.clear()
+            mBodyParams["type"] = "yule"
+            mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
+            presenter?.firstPage(this, mBodyParams)
         } else {
             firstPageDataError(resources.getString(R.string.please_check_the_network_connection))
         }
