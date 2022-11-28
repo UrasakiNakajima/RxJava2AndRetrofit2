@@ -8,6 +8,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Looper
 import android.os.Process
+import android.util.ArrayMap
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
@@ -23,38 +24,37 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivity() {
 
     private val TAG = BaseMvpRxAppActivity::class.java.simpleName
-    protected lateinit var loadView: QMUILoadingView
-    protected var layoutParams: FrameLayout.LayoutParams? = null
+    protected lateinit var mLoadView: QMUILoadingView
+    protected lateinit var layoutParams: FrameLayout.LayoutParams
 
-    protected var presenter: T? = null
-
+    protected lateinit var presenter: T
     protected var url: String? = null
-    protected var bodyParams: MutableMap<String, String> = HashMap()
+    protected var mBodyParams = ArrayMap<String, String>()
     protected lateinit var rxAppCompatActivity: RxAppCompatActivity
-    protected var baseApplication: BaseApplication? = null
-    private var activityPageManager: ActivityPageManager? = null
+    protected var mBaseApplication: BaseApplication? = null
+    private var mActivityPageManager: ActivityPageManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         rxAppCompatActivity = this
-        baseApplication = application as BaseApplication
-        activityPageManager = ActivityPageManager.getInstance()
-        activityPageManager?.addActivity(this)
+        mBaseApplication = application as BaseApplication
+        mActivityPageManager = ActivityPageManager.get()
+        mActivityPageManager?.addActivity(this)
         setContentView(initLayoutId())
 
         //        setToolbar();
         presenter = attachPresenter()
         initData()
         initViews()
-        loadView = QMUILoadingView(this)
-        loadView.visibility = View.GONE
-        loadView.setSize(100)
-        loadView.setColor(ResourcesManager.getColor(R.color.color_333333))
+        mLoadView = QMUILoadingView(this)
+        mLoadView.visibility = View.GONE
+        mLoadView.setSize(100)
+        mLoadView.setColor(ResourcesManager.getColor(R.color.color_333333))
         layoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
         )
-        layoutParams!!.gravity = Gravity.CENTER
-        addContentView(loadView, layoutParams)
+        layoutParams.gravity = Gravity.CENTER
+        addContentView(mLoadView, layoutParams)
         initLoadData()
 
 //        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
@@ -194,7 +194,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
 
     protected open fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!rxAppCompatActivity!!.isFinishing) {
+        if (!this.rxAppCompatActivity.isFinishing) {
             val toast: Toast
             val duration: Int
             duration = if (isLongToast) {
@@ -249,12 +249,12 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
         return Looper.getMainLooper().thread.id == Thread.currentThread().id
     }
 
-    protected open fun startActivity(cls: Class<*>?) {
+    protected fun startActivity(cls: Class<*>?) {
         val intent = Intent(this, cls)
         startActivity(intent)
     }
 
-    protected open fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
+    protected fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
         val intent = Intent(this, cls)
         val bundle = Bundle()
         if (params != null && params.size > 0) {
@@ -268,7 +268,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
         startActivity(intent)
     }
 
-    protected open fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
+    protected fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
         val intent = Intent(this, cls)
         startActivityForResult(intent, requestCode)
     }
@@ -292,16 +292,16 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
     }
 
     protected fun detachPresenter() {
-        presenter?.detachView()
+        presenter.detachView()
     }
 
     open fun getActivityPageManager(): ActivityPageManager? {
-        return activityPageManager
+        return mActivityPageManager
     }
 
     private fun killAppProcess() {
         LogManager.i(TAG, "killAppProcess")
-        baseApplication?.let {
+        mBaseApplication?.let {
             val manager = it.getSystemService(ACTIVITY_SERVICE) as ActivityManager
             val processInfos = manager.runningAppProcesses
             // 先杀掉相关进程，最后再杀掉主进程
@@ -311,8 +311,8 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
                 }
             }
             LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
-            val crashHandlerManager = CrashHandlerManager.getInstance()
-            crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
+            val crashHandlerManager = CrashHandlerManager.get()
+            crashHandlerManager?.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
             try {
                 Thread.sleep(1000)
             } catch (e: InterruptedException) {
@@ -326,11 +326,11 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
 
     override fun onDestroy() {
         detachPresenter()
-        bodyParams.clear()
-        if (activityPageManager?.isLastAliveActivity?.get() == true) {
+        mBodyParams.clear()
+        if (mActivityPageManager?.mIsLastAliveActivity?.get() == true) {
             killAppProcess()
         }
-        activityPageManager?.removeActivity(rxAppCompatActivity)
+        mActivityPageManager?.removeActivity(rxAppCompatActivity)
         super.onDestroy()
     }
 }

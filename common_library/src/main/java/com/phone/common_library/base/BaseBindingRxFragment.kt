@@ -44,9 +44,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rxAppCompatActivity = activity as RxAppCompatActivity?
-        if (rxAppCompatActivity != null) {
-            baseApplication = rxAppCompatActivity!!.application as BaseApplication
-        }
+        baseApplication = rxAppCompatActivity?.application as BaseApplication
         initData()
         initViews()
         initLoadData()

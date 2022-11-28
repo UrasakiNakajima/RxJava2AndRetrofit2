@@ -11,6 +11,11 @@
 
     <string name="please_add_components">請添加組件（将gradle.properties文件的isModule的值改为true，并同步项目）</string>
 
+
+    <string name="compress_pictures">壓縮圖片</string>
+    <string name="picture_to_base64">圖片轉Base64</string>
+    <string name="base64_to_picture">Base64轉圖片</string>
+    <string name="reset_data">重置數據</string>
     <string name="thread_pool">線程池</string>
     <string name="params_transfer_change_problem">参数传递改变问题</string>
     <string name="create_an_exception">製造一個異常（造成App崩潰的異常）</string>

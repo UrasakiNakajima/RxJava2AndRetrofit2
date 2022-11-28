@@ -29,7 +29,6 @@ class AndroidAndJsActivity : BaseBindingRxAppActivity<ActivityAndroidAndJsBindin
     override fun initLayoutId(): Int = R.layout.activity_android_and_js
 
     override fun initData() {
-        ARouter.getInstance().inject(this)
     }
 
     @SuppressLint("SetJavaScriptEnabled")

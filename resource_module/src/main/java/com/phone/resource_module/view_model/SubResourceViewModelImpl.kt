@@ -50,14 +50,14 @@ class SubResourceViewModelImpl() : BaseViewModel(), ISubResourceViewModel {
                                 dataxRxFragmentSuccess.value = list
                             } else {
                                 dataxRxFragmentError.value =
-                                    BaseApplication.getInstance().resources.getString(
+                                    BaseApplication.get().resources.getString(
                                         R.string.no_data_available
                                     )
                             }
                         }
                     } else {
                         dataxRxFragmentError.value =
-                            BaseApplication.getInstance().resources.getString(
+                            BaseApplication.get().resources.getString(
                                 R.string.loading_failed
                             )
                     }

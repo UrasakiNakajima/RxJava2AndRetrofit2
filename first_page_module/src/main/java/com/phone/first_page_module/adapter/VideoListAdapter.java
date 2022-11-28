@@ -58,7 +58,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             BodyHolder bodyHolder = (BodyHolder) holder;
 //            bodyHolder.tevCode.setText(videoListBeanList.get(position).getCode());
             String data = videoListBeanList.get(position).getUrl();
-            LogManager.i(TAG, "onBindViewHolder data*****" + data);
+            LogManager.INSTANCE.i(TAG, "onBindViewHolder data*****" + data);
 
 //            ViewGroup.LayoutParams layoutParams=new ViewGroup.LayoutParams();
             Glide.with(context).load(data).into(bodyHolder.imvData);

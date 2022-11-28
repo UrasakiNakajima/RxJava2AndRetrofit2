@@ -14,7 +14,7 @@ class SubResourceModelImpl : ISubResourceModel {
         tabId: Int,
         pageNum: Int
     ): Observable<ResponseBody> {
-        return RetrofitManager.getInstance().retrofit
+        return RetrofitManager.get().getRetrofit()
             .create(ResourceRequest::class.java)
             .getSubResourceData(tabId, pageNum)
     }
@@ -23,7 +23,7 @@ class SubResourceModelImpl : ISubResourceModel {
         tabId: Int,
         pageNum: Int
     ): Call<ResponseBody> {
-        return RetrofitManager.getInstance().retrofit
+        return RetrofitManager.get().getRetrofit()
             .create(ResourceRequest::class.java)
             .getSubResourceData2(tabId, pageNum)
     }

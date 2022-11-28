@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
@@ -77,11 +76,11 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 LogManager.i(TAG, "onChanged*****dataxRxFragmentSuccess")
                 squareDataSuccess(it)
             } else {
-                squareDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                squareDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.dataxRxFragmentError.observe(this, {
-            if (!TextUtils.isEmpty(it)) {
+            it?.let {
                 LogManager.i(TAG, "onChanged*****dataxRxFragmentError")
                 squareDataError(it)
             }
@@ -168,7 +167,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
 //                return null
 //            }
 //        }.execute()
-//        Toast.makeText(rxAppCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(mRxAppCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
 //    }
 
     fun showLoading() {
@@ -186,7 +185,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     fun squareDataSuccess(success: List<DataX>) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             if (success.size > 0) {
                 datax.apply {
                     title = success.get(1).title
@@ -204,7 +203,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     }
 
     fun squareDataError(error: String) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
@@ -224,7 +223,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
      * 請求權限，RxFragment里需要的时候直接调用就行了
      */
     private fun initRxPermissionsRxFragment(number: Int) {
-        val rxPermissionsManager = RxPermissionsManager.getInstance()
+        val rxPermissionsManager = RxPermissionsManager.get()
         rxPermissionsManager.initRxPermissions2(
             this,
             permissions,
@@ -233,7 +232,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                     //所有的权限都授予
                     if (number == 1) {
                         val baseMvpRxAppActivity =
-                            rxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
+                            mRxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
                         baseMvpRxAppActivity.getActivityPageManager()?.exitApp2();
                     } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
@@ -249,7 +248,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } catch (e: Exception) {
-                            ExceptionManager.getInstance().throwException(e)
+                            ExceptionManager.get()?.throwException(e)
                         }
                     }
                 }
@@ -269,18 +268,18 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     private fun showSystemSetupDialog() {
         cancelPermissionsDialog()
         if (mPermissionsDialog == null) {
-            mPermissionsDialog = AlertDialog.Builder(rxAppCompatActivity)
+            mPermissionsDialog = AlertDialog.Builder(mRxAppCompatActivity)
                 .setTitle("权限设置")
                 .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
                 .setPositiveButton("去授权") { dialog, which ->
                     cancelPermissionsDialog()
-                    intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri = Uri.fromParts(
                         "package",
-                        rxAppCompatActivity.applicationContext.packageName,
+                        mRxAppCompatActivity.applicationContext.packageName,
                         null
                     )
-                    intent!!.data = uri
+                    intent.data = uri
                     startActivityForResult(intent, 207)
                 }
                 .create()
@@ -303,7 +302,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.squareData(this, currentPage)
         } else {
-            squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
+            squareDataError(BaseApplication.get().resources.getString(R.string.please_check_the_network_connection));
         }
 
         LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get());

@@ -9,13 +9,13 @@ import retrofit2.Call
 class SquareModelImpl() : ISquareModel {
 
     override fun squareData(currentPage: String): Observable<ResponseBody> {
-        return RetrofitManager.getInstance().retrofit
+        return RetrofitManager.get().getRetrofit()
                 .create(SquareRequest::class.java)
                 .getSquareData(currentPage)
     }
 
     override fun squareData2(currentPage: String): Call<ResponseBody> {
-        return RetrofitManager.getInstance().retrofit
+        return RetrofitManager.get().getRetrofit()
             .create(SquareRequest::class.java)
             .getSquareData2(currentPage)
     }

@@ -4,6 +4,7 @@ import com.phone.common_library.manager.RetrofitManager;
 import com.phone.first_page_module.request.FirstPageRequest;
 
 import java.util.Map;
+import java.util.Objects;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -24,21 +25,21 @@ public class FirstPageModelImpl implements IFirstPageModel {
 	
 	@Override
 	public Observable<ResponseBody> firstPage(Map<String, String> bodyParams) {
-		return RetrofitManager.getInstance().getRetrofit()
+		return Objects.requireNonNull(Objects.requireNonNull(RetrofitManager.Companion.get()).getRetrofit())
 				   .create(FirstPageRequest.class)
 				   .getFirstPage(bodyParams);
 	}
 	
 	@Override
 	public Observable<ResponseBody> firstPageDetails(Map<String, String> bodyParams) {
-		return RetrofitManager.getInstance().getRetrofit()
+		return Objects.requireNonNull(Objects.requireNonNull(RetrofitManager.Companion.get()).getRetrofit())
 				   .create(FirstPageRequest.class)
 				   .getFirstPageDetails(bodyParams);
 	}
 	
 	//    @Override
 	//    public Observable<FirstPageResponse.QuestionBean> firstPageData(Map<String, String> bodyParams) {
-	//        return RetrofitManager.getInstance().getRetrofit()
+	//        return RetrofitManager.get().getRetrofit()
 	//                .create(FirstPageRequest.class)
 	//                .getFirstPageData(bodyParams);
 	//    }

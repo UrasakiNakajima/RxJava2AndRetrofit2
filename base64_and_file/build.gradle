@@ -1,6 +1,11 @@
-plugins {
-    id 'com.android.library'
-}
+//plugins {
+//    id 'com.android.library'
+//    id 'kotlin-android'
+//    id 'kotlin-kapt'
+//}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 31
@@ -34,16 +39,13 @@ android {
     sourceSets {
         main {
             manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
-            java {//移除module包下的代码
-                exclude 'module'
-            }
         }
     }
 
 }
 
 dependencies {
-    implementation project(path: ':common_library')
+    api project(path: ':common_library')
     implementation 'id.zelory:compressor:2.1.0'
 
 

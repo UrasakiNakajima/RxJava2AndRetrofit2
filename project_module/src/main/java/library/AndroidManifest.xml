@@ -11,7 +11,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.EventScheduleActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.SurfaceViewActivity"
             android:exported="false"

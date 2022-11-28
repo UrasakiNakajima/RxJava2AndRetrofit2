@@ -11,7 +11,7 @@ class ProjectModelImpl : IProjectModel {
     private val TAG = ProjectModelImpl::class.java.simpleName
 
     override fun projectTabData(): Call<ResponseBody> {
-        return RetrofitManager.getInstance().retrofit
+        return RetrofitManager.get().getRetrofit()
             .create(ProjectRequest::class.java)
             .getProjectTabData()
     }

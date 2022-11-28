@@ -18,6 +18,7 @@ import androidx.databinding.ViewDataBinding
 import com.gyf.immersionbar.ImmersionBar
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.R
+import com.phone.common_library.manager.ActivityPageManager
 import com.phone.common_library.manager.*
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
@@ -33,14 +34,14 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     protected lateinit var viewModel: VM
     protected lateinit var rxAppCompatActivity: RxAppCompatActivity
     protected var baseApplication: BaseApplication? = null
-    private var activityPageManager: ActivityPageManager? = null
+    private var mActivityPageManager: ActivityPageManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         rxAppCompatActivity = this;
-        activityPageManager = ActivityPageManager.getInstance()
-        activityPageManager?.addActivity(rxAppCompatActivity)
+        mActivityPageManager = ActivityPageManager.get()
+        mActivityPageManager?.addActivity(rxAppCompatActivity)
         baseApplication = application as BaseApplication
 
         initLayoutId()?.let {
@@ -240,13 +241,13 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         toast.show()
     }
 
-    protected open fun startActivity(cls: Class<*>?) {
+    protected fun startActivity(cls: Class<*>?) {
         val intent = Intent(this, cls)
         startActivity(intent)
     }
 
-    open fun getActivityPageManager2(): ActivityPageManager? {
-        return activityPageManager
+    open fun getActivityPageManager(): ActivityPageManager? {
+        return mActivityPageManager
     }
 
     private fun killAppProcess() {
@@ -262,8 +263,8 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
             }
 
             LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
-            val crashHandlerManager = CrashHandlerManager.getInstance()
-            crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
+            val crashHandlerManager = CrashHandlerManager.get()
+            crashHandlerManager?.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
             try {
                 Thread.sleep(1000)
             } catch (e: InterruptedException) {
@@ -279,10 +280,10 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     override fun onDestroy() {
         mDatabind.unbind()
         viewModelStore.clear()
-        if (activityPageManager?.isLastAliveActivity?.get() == true) {
+        if (mActivityPageManager?.mIsLastAliveActivity?.get() == true) {
             killAppProcess()
         }
-        activityPageManager?.removeActivity(rxAppCompatActivity)
+        mActivityPageManager?.removeActivity(rxAppCompatActivity)
         super.onDestroy()
     }
 

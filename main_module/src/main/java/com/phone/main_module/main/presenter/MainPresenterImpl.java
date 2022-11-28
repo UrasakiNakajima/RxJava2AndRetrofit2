@@ -9,6 +9,7 @@ import com.phone.main_module.main.view.IMainView;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * author    : Urasaki
@@ -22,7 +23,7 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
 
     private static final String TAG = "MainPresenterImpl";
     //    private IResourceChildView mainView;//P需要与V 交互，所以需要持有V的引用
-    private MainModelImpl model = new MainModelImpl();
+    private final MainModelImpl model = new MainModelImpl();
 
     public MainPresenterImpl(IBaseView baseView) {
         attachView(baseView);
@@ -36,7 +37,7 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
                 IMainView mainView = (IMainView) baseView;
                 mainView.showLoading();
 
-                RetrofitManager.getInstance()
+                Objects.requireNonNull(RetrofitManager.Companion.get())
                         .responseString3(rxAppCompatActivity, model.mainData(bodyParams), new OnCommonSingleParamCallback<String>() {
                             @Override
                             public void onSuccess(String success) {
@@ -63,7 +64,7 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
 ////                                    FirstPageResponse firstPageResponse = JSON.parse(responseString, FirstPageResponse.class);
 //                                    mainView.mainDataSuccess(baseResponse.getMessage());
 //                                } else {
-//                                    mainView.mainDataError(BaseApplication.getInstance().getResources().getString(R.string.data_in_wrong_format));
+//                                    mainView.mainDataError(BaseApplication.get().getResources().getString(R.string.data_in_wrong_format));
 //                                }
 //                                mainView.hideLoading();
 //                            }
@@ -72,7 +73,7 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
 //                            public void accept(Throwable throwable) throws Exception {
 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
 //                                // 异常处理
-//                                mainView.mainDataError(BaseApplication.getInstance().getResources().getString(R.string.request_was_aborted));
+//                                mainView.mainDataError(BaseApplication.get().getResources().getString(R.string.request_was_aborted));
 //                                mainView.hideLoading();
 //                            }
 //                        });

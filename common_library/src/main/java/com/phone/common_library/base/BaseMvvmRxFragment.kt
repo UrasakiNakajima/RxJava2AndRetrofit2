@@ -26,10 +26,8 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
     protected lateinit var viewModel: VM
-    protected lateinit var rxAppCompatActivity: RxAppCompatActivity
+    protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected lateinit var baseApplication: BaseApplication
-    protected var intent: Intent? = null
-    protected var bundle: Bundle? = null
 //    private var isFirstLoad = true
 
     override fun onCreateView(
@@ -48,8 +46,8 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rxAppCompatActivity = (getActivity() as RxAppCompatActivity?)!!
-        baseApplication = (rxAppCompatActivity.application as BaseApplication?)!!
+        mRxAppCompatActivity = activity as RxAppCompatActivity
+        baseApplication = mRxAppCompatActivity.application as BaseApplication
         viewModel = initViewModel()
         initData()
         initObservers()
@@ -75,13 +73,13 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         bgColor: Int, height: Int,
         roundRadius: Int, message: String, b: Boolean
     ) {
-        val frameLayout = FrameLayout(rxAppCompatActivity)
+        val frameLayout = FrameLayout(mRxAppCompatActivity)
         val layoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
         frameLayout.layoutParams = layoutParams
-        val textView = TextView(rxAppCompatActivity)
+        val textView = TextView(mRxAppCompatActivity)
         val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
         textView.layoutParams = layoutParams1
         textView.setPadding(left, 0, right, 0)
@@ -96,7 +94,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         textView.text = message
         frameLayout.addView(textView)
 
-        val toast = Toast(rxAppCompatActivity)
+        val toast = Toast(mRxAppCompatActivity)
         toast.view = frameLayout
         toast.duration = Toast.LENGTH_LONG
         toast.setGravity(Gravity.CENTER, 0, 0)
@@ -104,29 +102,27 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     }
 
     protected fun startActivity(cls: Class<*>) {
-        intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         startActivity(intent)
     }
 
     protected fun startActivityCarryParams(cls: Class<*>, params: Map<String, String>?) {
-        intent = Intent(rxAppCompatActivity, cls)
-        bundle = Bundle()
+        val intent = Intent(mRxAppCompatActivity, cls)
+        val bundle = Bundle()
 
         if (params != null && params.size > 0) {
             for (key in params.keys) {
                 if (params[key] != null) {//如果参数不是null，才把参数传给后台
-                    bundle?.putString(key, params[key])
+                    bundle.putString(key, params[key])
                 }
             }
-            bundle?.let {
-                intent?.putExtras(it)
-            }
+            intent.putExtras(bundle)
         }
         startActivity(intent)
     }
 
     protected fun startActivityForResult(cls: Class<*>, requestCode: Int) {
-        intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         startActivityForResult(intent, requestCode)
     }
 
@@ -135,18 +131,16 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         params: Map<String, String>?,
         requestCode: Int
     ) {
-        intent = Intent(rxAppCompatActivity, cls)
-        bundle = Bundle()
+        val intent = Intent(mRxAppCompatActivity, cls)
+        val bundle = Bundle()
 
         if (params != null && params.size > 0) {
             for (key in params.keys) {
                 if (params[key] != null) {//如果参数不是null，才把参数传给后台
-                    bundle?.putString(key, params[key])
+                    bundle.putString(key, params[key])
                 }
             }
-            bundle?.let {
-                intent?.putExtras(it)
-            }
+            intent.putExtras(bundle)
         }
         startActivityForResult(intent, requestCode)
     }

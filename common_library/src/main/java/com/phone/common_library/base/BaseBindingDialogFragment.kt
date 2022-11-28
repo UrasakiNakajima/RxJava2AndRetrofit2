@@ -25,8 +25,8 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
 
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
-    protected var rxAppCompatActivity: RxAppCompatActivity? = null
-    protected var baseApplication: BaseApplication? = null
+    protected var mRxAppCompatActivity: RxAppCompatActivity? = null
+    protected var mBaseApplication: BaseApplication? = null
 
     protected var rootView: View? = null
 
@@ -45,10 +45,8 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rxAppCompatActivity = activity as RxAppCompatActivity?
-        if (rxAppCompatActivity != null) {
-            baseApplication = rxAppCompatActivity!!.application as BaseApplication
-        }
+        mRxAppCompatActivity = activity as RxAppCompatActivity?
+        mBaseApplication = mRxAppCompatActivity?.application as BaseApplication
         initData()
         initViews()
         initLoadData()
@@ -72,11 +70,11 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
 
     private var onDialogCallback: OnDialogCallback<Int>? = null
 
-    fun setOnDialogCallback(onDialogCallback: OnDialogCallback<Int>?) {
+    open fun setOnDialogCallback(onDialogCallback: OnDialogCallback<Int>?) {
         this.onDialogCallback = onDialogCallback
     }
 
-    fun getOnDialogCallback() = onDialogCallback
+    open fun getOnDialogCallback() = onDialogCallback
 
     protected abstract fun initLayoutId(): Int?
 
@@ -88,17 +86,19 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
 
     protected fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!rxAppCompatActivity!!.isFinishing) {
-            val toast: Toast
-            val duration: Int
-            duration = if (isLongToast) {
-                Toast.LENGTH_LONG
-            } else {
-                Toast.LENGTH_SHORT
+        mRxAppCompatActivity?.let {
+            if (!it.isFinishing) {
+                val toast: Toast
+                val duration: Int
+                duration = if (isLongToast) {
+                    Toast.LENGTH_LONG
+                } else {
+                    Toast.LENGTH_SHORT
+                }
+                toast = Toast.makeText(it, message, duration)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
             }
-            toast = Toast.makeText(rxAppCompatActivity, message, duration)
-            toast.setGravity(Gravity.CENTER, 0, 0)
-            toast.show()
         }
     }
 
@@ -108,30 +108,33 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
         bgColor: Int, height: Int,
         roundRadius: Int, message: String?
     ) {
-        val frameLayout = FrameLayout(rxAppCompatActivity!!)
-        val layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        )
-        frameLayout.layoutParams = layoutParams
-        val textView = TextView(rxAppCompatActivity)
-        val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
-        textView.layoutParams = layoutParams1
-        textView.setPadding(left, 0, right, 0)
-        textView.textSize = textSize.toFloat()
-        textView.setTextColor(textColor)
-        textView.gravity = Gravity.CENTER
-        textView.includeFontPadding = false
-        val gradientDrawable = GradientDrawable() //创建drawable
-        gradientDrawable.setColor(bgColor)
-        gradientDrawable.cornerRadius = roundRadius.toFloat()
-        textView.background = gradientDrawable
-        textView.text = message
-        frameLayout.addView(textView)
-        val toast = Toast(rxAppCompatActivity)
-        toast.view = frameLayout
-        toast.duration = Toast.LENGTH_LONG
-        toast.show()
+        mRxAppCompatActivity?.let {
+            val frameLayout = FrameLayout(it)
+            val layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
+            frameLayout.layoutParams = layoutParams
+            val textView = TextView(it)
+            val layoutParams1 =
+                FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
+            textView.layoutParams = layoutParams1
+            textView.setPadding(left, 0, right, 0)
+            textView.textSize = textSize.toFloat()
+            textView.setTextColor(textColor)
+            textView.gravity = Gravity.CENTER
+            textView.includeFontPadding = false
+            val gradientDrawable = GradientDrawable() //创建drawable
+            gradientDrawable.setColor(bgColor)
+            gradientDrawable.cornerRadius = roundRadius.toFloat()
+            textView.background = gradientDrawable
+            textView.text = message
+            frameLayout.addView(textView)
+            val toast = Toast(it)
+            toast.view = frameLayout
+            toast.duration = Toast.LENGTH_LONG
+            toast.show()
+        }
     }
 
     fun isOnMainThread(): Boolean {
@@ -139,12 +142,12 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
     }
 
     protected fun startActivity(cls: Class<*>?) {
-        val intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         startActivity(intent)
     }
 
     protected fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
-        val intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         val bundle = Bundle()
         if (params != null && params.size > 0) {
             for (key in params.keys) {
@@ -160,7 +163,7 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
     }
 
     protected fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
-        val intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         startActivityForResult(intent, requestCode)
     }
 
@@ -173,11 +176,11 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
     }
 
     override fun onDestroyView() {
-        if (rxAppCompatActivity != null) {
-            rxAppCompatActivity = null
+        if (mRxAppCompatActivity != null) {
+            mRxAppCompatActivity = null
         }
-        if (baseApplication != null) {
-            baseApplication = null
+        if (mBaseApplication != null) {
+            mBaseApplication = null
         }
         if (rootView != null) {
             rootView = null

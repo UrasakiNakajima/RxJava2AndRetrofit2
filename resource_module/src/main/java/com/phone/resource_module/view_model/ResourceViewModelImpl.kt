@@ -46,14 +46,14 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                                 tabRxFragmentSuccess.value = it
                             } else {
                                 tabRxFragmentError.value =
-                                    BaseApplication.getInstance().resources.getString(
+                                    BaseApplication.get().resources.getString(
                                         R.string.no_data_available
                                     )
                             }
                         }
                     } else {
                         tabRxFragmentError.value =
-                            BaseApplication.getInstance().resources.getString(
+                            BaseApplication.get().resources.getString(
                                 R.string.loading_failed
                             )
                     }
@@ -78,14 +78,14 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                                 tabRxActivitySuccess.value = response.data()
                             } else {
                                 tabRxActivityError.value =
-                                    BaseApplication.getInstance().resources.getString(
+                                    BaseApplication.get().resources.getString(
                                         R.string.no_data_available
                                     )
                             }
                         }
                     } else {
                         tabRxActivityError.value =
-                            BaseApplication.getInstance().resources.getString(
+                            BaseApplication.get().resources.getString(
                                 R.string.loading_failed
                             )
                     }

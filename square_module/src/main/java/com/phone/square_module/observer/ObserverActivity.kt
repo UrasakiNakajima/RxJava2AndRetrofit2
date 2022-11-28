@@ -1,7 +1,5 @@
 package com.phone.square_module.observer
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.phone.common_library.base.BaseRxAppActivity
 import com.phone.common_library.manager.LogManager
 import com.phone.square_module.R

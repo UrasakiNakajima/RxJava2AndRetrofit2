@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Base64AndFileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="壓縮圖片"
+                        android:text="@string/compress_pictures"
                         android:textSize="@dimen/sp_20" />
 
                     <ImageView
@@ -91,7 +91,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@color/colorBlack666"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        tools:ignore="ContentDescription" />
 
                 </FrameLayout>
 
@@ -109,7 +110,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="圖片轉Base64"
+                        android:text="@string/picture_to_base64"
                         android:textSize="@dimen/sp_20" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -134,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Base64轉圖片"
+                        android:text="@string/base64_to_picture"
                         android:textSize="@dimen/sp_20" />
 
                     <ImageView
@@ -143,7 +144,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@color/colorBlack666"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        tools:ignore="ContentDescription" />
 
                 </FrameLayout>
 
@@ -160,7 +162,7 @@
                     android:background="@color/color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="重置數據"
+                    android:text="@string/reset_data"
                     android:textColor="@color/color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
@@ -168,15 +170,6 @@
 
         </ScrollView>
 
-
     </LinearLayout>
-
-    <com.qmuiteam.qmui.widget.QMUILoadingView
-        android:id="@+id/load_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:color="@color/color_FF999999"
-        android:visibility="gone" />
 
 </FrameLayout>

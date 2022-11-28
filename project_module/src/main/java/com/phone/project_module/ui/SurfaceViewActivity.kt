@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.*
 import com.phone.common_library.base.BaseRxAppActivity
 import com.phone.common_library.manager.LogManager
+import com.phone.common_library.manager.ResourcesManager
 import com.phone.project_module.R
 import com.phone.rxjava2andretrofit2.manager.VideoImageManager
 import io.reactivex.BackpressureStrategy
@@ -487,9 +488,9 @@ class SurfaceViewActivity : BaseRxAppActivity() {
             pausePlay()
             seekTo(0f)
             if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
-                tevCurrentTime?.text = resources.getString(R.string.start_time)
+                tevCurrentTime?.text = ResourcesManager.getString(R.string.start_time)
             } else {
-                tevCurrentTime?.text = resources.getString(R.string.start_time2)
+                tevCurrentTime?.text = ResourcesManager.getString(R.string.start_time2)
             }
             startPlay()
         }
@@ -504,9 +505,9 @@ class SurfaceViewActivity : BaseRxAppActivity() {
         pausePlay()
         seekTo(0f)
         if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
-            tevCurrentTime?.text = resources.getString(R.string.start_time)
+            tevCurrentTime?.text = ResourcesManager.getString(R.string.start_time)
         } else {
-            tevCurrentTime?.text = resources.getString(R.string.start_time2)
+            tevCurrentTime?.text = ResourcesManager.getString(R.string.start_time2)
         }
         progressCircular?.visibility = View.GONE
     }

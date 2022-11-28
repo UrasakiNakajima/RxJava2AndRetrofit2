@@ -1,11 +1,8 @@
 package com.phone.resource_module
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.adapter.TabFragmentStatePagerAdapter
@@ -42,11 +39,11 @@ class ResourceActivity :
                 LogManager.i(TAG, "onChanged*****tabRxActivitySuccess")
                 resourceTabDataSuccess(it)
             } else {
-                resourceTabDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                resourceTabDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.tabRxActivityError.observe(this, {
-            if (!TextUtils.isEmpty(it)) {
+            it?.let {
                 LogManager.i(TAG, "onChanged*****tabRxActivityError")
                 resourceTabDataError(it)
             }

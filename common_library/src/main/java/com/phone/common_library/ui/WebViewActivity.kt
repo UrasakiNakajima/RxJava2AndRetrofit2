@@ -51,12 +51,12 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
             layoutBack.setOnClickListener(View.OnClickListener { v: View? -> finish() })
 
             mDatabind.activityWebProgressbar.progress = 100
-            baseApplication?.let {
+            mBaseApplication?.let {
                 layoutWeb.addView(it.webView)
 //            val layoutParams = FrameLayout.LayoutParams(
 //                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
 //            )
-//            layoutWeb.addView(baseApplication.webView, layoutParams)
+//            layoutWeb.addView(mBaseApplication.webView, layoutParams)
                 it.setOnCommonSingleParamCallback(object :
                     OnCommonSingleParamCallback<Int> {
                     override fun onSuccess(success: Int?) {
@@ -93,19 +93,19 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
         loadUrl?.let {
 //            //清除网页访问留下的缓存
 //            //由于内核缓存是全局的因此这个方法不仅仅针对webview而是针对整个应用程序.
-//            baseApplication.webView.clearCache(true)
+//            mBaseApplication.webView.clearCache(true)
 //            //清除当前webview访问的历史记录
 //            //只会webview访问历史记录里的所有记录除了当前访问记录
-//            baseApplication.webView.clearHistory()
+//            mBaseApplication.webView.clearHistory()
 //            //这个api仅仅清除自动完成填充的表单数据，并不会清除WebView存储到本地的数据
-//            baseApplication.webView.clearFormData()
+//            mBaseApplication.webView.clearFormData()
 
-            baseApplication?.webView?.loadUrl(it)
+            mBaseApplication?.webView?.loadUrl(it)
         }
     }
 
     override fun onDestroy() {
-        baseApplication?.webView?.apply {
+        mBaseApplication?.webView?.apply {
             loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             clearCache(true)
             clearHistory();

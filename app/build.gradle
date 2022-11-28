@@ -54,8 +54,8 @@ android {
 
     //开启Java1_8 能够使用lambda表达式
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility "1.8"
+        targetCompatibility "1.8"
     }
 
 //    kotlinOptions {
@@ -79,6 +79,11 @@ android {
         debug {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    
+    configurations {
+        cleanedAnnotations
+        compile.exclude group: 'org.jetbrains' , module:'annotations'
     }
 
     ndkVersion '21.1.6352462'

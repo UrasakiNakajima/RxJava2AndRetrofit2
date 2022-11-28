@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -68,11 +67,11 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                 subProjectDataSuccess(it)
             } else {
-                subProjectDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                subProjectDataError(ResourcesManager.getString(R.string.no_data_available))
             }
         })
         viewModel.dataxRxFragmentError.observe(this, {
-            if (!TextUtils.isEmpty(it)) {
+            it?.let {
                 LogManager.i(TAG, "onChanged*****dataxErrorObserver")
                 subProjectDataError(it)
             }
@@ -99,7 +98,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
     }
 
     private fun initAdapter(list: MutableList<ArticleListBean>) {
-        linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
+        linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
         mDatabind.rcvData.apply {
             layoutManager = linearLayoutManager
@@ -107,7 +106,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
 //            (itemAnimator as DefaultItemAnimator).changeDuration = 0
 //            (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
-            subProjectAdapter = ProjectAndResourceAdapter(rxAppCompatActivity, list)
+            subProjectAdapter = ProjectAndResourceAdapter(mRxAppCompatActivity, list)
             subProjectAdapter?.apply {
                 //kotlin 使用这个方法需要初始化ProjectAndResourceAdapter 的时候把list 传进去，
                 //不然就会报VirtualLayout：Cannot change whether this adapter has stable IDs while the adapter has registered observers.
@@ -116,7 +115,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
                     when (view.id) {
                         //子项
                         R.id.root -> {
-                            val intent = Intent(rxAppCompatActivity, WebViewActivity::class.java)
+                            val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
                             intent.putExtras(Bundle().apply {
                                 subProjectAdapter?.list?.get(i)?.let {
                                     putString(
@@ -165,7 +164,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
     }
 
     override fun showLoading() {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             if (!mDatabind.loadView.isShown()) {
                 mDatabind.loadView.setVisibility(View.VISIBLE)
                 mDatabind.loadView.start()
@@ -174,7 +173,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
     }
 
     override fun hideLoading() {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             if (mDatabind.loadView.isShown()) {
                 mDatabind.loadView.stop()
                 mDatabind.loadView.setVisibility(View.GONE)
@@ -183,7 +182,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
     }
 
     override fun subProjectDataSuccess(success: MutableList<ArticleListBean>) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
                 initAdapter(success)
                 mDatabind.refreshLayout.finishRefresh()
@@ -196,7 +195,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
     }
 
     override fun subProjectDataError(error: String) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
@@ -223,7 +222,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.subProjectData(pageNum, tabId)
         } else {
-            subProjectDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
+            subProjectDataError(BaseApplication.get().resources.getString(R.string.please_check_the_network_connection));
         }
     }
 

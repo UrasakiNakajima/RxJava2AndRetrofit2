@@ -49,16 +49,16 @@ class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), I
     override fun attachPresenter() = MinePresenterImpl(this)
 
     override fun showLoading() {
-        if (!loadView.isShown) {
-            loadView.visibility = View.VISIBLE
-            loadView.start()
+        if (!mLoadView.isShown) {
+            mLoadView.visibility = View.VISIBLE
+            mLoadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (loadView.isShown) {
-            loadView.stop()
-            loadView.visibility = View.GONE
+        if (mLoadView.isShown) {
+            mLoadView.stop()
+            mLoadView.visibility = View.GONE
         }
     }
 
@@ -71,11 +71,11 @@ class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), I
     }
 
     private fun initUserData() {
-        bodyParams.clear()
-        bodyParams.put("loginType", "3")
+        mBodyParams.clear()
+        mBodyParams.put("loginType", "3")
 
-        presenter?.userData(this, bodyParams)
-//        presenter.userData(this, baseApplication.accessToken, bodyParams)
+        presenter.userData(this, mBodyParams)
+//        presenter.userData(this, baseApplication.accessToken, mBodyParams)
     }
 
 }

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,11 +65,11 @@ class SubResourceFragment :
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                 subResourceDataSuccess(it)
             } else {
-                subResourceDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                subResourceDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.dataxRxFragmentError.observe(this, {
-            if (!TextUtils.isEmpty(it)) {
+            it?.let {
                 LogManager.i(TAG, "onChanged*****dataxErrorObserver")
                 subResourceDataError(it)
             }
@@ -97,7 +96,7 @@ class SubResourceFragment :
     }
 
     private fun initAdapter(list: MutableList<ArticleListBean>) {
-        linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
+        linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
         mDatabind.rcvData.apply {
             layoutManager = linearLayoutManager
@@ -105,7 +104,7 @@ class SubResourceFragment :
 //            (itemAnimator as DefaultItemAnimator).changeDuration = 0
 //            (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
-            subResourceAdapter = ProjectAndResourceAdapter(rxAppCompatActivity, list)
+            subResourceAdapter = ProjectAndResourceAdapter(mRxAppCompatActivity, list)
             subResourceAdapter?.apply {
                 //kotlin 使用这个方法需要初始化ProjectAndResourceAdapter 的时候把list 传进去，
                 //不然就会报VirtualLayout：Cannot change whether this adapter has stable IDs while the adapter has registered observers.
@@ -114,7 +113,7 @@ class SubResourceFragment :
                     when (view.id) {
                         //子项
                         R.id.root -> {
-                            val intent = Intent(rxAppCompatActivity, WebViewActivity::class.java)
+                            val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
                             intent.putExtras(Bundle().apply {
                                 subResourceAdapter?.list?.get(i)?.let {
                                     putString(
@@ -174,7 +173,7 @@ class SubResourceFragment :
     }
 
     override fun subResourceDataSuccess(success: MutableList<ArticleListBean>) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
                 initAdapter(success)
                 mDatabind.refreshLayout.finishRefresh()
@@ -187,7 +186,7 @@ class SubResourceFragment :
     }
 
     override fun subResourceDataError(error: String) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),

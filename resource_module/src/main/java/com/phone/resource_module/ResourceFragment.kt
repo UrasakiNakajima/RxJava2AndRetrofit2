@@ -3,7 +3,6 @@ package com.phone.resource_module
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -45,11 +44,11 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
                 LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
                 resourceTabDataSuccess(it)
             } else {
-                resourceTabDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                resourceTabDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.tabRxFragmentError.observe(this, {
-            if (!TextUtils.isEmpty(it)) {
+            it?.let {
                 LogManager.i(TAG, "onChanged*****tabRxFragmentError")
                 resourceTabDataError(it)
             }
@@ -108,7 +107,7 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
             )
         mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
         //下划线绑定
-        val commonNavigator = CommonNavigator(rxAppCompatActivity)
+        val commonNavigator = CommonNavigator(mRxAppCompatActivity)
         commonNavigator.adapter = getCommonNavigatorAdapter(dataList)
         mDatabind.tabLayout.navigator = commonNavigator
         MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
@@ -116,7 +115,7 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
     }
 
     override fun resourceTabDataError(error: String) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),

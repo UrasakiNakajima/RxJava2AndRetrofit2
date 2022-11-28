@@ -4,7 +4,6 @@ import android.text.TextUtils
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.phone.common_library.R
-import com.phone.common_library.okhttp3_app_glide_module.GlideApp
 
 
 object CommonBindingAdapter {
@@ -15,10 +14,10 @@ object CommonBindingAdapter {
     @BindingAdapter("imageUrl")
     fun bindImage(imageView: ImageView, url: String?) {
         if (!TextUtils.isEmpty(url)) {
-            GlideApp.with(imageView.context)
-                .load(url)
-                .error(GlideApp.with(imageView.context).load(url))
-                .into(imageView)
+//            GlideApp.with(imageView.context)
+//                .load(url)
+//                .error(GlideApp.with(imageView.context).load(url))
+//                .into(imageView)
         }
 
 //        var numberOfTimes: Int = 0;

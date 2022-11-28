@@ -36,6 +36,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
  * date      :
  * introduce :
  */
+
 @Route(path = "/mine_module/mine")
 class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineView {
 
@@ -53,7 +54,9 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     private var rcvData: RecyclerView? = null
     private var loadView: QMUILoadingView? = null
 
-    private val mineAdapter by lazy { MineAdapter(rxAppCompatActivity) }
+    private val mineAdapter by lazy {
+        MineAdapter(rxAppCompatActivity)
+    }
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
 
@@ -63,36 +66,38 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     override fun initViews() {
-        layoutOutLayer = rootView.findViewById(R.id.layout_out_layer)
-        toolbar = rootView.findViewById(R.id.toolbar)
-        tevTitle = rootView.findViewById(R.id.tev_title)
-        tevLogout = rootView.findViewById(R.id.tev_logout)
-        tevThreadPool = rootView.findViewById(R.id.tev_thread_pool)
-        tevParamsTransferChangeProblem =
-            rootView.findViewById(R.id.tev_params_transfer_change_problem)
-        refreshLayout = rootView.findViewById(R.id.refresh_layout)
-        rcvData = rootView.findViewById(R.id.rcv_data)
-        loadView = rootView.findViewById(R.id.load_view)
+        rootView?.let {
+            layoutOutLayer = it.findViewById(R.id.layout_out_layer)
+            toolbar = it.findViewById(R.id.toolbar)
+            tevTitle = it.findViewById(R.id.tev_title)
+            tevLogout = it.findViewById(R.id.tev_logout)
+            tevThreadPool = it.findViewById(R.id.tev_thread_pool)
+            tevParamsTransferChangeProblem =
+                it.findViewById(R.id.tev_params_transfer_change_problem)
+            refreshLayout = it.findViewById(R.id.refresh_layout)
+            rcvData = it.findViewById(R.id.rcv_data)
+            loadView = it.findViewById(R.id.load_view)
 
-        tevTitle?.setOnClickListener(object : View.OnClickListener {
+            tevTitle?.setOnClickListener(object : View.OnClickListener {
 
-            override fun onClick(v: View?) {
+                override fun onClick(v: View?) {
 //                initMine()
-                startActivity(UserDataActivity::class.java)
+                    startActivity(UserDataActivity::class.java)
+                }
+            })
+            tevLogout?.setOnClickListener {
+                baseApplication.setLogin(false)
+                ARouter.getInstance().build("/main_module/login").navigation()
             }
-        })
-        tevLogout?.setOnClickListener {
-            baseApplication.isLogin = false
-            ARouter.getInstance().build("/main_module/login").navigation()
-        }
-        tevThreadPool?.setOnClickListener {
-            startActivity(ThreadPoolActivity::class.java)
-        }
-        tevParamsTransferChangeProblem?.setOnClickListener {
-            startActivity(ParamsTransferChangeProblemActivity::class.java)
-        }
+            tevThreadPool?.setOnClickListener {
+                startActivity(ThreadPoolActivity::class.java)
+            }
+            tevParamsTransferChangeProblem?.setOnClickListener {
+                startActivity(ParamsTransferChangeProblemActivity::class.java)
+            }
 
-        initAdapter()
+            initAdapter()
+        }
     }
 
     private fun initAdapter() {
@@ -105,18 +110,21 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
             setRcvOnItemViewClickListener(object : OnItemViewClickListener {
 
                 override fun onItemClickListener(position: Int, view: View?) {
-//                bodyParams.clear()
-//                bodyParams["max_behot_time"] = "1000"
-//                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
+                    //                bodyParams.clear()
+                    //                bodyParams["max_behot_time"] = "1000"
+                    //                startActivityCarryParams(MineDetailsActivity::class.java, bodyParams)
 
-//                //Jump with parameters
-//                ARouter.getInstance().build("/mine_module/ui/mine_details")
-//                        .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())
-//                        .navigation()
+                    //                //Jump with parameters
+                    //                ARouter.getInstance().build("/mine_module/ui/mine_details")
+                    //                        .withString("max_behot_time", (System.currentTimeMillis() / 1000).toString())
+                    //                        .navigation()
 
                     if (view?.id == R.id.ll_root) {
                         val intent = Intent(rxAppCompatActivity, WebViewActivity::class.java)
-                        intent.putExtra("loadUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
+                        intent.putExtra(
+                            "loadUrl",
+                            mineAdapter.mJuheNewsBeanList.get(position).url
+                        )
                         startActivity(intent)
                     }
                 }
@@ -165,38 +173,36 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     override fun mineDataSuccess(success: MutableList<Data>) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        mineAdapter.let {
             if (isRefresh) {
-                mineAdapter.clearData()
-                mineAdapter.addData(mineAdapter.mJuheNewsBeanList)
+                it.clearData()
+                it.addData(it.mJuheNewsBeanList)
                 refreshLayout?.finishRefresh()
             } else {
-                mineAdapter.clearData()
-                mineAdapter.addData(mineAdapter.mJuheNewsBeanList)
+                it.clearData()
+                it.addData(it.mJuheNewsBeanList)
                 refreshLayout?.finishLoadMore()
             }
         }
     }
 
     override fun mineDataError(error: String) {
-        if (!rxAppCompatActivity.isFinishing()) {
-            showCustomToast(
-                ScreenManager.dpToPx(20f),
-                ScreenManager.dpToPx(20f),
-                18,
-                ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FFE066FF),
-                ScreenManager.dpToPx(40f),
-                ScreenManager.dpToPx(20f),
-                error,
-                true
-            )
+        showCustomToast(
+            ScreenManager.dpToPx(20f),
+            ScreenManager.dpToPx(20f),
+            18,
+            ResourcesManager.getColor(R.color.white),
+            ResourcesManager.getColor(R.color.color_FFE066FF),
+            ScreenManager.dpToPx(40f),
+            ScreenManager.dpToPx(20f),
+            error,
+            true
+        )
 
-            if (isRefresh) {
-                refreshLayout?.finishRefresh(false)
-            } else {
-                refreshLayout?.finishLoadMore(false)
-            }
+        if (isRefresh) {
+            refreshLayout?.finishRefresh(false)
+        } else {
+            refreshLayout?.finishLoadMore(false)
         }
     }
 
@@ -206,7 +212,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
             bodyParams["type"] = "keji"
             bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.mineData(rxFragment, bodyParams)
+            presenter?.mineData(rxFragment, bodyParams)
         } else {
             showToast(resources.getString(R.string.please_check_the_network_connection), true)
             if (isRefresh) {

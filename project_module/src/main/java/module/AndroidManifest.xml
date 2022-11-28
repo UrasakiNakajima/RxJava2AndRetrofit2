@@ -35,6 +35,11 @@
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.EventScheduleActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

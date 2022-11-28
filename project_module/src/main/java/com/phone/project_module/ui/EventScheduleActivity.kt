@@ -41,12 +41,12 @@ class EventScheduleActivity : BaseRxAppActivity() {
             finish()
         }
         tevEventSchedule!!.setOnClickListener {
-            val eventScheduleDialogFragment: EventScheduleDialogFragment =
-                EventScheduleDialogFragment.newInstance()
+            val eventScheduleDialogFragment =
+                EventScheduleDialogFragment()
             //			ReserveSpaceDialogFragment reserveSpaceDialogFragment=ReserveSpaceDialogFragment.newInstance();
             //			ReserveSpaceDialogFragment reserveSpaceDialogFragment=ReserveSpaceDialogFragment.newInstance();
-            eventScheduleDialogFragment.setOnDialogCallback(object : OnDialogCallback<Int?> {
 
+            eventScheduleDialogFragment.setOnDialogCallback(object :OnDialogCallback<Int>{
                 override fun onDialogClick(view: View?, success: Int?) {
                     if (success == 0) {
 
@@ -64,6 +64,7 @@ class EventScheduleActivity : BaseRxAppActivity() {
                 ) {
 
                 }
+
             })
             eventScheduleDialogFragment.show(supportFragmentManager, "FOF")
         }

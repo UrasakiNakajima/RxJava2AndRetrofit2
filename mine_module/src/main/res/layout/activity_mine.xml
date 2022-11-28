@@ -95,12 +95,4 @@
 
     </LinearLayout>
 
-    <com.qmuiteam.qmui.widget.QMUILoadingView
-        android:id="@+id/load_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:color="@color/color_FF999999"
-        android:visibility="gone" />
-
 </FrameLayout>

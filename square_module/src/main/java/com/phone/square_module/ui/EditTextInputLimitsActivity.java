@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
 import com.phone.common_library.base.BaseRxAppActivity;
 import com.phone.common_library.common.DecimalInputFilter;
@@ -59,7 +58,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
         tevShowInput = (TextView) findViewById(R.id.tev_show_input);
         tevStartInput = (TextView) findViewById(R.id.tev_start_input);
         setToolbar(false, R.color.color_FF198CFF);
-        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
+        imvBack.setColorFilter(ResourcesManager.INSTANCE.getColor(R.color.white));
         layoutBack.setOnClickListener(v -> {
             finish();
         });

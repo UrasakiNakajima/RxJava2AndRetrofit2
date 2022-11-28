@@ -103,7 +103,6 @@ kapt {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':common_library')
     implementation project(path: ':base64_and_file')
 
     //Android路由（用于不同app之间的跳转）

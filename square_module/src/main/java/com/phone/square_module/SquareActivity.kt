@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
@@ -73,11 +72,11 @@ class SquareActivity :
                 LogManager.i(TAG, "onChanged*****dataxRxActivitySuccess")
                 squareDataSuccess(it)
             } else {
-                squareDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                squareDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.dataxRxActivityError.observe(this, {
-            if (!TextUtils.isEmpty(it)) {
+            it?.let {
                 LogManager.i(TAG, "onChanged*****dataxRxActivityError")
                 squareDataError(it)
             }
@@ -216,7 +215,7 @@ class SquareActivity :
      * 請求權限，RxFragment里需要的时候直接调用就行了
      */
     private fun initRxPermissionsRxFragment(number: Int) {
-        val rxPermissionsManager = RxPermissionsManager.getInstance()
+        val rxPermissionsManager = RxPermissionsManager.get()
         rxPermissionsManager.initRxPermissions(
             this,
             permissions,
@@ -241,7 +240,7 @@ class SquareActivity :
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } catch (e: Exception) {
-                            ExceptionManager.getInstance().throwException(e)
+                            ExceptionManager.get()?.throwException(e)
                         }
                     }
                 }
@@ -295,7 +294,7 @@ class SquareActivity :
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.squareData2(this, currentPage)
         } else {
-            squareDataError(BaseApplication.getInstance().resources.getString(R.string.please_check_the_network_connection));
+            squareDataError(BaseApplication.get().resources.getString(R.string.please_check_the_network_connection));
         }
 
         LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get());

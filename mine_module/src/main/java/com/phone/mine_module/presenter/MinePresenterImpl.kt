@@ -34,7 +34,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         if (baseView != null) {
             if (baseView is IMineView) {
                 baseView.showLoading()
-                RetrofitManager.getInstance()
+                RetrofitManager.get()
                     .responseString7(
                         rxFragment,
                         model.mineData(bodyParams),
@@ -55,7 +55,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                     }
                                 } else {
                                     baseView.mineDataError(
-                                        BaseApplication.getInstance().resources.getString(
+                                        BaseApplication.get().resources.getString(
                                             R.string.loading_failed
                                         )
                                     )
@@ -82,7 +82,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         if (baseView != null) {
             if (baseView is IMineView) {
                 baseView.showLoading()
-                RetrofitManager.getInstance()
+                RetrofitManager.get()
                     .responseString5(
                         rxAppCompatActivity,
                         model.mineData(bodyParams),
@@ -103,7 +103,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                     }
                                 } else {
                                     baseView.mineDataError(
-                                        BaseApplication.getInstance().resources.getString(
+                                        BaseApplication.get().resources.getString(
                                             R.string.loading_failed
                                         )
                                     )
@@ -130,7 +130,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         if (baseView != null) {
             if (baseView is IUserDataView) {
                 baseView.showLoading()
-                RetrofitManager.getInstance()
+                RetrofitManager.get()
                     .responseString5(
                         rxAppCompatActivity,
                         model.userData(bodyParams),
@@ -146,11 +146,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    if (response.ans_list != null && response.ans_list.size > 0) {
 //                                        baseView.mineDataSuccess(response.ans_list)
 //                                    } else {
-//                                        baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+//                                        baseView.mineDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
 //                                    }
                                 } else {
                                     baseView.userDataError(
-                                        BaseApplication.getInstance().resources.getString(
+                                        BaseApplication.get().resources.getString(
                                             R.string.loading_failed
                                         )
                                     )
@@ -178,7 +178,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         if (baseView != null) {
             if (baseView is IUserDataView) {
                 baseView.showLoading()
-                RetrofitManager.getInstance()
+                RetrofitManager.get()
                     .responseString5(
                         rxAppCompatActivity,
                         model.userData(accessToken, bodyParams),
@@ -194,11 +194,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    if (response.ans_list != null && response.ans_list.size > 0) {
 //                                        baseView.mineDataSuccess(response.ans_list)
 //                                    } else {
-//                                        baseView.mineDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+//                                        baseView.mineDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
 //                                    }
                                 } else {
                                     baseView.userDataError(
-                                        BaseApplication.getInstance().resources.getString(
+                                        BaseApplication.get().resources.getString(
                                             R.string.loading_failed
                                         )
                                     )

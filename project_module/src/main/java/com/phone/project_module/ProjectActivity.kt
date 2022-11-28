@@ -3,7 +3,6 @@ package com.phone.project_module
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.phone.common_library.BaseApplication
@@ -40,11 +39,11 @@ class ProjectActivity :
                 LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
                 projectTabDataSuccess(it)
             } else {
-                projectTabDataError(BaseApplication.getInstance().resources.getString(R.string.no_data_available))
+                projectTabDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.tabRxActivityError.observe(this, {
-            if (!TextUtils.isEmpty(it)) {
+            it?.let {
                 LogManager.i(TAG, "onChanged*****tabRxFragmentError")
                 projectTabDataError(it)
             }

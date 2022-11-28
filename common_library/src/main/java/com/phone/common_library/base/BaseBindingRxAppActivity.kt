@@ -1,7 +1,6 @@
 package com.phone.common_library.base
 
 import android.app.ActivityManager
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -19,6 +18,7 @@ import androidx.databinding.ViewDataBinding
 import com.gyf.immersionbar.ImmersionBar
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.R
+import com.phone.common_library.manager.ActivityPageManager
 import com.phone.common_library.manager.*
 import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
@@ -31,20 +31,20 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
 
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
-    protected lateinit var rxAppCompatActivity: RxAppCompatActivity
-    protected var baseApplication: BaseApplication? = null
-    private var activityPageManager: ActivityPageManager? = null
+    protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
+    protected var mBaseApplication: BaseApplication? = null
+    private var mActivityPageManager: ActivityPageManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        rxAppCompatActivity = this
-        baseApplication = application as BaseApplication
-        activityPageManager = ActivityPageManager.getInstance()
-        activityPageManager?.addActivity(this)
+        mRxAppCompatActivity = this
+        mBaseApplication = application as BaseApplication
+        mActivityPageManager = ActivityPageManager.get()
+        mActivityPageManager?.addActivity(this)
 
         initLayoutId()?.let {
             mDatabind = DataBindingUtil.setContentView(this, it)
-            mDatabind.lifecycleOwner = rxAppCompatActivity
+            mDatabind.lifecycleOwner = mRxAppCompatActivity
         }
         initData()
         initViews()
@@ -171,7 +171,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
 
     protected open fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!rxAppCompatActivity.isFinishing) {
+        if (!mRxAppCompatActivity.isFinishing) {
             val toast: Toast
             val duration: Int
             duration = if (isLongToast) {
@@ -179,7 +179,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
             } else {
                 Toast.LENGTH_SHORT
             }
-            toast = Toast.makeText(rxAppCompatActivity, message, duration)
+            toast = Toast.makeText(mRxAppCompatActivity, message, duration)
             toast.setGravity(Gravity.CENTER, 0, 0)
             toast.show()
         }
@@ -227,24 +227,24 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     }
 
     protected open fun startActivity(cls: Class<*>?) {
-        intent = Intent(this, cls)
+        val intent = Intent(this, cls)
         startActivity(intent)
     }
 
     protected open fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
-        intent = Intent(this, cls)
+        val intent = Intent(this, cls)
         startActivityForResult(intent, requestCode)
     }
 
     open fun getActivityPageManager(): ActivityPageManager? {
-        return activityPageManager
+        return mActivityPageManager
     }
 
     private fun killAppProcess() {
         LogManager.i(TAG, "killAppProcess")
-        baseApplication?.let {
+        mBaseApplication?.let {
             val manager =
-                baseApplication?.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+                mBaseApplication?.getSystemService(ACTIVITY_SERVICE) as ActivityManager
             val processInfos = manager.runningAppProcesses
             // 先杀掉相关进程，最后再杀掉主进程
             for (runningAppProcessInfo in processInfos) {
@@ -253,8 +253,8 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
                 }
             }
             LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
-            val crashHandlerManager = CrashHandlerManager.getInstance()
-            crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
+            val crashHandlerManager = CrashHandlerManager.get()
+            crashHandlerManager?.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
             try {
                 Thread.sleep(1000)
             } catch (e: InterruptedException) {
@@ -267,10 +267,10 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     }
 
     override fun onDestroy() {
-        if (activityPageManager?.isLastAliveActivity?.get() == true) {
+        if (mActivityPageManager?.mIsLastAliveActivity?.get() == true) {
             killAppProcess()
         }
-        activityPageManager?.removeActivity(rxAppCompatActivity)
+        mActivityPageManager?.removeActivity(mRxAppCompatActivity)
         super.onDestroy()
     }
 

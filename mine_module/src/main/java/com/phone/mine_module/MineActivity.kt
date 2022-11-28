@@ -68,7 +68,6 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
             findViewById(R.id.tev_params_transfer_change_problem)
         refreshLayout = findViewById(R.id.refresh_layout)
         rcvData = findViewById(R.id.rcv_data)
-        loadView = findViewById(R.id.load_view)
 
         setToolbar(false, R.color.color_FF198CFF)
         tevTitle?.setOnClickListener(object : View.OnClickListener {
@@ -146,16 +145,16 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     override fun showLoading() {
-        if (!loadView.isShown()) {
-            loadView.setVisibility(View.VISIBLE)
-            loadView.start()
+        if (!mLoadView.isShown()) {
+            mLoadView.setVisibility(View.VISIBLE)
+            mLoadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (loadView.isShown()) {
-            loadView.stop()
-            loadView.setVisibility(View.GONE)
+        if (mLoadView.isShown()) {
+            mLoadView.stop()
+            mLoadView.setVisibility(View.GONE)
         }
     }
 
@@ -198,11 +197,11 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
 
     private fun initMine() {
         if (RetrofitManager.isNetworkAvailable()) {
-            bodyParams.clear()
+            mBodyParams.clear()
 
-            bodyParams["type"] = "keji"
-            bodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter?.mineData2(rxAppCompatActivity, bodyParams)
+            mBodyParams["type"] = "keji"
+            mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
+            presenter.mineData2(rxAppCompatActivity, mBodyParams)
         } else {
             showToast(
                 ResourcesManager.getString(R.string.please_check_the_network_connection),

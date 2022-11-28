@@ -7,10 +7,7 @@ import com.phone.common_library.base.BaseViewModel
 import com.phone.common_library.bean.DataX
 import com.phone.common_library.bean.SquareBean
 import com.phone.common_library.callback.OnCommonSingleParamCallback
-import com.phone.common_library.manager.GsonManager
-import com.phone.common_library.manager.LogManager
-import com.phone.common_library.manager.RetrofitManager
-import com.phone.common_library.manager.SingleLiveData
+import com.phone.common_library.manager.*
 import com.phone.square_module.model.SquareModelImpl
 import com.phone.square_module.R
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
@@ -50,12 +47,12 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                                 dataxRxFragmentSuccess.value = it
                             } else {
                                 dataxRxFragmentError.value =
-                                    BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                                    ResourcesManager.getString(R.string.no_data_available)
                             }
                         }
                     } else {
                         dataxRxFragmentError.value =
-                            BaseApplication.getInstance().resources.getString(R.string.loading_failed)
+                            ResourcesManager.getString(R.string.loading_failed)
                     }
                 }
             }
@@ -77,11 +74,11 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 //                                    dataxRxFragmentSuccess.value = response.data!!.datas
 //                                } else {
 //                                    dataxRxFragmentError.value =
-//                                        BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+//                                        ResourcesManager.getString(R.string.no_data_available)
 //                                }
 //                            } else {
 //                                dataxRxFragmentError.value =
-//                                    BaseApplication.getInstance().resources.getString(R.string.loading_failed)
+//                                    ResourcesManager.getString(R.string.loading_failed)
 //                            }
 //                        }
 //
@@ -97,7 +94,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         rxAppCompatActivity: RxAppCompatActivity,
         currentPage: String
     ) {
-        RetrofitManager.getInstance()
+        RetrofitManager.get()
             .responseString5(rxAppCompatActivity,
                 model.squareData(currentPage),
                 object : OnCommonSingleParamCallback<String> {
@@ -112,12 +109,12 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                                     dataxRxActivitySuccess.value = this
                                 } else {
                                     dataxRxActivityError.value =
-                                        BaseApplication.getInstance().resources.getString(R.string.no_data_available)
+                                        ResourcesManager.getString(R.string.no_data_available)
                                 }
                             }
                         } else {
                             dataxRxActivityError.value =
-                                BaseApplication.getInstance().resources.getString(R.string.loading_failed)
+                                ResourcesManager.getString(R.string.loading_failed)
                         }
                     }
 
