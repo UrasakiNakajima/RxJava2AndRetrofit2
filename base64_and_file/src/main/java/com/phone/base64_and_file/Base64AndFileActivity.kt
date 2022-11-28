@@ -94,11 +94,11 @@ class Base64AndFileActivity :
     override fun initData() {
         handler = Handler(Looper.getMainLooper())
         dirsPath = mBaseApplication?.externalCacheDir
-            .toString() + File.separator + "Pictures"
+            ?.absolutePath + File.separator + "Pictures"
         dirsPathCompressed = mBaseApplication?.externalCacheDir
-            .toString() + File.separator + "PicturesCompressed"
+            ?.absolutePath + File.separator + "PicturesCompressed"
         dirsPathCompressedRecover = mBaseApplication?.externalCacheDir
-            .toString() + File.separator + "PicturesCompressedRecover"
+            ?.absolutePath + File.separator + "PicturesCompressedRecover"
     }
 
     override fun initViews() {
@@ -119,6 +119,14 @@ class Base64AndFileActivity :
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.white))
         layoutBack?.setOnClickListener { v: View? -> finish() }
         tevRequestPermissions?.setOnClickListener {
+            val firstPageService =
+                ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
+                    .navigation() as IFirstPageService
+            LogManager.i(
+                TAG,
+                "firstPageService.firstPageDataList******" + firstPageService.mFirstPageDataList.toString()
+            )
+
             LogManager.i(TAG, "tevRequestPermissions")
             initRxPermissions()
         }
@@ -155,18 +163,11 @@ class Base64AndFileActivity :
         linearLayoutManager.orientation = RecyclerView.VERTICAL
         rcvBase64Str?.layoutManager = linearLayoutManager
         rcvBase64Str?.itemAnimator = DefaultItemAnimator()
-        base64StrAdapter = Base64StrAdapter(rxAppCompatActivity)
+        base64StrAdapter = Base64StrAdapter(mRxAppCompatActivity)
         rcvBase64Str?.adapter = base64StrAdapter
     }
 
     override fun initLoadData() {
-        val firstPageService =
-            ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
-                .navigation() as IFirstPageService
-        LogManager.i(
-            TAG,
-            "firstPageService.firstPageDataList******" + firstPageService.mFirstPageDataList.toString()
-        )
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            initRxPermissions();

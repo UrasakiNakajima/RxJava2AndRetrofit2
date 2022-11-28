@@ -24,7 +24,7 @@ import java.util.Map;
 public abstract class BaseRxFragment extends RxFragment {
 
     private static final String TAG = BaseRxFragment.class.getSimpleName();
-    protected RxAppCompatActivity rxAppCompatActivity;
+    protected RxAppCompatActivity mRxAppCompatActivity;
     protected BaseApplication baseApplication;
     private Intent intent;
     private Bundle bundle;
@@ -42,9 +42,9 @@ public abstract class BaseRxFragment extends RxFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rxAppCompatActivity = (RxAppCompatActivity) getActivity();
-        if (rxAppCompatActivity != null) {
-            baseApplication = (BaseApplication) rxAppCompatActivity.getApplication();
+        mRxAppCompatActivity = (RxAppCompatActivity) getActivity();
+        if (mRxAppCompatActivity != null) {
+            baseApplication = (BaseApplication) mRxAppCompatActivity.getApplication();
         }
 
         initData();
@@ -62,7 +62,7 @@ public abstract class BaseRxFragment extends RxFragment {
 
     protected void showToast(String message, boolean isLongToast) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             Toast toast;
             int duration;
             if (isLongToast) {
@@ -70,7 +70,7 @@ public abstract class BaseRxFragment extends RxFragment {
             } else {
                 duration = Toast.LENGTH_SHORT;
             }
-            toast = Toast.makeText(rxAppCompatActivity, message, duration);
+            toast = Toast.makeText(mRxAppCompatActivity, message, duration);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
@@ -80,10 +80,10 @@ public abstract class BaseRxFragment extends RxFragment {
                                    int textSize, int textColor,
                                    int bgColor, int height,
                                    int roundRadius, String message) {
-        FrameLayout frameLayout = new FrameLayout(rxAppCompatActivity);
+        FrameLayout frameLayout = new FrameLayout(mRxAppCompatActivity);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         frameLayout.setLayoutParams(layoutParams);
-        TextView textView = new TextView(rxAppCompatActivity);
+        TextView textView = new TextView(mRxAppCompatActivity);
         FrameLayout.LayoutParams layoutParams1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height);
         textView.setLayoutParams(layoutParams1);
         textView.setPadding(left, 0, right, 0);
@@ -98,7 +98,7 @@ public abstract class BaseRxFragment extends RxFragment {
         textView.setText(message);
         frameLayout.addView(textView);
 
-        Toast toast = new Toast(rxAppCompatActivity);
+        Toast toast = new Toast(mRxAppCompatActivity);
         toast.setView(frameLayout);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
@@ -109,12 +109,12 @@ public abstract class BaseRxFragment extends RxFragment {
     }
 
     protected void startActivity(Class<?> cls) {
-        intent = new Intent(rxAppCompatActivity, cls);
+        intent = new Intent(mRxAppCompatActivity, cls);
         startActivity(intent);
     }
 
     protected void startActivityCarryParams(Class<?> cls, Map<String, String> params) {
-        intent = new Intent(rxAppCompatActivity, cls);
+        intent = new Intent(mRxAppCompatActivity, cls);
         bundle = new Bundle();
 
         if (params != null && params.size() > 0) {
@@ -129,12 +129,12 @@ public abstract class BaseRxFragment extends RxFragment {
     }
 
     protected void startActivityForResult(Class<?> cls, int requestCode) {
-        intent = new Intent(rxAppCompatActivity, cls);
+        intent = new Intent(mRxAppCompatActivity, cls);
         startActivityForResult(intent, requestCode);
     }
 
     protected void startActivityForResultCarryParams(Class<?> cls, Map<String, String> params, int requestCode) {
-        intent = new Intent(rxAppCompatActivity, cls);
+        intent = new Intent(mRxAppCompatActivity, cls);
         bundle = new Bundle();
 
         if (params != null && params.size() > 0) {
@@ -158,8 +158,8 @@ public abstract class BaseRxFragment extends RxFragment {
 
     @Override
     public void onDestroyView() {
-        if (rxAppCompatActivity != null) {
-            rxAppCompatActivity = null;
+        if (mRxAppCompatActivity != null) {
+            mRxAppCompatActivity = null;
         }
         if (baseApplication != null) {
             baseApplication = null;

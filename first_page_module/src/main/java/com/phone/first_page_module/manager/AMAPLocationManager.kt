@@ -50,7 +50,7 @@ class AMAPLocationManager {
                 if (aMapLocation.getErrorCode() == 0) {
                     LogManager.i(TAG, "address*****" + aMapLocation.getAddress())
                     //可在其中解析amapLocation获取相应内容。
-                    onCommonSingleParamCallback!!.onSuccess(aMapLocation)
+                    onCommonSingleParamCallback?.onSuccess(aMapLocation)
                     stopLocation()
                 } else {
                     //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
@@ -58,7 +58,7 @@ class AMAPLocationManager {
                             + aMapLocation.getErrorCode() + ", errInfo:"
                             + aMapLocation.getErrorInfo())
                     LogManager.i(TAG, "errorMessage$errorMessage")
-                    onCommonSingleParamCallback!!.onError(errorMessage)
+                    onCommonSingleParamCallback?.onError(errorMessage)
                 }
             }
         }
@@ -69,7 +69,7 @@ class AMAPLocationManager {
             mLocationClient = AMapLocationClient(BaseApplication.get())
         } catch (e: Exception) {
             e.printStackTrace()
-            ExceptionManager.get()?.throwException(e)
+            ExceptionManager.get().throwException(e)
         }
         //设置定位回调监听
         mLocationClient?.setLocationListener(mLocationListener)

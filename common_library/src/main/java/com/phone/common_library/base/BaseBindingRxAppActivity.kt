@@ -42,10 +42,8 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
         mActivityPageManager = ActivityPageManager.get()
         mActivityPageManager?.addActivity(this)
 
-        initLayoutId()?.let {
-            mDatabind = DataBindingUtil.setContentView(this, it)
-            mDatabind.lifecycleOwner = mRxAppCompatActivity
-        }
+        mDatabind = DataBindingUtil.setContentView(this, initLayoutId())
+        mDatabind.lifecycleOwner = mRxAppCompatActivity
         initData()
         initViews()
         loadView = QMUILoadingView(this)
@@ -81,7 +79,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
         return res
     }
 
-    protected abstract fun initLayoutId(): Int?
+    protected abstract fun initLayoutId(): Int
 
     protected open fun setToolbar(isDarkFont: Boolean) {
         if (isDarkFont) {

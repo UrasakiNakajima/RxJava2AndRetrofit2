@@ -6,7 +6,6 @@ import com.phone.common_library.greendao.DaoMaster
 import com.phone.common_library.greendao.DaoMaster.DevOpenHelper
 import com.phone.common_library.greendao.DaoSession
 import com.phone.common_library.greendao.UserBeanDao
-import com.phone.common_library.manager.LogManager.i
 import org.greenrobot.greendao.query.QueryBuilder
 
 class UserBeanDaoManager {
@@ -16,7 +15,7 @@ class UserBeanDaoManager {
     private var mDevOpenHelper: DevOpenHelper? = null
     private var daoSession: DaoSession? = null
 
-    fun UserBeanDaoManager() {
+    init {
         mDevOpenHelper = DevOpenHelper(get(), DB_NAME, null)
         val daoMaster = DaoMaster(mDevOpenHelper?.writableDatabase)
         daoSession = daoMaster.newSession()
@@ -31,7 +30,7 @@ class UserBeanDaoManager {
     fun insert(userBean: UserBean): Boolean {
         var flag = false
         flag = daoSession?.userBeanDao?.insert(userBean) != -1L
-        i(TAG, "insert User :$flag-->$userBean")
+        LogManager.i(TAG, "insert User :$flag-->$userBean")
         return flag
     }
 
@@ -41,7 +40,7 @@ class UserBeanDaoManager {
      * @param userBeanList
      * @return
      */
-    fun insertInTx(userBeanList: List<UserBean?>) {
+    fun insertInTx(userBeanList: List<UserBean>) {
         daoSession?.userBeanDao?.insertInTx(userBeanList)
     }
 
@@ -56,12 +55,12 @@ class UserBeanDaoManager {
     }
 
     /**
-     * 修改一条数据
+     * 修改多条数据
      *
      * @param userBeanList
      * @return
      */
-    fun update(userBeanList: List<UserBean?>) {
+    fun update(userBeanList: List<UserBean>) {
         daoSession?.userBeanDao?.updateInTx(userBeanList)
     }
 
@@ -71,7 +70,7 @@ class UserBeanDaoManager {
      * @param userBean
      * @return
      */
-    fun delete(userBean: UserBean?) {
+    fun delete(userBean: UserBean) {
         //按照id删除
         daoSession?.userBeanDao?.delete(userBean)
     }
@@ -81,7 +80,7 @@ class UserBeanDaoManager {
      *
      * @param userBeanList
      */
-    fun deleteInTx(userBeanList: List<UserBean?>?) {
+    fun deleteInTx(userBeanList: List<UserBean>) {
         //按照id删除
         daoSession?.userBeanDao?.deleteInTx(userBeanList)
     }
@@ -101,10 +100,8 @@ class UserBeanDaoManager {
      *
      * @return
      */
-    fun queryAll(): List<UserBean?>? {
-        return if (daoSession?.userBeanDao?.loadAll() == null) {
-            ArrayList()
-        } else daoSession?.userBeanDao?.loadAll()
+    fun queryAll(): List<UserBean> {
+        return daoSession?.userBeanDao?.loadAll() ?: mutableListOf()
     }
 
     /**
@@ -113,15 +110,15 @@ class UserBeanDaoManager {
      * @param key
      * @return
      */
-    fun queryById(key: Long): UserBean? {
-        return daoSession?.userBeanDao?.load(key)
+    fun queryById(key: Long): UserBean {
+        return daoSession?.userBeanDao?.load(key) ?: UserBean()
     }
 
     /**
      * 使用native sql进行查询操作
      */
-    fun queryByNativeSql(sql: String?, conditions: Array<String?>): List<UserBean?>? {
-        return daoSession?.userBeanDao?.queryRaw(sql, *conditions)
+    fun queryByNativeSql(sql: String, conditions: Array<String>): List<UserBean> {
+        return daoSession?.userBeanDao?.queryRaw(sql, *conditions) ?: mutableListOf()
     }
 
     /**
@@ -129,9 +126,10 @@ class UserBeanDaoManager {
      *
      * @return
      */
-    fun queryByQueryBuilder(userId: String?): List<UserBean>? {
+    fun queryByQueryBuilder(userId: String): List<UserBean> {
         val queryBuilder = daoSession?.userBeanDao?.queryBuilder()
         return queryBuilder?.where(UserBeanDao.Properties.UserId.eq(userId))?.list()
+            ?: mutableListOf()
     }
 
     /**

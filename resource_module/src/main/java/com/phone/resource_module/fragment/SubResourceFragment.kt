@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.adapter.ProjectAndResourceAdapter
 import com.phone.common_library.base.BaseMvvmRxFragment
@@ -15,6 +16,7 @@ import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.ResourcesManager
 import com.phone.common_library.manager.RetrofitManager
 import com.phone.common_library.manager.ScreenManager
+import com.phone.common_library.service.ISquareService
 import com.phone.common_library.ui.WebViewActivity
 import com.phone.resource_module.R
 import com.phone.resource_module.databinding.FragmentResourceSubBinding
@@ -191,7 +193,7 @@ class SubResourceFragment :
                 ScreenManager.dpToPx(20f),
                 18,
                 ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ResourcesManager.getColor(R.color.color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
                 error,

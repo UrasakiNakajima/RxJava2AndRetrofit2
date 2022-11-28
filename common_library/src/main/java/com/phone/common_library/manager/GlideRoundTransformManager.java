@@ -17,7 +17,7 @@ import java.security.MessageDigest;
  * Created by xsf
  * on 2016.04.15:17
  */
-public class GlideRoundTransformUtil extends BitmapTransformation {
+public class GlideRoundTransformManager extends BitmapTransformation {
 	
 	@Override
 	protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {

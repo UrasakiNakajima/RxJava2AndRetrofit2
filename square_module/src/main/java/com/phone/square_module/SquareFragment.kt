@@ -22,10 +22,7 @@ import com.phone.common_library.manager.*
 import com.phone.common_library.service.IFirstPageService
 import com.phone.common_library.service.ISquareService
 import com.phone.square_module.databinding.FragmentSquareBinding
-import com.phone.square_module.ui.CreateUserActivity
-import com.phone.square_module.ui.DecimalOperationActivity
-import com.phone.square_module.ui.EditTextInputLimitsActivity
-import com.phone.square_module.ui.KotlinCoroutineActivity
+import com.phone.square_module.ui.*
 import com.phone.square_module.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -80,57 +77,58 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             }
         })
         viewModel.dataxRxFragmentError.observe(this, {
-            it?.let {
-                LogManager.i(TAG, "onChanged*****dataxRxFragmentError")
-                squareDataError(it)
-            }
+            LogManager.i(TAG, "onChanged*****dataxRxFragmentError")
+            squareDataError(
+                it ?: BaseApplication.get().resources.getString(R.string.no_data_available)
+            )
         })
     }
 
     override fun initViews() {
         mDatabind.apply {
             tevKillApp.setOnClickListener {
-                LogManager.i(TAG, "tevKillApp");
-                number = 1;
+                LogManager.i(TAG, "tevKillApp")
+                number = 1
                 initRxPermissionsRxFragment(number)
             }
             tevCreateAnException.setOnClickListener {
-                number = 2;
+                number = 2
                 initRxPermissionsRxFragment(number)
             }
             tevCreateAnException.apply {
                 setOnClickListener {
-                    number = 2;
+                    number = 2
                     initRxPermissionsRxFragment(number)
                 }
             }
             tevCreateAnException2.setOnClickListener {
-                number = 3;
+                number = 3
                 initRxPermissionsRxFragment(number)
             }
             tevAndroidAndJs.setOnClickListener {
                 //Jump with parameters
-                ARouter.getInstance().build("/android_and_js/ui").navigation()
+                ARouter.getInstance().build("/android_and_js/ui/android_and_js").navigation()
             }
             tevEditTextInputLimits.run {
                 setOnClickListener {
-//            showEditTextInputLimitsDialog()
                     startActivity(EditTextInputLimitsActivity::class.java)
                 }
             }
             tevDecimalOperation.setOnClickListener {
                 startActivity(DecimalOperationActivity::class.java)
             }
-            imvPicture.setOnClickListener {
-//            startActivity(SquareDetailsActivity::class.java)
-//            startActivity(PickerViewActivity::class.java)
-                startActivity(Base64AndFileActivity::class.java)
-            }
             tevCreateUser.setOnClickListener {
                 startActivity(CreateUserActivity::class.java)
             }
             tevKotlinCoroutine.setOnClickListener {
                 startActivity(KotlinCoroutineActivity::class.java)
+            }
+            tevThreeLevelLinkageList.setOnClickListener {
+                startActivity(PickerViewActivity::class.java)
+            }
+            imvPicture.setOnClickListener {
+//                ARouter.getInstance().build("/project_module/ui/event_schedule").navigation()
+                startActivity(Base64AndFileActivity::class.java)
             }
         }
 
@@ -188,7 +186,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 val ISquareService: ISquareService =
                     ARouter.getInstance().build("/square_module/SquareServiceImpl")
                         .navigation() as ISquareService
-                ISquareService.squareDataList = success;
+                ISquareService.mSquareDataList = success
             }
             hideLoading()
         }
@@ -201,7 +199,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 ScreenManager.dpToPx(20f),
                 18,
                 ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ResourcesManager.getColor(R.color.color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
                 error,
@@ -224,8 +222,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                     //所有的权限都授予
                     if (number == 1) {
                         val baseMvpRxAppActivity =
-                            mRxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
-                        baseMvpRxAppActivity.getActivityPageManager()?.exitApp2();
+                            mRxAppCompatActivity as BaseMvpRxAppActivity<*, *>
+                        baseMvpRxAppActivity.getActivityPageManager()?.exitApp2()
                     } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                         val userBean: UserBean =
@@ -240,7 +238,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } catch (e: Exception) {
-                            ExceptionManager.get()?.throwException(e)
+                            ExceptionManager.get().throwException(e)
                         }
                     }
                 }
@@ -294,12 +292,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.squareData(this, currentPage)
         } else {
-            squareDataError(BaseApplication.get().resources.getString(R.string.please_check_the_network_connection));
+            squareDataError(BaseApplication.get().resources.getString(R.string.please_check_the_network_connection))
         }
 
-        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get());
-        atomicBoolean.compareAndSet(atomicBoolean.get(), true);
-        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get());
+        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())
+        atomicBoolean.compareAndSet(atomicBoolean.get(), true)
+        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get())
     }
 
 }

@@ -49,7 +49,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     private var refreshLayout: SmartRefreshLayout? = null
     private var rcvData: RecyclerView? = null
 
-    private val mineAdapter by lazy { MineAdapter(rxAppCompatActivity) }
+    private val mineAdapter by lazy { MineAdapter(mRxAppCompatActivity) }
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
 
@@ -95,7 +95,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     private fun initAdapter() {
-        linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
+        linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
         rcvData?.layoutManager = (linearLayoutManager)
         rcvData?.itemAnimator = DefaultItemAnimator()
@@ -113,7 +113,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
 //                        .navigation()
 
                 if (view?.id == R.id.ll_root) {
-                    val intent = Intent(rxAppCompatActivity, WebViewActivity::class.java)
+                    val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
                     intent.putExtra("loadUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
                     startActivity(intent)
                 }
@@ -159,7 +159,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     override fun mineDataSuccess(success: MutableList<Data>) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
                 mineAdapter.apply {
                     clearData();
@@ -174,7 +174,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     override fun mineDataError(error: String) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
@@ -201,7 +201,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
 
             mBodyParams["type"] = "keji"
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.mineData2(rxAppCompatActivity, mBodyParams)
+            presenter.mineData2(mRxAppCompatActivity, mBodyParams)
         } else {
             showToast(
                 ResourcesManager.getString(R.string.please_check_the_network_connection),

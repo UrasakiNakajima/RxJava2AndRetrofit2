@@ -42,13 +42,12 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                         val response =
                             GsonManager()
                                 .convert(success, SquareBean::class.java)
-                        response.data?.datas?.also {
-                            if (it.size > 0) {
-                                dataxRxFragmentSuccess.value = it
-                            } else {
-                                dataxRxFragmentError.value =
-                                    ResourcesManager.getString(R.string.no_data_available)
-                            }
+                        val responseData = response.data?.datas ?: mutableListOf()
+                        if (responseData.size > 0) {
+                            dataxRxFragmentSuccess.value = responseData
+                        } else {
+                            dataxRxFragmentError.value =
+                                ResourcesManager.getString(R.string.no_data_available)
                         }
                     } else {
                         dataxRxFragmentError.value =
@@ -104,13 +103,12 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                             val response =
                                 GsonManager()
                                     .convert(success, SquareBean::class.java)
-                            response.data?.datas?.apply {
-                                if (this.size > 0) {
-                                    dataxRxActivitySuccess.value = this
-                                } else {
-                                    dataxRxActivityError.value =
-                                        ResourcesManager.getString(R.string.no_data_available)
-                                }
+                            val responseData = response.data?.datas ?: mutableListOf()
+                            if (responseData.size > 0) {
+                                dataxRxActivitySuccess.value = responseData
+                            } else {
+                                dataxRxActivityError.value =
+                                    ResourcesManager.getString(R.string.no_data_available)
                             }
                         } else {
                             dataxRxActivityError.value =

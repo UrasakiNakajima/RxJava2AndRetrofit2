@@ -35,12 +35,9 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initLayoutId()?.let {
-            mDatabind = DataBindingUtil.inflate(inflater, it, container, false)
-            mDatabind.lifecycleOwner = viewLifecycleOwner
-            return mDatabind.root
-        }
-        return super.onCreateView(inflater, container, savedInstanceState)
+        mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
+        mDatabind.lifecycleOwner = viewLifecycleOwner
+        return mDatabind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,7 +52,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         initLoadData()
     }
 
-    protected abstract fun initLayoutId(): Int?
+    protected abstract fun initLayoutId(): Int
 
     protected abstract fun initViewModel(): VM
 

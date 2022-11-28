@@ -10,14 +10,13 @@ class FirstPageServiceImpl : IFirstPageService {
 
     private val TAG = FirstPageServiceImpl::class.java.simpleName
 
-    override fun setFirstPageDataList(firstPageDataList: MutableList<JuheNewsBean?>) {
-        mFirstPageDataList.clear()
-        mFirstPageDataList.addAll(firstPageDataList)
-    }
-
-    override fun getFirstPageDataList(): MutableList<JuheNewsBean?> {
-        return mFirstPageDataList
-    }
+    override var mFirstPageDataList: MutableList<JuheNewsBean> = mutableListOf()
+        get() {
+            return field
+        }
+        set(value) {
+            field = value
+        }
 
     override fun init(context: Context?) {
     }

@@ -46,7 +46,7 @@ class LaunchActivity : BaseRxAppActivity() {
     override fun initViews() {}
 
     override fun initLoadData() {
-//        initPermissions();
+//        initPermissions()
         if (baseApplication.isLogin()) {
             startActivity(MainActivity::class.java)
         } else {

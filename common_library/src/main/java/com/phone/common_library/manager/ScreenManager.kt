@@ -74,14 +74,14 @@ object ScreenManager {
     /**
      * 获取屏幕高度(px)
      */
-    fun getScreenHeight(context: Context?): Int {
+    fun getScreenHeight(): Int {
         return BaseApplication.get().resources.displayMetrics.heightPixels
     }
 
     /**
      * 获取屏幕宽度(px)
      */
-    fun getScreenWidth(context: Context?): Int {
+    fun getScreenWidth(): Int {
         return BaseApplication.get().resources.displayMetrics.widthPixels
     }
 
@@ -93,15 +93,15 @@ object ScreenManager {
      * @param contentView window的内容布局
      * @return window显示的左上角的xOff, yOff坐标
      */
-    fun calculatePopWindowPos(anchorView: View, contentView: View): IntArray? {
+    fun calculatePopWindowPos(anchorView: View, contentView: View): IntArray {
         val windowPos = IntArray(2)
         val anchorLoc = IntArray(2)
         // 获取锚点View在屏幕上的左上角坐标位置
         anchorView.getLocationOnScreen(anchorLoc)
         val anchorHeight = anchorView.height
         // 获取屏幕的高宽
-        val screenHeight = getScreenHeight(anchorView.context)
-        val screenWidth = getScreenWidth(anchorView.context)
+        val screenHeight = getScreenHeight()
+        val screenWidth = getScreenWidth()
         contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         // 计算contentView的高宽
         val windowHeight = contentView.measuredHeight
@@ -215,10 +215,7 @@ object ScreenManager {
         return realWidth - displayWidth > 0 || realHeight - displayHeight > 0
     }
 
-    fun getWidthAndHeight(window: Window?): Array<Int?>? {
-        if (window == null) {
-            return null
-        }
+    fun getWidthAndHeight(window: Window): Array<Int?> {
         val integer = arrayOfNulls<Int>(2)
         val dm = DisplayMetrics()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

@@ -24,6 +24,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.EventScheduleActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.SurfaceViewActivity"
             android:exported="false"
             android:launchMode="singleTask"
@@ -32,11 +37,6 @@
         </activity>
         <activity
             android:name=".ui.VideoViewActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".ui.EventScheduleActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />

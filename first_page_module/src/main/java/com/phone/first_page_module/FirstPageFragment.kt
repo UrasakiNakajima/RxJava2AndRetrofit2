@@ -86,11 +86,14 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
         refreshLayout = rootView?.findViewById<View>(R.id.refresh_layout) as SmartRefreshLayout
         rcvData = rootView?.findViewById<View>(R.id.rcv_data) as RecyclerView
         loadView = rootView?.findViewById<View>(R.id.loadView) as QMUILoadingView
-        tevTitle?.setOnClickListener {
-            LogManager.i(TAG, "tev_title")
-            initFirstPage()
-        }
         tevRequestPermissionAndStartLocating?.setOnClickListener {
+            val ISquareService = ARouter.getInstance().build("/square_module/SquareServiceImpl")
+                .navigation() as ISquareService
+            LogManager.i(
+                TAG,
+                "squareService.getSquareDataList()******" + ISquareService.mSquareDataList.toString()
+            )
+
             LogManager.i(TAG, "tevRequestPermissions")
             initRxPermissionsRxFragment()
         }
@@ -104,24 +107,24 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
         rcvData?.itemAnimator = DefaultItemAnimator()
         firstPageAdapter = FirstPageAdapter(mRxAppCompatActivity)
         firstPageAdapter?.setRcvOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
-            //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
-            //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
-            //					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4";
-            //					//					fileFullname = mFileDTO.getFName();
-            //					String[] arr = url.split("\\.");
+            //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4"
+            //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4"
+            //					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4"
+            //					//					fileFullname = mFileDTO.getFName()
+            //					String[] arr = url.split("\\.")
             //					if (arr != null && arr.length > 0) {
-            //						String fileName = "";
-            //						StringBuilder stringBuilder = new StringBuilder();
-            //						for (int i = 0; i < arr.length - 1; i++) {
-            //							stringBuilder.append(arr[i]);
+            //						String fileName = ""
+            //						StringBuilder stringBuilder = new StringBuilder()
+            //						for (int i = 0 i < arr.length - 1 i++) {
+            //							stringBuilder.append(arr[i])
             //						}
-            //						fileName = stringBuilder.toString();
-            //						String suffix = arr[arr.length - 1];
+            //						fileName = stringBuilder.toString()
+            //						String suffix = arr[arr.length - 1]
             //
-            //						paramMap.clear();
-            //						paramMap.put("url", url);
-            //						paramMap.put("suffix", suffix);
-            //						startActivityCarryParams(ShowVideoActivity.class, paramMap);
+            //						paramMap.clear()
+            //						paramMap.put("url", url)
+            //						paramMap.put("suffix", suffix)
+            //						startActivityCarryParams(ShowVideoActivity.class, paramMap)
             //					}
             //
             //				}
@@ -150,24 +153,18 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     }
 
     override fun initLoadData() {
-        refreshLayout?.autoRefresh()
-        val ISquareService = ARouter.getInstance().build("/square_module/SquareServiceImpl")
-            .navigation() as ISquareService
-        LogManager.i(
-            TAG,
-            "squareService.getSquareDataList()******" + ISquareService.squareDataList.toString()
-        )
+        initFirstPage()
         LogManager.i(TAG, "FirstPageFragment initLoadData")
 
-        //		startAsyncTask();
+        //		startAsyncTask()
 
 //        try {
 //            //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-//            User user = new User2();
-//            User3 user3 = (User3) user;
-//            LogManager.i(TAG, user3.toString());
+//            User user = new User2()
+//            User3 user3 = (User3) user
+//            LogManager.i(TAG, user3.toString())
 //        } catch (Exception e) {
-//            ExceptionManager.getInstance().throwException(getRxAppCompatActivity(), e);
+//            ExceptionManager.getInstance().throwException(getRxAppCompatActivity(), e)
 //        }
     }
 
@@ -184,12 +181,12 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
 //			@Override
 //			protected Void doInBackground(Void... params) {
 //				// Do some slow work in background
-//				SystemClock.sleep(10000);
-//				return null;
+//				SystemClock.sleep(10000)
+//				return null
 //			}
-//		}.execute();
+//		}.execute()
 //
-//		Toast.makeText(getRxAppCompatActivity(), "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show();
+//		Toast.makeText(getRxAppCompatActivity(), "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
 //	}
 
     //	private void startAsyncTask() {
@@ -201,12 +198,12 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     //			@Override
     //			protected Void doInBackground(Void... params) {
     //				// Do some slow work in background
-    //				SystemClock.sleep(10000);
-    //				return null;
+    //				SystemClock.sleep(10000)
+    //				return null
     //			}
-    //		}.execute();
+    //		}.execute()
     //
-    //		Toast.makeText(getRxAppCompatActivity(), "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show();
+    //		Toast.makeText(getRxAppCompatActivity(), "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
     //	}
 
     override fun showLoading() {
@@ -227,12 +224,8 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
         }
     }
 
-    override fun firstPageDataSuccess(success: List<JuheNewsBean?>?) {
+    override fun firstPageDataSuccess(success: List<JuheNewsBean>) {
         if (!mRxAppCompatActivity.isFinishing) {
-            val IFirstPageService =
-                ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
-                    .navigation() as IFirstPageService
-
             if (isRefresh) {
                 firstPageAdapter?.clearData()
                 firstPageAdapter?.addData(success)
@@ -245,19 +238,23 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
                 TAG,
                 "firstPageAdapter?.mJuheNewsBeanList*****" + firstPageAdapter?.mJuheNewsBeanList.toString()
             )
+
+            val IFirstPageService =
+                ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
+                    .navigation() as IFirstPageService
             IFirstPageService.mFirstPageDataList =
-                firstPageAdapter?.mJuheNewsBeanList as MutableList<JuheNewsBean?>
+                firstPageAdapter?.mJuheNewsBeanList ?: mutableListOf()
             hideLoading()
         }
     }
 
-    override fun firstPageDataError(error: String?) {
+    override fun firstPageDataError(error: String) {
         if (!mRxAppCompatActivity.isFinishing) {
-//            showToast(error, true);
+//            showToast(error, true)
             showCustomToast(
                 ScreenManager.dpToPx(20f), ScreenManager.dpToPx(20f),
                 18, resources.getColor(R.color.white),
-                resources.getColor(R.color.color_FFE066FF), ScreenManager.dpToPx(40f),
+                resources.getColor(R.color.color_FF198CFF), ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f), error,
                 true
             )
@@ -273,7 +270,7 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 207) {
-//            initRxPermissions();
+//            initRxPermissions()
         }
     }
 
@@ -289,9 +286,9 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
                 override fun onRxPermissionsAllPass() {
                     //所有的权限都授予
 //                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-//                User user = new User2();
-//                User3 user3 = (User3) user;
-//                LogManager.i(TAG, user3.toString());
+//                User user = new User2()
+//                User3 user3 = (User3) user
+//                LogManager.i(TAG, user3.toString())
                     if (TextUtils.isEmpty(mBaseApplication.getSystemId())) {
                         val systemId = SystemManager.getSystemId()
                         mBaseApplication.setSystemId(systemId)
@@ -357,10 +354,8 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     }
 
     override fun onDestroyView() {
-        if (layoutOutLayer != null) {
-            layoutOutLayer?.removeAllViews()
-            layoutOutLayer = null
-        }
+        layoutOutLayer?.removeAllViews()
+        layoutOutLayer = null
         if (amapLocationManager != null) {
             amapLocationManager?.destoryLocation()
         }

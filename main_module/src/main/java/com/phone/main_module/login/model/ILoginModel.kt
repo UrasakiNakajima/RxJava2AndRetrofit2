@@ -12,10 +12,10 @@ import okhttp3.ResponseBody
 
 interface ILoginModel {
 
-    fun getAuthCode(bodyParams: Map<String?, String?>): Observable<ResponseBody?>
+    fun getAuthCode(bodyParams: Map<String, String>): Observable<ResponseBody>
 
-    fun loginWithAuthCode(bodyParams: Map<String?, String?>): Observable<ResponseBody?>
+    fun loginWithAuthCode(bodyParams: Map<String, String>): Observable<ResponseBody>
 
-    fun register(bodyParams: Map<String?, String?>): Observable<ResponseBody?>
+    fun register(bodyParams: Map<String, String>): Observable<ResponseBody>
 
 }

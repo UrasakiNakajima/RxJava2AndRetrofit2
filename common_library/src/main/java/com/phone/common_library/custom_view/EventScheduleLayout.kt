@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.TextUtils
-import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -341,7 +340,7 @@ class EventScheduleLayout(
                         }
                         val mFrameLayout = FrameLayout(mContext)
                         mFrameLayout.background =
-                            getResources().getDrawable(R.drawable.corners_7_color_ffd0d6ec)
+                            resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
                         val tevTime = TextView(mContext)
                         tevTime.text = mRowsDTO?.activeTime
                         tevTime.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
@@ -386,12 +385,12 @@ class EventScheduleLayout(
                         tevStatus.includeFontPadding = false
                         if (mRowsDTO?.auditStatus == 0) {
                             mFrameLayout.background =
-                                getResources().getDrawable(R.drawable.corners_7_color_ffd0d6ec)
-                            tevStatus.setText(getResources().getString(R.string.check_pending))
+                                resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
+                            tevStatus.setText(ResourcesManager.getString(R.string.check_pending))
                         } else if (mRowsDTO?.auditStatus == 2) {
                             mFrameLayout.background =
-                                getResources().getDrawable(R.drawable.corners_7_color_ffcfe9ff)
-                            tevStatus.setText(getResources().getString(R.string.checked))
+                                resources.getDrawable(R.drawable.corners_7_color_ffcfe9ff)
+                            tevStatus.setText(ResourcesManager.getString(R.string.checked))
                         }
                         val tevStatusParams = FrameLayout.LayoutParams(
                             FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -457,7 +456,7 @@ class EventScheduleLayout(
                         val mFrameLayout = FrameLayout(mContext)
                         //						mFrameLayout.setBackgroundColor(ResourcesManager.getColor(R.color.color_FFFF0000));
                         mFrameLayout.background =
-                            getResources().getDrawable(R.drawable.corners_7_color_ffd0d6ec)
+                            resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
                         val mFrameLayoutParams = LinearLayout.LayoutParams(
                             FrameLayout.LayoutParams.MATCH_PARENT,
                             ScreenManager.dpToPx(
@@ -509,12 +508,12 @@ class EventScheduleLayout(
                         tevStatus.includeFontPadding = false
                         if (mRowsDTO?.auditStatus == 0) {
                             mFrameLayout.background =
-                                getResources().getDrawable(R.drawable.corners_7_color_ffd0d6ec)
-                            tevStatus.setText(getResources().getString(R.string.check_pending))
+                                resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
+                            tevStatus.setText(ResourcesManager.getString(R.string.check_pending))
                         } else if (mRowsDTO?.auditStatus == 2) {
                             mFrameLayout.background =
-                                getResources().getDrawable(R.drawable.corners_7_color_ffcfe9ff)
-                            tevStatus.setText(getResources().getString(R.string.checked))
+                                resources.getDrawable(R.drawable.corners_7_color_ffcfe9ff)
+                            tevStatus.setText(ResourcesManager.getString(R.string.checked))
                         }
                         tevStatusParams.setMargins(
                             0, ScreenManager.dpToPx(10f),

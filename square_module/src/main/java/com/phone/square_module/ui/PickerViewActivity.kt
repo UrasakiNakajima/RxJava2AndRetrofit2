@@ -7,34 +7,24 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.databinding.ViewDataBinding
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.google.gson.Gson
 import com.phone.common_library.base.BaseBindingRxAppActivity
-import com.phone.common_library.fragment.EventScheduleDialogFragment
 import com.phone.common_library.manager.GetJsonDataManager
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.ResourcesManager
 import com.phone.square_module.R
 import com.phone.square_module.bean.ProvincesBean
+import com.phone.square_module.databinding.ActivityPickerViewBinding
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import org.json.JSONArray
-import java.lang.ref.WeakReference
 
-class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
+class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>() {
 
     private val TAG = PickerViewActivity::class.java.simpleName
-    private var toolbar: Toolbar? = null
-    private var layoutBack: FrameLayout? = null
-    private var imvBack: ImageView? = null
-    private var tevTitle: TextView? = null
-    private var tevShow: TextView? = null
 
     protected var bodyParams: Map<String, String>? = null
     private var pvOptions: OptionsPickerView<Any>? = null
@@ -44,13 +34,9 @@ class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
     var isAnalyticalDataComplete = false
     internal var analyticalDataAsyncTask: AnalyticalDataAsyncTask? = null
 
-    private var eventScheduleDialogFragment: EventScheduleDialogFragment? = null
-
     // where this is an Activity or Fragment instance
     private var rxPermissions: RxPermissions? = null
-//    private Disposable disposable;
 
-    //    private Disposable disposable;
     override fun initLayoutId() = R.layout.activity_picker_view
 
     override fun initData() {
@@ -59,29 +45,24 @@ class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
         options2Items = ArrayList()
         options3Items = ArrayList()
         analyticalDataAsyncTask =
-            AnalyticalDataAsyncTask(mRxAppCompatActivity as PickerViewActivity)
+            AnalyticalDataAsyncTask()
         analyticalDataAsyncTask?.execute()
         initRxPermissions()
     }
 
     override fun initViews() {
-        toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        layoutBack = findViewById<View>(R.id.layout_back) as FrameLayout
-        imvBack = findViewById<View>(R.id.imv_back) as ImageView
-        tevTitle = findViewById<View>(R.id.tev_title) as TextView
-        tevShow = findViewById<View>(R.id.tev_show) as TextView
         setToolbar(false, R.color.color_FF198CFF)
-        imvBack?.setColorFilter(ContextCompat.getColor(mRxAppCompatActivity, R.color.white))
-        layoutBack?.setOnClickListener { view: View? -> finish() }
-        eventScheduleDialogFragment = EventScheduleDialogFragment()
-        tevShow?.setOnClickListener { v: View? ->
-
-//            pvOptions.show();
-            eventScheduleDialogFragment?.show(supportFragmentManager, "FOF")
+        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.white))
+        mDatabind.layoutBack.setOnClickListener { view: View? -> finish() }
+        mDatabind.tevShow.setOnClickListener { v: View? ->
+            pvOptions?.show()
+//            val eventScheduleDialogFragment = EventScheduleDialogFragment()
+//            eventScheduleDialogFragment.show(supportFragmentManager, "FOF")
         }
     }
 
-    override fun initLoadData() {}
+    override fun initLoadData() {
+    }
 
     /**
      * 這個只是一個請求權限的框架，無論成功與失敗都不做任何處理
@@ -104,9 +85,9 @@ class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
                         LogManager.i(TAG, "所有的权限都授予")
                         LogManager.i(TAG, "用户已经同意该权限 permission.name*****" + permission.name)
 
-//                        Intent bindIntent = new Intent(this, Base64AndFileService.class);
+//                        Intent bindIntent = new Intent(this, Base64AndFileService.class)
 //                        // 绑定服务和活动，之后活动就可以去调服务的方法了
-//                        bindService(bindIntent, connection, BIND_AUTO_CREATE);
+//                        bindService(bindIntent, connection, BIND_AUTO_CREATE)
                     } else if (permission.shouldShowRequestPermissionRationale) {
                         // Denied permission without ask never again
 
@@ -137,11 +118,11 @@ class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
                 if (options2Items.size > 0 && options3Items[options1].size > 0 && options3Items[options1][options2].size > 0
                 ) options3Items[options1][options2][options3] else ""
 
-//                bodyParams.clear();
-//                bodyParams.put("province", province);
-//                bodyParams.put("city", city);
-//                bodyParams.put("county", county);
-//                startActivityForResultCarryParams(PickerViewActivity.class, bodyParams, 203);
+//                bodyParams.clear()
+//                bodyParams.put("province", province)
+//                bodyParams.put("city", city)
+//                bodyParams.put("county", county)
+//                startActivityForResultCarryParams(PickerViewActivity.class, bodyParams, 203)
         }
             .setTitleText("城市选择")
             .setDividerColor(Color.BLACK)
@@ -152,8 +133,8 @@ class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
             .isDialog(true)
             .build<Any>()
 
-        /*pvOptions.setPicker(options1Items);//一级选择器
-        pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
+        /*pvOptions.setPicker(options1Items)//一级选择器
+        pvOptions.setPicker(options1Items, options2Items)//二级选择器*/
         pvOptions?.setPicker(
             options1Items, options2Items as List<MutableList<Any>>?,
             options3Items as List<MutableList<MutableList<Any>>>?
@@ -183,7 +164,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
         }
     }
 
-    private fun initAnalyticalData(pickerViewActivity: PickerViewActivity): Boolean { //解析数据
+    private fun initAnalyticalData(): Boolean { //解析数据
         /**
          * 注意：assets 目录下的Json文件仅供参考，实际使用可自行替换文件
          * 关键逻辑在于循环体
@@ -209,9 +190,9 @@ class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
                 //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
                 /*if (jsonBean.get(i).getCityList().get(c).getArea() == null
                         || jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
-                    city_AreaList.add("");
+                    city_AreaList.add("")
                 } else {
-                    city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea());
+                    city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea())
                 }*/city_AreaList.addAll(jsonBean[i].cityList[c].area)
                 province_AreaList.add(city_AreaList) //添加该省所有地区数据
             }
@@ -252,22 +233,11 @@ class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
                 it.cancel(true)
             }
         }
-
-
-//        if (disposable != null && !disposable.isDisposed()) {
-//            disposable.dispose();
-//        }
         super.onDestroy()
     }
 
 
-    inner class AnalyticalDataAsyncTask(pickerViewActivity: PickerViewActivity) :
-        AsyncTask<String?, Int?, Boolean>() {
-        private val activityWeakReference: WeakReference<PickerViewActivity>
-
-        init {
-            activityWeakReference = WeakReference(pickerViewActivity)
-        }
+    inner class AnalyticalDataAsyncTask() : AsyncTask<String?, Int?, Boolean>() {
 
         /**
          * 这里是开始线程之前执行的,是在UI线程
@@ -276,7 +246,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
         override fun onPreExecute() {
             super.onPreExecute()
             this@PickerViewActivity.isAnalyticalDataComplete = false
-            //            mProgressBar.setMax(100);
+            //            mProgressBar.setMax(100)
         }
 
         /**
@@ -290,10 +260,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<ViewDataBinding>() {
             if (isCancelled) {
                 return false
             }
-            val pickerViewActivity = activityWeakReference.get()
-            if (pickerViewActivity != null) {
-                isAnalyticalDataComplete = initAnalyticalData(pickerViewActivity)
-            }
+            isAnalyticalDataComplete = initAnalyticalData()
             return isAnalyticalDataComplete
         }
 

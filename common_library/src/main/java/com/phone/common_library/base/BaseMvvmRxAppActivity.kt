@@ -32,22 +32,20 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
     protected lateinit var viewModel: VM
-    protected lateinit var rxAppCompatActivity: RxAppCompatActivity
+    protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected var baseApplication: BaseApplication? = null
     private var mActivityPageManager: ActivityPageManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        rxAppCompatActivity = this;
+        mRxAppCompatActivity = this;
         mActivityPageManager = ActivityPageManager.get()
-        mActivityPageManager?.addActivity(rxAppCompatActivity)
+        mActivityPageManager?.addActivity(mRxAppCompatActivity)
         baseApplication = application as BaseApplication
 
-        initLayoutId()?.let {
-            mDatabind = DataBindingUtil.setContentView(rxAppCompatActivity, it)
-            mDatabind.lifecycleOwner = rxAppCompatActivity
-        }
+        mDatabind = DataBindingUtil.setContentView(mRxAppCompatActivity, initLayoutId())
+        mDatabind.lifecycleOwner = mRxAppCompatActivity
         viewModel = initViewModel()
         initData()
         initObservers()
@@ -74,7 +72,7 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         return res
     }
 
-    protected abstract fun initLayoutId(): Int?
+    protected abstract fun initLayoutId(): Int
 
     protected abstract fun initViewModel(): VM
 
@@ -283,7 +281,7 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         if (mActivityPageManager?.mIsLastAliveActivity?.get() == true) {
             killAppProcess()
         }
-        mActivityPageManager?.removeActivity(rxAppCompatActivity)
+        mActivityPageManager?.removeActivity(mRxAppCompatActivity)
         super.onDestroy()
     }
 

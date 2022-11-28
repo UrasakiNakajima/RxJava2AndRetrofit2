@@ -42,7 +42,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
 
     override fun getAuthCode(
         rxAppCompatActivity: RxAppCompatActivity,
-        bodyParams: Map<String?, String?>
+        bodyParams: Map<String, String>
     ) {
         val baseView = obtainView()
         if (baseView != null) {
@@ -127,7 +127,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
 
     override fun loginWithAuthCode(
         rxAppCompatActivity: RxAppCompatActivity,
-        bodyParams: Map<String?, String?>
+        bodyParams: Map<String, String>
     ) {
         val baseView = obtainView()
         if (baseView != null) {
@@ -216,7 +216,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
 
     override fun login(
         rxAppCompatActivity: RxAppCompatActivity,
-        bodyParams: Map<String?, String?>
+        bodyParams: Map<String, String>
     ) {
         val baseView = obtainView()
         if (baseView != null) {
@@ -226,7 +226,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                 val userId = bodyParams["userId"]
                 val password = bodyParams["password"]
                 val userBeanDaoManager = UserBeanDaoManager()
-                val userBeanList = userBeanDaoManager.queryByQueryBuilder(userId)
+                val userBeanList = userId?.let { userBeanDaoManager.queryByQueryBuilder(userId) }
                 if (userBeanList != null && userBeanList.size > 0) {
                     val userBean = userBeanList[0]
                     if (userBean.userId == userId) {
@@ -248,7 +248,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
 
     override fun register(
         rxAppCompatActivity: RxAppCompatActivity,
-        bodyParams: Map<String?, String?>
+        bodyParams: Map<String, String>
     ) {
         val baseView = obtainView()
         if (baseView != null) {
@@ -286,7 +286,10 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                 val password = bodyParams["password"]
                 if (!TextUtils.isEmpty(userId)) {
                     if (!TextUtils.isEmpty(password)) {
-                        val userBeanList = userBeanDaoManager.queryByQueryBuilder(userId)
+                        val userBeanList =
+                            userId?.let {
+                                userBeanDaoManager.queryByQueryBuilder(userId)
+                            }
                         if (userBeanList != null && userBeanList.size > 0 && userId == userBeanList[0].userId) {
                             registerView.registerError(ResourcesManager.getString(R.string.this_user_is_already_registered))
                         } else {

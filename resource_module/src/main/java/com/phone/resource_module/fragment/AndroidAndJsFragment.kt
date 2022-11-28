@@ -64,23 +64,23 @@ class AndroidAndJsFragment : BaseBindingRxFragment<FragmentAndroidAndJsBinding>(
                 //		webView.setWebChromeClient(new WebChromeClient() {
                 //			@Override
                 //			public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-                //				AlertDialog.Builder builder = new AlertDialog.Builder(appCompatActivity);
-                //				builder.setTitle("Alert");
-                //				builder.setMessage(message);
+                //				AlertDialog.Builder builder = new AlertDialog.Builder(appCompatActivity)
+                //				builder.setTitle("Alert")
+                //				builder.setMessage(message)
                 //				builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 //					@Override
                 //					public void onClick(DialogInterface dialog, int which) {
-                //						result.confirm();
+                //						result.confirm()
                 //					}
-                //				});
-                //				builder.setCancelable(false);
+                //				})
+                //				builder.setCancelable(false)
                 //				builder
                 //					.create()
-                //					.show();
-                //				return true;
+                //					.show()
+                //				return true
                 //			}
                 //
-                //		});
+                //		})
                 //js调用android
                 addJavascriptInterface(JsInteration(), "android")
             }

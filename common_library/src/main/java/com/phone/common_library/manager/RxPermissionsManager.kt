@@ -12,7 +12,6 @@ class RxPermissionsManager {
 
     private val TAG = RxPermissionsManager::class.java.simpleName
 
-
     /**
      * 保证只有一个实例
      *
@@ -27,7 +26,7 @@ class RxPermissionsManager {
             if (instance == null) {
                 instance = RxPermissionsManager()
             }
-            return instance as RxPermissionsManager
+            return instance!!
         }
     }
 

@@ -5,11 +5,6 @@ import com.phone.common_library.bean.FirstPageResponse.ResultData.JuheNewsBean
 
 interface IFirstPageService : IProvider {
 
-    var mFirstPageDataList: MutableList<JuheNewsBean?>
-        get() = mutableListOf()
-        set(value) = TODO()
+    var mFirstPageDataList: MutableList<JuheNewsBean>
 
-    fun setFirstPageDataList(firstPageDataList: MutableList<JuheNewsBean?>)
-
-    fun getFirstPageDataList(): MutableList<JuheNewsBean?>
 }

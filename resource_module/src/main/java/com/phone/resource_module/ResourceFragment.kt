@@ -48,10 +48,10 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
             }
         })
         viewModel.tabRxFragmentError.observe(this, {
-            it?.let {
-                LogManager.i(TAG, "onChanged*****tabRxFragmentError")
-                resourceTabDataError(it)
-            }
+            LogManager.i(TAG, "onChanged*****tabRxFragmentError")
+            resourceTabDataError(
+                it ?: BaseApplication.get().resources.getString(R.string.no_data_available)
+            )
         })
     }
 
@@ -121,7 +121,7 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
                 ScreenManager.dpToPx(20f),
                 18,
                 ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ResourcesManager.getColor(R.color.color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
                 error,
@@ -132,8 +132,8 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
     }
 
     private fun initResourceTabData() {
+        showLoading()
         if (RetrofitManager.isNetworkAvailable()) {
-            showLoading()
             viewModel.resourceTabData()
         } else {
             resourceTabDataError(resources.getString(R.string.please_check_the_network_connection))

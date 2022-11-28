@@ -1,52 +1,35 @@
 package com.phone.project_module.ui
 
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import com.phone.common_library.base.BaseRxAppActivity
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.phone.common_library.base.BaseBindingRxAppActivity
 import com.phone.common_library.callback.OnDialogCallback
 import com.phone.common_library.fragment.EventScheduleDialogFragment
 import com.phone.project_module.R
+import com.phone.project_module.databinding.ActivityEventScheduleBinding
 
-class EventScheduleActivity : BaseRxAppActivity() {
+@Route(path = "/project_module/ui/event_schedule")
+class EventScheduleActivity : BaseBindingRxAppActivity<ActivityEventScheduleBinding>() {
 
     companion object {
         private const val TAG = "EventScheduleActivity"
     }
 
-    private var toolbar: Toolbar? = null
-    private var layoutBack: FrameLayout? = null
-    private var imvBack: ImageView? = null
-    private var tevTitle: TextView? = null
-    private var tevEventSchedule: TextView? = null
-
     override fun initLayoutId() = R.layout.activity_event_schedule
 
     override fun initData() {
-
     }
 
     override fun initViews() {
-        toolbar = findViewById(R.id.toolbar);
-        layoutBack = findViewById(R.id.layout_back);
-        imvBack = findViewById(R.id.imv_back);
-        tevTitle = findViewById(R.id.tev_title);
-        tevEventSchedule = findViewById(R.id.tev_event_schedule);
-
-        imvBack!!.setColorFilter(ContextCompat.getColor(this, R.color.white))
-        layoutBack!!.setOnClickListener {
+        setToolbar(false, R.color.color_FF198CFF)
+        mDatabind.imvBack.setColorFilter(ContextCompat.getColor(this, R.color.white))
+        mDatabind.layoutBack.setOnClickListener {
             finish()
         }
-        tevEventSchedule!!.setOnClickListener {
-            val eventScheduleDialogFragment =
-                EventScheduleDialogFragment()
-            //			ReserveSpaceDialogFragment reserveSpaceDialogFragment=ReserveSpaceDialogFragment.newInstance();
-            //			ReserveSpaceDialogFragment reserveSpaceDialogFragment=ReserveSpaceDialogFragment.newInstance();
-
-            eventScheduleDialogFragment.setOnDialogCallback(object :OnDialogCallback<Int>{
+        mDatabind.tevEventSchedule.setOnClickListener {
+            val eventScheduleDialogFragment = EventScheduleDialogFragment()
+            eventScheduleDialogFragment.setOnDialogCallback(object : OnDialogCallback<Int> {
                 override fun onDialogClick(view: View?, success: Int?) {
                     if (success == 0) {
 
@@ -68,13 +51,9 @@ class EventScheduleActivity : BaseRxAppActivity() {
             })
             eventScheduleDialogFragment.show(supportFragmentManager, "FOF")
         }
-
-
-        setToolbar(false, R.color.color_FFE066FF)
     }
 
     override fun initLoadData() {
-
     }
 
 }

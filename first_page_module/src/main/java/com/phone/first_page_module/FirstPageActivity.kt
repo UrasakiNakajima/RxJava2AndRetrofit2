@@ -85,42 +85,42 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
                 ResourcesManager.getString(R.string.this_function_can_only_be_used_under_componentization),
                 false
             )
-            //                initRxPermissions();
+            //                initRxPermissions()
         }
         initAdapter()
     }
 
     private fun initAdapter() {
-        val linearLayoutManager = LinearLayoutManager(rxAppCompatActivity)
+        val linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
         rcvData?.layoutManager = linearLayoutManager
         rcvData?.itemAnimator = DefaultItemAnimator()
-        firstPageAdapter = FirstPageAdapter(rxAppCompatActivity)
-        //		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page);
+        firstPageAdapter = FirstPageAdapter(mRxAppCompatActivity)
+        //		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page)
         firstPageAdapter?.setRcvOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
-            //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4";
-            //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4";
-            //					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4";
-            //					//					fileFullname = mFileDTO.getFName();
-            //					String[] arr = url.split("\\.");
+            //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4"
+            //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4"
+            //					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4"
+            //					//					fileFullname = mFileDTO.getFName()
+            //					String[] arr = url.split("\\.")
             //					if (arr != null && arr.length > 0) {
-            //						String fileName = "";
-            //						StringBuilder stringBuilder = new StringBuilder();
-            //						for (int i = 0; i < arr.length - 1; i++) {
-            //							stringBuilder.append(arr[i]);
+            //						String fileName = ""
+            //						StringBuilder stringBuilder = new StringBuilder()
+            //						for (int i = 0 i < arr.length - 1 i++) {
+            //							stringBuilder.append(arr[i])
             //						}
-            //						fileName = stringBuilder.toString();
-            //						String suffix = arr[arr.length - 1];
+            //						fileName = stringBuilder.toString()
+            //						String suffix = arr[arr.length - 1]
             //
-            //						paramMap.clear();
-            //						paramMap.put("url", url);
-            //						paramMap.put("suffix", suffix);
-            //						startActivityCarryParams(ShowVideoActivity.class, paramMap);
+            //						paramMap.clear()
+            //						paramMap.put("url", url)
+            //						paramMap.put("suffix", suffix)
+            //						startActivityCarryParams(ShowVideoActivity.class, paramMap)
             //					}
             //
             //				}
             if (view.id == R.id.ll_root) {
-                val intent = Intent(rxAppCompatActivity, WebViewActivity::class.java)
+                val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
                 intent.putExtra(
                     "loadUrl",
                     firstPageAdapter?.mJuheNewsBeanList?.get(position)?.getUrl()
@@ -165,7 +165,7 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         }
     }
 
-    override fun firstPageDataSuccess(success: List<JuheNewsBean?>) {
+    override fun firstPageDataSuccess(success: List<JuheNewsBean>) {
         if (!this.isFinishing) {
             if (isRefresh) {
                 firstPageAdapter?.mJuheNewsBeanList?.clear()
@@ -181,9 +181,9 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         }
     }
 
-    override fun firstPageDataError(error: String?) {
+    override fun firstPageDataError(error: String) {
         if (!this.isFinishing) {
-            //            showToast(error, true);
+            //            showToast(error, true)
             showCustomToast(
                 dpToPx(20f), dpToPx(20f),
                 16, ResourcesManager.getColor(R.color.white),
@@ -203,7 +203,7 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 207) {
-//            initRxPermissions();
+//            initRxPermissions()
         }
     }
 
@@ -219,9 +219,9 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
                 override fun onRxPermissionsAllPass() {
                     //所有的权限都授予
 //                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-//                User user = new User2();
-//                User3 user3 = (User3) user;
-//                LogManager.i(TAG, user3.toString());
+//                User user = new User2()
+//                User3 user3 = (User3) user
+//                LogManager.i(TAG, user3.toString())
                     if (TextUtils.isEmpty(
                             mBaseApplication?.getSystemId()
                         )
@@ -284,7 +284,7 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
             mBodyParams.clear()
             mBodyParams["type"] = "yule"
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.firstPage2(rxAppCompatActivity, mBodyParams)
+            presenter.firstPage2(mRxAppCompatActivity, mBodyParams)
         } else {
             firstPageDataError(ResourcesManager.getString(R.string.please_check_the_network_connection))
             hideLoading()

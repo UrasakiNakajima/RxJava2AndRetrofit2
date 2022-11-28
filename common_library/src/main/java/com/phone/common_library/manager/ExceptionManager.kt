@@ -13,15 +13,15 @@ class ExceptionManager private constructor() {
     companion object {
         private val TAG = ExceptionManager::class.java.simpleName
 
-        private var instance: ExceptionManager? = null;
+        private var instance: ExceptionManager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
         @Synchronized
-        fun get(): ExceptionManager? {
+        fun get(): ExceptionManager {
             if (instance == null) {
-                instance = ExceptionManager();
+                instance = ExceptionManager()
             }
-            return instance;
+            return instance!!
         }
     }
 
@@ -32,19 +32,19 @@ class ExceptionManager private constructor() {
      */
     fun throwException(throwable: Throwable) {
 //        //1.调试打印堆栈而不退出（推薦使用，開發人員用Log就可以把異常日誌打印出來）
-//        LogManager.i(TAG, Log.getStackTraceString(throwable));
+//        LogManager.i(TAG, Log.getStackTraceString(throwable))
 
         //2.打印异常堆栈（推薦使用，讓系統把異常日誌打印出來）
         throwable.printStackTrace()
 
 //        //3.获取当前线程的堆栈（不推薦使用，打印的不是很詳細，報錯具體哪行沒打印出來，故不要使用這種方法）
 //        for (StackTraceElement i : Thread.currentThread().getStackTrace()) {
-//            LogManager.i(TAG, i.toString());
+//            LogManager.i(TAG, i.toString())
 //        }
 
 //        //4.打印异常堆栈（不推薦使用，打印的不是很詳細，報錯具體哪行沒打印出來，故不要使用這種方法）
-//        throwable.fillInStackTrace();
-//        LogManager.i(TAG, "stackTrace", throwable);
+//        throwable.fillInStackTrace()
+//        LogManager.i(TAG, "stackTrace", throwable)
         val crashHandlerManager = CrashHandlerManager.get()
         //收集設備信息和保存異常日誌到文件
         crashHandlerManager?.handleException(throwable)

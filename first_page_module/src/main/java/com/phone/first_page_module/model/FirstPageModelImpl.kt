@@ -17,13 +17,13 @@ class FirstPageModelImpl : IFirstPageModel {
 
     private val TAG = "FirstPageModelImpl"
 
-    override fun firstPage(bodyParams: Map<String?, String?>?): Observable<ResponseBody?> {
+    override fun firstPage(bodyParams: Map<String, String>): Observable<ResponseBody> {
         return RetrofitManager.get().getRetrofit()
             .create(FirstPageRequest::class.java)
             .getFirstPage(bodyParams)
     }
 
-    override fun firstPageDetails(bodyParams: Map<String?, String?>?): Observable<ResponseBody?> {
+    override fun firstPageDetails(bodyParams: Map<String, String>): Observable<ResponseBody> {
         return RetrofitManager.get().getRetrofit()
             .create(FirstPageRequest::class.java)
             .getFirstPageDetails(bodyParams)

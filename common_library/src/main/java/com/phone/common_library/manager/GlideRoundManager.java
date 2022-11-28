@@ -25,7 +25,6 @@ import com.phone.common_library.custom_view.GlideRoundTransform;
 public class GlideRoundManager {
 
     public static void setRoundCorner(final View view, final Drawable resourceId, final float cornerDipValue) {
-
         if (cornerDipValue == 0) {
             if (view.getMeasuredWidth() == 0 && view.getMeasuredHeight() == 0) {
                 view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -69,9 +68,7 @@ public class GlideRoundManager {
                             }
                         });
             }
-
         } else {
-
             if (view.getMeasuredWidth() == 0 && view.getMeasuredHeight() == 0) {
                 view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                     @Override
@@ -113,9 +110,7 @@ public class GlideRoundManager {
                             }
                         });
             }
-
         }
-
     }
 
     public static void setCorners(final View view, final Drawable resourceId, final float leftTop_corner, final float leftBottom_corner, final float rightTop_corner, final float rightBottom_corner) {
@@ -186,7 +181,6 @@ public class GlideRoundManager {
                     }
                 });
             } else {
-
                 GlideRoundTransform transform = new GlideRoundTransform(view.getContext(), leftTop_corner, leftBottom_corner, rightTop_corner, rightBottom_corner);
                 Glide.with(view)
                         .load(resourceId)
@@ -204,11 +198,8 @@ public class GlideRoundManager {
 
                             }
                         });
-
             }
-
         }
-
     }
 
 }

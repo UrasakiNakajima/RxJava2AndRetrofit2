@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.PickerViewActivity">
 
+    <data>
+
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,10 +55,10 @@
                     <TextView
                         android:id="@+id/tev_title"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dp_48"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="@string/square_details"
+                        android:text="@string/three_level_linkage_list"
                         android:textColor="@color/color_FFFFFFFF"
                         android:textSize="@dimen/sp_20" />
 
@@ -66,19 +70,19 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_10" />
+            android:layout_height="@dimen/dp_30" />
 
         <TextView
             android:id="@+id/tev_show"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_50"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-            android:background="@drawable/corners_25_color_ffe066ff"
+            android:background="@drawable/corners_25_color_ff198cff"
             android:gravity="center"
             android:paddingStart="@dimen/dp_20"
             android:paddingEnd="@dimen/dp_20"
             android:text="@string/show_data"
+            android:textColor="@color/white"
             android:textSize="@dimen/sp_18" />
 
     </LinearLayout>

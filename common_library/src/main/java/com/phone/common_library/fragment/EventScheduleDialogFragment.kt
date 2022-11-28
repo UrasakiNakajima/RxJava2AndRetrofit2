@@ -1,16 +1,13 @@
 package com.phone.common_library.fragment
 
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.widget.NestedScrollView
-import androidx.databinding.ViewDataBinding
 import com.phone.common_library.R
 import com.phone.common_library.base.BaseBindingDialogFragment
 import com.phone.common_library.bean.EventScheduleListBean
 import com.phone.common_library.callback.OnDialogCallback
 import com.phone.common_library.custom_view.EventScheduleLayout
+import com.phone.common_library.databinding.DialogFragmentEventScheduleBinding
 
 /**
  * author : Urasaki
@@ -19,17 +16,15 @@ import com.phone.common_library.custom_view.EventScheduleLayout
  * desc   : 活动日程弹框
  * version: 1.0
  */
-class EventScheduleDialogFragment : BaseBindingDialogFragment<ViewDataBinding>() {
+class EventScheduleDialogFragment :
+    BaseBindingDialogFragment<DialogFragmentEventScheduleBinding>() {
 
     private val TAG = EventScheduleDialogFragment::class.java.simpleName
-    private var tevEventSchedule: TextView? = null
-    private var layoutCloseDialog: FrameLayout? = null
-    private var nestedScrollView: NestedScrollView? = null
-    private var layoutEventSchedule: FrameLayout? = null
+
     private val rowsDTOList: MutableList<EventScheduleListBean.DataDTO.RowsDTO> = ArrayList()
 
     private fun setSuccessView() {
-        nestedScrollView?.visibility = View.VISIBLE
+        mDatabind.nestedScrollView.visibility = View.VISIBLE
         val rowsDTO = EventScheduleListBean.DataDTO.RowsDTO()
         rowsDTO.activeStartTime = "2021-04-29 07:15:00"
         rowsDTO.activeEndTime = "2021-04-29 09:20:00"
@@ -78,28 +73,21 @@ class EventScheduleDialogFragment : BaseBindingDialogFragment<ViewDataBinding>()
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
             )
-            layoutEventSchedule?.addView(eventScheduleLayout, layoutParams)
+            mDatabind.layoutEventSchedule.addView(eventScheduleLayout, layoutParams)
         }
     }
 
     override fun initLayoutId(): Int = R.layout.dialog_fragment_event_schedule
 
     override fun initData() {
-
     }
 
     override fun initViews() {
-        tevEventSchedule = rootView?.findViewById<View>(R.id.tev_event_schedule) as TextView
-        layoutCloseDialog = rootView?.findViewById<View>(R.id.layout_close_dialog) as FrameLayout
-        nestedScrollView = rootView?.findViewById<View>(R.id.nested_scroll_view) as NestedScrollView
-        layoutEventSchedule =
-            rootView?.findViewById<View>(R.id.layout_event_schedule) as FrameLayout
-        layoutCloseDialog!!.setOnClickListener { view1: View? -> dismiss() }
+        mDatabind.layoutCloseDialog.setOnClickListener { dismiss() }
         setSuccessView()
     }
 
     override fun initLoadData() {
-
     }
 
     private var onDialogCallback: OnDialogCallback<Int>? = null

@@ -6,16 +6,16 @@ import com.phone.main_module.login.bean.LoginResponse
 
 interface ILoginView:IBaseView {
 
-    fun getAuthCodeSuccess(success: GetVerificationCode.DataDTO?)
+    fun getAuthCodeSuccess(success: GetVerificationCode.DataDTO)
 
-    fun getAuthCodeError(error: String?)
+    fun getAuthCodeError(error: String)
 
-    fun loginWithAuthCodeSuccess(success: LoginResponse.DataDTO?)
+    fun loginWithAuthCodeSuccess(success: LoginResponse.DataDTO)
 
-    fun loginWithAuthCodeError(error: String?)
+    fun loginWithAuthCodeError(error: String)
 
-    fun loginSuccess(success: String?)
+    fun loginSuccess(success: String)
 
-    fun loginError(error: String?)
+    fun loginError(error: String)
 
 }

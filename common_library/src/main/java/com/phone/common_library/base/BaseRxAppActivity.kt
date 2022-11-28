@@ -274,7 +274,7 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
 
     private fun killAppProcess() {
         i(TAG, "killAppProcess")
-        val manager = baseApplication?.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val manager = baseApplication.getSystemService(ACTIVITY_SERVICE) as ActivityManager
         val processInfos = manager.runningAppProcesses
         // 先杀掉相关进程，最后再杀掉主进程
         for (runningAppProcessInfo in processInfos) {

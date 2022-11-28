@@ -35,12 +35,9 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initLayoutId()?.let {
-            mDatabind = DataBindingUtil.inflate(inflater, it, container, false)
-            mDatabind.lifecycleOwner = viewLifecycleOwner
-            return mDatabind.root
-        }
-        return super.onCreateView(inflater, container, savedInstanceState)
+        mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
+        mDatabind.lifecycleOwner = viewLifecycleOwner
+        return mDatabind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,7 +73,7 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
 
     open fun getOnDialogCallback() = onDialogCallback
 
-    protected abstract fun initLayoutId(): Int?
+    protected abstract fun initLayoutId(): Int
 
     protected abstract fun initData()
 
@@ -176,15 +173,9 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
     }
 
     override fun onDestroyView() {
-        if (mRxAppCompatActivity != null) {
-            mRxAppCompatActivity = null
-        }
-        if (mBaseApplication != null) {
-            mBaseApplication = null
-        }
-        if (rootView != null) {
-            rootView = null
-        }
+        mRxAppCompatActivity = null
+        mBaseApplication = null
+        rootView = null
         super.onDestroyView()
     }
 

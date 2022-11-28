@@ -23,7 +23,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
 
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
-    protected var rxAppCompatActivity: RxAppCompatActivity? = null
+    protected var mRxAppCompatActivity: RxAppCompatActivity? = null
     protected var baseApplication: BaseApplication? = null
 
     protected var rootView: View? = null
@@ -33,24 +33,21 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initLayoutId()?.let {
-            mDatabind = DataBindingUtil.inflate(inflater, it, container, false)
-            mDatabind.lifecycleOwner = viewLifecycleOwner
-            return mDatabind.root
-        }
-        return super.onCreateView(inflater, container, savedInstanceState)
+        mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
+        mDatabind.lifecycleOwner = viewLifecycleOwner
+        return mDatabind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rxAppCompatActivity = activity as RxAppCompatActivity?
-        baseApplication = rxAppCompatActivity?.application as BaseApplication
+        mRxAppCompatActivity = activity as RxAppCompatActivity?
+        baseApplication = mRxAppCompatActivity?.application as BaseApplication
         initData()
         initViews()
         initLoadData()
     }
 
-    protected abstract fun initLayoutId(): Int?
+    protected abstract fun initLayoutId(): Int
 
     protected abstract fun initData()
 
@@ -60,7 +57,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
 
     protected fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!rxAppCompatActivity!!.isFinishing) {
+        if (!mRxAppCompatActivity!!.isFinishing) {
             val toast: Toast
             val duration: Int
             duration = if (isLongToast) {
@@ -68,7 +65,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
             } else {
                 Toast.LENGTH_SHORT
             }
-            toast = Toast.makeText(rxAppCompatActivity, message, duration)
+            toast = Toast.makeText(mRxAppCompatActivity, message, duration)
             toast.setGravity(Gravity.CENTER, 0, 0)
             toast.show()
         }
@@ -80,13 +77,13 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
         bgColor: Int, height: Int,
         roundRadius: Int, message: String?
     ) {
-        val frameLayout = FrameLayout(rxAppCompatActivity!!)
+        val frameLayout = FrameLayout(mRxAppCompatActivity!!)
         val layoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
         frameLayout.layoutParams = layoutParams
-        val textView = TextView(rxAppCompatActivity)
+        val textView = TextView(mRxAppCompatActivity)
         val layoutParams1 = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
         textView.layoutParams = layoutParams1
         textView.setPadding(left, 0, right, 0)
@@ -100,7 +97,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
         textView.background = gradientDrawable
         textView.text = message
         frameLayout.addView(textView)
-        val toast = Toast(rxAppCompatActivity)
+        val toast = Toast(mRxAppCompatActivity)
         toast.view = frameLayout
         toast.duration = Toast.LENGTH_LONG
         toast.show()
@@ -111,12 +108,12 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
     }
 
     protected fun startActivity(cls: Class<*>?) {
-        val intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         startActivity(intent)
     }
 
     protected fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
-        val intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         val bundle = Bundle()
         if (params != null && params.size > 0) {
             for (key in params.keys) {
@@ -132,7 +129,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
     }
 
     protected fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
-        val intent = Intent(rxAppCompatActivity, cls)
+        val intent = Intent(mRxAppCompatActivity, cls)
         startActivityForResult(intent, requestCode)
     }
 
@@ -145,8 +142,8 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
     }
 
     override fun onDestroyView() {
-        if (rxAppCompatActivity != null) {
-            rxAppCompatActivity = null
+        if (mRxAppCompatActivity != null) {
+            mRxAppCompatActivity = null
         }
         if (baseApplication != null) {
             baseApplication = null

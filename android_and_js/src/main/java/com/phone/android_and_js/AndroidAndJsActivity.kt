@@ -10,7 +10,7 @@ import com.phone.common_library.base.BaseBindingRxAppActivity
 import com.phone.common_library.manager.LogManager
 import com.phone.common_library.manager.ResourcesManager
 
-@Route(path = "/android_and_js/ui")
+@Route(path = "/android_and_js/ui/android_and_js")
 class AndroidAndJsActivity : BaseBindingRxAppActivity<ActivityAndroidAndJsBinding>() {
 
     companion object {
@@ -85,23 +85,23 @@ class AndroidAndJsActivity : BaseBindingRxAppActivity<ActivityAndroidAndJsBindin
                 //		setWebChromeClient(new WebChromeClient() {
                 //			@Override
                 //			public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-                //				AlertDialog.Builder builder = new AlertDialog.Builder(rxAppCompatActivity);
-                //				builder.setTitle("Alert");
-                //				builder.setMessage(message);
+                //				AlertDialog.Builder builder = new AlertDialog.Builder(rxAppCompatActivity)
+                //				builder.setTitle("Alert")
+                //				builder.setMessage(message)
                 //				builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 //					@Override
                 //					public void onClick(DialogInterface dialog, int which) {
-                //						result.confirm();
+                //						result.confirm()
                 //					}
-                //				});
-                //				builder.setCancelable(false);
+                //				})
+                //				builder.setCancelable(false)
                 //				builder
                 //					.create()
-                //					.show();
-                //				return true;
+                //					.show()
+                //				return true
                 //			}
                 //
-                //		});
+                //		})
                 //js调用android
 
                 //		/**
@@ -114,23 +114,23 @@ class AndroidAndJsActivity : BaseBindingRxAppActivity<ActivityAndroidAndJsBindin
                 //		setWebChromeClient(new WebChromeClient() {
                 //			@Override
                 //			public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-                //				AlertDialog.Builder builder = new AlertDialog.Builder(rxAppCompatActivity);
-                //				builder.setTitle("Alert");
-                //				builder.setMessage(message);
+                //				AlertDialog.Builder builder = new AlertDialog.Builder(rxAppCompatActivity)
+                //				builder.setTitle("Alert")
+                //				builder.setMessage(message)
                 //				builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 //					@Override
                 //					public void onClick(DialogInterface dialog, int which) {
-                //						result.confirm();
+                //						result.confirm()
                 //					}
-                //				});
-                //				builder.setCancelable(false);
+                //				})
+                //				builder.setCancelable(false)
                 //				builder
                 //					.create()
-                //					.show();
-                //				return true;
+                //					.show()
+                //				return true
                 //			}
                 //
-                //		});
+                //		})
                 //js调用android
                 addJavascriptInterface(
                     JsInteration(),

@@ -12,8 +12,8 @@ import okhttp3.ResponseBody
 
 interface IFirstPageModel {
 
-    fun firstPage(bodyParams: Map<String?, String?>?): Observable<ResponseBody?>
+    fun firstPage(bodyParams: Map<String, String>): Observable<ResponseBody>
 
-    fun firstPageDetails(bodyParams: Map<String?, String?>?): Observable<ResponseBody?>
+    fun firstPageDetails(bodyParams: Map<String, String>): Observable<ResponseBody>
 
 }

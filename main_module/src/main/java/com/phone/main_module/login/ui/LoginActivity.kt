@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.common_library.base.BaseMvpRxAppActivity
 import com.phone.common_library.base.IBaseView
 import com.phone.common_library.manager.ActivityPageManager
@@ -22,6 +23,7 @@ import com.phone.main_module.login.presenter.LoginPresenterImpl
 import com.phone.main_module.login.view.ILoginView
 import com.phone.main_module.main.MainActivity
 
+@Route(path = "/main_module/login")
 class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILoginView {
 
     private val TAG = LoginActivity::class.java.simpleName
@@ -64,7 +66,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.color_000000))
         layoutBack?.setOnClickListener { finish() }
         tevGetAuthCode?.setOnClickListener { view: View? -> getAuthCode() }
-        tevLogin?.setOnClickListener { //                initLoginWithAuthCode();
+        tevLogin?.setOnClickListener { //                initLoginWithAuthCode()
             initLogin()
         }
         tevJumpToRegister?.setOnClickListener { startActivity(RegisterActivity::class.java) }
@@ -98,38 +100,38 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         LogManager.i(TAG, "onNewIntent")
     }
 
-    override fun getAuthCodeSuccess(success: GetVerificationCode.DataDTO?) {
+    override fun getAuthCodeSuccess(success: GetVerificationCode.DataDTO) {
         showToast(success?.content, true)
     }
 
-    override fun getAuthCodeError(error: String?) {
+    override fun getAuthCodeError(error: String) {
         showToast(error, true)
     }
 
-    override fun loginWithAuthCodeSuccess(success: LoginResponse.DataDTO?) {
-        //		showToast(success.getUserName(), true);
+    override fun loginWithAuthCodeSuccess(success: LoginResponse.DataDTO) {
+        //		showToast(success.getUserName(), true)
         startActivity(MainActivity::class.java)
         finish()
     }
 
-    override fun loginWithAuthCodeError(error: String?) {
+    override fun loginWithAuthCodeError(error: String) {
         showToast(error, true)
     }
 
-    override fun loginSuccess(success: String?) {
+    override fun loginSuccess(success: String) {
         mBaseApplication?.setLogin(true)
         startActivity(MainActivity::class.java)
         finish()
     }
 
-    override fun loginError(error: String?) {
+    override fun loginError(error: String) {
         showToast(error, true)
     }
 
     private fun getAuthCode() {
         userId = edtUserId?.text.toString()
-        //		verificationCode = edtVerificationCode.getText().toString();
-        //		phoneDevice = UIUtils.getDeviceUUid().toString();
+        //		verificationCode = edtVerificationCode.getText().toString()
+        //		phoneDevice = UIUtils.getDeviceUUid().toString()
         userId?.let {
             mBodyParams.clear()
             mBodyParams["account"] = it

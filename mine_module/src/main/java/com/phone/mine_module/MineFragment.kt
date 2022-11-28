@@ -147,8 +147,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     override fun initLoadData() {
-        refreshLayout?.autoRefresh()
-
+        initMine()
         LogManager.i(TAG, "MineFragment initLoadData")
     }
 
@@ -207,6 +206,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     private fun initMine() {
+        showLoading()
         if (RetrofitManager.isNetworkAvailable()) {
             mBodyParams.clear()
 

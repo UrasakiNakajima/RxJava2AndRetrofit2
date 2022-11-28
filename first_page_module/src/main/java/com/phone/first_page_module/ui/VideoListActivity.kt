@@ -1,6 +1,5 @@
 package com.phone.first_page_module.ui
 
-import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -123,9 +122,9 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         return FirstPagePresenterImpl(this)
     }
 
-    override fun videoListSuccess(success: String?) {}
+    override fun videoListSuccess(success: String) {}
 
-    override fun videoListError(error: String?) {}
+    override fun videoListError(error: String) {}
 
     override fun showLoading() {
         if (!mLoadView.isShown) {

@@ -61,7 +61,7 @@ class Okhttp3Manager {
             if (instance == null) {
                 instance = Okhttp3Manager();
             }
-            return instance as Okhttp3Manager
+            return instance!!
         }
     }
 
@@ -77,7 +77,7 @@ class Okhttp3Manager {
      */
     fun getAsync(
         url: String,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         //2.创建Request对象，设置一个url地址（百度地址）,设置请求方式。
         val request = Request.Builder().url(url).method("GET", null).build()
@@ -149,8 +149,8 @@ class Okhttp3Manager {
      */
     fun getAsync(
         url: String,
-        bodyParams: Map<String, String>?,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        bodyParams: Map<String, String>,
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         var urlNew = url
         // 设置HTTP请求参数
@@ -226,9 +226,9 @@ class Okhttp3Manager {
      */
     fun getAsync(
         url: String,
-        headerParams: Map<String, String>?,
-        bodyParams: Map<String, String>?,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        headerParams: Map<String, String>,
+        bodyParams: Map<String, String>,
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         var urlNew = url
         // 设置HTTP请求参数
@@ -301,7 +301,7 @@ class Okhttp3Manager {
      * @param bodyParams
      * @return
      */
-    private fun getBodyParams(bodyParams: Map<String, String>?): String {
+    private fun getBodyParams(bodyParams: Map<String, String>): String {
         //1.添加请求参数
         //遍历map中所有参数到builder
         return if (bodyParams != null && bodyParams.size > 0) {
@@ -327,18 +327,17 @@ class Okhttp3Manager {
      * @param headerParams
      * @return
      */
-    private fun setHeaderParams(headerParams: Map<String, String>?): Headers? {
-        var headers: Headers? = null
+    private fun setHeaderParams(headerParams: Map<String, String>): Headers {
         val headersbuilder = Headers.Builder()
-        if (headerParams != null && headerParams.size > 0) {
+        if (headerParams.size > 0) {
             for (key in headerParams.keys) {
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(headerParams[key])) {
                     //如果参数不是null并且不是""，就拼接起来
-                    headersbuilder.add(key, headerParams[key])
+                    headersbuilder.add(key, headerParams[key]!!)
                 }
             }
         }
-        headers = headersbuilder.build()
+        val headers = headersbuilder.build()
         return headers
     }
 
@@ -351,8 +350,8 @@ class Okhttp3Manager {
      */
     fun postAsyncString(
         url: String,
-        bodyParams: Map<String?, String?>,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        bodyParams: Map<String, String>,
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         val jsonObject = JSONObject(bodyParams)
         val requestData = jsonObject.toString()
@@ -433,7 +432,7 @@ class Okhttp3Manager {
     fun postAsyncStream(
         url: String,
         requestData: String,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         LogManager.i(TAG, "requestData*****$requestData")
 
@@ -517,8 +516,8 @@ class Okhttp3Manager {
      */
     fun postAsyncKeyValuePairs(
         url: String,
-        bodyParams: Map<String?, String?>,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        bodyParams: Map<String, String>,
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         if (bodyParams != null && bodyParams.size > 0) {
             LogManager.i(
@@ -625,7 +624,7 @@ class Okhttp3Manager {
      */
     fun postAsync(
         url: String,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         //这句话是重点Request
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
@@ -709,8 +708,8 @@ class Okhttp3Manager {
      */
     fun postAsyncForm(
         url: String,
-        bodyParams: Map<String?, String?>,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        bodyParams: Map<String, String>,
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         if (bodyParams != null && bodyParams.size > 0) {
             LogManager.i(
@@ -813,9 +812,9 @@ class Okhttp3Manager {
      */
     fun postAsyncFormAndFiles(
         url: String,
-        bodyParams: Map<String?, String?>,
-        fileList: List<File>?,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        bodyParams: Map<String, String>,
+        fileList: List<File>,
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         if (bodyParams != null && bodyParams.size > 0) {
             LogManager.i(
@@ -931,10 +930,10 @@ class Okhttp3Manager {
      */
     fun postAsyncFormAndFiles(
         url: String,
-        bodyParams: Map<String?, String?>,
-        fileMap: Map<String?, File>,
-        filesMap: Map<String?, List<File>?>,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        bodyParams: Map<String, String>,
+        fileMap: Map<String, File>,
+        filesMap: Map<String, List<File>>,
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         if (bodyParams != null && bodyParams.size > 0) {
             LogManager.i(
@@ -1079,9 +1078,9 @@ class Okhttp3Manager {
      */
     fun postAsyncPhpFormAndFiles(
         url: String,
-        bodyParams: Map<String?, String?>,
-        fileList: List<File>?,
-        onCommonSingleParamCallback: OnCommonSingleParamCallback<String?>
+        bodyParams: Map<String, String>,
+        fileList: List<File>,
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         if (bodyParams != null && bodyParams.size > 0) {
             LogManager.i(
@@ -1817,21 +1816,17 @@ class Okhttp3Manager {
      * @param bodyParams
      * @return
      */
-    private fun setRequestBody(bodyParams: Map<String, String>?): RequestBody? {
-        var body: RequestBody? = null
+    private fun setRequestBody(bodyParams: Map<String, String>): RequestBody {
         val formEncodingBuilder = FormBody.Builder()
-        if (bodyParams != null) {
-            val iterator = bodyParams.keys.iterator()
-            var key = ""
-            while (iterator.hasNext()) {
-                key = iterator.next()
-                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams[key])) {
-                    //如果参数不是null，才把参数传给后台
-                    formEncodingBuilder.add(key, bodyParams[key])
-                }
+        val iterator = bodyParams.keys.iterator()
+        while (iterator.hasNext()) {
+            val key = iterator.next()
+            if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams[key])) {
+                //如果参数不是null，才把参数传给后台
+                formEncodingBuilder.add(key, bodyParams[key]!!)
             }
         }
-        body = formEncodingBuilder.build()
+        val body = formEncodingBuilder.build()
         return body
     }
 
@@ -1841,20 +1836,16 @@ class Okhttp3Manager {
      * @param context
      * @return
      */
-    fun isNetworkAvailable(context: Context): Boolean {
-        val connectivityManager = context.applicationContext
+    fun isNetworkAvailable(): Boolean {
+        val connectivityManager = BaseApplication.get()
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectivityManager != null) {
-            //如果仅仅是用来判断网络连接
-            //connectivityManager.getActiveNetworkInfo().isAvailable();
-            val info = connectivityManager.allNetworkInfo
-            //            LogManager.i(TAG, "isNetworkAvailable*****" + info.toString());
-            if (info != null) {
-                for (i in info.indices) {
-                    if (info[i].state == NetworkInfo.State.CONNECTED) {
-                        return true
-                    }
-                }
+        //如果仅仅是用来判断网络连接
+        //connectivityManager.getActiveNetworkInfo().isAvailable();
+        val info = connectivityManager.allNetworkInfo
+        //            LogManager.i(TAG, "isNetworkAvailable*****" + info.toString());
+        for (i in info.indices) {
+            if (info[i].state == NetworkInfo.State.CONNECTED) {
+                return true
             }
         }
         return false

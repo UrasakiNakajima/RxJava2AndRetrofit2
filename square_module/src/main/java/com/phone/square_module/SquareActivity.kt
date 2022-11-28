@@ -21,10 +21,7 @@ import com.phone.common_library.callback.OnCommonRxPermissionsCallback
 import com.phone.common_library.manager.*
 import com.phone.common_library.service.ISquareService
 import com.phone.square_module.databinding.ActivitySquareBinding
-import com.phone.square_module.ui.CreateUserActivity
-import com.phone.square_module.ui.DecimalOperationActivity
-import com.phone.square_module.ui.EditTextInputLimitsActivity
-import com.phone.square_module.ui.KotlinCoroutineActivity
+import com.phone.square_module.ui.*
 import com.phone.square_module.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -57,7 +54,7 @@ class SquareActivity :
     override fun initLayoutId() = R.layout.activity_square
 
     override fun initViewModel() =
-        ViewModelProvider(rxAppCompatActivity).get(SquareViewModelImpl::class.java)
+        ViewModelProvider(mRxAppCompatActivity).get(SquareViewModelImpl::class.java)
 
     override fun initData() {
         mDatabind.viewModel = viewModel
@@ -76,15 +73,15 @@ class SquareActivity :
             }
         })
         viewModel.dataxRxActivityError.observe(this, {
-            it?.let {
-                LogManager.i(TAG, "onChanged*****dataxRxActivityError")
-                squareDataError(it)
-            }
+            LogManager.i(TAG, "onChanged*****dataxRxActivityError")
+            squareDataError(
+                it ?: BaseApplication.get().resources.getString(R.string.no_data_available)
+            )
         })
     }
 
     override fun initViews() {
-        ImmersionBar.with(rxAppCompatActivity)
+        ImmersionBar.with(mRxAppCompatActivity)
             .keyboardEnable(false)
             .statusBarDarkFont(false)
             .statusBarColor(R.color.color_FF198CFF)
@@ -92,18 +89,18 @@ class SquareActivity :
 
         mDatabind.apply {
             tevKillApp.setOnClickListener {
-                LogManager.i(TAG, "tevKillApp");
-                number = 1;
+                LogManager.i(TAG, "tevKillApp")
+                number = 1
                 initRxPermissionsRxFragment(number)
             }
             tevCreateAnException.run {
                 setOnClickListener {
-                    number = 2;
+                    number = 2
                     initRxPermissionsRxFragment(number)
                 }
             }
             tevCreateAnException2.setOnClickListener {
-                number = 3;
+                number = 3
                 initRxPermissionsRxFragment(number)
             }
             tevAndroidAndJs.setOnClickListener {
@@ -116,22 +113,23 @@ class SquareActivity :
 //                ARouter.getInstance().build("/android_and_js/ui").navigation()
             }
             tevEditTextInputLimits.setOnClickListener {
-//            showEditTextInputLimitsDialog()
                 startActivity(EditTextInputLimitsActivity::class.java)
             }
             tevDecimalOperation.setOnClickListener {
                 startActivity(DecimalOperationActivity::class.java)
-            }
-            imvPicture.setOnClickListener {
-//            startActivity(SquareDetailsActivity::class.java)
-//            startActivity(PickerViewActivity::class.java)
-                startActivity(Base64AndFileActivity::class.java)
             }
             tevCreateUser.setOnClickListener {
                 startActivity(CreateUserActivity::class.java)
             }
             tevKotlinCoroutine.setOnClickListener {
                 startActivity(KotlinCoroutineActivity::class.java)
+            }
+            tevThreeLevelLinkageList.setOnClickListener {
+                startActivity(PickerViewActivity::class.java)
+            }
+            imvPicture.setOnClickListener {
+//                ARouter.getInstance().build("/project_module/ui/event_schedule").navigation()
+                startActivity(Base64AndFileActivity::class.java)
             }
         }
     }
@@ -159,7 +157,7 @@ class SquareActivity :
 //                return null
 //            }
 //        }.execute()
-//        Toast.makeText(rxAppCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(mRxAppCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
 //    }
 
     fun showLoading() {
@@ -177,7 +175,7 @@ class SquareActivity :
     }
 
     fun squareDataSuccess(success: List<DataX>) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             if (success.size > 0) {
                 datax.apply {
                     title = success.get(1).title
@@ -188,20 +186,20 @@ class SquareActivity :
                 val ISquareService: ISquareService =
                     ARouter.getInstance().build("/square_module/SquareServiceImpl")
                         .navigation() as ISquareService
-                ISquareService.squareDataList = success;
+                ISquareService.mSquareDataList = success
             }
             hideLoading()
         }
     }
 
     fun squareDataError(error: String) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
                 18,
                 ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ResourcesManager.getColor(R.color.color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
                 error,
@@ -224,8 +222,8 @@ class SquareActivity :
                     //所有的权限都授予
                     if (number == 1) {
                         val baseMvpRxAppActivity =
-                            rxAppCompatActivity as BaseMvpRxAppActivity<*, *>;
-                        baseMvpRxAppActivity.getActivityPageManager()?.exitApp2();
+                            mRxAppCompatActivity as BaseMvpRxAppActivity<*, *>
+                        baseMvpRxAppActivity.getActivityPageManager()?.exitApp2()
                     } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                         val userBean: UserBean =
@@ -240,7 +238,7 @@ class SquareActivity :
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } catch (e: Exception) {
-                            ExceptionManager.get()?.throwException(e)
+                            ExceptionManager.get().throwException(e)
                         }
                     }
                 }
@@ -260,18 +258,18 @@ class SquareActivity :
     private fun showSystemSetupDialog() {
         cancelPermissionsDialog()
         if (mPermissionsDialog == null) {
-            mPermissionsDialog = AlertDialog.Builder(rxAppCompatActivity)
+            mPermissionsDialog = AlertDialog.Builder(mRxAppCompatActivity)
                 .setTitle("权限设置")
                 .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
                 .setPositiveButton("去授权") { dialog, which ->
                     cancelPermissionsDialog()
-                    intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri = Uri.fromParts(
                         "package",
-                        rxAppCompatActivity.applicationContext.packageName,
+                        mRxAppCompatActivity.applicationContext.packageName,
                         null
                     )
-                    intent!!.data = uri
+                    intent.data = uri
                     startActivityForResult(intent, 207)
                 }
                 .create()
@@ -294,12 +292,12 @@ class SquareActivity :
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.squareData2(this, currentPage)
         } else {
-            squareDataError(BaseApplication.get().resources.getString(R.string.please_check_the_network_connection));
+            squareDataError(BaseApplication.get().resources.getString(R.string.please_check_the_network_connection))
         }
 
-        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get());
-        atomicBoolean.compareAndSet(atomicBoolean.get(), true);
-        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get());
+        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())
+        atomicBoolean.compareAndSet(atomicBoolean.get(), true)
+        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get())
     }
 
 }

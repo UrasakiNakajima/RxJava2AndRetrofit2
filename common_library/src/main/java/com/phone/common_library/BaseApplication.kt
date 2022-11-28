@@ -27,12 +27,10 @@ open class BaseApplication : MultiDexApplication() {
 
     companion object {
         private val TAG = BaseApplication::class.java.simpleName
-        private lateinit var instance: BaseApplication
+        private var instance: BaseApplication? = null
 
-        //       Synchronized添加后就是线程安全的的懒汉模式
-        @Synchronized
         fun get(): BaseApplication {
-            return instance
+            return instance!!
         }
     }
 

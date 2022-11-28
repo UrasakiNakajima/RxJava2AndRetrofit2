@@ -30,7 +30,8 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
         return R.layout.activity_register
     }
 
-    override fun initData() {}
+    override fun initData() {
+    }
 
     override fun initViews() {
         toolbar = findViewById<View>(R.id.toolbar) as Toolbar
@@ -41,15 +42,15 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
         edtConfirmPassword = findViewById<View>(R.id.edt_confirm_password) as EditText
         tevRegister = findViewById<View>(R.id.tev_register) as TextView
         setToolbar(true, R.color.color_FFFFFFFF)
-        imvBack!!.setColorFilter(ResourcesManager.getColor(R.color.color_000000))
-        layoutBack!!.setOnClickListener { finish() }
-        tevRegister!!.setOnClickListener { initRegister() }
+        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.color_000000))
+        layoutBack?.setOnClickListener { finish() }
+        tevRegister?.setOnClickListener { initRegister() }
     }
 
     override fun initLoadData() {
-        edtUserId!!.setText("13510001000")
-        edtPassword!!.setText("12345678")
-        edtConfirmPassword!!.setText("12345678")
+        edtUserId?.setText("13510001000")
+        edtPassword?.setText("12345678")
+        edtConfirmPassword?.setText("12345678")
     }
 
     override fun attachPresenter(): LoginPresenterImpl {
@@ -70,26 +71,26 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
         }
     }
 
-    override fun registerSuccess(success: String?) {
+    override fun registerSuccess(success: String) {
         startActivity(LoginActivity::class.java)
     }
 
-    override fun registerError(error: String?) {
+    override fun registerError(error: String) {
         showToast(error, true)
     }
 
     private fun initRegister() {
         if (isNetworkAvailable()) {
-            val password = edtPassword!!.text.toString()
-            val confirmPassword = edtConfirmPassword!!.text.toString()
+            val password = edtPassword?.text.toString()
+            val confirmPassword = edtConfirmPassword?.text.toString()
             if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(confirmPassword) && password == confirmPassword) {
                 mBodyParams.clear()
-                mBodyParams["userId"] = edtUserId!!.text.toString()
-                mBodyParams["password"] = edtPassword!!.text.toString()
-                mBodyParams["confirmPassword"] = edtConfirmPassword!!.text.toString()
-                //        String data = MapManager.mapToJsonStr(getBodyParams());
-//        String requestData = JSONObject.toJSONString(getBodyParams());
-//        LogManager.i(TAG, "requestData*****" + requestData);
+                mBodyParams["userId"] = edtUserId?.text.toString()
+                mBodyParams["password"] = edtPassword?.text.toString()
+                mBodyParams["confirmPassword"] = edtConfirmPassword?.text.toString()
+                //        String data = MapManager.mapToJsonStr(getBodyParams())
+//        String requestData = JSONObject.toJSONString(getBodyParams())
+//        LogManager.i(TAG, "requestData*****" + requestData)
                 presenter.register(this, mBodyParams)
             } else {
                 showToast(

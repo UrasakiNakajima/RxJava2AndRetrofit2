@@ -41,15 +41,13 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                         val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
                         val response: ApiResponse<MutableList<TabBean>> =
                             GsonManager().fromJson(success, type2)
-                        response.data().let {
-                            if (it.size > 0) {
-                                tabRxFragmentSuccess.value = it
-                            } else {
-                                tabRxFragmentError.value =
-                                    BaseApplication.get().resources.getString(
-                                        R.string.no_data_available
-                                    )
-                            }
+                        if (response.data().size > 0) {
+                            tabRxFragmentSuccess.value = response.data()
+                        } else {
+                            tabRxFragmentError.value =
+                                BaseApplication.get().resources.getString(
+                                    R.string.no_data_available
+                                )
                         }
                     } else {
                         tabRxFragmentError.value =
@@ -73,15 +71,13 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                         val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
                         val response: ApiResponse<MutableList<TabBean>> =
                             GsonManager().fromJson(success, type2)
-                        response.let {
-                            if (response.data().size > 0) {
-                                tabRxActivitySuccess.value = response.data()
-                            } else {
-                                tabRxActivityError.value =
-                                    BaseApplication.get().resources.getString(
-                                        R.string.no_data_available
-                                    )
-                            }
+                        if (response.data().size > 0) {
+                            tabRxActivitySuccess.value = response.data()
+                        } else {
+                            tabRxActivityError.value =
+                                BaseApplication.get().resources.getString(
+                                    R.string.no_data_available
+                                )
                         }
                     } else {
                         tabRxActivityError.value =

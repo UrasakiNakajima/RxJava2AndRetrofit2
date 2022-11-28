@@ -30,13 +30,13 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
     protected lateinit var presenter: T
     protected var url: String? = null
     protected var mBodyParams = ArrayMap<String, String>()
-    protected lateinit var rxAppCompatActivity: RxAppCompatActivity
+    protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected var mBaseApplication: BaseApplication? = null
     private var mActivityPageManager: ActivityPageManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        rxAppCompatActivity = this
+        mRxAppCompatActivity = this
         mBaseApplication = application as BaseApplication
         mActivityPageManager = ActivityPageManager.get()
         mActivityPageManager?.addActivity(this)
@@ -61,7 +61,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
 //        rxPermissionsManager.initRxPermissionsActivity(new OnCommonRxPermissionsCallback() {
 //            @Override
 //            public void onRxPermissionsAllPass() {
-//                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(rxAppCompatActivity);
+//                CrashHandlerManager crashHandlerManager = CrashHandlerManager.getInstance(mRxAppCompatActivity);
 //                crashHandlerManager.sendPreviousReportsToServer();
 //                crashHandlerManager.init();
 //            }
@@ -194,7 +194,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
 
     protected open fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!this.rxAppCompatActivity.isFinishing) {
+        if (!this.mRxAppCompatActivity.isFinishing) {
             val toast: Toast
             val duration: Int
             duration = if (isLongToast) {
@@ -202,7 +202,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
             } else {
                 Toast.LENGTH_SHORT
             }
-            toast = Toast.makeText(rxAppCompatActivity, message, duration)
+            toast = Toast.makeText(mRxAppCompatActivity, message, duration)
             toast.setGravity(Gravity.CENTER, 0, 0)
             toast.show()
         }
@@ -330,7 +330,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
         if (mActivityPageManager?.mIsLastAliveActivity?.get() == true) {
             killAppProcess()
         }
-        mActivityPageManager?.removeActivity(rxAppCompatActivity)
+        mActivityPageManager?.removeActivity(mRxAppCompatActivity)
         super.onDestroy()
     }
 }

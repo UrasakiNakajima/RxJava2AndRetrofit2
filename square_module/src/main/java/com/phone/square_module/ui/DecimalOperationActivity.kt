@@ -55,9 +55,9 @@ class DecimalOperationActivity : BaseRxAppActivity() {
         tevDecimalOperationRejection =
             findViewById<View>(R.id.tev_decimal_operation_rejection) as TextView
         setToolbar(false, R.color.color_FF198CFF)
-        imvBack!!.setColorFilter(ResourcesManager.getColor(R.color.white))
-        layoutBack!!.setOnClickListener { view: View? -> finish() }
-        tevDecimalOperationRounding!!.setOnClickListener { v: View? ->
+        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.white))
+        layoutBack?.setOnClickListener { view: View -> finish() }
+        tevDecimalOperationRounding?.setOnClickListener { v: View ->
             val m1 = 986790.278576897
             val m2 = 1887906.795768
             val numAdd = additionDouble(m1, m2, 5)
@@ -91,8 +91,8 @@ class DecimalOperationActivity : BaseRxAppActivity() {
                 getDoubleKeepDecimalsToStr(z1, 5)
             LogManager.i(TAG, "numKeepDecimalsStr*****$numKeepDecimalsStr")
         }
-        tevDecimalOperationRejection!!.setOnClickListener { v: View? ->
-            val mCompatible1 = 986790.27857
+        tevDecimalOperationRejection?.setOnClickListener { v: View ->
+            val mCompatible1 = 986790.2785
             val mCompatible2 = 1887906.79501
             //这个因为超过了50 0000，可能会出现问题
             val numAddCompatible =

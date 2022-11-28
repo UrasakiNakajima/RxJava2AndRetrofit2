@@ -16,21 +16,19 @@ class LoginModelImpl : ILoginModel {
 
     private val TAG = LoginModelImpl::class.java.simpleName
 
-    fun LoginModelImpl() {}
-
-    override fun getAuthCode(bodyParams: Map<String?, String?>): Observable<ResponseBody?> {
+    override fun getAuthCode(bodyParams: Map<String, String>): Observable<ResponseBody> {
         return get().getRetrofit()
             .create(LoginRequest::class.java)
             .getAuthCode(bodyParams)
     }
 
-    override fun loginWithAuthCode(bodyParams: Map<String?, String?>): Observable<ResponseBody?> {
+    override fun loginWithAuthCode(bodyParams: Map<String, String>): Observable<ResponseBody> {
         return get().getRetrofit()
             .create(LoginRequest::class.java)
             .getLoginWithAuthCodeData(bodyParams)
     }
 
-    override fun register(bodyParams: Map<String?, String?>): Observable<ResponseBody?> {
+    override fun register(bodyParams: Map<String, String>): Observable<ResponseBody> {
         return get().getRetrofit()
             .create(LoginRequest::class.java)
             .getRegisterData(bodyParams)

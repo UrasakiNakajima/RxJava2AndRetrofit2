@@ -11,15 +11,15 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
 interface ILoginPresenter {
 
-    fun getAuthCode(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String?, String?>)
+    fun getAuthCode(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
 
     fun loginWithAuthCode(
         rxAppCompatActivity: RxAppCompatActivity,
-        bodyParams: Map<String?, String?>
+        bodyParams: Map<String, String>
     )
 
-    fun login(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String?, String?>)
+    fun login(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
 
-    fun register(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String?, String?>)
+    fun register(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
 
 }

@@ -28,7 +28,7 @@ class ProjectActivity :
     override fun initLayoutId() = R.layout.activity_project
 
     override fun initViewModel() =
-        ViewModelProvider(rxAppCompatActivity).get(ProjectViewModelImpl::class.java)
+        ViewModelProvider(mRxAppCompatActivity).get(ProjectViewModelImpl::class.java)
 
     override fun initData() {
     }
@@ -43,10 +43,10 @@ class ProjectActivity :
             }
         })
         viewModel.tabRxActivityError.observe(this, {
-            it?.let {
-                LogManager.i(TAG, "onChanged*****tabRxFragmentError")
-                projectTabDataError(it)
-            }
+            LogManager.i(TAG, "onChanged*****tabRxFragmentError")
+            projectTabDataError(
+                it ?: BaseApplication.get().resources.getString(R.string.no_data_available)
+            )
         })
     }
 
@@ -91,7 +91,7 @@ class ProjectActivity :
             )
         mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
         //下划线绑定
-        val commonNavigator = CommonNavigator(rxAppCompatActivity)
+        val commonNavigator = CommonNavigator(mRxAppCompatActivity)
         commonNavigator.adapter = getCommonNavigatorAdapter(success)
         mDatabind.tabLayout.navigator = commonNavigator
         MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
@@ -99,7 +99,7 @@ class ProjectActivity :
     }
 
     override fun projectTabDataError(error: String) {
-        if (!rxAppCompatActivity.isFinishing()) {
+        if (!mRxAppCompatActivity.isFinishing()) {
             showCustomToast(
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),

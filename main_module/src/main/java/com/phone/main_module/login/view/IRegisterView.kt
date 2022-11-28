@@ -4,8 +4,8 @@ import com.phone.common_library.base.IBaseView
 
 interface IRegisterView:IBaseView {
 
-    fun registerSuccess(success: String?)
+    fun registerSuccess(success: String)
 
-    fun registerError(error: String?)
+    fun registerError(error: String)
 
 }

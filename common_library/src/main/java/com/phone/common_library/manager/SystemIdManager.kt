@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.telephony.TelephonyManager
+import android.text.TextUtils
 import androidx.core.app.ActivityCompat
 import com.phone.common_library.BaseApplication
 import com.phone.common_library.manager.LogManager.i
@@ -38,7 +39,7 @@ object SystemIdManager {
         //用于生成最终的唯一标识符
         val stringBuilder = StringBuilder()
         //判断是否已经生成过,
-        if (systemId != null && "" != systemId) {
+        if (!TextUtils.isEmpty(systemId)) {
             i(TAG, "已经生成过")
             return systemId
         }
@@ -77,13 +78,13 @@ object SystemIdManager {
      *
      * @return
      */
-    fun readSystemId(): String? {
+    fun readSystemId(): String {
         val file = getSystemIdDir()
         return if (file.exists()) {
             i(TAG, "file.exists()")
             if (file.length() > 1) {
                 i(TAG, "file.length() > 1")
-                val buffer = StringBuffer()
+                val buffer = StringBuilder()
                 try {
                     val fis = FileInputStream(file)
                     val isr = InputStreamReader(fis, "UTF-8")
@@ -96,14 +97,14 @@ object SystemIdManager {
                     buffer.toString()
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    null
+                    ""
                 }
             } else {
-                null
+                ""
             }
         } else {
             i(TAG, "xfile.exists()")
-            null
+            ""
         }
     }
 
@@ -113,7 +114,7 @@ object SystemIdManager {
      *
      * @return
      */
-    fun getIMIEStatus(): String? {
+    fun getIMIEStatus(): String {
         val telephonyManager = BaseApplication.get()
             .getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         var iMIEStatus: String? = null
@@ -130,12 +131,12 @@ object SystemIdManager {
                 //                                          int[] grantResults)
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
-                return null
+                return ""
             }
             iMIEStatus = telephonyManager.deviceId
             i(TAG, "iMIEStatus*****$iMIEStatus")
         }
-        return iMIEStatus
+        return iMIEStatus ?: ""
     }
 
 
@@ -181,7 +182,7 @@ object SystemIdManager {
      *
      * @param str
      */
-    fun saveSystemId(str: String?) {
+    fun saveSystemId(str: String) {
         val file = getSystemIdDir()
         try {
             val fos = FileOutputStream(file)

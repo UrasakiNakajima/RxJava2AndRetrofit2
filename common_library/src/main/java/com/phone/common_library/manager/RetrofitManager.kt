@@ -115,7 +115,7 @@ class RetrofitManager {
             return instance!!
         }
 
-        fun buildSign(secret: String?, time: Long): String {
+        fun buildSign(secret: String, time: Long): String {
             //        Map treeMap = new TreeMap(params)// treeMap默认会以key值升序排序
             val stringBuilder = StringBuilder()
             stringBuilder.append(secret)
@@ -200,7 +200,7 @@ class RetrofitManager {
     fun multipartBody(
         bodyParams: Map<String, String>,
         fileMap: Map<String, File>
-    ): RequestBody? {
+    ): RequestBody {
         val MEDIA_TYPE = MediaType.parse("image/*")
         // form 表单形式上传
         val multipartBodyBuilder =
@@ -252,7 +252,7 @@ class RetrofitManager {
     fun multipartBody2(
         bodyParams: Map<String, String>,
         fileMap: Map<String, File>,
-        filesMap: Map<String, List<File?>>
+        filesMap: Map<String, List<File>>
     ): RequestBody? {
         val MEDIA_TYPE = MediaType.parse("image/*")
         // form 表单形式上传
@@ -299,10 +299,10 @@ class RetrofitManager {
                 val files = filesMap[key]
                 if (files != null && files.size > 0) { //如果参数不是null，才把参数传给后台
                     for (i in files.indices) {
-                        if (files[i] != null && files[i]!!.exists()) {
+                        if (files[i].exists()) {
                             multipartBodyBuilder.addFormDataPart(
                                 key,
-                                files[i]!!.name,
+                                files[i].name,
                                 RequestBody.create(MEDIA_TYPE, files[i])
                             )
                             LogManager.i(
@@ -329,7 +329,7 @@ class RetrofitManager {
      */
     fun responseString(
         appCompatActivity: AppCompatActivity,
-        observable: Observable<ResponseBody?>,
+        observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         observable.onTerminateDetach()
@@ -361,8 +361,8 @@ class RetrofitManager {
      * @return
      */
     fun responseString2(
-        fragment: Fragment?,
-        observable: Observable<ResponseBody?>,
+        fragment: Fragment,
+        observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         observable.onTerminateDetach()
@@ -412,7 +412,7 @@ class RetrofitManager {
      */
     fun responseString3(
         rxAppCompatActivity: RxAppCompatActivity,
-        observable: Observable<ResponseBody?>,
+        observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         observable.onTerminateDetach()
@@ -420,7 +420,7 @@ class RetrofitManager {
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
             .compose(rxAppCompatActivity.bindToLifecycle())
             .subscribe({ responseBody ->
-                val responseString = responseBody?.string()
+                val responseString = responseBody.string()
                 LogManager.i(TAG, "responseString*****$responseString")
                 onCommonSingleParamCallback.onSuccess(responseString)
                 //                                   if (!TextUtils.isEmpty(responseString)) {
@@ -484,7 +484,7 @@ class RetrofitManager {
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
             .compose(rxAppCompatActivity.bindUntilEvent(ActivityEvent.DESTROY))
             .subscribe({ responseBody ->
-                val responseString = responseBody?.string()
+                val responseString = responseBody.string()
                 LogManager.i(TAG, "responseString*****$responseString")
                 onCommonSingleParamCallback.onSuccess(responseString)
             }
@@ -509,7 +509,7 @@ class RetrofitManager {
      */
     fun responseString6(
         rxFragment: RxFragment,
-        observable: Observable<ResponseBody?>,
+        observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
         observable.onTerminateDetach()
@@ -517,7 +517,7 @@ class RetrofitManager {
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
             .compose(rxFragment.bindToLifecycle())
             .subscribe({ responseBody ->
-                val responseString = responseBody?.string()
+                val responseString = responseBody.string()
                 LogManager.i(TAG, "responseString*****$responseString")
                 onCommonSingleParamCallback.onSuccess(responseString)
                 //                                   if (!TextUtils.isEmpty(responseString)) {
@@ -581,7 +581,7 @@ class RetrofitManager {
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
             .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY))
             .subscribe({ responseBody ->
-                val responseString = responseBody?.string()
+                val responseString = responseBody.string()
                 LogManager.i(TAG, "responseString*****$responseString")
                 onCommonSingleParamCallback.onSuccess(responseString)
                 //                                   if (!TextUtils.isEmpty(responseString)) {

@@ -63,6 +63,7 @@
     <string name="resource_details">资源详情</string>
     <string name="loading_failed">加载失败</string>
     <string name="no_data_available">暂无数据</string>
+    <string name="three_level_linkage_list">三级联动列表</string>
 
     <string name="all_resource">全部资源</string>
     <string name="all">全部</string>

@@ -36,7 +36,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
         model = FirstPageModelImpl()
     }
 
-    override fun firstPage(rxFragment: RxFragment, bodyParams: Map<String?, String?>) {
+    override fun firstPage(rxFragment: RxFragment, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IFirstPageView) {
@@ -114,7 +114,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
 
     override fun firstPage2(
         rxAppCompatActivity: RxAppCompatActivity,
-        bodyParams: Map<String?, String?>
+        bodyParams: Map<String, String>
     ) {
         val baseView = obtainView()
         if (baseView != null) {

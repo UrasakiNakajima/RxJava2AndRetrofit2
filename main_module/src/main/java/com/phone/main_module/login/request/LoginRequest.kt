@@ -10,15 +10,15 @@ interface LoginRequest {
 
     //    @FormUrlEncoded
     @GET(ConstantUrl.GET_VERIFICATION_CODE_URL)
-    fun getAuthCode(@QueryMap bodyParams: Map<String?, String?>): Observable<ResponseBody?>
+    fun getAuthCode(@QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
     @FormUrlEncoded
     @POST(ConstantUrl.LOGIN_WITH_AUTH_CODE_URL)
-    fun getLoginWithAuthCodeData(@FieldMap bodyParams: Map<String?, String?>): Observable<ResponseBody?>
+    fun getLoginWithAuthCodeData(@FieldMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
     @FormUrlEncoded
     @POST(ConstantUrl.REGISTER_URL)
-    fun getRegisterData(@FieldMap bodyParams: Map<String?, String?>): Observable<ResponseBody?>
+    fun getRegisterData(@FieldMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
     //    @Multipart
     //    @POST("upload")
@@ -29,7 +29,8 @@ interface LoginRequest {
     //    @POST("upload")
     //    Observable<JSONObject> addShopResult(@PartMap Map<String, RequestBody> fileMap,
     //                                              @PartMap Map<String, List<RequestBody>> filesMap);
+    
     @POST(ConstantUrl.ADD_SHOP_URL)
-    fun addShopResult(@Body requestBody: RequestBody): Observable<ResponseBody?>
+    fun addShopResult(@Body requestBody: RequestBody): Observable<ResponseBody>
 
 }

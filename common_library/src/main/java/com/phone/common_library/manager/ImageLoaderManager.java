@@ -90,7 +90,7 @@ public class ImageLoaderManager {
 		Glide.with(context).load(url)
 			.diskCacheStrategy(DiskCacheStrategy.ALL)
 			.error(R.mipmap.toux2)
-			.centerCrop().transform(new GlideRoundTransformUtil()).into(imageView);
+			.centerCrop().transform(new GlideRoundTransformManager()).into(imageView);
 	}
 	
 	public static void displayRound(Context context, ImageView imageView, int resId) {
@@ -100,7 +100,7 @@ public class ImageLoaderManager {
 		Glide.with(context).load(resId)
 			.diskCacheStrategy(DiskCacheStrategy.ALL)
 			.error(R.mipmap.toux2)
-			.centerCrop().transform(new GlideRoundTransformUtil()).into(imageView);
+			.centerCrop().transform(new GlideRoundTransformManager()).into(imageView);
 	}
 	
 }
