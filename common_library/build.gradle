@@ -2,14 +2,16 @@
 //    id 'com.android.library'
 //    id 'kotlin-android'
 //    id 'kotlin-kapt'
-//    //apply plugin:'newlens'
 //    //GreenDao apply plugin
 //    id 'org.greenrobot.greendao'
+////    id 'org.jetbrains.kotlin.android'
+//    //id 'newlens'
 //}
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.greenrobot.greendao'
+////apply plugin: 'newlens'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -17,13 +19,13 @@ tasks.withType(JavaCompile) {
 
 
 android {
-    compileSdkVersion 31
+    compileSdk 31
 //    buildToolsVersion "31.0.3"
 
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 31
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -239,6 +241,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.24'
     kapt 'org.projectlombok:lombok:1.18.24'
 
-    api 'com.github.hackware1993:MagicIndicator:1.5.0'
+    api 'com.github.hackware1993:MagicIndicator:1.7.0'
 
 }

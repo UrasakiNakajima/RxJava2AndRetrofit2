@@ -3,18 +3,19 @@
 //    id 'com.android.library'
 //    id 'kotlin-android'
 //    id 'kotlin-kapt'
+////    id 'org.jetbrains.kotlin.android'
 //}
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 31
+    compileSdk 31
 //    buildToolsVersion "31.0.3"
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 31
         versionCode 1
         versionName "1.0"
         multiDexEnabled true

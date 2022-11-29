@@ -1,14 +1,17 @@
+//plugins {
+//    id 'com.android.application'
+//}
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
+    compileSdk 31
 //    buildToolsVersion "31.0.3"
 
 
     defaultConfig {
         applicationId "com.phone.aidl_client"
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
