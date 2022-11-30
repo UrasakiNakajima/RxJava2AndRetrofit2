@@ -1,19 +1,22 @@
+import com.phone.versionplugin.BuildVersions
+
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
 //    id 'org.jetbrains.kotlin.android'
+    id 'com.phone.versionplugin'
 }
 
 android {
-    compileSdk 31
+    compileSdk BuildVersions.compileSdk
 //    buildToolsVersion "31.0.3"
 
     defaultConfig {
-        minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        minSdk BuildVersions.minSdk
+        targetSdk BuildVersions.targetSdk
+        versionCode BuildVersions.versionCode
+        versionName BuildVersions.versionName
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -50,10 +53,9 @@ android {
 }
 
 dependencies {
-    api project(path: ':common_library')
-
+    api project(path: ':library_common')
     //Android路由（用于不同app之间的跳转）
-//    implementation 'com.alibaba:arouter-api:1.5.0'
-    kapt 'com.alibaba:arouter-compiler:1.2.2'
+//    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
+    kapt "com.alibaba:arouter-compiler:$BuildVersions.arouter_compiler_version"
 
 }

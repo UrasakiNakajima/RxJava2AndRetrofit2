@@ -1,0 +1,237 @@
+import com.phone.versionplugin.BuildVersions
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    //GreenDao apply plugin
+    id 'org.greenrobot.greendao'
+//    id 'org.jetbrains.kotlin.android'
+    //id 'newlens'
+    id 'com.phone.versionplugin'
+}
+
+////apply plugin: 'newlens'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+android {
+    compileSdk BuildVersions.compileSdk
+//    buildToolsVersion "31.0.3"
+
+
+    defaultConfig {
+        minSdk BuildVersions.minSdk
+        targetSdk BuildVersions.targetSdk
+        versionCode BuildVersions.versionCode
+        versionName BuildVersions.versionName
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+//        //java代码中引用的定义形式
+//        buildConfigField "String", "CUR_PROJECT", "\"${CUR_PROJECT}\""
+//        buildConfigField "Boolean", "DEBUG_TAG", "${DEBUG_TAG}"
+//        buildConfigField "String", "DEBUG_LOGIN_SN", "\"${DEBUG_LOGIN_SN}\""
+//        buildConfigField "String", "DEBUG_LOGIN_MODEL", "\"${DEBUG_LOGIN_MODEL}\""
+//        buildConfigField "String", "DEBUG_LOGIN_VENDOR", "\"${DEBUG_LOGIN_VENDOR}\""
+//        buildConfigField "String", "DEBUG_LOGIN_TYPE", "\"${DEBUG_LOGIN_TYPE}\""
+//        buildConfigField "String", "SERVER_UP_URL", "\"${SERVER_UP_URL}\""
+//        buildConfigField "String", "VIDEO_EXTRANET_IP", "\"${VIDEO_EXTRANET_IP}\""
+//        buildConfigField "String", "LOAD_H5_UP", "\"${LOAD_H5_UP}\""
+//        buildConfigField "String", "TIME_SERVER_IP", "\"${TIME_SERVER_IP}\""
+//        buildConfigField "Boolean", "SUPPORT_TIMESHIFT", "${SUPPORT_TIMESHIFT}"
+//        buildConfigField "Boolean", "IS_USE_IJKPLAYER_FOR_VOD", "${IS_USE_IJKPLAYER_FOR_VOD}"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    packagingOptions {
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
+    }
+
+    //android 模块下开启DataBinding
+    dataBinding {
+        enabled = true
+    }
+
+    //开启Java1_8 能够使用lambda表达式
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
+        }
+    }
+
+    buildTypes {
+        release {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
+greendao {
+    //数据库版本号
+    schemaVersion BuildVersions.schemaVersion
+    // 设置DaoMaster、DaoSession、Dao 包名
+    daoPackage 'com.phone.common_library.greendao'
+    //设置DaoMaster、DaoSession、Dao目录,请注意，这里路径用/不要用.
+    targetGenDir 'src/main/java'
+    //设置为true以自动生成单元测试。
+    generateTests false
+    //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
+    //targetGenDirTests 'src/androidTest/java'
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api "org.jetbrains.kotlin:kotlin-stdlib:$BuildVersions.kotlin_version"
+    api "androidx.appcompat:appcompat:$BuildVersions.appcompat_version"
+    api "androidx.constraintlayout:constraintlayout:$BuildVersions.constraintlayout_version"
+    androidTestApi "androidx.test:runner:$BuildVersions.runner_version"
+    androidTestApi "androidx.test.espresso:espresso-core:$BuildVersions.espresso_core_version"
+    api "androidx.core:core:$BuildVersions.core_version"
+    api "androidx.core:core-ktx:$BuildVersions.core_ktx_version"
+    //android函数分包框架导入
+    api "androidx.multidex:multidex:$BuildVersions.multidex_version"
+    //cardview导入
+    api "androidx.cardview:cardview:$BuildVersions.cardview_version"
+    //Mvvm模式框架导入
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$BuildVersions.lifecycle_version"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$BuildVersions.lifecycle_version"
+    testApi "junit:junit:$BuildVersions.junit_version"
+    api "com.google.android.material:material:$BuildVersions.material_version"
+
+
+    implementation files('libs/BASE64Decoder.jar')
+    //apache StringUtils导入
+    api "org.apache.commons:commons-lang3:$BuildVersions.commons_lang_version"
+    //apache Base64导入
+    api "commons-codec:commons-codec:$BuildVersions.commons_codec_version"
+    //kotlin databinding
+    kapt "com.android.databinding:compiler:$BuildVersions.databinding_version"
+
+    //谷歌官方Json解析框架导入
+    api "com.google.code.gson:gson:$BuildVersions.gson_version"
+
+    //okhttp3框架導入
+    api "com.squareup.okhttp3:okhttp:$BuildVersions.okhttp3_version"
+    api "com.squareup.okhttp3:logging-interceptor:$BuildVersions.okhttp3_version"
+    //retrofit2框架導入
+    api "com.squareup.retrofit2:retrofit:$BuildVersions.retrofit2_version"
+    api "com.squareup.retrofit2:converter-gson:$BuildVersions.retrofit2_version"
+    api "com.squareup.retrofit2:adapter-rxjava2:$BuildVersions.retrofit2_version"
+    //rxjava2框架導入
+    api "io.reactivex.rxjava2:rxjava:$BuildVersions.rxjava_version"
+    api "io.reactivex.rxjava2:rxandroid:$BuildVersions.rxandroid_version"
+    //rxpermissions框架導入
+    api "com.github.tbruyelle:rxpermissions:$BuildVersions.rxpermissions_version"
+    //1.解决rxjava导致的内存泄漏的框架導入
+    api "com.trello.rxlifecycle3:rxlifecycle:$BuildVersions.rxlifecycle_version"
+    // If you want to bind to Android-specific lifecycles
+    api "com.trello.rxlifecycle3:rxlifecycle-android:$BuildVersions.rxlifecycle_version"
+    // If you want pre-written Activities and Fragments you can subclass as providers
+    api "com.trello.rxlifecycle3:rxlifecycle-components:$BuildVersions.rxlifecycle_version"
+    // If you want pre-written support preference Fragments you can subclass as providers
+    api "com.trello.rxlifecycle3:rxlifecycle-components-preference:$BuildVersions.rxlifecycle_version"
+    // If you want to use Android Lifecycle for providers
+    api "com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:$BuildVersions.rxlifecycle_version"
+    // If you want to use Kotlin syntax
+    api "com.trello.rxlifecycle3:rxlifecycle-kotlin:$BuildVersions.rxlifecycle_version"
+    // If you want to use Kotlin syntax with Android Lifecycle
+    api "com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:$BuildVersions.rxlifecycle_version"
+//    // If you want to use Navi for providers
+//    // DEPRECATED: Use rxlifecycle-android-lifecycle instead. This will be removed in a future release.
+//    api "com.trello.rxlifecycle3:rxlifecycle-navi:$BuildVersions.rxlifecycle_version"
+
+    //2.AutoDispose解决rxjava导致的内存泄漏的框架
+    api "com.uber.autodispose:autodispose-android-archcomponents:$BuildVersions.autodispose_version"
+
+    //glide框架導入
+    api "com.github.bumptech.glide:glide:$BuildVersions.glide_version"
+    kapt "com.github.bumptech.glide:compiler:$BuildVersions.glide_version"
+    //https图片处理
+    api "com.github.bumptech.glide:okhttp3-integration:$BuildVersions.glide_version"
+
+    //沉浸式状态栏框架导入
+    // 基础依赖包，必须要依赖
+    api "com.geyifeng.immersionbar:immersionbar:$BuildVersions.immersionbar_version"
+    // kotlin扩展（可选）
+    api "com.geyifeng.immersionbar:immersionbar-ktx:$BuildVersions.immersionbar_version"
+    api "com.qmuiteam:qmui:$BuildVersions.qmui_version"
+
+    //fastjson(阿里云json解析框架导入)
+    api "com.alibaba:fastjson:$BuildVersions.fastjson_version"
+//    api "com.alibaba:fastjson:$BuildVersions.fastjson_version.android"
+
+    //图片和视频选择框架导入（这个框架的手机拍照功能有bug，不要使用）
+    api "com.github.LuckSiege.PictureSelector:picture_library:$BuildVersions.picture_selector_version"
+    //刷新和加载Layout导入,核心必须依赖
+    api "com.scwang.smart:refresh-layout-kernel:$BuildVersions.refresh_layout_version"
+    api "com.scwang.smart:refresh-header-classics:$BuildVersions.refresh_layout_version"    //经典刷新头
+//    api "com.scwang.smart:refresh-header-radar:$BuildVersions.refresh_layout_version"       //雷达刷新头
+//    api "com.scwang.smart:refresh-header-falsify:$BuildVersions.refresh_layout_version"     //虚拟刷新头
+//    api "com.scwang.smart:refresh-header-material:$BuildVersions.refresh_layout_version"    //谷歌刷新头
+//    api "com.scwang.smart:refresh-header-two-level:$BuildVersions.refresh_layout_version"   //二级刷新头
+//    api "com.scwang.smart:refresh-footer-ball:$BuildVersions.refresh_layout_version"        //球脉冲加载
+//    api "com.scwang.smart:refresh-footer-classics:$BuildVersions.refresh_layout_version"    //经典加载
+
+
+    //选择时间和省市县三级联动框架
+    api "com.contrarywind:Android-PickerView:$BuildVersions.picker_view_version"
+    //Android路由（用于不同app之间的跳转）
+    api "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
+    kapt "com.alibaba:arouter-compiler:$BuildVersions.arouter_compiler_version"
+
+//    //leakcanary导入（检测内存泄漏框架，直接導入框架就可以了，2.7版本的不用配置）
+//    debugApi "com.squareup.leakcanary:leakcanary-android:$BuildVersions.leakcanary_version"
+
+//    //工具库
+//    implementation "com.blankj:utilcodex:$BuildVersions.utilcodex_version"
+
+    //日志打印框架
+    api "com.orhanobut:logger:$BuildVersions.logger_version"
+
+    //GreenDao apply plugin
+    api "org.greenrobot:greendao:$BuildVersions.greendao_version"
+    //jackson
+    api "com.fasterxml.jackson.core:jackson-databind:$BuildVersions.jackson_databind_version"
+    compileOnly "org.projectlombok:lombok:$BuildVersions.lombok_version"
+    kapt "org.projectlombok:lombok:$BuildVersions.lombok_version"
+    api "com.github.hackware1993:MagicIndicator:$BuildVersions.magic_indicator_version"
+
+}

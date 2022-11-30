@@ -120,7 +120,7 @@ class Base64AndFileActivity :
         layoutBack?.setOnClickListener { v: View? -> finish() }
         tevRequestPermissions?.setOnClickListener {
             val firstPageService =
-                ARouter.getInstance().build("/first_page_module/FirstPageServiceImpl")
+                ARouter.getInstance().build("/module_home/FirstPageServiceImpl")
                     .navigation() as IFirstPageService
             LogManager.i(
                 TAG,

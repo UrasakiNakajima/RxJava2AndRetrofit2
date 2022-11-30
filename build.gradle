@@ -1,12 +1,11 @@
 buildscript {
-    ext.kotlin_version = '1.6.21'
-
+//    ext.kotlin_version = '1.6.21'
 //    ext.tingyun_sdk_version = '2.14.8'//基调听云SDK版本
 //    ext.tingyun_ndk_version = '2.0.0'//基调听云NDK版本
 
     dependencies {
         //GreenDao add plugin
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0'
+        classpath "org.greenrobot:greendao-gradle-plugin:3.3.0"
 
 //        classpath "com.networkbench.newlens.agent.android:agent-gradle-plugin:$tingyun_sdk_version"
 
@@ -19,9 +18,10 @@ buildscript {
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id 'com.android.application' version '7.1.2' apply false
-    id 'com.android.library' version '7.1.2' apply false
+    id 'com.android.application' version '7.0.0' apply false
+    id 'com.android.library' version '7.0.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
+
 //    id 'com.google.dagger.hilt.android' version '2.44' apply false
 }
 

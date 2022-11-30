@@ -1,9 +1,12 @@
+import com.phone.versionplugin.BuildVersions
+
 plugins {
     //body app（不可单独运行）
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
 //    id 'org.jetbrains.kotlin.android'
+    id 'com.phone.versionplugin'
 }
 //apply plugin: 'com.google.gms.google-services'
 //apply plugin: 'com.huawei.agconnect'
@@ -13,15 +16,15 @@ tasks.withType(JavaCompile) {
 }
 
 android {
-    compileSdk 31
+    compileSdk BuildVersions.compileSdk
 //    buildToolsVersion "31.0.3"
 
     defaultConfig {
         applicationId "com.phone.rxjava2andretrofit2"
-        minSdk 21
-        targetSdk 31
-        versionCode 2
-        versionName "2.0"
+        minSdk BuildVersions.minSdk
+        targetSdk BuildVersions.targetSdk
+        versionCode BuildVersions.versionCode
+        versionName BuildVersions.versionName
 
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -96,22 +99,22 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     if (isModule.toBoolean()) {
         //可独立运行的app
-        implementation project(path: ':main_module')
+        implementation project(path: ':module_main')
     } else {
         //被依赖的library
-        implementation project(path: ':main_module')
-        implementation project(path: ':square_module')
-        implementation project(path: ':mine_module')
-        implementation project(path: ':first_page_module')
-        implementation project(path: ':resource_module')
-        implementation project(path: ':project_module')
+        implementation project(path: ':module_main')
+        implementation project(path: ':module_home')
+        implementation project(path: ':module_project')
+        implementation project(path: ':module_square')
+        implementation project(path: ':module_resource')
+        implementation project(path: ':module_mine')
     }
 
     //极光推送JPush
-    implementation 'cn.jiguang.sdk:jpush:4.7.0'
+    implementation "cn.jiguang.sdk:jpush:$BuildVersions.jpush_version"
     //极光推送JCore
-    implementation 'cn.jiguang.sdk:jcore:3.2.4'
+    implementation "cn.jiguang.sdk:jcore:$BuildVersions.jcore_version"
 //    // 接入小米厂商
-//    implementation 'cn.jiguang.sdk.plugin:xiaomi:4.0.0'
+//    implementation "cn.jiguang.sdk.plugin:xiaomi:4.0.0"
 
 }

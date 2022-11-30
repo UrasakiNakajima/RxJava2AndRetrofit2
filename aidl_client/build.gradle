@@ -1,19 +1,21 @@
-//plugins {
-//    id 'com.android.application'
-//}
-apply plugin: 'com.android.application'
+import com.phone.versionplugin.BuildVersions
+
+plugins {
+    id 'com.android.application'
+    id 'com.phone.versionplugin'
+}
 
 android {
-    compileSdk 31
+    compileSdk BuildVersions.compileSdk
 //    buildToolsVersion "31.0.3"
 
 
     defaultConfig {
         applicationId "com.phone.aidl_client"
-        minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        minSdk BuildVersions.minSdk
+        targetSdk BuildVersions.targetSdk
+        versionCode BuildVersions.versionCode
+        versionName BuildVersions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -41,6 +43,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':common_library')
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation project(path: ':library_common')
+    implementation "androidx.recyclerview:recyclerview:$BuildVersions.recyclerview_version"
 }

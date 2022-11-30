@@ -1,0 +1,131 @@
+import com.phone.versionplugin.BuildVersions
+
+plugins {
+    id 'com.phone.versionplugin'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+if (isModule.toBoolean()) {
+    //可独立运行的app
+    apply plugin: 'com.android.application'
+} else {
+    //被依赖的library
+    apply plugin: 'com.android.library'
+}
+
+
+android {
+    compileSdk BuildVersions.compileSdk
+//    buildToolsVersion "31.0.3"
+
+
+    defaultConfig {
+        if (isModule.toBoolean()) {
+            //可独立运行的app
+            applicationId "com.phone.module_home"
+        } else {
+            //被依赖的library
+        }
+
+        minSdk BuildVersions.minSdk
+        targetSdk BuildVersions.targetSdk
+        versionCode BuildVersions.versionCode
+        versionName BuildVersions.versionName
+
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    //android 模块下开启DataBinding
+    dataBinding {
+        enabled = true
+    }
+
+    //开启Java1_8 能够使用lambda表达式
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    if (isModule.toBoolean()) {
+        //可独立运行的app
+        signingConfigs {
+            release {
+                storeFile file('../rx_java2_and_retrofit2_release.keystore')
+                storePassword 'Xz&150120'
+                keyPassword 'Xz&150120'
+                keyAlias 'rx_java2_and_retrofit2'
+            }
+        }
+    } else {
+        //被依赖的library
+    }
+
+    sourceSets {
+        main {
+            if (isModule.toBoolean()) {
+                manifest.srcFile 'src/main/java/module/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
+                java {//移除module包下的代码
+                    exclude 'module'
+                }
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //给Module 内的资源名增加前缀, 避免资源名冲突
+    resourcePrefix "home_"
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':library_common')
+    // room
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+//    implementation project(path: ':irecyclerview')
+
+    //Android路由（用于不同app之间的跳转）
+//    implementation 'com.alibaba:arouter-api:1.5.0'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
+
+//    //播放器框架
+//    implementation 'com.shuyu:GSYVideoPlayer:8.0.0'
+//    implementation 'com.shuyu:gsyVideoPlayer-armv7a:8.0.0'
+//    implementation 'com.shuyu:gsyVideoPlayer-arm64:8.0.0'
+
+    //百分比进度条
+    implementation 'cn.bingoogolapple:bga-progressbar:1.0.1@aar'
+
+    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
+}

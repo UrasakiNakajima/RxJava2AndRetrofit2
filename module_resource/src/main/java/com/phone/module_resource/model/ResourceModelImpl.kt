@@ -1,0 +1,18 @@
+package com.phone.module_resource.model
+
+import com.phone.common_library.manager.RetrofitManager
+import com.phone.module_resource.request.ResourceRequest
+import okhttp3.ResponseBody
+import retrofit2.Call
+
+class ResourceModelImpl : IResourceModel {
+
+    private val TAG = ResourceModelImpl::class.java.simpleName
+
+    override fun resourceTabData(): Call<ResponseBody> {
+        return RetrofitManager.get().getRetrofit()
+            .create(ResourceRequest::class.java)
+            .getResourceTabData()
+    }
+
+}
