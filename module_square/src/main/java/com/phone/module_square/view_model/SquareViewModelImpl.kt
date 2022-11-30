@@ -2,11 +2,11 @@ package com.phone.module_square.view_model
 
 import android.text.TextUtils
 import androidx.lifecycle.viewModelScope
-import com.phone.common_library.base.BaseViewModel
-import com.phone.common_library.bean.DataX
-import com.phone.common_library.bean.SquareBean
-import com.phone.common_library.callback.OnCommonSingleParamCallback
-import com.phone.common_library.manager.*
+import com.phone.library_common.base.BaseViewModel
+import com.phone.library_common.bean.DataX
+import com.phone.library_common.bean.SquareBean
+import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_common.manager.*
 import com.phone.module_square.model.SquareModelImpl
 import com.phone.module_square.R
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity

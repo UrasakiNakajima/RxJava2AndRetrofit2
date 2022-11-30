@@ -16,11 +16,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
-import com.phone.common_library.base.BaseRxAppActivity;
-import com.phone.common_library.common.DecimalInputFilter;
-import com.phone.common_library.common.DecimalTextWatcher;
-import com.phone.common_library.manager.ResourcesManager;
-import com.phone.common_library.manager.SoftKeyboardManager;
+import com.phone.library_common.base.BaseRxAppActivity;
+import com.phone.library_common.common.DecimalInputFilter;
+import com.phone.library_common.common.DecimalTextWatcher;
+import com.phone.library_common.manager.ResourcesManager;
+import com.phone.library_common.manager.SoftKeyboardManager;
 import com.phone.module_square.R;
 
 /**

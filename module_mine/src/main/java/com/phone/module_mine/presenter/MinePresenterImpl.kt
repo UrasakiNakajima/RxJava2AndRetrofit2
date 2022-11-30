@@ -1,13 +1,13 @@
 package com.phone.module_mine.presenter
 
 import android.text.TextUtils
-import com.phone.common_library.BaseApplication
-import com.phone.common_library.base.BasePresenter
-import com.phone.common_library.base.IBaseView
-import com.phone.common_library.callback.OnCommonSingleParamCallback
-import com.phone.common_library.manager.GsonManager
-import com.phone.common_library.manager.LogManager
-import com.phone.common_library.manager.RetrofitManager
+import com.phone.library_common.BaseApplication
+import com.phone.library_common.base.BasePresenter
+import com.phone.library_common.base.IBaseView
+import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_common.manager.GsonManager
+import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_mine.R
 import com.phone.module_mine.bean.MineResponse
 import com.phone.module_mine.model.MineModelImpl

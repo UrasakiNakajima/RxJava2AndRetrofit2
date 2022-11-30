@@ -1,6 +1,6 @@
 package com.phone.aidl_server;
 
-import com.phone.common_library.BaseApplication;
+import com.phone.library_common.BaseApplication;
 
 /**
  * author : Urasaki

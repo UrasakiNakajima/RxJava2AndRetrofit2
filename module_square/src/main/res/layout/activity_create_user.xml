@@ -1,110 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.CreateUserActivity"
-    tools:ignore="MissingDefaultResource">
+    tools:context=".ui.CreateUserActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layout_root"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_73"
-        android:background="@color/color_FF198CFF"
-        android:minHeight="?attr/actionBarSize"
-        android:orientation="vertical"
-        app:contentInsetStart="0dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_73"
-            android:orientation="vertical">
+            android:background="@color/color_FF198CFF"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="vertical"
+            app:contentInsetStart="0dp">
 
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_25" />
+                android:layout_height="@dimen/dp_73"
+                android:orientation="vertical">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_25" />
 
                 <FrameLayout
-                    android:id="@+id/layout_back"
-                    android:layout_width="@dimen/dp_36"
-                    android:layout_height="match_parent"
-                    android:gravity="start"
-                    tools:ignore="UselessParent">
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48">
 
-                    <ImageView
-                        android:id="@+id/imv_back"
-                        android:layout_width="@dimen/dp_9"
-                        android:layout_height="@dimen/dp_16"
-                        android:layout_gravity="center"
-                        android:src="@mipmap/icon_arrowhead_left"
-                        tools:ignore="ContentDescription" />
+                    <FrameLayout
+                        android:id="@+id/layout_back"
+                        android:layout_width="@dimen/dp_36"
+                        android:layout_height="match_parent"
+                        android:gravity="start"
+                        tools:ignore="UselessParent">
+
+                        <ImageView
+                            android:id="@+id/imv_back"
+                            android:layout_width="@dimen/dp_9"
+                            android:layout_height="@dimen/dp_16"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/icon_arrowhead_left"
+                            tools:ignore="ContentDescription" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tev_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_48"
+                        android:gravity="center"
+                        android:text="@string/create_user"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_17" />
 
                 </FrameLayout>
 
-                <TextView
-                    android:id="@+id/tev_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
-                    android:gravity="center"
-                    android:text="@string/create_user"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_17" />
+            </LinearLayout>
 
-            </FrameLayout>
+        </androidx.appcompat.widget.Toolbar>
 
-        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_user"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="550" />
 
-    </androidx.appcompat.widget.Toolbar>
+        <TextView
+            android:id="@+id/tev_create_user"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:background="@color/color_FFFFC73B"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="@string/create_user"
+            android:textColor="@color/color_FFFFFF"
+            android:textSize="@dimen/sp_16" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_user"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="550" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_FFFFFF" />
 
-    <TextView
-        android:id="@+id/tev_create_user"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:background="@color/color_FFFFC73B"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:paddingStart="@dimen/dp_15"
-        android:paddingTop="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_15"
-        android:paddingBottom="@dimen/dp_10"
-        android:text="@string/create_user"
-        android:textColor="@color/color_FFFFFF"
-        android:textSize="@dimen/sp_16" />
+        <TextView
+            android:id="@+id/tev_delete_all_user"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:background="@color/color_FFFFC73B"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="@string/delete_all_user"
+            android:textColor="@color/color_FFFFFF"
+            android:textSize="@dimen/sp_16" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/color_FFFFFF" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tev_delete_all_user"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:background="@color/color_FFFFC73B"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:paddingStart="@dimen/dp_15"
-        android:paddingTop="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_15"
-        android:paddingBottom="@dimen/dp_10"
-        android:text="@string/delete_all_user"
-        android:textColor="@color/color_FFFFFF"
-        android:textSize="@dimen/sp_16" />
-
-</LinearLayout>
+</layout>

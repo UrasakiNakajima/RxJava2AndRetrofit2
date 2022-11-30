@@ -1,6 +1,6 @@
 package com.phone.module_main.main.view
 
-import com.phone.common_library.base.IBaseView
+import com.phone.library_common.base.IBaseView
 
 /**
  * author    : Urasaki

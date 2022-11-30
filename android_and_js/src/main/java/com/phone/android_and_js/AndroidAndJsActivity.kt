@@ -4,11 +4,10 @@ import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.webkit.*
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.android_and_js.databinding.ActivityAndroidAndJsBinding
-import com.phone.common_library.base.BaseBindingRxAppActivity
-import com.phone.common_library.manager.LogManager
-import com.phone.common_library.manager.ResourcesManager
+import com.phone.library_common.base.BaseBindingRxAppActivity
+import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.ResourcesManager
 
 @Route(path = "/android_and_js/ui/android_and_js")
 class AndroidAndJsActivity : BaseBindingRxAppActivity<ActivityAndroidAndJsBinding>() {

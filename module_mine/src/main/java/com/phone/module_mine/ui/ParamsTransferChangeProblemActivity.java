@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.phone.common_library.base.BaseRxAppActivity;
-import com.phone.common_library.manager.LogManager;
-import com.phone.common_library.manager.ResourcesManager;
+import com.phone.library_common.base.BaseRxAppActivity;
+import com.phone.library_common.manager.LogManager;
+import com.phone.library_common.manager.ResourcesManager;
 import com.phone.module_mine.R;
 import com.phone.module_mine.bean.User;
 

@@ -3,7 +3,7 @@ package com.phone.base64_and_file.manager
 import Decoder.BASE64Decoder
 import Decoder.BASE64Encoder
 import android.util.Base64
-import com.phone.common_library.manager.LogManager.i
+import com.phone.library_common.manager.LogManager.i
 import java.io.*
 import java.util.*
 

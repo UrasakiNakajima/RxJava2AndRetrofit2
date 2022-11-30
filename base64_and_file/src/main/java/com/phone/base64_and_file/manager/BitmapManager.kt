@@ -6,7 +6,7 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
-import com.phone.common_library.manager.LogManager.i
+import com.phone.library_common.manager.LogManager.i
 import id.zelory.compressor.Compressor
 import java.io.*
 import java.lang.ref.SoftReference

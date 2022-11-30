@@ -6,8 +6,8 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.phone.common_library.bean.EventScheduleListBean;
-import com.phone.common_library.custom_view.EventScheduleLayout;
+import com.phone.library_common.bean.EventScheduleListBean;
+import com.phone.library_common.custom_view.EventScheduleLayout;
 import com.phone.module_main.R;
 
 import java.util.ArrayList;

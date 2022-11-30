@@ -42,7 +42,7 @@
             android:value="portrait|landscape" />
 
         <meta-data
-            android:name="com.phone.common_library.okhttp3_app_glide_module.Okhttp3AppGlideModule"
+            android:name="com.phone.library_common.okhttp3_app_glide_module.Okhttp3AppGlideModule"
             android:value="AppGlideModule" />
 
         <provider

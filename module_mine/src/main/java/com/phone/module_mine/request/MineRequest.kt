@@ -1,7 +1,7 @@
 package com.phone.module_mine.request
 
-import com.phone.common_library.common.ConstantData
-import com.phone.common_library.common.ConstantUrl
+import com.phone.library_common.common.ConstantData
+import com.phone.library_common.common.ConstantUrl
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.GET

@@ -1,20 +1,19 @@
 package com.phone.module_home.presenter
 
 import android.text.TextUtils
-import com.phone.common_library.base.BasePresenter
-import com.phone.common_library.base.IBaseView
-import com.phone.common_library.bean.FirstPageResponse
-import com.phone.common_library.callback.OnCommonSingleParamCallback
-import com.phone.common_library.manager.GsonManager
-import com.phone.common_library.manager.LogManager.i
-import com.phone.common_library.manager.ResourcesManager
-import com.phone.common_library.manager.RetrofitManager
+import com.phone.library_common.base.BasePresenter
+import com.phone.library_common.base.IBaseView
+import com.phone.library_common.bean.FirstPageResponse
+import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_common.manager.GsonManager
+import com.phone.library_common.manager.LogManager.i
+import com.phone.library_common.manager.ResourcesManager
+import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_home.R
 import com.phone.module_home.model.FirstPageModelImpl
 import com.phone.module_home.view.IFirstPageView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
-import java.util.*
 
 /**
  * author    : Urasaki

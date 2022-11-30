@@ -6,31 +6,25 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.fastjson.JSONObject
-import com.phone.common_library.base.BaseRxAppActivity
-import com.phone.common_library.bean.UserBean
-import com.phone.common_library.dialog.StandardDialog
-import com.phone.common_library.dialog.StandardUserDialog
-import com.phone.common_library.manager.*
+import com.phone.library_common.base.BaseBindingRxAppActivity
+import com.phone.library_common.base.BaseRxAppActivity
+import com.phone.library_common.bean.UserBean
+import com.phone.library_common.dialog.StandardDialog
+import com.phone.library_common.dialog.StandardUserDialog
+import com.phone.library_common.manager.*
 import com.phone.module_square.R
 import com.phone.module_square.adapter.UserBeanAdapter
+import com.phone.module_square.databinding.ActivityCreateUserBinding
 import java.util.*
 
-class CreateUserActivity : BaseRxAppActivity() {
+class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>() {
 
     private val TAG = CreateUserActivity::class.java.simpleName
-    private var layoutRoot: LinearLayout? = null
-    private var toolbar: Toolbar? = null
-    private var layoutBack: FrameLayout? = null
-    private var imvBack: ImageView? = null
-    private var tevTitle: TextView? = null
-    private var rcvUser: RecyclerView? = null
-    private var tevCreateUser: TextView? = null
-    private var tevDeleteAllUser: TextView? = null
-
     private var userBeanDaoManager: UserBeanDaoManager? = null
     private var userBeanAdapter: UserBeanAdapter? = null
 
@@ -51,19 +45,13 @@ class CreateUserActivity : BaseRxAppActivity() {
     }
 
     override fun initViews() {
-        layoutRoot = findViewById<View>(R.id.layout_root) as LinearLayout
-        toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        layoutBack = findViewById<View>(R.id.layout_back) as FrameLayout
-        imvBack = findViewById<View>(R.id.imv_back) as ImageView
-        tevTitle = findViewById<View>(R.id.tev_title) as TextView
-        rcvUser = findViewById<View>(R.id.rcv_user) as RecyclerView
-        tevCreateUser = findViewById<View>(R.id.tev_create_user) as TextView
-        tevDeleteAllUser = findViewById<View>(R.id.tev_delete_all_user) as TextView
         setToolbar(false, R.color.color_FF198CFF)
-        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.white))
-        layoutBack?.setOnClickListener { v: View? -> finish() }
-        tevCreateUser?.setOnClickListener { v: View? -> showCreateUserDialog() }
-        tevDeleteAllUser?.setOnClickListener { v: View? -> showDeleteAllUserDialog() }
+        mDatabind.apply {
+            imvBack.setColorFilter(ResourcesManager.getColor(R.color.white))
+            layoutBack.setOnClickListener { v: View? -> finish() }
+            tevCreateUser.setOnClickListener { v: View? -> showCreateUserDialog() }
+            tevDeleteAllUser.setOnClickListener { v: View? -> showDeleteAllUserDialog() }
+        }
         initAdapter()
 
 //        int[] arr = {10, 7, 8, 5, 17, 11, 18, 29, 21, 16, 26}
@@ -84,26 +72,42 @@ class CreateUserActivity : BaseRxAppActivity() {
     private fun initAdapter() {
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        rcvUser?.layoutManager = linearLayoutManager
-        rcvUser?.itemAnimator = DefaultItemAnimator()
-        userBeanAdapter = UserBeanAdapter(this)
-        userBeanAdapter?.setOnItemViewClickListener { position: Int, view: View ->
+        mDatabind.rcvUser.let {
+            it.layoutManager = linearLayoutManager
+            it.itemAnimator = DefaultItemAnimator()
+            userBeanAdapter = UserBeanAdapter(this)
+            userBeanAdapter?.setOnItemViewClickListener { position: Int, view: View ->
 //            switch (view.getId()){
 //                case R.id.tev_delete:
 //                    showDeleteUserDialog(position)
 //                    break
 //            }
-            if (view.id == R.id.tev_update) {
-                showUpdateUserDialog(position)
-            } else if (view.id == R.id.tev_delete) {
-                showDeleteUserDialog(position)
+                if (view.id == R.id.tev_update) {
+                    showUpdateUserDialog(position)
+                } else if (view.id == R.id.tev_delete) {
+                    showDeleteUserDialog(position)
+                }
             }
+            it.adapter = userBeanAdapter
         }
-        rcvUser?.adapter = userBeanAdapter
     }
 
     override fun initLoadData() {
         queryUserList()
+    }
+
+    override fun showLoading() {
+        if (!loadView.isShown()) {
+            loadView.setVisibility(View.VISIBLE)
+            loadView.start()
+        }
+    }
+
+    override fun hideLoading() {
+        if (loadView.isShown()) {
+            loadView.stop()
+            loadView.setVisibility(View.GONE)
+        }
     }
 
     private fun queryUserList() {
@@ -143,7 +147,7 @@ class CreateUserActivity : BaseRxAppActivity() {
                     Collections.reverse(queryUserList)
                     userBeanAdapter?.clearData()
                     userBeanAdapter?.addData(queryUserList)
-                    tevTitle?.let {
+                    mDatabind.tevTitle.let {
                         TextViewStyleManager.setTextViewStyleVerticalCenter(
                             it,
                             ResourcesManager.getString(R.string.created_b)
@@ -170,7 +174,7 @@ class CreateUserActivity : BaseRxAppActivity() {
 //            }
 //            timer.schedule(timerTask, 2000)
                 } else {
-                    tevTitle?.let {
+                    mDatabind.tevTitle.let {
                         TextViewStyleManager.setTextViewStyleVerticalCenter(
                             it,
                             ResourcesManager.getString(R.string.created_b)
@@ -238,7 +242,7 @@ class CreateUserActivity : BaseRxAppActivity() {
                                 Collections.reverse(queryUserList)
                                 userBeanAdapter?.clearData()
                                 userBeanAdapter?.addData(queryUserList)
-                                tevTitle?.let {
+                                mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
                                         ResourcesManager.getString(R.string.created_b)
@@ -251,7 +255,7 @@ class CreateUserActivity : BaseRxAppActivity() {
                                 }
                             } else {
                                 userBeanAdapter?.clearData()
-                                tevTitle?.let {
+                                mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
                                         ResourcesManager.getString(R.string.created_b)
@@ -319,7 +323,7 @@ class CreateUserActivity : BaseRxAppActivity() {
                                 Collections.reverse(queryUserList)
                                 userBeanAdapter?.clearData()
                                 userBeanAdapter?.addData(queryUserList)
-                                tevTitle?.let {
+                                mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
                                         ResourcesManager.getString(R.string.created_b)
@@ -332,7 +336,7 @@ class CreateUserActivity : BaseRxAppActivity() {
                                 }
                             } else {
                                 userBeanAdapter?.clearData()
-                                tevTitle?.let {
+                                mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
                                         ResourcesManager.getString(R.string.created_b)
@@ -379,7 +383,7 @@ class CreateUserActivity : BaseRxAppActivity() {
                                 Collections.reverse(queryUserList)
                                 userBeanAdapter?.clearData()
                                 userBeanAdapter?.addData(queryUserList)
-                                tevTitle?.let {
+                                mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
                                         ResourcesManager.getString(R.string.created_b)
@@ -392,7 +396,7 @@ class CreateUserActivity : BaseRxAppActivity() {
                                 }
                             } else {
                                 userBeanAdapter?.clearData()
-                                tevTitle?.let {
+                                mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
                                         ResourcesManager.getString(R.string.created_b)
@@ -438,7 +442,7 @@ class CreateUserActivity : BaseRxAppActivity() {
                                 Collections.reverse(queryUserList)
                                 userBeanAdapter?.clearData()
                                 userBeanAdapter?.addData(queryUserList)
-                                tevTitle?.let {
+                                mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
                                         ResourcesManager.getString(R.string.created_b)
@@ -451,7 +455,7 @@ class CreateUserActivity : BaseRxAppActivity() {
                                 }
                             } else {
                                 userBeanAdapter?.clearData()
-                                tevTitle?.let {
+                                mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
                                         ResourcesManager.getString(R.string.created_b)

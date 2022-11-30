@@ -10,8 +10,8 @@ import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.phone.common_library.base.BaseRxAppActivity
-import com.phone.common_library.manager.LogManager
+import com.phone.library_common.base.BaseRxAppActivity
+import com.phone.library_common.manager.LogManager
 import com.phone.module_main.R
 import com.phone.module_main.main.MainActivity
 

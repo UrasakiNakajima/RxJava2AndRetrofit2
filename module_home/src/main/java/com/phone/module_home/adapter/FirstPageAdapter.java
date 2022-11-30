@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.phone.common_library.bean.FirstPageResponse;
-import com.phone.common_library.callback.OnItemViewClickListener;
+import com.phone.library_common.bean.FirstPageResponse;
+import com.phone.library_common.callback.OnItemViewClickListener;
 import com.phone.module_home.R;
 
 import java.util.ArrayList;

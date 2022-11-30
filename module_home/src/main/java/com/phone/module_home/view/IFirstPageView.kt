@@ -1,7 +1,7 @@
 package com.phone.module_home.view
 
-import com.phone.common_library.base.IBaseView
-import com.phone.common_library.bean.FirstPageResponse.ResultData.JuheNewsBean
+import com.phone.library_common.base.IBaseView
+import com.phone.library_common.bean.FirstPageResponse.ResultData.JuheNewsBean
 
 /**
  * author    : Urasaki

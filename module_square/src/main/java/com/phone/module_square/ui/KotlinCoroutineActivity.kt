@@ -1,6 +1,6 @@
 package com.phone.module_square.ui
 
-import com.phone.common_library.base.BaseRxAppActivity
+import com.phone.library_common.base.BaseRxAppActivity
 import com.phone.module_square.R
 import kotlinx.coroutines.*
 

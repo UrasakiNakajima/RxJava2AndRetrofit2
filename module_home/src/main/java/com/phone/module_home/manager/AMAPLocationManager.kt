@@ -4,10 +4,10 @@ import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
-import com.phone.common_library.BaseApplication
-import com.phone.common_library.callback.OnCommonSingleParamCallback
-import com.phone.common_library.manager.ExceptionManager
-import com.phone.common_library.manager.LogManager
+import com.phone.library_common.BaseApplication
+import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_common.manager.ExceptionManager
+import com.phone.library_common.manager.LogManager
 
 class AMAPLocationManager {
 

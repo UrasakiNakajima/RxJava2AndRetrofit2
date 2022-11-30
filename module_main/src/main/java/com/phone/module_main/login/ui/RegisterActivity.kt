@@ -7,10 +7,10 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import com.phone.common_library.base.BaseMvpRxAppActivity
-import com.phone.common_library.base.IBaseView
-import com.phone.common_library.manager.ResourcesManager
-import com.phone.common_library.manager.RetrofitManager.Companion.isNetworkAvailable
+import com.phone.library_common.base.BaseMvpRxAppActivity
+import com.phone.library_common.base.IBaseView
+import com.phone.library_common.manager.ResourcesManager
+import com.phone.library_common.manager.RetrofitManager.Companion.isNetworkAvailable
 import com.phone.module_main.R
 import com.phone.module_main.login.presenter.LoginPresenterImpl
 import com.phone.module_main.login.view.IRegisterView

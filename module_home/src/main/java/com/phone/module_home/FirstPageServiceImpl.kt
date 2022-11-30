@@ -2,8 +2,8 @@ package com.phone.module_home
 
 import android.content.Context
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.common_library.bean.FirstPageResponse.ResultData.JuheNewsBean
-import com.phone.common_library.service.IFirstPageService
+import com.phone.library_common.bean.FirstPageResponse.ResultData.JuheNewsBean
+import com.phone.library_common.service.IFirstPageService
 
 @Route(path = "/module_home/FirstPageServiceImpl")
 class FirstPageServiceImpl : IFirstPageService {

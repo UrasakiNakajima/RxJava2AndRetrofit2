@@ -8,8 +8,8 @@ import android.os.Build
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
-import com.phone.common_library.base.BaseRxAppActivity
-import com.phone.common_library.custom_view.MineVideoView
+import com.phone.library_common.base.BaseRxAppActivity
+import com.phone.library_common.custom_view.MineVideoView
 import com.phone.module_project.R
 import com.phone.rxjava2andretrofit2.manager.VideoImageManager
 import io.reactivex.Observable

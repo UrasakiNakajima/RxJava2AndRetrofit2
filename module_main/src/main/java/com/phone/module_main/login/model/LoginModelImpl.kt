@@ -1,6 +1,6 @@
 package com.phone.module_main.login.model
 
-import com.phone.common_library.manager.RetrofitManager.Companion.get
+import com.phone.library_common.manager.RetrofitManager.Companion.get
 import com.phone.module_main.login.request.LoginRequest
 import io.reactivex.Observable
 import okhttp3.ResponseBody

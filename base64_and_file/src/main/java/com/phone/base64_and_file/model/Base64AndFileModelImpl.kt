@@ -7,8 +7,8 @@ import com.phone.base64_and_file.bean.Base64AndFileBean
 import com.phone.base64_and_file.thread_pool.Base64ToPictureThreadPool
 import com.phone.base64_and_file.thread_pool.CompressedPictureThreadPool
 import com.phone.base64_and_file.thread_pool.PictureToBase64ThreadPool
-import com.phone.common_library.callback.OnCommonSingleParamCallback
-import com.phone.common_library.manager.LogManager.i
+import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_common.manager.LogManager.i
 
 class Base64AndFileModelImpl : IBase64AndFileModel {
 

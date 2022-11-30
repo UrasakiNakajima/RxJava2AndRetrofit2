@@ -1,6 +1,6 @@
 package com.phone.module_main.login.view
 
-import com.phone.common_library.base.IBaseView
+import com.phone.library_common.base.IBaseView
 import com.phone.module_main.login.bean.GetVerificationCode
 import com.phone.module_main.login.bean.LoginResponse
 

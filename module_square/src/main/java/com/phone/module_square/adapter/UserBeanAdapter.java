@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.phone.common_library.bean.UserBean;
-import com.phone.common_library.callback.OnItemViewClickListener;
-import com.phone.common_library.manager.ResourcesManager;
+import com.phone.library_common.bean.UserBean;
+import com.phone.library_common.callback.OnItemViewClickListener;
+import com.phone.library_common.manager.ResourcesManager;
 import com.phone.module_square.R;
 
 import java.util.ArrayList;

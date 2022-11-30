@@ -2,7 +2,7 @@ package com.phone.base64_and_file.model
 
 import android.content.Context
 import com.phone.base64_and_file.bean.Base64AndFileBean
-import com.phone.common_library.callback.OnCommonSingleParamCallback
+import com.phone.library_common.callback.OnCommonSingleParamCallback
 
 interface IBase64AndFileModel {
 

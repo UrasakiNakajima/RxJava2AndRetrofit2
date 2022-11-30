@@ -2,16 +2,16 @@ package com.phone.module_main.login.presenter
 
 import android.text.TextUtils
 import com.alibaba.fastjson.JSON
-import com.phone.common_library.BaseApplication
-import com.phone.common_library.base.BasePresenter
-import com.phone.common_library.base.BaseResponse
-import com.phone.common_library.base.IBaseView
-import com.phone.common_library.bean.UserBean
-import com.phone.common_library.callback.OnCommonSingleParamCallback
-import com.phone.common_library.manager.LogManager.i
-import com.phone.common_library.manager.ResourcesManager
-import com.phone.common_library.manager.RetrofitManager
-import com.phone.common_library.manager.UserBeanDaoManager
+import com.phone.library_common.BaseApplication
+import com.phone.library_common.base.BasePresenter
+import com.phone.library_common.base.BaseResponse
+import com.phone.library_common.base.IBaseView
+import com.phone.library_common.bean.UserBean
+import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_common.manager.LogManager.i
+import com.phone.library_common.manager.ResourcesManager
+import com.phone.library_common.manager.RetrofitManager
+import com.phone.library_common.manager.UserBeanDaoManager
 import com.phone.module_main.R
 import com.phone.module_main.login.bean.GetVerificationCode
 import com.phone.module_main.login.bean.LoginResponse

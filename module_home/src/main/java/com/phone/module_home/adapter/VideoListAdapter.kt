@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.phone.common_library.callback.OnItemViewClickListener
-import com.phone.common_library.manager.LogManager.i
+import com.phone.library_common.callback.OnItemViewClickListener
+import com.phone.library_common.manager.LogManager.i
 import com.phone.module_home.R
 import com.phone.module_home.bean.VideoListBean.LargeImageListBean
 

@@ -3,8 +3,8 @@ package com.phone.base64_and_file.thread_pool
 import android.content.Context
 import com.phone.base64_and_file.bean.Base64AndFileBean
 import com.phone.base64_and_file.manager.BitmapManager
-import com.phone.common_library.callback.OnCommonSingleParamCallback
-import com.phone.common_library.manager.LogManager
+import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_common.manager.LogManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

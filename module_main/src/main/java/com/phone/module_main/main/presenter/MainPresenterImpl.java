@@ -1,9 +1,9 @@
 package com.phone.module_main.main.presenter;
 
-import com.phone.common_library.base.BasePresenter;
-import com.phone.common_library.base.IBaseView;
-import com.phone.common_library.callback.OnCommonSingleParamCallback;
-import com.phone.common_library.manager.RetrofitManager;
+import com.phone.library_common.base.BasePresenter;
+import com.phone.library_common.base.IBaseView;
+import com.phone.library_common.callback.OnCommonSingleParamCallback;
+import com.phone.library_common.manager.RetrofitManager;
 import com.phone.module_main.main.model.MainModelImpl;
 import com.phone.module_main.main.view.IMainView;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;

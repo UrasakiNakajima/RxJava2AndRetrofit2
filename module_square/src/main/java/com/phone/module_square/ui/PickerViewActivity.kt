@@ -10,10 +10,10 @@ import android.widget.FrameLayout
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.google.gson.Gson
-import com.phone.common_library.base.BaseBindingRxAppActivity
-import com.phone.common_library.manager.GetJsonDataManager
-import com.phone.common_library.manager.LogManager
-import com.phone.common_library.manager.ResourcesManager
+import com.phone.library_common.base.BaseBindingRxAppActivity
+import com.phone.library_common.manager.GetJsonDataManager
+import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_square.R
 import com.phone.module_square.bean.ProvincesBean
 import com.phone.module_square.databinding.ActivityPickerViewBinding

@@ -3,7 +3,7 @@ package com.phone.aidl_server;
 import android.widget.TextView;
 
 import com.phone.aidl_server.bean.ConnectBean;
-import com.phone.common_library.base.BaseRxAppActivity;
+import com.phone.library_common.base.BaseRxAppActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

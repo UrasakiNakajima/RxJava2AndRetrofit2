@@ -12,7 +12,7 @@
 
         <variable
             name="datax"
-            type="com.phone.common_library.bean.DataX" />
+            type="com.phone.library_common.bean.DataX" />
 
         <import type="android.view.View" />
 

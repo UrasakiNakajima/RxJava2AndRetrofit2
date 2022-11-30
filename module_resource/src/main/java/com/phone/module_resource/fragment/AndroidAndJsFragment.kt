@@ -3,8 +3,8 @@ package com.phone.module_resource.fragment
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.webkit.*
-import com.phone.common_library.base.BaseBindingRxFragment
-import com.phone.common_library.manager.LogManager
+import com.phone.library_common.base.BaseBindingRxFragment
+import com.phone.library_common.manager.LogManager
 import com.phone.module_resource.R
 import com.phone.module_resource.databinding.FragmentAndroidAndJsBinding
 

@@ -2,8 +2,8 @@ package com.phone.rxjava2andretrofit2
 
 import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
-import com.phone.common_library.BaseApplication
-import com.phone.common_library.manager.LogManager
+import com.phone.library_common.BaseApplication
+import com.phone.library_common.manager.LogManager
 
 class MineApplication: BaseApplication() {
 

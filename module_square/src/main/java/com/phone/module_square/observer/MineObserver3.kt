@@ -1,6 +1,6 @@
 package com.phone.module_square.observer
 
-import com.phone.common_library.manager.LogManager
+import com.phone.library_common.manager.LogManager
 import java.util.*
 
 class MineObserver3 : Observer {

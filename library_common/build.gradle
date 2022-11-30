@@ -108,7 +108,7 @@ greendao {
     //数据库版本号
     schemaVersion BuildVersions.schemaVersion
     // 设置DaoMaster、DaoSession、Dao 包名
-    daoPackage 'com.phone.common_library.greendao'
+    daoPackage 'com.phone.library_common.greendao'
     //设置DaoMaster、DaoSession、Dao目录,请注意，这里路径用/不要用.
     targetGenDir 'src/main/java'
     //设置为true以自动生成单元测试。

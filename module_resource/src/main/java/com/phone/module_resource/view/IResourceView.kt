@@ -1,7 +1,7 @@
 package com.phone.module_resource.view
 
-import com.phone.common_library.base.IBaseView
-import com.phone.common_library.bean.TabBean
+import com.phone.library_common.base.IBaseView
+import com.phone.library_common.bean.TabBean
 
 interface IResourceView : IBaseView {
 

@@ -1,6 +1,6 @@
 package com.phone.rxjava2andretrofit2;
 
-import com.phone.common_library.manager.LogManager;
+import com.phone.library_common.manager.LogManager;
 
 public class MineClass {
 

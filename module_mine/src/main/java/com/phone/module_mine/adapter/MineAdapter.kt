@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.phone.common_library.callback.OnItemViewClickListener
+import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.module_mine.R
 import com.phone.module_mine.bean.Data
 

@@ -4,9 +4,9 @@ import android.content.Context
 import com.phone.base64_and_file.bean.Base64AndFileBean
 import com.phone.base64_and_file.model.Base64AndFileModelImpl
 import com.phone.base64_and_file.view.IBase64AndFileView
-import com.phone.common_library.base.BasePresenter
-import com.phone.common_library.base.IBaseView
-import com.phone.common_library.callback.OnCommonSingleParamCallback
+import com.phone.library_common.base.BasePresenter
+import com.phone.library_common.base.IBaseView
+import com.phone.library_common.callback.OnCommonSingleParamCallback
 
 class Base64AndFilePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
     IBase64AndFilePresenter {
