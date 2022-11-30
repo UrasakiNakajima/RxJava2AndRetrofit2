@@ -56,4 +56,18 @@ class EventScheduleActivity : BaseBindingRxAppActivity<ActivityEventScheduleBind
     override fun initLoadData() {
     }
 
+    override fun showLoading() {
+        if (!loadView.isShown()) {
+            loadView.setVisibility(View.VISIBLE)
+            loadView.start()
+        }
+    }
+
+    override fun hideLoading() {
+        if (loadView.isShown()) {
+            loadView.stop()
+            loadView.setVisibility(View.GONE)
+        }
+    }
+
 }

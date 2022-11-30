@@ -63,6 +63,20 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
     override fun initLoadData() {
     }
 
+    override fun showLoading() {
+        if (!loadView.isShown()) {
+            loadView.setVisibility(View.VISIBLE)
+            loadView.start()
+        }
+    }
+
+    override fun hideLoading() {
+        if (loadView.isShown()) {
+            loadView.stop()
+            loadView.setVisibility(View.GONE)
+        }
+    }
+
     /**
      * 這個只是一個請求權限的框架，無論成功與失敗都不做任何處理
      */
@@ -234,7 +248,6 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
         }
         super.onDestroy()
     }
-
 
     inner class AnalyticalDataAsyncTask() : AsyncTask<String?, Int?, Boolean>() {
 
