@@ -26,7 +26,6 @@ import com.phone.first_page_module.adapter.FirstPageAdapter
 import com.phone.first_page_module.manager.AMAPLocationManager
 import com.phone.first_page_module.presenter.FirstPagePresenterImpl
 import com.phone.first_page_module.view.IFirstPageView
-import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener

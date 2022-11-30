@@ -1,14 +1,10 @@
-//plugins {
-//    //body app（不可单独运行）
-//    id 'com.android.application'
-//    id 'kotlin-android'
-//    id 'kotlin-kapt'
-////    id 'org.jetbrains.kotlin.android'
-//}
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-
+plugins {
+    //body app（不可单独运行）
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+//    id 'org.jetbrains.kotlin.android'
+}
 //apply plugin: 'com.google.gms.google-services'
 //apply plugin: 'com.huawei.agconnect'
 
@@ -59,13 +55,13 @@ android {
         targetCompatibility "1.8"
     }
 
-//    kotlinOptions {
-//        jvmTarget = "1.8"
-//    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 
     signingConfigs {
         release {
-            storeFile file('/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/rx_java2_and_retrofit2_release.jks')
+            storeFile file('../rx_java2_and_retrofit2_release.keystore')
             storePassword 'Xz&150120'
             keyPassword 'Xz&150120'
             keyAlias 'rx_java2_and_retrofit2'
