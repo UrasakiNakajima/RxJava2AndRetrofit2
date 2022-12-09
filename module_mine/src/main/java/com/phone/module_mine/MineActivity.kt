@@ -100,7 +100,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
         rcvData?.layoutManager = (linearLayoutManager)
         rcvData?.itemAnimator = DefaultItemAnimator()
 
-        mineAdapter.setRcvOnItemViewClickListener(object : OnItemViewClickListener {
+        mineAdapter.setOnItemViewClickListener(object : OnItemViewClickListener {
 
             override fun onItemClickListener(position: Int, view: View?) {
 //                bodyParams.clear()

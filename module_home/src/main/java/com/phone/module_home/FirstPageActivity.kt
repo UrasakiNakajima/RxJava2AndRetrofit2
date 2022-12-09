@@ -96,7 +96,7 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         rcvData?.itemAnimator = DefaultItemAnimator()
         firstPageAdapter = FirstPageAdapter(mRxAppCompatActivity)
         //		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page)
-        firstPageAdapter?.setRcvOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
+        firstPageAdapter?.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
             //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4"
             //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4"
             //					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4"

@@ -89,7 +89,7 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         rcvData!!.layoutManager = linearLayoutManager
         rcvData!!.itemAnimator = DefaultItemAnimator()
         val videoListAdapter = VideoListAdapter(this)
-        //        videoListAdapter.setRcvOnItemViewClickListener(new RcvOnItemViewClickListener() {
+        //        videoListAdapter.setOnItemViewClickListener(new RcvOnItemViewClickListener() {
         //            @Override
         //            public void onItemClickListener(int position, View view) {
         //

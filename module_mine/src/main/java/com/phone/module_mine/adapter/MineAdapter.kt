@@ -97,7 +97,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
 
     private lateinit var onItemViewClickListener: OnItemViewClickListener
 
-    fun setRcvOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
+    fun setOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
         this.onItemViewClickListener = onItemViewClickListener
     }
 }

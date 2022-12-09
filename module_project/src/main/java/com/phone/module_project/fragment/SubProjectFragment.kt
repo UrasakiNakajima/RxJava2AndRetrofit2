@@ -110,7 +110,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
                 //kotlin 使用这个方法需要初始化ProjectAndResourceAdapter 的时候把list 传进去，
                 //不然就会报VirtualLayout：Cannot change whether this adapter has stable IDs while the adapter has registered observers.
                 setHasStableIds(true)
-                setRcvOnItemViewClickListener { i, view ->
+                setOnItemViewClickListener { i, view ->
                     when (view.id) {
                         //子项
                         R.id.root -> {

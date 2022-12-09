@@ -105,7 +105,7 @@ public class FirstPageAdapter
 
     private OnItemViewClickListener onItemViewClickListener;
 
-    public void setRcvOnItemViewClickListener(OnItemViewClickListener onItemViewClickListener) {
+    public void setOnItemViewClickListener(OnItemViewClickListener onItemViewClickListener) {
         this.onItemViewClickListener = onItemViewClickListener;
     }
 

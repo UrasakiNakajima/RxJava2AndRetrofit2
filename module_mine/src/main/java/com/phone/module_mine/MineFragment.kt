@@ -107,7 +107,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
         rcvData?.itemAnimator = DefaultItemAnimator()
 
         mineAdapter.apply {
-            setRcvOnItemViewClickListener(object : OnItemViewClickListener {
+            setOnItemViewClickListener(object : OnItemViewClickListener {
 
                 override fun onItemClickListener(position: Int, view: View?) {
                     //                mBodyParams.clear()

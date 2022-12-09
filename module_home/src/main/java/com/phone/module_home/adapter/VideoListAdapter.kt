@@ -62,7 +62,7 @@ class VideoListAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView
 
     private var onItemViewClickListener: OnItemViewClickListener? = null
 
-    fun setRcvOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener?) {
+    fun setOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener?) {
         this.onItemViewClickListener = onItemViewClickListener
     }
 }

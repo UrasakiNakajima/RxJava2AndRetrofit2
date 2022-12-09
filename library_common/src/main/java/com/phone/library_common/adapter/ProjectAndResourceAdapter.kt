@@ -132,7 +132,7 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
 
     private var onItemViewClickListener: OnItemViewClickListener? = null
 
-    fun setRcvOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
+    fun setOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
         this.onItemViewClickListener = onItemViewClickListener
     }
 
