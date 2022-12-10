@@ -17,8 +17,8 @@ import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.library_common.manager.SystemManager.getSystemId
 import com.phone.module_main.R
-import com.phone.module_main.login.bean.GetVerificationCode
-import com.phone.module_main.login.bean.LoginResponse
+import com.phone.module_main.login.DataGetVerification
+import com.phone.module_main.login.DataLogin
 import com.phone.module_main.login.presenter.LoginPresenterImpl
 import com.phone.module_main.login.view.ILoginView
 import com.phone.module_main.main.MainActivity
@@ -100,15 +100,15 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         LogManager.i(TAG, "onNewIntent")
     }
 
-    override fun getAuthCodeSuccess(success: GetVerificationCode.DataDTO) {
-        showToast(success?.content, true)
+    override fun getAuthCodeSuccess(success: DataGetVerification) {
+        showToast(success.content, true)
     }
 
     override fun getAuthCodeError(error: String) {
         showToast(error, true)
     }
 
-    override fun loginWithAuthCodeSuccess(success: LoginResponse.DataDTO) {
+    override fun loginWithAuthCodeSuccess(success: DataLogin) {
         //		showToast(success.getUserName(), true)
         startActivity(MainActivity::class.java)
         finish()

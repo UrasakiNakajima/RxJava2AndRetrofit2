@@ -83,7 +83,7 @@ public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
         tevUserAfterChange2 = (TextView) findViewById(R.id.tev_user_after_change2);
         tevStringListAfterChange2 = (TextView) findViewById(R.id.tev_stringList_after_change2);
         setToolbar(false, R.color.color_FF198CFF);
-        imvBack.setColorFilter(ResourcesManager.INSTANCE.getColor(R.color.white));
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
         layoutBack.setOnClickListener(v -> {
             finish();
         });
@@ -91,19 +91,19 @@ public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
 
     @Override
     protected void initLoadData() {
-        LogManager.INSTANCE.i(TAG, "change before user*****" + user);
-        LogManager.INSTANCE.i(TAG, "change before number*****" + number);
-        LogManager.INSTANCE.i(TAG, "change before str*****" + str);
-        LogManager.INSTANCE.i(TAG, "change before stringList*****" + stringList);
+        LogManager.i(TAG, "change before user*****" + user);
+        LogManager.i(TAG, "change before number*****" + number);
+        LogManager.i(TAG, "change before str*****" + str);
+        LogManager.i(TAG, "change before stringList*****" + stringList);
         tevUserBeforeChange.setText("before_change:" + user.toString());
         tevNumberBeforeChange.setText("before_change:" + String.valueOf(number));
         tevStrBeforeChange.setText("before_change:" + str);
         tevStringListBeforeChange.setText("before_change:" + stringList.toString());
 //        change(user, number, str, stringList);
-//        LogManager.INSTANCE.i(TAG, "change after user*****" + user);
-//        LogManager.INSTANCE.i(TAG, "change after number*****" + number);
-//        LogManager.INSTANCE.i(TAG, "change after str*****" + str);
-//        LogManager.INSTANCE.i(TAG, "change after stringList*****" + stringList.toString());
+//        LogManager.i(TAG, "change after user*****" + user);
+//        LogManager.i(TAG, "change after number*****" + number);
+//        LogManager.i(TAG, "change after str*****" + str);
+//        LogManager.i(TAG, "change after stringList*****" + stringList.toString());
 //        tevUserAfterChange.setText("after_change:" + user.toString());
 //        tevNumberAfterChange.setText("after_change:" + String.valueOf(number));
 //        tevStrAfterChange.setText("after_change:" + str);
@@ -113,8 +113,8 @@ public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
 
         try {
             change2((User) user.clone(), (ArrayList<String>) stringList.clone());
-            LogManager.INSTANCE.i(TAG, "change2 after user*****" + user);
-            LogManager.INSTANCE.i(TAG, "change2 after stringList*****" + stringList.toString());
+            LogManager.i(TAG, "change2 after user*****" + user);
+            LogManager.i(TAG, "change2 after stringList*****" + stringList.toString());
             tevUserAfterChange2.setText("before_change2:" + user.toString());
             tevStringListAfterChange2.setText("before_change2:" + stringList.toString());
         } catch (CloneNotSupportedException e) {

@@ -40,7 +40,7 @@ open class BaseViewModel : ViewModel() {
             }.onFailure {
                 it.printStackTrace()
                 getApiException(it).apply {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
 //                        toast(errorMessage)
                         //统一响应错误信息
                         errorLiveData.value = this@apply

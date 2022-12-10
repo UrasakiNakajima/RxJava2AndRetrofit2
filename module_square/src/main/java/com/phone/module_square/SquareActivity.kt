@@ -13,10 +13,7 @@ import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.BaseMvvmAppRxActivity
-import com.phone.library_common.bean.DataX
-import com.phone.library_common.bean.UserBean
-import com.phone.library_common.bean.UserBean2
-import com.phone.library_common.bean.UserBean3
+import com.phone.library_common.bean.*
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.manager.*
 import com.phone.library_common.service.ISquareService
@@ -39,7 +36,7 @@ class SquareActivity :
     }
 
     private var currentPage = 1
-    private var datax = DataX()
+    private var subDataSquare = SubDataSquare()
     private var atomicBoolean = AtomicBoolean(false)
 
     private var mPermissionsDialog: AlertDialog? = null
@@ -58,7 +55,7 @@ class SquareActivity :
 
     override fun initData() {
         mDatabind.viewModel = viewModel
-        mDatabind.datax = datax
+        mDatabind.subDataSquare = subDataSquare
 
         mDatabind.executePendingBindings()
     }
@@ -174,10 +171,10 @@ class SquareActivity :
         }
     }
 
-    fun squareDataSuccess(success: List<DataX>) {
+    fun squareDataSuccess(success: List<SubDataSquare>) {
         if (!mRxAppCompatActivity.isFinishing()) {
             if (success.size > 0) {
-                datax.apply {
+                subDataSquare.apply {
                     title = success.get(1).title
                     chapterName = success.get(1).chapterName
                     link = success.get(1).link

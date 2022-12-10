@@ -59,10 +59,14 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                                     //											 String jsonStr = new GsonManager().toJson(response);
                                     if (response.error_code == 0) {
                                         firstPageView.firstPageDataSuccess(
-                                            response.getResult().getData()
+                                            response.result?.data ?: mutableListOf()
                                         )
                                     } else {
-                                        firstPageView.firstPageDataError(response.getReason())
+                                        firstPageView.firstPageDataError(
+                                            response.reason ?: ResourcesManager.getString(
+                                                R.string.loading_failed
+                                            )
+                                        )
                                     }
                                 } else {
                                     firstPageView.firstPageDataError(
@@ -88,7 +92,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 //                            @Override
                 //                            public void accept(JSONObject jsonObject) throws Exception {
                 //                                String responseString = jsonObject.toJSONString();
-                //                                LogManager.INSTANCE.i(TAG, "responseString*****" + responseString);
+                //                                LogManager.i(TAG, "responseString*****" + responseString);
                 //                                BaseResponse baseResponse = JSON.parseObject(responseString, BaseResponse.class);
                 //                                if (baseResponse.getCode() == 200) {
                 ////                                    FirstPageResponse firstPageResponse = JSON.parse(responseString, FirstPageResponse.class);
@@ -101,7 +105,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 //                        }, new Consumer<Throwable>() {
                 //                            @Override
                 //                            public void accept(Throwable throwable) throws Exception {
-                //                                LogManager.INSTANCE.i(TAG, "throwable*****" + throwable.getMessage());
+                //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
                 //                                firstPageView.firstPageDataError(BaseApplication.get().getResources().getString(R.string.request_was_aborted));
                 //                                firstPageView.hideLoading();
@@ -138,10 +142,14 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                                     //											 String jsonStr = new GsonManager().toJson(response);
                                     if (response.error_code == 0) {
                                         firstPageView.firstPageDataSuccess(
-                                            response.getResult().getData()
+                                            response.result?.data ?: mutableListOf()
                                         )
                                     } else {
-                                        firstPageView.firstPageDataError(response.getReason())
+                                        firstPageView.firstPageDataError(
+                                            response.reason ?: ResourcesManager.getString(
+                                                R.string.loading_failed
+                                            )
+                                        )
                                     }
                                 } else {
                                     firstPageView.firstPageDataError(
@@ -167,7 +175,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 //                            @Override
                 //                            public void accept(JSONObject jsonObject) throws Exception {
                 //                                String responseString = jsonObject.toJSONString();
-                //                                LogManager.INSTANCE.i(TAG, "responseString*****" + responseString);
+                //                                LogManager.i(TAG, "responseString*****" + responseString);
                 //                                BaseResponse baseResponse = JSON.parseObject(responseString, BaseResponse.class);
                 //                                if (baseResponse.getCode() == 200) {
                 ////                                    FirstPageResponse firstPageResponse = JSON.parse(responseString, FirstPageResponse.class);
@@ -180,7 +188,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 //                        }, new Consumer<Throwable>() {
                 //                            @Override
                 //                            public void accept(Throwable throwable) throws Exception {
-                //                                LogManager.INSTANCE.i(TAG, "throwable*****" + throwable.getMessage());
+                //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
                 //                                firstPageView.firstPageDataError(BaseApplication.get().getResources().getString(R.string.request_was_aborted));
                 //                                firstPageView.hideLoading();

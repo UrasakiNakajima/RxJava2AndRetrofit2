@@ -23,11 +23,13 @@ import com.phone.library_common.manager.LogManager.i
 
 object ScreenManager {
 
+    @JvmStatic
     private val TAG = ScreenManager::class.java.simpleName
 
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */
+    @JvmStatic
     fun dpToPx(dpValue: Float): Int {
         val scale = BaseApplication.get().resources.displayMetrics.density
         return (dpValue * scale + 0.5f).toInt()
@@ -36,6 +38,7 @@ object ScreenManager {
     /**
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
      */
+    @JvmStatic
     fun pxToDp(pxValue: Float): Int {
         val scale = BaseApplication.get().resources.displayMetrics.density
         return (pxValue / scale + 0.5f).toInt()
@@ -44,6 +47,7 @@ object ScreenManager {
     /**
      * 将px值转换为sp值，保证文字大小不变
      */
+    @JvmStatic
     fun pxToSp(pxValue: Float): Int {
         val fontScale = BaseApplication.get().resources.displayMetrics.scaledDensity
         return (pxValue / fontScale + 0.5f).toInt()
@@ -52,6 +56,7 @@ object ScreenManager {
     /**
      * 将sp值转换为px值，保证文字大小不变
      */
+    @JvmStatic
     fun spToPx(spValue: Float): Int {
         val fontScale = BaseApplication.get().resources.displayMetrics.scaledDensity
         return (spValue * fontScale + 0.5f).toInt()
@@ -60,6 +65,7 @@ object ScreenManager {
     /**
      * 拿到资源文件的dp值
      */
+    @JvmStatic
     fun getDimenDp(dpValue: Int): Int {
         return pxToDp(BaseApplication.get().resources.getDimension(dpValue))
     }
@@ -67,6 +73,7 @@ object ScreenManager {
     /**
      * 拿到资源文件的sp值
      */
+    @JvmStatic
     fun getDimenSp(spValue: Int): Int {
         return pxToSp(BaseApplication.get().resources.getDimension(spValue))
     }
@@ -74,6 +81,7 @@ object ScreenManager {
     /**
      * 获取屏幕高度(px)
      */
+    @JvmStatic
     fun getScreenHeight(): Int {
         return BaseApplication.get().resources.displayMetrics.heightPixels
     }
@@ -81,6 +89,7 @@ object ScreenManager {
     /**
      * 获取屏幕宽度(px)
      */
+    @JvmStatic
     fun getScreenWidth(): Int {
         return BaseApplication.get().resources.displayMetrics.widthPixels
     }
@@ -93,6 +102,7 @@ object ScreenManager {
      * @param contentView window的内容布局
      * @return window显示的左上角的xOff, yOff坐标
      */
+    @JvmStatic
     fun calculatePopWindowPos(anchorView: View, contentView: View): IntArray {
         val windowPos = IntArray(2)
         val anchorLoc = IntArray(2)
@@ -121,6 +131,7 @@ object ScreenManager {
     /**
      * 获取屏幕宽度(dp)
      */
+    @JvmStatic
     fun getScreenWidthDp(context: Context): Int {
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val dm = DisplayMetrics()
@@ -153,6 +164,7 @@ object ScreenManager {
         return screenWidth
     }
 
+    @JvmStatic
     private fun getInternalDimensionSize(key: String): Int {
         var result = 0
         try {
@@ -170,10 +182,12 @@ object ScreenManager {
         return result
     }
 
+    @JvmStatic
     fun getStatusBarHeight(): Int {
         return getInternalDimensionSize("status_bar_height")
     }
 
+    @JvmStatic
     fun getNavigationBarHeight(context: Context): Int {
         val mInPortrait =
             context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
@@ -192,6 +206,7 @@ object ScreenManager {
         return result
     }
 
+    @JvmStatic
     private fun hasNavBar(activity: Activity): Boolean {
         //判断小米手机是否开启了全面屏,开启了，直接返回false
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -215,6 +230,7 @@ object ScreenManager {
         return realWidth - displayWidth > 0 || realHeight - displayHeight > 0
     }
 
+    @JvmStatic
     fun getWidthAndHeight(window: Window): Array<Int?> {
         val integer = arrayOfNulls<Int>(2)
         val dm = DisplayMetrics()

@@ -16,7 +16,7 @@ class SubProjectModelImpl : ISubProjectModel {
         pageNum: Int,
         tabId: Int
     ): Observable<ResponseBody> {
-        return RetrofitManager.get().getRetrofit()
+        return RetrofitManager.get().mRetrofit
             .create(ProjectRequest::class.java)
             .getSubProjectData(pageNum, tabId)
     }
@@ -25,7 +25,7 @@ class SubProjectModelImpl : ISubProjectModel {
         pageNum: Int,
         tabId: Int
     ): Call<ResponseBody> {
-        return RetrofitManager.get().getRetrofit()
+        return RetrofitManager.get().mRetrofit
             .create(ProjectRequest::class.java)
             .getSubProjectData2(pageNum, tabId)
     }

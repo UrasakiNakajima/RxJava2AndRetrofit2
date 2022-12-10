@@ -4,7 +4,6 @@ import com.phone.library_common.manager.RetrofitManager;
 import com.phone.module_main.main.request.MainRequest;
 
 import java.util.Map;
-import java.util.Objects;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -25,7 +24,7 @@ public class MainModelImpl implements IMainModel {
 
     @Override
     public Observable<ResponseBody> mainData(Map<String, String> bodyParams) {
-        return Objects.requireNonNull(Objects.requireNonNull(RetrofitManager.Companion.get()).getRetrofit())
+        return RetrofitManager.get().mRetrofit
                 .create(MainRequest.class)
                 .getMainData(bodyParams);
     }

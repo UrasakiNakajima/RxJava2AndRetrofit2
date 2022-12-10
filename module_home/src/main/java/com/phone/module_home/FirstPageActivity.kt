@@ -122,7 +122,7 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
                 val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
                 intent.putExtra(
                     "loadUrl",
-                    firstPageAdapter?.mJuheNewsBeanList?.get(position)?.getUrl()
+                    firstPageAdapter?.mJuheNewsBeanList?.get(position)?.url
                 )
                 startActivity(intent)
             }

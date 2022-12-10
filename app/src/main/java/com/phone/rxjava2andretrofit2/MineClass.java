@@ -7,6 +7,6 @@ public class MineClass {
     private static final String TAG = "MineClass";
 
     public static void main(String[] args) {
-        LogManager.INSTANCE.i(TAG, "MineClass main函数");
+        LogManager.i(TAG, "MineClass main函数");
     }
 }

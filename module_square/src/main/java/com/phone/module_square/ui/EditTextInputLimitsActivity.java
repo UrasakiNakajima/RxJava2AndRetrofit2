@@ -58,7 +58,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
         tevShowInput = (TextView) findViewById(R.id.tev_show_input);
         tevStartInput = (TextView) findViewById(R.id.tev_start_input);
         setToolbar(false, R.color.color_FF198CFF);
-        imvBack.setColorFilter(ResourcesManager.INSTANCE.getColor(R.color.white));
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
         layoutBack.setOnClickListener(v -> {
             finish();
         });

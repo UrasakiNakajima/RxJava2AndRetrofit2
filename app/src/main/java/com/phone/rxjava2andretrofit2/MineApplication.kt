@@ -5,7 +5,7 @@ import cn.jpush.android.api.JPushInterface
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.manager.LogManager
 
-class MineApplication: BaseApplication() {
+class MineApplication : BaseApplication() {
 
     private val TAG = MineApplication::class.java.simpleName
 

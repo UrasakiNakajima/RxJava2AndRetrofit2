@@ -3,7 +3,7 @@ package com.phone.module_square.view_model
 import android.text.TextUtils
 import androidx.lifecycle.viewModelScope
 import com.phone.library_common.base.BaseViewModel
-import com.phone.library_common.bean.DataX
+import com.phone.library_common.bean.SubDataSquare
 import com.phone.library_common.bean.SquareBean
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.manager.*
@@ -24,11 +24,11 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     private var model: SquareModelImpl = SquareModelImpl()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragmentSuccess: SingleLiveData<MutableList<DataX>> = SingleLiveData()
+    val dataxRxFragmentSuccess: SingleLiveData<MutableList<SubDataSquare>> = SingleLiveData()
     val dataxRxFragmentError: SingleLiveData<String> = SingleLiveData()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxActivitySuccess: SingleLiveData<MutableList<DataX>> = SingleLiveData()
+    val dataxRxActivitySuccess: SingleLiveData<MutableList<SubDataSquare>> = SingleLiveData()
     val dataxRxActivityError: SingleLiveData<String> = SingleLiveData()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {

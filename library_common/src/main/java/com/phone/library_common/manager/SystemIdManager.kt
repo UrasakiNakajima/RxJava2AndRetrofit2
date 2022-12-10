@@ -33,6 +33,7 @@ object SystemIdManager {
      *
      * @return
      */
+    @JvmStatic
     fun getSystemId(): String {
         //读取保存的在sd卡中的唯一标识符
         var systemId = readSystemId()
@@ -78,6 +79,7 @@ object SystemIdManager {
      *
      * @return
      */
+    @JvmStatic
     fun readSystemId(): String {
         val file = getSystemIdDir()
         return if (file.exists()) {
@@ -114,6 +116,7 @@ object SystemIdManager {
      *
      * @return
      */
+    @JvmStatic
     fun getIMIEStatus(): String {
         val telephonyManager = BaseApplication.get()
             .getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
@@ -146,6 +149,7 @@ object SystemIdManager {
      *
      * @return
      */
+    @JvmStatic
     private fun getLocalMac(): String {
 //        WifiManager wifi = (WifiManager) context
 //                .getSystemService(Context.WIFI_SERVICE);
@@ -182,6 +186,7 @@ object SystemIdManager {
      *
      * @param str
      */
+    @JvmStatic
     fun saveSystemId(str: String) {
         val file = getSystemIdDir()
         try {
@@ -201,6 +206,7 @@ object SystemIdManager {
      * @param upperCase 加密以后的字符串是是大写还是小写  true 大写  false 小写
      * @return
      */
+    @JvmStatic
     fun getMD5(message: String, upperCase: Boolean): String {
         var md5str = ""
         try {
@@ -214,6 +220,7 @@ object SystemIdManager {
         return md5str
     }
 
+    @JvmStatic
     fun bytesToHex(bytes: ByteArray, upperCase: Boolean): String {
         val md5str = StringBuilder()
         var digital: Int
@@ -237,6 +244,7 @@ object SystemIdManager {
      *
      * @return
      */
+    @JvmStatic
     private fun getSystemIdDir(): File {
         val file: File
         val dirs = File(BaseApplication.get().externalCacheDir, CACHE_IMAGE_DIR)

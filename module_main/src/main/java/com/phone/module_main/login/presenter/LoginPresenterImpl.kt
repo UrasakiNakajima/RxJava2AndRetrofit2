@@ -13,8 +13,8 @@ import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.library_common.manager.UserBeanDaoManager
 import com.phone.module_main.R
-import com.phone.module_main.login.bean.GetVerificationCode
-import com.phone.module_main.login.bean.LoginResponse
+import com.phone.module_main.login.GetVerificationCode
+import com.phone.module_main.login.LoginResponse
 import com.phone.module_main.login.model.LoginModelImpl
 import com.phone.module_main.login.view.ILoginView
 import com.phone.module_main.login.view.IRegisterView

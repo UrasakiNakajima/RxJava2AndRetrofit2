@@ -66,7 +66,7 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
         tevStartThreadPool2 = (TextView) findViewById(R.id.tev_start_thread_pool2);
         tevStopThreadPool2 = (TextView) findViewById(R.id.tev_stop_thread_pool2);
         setToolbar(false, R.color.color_FF198CFF);
-        imvBack.setColorFilter(ResourcesManager.INSTANCE.getColor(R.color.white));
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
         layoutBack.setOnClickListener(v -> {
             finish();
         });
@@ -89,7 +89,7 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
      * 记一次Java参数传递时值发生变化问题（传Vector，就是线程安全的List）
      */
     private void startThreadPool() {
-        LogManager.INSTANCE.i(TAG, "startThreadPool currentThread name*****" + Thread.currentThread().getName());
+        LogManager.i(TAG, "startThreadPool currentThread name*****" + Thread.currentThread().getName());
         vector.clear();
         for (int i = 0; i < 6; i++) {
             BitmapFactory.Options mOption = new BitmapFactory.Options();
@@ -116,12 +116,12 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                LogManager.INSTANCE.i(TAG, "startThreadPool currentThread2 name*****" + Thread.currentThread().getName());
+                LogManager.i(TAG, "startThreadPool currentThread2 name*****" + Thread.currentThread().getName());
                 BitmapFactory.Options mOption = new BitmapFactory.Options();
                 mOption.inPreferredConfig = Bitmap.Config.RGB_565;
                 Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture15, mOption);
                 vector.add(mBitmap);
-                LogManager.INSTANCE.i(TAG, "startThreadPool vector size*****" + vector.size());
+                LogManager.i(TAG, "startThreadPool vector size*****" + vector.size());
                 handler.removeCallbacksAndMessages(null);
                 handler = null;
             }
@@ -131,13 +131,13 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
         future = excutor.submit(new Runnable() {
             @Override
             public void run() {
-                LogManager.INSTANCE.i(TAG, "startThreadPool excutor currentThread name*****" + Thread.currentThread().getName());
+                LogManager.i(TAG, "startThreadPool excutor currentThread name*****" + Thread.currentThread().getName());
                 //1、如果vector是由原vector.clone()传来的时候，当原vector发生变化，他是不会变化的
                 Vector<Bitmap> list = (Vector<Bitmap>) vector.clone();
                 initFaceRecognition(list);
             }
         });
-        LogManager.INSTANCE.i(TAG, "startThreadPool&&&*****");
+        LogManager.i(TAG, "startThreadPool&&&*****");
 
     }
 
@@ -150,12 +150,12 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
     private void initFaceRecognition(final Vector<Bitmap> vector) {
         for (int i = 0; i < vector.size(); i++) {
             Bitmap mBitmap = vector.get(i);
-            LogManager.INSTANCE.i(TAG, "initFaceRecognition i*****" + i);
+            LogManager.i(TAG, "initFaceRecognition i*****" + i);
             int maxFaces = 20;
             FaceDetector mFaceDetector = new FaceDetector(mBitmap.getWidth(), mBitmap.getHeight(), maxFaces);
             FaceDetector.Face[] mFace = new FaceDetector.Face[maxFaces];
             maxFaces = mFaceDetector.findFaces(mBitmap, mFace);
-            LogManager.INSTANCE.i(TAG, "initFaceRecognition maxFaces*****" + maxFaces);
+            LogManager.i(TAG, "initFaceRecognition maxFaces*****" + maxFaces);
         }
     }
 
@@ -173,7 +173,7 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
             future.cancel(true);
             if (!excutor.isShutdown()) {
                 excutor.shutdownNow();
-                LogManager.INSTANCE.i(TAG, "stopThreadPool shutdownNow*****");
+                LogManager.i(TAG, "stopThreadPool shutdownNow*****");
             }
         }
     }
@@ -190,7 +190,7 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
             @Override
             public void run() {
 //                for (int i = 0; i < 1000000; i++) {
-//                    LogManager.INSTANCE.i(TAG, "startThreadPool2*****" + i);
+//                    LogManager.i(TAG, "startThreadPool2*****" + i);
 //                }
             }
         });
@@ -201,7 +201,7 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
             future2.cancel(true);
             if (!excutor2.isShutdown()) {
                 excutor2.shutdownNow();
-                LogManager.INSTANCE.i(TAG, "stopThreadPool2 shutdownNow*****");
+                LogManager.i(TAG, "stopThreadPool2 shutdownNow*****");
             }
         }
     }

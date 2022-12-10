@@ -6,7 +6,7 @@ object BuildVersions {
     const val targetSdk = 31
     const val versionCode = 2
     const val versionName = "2.0"
-    const val schemaVersion = 11
+    const val schemaVersion = 12
 
     const val kotlin_version = "1.6.21"
     //AndroidX

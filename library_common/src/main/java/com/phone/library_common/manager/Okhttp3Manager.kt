@@ -29,20 +29,20 @@ import java.util.concurrent.TimeUnit
 class Okhttp3Manager {
 
     private val TAG = Okhttp3Manager::class.java.simpleName
-    private var client: OkHttpClient
+    var mClient: OkHttpClient
     val UPDATA = 100
 
     init {
         //创建OkHttpClient对象
-        client = OkHttpClient.Builder()
+        mClient = OkHttpClient.Builder()
             .connectTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //连接超时
             .readTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //读取超时
             .writeTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //写入超时
             .addInterceptor(AddAccessTokenInterceptor()) //拦截器用于设置header
             .addInterceptor(ReceivedAccessTokenInterceptor()) //拦截器用于接收并持久化cookie
             //                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
-            .sslSocketFactory(SSLSocketManager.getSSLSocketFactory()) //配置（只有https请求需要配置）
-            .hostnameVerifier(SSLSocketManager.getHostnameVerifier()) //配置（只有https请求需要配置）
+            .sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置（只有https请求需要配置）
+            .hostnameVerifier(SSLSocketManager.hostnameVerifier()) //配置（只有https请求需要配置）
             //                .proxy(Proxy.NO_PROXY)
             .build()
     }
@@ -53,20 +53,16 @@ class Okhttp3Manager {
      * @return
      */
     companion object {
-        private var instance: Okhttp3Manager? = null;
+        private var instance: Okhttp3Manager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
         @Synchronized
         fun get(): Okhttp3Manager {
             if (instance == null) {
-                instance = Okhttp3Manager();
+                instance = Okhttp3Manager()
             }
             return instance!!
         }
-    }
-
-    fun getClient(): OkHttpClient {
-        return client
     }
 
     /**
@@ -84,9 +80,9 @@ class Okhttp3Manager {
         //        Request request = new Request.Builder()
 //                .url(url)
 //                .get()//默认就是GET请求，可以不写（最好写上，要清晰表达出来）
-//                .build();
+//                .build()
         //3.创建一个call对象,参数就是Request请求对象
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -160,9 +156,9 @@ class Okhttp3Manager {
         //        Request request = new Request.Builder()
 //                .url(url)
 //                .get()//默认就是GET请求，可以不写（最好写上，要清晰表达出来）
-//                .build();
+//                .build()
         //3.创建一个call对象,参数就是Request请求对象
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -239,9 +235,9 @@ class Okhttp3Manager {
         //        Request request = new Request.Builder()
 //                .url(url)
 //                .get()//默认就是GET请求，可以不写（最好写上，要清晰表达出来）
-//                .build();
+//                .build()
         //3.创建一个call对象,参数就是Request请求对象
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -359,13 +355,13 @@ class Okhttp3Manager {
             TAG,
             "postAsyncString requestData*****$requestData"
         )
-        val mediaType = MediaType.parse("application/json; charset=utf-8") //"类型,字节码"
+        val mediaType = MediaType.parse("application/json charset=utf-8") //"类型,字节码"
         //2.通过RequestBody.create 创建requestBody对象
         val requestBody = RequestBody.create(mediaType, requestData)
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         val request = Request.Builder().url(url).post(requestBody).build()
         //4.创建一个call对象,参数就是Request请求对象
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -439,7 +435,7 @@ class Okhttp3Manager {
         //2.通过new RequestBody 创建requestBody对象
         val requestBody: RequestBody = object : RequestBody() {
             override fun contentType(): MediaType? {
-                return MediaType.parse("text/x-markdown; charset=utf-8")
+                return MediaType.parse("text/x-markdown charset=utf-8")
             }
 
             @Throws(IOException::class)
@@ -450,7 +446,7 @@ class Okhttp3Manager {
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         val request = Request.Builder().url(url).post(requestBody).build()
         //4.创建一个call对象,参数就是Request请求对象
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -548,7 +544,7 @@ class Okhttp3Manager {
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         val request = Request.Builder().url(url).post(requestBody).build()
         //4.创建一个call对象,参数就是Request请求对象
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -572,9 +568,9 @@ class Okhttp3Manager {
 //                        new MainThreadManager(new OnSubThreadToMainThreadCallback() {
 //                            @Override
 //                            public void onSuccess() {
-//                                onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off));
+//                                onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off))
 //                            }
-//                        });
+//                        })
             }
 
             @Throws(IOException::class)
@@ -630,7 +626,7 @@ class Okhttp3Manager {
         //3.创建Request对象，设置URL地址，将RequestBody作为post方法的参数传入
         val request = Request.Builder().post(RequestBody.create(null, "")).url(url).build()
         //4.创建一个call对象,参数就是Request请求对象
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -654,9 +650,9 @@ class Okhttp3Manager {
 //                        new MainThreadManager(new OnSubThreadToMainThreadCallback() {
 //                            @Override
 //                            public void onSuccess() {
-//                                onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off));
+//                                onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off))
 //                            }
-//                        });
+//                        })
             }
 
             @Throws(IOException::class)
@@ -739,7 +735,7 @@ class Okhttp3Manager {
         val requestBody: RequestBody = multipartBodyBuilder.build()
         val request = Request.Builder().post(requestBody).url(url).build()
         //3 将Request封装为Call
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -757,11 +753,11 @@ class Okhttp3Manager {
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
 //                //服务器返回的是加密字符串，要解密
-//                String dataEncrypt = response.body()?.string();
-//                LogManager.LogManager.i(TAG, "login onResponse dataEncrypt*****" + dataEncrypt);
+//                String dataEncrypt = response.body()?.string()
+//                LogManager.LogManager.i(TAG, "login onResponse dataEncrypt*****" + dataEncrypt)
                 val responseString = response.body()?.string()
                 //                try {
-//                    responseString = AESManager.aesDecrypt(dataEncrypt);
+//                    responseString = AESManager.aesDecrypt(dataEncrypt)
                 LogManager.i(
                     TAG,
                     "postAsyncForm onResponse responseString*****$responseString"
@@ -795,7 +791,7 @@ class Okhttp3Manager {
                 })
                 mainThreadManager.subThreadToUIThread()
                 //                } catch (Exception e) {
-//                    e.printStackTrace();
+//                    e.printStackTrace()
 //                }
             }
         })
@@ -826,7 +822,7 @@ class Okhttp3Manager {
                 "postAsyncKeyValuePairs bodyParams json*****" + MapManager.mapToJsonStr(bodyParams)
             )
         }
-        //        MediaType MEDIA_TYPE = MediaType.parse("image/png");
+        //        MediaType MEDIA_TYPE = MediaType.parse("image/png")
         val MEDIA_TYPE = MediaType.parse("image/*")
         // form 表单形式上传
         val multipartBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -861,7 +857,7 @@ class Okhttp3Manager {
         val requestBody: RequestBody = multipartBodyBuilder.build()
         val request = Request.Builder().post(requestBody).url(url).build()
         //3 将Request封装为Call
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -1008,7 +1004,7 @@ class Okhttp3Manager {
         val requestBody: RequestBody = multipartBodyBuilder.build()
         val request = Request.Builder().post(requestBody).url(url).build()
         //3 将Request封装为Call
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -1125,7 +1121,7 @@ class Okhttp3Manager {
         val requestBody: RequestBody = multipartBodyBuilder.build()
         val request = Request.Builder().post(requestBody).url(url).build()
         //3 将Request封装为Call
-        val call = client.newCall(request)
+        val call = mClient.newCall(request)
         //4 执行Call
         call.enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -1195,45 +1191,45 @@ class Okhttp3Manager {
 //    public void getAppContentLength(String url,
 //                                           Map<String, String> bodyParams,
 //                                           OnCommonSingleParamCallback<Long> onCommonSingleParamCallback) {
-//        LogManager.i(TAG, "bodyParams String*******" + bodyParams.toString());
+//        LogManager.i(TAG, "bodyParams String*******" + bodyParams.toString())
 //        Request request = new Request.Builder()
 //                .get()
 //                .url(url)
-//                .build();
+//                .build()
 //        //3 将Request封装为Call
-//        Call call = client.newCall(request);
+//        Call call = mClient.newCall(request)
 //        //4 执行Call
 //        call.enqueue(new Callback() {
 //            @Override
 //            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                LogManager.i(TAG, "getAppContentLength onFailure e*******" + e.toString());
-//                LogManager.i(TAG, "getAppContentLength onFailure e detailMessage*******" + e.getMessage());
-//                MainThreadManager mainThreadManager = new MainThreadManager();
+//                LogManager.i(TAG, "getAppContentLength onFailure e*******" + e.toString())
+//                LogManager.i(TAG, "getAppContentLength onFailure e detailMessage*******" + e.getMessage())
+//                MainThreadManager mainThreadManager = new MainThreadManager()
 //                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                    @Override
 //                    public void onSuccess() {
-//                        onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off));
+//                        onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off))
 //                    }
-//                });
-//                mainThreadManager.subThreadToUIThread();
+//                })
+//                mainThreadManager.subThreadToUIThread()
 //            }
 //
 //            @Override
 //            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 //                if (response != null && response.isSuccessful()) {
-//                    long contentLength = response.body()?.contentLength();
-//                    LogManager.i(TAG, "getAppContentLength onResponse contentLength*******" + contentLength);
-//                    MainThreadManager mainThreadManager = new MainThreadManager();
+//                    long contentLength = response.body()?.contentLength()
+//                    LogManager.i(TAG, "getAppContentLength onResponse contentLength*******" + contentLength)
+//                    MainThreadManager mainThreadManager = new MainThreadManager()
 //                    mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                        @Override
 //                        public void onSuccess() {
-//                            onCommonSingleParamCallback.onSuccess(contentLength);
+//                            onCommonSingleParamCallback.onSuccess(contentLength)
 //                        }
-//                    });
-//                    mainThreadManager.subThreadToUIThread();
+//                    })
+//                    mainThreadManager.subThreadToUIThread()
 //                }
 //            }
-//        });
+//        })
 //    }
 //
 //    /**
@@ -1244,17 +1240,17 @@ class Okhttp3Manager {
 //     * @param onDownloadCallback
 //     */
 //    public void downloadApp(String url, Map<String, String> bodyParams, OnDownloadCallback<String> onDownloadCallback) {
-//        LogManager.i(TAG, "downloadApp bodyParams String*******" + bodyParams.toString());
-//        String alreadyDownloadLength = null;
-//        String appContentLength = null;
+//        LogManager.i(TAG, "downloadApp bodyParams String*******" + bodyParams.toString())
+//        String alreadyDownloadLength = null
+//        String appContentLength = null
 //        //遍历map中所有参数到builder
 //        if (bodyParams != null && bodyParams.size() > 0) {
 //            if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
 //                    //如果参数不是null，才把参数传给后台
 //                if ("alreadyDownloadLength".equals(key)) {
-//                    alreadyDownloadLength = bodyParams.get(key);
+//                    alreadyDownloadLength = bodyParams.get(key)
 //                } else if ("appContentLength".equals(key)) {
-//                    appContentLength = bodyParams.get(key);
+//                    appContentLength = bodyParams.get(key)
 //                }
 //            }
 //        }
@@ -1264,189 +1260,189 @@ class Okhttp3Manager {
 //                //确定下载的范围,添加此头,则服务器就可以跳过已经下载好的部分
 //                .addHeader("Range", "bytes=" + alreadyDownloadLength + "-" + appContentLength)
 //                .url(url)
-//                .build();
+//                .build()
 //        //3 将Request封装为Call
-//        Call call = client.newCall(request);
+//        Call call = mClient.newCall(request)
 //        //4 执行Call
 //        call.enqueue(new Callback() {
 //            @Override
 //            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                LogManager.i(TAG, "getAppContentLength onFailure e*******" + e.toString());
-//                LogManager.i(TAG, "getAppContentLength onFailure e detailMessage*******" + e.getMessage());
-//                MainThreadManager mainThreadManager = new MainThreadManager();
+//                LogManager.i(TAG, "getAppContentLength onFailure e*******" + e.toString())
+//                LogManager.i(TAG, "getAppContentLength onFailure e detailMessage*******" + e.getMessage())
+//                MainThreadManager mainThreadManager = new MainThreadManager()
 //                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                    @Override
 //                    public void onSuccess() {
-//                        onDownloadCallback.onError(context.getResources().getString(R.string.network_sneak_off));
+//                        onDownloadCallback.onError(context.getResources().getString(R.string.network_sneak_off))
 //                    }
-//                });
-//                mainThreadManager.subThreadToUIThread();
+//                })
+//                mainThreadManager.subThreadToUIThread()
 //            }
 //
 //            @Override
 //            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//                String alreadyDownloadLength = null;
-//                String appContentLength = null;
-//                String fileName = null;
-//                String FILEPATH = null;
+//                String alreadyDownloadLength = null
+//                String appContentLength = null
+//                String fileName = null
+//                String FILEPATH = null
 //                //遍历map中所有参数到builder
 //                if (bodyParams != null && bodyParams.size() > 0) {
 //                    for (String key : bodyParams.keySet()) {
 //                        if ("alreadyDownloadLength".equals(key)) {
-//                            alreadyDownloadLength = bodyParams.get(key);
-//                            LogManager.i(TAG, "downloadApp alreadyDownloadLength*****" + alreadyDownloadLength);
+//                            alreadyDownloadLength = bodyParams.get(key)
+//                            LogManager.i(TAG, "downloadApp alreadyDownloadLength*****" + alreadyDownloadLength)
 //                        } else if ("appContentLength".equals(key)) {
-//                            appContentLength = bodyParams.get(key);
-//                            LogManager.i(TAG, "downloadApp appContentLength*****" + appContentLength);
+//                            appContentLength = bodyParams.get(key)
+//                            LogManager.i(TAG, "downloadApp appContentLength*****" + appContentLength)
 //                        } else if ("fileName".equals(key)) {
-//                            fileName = bodyParams.get(key);
+//                            fileName = bodyParams.get(key)
 //
 //                            //查询数据库，看看有没有数据
-//                            AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1);
+//                            AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1)
 //                            if (appInfo != null) {
-//                                LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString());
+//                                LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString())
 //                                //如果存在数据，则更新这条数据
-//                                appInfo.set_id(appInfo.get_id());
-//                                appInfo.setFileName(fileName);
-//                                AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo);
+//                                appInfo.set_id(appInfo.get_id())
+//                                appInfo.setFileName(fileName)
+//                                AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo)
 //                            } else {
-//                                appInfo = new AppInfo();
-//                                appInfo.setFileName(fileName);
+//                                appInfo = new AppInfo()
+//                                appInfo.setFileName(fileName)
 //                                //如果不存在数据，则插入这条数据
-//                                AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo);
+//                                AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo)
 //                            }
-//                            LogManager.i(TAG, "downloadApp fileName*****" + fileName);
+//                            LogManager.i(TAG, "downloadApp fileName*****" + fileName)
 //                        } else if ("FILEPATH".equals(key)) {
-//                            FILEPATH = bodyParams.get(key);
-//                            LogManager.i(TAG, "downloadApp FILEPATH*****" + FILEPATH);
+//                            FILEPATH = bodyParams.get(key)
+//                            LogManager.i(TAG, "downloadApp FILEPATH*****" + FILEPATH)
 //                        }
 //                    }
 //                }
 //                if (appContentLength != null && !"".equals(appContentLength) &&
 //                        fileName != null && !"".equals(fileName) &&
 //                        FILEPATH != null && !"".equals(FILEPATH)) {
-//                    long alreadyDownloadLengthL = Long.valueOf(alreadyDownloadLength);
-//                    long appContentLengthL = Long.valueOf(appContentLength);
-//                    LogManager.i(TAG, "downloadApp alreadyDownloadLengthL*****" + alreadyDownloadLengthL);
-//                    LogManager.i(TAG, "downloadApp appContentLengthL*****" + appContentLengthL);
-//                    File dirs = new File(FILEPATH);
+//                    long alreadyDownloadLengthL = Long.valueOf(alreadyDownloadLength)
+//                    long appContentLengthL = Long.valueOf(appContentLength)
+//                    LogManager.i(TAG, "downloadApp alreadyDownloadLengthL*****" + alreadyDownloadLengthL)
+//                    LogManager.i(TAG, "downloadApp appContentLengthL*****" + appContentLengthL)
+//                    File dirs = new File(FILEPATH)
 //                    if (!dirs.exists()) {
-//                        LogManager.i(TAG, "downloadApp*****!dirs.exists()");
-//                        dirs.mkdirs();
+//                        LogManager.i(TAG, "downloadApp*****!dirs.exists()")
+//                        dirs.mkdirs()
 //                    }
-//                    File file = new File(dirs, fileName);
+//                    File file = new File(dirs, fileName)
 //                    if (!file.exists()) {
-//                        file.createNewFile();
-//                        LogManager.i(TAG, "downloadApp*****!file.exists()");
+//                        file.createNewFile()
+//                        LogManager.i(TAG, "downloadApp*****!file.exists()")
 //                    } else {
-//                        LogManager.i(TAG, "downloadApp file.getAbsolutePath()*****" + file.getAbsolutePath());
+//                        LogManager.i(TAG, "downloadApp file.getAbsolutePath()*****" + file.getAbsolutePath())
 //                    }
 //
 //                    if (file.exists() && appContentLengthL == file.length()) {
 //                        //查询数据库，看看有没有数据
-//                        AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1);
+//                        AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1)
 //                        if (appInfo != null) {
-//                            LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString());
+//                            LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString())
 //                            //如果存在数据，则更新这条数据
-//                            appInfo.set_id(appInfo.get_id());
-//                            appInfo.setFileName(fileName);
-//                            appInfo.setAppContentLength(appContentLengthL);
-//                            AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo);
+//                            appInfo.set_id(appInfo.get_id())
+//                            appInfo.setFileName(fileName)
+//                            appInfo.setAppContentLength(appContentLengthL)
+//                            AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo)
 //                        } else {
-//                            appInfo = new AppInfo();
-//                            appInfo.setFileName(fileName);
-//                            appInfo.setAppContentLength(appContentLengthL);
+//                            appInfo = new AppInfo()
+//                            appInfo.setFileName(fileName)
+//                            appInfo.setAppContentLength(appContentLengthL)
 //                            //如果不存在数据，则插入这条数据
-//                            AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo);
+//                            AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo)
 //                        }
-//                        MainThreadManager mainThreadManager = new MainThreadManager();
+//                        MainThreadManager mainThreadManager = new MainThreadManager()
 //                        mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                            @Override
 //                            public void onSuccess() {
-//                                onDownloadCallback.onDownloading(appContentLengthL);
-//                                onDownloadCallback.onSuccess("");
+//                                onDownloadCallback.onDownloading(appContentLengthL)
+//                                onDownloadCallback.onSuccess("")
 //                            }
-//                        });
-//                        mainThreadManager.subThreadToUIThread();
+//                        })
+//                        mainThreadManager.subThreadToUIThread()
 //                    } else {
-//                        InputStream inputStream = null;
-//                        BufferedInputStream bufferedInputStream = null;
-//                        FileOutputStream fileOutputStream = null;
-//                        BufferedOutputStream bufferedOutputStream = null;
+//                        InputStream inputStream = null
+//                        BufferedInputStream bufferedInputStream = null
+//                        FileOutputStream fileOutputStream = null
+//                        BufferedOutputStream bufferedOutputStream = null
 //                        try {
-//                            inputStream = response.body()?.byteStream();
-//                            bufferedInputStream = new BufferedInputStream(inputStream);
-//                            fileOutputStream = new FileOutputStream(file, false);
-//                            bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-//                            int bytesPerBuffer = 1024 * 1024;
-//                            byte[] buffer = new byte[bytesPerBuffer];//缓冲数组1024kB
-//                            int len;
+//                            inputStream = response.body()?.byteStream()
+//                            bufferedInputStream = new BufferedInputStream(inputStream)
+//                            fileOutputStream = new FileOutputStream(file, false)
+//                            bufferedOutputStream = new BufferedOutputStream(fileOutputStream)
+//                            int bytesPerBuffer = 1024 * 1024
+//                            byte[] buffer = new byte[bytesPerBuffer]//缓冲数组1024kB
+//                            int len
 //
-//                            long alreadyDownloadLengthDownloading = alreadyDownloadLengthL;
+//                            long alreadyDownloadLengthDownloading = alreadyDownloadLengthL
 //                            while ((len = bufferedInputStream.read(buffer)) != -1) {
-//                                bufferedOutputStream.write(buffer, 0, len);
-//                                alreadyDownloadLengthDownloading += len;
+//                                bufferedOutputStream.write(buffer, 0, len)
+//                                alreadyDownloadLengthDownloading += len
 //                                if (Okhttp3Manager.isNetworkAvailable(context)) {//连网呢
-//                                    long finalAlreadyDownloadLengthDownloading = alreadyDownloadLengthDownloading;
-//                                    MainThreadManager mainThreadManager = new MainThreadManager();
+//                                    long finalAlreadyDownloadLengthDownloading = alreadyDownloadLengthDownloading
+//                                    MainThreadManager mainThreadManager = new MainThreadManager()
 //                                    mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                                        @Override
 //                                        public void onSuccess() {
-//                                            onDownloadCallback.onDownloading(finalAlreadyDownloadLengthDownloading);
+//                                            onDownloadCallback.onDownloading(finalAlreadyDownloadLengthDownloading)
 //                                        }
-//                                    });
-//                                    mainThreadManager.subThreadToUIThread();
-//                                    LogManager.i(TAG, "alreadyDownloadLengthDownloading=" + alreadyDownloadLengthDownloading);
+//                                    })
+//                                    mainThreadManager.subThreadToUIThread()
+//                                    LogManager.i(TAG, "alreadyDownloadLengthDownloading=" + alreadyDownloadLengthDownloading)
 //                                } else {//没连网呢
-//                                    onDownloadCallback.onError(context.getResources().getString(R.string.please_check_the_network_connection));
-//                                    break;
+//                                    onDownloadCallback.onError(context.getResources().getString(R.string.please_check_the_network_connection))
+//                                    break
 //                                }
 //                            }
 //
-//                            bufferedOutputStream.flush();
+//                            bufferedOutputStream.flush()
 //                            if (file.exists()) {
-//                                alreadyDownloadLengthDownloading = file.length();
+//                                alreadyDownloadLengthDownloading = file.length()
 //                            }
 //                            if (alreadyDownloadLengthDownloading == appContentLengthL) {
 //                                //查询数据库，看看有没有数据
-//                                AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1);
+//                                AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1)
 //                                if (appInfo != null) {
-//                                    LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString());
+//                                    LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString())
 //                                    //如果存在数据，则更新这条数据
-//                                    appInfo.set_id(appInfo.get_id());
-//                                    appInfo.setFileName(fileName);
-//                                    appInfo.setAppContentLength(alreadyDownloadLengthDownloading);
-//                                    AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo);
+//                                    appInfo.set_id(appInfo.get_id())
+//                                    appInfo.setFileName(fileName)
+//                                    appInfo.setAppContentLength(alreadyDownloadLengthDownloading)
+//                                    AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo)
 //                                } else {
-//                                    appInfo = new AppInfo();
-//                                    appInfo.setFileName(fileName);
-//                                    appInfo.setAppContentLength(alreadyDownloadLengthDownloading);
+//                                    appInfo = new AppInfo()
+//                                    appInfo.setFileName(fileName)
+//                                    appInfo.setAppContentLength(alreadyDownloadLengthDownloading)
 //                                    //如果不存在数据，则插入这条数据
-//                                    AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo);
+//                                    AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo)
 //                                }
 //
-//                                MainThreadManager mainThreadManager = new MainThreadManager();
+//                                MainThreadManager mainThreadManager = new MainThreadManager()
 //                                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                                    @Override
 //                                    public void onSuccess() {
-//                                        onDownloadCallback.onSuccess("");
+//                                        onDownloadCallback.onSuccess("")
 //                                    }
-//                                });
-//                                mainThreadManager.subThreadToUIThread();
+//                                })
+//                                mainThreadManager.subThreadToUIThread()
 //                            } else {
-//                                onDownloadCallback.onError("下载失败，请检查网络连接");
+//                                onDownloadCallback.onError("下载失败，请检查网络连接")
 //                            }
 //                        } finally {
 //                            //关闭IO流
-//                            IOManager.closeAll(bufferedInputStream, bufferedOutputStream);
+//                            IOManager.closeAll(bufferedInputStream, bufferedOutputStream)
 //                        }
 //                    }
 //                } else {
-//                    LogManager.i(TAG, "downloadApp*****" + "找不到文件名");
-//                    onDownloadCallback.onError("找不到文件名");
+//                    LogManager.i(TAG, "downloadApp*****" + "找不到文件名")
+//                    onDownloadCallback.onError("找不到文件名")
 //                }
 //            }
-//        });
+//        })
 //    }
 //
 //    /**
@@ -1457,45 +1453,45 @@ class Okhttp3Manager {
 //     * @param callback
 //     */
 //    public void getDownloadApp(String url, Map<String, String> bodyParams, Callback callback) {
-//        LogManager.i(TAG, "bodyParams String*******" + bodyParams.toString());
-//        String alreadyDownloadLength = null;
-//        String appContentLength = null;
+//        LogManager.i(TAG, "bodyParams String*******" + bodyParams.toString())
+//        String alreadyDownloadLength = null
+//        String appContentLength = null
 //        //遍历map中所有参数到builder
 //        if (bodyParams != null && bodyParams.size() > 0) {
 //            for (String key : bodyParams.keySet()) {
 //    if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
 //        //如果参数不是null，才把参数传给后台
 //                if ("alreadyDownloadLength".equals(key)) {
-//                    alreadyDownloadLength = bodyParams.get(key);
+//                    alreadyDownloadLength = bodyParams.get(key)
 //                } else if ("appContentLength".equals(key)) {
-//                    appContentLength = bodyParams.get(key);
+//                    appContentLength = bodyParams.get(key)
 //                }
 //}
 //            }
 //        }
 //
-//        LogManager.i(TAG, "getDownloadApp alreadyDownloadLength*******" + alreadyDownloadLength);
-//        LogManager.i(TAG, "getDownloadApp appContentLength*******" + appContentLength);
-//        Request request = null;
+//        LogManager.i(TAG, "getDownloadApp alreadyDownloadLength*******" + alreadyDownloadLength)
+//        LogManager.i(TAG, "getDownloadApp appContentLength*******" + appContentLength)
+//        Request request = null
 //        if (alreadyDownloadLength != null && !"".equals(alreadyDownloadLength)
 //                && appContentLength != null && !"".equals(appContentLength)) {
 //            request = new Request.Builder()
 //                    //确定下载的范围,添加此头,则服务器就可以跳过已经下载好的部分
 //                    .addHeader("range", "bytes=" + alreadyDownloadLength + "-" + appContentLength)
 //                    .url(url)
-//                    .build();
+//                    .build()
 //        } else {
 //            request = new Request.Builder()
 //                    //确定下载的范围,添加此头,则服务器就可以跳过已经下载好的部分
 ////                .addHeader("RANGE", "bytes=" + alreadyDownloadLengthL + "-" + appContentLengthL)
 //                    .url(url)
-//                    .build();
+//                    .build()
 //        }
 //
 //        //3 将Request封装为Call
-//        Call call = client.newCall(request);
+//        Call call = mClient.newCall(request)
 //        //4 执行Call
-//        call.enqueue(callback);
+//        call.enqueue(callback)
 //    }
 
     //    /**
@@ -1508,45 +1504,45 @@ class Okhttp3Manager {
     //    public void getAppContentLength(String url,
     //                                           Map<String, String> bodyParams,
     //                                           OnCommonSingleParamCallback<Long> onCommonSingleParamCallback) {
-    //        LogManager.i(TAG, "bodyParams String*******" + bodyParams.toString());
+    //        LogManager.i(TAG, "bodyParams String*******" + bodyParams.toString())
     //        Request request = new Request.Builder()
     //                .get()
     //                .url(url)
-    //                .build();
+    //                .build()
     //        //3 将Request封装为Call
-    //        Call call = client.newCall(request);
+    //        Call call = mClient.newCall(request)
     //        //4 执行Call
     //        call.enqueue(new Callback() {
     //            @Override
     //            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-    //                LogManager.i(TAG, "getAppContentLength onFailure e*******" + e.toString());
-    //                LogManager.i(TAG, "getAppContentLength onFailure e detailMessage*******" + e.getMessage());
-    //                MainThreadManager mainThreadManager = new MainThreadManager();
+    //                LogManager.i(TAG, "getAppContentLength onFailure e*******" + e.toString())
+    //                LogManager.i(TAG, "getAppContentLength onFailure e detailMessage*******" + e.getMessage())
+    //                MainThreadManager mainThreadManager = new MainThreadManager()
     //                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
     //                    @Override
     //                    public void onSuccess() {
-    //                        onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off));
+    //                        onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off))
     //                    }
-    //                });
-    //                mainThreadManager.subThreadToUIThread();
+    //                })
+    //                mainThreadManager.subThreadToUIThread()
     //            }
     //
     //            @Override
     //            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
     //                if (response != null && response.isSuccessful()) {
-    //                    long contentLength = response.body()?.contentLength();
-    //                    LogManager.i(TAG, "getAppContentLength onResponse contentLength*******" + contentLength);
-    //                    MainThreadManager mainThreadManager = new MainThreadManager();
+    //                    long contentLength = response.body()?.contentLength()
+    //                    LogManager.i(TAG, "getAppContentLength onResponse contentLength*******" + contentLength)
+    //                    MainThreadManager mainThreadManager = new MainThreadManager()
     //                    mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
     //                        @Override
     //                        public void onSuccess() {
-    //                            onCommonSingleParamCallback.onSuccess(contentLength);
+    //                            onCommonSingleParamCallback.onSuccess(contentLength)
     //                        }
-    //                    });
-    //                    mainThreadManager.subThreadToUIThread();
+    //                    })
+    //                    mainThreadManager.subThreadToUIThread()
     //                }
     //            }
-    //        });
+    //        })
     //    }
     //
     //    /**
@@ -1557,17 +1553,17 @@ class Okhttp3Manager {
     //     * @param onDownloadCallback
     //     */
     //    public void downloadApp(String url, Map<String, String> bodyParams, OnDownloadCallback<String> onDownloadCallback) {
-    //        LogManager.i(TAG, "downloadApp bodyParams String*******" + bodyParams.toString());
-    //        String alreadyDownloadLength = null;
-    //        String appContentLength = null;
+    //        LogManager.i(TAG, "downloadApp bodyParams String*******" + bodyParams.toString())
+    //        String alreadyDownloadLength = null
+    //        String appContentLength = null
     //        //遍历map中所有参数到builder
     //        if (bodyParams != null && bodyParams.size() > 0) {
     //            if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
     //                    //如果参数不是null，才把参数传给后台
     //                if ("alreadyDownloadLength".equals(key)) {
-    //                    alreadyDownloadLength = bodyParams.get(key);
+    //                    alreadyDownloadLength = bodyParams.get(key)
     //                } else if ("appContentLength".equals(key)) {
-    //                    appContentLength = bodyParams.get(key);
+    //                    appContentLength = bodyParams.get(key)
     //                }
     //            }
     //        }
@@ -1577,189 +1573,189 @@ class Okhttp3Manager {
     //                //确定下载的范围,添加此头,则服务器就可以跳过已经下载好的部分
     //                .addHeader("Range", "bytes=" + alreadyDownloadLength + "-" + appContentLength)
     //                .url(url)
-    //                .build();
+    //                .build()
     //        //3 将Request封装为Call
-    //        Call call = client.newCall(request);
+    //        Call call = mClient.newCall(request)
     //        //4 执行Call
     //        call.enqueue(new Callback() {
     //            @Override
     //            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-    //                LogManager.i(TAG, "getAppContentLength onFailure e*******" + e.toString());
-    //                LogManager.i(TAG, "getAppContentLength onFailure e detailMessage*******" + e.getMessage());
-    //                MainThreadManager mainThreadManager = new MainThreadManager();
+    //                LogManager.i(TAG, "getAppContentLength onFailure e*******" + e.toString())
+    //                LogManager.i(TAG, "getAppContentLength onFailure e detailMessage*******" + e.getMessage())
+    //                MainThreadManager mainThreadManager = new MainThreadManager()
     //                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
     //                    @Override
     //                    public void onSuccess() {
-    //                        onDownloadCallback.onError(context.getResources().getString(R.string.network_sneak_off));
+    //                        onDownloadCallback.onError(context.getResources().getString(R.string.network_sneak_off))
     //                    }
-    //                });
-    //                mainThreadManager.subThreadToUIThread();
+    //                })
+    //                mainThreadManager.subThreadToUIThread()
     //            }
     //
     //            @Override
     //            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-    //                String alreadyDownloadLength = null;
-    //                String appContentLength = null;
-    //                String fileName = null;
-    //                String FILEPATH = null;
+    //                String alreadyDownloadLength = null
+    //                String appContentLength = null
+    //                String fileName = null
+    //                String FILEPATH = null
     //                //遍历map中所有参数到builder
     //                if (bodyParams != null && bodyParams.size() > 0) {
     //                    for (String key : bodyParams.keySet()) {
     //                        if ("alreadyDownloadLength".equals(key)) {
-    //                            alreadyDownloadLength = bodyParams.get(key);
-    //                            LogManager.i(TAG, "downloadApp alreadyDownloadLength*****" + alreadyDownloadLength);
+    //                            alreadyDownloadLength = bodyParams.get(key)
+    //                            LogManager.i(TAG, "downloadApp alreadyDownloadLength*****" + alreadyDownloadLength)
     //                        } else if ("appContentLength".equals(key)) {
-    //                            appContentLength = bodyParams.get(key);
-    //                            LogManager.i(TAG, "downloadApp appContentLength*****" + appContentLength);
+    //                            appContentLength = bodyParams.get(key)
+    //                            LogManager.i(TAG, "downloadApp appContentLength*****" + appContentLength)
     //                        } else if ("fileName".equals(key)) {
-    //                            fileName = bodyParams.get(key);
+    //                            fileName = bodyParams.get(key)
     //
     //                            //查询数据库，看看有没有数据
-    //                            AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1);
+    //                            AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1)
     //                            if (appInfo != null) {
-    //                                LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString());
+    //                                LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString())
     //                                //如果存在数据，则更新这条数据
-    //                                appInfo.set_id(appInfo.get_id());
-    //                                appInfo.setFileName(fileName);
-    //                                AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo);
+    //                                appInfo.set_id(appInfo.get_id())
+    //                                appInfo.setFileName(fileName)
+    //                                AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo)
     //                            } else {
-    //                                appInfo = new AppInfo();
-    //                                appInfo.setFileName(fileName);
+    //                                appInfo = new AppInfo()
+    //                                appInfo.setFileName(fileName)
     //                                //如果不存在数据，则插入这条数据
-    //                                AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo);
+    //                                AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo)
     //                            }
-    //                            LogManager.i(TAG, "downloadApp fileName*****" + fileName);
+    //                            LogManager.i(TAG, "downloadApp fileName*****" + fileName)
     //                        } else if ("FILEPATH".equals(key)) {
-    //                            FILEPATH = bodyParams.get(key);
-    //                            LogManager.i(TAG, "downloadApp FILEPATH*****" + FILEPATH);
+    //                            FILEPATH = bodyParams.get(key)
+    //                            LogManager.i(TAG, "downloadApp FILEPATH*****" + FILEPATH)
     //                        }
     //                    }
     //                }
     //                if (appContentLength != null && !"".equals(appContentLength) &&
     //                        fileName != null && !"".equals(fileName) &&
     //                        FILEPATH != null && !"".equals(FILEPATH)) {
-    //                    long alreadyDownloadLengthL = Long.valueOf(alreadyDownloadLength);
-    //                    long appContentLengthL = Long.valueOf(appContentLength);
-    //                    LogManager.i(TAG, "downloadApp alreadyDownloadLengthL*****" + alreadyDownloadLengthL);
-    //                    LogManager.i(TAG, "downloadApp appContentLengthL*****" + appContentLengthL);
-    //                    File dirs = new File(FILEPATH);
+    //                    long alreadyDownloadLengthL = Long.valueOf(alreadyDownloadLength)
+    //                    long appContentLengthL = Long.valueOf(appContentLength)
+    //                    LogManager.i(TAG, "downloadApp alreadyDownloadLengthL*****" + alreadyDownloadLengthL)
+    //                    LogManager.i(TAG, "downloadApp appContentLengthL*****" + appContentLengthL)
+    //                    File dirs = new File(FILEPATH)
     //                    if (!dirs.exists()) {
-    //                        LogManager.i(TAG, "downloadApp*****!dirs.exists()");
-    //                        dirs.mkdirs();
+    //                        LogManager.i(TAG, "downloadApp*****!dirs.exists()")
+    //                        dirs.mkdirs()
     //                    }
-    //                    File file = new File(dirs, fileName);
+    //                    File file = new File(dirs, fileName)
     //                    if (!file.exists()) {
-    //                        file.createNewFile();
-    //                        LogManager.i(TAG, "downloadApp*****!file.exists()");
+    //                        file.createNewFile()
+    //                        LogManager.i(TAG, "downloadApp*****!file.exists()")
     //                    } else {
-    //                        LogManager.i(TAG, "downloadApp file.getAbsolutePath()*****" + file.getAbsolutePath());
+    //                        LogManager.i(TAG, "downloadApp file.getAbsolutePath()*****" + file.getAbsolutePath())
     //                    }
     //
     //                    if (file.exists() && appContentLengthL == file.length()) {
     //                        //查询数据库，看看有没有数据
-    //                        AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1);
+    //                        AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1)
     //                        if (appInfo != null) {
-    //                            LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString());
+    //                            LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString())
     //                            //如果存在数据，则更新这条数据
-    //                            appInfo.set_id(appInfo.get_id());
-    //                            appInfo.setFileName(fileName);
-    //                            appInfo.setAppContentLength(appContentLengthL);
-    //                            AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo);
+    //                            appInfo.set_id(appInfo.get_id())
+    //                            appInfo.setFileName(fileName)
+    //                            appInfo.setAppContentLength(appContentLengthL)
+    //                            AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo)
     //                        } else {
-    //                            appInfo = new AppInfo();
-    //                            appInfo.setFileName(fileName);
-    //                            appInfo.setAppContentLength(appContentLengthL);
+    //                            appInfo = new AppInfo()
+    //                            appInfo.setFileName(fileName)
+    //                            appInfo.setAppContentLength(appContentLengthL)
     //                            //如果不存在数据，则插入这条数据
-    //                            AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo);
+    //                            AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo)
     //                        }
-    //                        MainThreadManager mainThreadManager = new MainThreadManager();
+    //                        MainThreadManager mainThreadManager = new MainThreadManager()
     //                        mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
     //                            @Override
     //                            public void onSuccess() {
-    //                                onDownloadCallback.onDownloading(appContentLengthL);
-    //                                onDownloadCallback.onSuccess("");
+    //                                onDownloadCallback.onDownloading(appContentLengthL)
+    //                                onDownloadCallback.onSuccess("")
     //                            }
-    //                        });
-    //                        mainThreadManager.subThreadToUIThread();
+    //                        })
+    //                        mainThreadManager.subThreadToUIThread()
     //                    } else {
-    //                        InputStream inputStream = null;
-    //                        BufferedInputStream bufferedInputStream = null;
-    //                        FileOutputStream fileOutputStream = null;
-    //                        BufferedOutputStream bufferedOutputStream = null;
+    //                        InputStream inputStream = null
+    //                        BufferedInputStream bufferedInputStream = null
+    //                        FileOutputStream fileOutputStream = null
+    //                        BufferedOutputStream bufferedOutputStream = null
     //                        try {
-    //                            inputStream = response.body()?.byteStream();
-    //                            bufferedInputStream = new BufferedInputStream(inputStream);
-    //                            fileOutputStream = new FileOutputStream(file, false);
-    //                            bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-    //                            int bytesPerBuffer = 1024 * 1024;
-    //                            byte[] buffer = new byte[bytesPerBuffer];//缓冲数组1024kB
-    //                            int len;
+    //                            inputStream = response.body()?.byteStream()
+    //                            bufferedInputStream = new BufferedInputStream(inputStream)
+    //                            fileOutputStream = new FileOutputStream(file, false)
+    //                            bufferedOutputStream = new BufferedOutputStream(fileOutputStream)
+    //                            int bytesPerBuffer = 1024 * 1024
+    //                            byte[] buffer = new byte[bytesPerBuffer]//缓冲数组1024kB
+    //                            int len
     //
-    //                            long alreadyDownloadLengthDownloading = alreadyDownloadLengthL;
+    //                            long alreadyDownloadLengthDownloading = alreadyDownloadLengthL
     //                            while ((len = bufferedInputStream.read(buffer)) != -1) {
-    //                                bufferedOutputStream.write(buffer, 0, len);
-    //                                alreadyDownloadLengthDownloading += len;
+    //                                bufferedOutputStream.write(buffer, 0, len)
+    //                                alreadyDownloadLengthDownloading += len
     //                                if (Okhttp3Manager.isNetworkAvailable(context)) {//连网呢
-    //                                    long finalAlreadyDownloadLengthDownloading = alreadyDownloadLengthDownloading;
-    //                                    MainThreadManager mainThreadManager = new MainThreadManager();
+    //                                    long finalAlreadyDownloadLengthDownloading = alreadyDownloadLengthDownloading
+    //                                    MainThreadManager mainThreadManager = new MainThreadManager()
     //                                    mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
     //                                        @Override
     //                                        public void onSuccess() {
-    //                                            onDownloadCallback.onDownloading(finalAlreadyDownloadLengthDownloading);
+    //                                            onDownloadCallback.onDownloading(finalAlreadyDownloadLengthDownloading)
     //                                        }
-    //                                    });
-    //                                    mainThreadManager.subThreadToUIThread();
-    //                                    LogManager.i(TAG, "alreadyDownloadLengthDownloading=" + alreadyDownloadLengthDownloading);
+    //                                    })
+    //                                    mainThreadManager.subThreadToUIThread()
+    //                                    LogManager.i(TAG, "alreadyDownloadLengthDownloading=" + alreadyDownloadLengthDownloading)
     //                                } else {//没连网呢
-    //                                    onDownloadCallback.onError(context.getResources().getString(R.string.please_check_the_network_connection));
-    //                                    break;
+    //                                    onDownloadCallback.onError(context.getResources().getString(R.string.please_check_the_network_connection))
+    //                                    break
     //                                }
     //                            }
     //
-    //                            bufferedOutputStream.flush();
+    //                            bufferedOutputStream.flush()
     //                            if (file.exists()) {
-    //                                alreadyDownloadLengthDownloading = file.length();
+    //                                alreadyDownloadLengthDownloading = file.length()
     //                            }
     //                            if (alreadyDownloadLengthDownloading == appContentLengthL) {
     //                                //查询数据库，看看有没有数据
-    //                                AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1);
+    //                                AppInfo appInfo = AppInfoDaoManager.getInstance(context).queryAppInfoById(1)
     //                                if (appInfo != null) {
-    //                                    LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString());
+    //                                    LogManager.i(TAG, "versionUpdate appInfoList*****" + appInfo.toString())
     //                                    //如果存在数据，则更新这条数据
-    //                                    appInfo.set_id(appInfo.get_id());
-    //                                    appInfo.setFileName(fileName);
-    //                                    appInfo.setAppContentLength(alreadyDownloadLengthDownloading);
-    //                                    AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo);
+    //                                    appInfo.set_id(appInfo.get_id())
+    //                                    appInfo.setFileName(fileName)
+    //                                    appInfo.setAppContentLength(alreadyDownloadLengthDownloading)
+    //                                    AppInfoDaoManager.getInstance(context).updateAppInfo(appInfo)
     //                                } else {
-    //                                    appInfo = new AppInfo();
-    //                                    appInfo.setFileName(fileName);
-    //                                    appInfo.setAppContentLength(alreadyDownloadLengthDownloading);
+    //                                    appInfo = new AppInfo()
+    //                                    appInfo.setFileName(fileName)
+    //                                    appInfo.setAppContentLength(alreadyDownloadLengthDownloading)
     //                                    //如果不存在数据，则插入这条数据
-    //                                    AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo);
+    //                                    AppInfoDaoManager.getInstance(context).insertAppInfo(appInfo)
     //                                }
     //
-    //                                MainThreadManager mainThreadManager = new MainThreadManager();
+    //                                MainThreadManager mainThreadManager = new MainThreadManager()
     //                                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
     //                                    @Override
     //                                    public void onSuccess() {
-    //                                        onDownloadCallback.onSuccess("");
+    //                                        onDownloadCallback.onSuccess("")
     //                                    }
-    //                                });
-    //                                mainThreadManager.subThreadToUIThread();
+    //                                })
+    //                                mainThreadManager.subThreadToUIThread()
     //                            } else {
-    //                                onDownloadCallback.onError("下载失败，请检查网络连接");
+    //                                onDownloadCallback.onError("下载失败，请检查网络连接")
     //                            }
     //                        } finally {
     //                            //关闭IO流
-    //                            IOManager.closeAll(bufferedInputStream, bufferedOutputStream);
+    //                            IOManager.closeAll(bufferedInputStream, bufferedOutputStream)
     //                        }
     //                    }
     //                } else {
-    //                    LogManager.i(TAG, "downloadApp*****" + "找不到文件名");
-    //                    onDownloadCallback.onError("找不到文件名");
+    //                    LogManager.i(TAG, "downloadApp*****" + "找不到文件名")
+    //                    onDownloadCallback.onError("找不到文件名")
     //                }
     //            }
-    //        });
+    //        })
     //    }
     //
     //    /**
@@ -1770,45 +1766,45 @@ class Okhttp3Manager {
     //     * @param callback
     //     */
     //    public void getDownloadApp(String url, Map<String, String> bodyParams, Callback callback) {
-    //        LogManager.i(TAG, "bodyParams String*******" + bodyParams.toString());
-    //        String alreadyDownloadLength = null;
-    //        String appContentLength = null;
+    //        LogManager.i(TAG, "bodyParams String*******" + bodyParams.toString())
+    //        String alreadyDownloadLength = null
+    //        String appContentLength = null
     //        //遍历map中所有参数到builder
     //        if (bodyParams != null && bodyParams.size() > 0) {
     //            for (String key : bodyParams.keySet()) {
     //    if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
     //        //如果参数不是null，才把参数传给后台
     //                if ("alreadyDownloadLength".equals(key)) {
-    //                    alreadyDownloadLength = bodyParams.get(key);
+    //                    alreadyDownloadLength = bodyParams.get(key)
     //                } else if ("appContentLength".equals(key)) {
-    //                    appContentLength = bodyParams.get(key);
+    //                    appContentLength = bodyParams.get(key)
     //                }
     //}
     //            }
     //        }
     //
-    //        LogManager.i(TAG, "getDownloadApp alreadyDownloadLength*******" + alreadyDownloadLength);
-    //        LogManager.i(TAG, "getDownloadApp appContentLength*******" + appContentLength);
-    //        Request request = null;
+    //        LogManager.i(TAG, "getDownloadApp alreadyDownloadLength*******" + alreadyDownloadLength)
+    //        LogManager.i(TAG, "getDownloadApp appContentLength*******" + appContentLength)
+    //        Request request = null
     //        if (alreadyDownloadLength != null && !"".equals(alreadyDownloadLength)
     //                && appContentLength != null && !"".equals(appContentLength)) {
     //            request = new Request.Builder()
     //                    //确定下载的范围,添加此头,则服务器就可以跳过已经下载好的部分
     //                    .addHeader("range", "bytes=" + alreadyDownloadLength + "-" + appContentLength)
     //                    .url(url)
-    //                    .build();
+    //                    .build()
     //        } else {
     //            request = new Request.Builder()
     //                    //确定下载的范围,添加此头,则服务器就可以跳过已经下载好的部分
     ////                .addHeader("RANGE", "bytes=" + alreadyDownloadLengthL + "-" + appContentLengthL)
     //                    .url(url)
-    //                    .build();
+    //                    .build()
     //        }
     //
     //        //3 将Request封装为Call
-    //        Call call = client.newCall(request);
+    //        Call call = mClient.newCall(request)
     //        //4 执行Call
-    //        call.enqueue(callback);
+    //        call.enqueue(callback)
     //    }
     /**
      * post的请求参数，构造RequestBody
@@ -1840,9 +1836,9 @@ class Okhttp3Manager {
         val connectivityManager = BaseApplication.get()
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         //如果仅仅是用来判断网络连接
-        //connectivityManager.getActiveNetworkInfo().isAvailable();
+        //connectivityManager.getActiveNetworkInfo().isAvailable()
         val info = connectivityManager.allNetworkInfo
-        //            LogManager.i(TAG, "isNetworkAvailable*****" + info.toString());
+        //            LogManager.i(TAG, "isNetworkAvailable*****" + info.toString())
         for (i in info.indices) {
             if (info[i].state == NetworkInfo.State.CONNECTED) {
                 return true

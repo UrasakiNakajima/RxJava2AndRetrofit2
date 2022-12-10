@@ -210,7 +210,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                 }
                 success?.let {
                     val userBeanList =
-                        userBeanDaoManager?.queryByQueryBuilder(success.userId)
+                        userBeanDaoManager?.queryByQueryBuilder(success.userId!!)
                     if (userBeanList != null && userBeanList.size > 0 && userBeanList[0]
                             .userId == success.userId
                     ) {
@@ -295,7 +295,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                 }
                 success?.let {
                     val userBeanList =
-                        userBeanDaoManager?.queryByQueryBuilder(success.userId)
+                        userBeanDaoManager?.queryByQueryBuilder(success.userId!!)
                     if (userBeanList != null && userBeanList.size > 0 && userBeanList[0]
                             .userId == success.userId
                     ) {

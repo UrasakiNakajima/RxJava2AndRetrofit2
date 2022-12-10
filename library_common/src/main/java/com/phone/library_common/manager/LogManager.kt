@@ -9,6 +9,7 @@ object LogManager {
     //规定每段显示的长度
     private val LOG_MAXLENGTH = 2000
 
+    @JvmStatic
     fun i(TAG: String, message: String) {
         if (isOpenLog) {
             val strLength = message.length

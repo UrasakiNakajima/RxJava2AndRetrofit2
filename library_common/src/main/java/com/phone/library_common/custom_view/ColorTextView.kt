@@ -32,16 +32,16 @@ class ColorTextView(context: Context, attrs: AttributeSet) : AppCompatTextView(c
     override fun setTheme(themeId: Theme?) {
         Log.d("COLOR", "id = $id")
         if (attr_drawable != -1) {
-            ViewAttributeManager.applyBackgroundDrawable(this, themeId, attr_drawable)
+            ViewAttributeManager.applyBackgroundDrawable(this, themeId!!, attr_drawable)
         }
         //        if(attr_textAppearance != -1) {
 //            ViewAttributeManager.applyTextAppearance(this, themeId, attr_textAppearance);
 //        }
         if (attr_textColor != -1) {
-            ViewAttributeManager.applyTextColor(this, themeId, attr_textColor)
+            ViewAttributeManager.applyTextColor(this, themeId!!, attr_textColor)
         }
         if (attr_textLinkColor != -1) {
-            ViewAttributeManager.applyTextLinkColor(this, themeId, attr_textLinkColor)
+            ViewAttributeManager.applyTextLinkColor(this, themeId!!, attr_textLinkColor)
         }
     }
 }

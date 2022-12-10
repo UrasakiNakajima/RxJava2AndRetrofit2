@@ -101,7 +101,7 @@ public class AidlClientActivity extends BaseRxAppActivity {
             mBookList.addAll(mBookManager.getBookList());
             mBookAdapter.clearData();
             mBookAdapter.addData(mBookList);
-            LogManager.INSTANCE.i(TAG, "initAddBook*****" + book.toString());
+            LogManager.i(TAG, "initAddBook*****" + book.toString());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -125,21 +125,21 @@ public class AidlClientActivity extends BaseRxAppActivity {
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            LogManager.INSTANCE.i(TAG, "service connected");
+            LogManager.i(TAG, "service connected");
             mBookManager = BookManager.Stub.asInterface(service);
             isConnectServer = true;
             Toast.makeText(AidlClientActivity.this, "已连接服务端", Toast.LENGTH_SHORT).show();
 
             if (mBookManager != null) {
                 if (mBookList.size() > 0) {
-                    LogManager.INSTANCE.i(TAG, "onServiceConnected*****" + mBookList.toString());
+                    LogManager.i(TAG, "onServiceConnected*****" + mBookList.toString());
                 }
             }
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            LogManager.INSTANCE.i(TAG, "service disconnected");
+            LogManager.i(TAG, "service disconnected");
             isConnectServer = false;
         }
     };

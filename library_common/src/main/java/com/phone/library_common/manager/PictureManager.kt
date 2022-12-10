@@ -14,8 +14,9 @@ import com.phone.library_common.callback.OnCommonSingleParamCallback
 import okhttp3.ResponseBody
 import java.io.*
 
-class PictureManager {
+object PictureManager {
 
+    @JvmStatic
     private val TAG = PictureManager::class.java.simpleName
 
     /**
@@ -25,11 +26,12 @@ class PictureManager {
      * @param fileName
      * @return
      */
+    @JvmStatic
     fun saveImageToPath(
         bitmap: Bitmap,
         fileName: String
     ): Boolean {
-        var fileName = fileName
+        var newFileName = fileName
         val path = BaseApplication.get().externalCacheDir
             .toString() + File.separator + "Pictures"
         val appDir = File(path)
@@ -38,8 +40,8 @@ class PictureManager {
         }
 
         //这个才是文件
-        fileName = "$fileName.png"
-        val file = File(appDir, fileName)
+        newFileName = "$newFileName.png"
+        val file = File(appDir, newFileName)
         try {
             if (!file.exists()) {
                 file.createNewFile()
@@ -63,161 +65,162 @@ class PictureManager {
 
 //        //一定要是外部目录
 //		String path = context.getExternalCacheDir()
-//						  + File.separator + "Pictures";
+//						  + File.separator + "Pictures"
 //        String path = File.separator + "storage"
 //                + File.separator + "emulated"
 //                + File.separator + "0"
-//                + File.separator + "Pictures";
-//        String filesDir = context.getFilesDir().getAbsolutePath();
+//                + File.separator + "Pictures"
+//        String filesDir = context.getFilesDir().getAbsolutePath()
 //        //先判断是否是沙盒内部目录
-//        StringBuilder stringBuilder = new StringBuilder();
-//        String[] filesDirArr = filesDir.split("/");
-//        for (int i = 0; i < filesDirArr.length - 1; i++) {
+//        StringBuilder stringBuilder = new StringBuilder()
+//        String[] filesDirArr = filesDir.split("/")
+//        for (int i = 0 i < filesDirArr.length - 1 i++) {
 //            if (i == 0) {
-//                stringBuilder.append(filesDirArr[i]);
+//                stringBuilder.append(filesDirArr[i])
 //            } else {
-//                stringBuilder.append("/").append(filesDirArr[i]);
+//                stringBuilder.append("/").append(filesDirArr[i])
 //            }
 //        }
-//        String pathInternal = stringBuilder.toString();
-//        boolean isPathInternal = path.contains(pathInternal);
+//        String pathInternal = stringBuilder.toString()
+//        boolean isPathInternal = path.contains(pathInternal)
 //        if (isPathInternal) {//是沙盒内部目录
-//            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal);
+//            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal)
 //            //首先创建路径（有则不创建，没有则创建）
-//            File appDir = new File(path);
+//            File appDir = new File(path)
 //            if (!appDir.exists()) {
-//                appDir.mkdirs();
+//                appDir.mkdirs()
 //            }
 //
 //            //这个才是文件
-//            fileName = fileName + ".png";
-//            File file = new File(appDir, fileName);
+//            fileName = fileName + ".png"
+//            File file = new File(appDir, fileName)
 //            try {
 //                if (!file.exists()) {
-//                    file.createNewFile();
+//                    file.createNewFile()
 //                }
-//                FileOutputStream fos = new FileOutputStream(file);
-//                BufferedOutputStream bos = new BufferedOutputStream(fos);
+//                FileOutputStream fos = new FileOutputStream(file)
+//                BufferedOutputStream bos = new BufferedOutputStream(fos)
 //                //通过io流的方式来压缩保存图片
-//                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-//                bos.flush();
-//                bos.close();
+//                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos)
+//                bos.flush()
+//                bos.close()
 //
 //                //保存图片后发送广播通知更新数据库
-//                Uri uri = Uri.fromFile(file);
-//                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-//                return isSuccess;
+//                Uri uri = Uri.fromFile(file)
+//                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
+//                return isSuccess
 //            } catch (IOException e) {
-//                e.printStackTrace();
+//                e.printStackTrace()
 //            }
 //        } else {//不是沙盒内部目录
-//            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal);
+//            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal)
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                ContentValues values = new ContentValues();
-//                String mimeType = "image/png";
-//                values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
-//                values.put(MediaStore.Files.FileColumns.TITLE, fileName);
-//                values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
-//                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+//                ContentValues values = new ContentValues()
+//                String mimeType = "image/png"
+//                values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName)
+//                values.put(MediaStore.Files.FileColumns.TITLE, fileName)
+//                values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType)
+//                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
 //
-//                ContentResolver contentResolver = context.getContentResolver();
-//                Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//                ContentResolver contentResolver = context.getContentResolver()
+//                Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
 //                if (uri != null) {
 //                    try {
-//                        OutputStream os = contentResolver.openOutputStream(uri);
-//                        BufferedOutputStream bos = new BufferedOutputStream(os);
+//                        OutputStream os = contentResolver.openOutputStream(uri)
+//                        BufferedOutputStream bos = new BufferedOutputStream(os)
 //                        //通过io流的方式来压缩保存图片
-//                        boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-//                        bos.flush();
-//                        bos.close();
-//                        return isSuccess;
+//                        boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos)
+//                        bos.flush()
+//                        bos.close()
+//                        return isSuccess
 //                    } catch (IOException e) {
-//                        e.printStackTrace();
+//                        e.printStackTrace()
 //                    }
 //                }
 //            }
 //        }
-//        return false;
+//        return false
 //    }
 
     //        //一定要是外部目录
     //		String path = context.getExternalCacheDir()
-    //						  + File.separator + "Pictures";
+    //						  + File.separator + "Pictures"
     //        String path = File.separator + "storage"
     //                + File.separator + "emulated"
     //                + File.separator + "0"
-    //                + File.separator + "Pictures";
-    //        String filesDir = context.getFilesDir().getAbsolutePath();
+    //                + File.separator + "Pictures"
+    //        String filesDir = context.getFilesDir().getAbsolutePath()
     //        //先判断是否是沙盒内部目录
-    //        StringBuilder stringBuilder = new StringBuilder();
-    //        String[] filesDirArr = filesDir.split("/");
-    //        for (int i = 0; i < filesDirArr.length - 1; i++) {
+    //        StringBuilder stringBuilder = new StringBuilder()
+    //        String[] filesDirArr = filesDir.split("/")
+    //        for (int i = 0 i < filesDirArr.length - 1 i++) {
     //            if (i == 0) {
-    //                stringBuilder.append(filesDirArr[i]);
+    //                stringBuilder.append(filesDirArr[i])
     //            } else {
-    //                stringBuilder.append("/").append(filesDirArr[i]);
+    //                stringBuilder.append("/").append(filesDirArr[i])
     //            }
     //        }
-    //        String pathInternal = stringBuilder.toString();
-    //        boolean isPathInternal = path.contains(pathInternal);
+    //        String pathInternal = stringBuilder.toString()
+    //        boolean isPathInternal = path.contains(pathInternal)
     //        if (isPathInternal) {//是沙盒内部目录
-    //            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal);
+    //            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal)
     //            //首先创建路径（有则不创建，没有则创建）
-    //            File appDir = new File(path);
+    //            File appDir = new File(path)
     //            if (!appDir.exists()) {
-    //                appDir.mkdirs();
+    //                appDir.mkdirs()
     //            }
     //
     //            //这个才是文件
-    //            fileName = fileName + ".png";
-    //            File file = new File(appDir, fileName);
+    //            fileName = fileName + ".png"
+    //            File file = new File(appDir, fileName)
     //            try {
     //                if (!file.exists()) {
-    //                    file.createNewFile();
+    //                    file.createNewFile()
     //                }
-    //                FileOutputStream fos = new FileOutputStream(file);
-    //                BufferedOutputStream bos = new BufferedOutputStream(fos);
+    //                FileOutputStream fos = new FileOutputStream(file)
+    //                BufferedOutputStream bos = new BufferedOutputStream(fos)
     //                //通过io流的方式来压缩保存图片
-    //                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-    //                bos.flush();
-    //                bos.close();
+    //                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos)
+    //                bos.flush()
+    //                bos.close()
     //
     //                //保存图片后发送广播通知更新数据库
-    //                Uri uri = Uri.fromFile(file);
-    //                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-    //                return isSuccess;
+    //                Uri uri = Uri.fromFile(file)
+    //                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
+    //                return isSuccess
     //            } catch (IOException e) {
-    //                e.printStackTrace();
+    //                e.printStackTrace()
     //            }
     //        } else {//不是沙盒内部目录
-    //            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal);
+    //            LogManager.i(TAG, "saveImageToPath*****isPathInternal" + isPathInternal)
     //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-    //                ContentValues values = new ContentValues();
-    //                String mimeType = "image/png";
-    //                values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
-    //                values.put(MediaStore.Files.FileColumns.TITLE, fileName);
-    //                values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
-    //                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+    //                ContentValues values = new ContentValues()
+    //                String mimeType = "image/png"
+    //                values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName)
+    //                values.put(MediaStore.Files.FileColumns.TITLE, fileName)
+    //                values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType)
+    //                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
     //
-    //                ContentResolver contentResolver = context.getContentResolver();
-    //                Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    //                ContentResolver contentResolver = context.getContentResolver()
+    //                Uri uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
     //                if (uri != null) {
     //                    try {
-    //                        OutputStream os = contentResolver.openOutputStream(uri);
-    //                        BufferedOutputStream bos = new BufferedOutputStream(os);
+    //                        OutputStream os = contentResolver.openOutputStream(uri)
+    //                        BufferedOutputStream bos = new BufferedOutputStream(os)
     //                        //通过io流的方式来压缩保存图片
-    //                        boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-    //                        bos.flush();
-    //                        bos.close();
-    //                        return isSuccess;
+    //                        boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos)
+    //                        bos.flush()
+    //                        bos.close()
+    //                        return isSuccess
     //                    } catch (IOException e) {
-    //                        e.printStackTrace();
+    //                        e.printStackTrace()
     //                    }
     //                }
     //            }
     //        }
-    //        return false;
+    //        return false
     //    }
+
     /**
      * 保存文件到指定路径
      *
@@ -226,12 +229,13 @@ class PictureManager {
      * @param onCommonSingleParamCallback
      * @return
      */
+    @JvmStatic
     fun saveImageToPath(
         responseBody: ResponseBody,
         fileName: String,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<Int?>?
     ): Boolean {
-        var fileName = fileName
+        var newFileName = fileName
         val path = BaseApplication.get().externalCacheDir
             .toString() + File.separator + "Pictures"
         //首先创建路径（有则不创建，没有则创建）
@@ -241,8 +245,8 @@ class PictureManager {
         }
 
         //这个才是文件
-        fileName = "$fileName.png"
-        val file = File(appDir, fileName)
+        newFileName = "$fileName.png"
+        val file = File(appDir, newFileName)
         if (!file.exists()) {
             try {
                 file.createNewFile()
@@ -272,181 +276,181 @@ class PictureManager {
 
 //        //一定要是外部目录
 //        String path = context.getExternalCacheDir()
-//                + File.separator + "Pictures";
-//        String filesDir = context.getFilesDir().getAbsolutePath();
+//                + File.separator + "Pictures"
+//        String filesDir = context.getFilesDir().getAbsolutePath()
 //        //先判断是否是沙盒内部目录
-//        StringBuilder stringBuilder = new StringBuilder();
-//        String[] filesDirArr = filesDir.split("/");
-//        for (int i = 0; i < filesDirArr.length - 1; i++) {
+//        StringBuilder stringBuilder = new StringBuilder()
+//        String[] filesDirArr = filesDir.split("/")
+//        for (int i = 0 i < filesDirArr.length - 1 i++) {
 //            if (i == 0) {
-//                stringBuilder.append(filesDirArr[i]);
+//                stringBuilder.append(filesDirArr[i])
 //            } else {
-//                stringBuilder.append("/").append(filesDirArr[i]);
+//                stringBuilder.append("/").append(filesDirArr[i])
 //            }
 //        }
-//        String pathInternal = stringBuilder.toString();
-//        boolean isPathInternal = path.contains(pathInternal);
-//        Bitmap bitmap = null;
+//        String pathInternal = stringBuilder.toString()
+//        boolean isPathInternal = path.contains(pathInternal)
+//        Bitmap bitmap = null
 //        if (isPathInternal) {//是沙盒内部目录
 //            try {
 //                //首先创建路径（有则不创建，没有则创建）
-//                File appDir = new File(path);
+//                File appDir = new File(path)
 //                if (!appDir.exists()) {
-//                    appDir.mkdirs();
+//                    appDir.mkdirs()
 //                }
 //
 //                //这个才是文件
-//                fileName = fileName + ".png";
-//                File file = new File(appDir, fileName);
+//                fileName = fileName + ".png"
+//                File file = new File(appDir, fileName)
 //                if (!file.exists()) {
-//                    file.createNewFile();
+//                    file.createNewFile()
 //                }
-//                InputStream inputStream = responseBody.byteStream();
-//                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-//                bitmap = BitmapFactory.decodeStream(bufferedInputStream);
-//                FileOutputStream fileOutputStream = new FileOutputStream(file);
-//                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+//                InputStream inputStream = responseBody.byteStream()
+//                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream)
+//                bitmap = BitmapFactory.decodeStream(bufferedInputStream)
+//                FileOutputStream fileOutputStream = new FileOutputStream(file)
+//                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream)
 //
 //                //通过io流的方式来压缩保存图片
-//                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
-//                bufferedOutputStream.flush();
-//                bufferedOutputStream.close();
+//                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream)
+//                bufferedOutputStream.flush()
+//                bufferedOutputStream.close()
 //                //保存图片后发送广播通知更新数据库
-//                Uri uri = Uri.fromFile(file);
-//                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-//                return isSuccess;
+//                Uri uri = Uri.fromFile(file)
+//                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
+//                return isSuccess
 //            } catch (IOException e) {
-//                e.printStackTrace();
+//                e.printStackTrace()
 //            }
 //        } else {//不是沙盒内部目录
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 //                //Android 外部目录
-//                String mimeType = "image/png";
-//                ContentValues values = new ContentValues();
-//                values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
-//                values.put(MediaStore.Files.FileColumns.TITLE, fileName);
-//                values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
-//                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+//                String mimeType = "image/png"
+//                ContentValues values = new ContentValues()
+//                values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName)
+//                values.put(MediaStore.Files.FileColumns.TITLE, fileName)
+//                values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType)
+//                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
 //
-//                Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-//                ContentResolver resolver = context.getContentResolver();
-//                Uri insertUri = resolver.insert(external, values);
+//                Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+//                ContentResolver resolver = context.getContentResolver()
+//                Uri insertUri = resolver.insert(external, values)
 //                try {
-//                    InputStream is = responseBody.byteStream();
-//                    BufferedInputStream bufferedInputStream = null;
-//                    OutputStream outputStream = null;
-//                    BufferedOutputStream bufferedOutputStream = null;
-//                    bufferedInputStream = new BufferedInputStream(is);
-//                    bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+//                    InputStream is = responseBody.byteStream()
+//                    BufferedInputStream bufferedInputStream = null
+//                    OutputStream outputStream = null
+//                    BufferedOutputStream bufferedOutputStream = null
+//                    bufferedInputStream = new BufferedInputStream(is)
+//                    bitmap = BitmapFactory.decodeStream(bufferedInputStream)
 //                    if (insertUri != null) {
-//                        outputStream = resolver.openOutputStream(insertUri);
+//                        outputStream = resolver.openOutputStream(insertUri)
 //                        if (outputStream != null) {
-//                            bufferedOutputStream = new BufferedOutputStream(outputStream);
+//                            bufferedOutputStream = new BufferedOutputStream(outputStream)
 //                        }
 //                    }
 //                    if (bufferedOutputStream != null) {
 //                        //通过io流的方式来压缩保存图片
-//                        boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
-//                        bufferedOutputStream.flush();
-//                        bufferedInputStream.close();
-//                        bufferedOutputStream.close();
-//                        return isSuccess;
+//                        boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream)
+//                        bufferedOutputStream.flush()
+//                        bufferedInputStream.close()
+//                        bufferedOutputStream.close()
+//                        return isSuccess
 //                    }
 //                } catch (IOException e) {
-//                    e.printStackTrace();
+//                    e.printStackTrace()
 //                }
 //            }
 //        }
-//        return false;
+//        return false
 
     //        //一定要是外部目录
     //        String path = context.getExternalCacheDir()
-    //                + File.separator + "Pictures";
-    //        String filesDir = context.getFilesDir().getAbsolutePath();
+    //                + File.separator + "Pictures"
+    //        String filesDir = context.getFilesDir().getAbsolutePath()
     //        //先判断是否是沙盒内部目录
-    //        StringBuilder stringBuilder = new StringBuilder();
-    //        String[] filesDirArr = filesDir.split("/");
-    //        for (int i = 0; i < filesDirArr.length - 1; i++) {
+    //        StringBuilder stringBuilder = new StringBuilder()
+    //        String[] filesDirArr = filesDir.split("/")
+    //        for (int i = 0 i < filesDirArr.length - 1 i++) {
     //            if (i == 0) {
-    //                stringBuilder.append(filesDirArr[i]);
+    //                stringBuilder.append(filesDirArr[i])
     //            } else {
-    //                stringBuilder.append("/").append(filesDirArr[i]);
+    //                stringBuilder.append("/").append(filesDirArr[i])
     //            }
     //        }
-    //        String pathInternal = stringBuilder.toString();
-    //        boolean isPathInternal = path.contains(pathInternal);
-    //        Bitmap bitmap = null;
+    //        String pathInternal = stringBuilder.toString()
+    //        boolean isPathInternal = path.contains(pathInternal)
+    //        Bitmap bitmap = null
     //        if (isPathInternal) {//是沙盒内部目录
     //            try {
     //                //首先创建路径（有则不创建，没有则创建）
-    //                File appDir = new File(path);
+    //                File appDir = new File(path)
     //                if (!appDir.exists()) {
-    //                    appDir.mkdirs();
+    //                    appDir.mkdirs()
     //                }
     //
     //                //这个才是文件
-    //                fileName = fileName + ".png";
-    //                File file = new File(appDir, fileName);
+    //                fileName = fileName + ".png"
+    //                File file = new File(appDir, fileName)
     //                if (!file.exists()) {
-    //                    file.createNewFile();
+    //                    file.createNewFile()
     //                }
-    //                InputStream inputStream = responseBody.byteStream();
-    //                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-    //                bitmap = BitmapFactory.decodeStream(bufferedInputStream);
-    //                FileOutputStream fileOutputStream = new FileOutputStream(file);
-    //                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+    //                InputStream inputStream = responseBody.byteStream()
+    //                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream)
+    //                bitmap = BitmapFactory.decodeStream(bufferedInputStream)
+    //                FileOutputStream fileOutputStream = new FileOutputStream(file)
+    //                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream)
     //
     //                //通过io流的方式来压缩保存图片
-    //                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
-    //                bufferedOutputStream.flush();
-    //                bufferedOutputStream.close();
+    //                boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream)
+    //                bufferedOutputStream.flush()
+    //                bufferedOutputStream.close()
     //                //保存图片后发送广播通知更新数据库
-    //                Uri uri = Uri.fromFile(file);
-    //                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-    //                return isSuccess;
+    //                Uri uri = Uri.fromFile(file)
+    //                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
+    //                return isSuccess
     //            } catch (IOException e) {
-    //                e.printStackTrace();
+    //                e.printStackTrace()
     //            }
     //        } else {//不是沙盒内部目录
     //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
     //                //Android 外部目录
-    //                String mimeType = "image/png";
-    //                ContentValues values = new ContentValues();
-    //                values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
-    //                values.put(MediaStore.Files.FileColumns.TITLE, fileName);
-    //                values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
-    //                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+    //                String mimeType = "image/png"
+    //                ContentValues values = new ContentValues()
+    //                values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName)
+    //                values.put(MediaStore.Files.FileColumns.TITLE, fileName)
+    //                values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType)
+    //                values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
     //
-    //                Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-    //                ContentResolver resolver = context.getContentResolver();
-    //                Uri insertUri = resolver.insert(external, values);
+    //                Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+    //                ContentResolver resolver = context.getContentResolver()
+    //                Uri insertUri = resolver.insert(external, values)
     //                try {
-    //                    InputStream is = responseBody.byteStream();
-    //                    BufferedInputStream bufferedInputStream = null;
-    //                    OutputStream outputStream = null;
-    //                    BufferedOutputStream bufferedOutputStream = null;
-    //                    bufferedInputStream = new BufferedInputStream(is);
-    //                    bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+    //                    InputStream is = responseBody.byteStream()
+    //                    BufferedInputStream bufferedInputStream = null
+    //                    OutputStream outputStream = null
+    //                    BufferedOutputStream bufferedOutputStream = null
+    //                    bufferedInputStream = new BufferedInputStream(is)
+    //                    bitmap = BitmapFactory.decodeStream(bufferedInputStream)
     //                    if (insertUri != null) {
-    //                        outputStream = resolver.openOutputStream(insertUri);
+    //                        outputStream = resolver.openOutputStream(insertUri)
     //                        if (outputStream != null) {
-    //                            bufferedOutputStream = new BufferedOutputStream(outputStream);
+    //                            bufferedOutputStream = new BufferedOutputStream(outputStream)
     //                        }
     //                    }
     //                    if (bufferedOutputStream != null) {
     //                        //通过io流的方式来压缩保存图片
-    //                        boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
-    //                        bufferedOutputStream.flush();
-    //                        bufferedInputStream.close();
-    //                        bufferedOutputStream.close();
-    //                        return isSuccess;
+    //                        boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream)
+    //                        bufferedOutputStream.flush()
+    //                        bufferedInputStream.close()
+    //                        bufferedOutputStream.close()
+    //                        return isSuccess
     //                    }
     //                } catch (IOException e) {
-    //                    e.printStackTrace();
+    //                    e.printStackTrace()
     //                }
     //            }
     //        }
-    //        return false;
+    //        return false
     /**
      * 得到绝对地址
      *
@@ -483,8 +487,9 @@ class PictureManager {
      * @param context
      * @param fileName
      */
+    @JvmStatic
     fun copyExternalCacheDirFile(context: Context, fileName: String): Boolean {
-        var fileName = fileName
+        var newFileName = fileName
         val resourcesPath = context.externalCacheDir
             .toString() + File.separator + "Cache"
         //一定要是外部目录
@@ -501,8 +506,8 @@ class PictureManager {
                 appDir.mkdirs()
             }
             //这个才是文件
-            fileName = "$fileName.png"
-            val fileUpdate = File(appDir, fileName)
+            newFileName = "$fileName.png"
+            val fileUpdate = File(appDir, newFileName)
             if (!fileUpdate.exists()) {
                 fileUpdate.createNewFile()
             }
@@ -527,98 +532,98 @@ class PictureManager {
     }
 
 //		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-//			String fileId = PictureManager.queryFile(context, resourcesPath);
+//			String fileId = PictureManager.queryFile(context, resourcesPath)
 //			if (!TextUtils.isEmpty(fileId)) {
-//				Uri uri = PictureManager.getMediaFileUriFromID(fileId);
+//				Uri uri = PictureManager.getMediaFileUriFromID(fileId)
 //
 //				//Android 外部目录
-//				String mimeType = "image/png";
-//				ContentValues values = new ContentValues();
-//				values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
-//				values.put(MediaStore.Files.FileColumns.TITLE, fileName);
-//				values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
-//				values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+//				String mimeType = "image/png"
+//				ContentValues values = new ContentValues()
+//				values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName)
+//				values.put(MediaStore.Files.FileColumns.TITLE, fileName)
+//				values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType)
+//				values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
 //
-//				Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-//				//				Uri external;
+//				Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+//				//				Uri external
 //				//				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//				//									external = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL);
+//				//									external = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
 //				//				} else {
-//				//									external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+//				//									external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 //				//				}
-//				ContentResolver resolver = context.getContentResolver();
-//				Uri insertUri = resolver.insert(external, values);
+//				ContentResolver resolver = context.getContentResolver()
+//				Uri insertUri = resolver.insert(external, values)
 //				try {
-//					InputStream inputStream = null;
-//					BufferedInputStream bufferedInputStream = null;
-//					OutputStream outputStream = null;
-//					BufferedOutputStream bufferedOutputStream = null;
+//					InputStream inputStream = null
+//					BufferedInputStream bufferedInputStream = null
+//					OutputStream outputStream = null
+//					BufferedOutputStream bufferedOutputStream = null
 //
-//					inputStream = resolver.openInputStream(uri);
-//					bufferedInputStream = new BufferedInputStream(inputStream);
-//					bitmap = BitmapFactory.decodeStream(bufferedInputStream);
-//					bufferedInputStream = new BufferedInputStream(inputStream);
+//					inputStream = resolver.openInputStream(uri)
+//					bufferedInputStream = new BufferedInputStream(inputStream)
+//					bitmap = BitmapFactory.decodeStream(bufferedInputStream)
+//					bufferedInputStream = new BufferedInputStream(inputStream)
 //					if (insertUri != null) {
-//						outputStream = resolver.openOutputStream(insertUri);
+//						outputStream = resolver.openOutputStream(insertUri)
 //						if (outputStream != null) {
-//							bufferedOutputStream = new BufferedOutputStream(outputStream);
+//							bufferedOutputStream = new BufferedOutputStream(outputStream)
 //						}
 //					}
 //					if (bufferedOutputStream != null) {
 //						//通过io流的方式来压缩保存图片
-//						boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
-//						bufferedOutputStream.flush();
-//						bufferedInputStream.close();
-//						bufferedOutputStream.close();
-//						return isSuccess;
+//						boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream)
+//						bufferedOutputStream.flush()
+//						bufferedInputStream.close()
+//						bufferedOutputStream.close()
+//						return isSuccess
 //					}
 //				} catch (IOException e) {
-//					e.printStackTrace();
+//					e.printStackTrace()
 //				}
 //			}
 //		} else {
 //        //一定要是外部目录
 //        String path = Environment.getExternalStorageDirectory().getAbsolutePath()
-//                + File.separator + "Pictures";
+//                + File.separator + "Pictures"
 //
-//        FileInputStream fis = null;
-//        BufferedInputStream bis = null;
-//        FileOutputStream fos = null;
-//        BufferedOutputStream bos = null;
+//        FileInputStream fis = null
+//        BufferedInputStream bis = null
+//        FileOutputStream fos = null
+//        BufferedOutputStream bos = null
 //        try {
 //            //首先创建路径（有则不创建，没有则创建）
-//            File appDir = new File(path);
+//            File appDir = new File(path)
 //            if (!appDir.exists()) {
-//                appDir.mkdirs();
+//                appDir.mkdirs()
 //            }
 //
 //            //这个才是文件
-//            fileName = fileName + ".png";
-//            File fileUpdate = new File(appDir, fileName);
+//            fileName = fileName + ".png"
+//            File fileUpdate = new File(appDir, fileName)
 //
 //            if (!fileUpdate.exists()) {
-//                fileUpdate.createNewFile();
+//                fileUpdate.createNewFile()
 //            }
 //
-//            File resourcesFile = new File(resourcesPath);
-//            fis = new FileInputStream(resourcesFile);
-//            bis = new BufferedInputStream(fis);
-//            bitmap = BitmapFactory.decodeStream(bis);
-//            fos = new FileOutputStream(fileUpdate);
-//            bos = new BufferedOutputStream(fos);
+//            File resourcesFile = new File(resourcesPath)
+//            fis = new FileInputStream(resourcesFile)
+//            bis = new BufferedInputStream(fis)
+//            bitmap = BitmapFactory.decodeStream(bis)
+//            fos = new FileOutputStream(fileUpdate)
+//            bos = new BufferedOutputStream(fos)
 //
 //            //通过io流的方式来压缩保存图片
-//            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-//            bos.flush();
-//            bos.close();
+//            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos)
+//            bos.flush()
+//            bos.close()
 //            //保存图片后发送广播通知更新数据库
-//            PictureManager.updatePhotoMedia(context, fileUpdate);
-//            return isSuccess;
+//            PictureManager.updatePhotoMedia(context, fileUpdate)
+//            return isSuccess
 //        } catch (IOException e) {
-//            e.printStackTrace();
+//            e.printStackTrace()
 //        }
 //		}
-//        return false;
+//        return false
 //    }
 
 //	/**
@@ -626,144 +631,146 @@ class PictureManager {
 //	 */
 //	@RequiresApi(api = Build.VERSION_CODES.Q)
 //	public static String queryFile(Context context, String resourcesPath) {
-//		Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL), null, null, null, null);
-//		String fileId = null;
+//		Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL), null, null, null, null)
+//		String fileId = null
 //		while (cursor.moveToNext()) {
-//			String id = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID));
-//			String data = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Downloads.DATA));
-//			Log.i(TAG, "queryFile id*****" + id);
-//			Log.i(TAG, "queryFile data*****" + data);
+//			String id = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID))
+//			String data = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Downloads.DATA))
+//			Log.i(TAG, "queryFile id*****" + id)
+//			Log.i(TAG, "queryFile data*****" + data)
 //
 //			if (resourcesPath.equals(data)) {
-//				fileId = id;
-//				break;
+//				fileId = id
+//				break
 //			}
 //		}
-//		cursor.close();
-//		return fileId;
+//		cursor.close()
+//		return fileId
 //	}
 
     //		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-    //			String fileId = PictureManager.queryFile(context, resourcesPath);
+    //			String fileId = PictureManager.queryFile(context, resourcesPath)
     //			if (!TextUtils.isEmpty(fileId)) {
-    //				Uri uri = PictureManager.getMediaFileUriFromID(fileId);
+    //				Uri uri = PictureManager.getMediaFileUriFromID(fileId)
     //
     //				//Android 外部目录
-    //				String mimeType = "image/png";
-    //				ContentValues values = new ContentValues();
-    //				values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName);
-    //				values.put(MediaStore.Files.FileColumns.TITLE, fileName);
-    //				values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType);
-    //				values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+    //				String mimeType = "image/png"
+    //				ContentValues values = new ContentValues()
+    //				values.put(MediaStore.Files.FileColumns.DISPLAY_NAME, fileName)
+    //				values.put(MediaStore.Files.FileColumns.TITLE, fileName)
+    //				values.put(MediaStore.Files.FileColumns.MIME_TYPE, mimeType)
+    //				values.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
     //
-    //				Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-    //				//				Uri external;
+    //				Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+    //				//				Uri external
     //				//				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-    //				//									external = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL);
+    //				//									external = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
     //				//				} else {
-    //				//									external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    //				//									external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
     //				//				}
-    //				ContentResolver resolver = context.getContentResolver();
-    //				Uri insertUri = resolver.insert(external, values);
+    //				ContentResolver resolver = context.getContentResolver()
+    //				Uri insertUri = resolver.insert(external, values)
     //				try {
-    //					InputStream inputStream = null;
-    //					BufferedInputStream bufferedInputStream = null;
-    //					OutputStream outputStream = null;
-    //					BufferedOutputStream bufferedOutputStream = null;
+    //					InputStream inputStream = null
+    //					BufferedInputStream bufferedInputStream = null
+    //					OutputStream outputStream = null
+    //					BufferedOutputStream bufferedOutputStream = null
     //
-    //					inputStream = resolver.openInputStream(uri);
-    //					bufferedInputStream = new BufferedInputStream(inputStream);
-    //					bitmap = BitmapFactory.decodeStream(bufferedInputStream);
-    //					bufferedInputStream = new BufferedInputStream(inputStream);
+    //					inputStream = resolver.openInputStream(uri)
+    //					bufferedInputStream = new BufferedInputStream(inputStream)
+    //					bitmap = BitmapFactory.decodeStream(bufferedInputStream)
+    //					bufferedInputStream = new BufferedInputStream(inputStream)
     //					if (insertUri != null) {
-    //						outputStream = resolver.openOutputStream(insertUri);
+    //						outputStream = resolver.openOutputStream(insertUri)
     //						if (outputStream != null) {
-    //							bufferedOutputStream = new BufferedOutputStream(outputStream);
+    //							bufferedOutputStream = new BufferedOutputStream(outputStream)
     //						}
     //					}
     //					if (bufferedOutputStream != null) {
     //						//通过io流的方式来压缩保存图片
-    //						boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream);
-    //						bufferedOutputStream.flush();
-    //						bufferedInputStream.close();
-    //						bufferedOutputStream.close();
-    //						return isSuccess;
+    //						boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bufferedOutputStream)
+    //						bufferedOutputStream.flush()
+    //						bufferedInputStream.close()
+    //						bufferedOutputStream.close()
+    //						return isSuccess
     //					}
     //				} catch (IOException e) {
-    //					e.printStackTrace();
+    //					e.printStackTrace()
     //				}
     //			}
     //		} else {
     //        //一定要是外部目录
     //        String path = Environment.getExternalStorageDirectory().getAbsolutePath()
-    //                + File.separator + "Pictures";
+    //                + File.separator + "Pictures"
     //
-    //        FileInputStream fis = null;
-    //        BufferedInputStream bis = null;
-    //        FileOutputStream fos = null;
-    //        BufferedOutputStream bos = null;
+    //        FileInputStream fis = null
+    //        BufferedInputStream bis = null
+    //        FileOutputStream fos = null
+    //        BufferedOutputStream bos = null
     //        try {
     //            //首先创建路径（有则不创建，没有则创建）
-    //            File appDir = new File(path);
+    //            File appDir = new File(path)
     //            if (!appDir.exists()) {
-    //                appDir.mkdirs();
+    //                appDir.mkdirs()
     //            }
     //
     //            //这个才是文件
-    //            fileName = fileName + ".png";
-    //            File fileUpdate = new File(appDir, fileName);
+    //            fileName = fileName + ".png"
+    //            File fileUpdate = new File(appDir, fileName)
     //
     //            if (!fileUpdate.exists()) {
-    //                fileUpdate.createNewFile();
+    //                fileUpdate.createNewFile()
     //            }
     //
-    //            File resourcesFile = new File(resourcesPath);
-    //            fis = new FileInputStream(resourcesFile);
-    //            bis = new BufferedInputStream(fis);
-    //            bitmap = BitmapFactory.decodeStream(bis);
-    //            fos = new FileOutputStream(fileUpdate);
-    //            bos = new BufferedOutputStream(fos);
+    //            File resourcesFile = new File(resourcesPath)
+    //            fis = new FileInputStream(resourcesFile)
+    //            bis = new BufferedInputStream(fis)
+    //            bitmap = BitmapFactory.decodeStream(bis)
+    //            fos = new FileOutputStream(fileUpdate)
+    //            bos = new BufferedOutputStream(fos)
     //
     //            //通过io流的方式来压缩保存图片
-    //            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-    //            bos.flush();
-    //            bos.close();
+    //            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos)
+    //            bos.flush()
+    //            bos.close()
     //            //保存图片后发送广播通知更新数据库
-    //            PictureManager.updatePhotoMedia(context, fileUpdate);
-    //            return isSuccess;
+    //            PictureManager.updatePhotoMedia(context, fileUpdate)
+    //            return isSuccess
     //        } catch (IOException e) {
-    //            e.printStackTrace();
+    //            e.printStackTrace()
     //        }
     //		}
-    //        return false;
+    //        return false
     //    }
     //	/**
     //	 * 查询外部存储所有媒体文件
     //	 */
     //	@RequiresApi(api = Build.VERSION_CODES.Q)
     //	public static String queryFile(Context context, String resourcesPath) {
-    //		Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL), null, null, null, null);
-    //		String fileId = null;
+    //		Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL), null, null, null, null)
+    //		String fileId = null
     //		while (cursor.moveToNext()) {
-    //			String id = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID));
-    //			String data = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Downloads.DATA));
-    //			Log.i(TAG, "queryFile id*****" + id);
-    //			Log.i(TAG, "queryFile data*****" + data);
+    //			String id = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID))
+    //			String data = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Downloads.DATA))
+    //			Log.i(TAG, "queryFile id*****" + id)
+    //			Log.i(TAG, "queryFile data*****" + data)
     //
     //			if (resourcesPath.equals(data)) {
-    //				fileId = id;
-    //				break;
+    //				fileId = id
+    //				break
     //			}
     //		}
-    //		cursor.close();
-    //		return fileId;
+    //		cursor.close()
+    //		return fileId
     //	}
+
     /**
      * 根据媒体文件的ID来获取文件的Uri
      *
      * @param id
      * @return
      */
+    @JvmStatic
     fun getMediaFileUriFromID(id: String): Uri? {
         return MediaStore.Files.getContentUri("external").buildUpon().appendPath(id).build()
     }
@@ -774,6 +781,7 @@ class PictureManager {
      * @param bitmap 需要设置的位图
      * @param color  背景色
      */
+    @JvmStatic
     fun setBitmapBGColor(bitmap: Bitmap, color: Int) {
         for (i in 0 until bitmap.width) {
             for (j in 0 until bitmap.height) {
@@ -785,6 +793,7 @@ class PictureManager {
     /**
      * 获取一个 View 的缓存视图
      */
+    @JvmStatic
     fun getCacheBitmapFromView(view: View): Bitmap? {
         //第一种方案   返回的bitmap不为空
         if (view.measuredWidth <= 0 || view.measuredHeight <= 0) {
@@ -792,7 +801,7 @@ class PictureManager {
         }
         //不能使用此方法的宽高
 //        Bitmap b = Bitmap.createBitmap(view.getLayoutParams().width,
-//                view.getLayoutParams().height, Bitmap.Config.ARGB_8888);
+//                view.getLayoutParams().height, Bitmap.Config.ARGB_8888)
         //一定要使用这个方法的宽高
         val bitmap = Bitmap.createBitmap(
             view.measuredWidth,
@@ -800,7 +809,7 @@ class PictureManager {
         )
         setBitmapBGColor(bitmap, ResourcesManager.getColor(R.color.color_FFFFFF))
         val c = Canvas(bitmap)
-        //        view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+        //        view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getBottom())
         view.draw(c)
         return bitmap
     }

@@ -28,7 +28,7 @@ class AMAPLocationManager {
         private var instance: AMAPLocationManager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
-        @Synchronized
+        @Synchronized @JvmStatic
         fun get(): AMAPLocationManager? {
             if (instance == null) {
                 instance = AMAPLocationManager()

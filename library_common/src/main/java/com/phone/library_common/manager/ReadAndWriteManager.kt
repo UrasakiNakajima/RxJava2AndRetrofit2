@@ -29,15 +29,15 @@ class ReadAndWriteManager {
      * @return
      */
     companion object {
-        private var instance: ReadAndWriteManager? = null;
+        private var instance: ReadAndWriteManager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
         @Synchronized
         fun get(): ReadAndWriteManager? {
             if (instance == null) {
-                instance = ReadAndWriteManager();
+                instance = ReadAndWriteManager()
             }
-            return instance;
+            return instance
         }
     }
 

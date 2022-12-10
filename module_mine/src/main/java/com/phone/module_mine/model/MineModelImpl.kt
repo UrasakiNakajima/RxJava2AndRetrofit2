@@ -12,25 +12,25 @@ class MineModelImpl : IMineModel {
     }
 
     override fun mineData(bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.get().getRetrofit()
+        return RetrofitManager.get().mRetrofit
                 .create(MineRequest::class.java)
                 .getMineData(bodyParams)
     }
 
     override fun mineDetails(bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.get().getRetrofit()
+        return RetrofitManager.get().mRetrofit
                 .create(MineRequest::class.java)
                 .getMineDetails(bodyParams)
     }
 
     override fun userData(bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.get().getRetrofit()
+        return RetrofitManager.get().mRetrofit
                 .create(MineRequest::class.java)
                 .getUserData(bodyParams)
     }
 
     override fun userData(accessToken: String, bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.get().getRetrofit()
+        return RetrofitManager.get().mRetrofit
                 .create(MineRequest::class.java)
                 .getUserData(accessToken, bodyParams)
     }

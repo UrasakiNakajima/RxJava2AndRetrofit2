@@ -10,14 +10,14 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 
 class RxPermissionsManager {
 
-    private val TAG = RxPermissionsManager::class.java.simpleName
-
     /**
      * 保证只有一个实例
      *
      * @return
      */
     companion object {
+        private val TAG = RxPermissionsManager::class.java.simpleName
+
         private var instance: RxPermissionsManager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式

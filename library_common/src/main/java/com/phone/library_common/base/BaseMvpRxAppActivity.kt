@@ -115,7 +115,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
                 .keyboardEnable(true)
                 .init()
         }
-        ToolbarManager.assistActivity(findViewById(R.id.content))
+        ToolbarManager.assistActivity(findViewById(android.R.id.content))
     }
 
     protected open fun setToolbar(isDarkFont: Boolean, isResizeChildOfContent: Boolean) {
@@ -135,7 +135,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
                 .init()
         }
         if (isResizeChildOfContent) {
-            ToolbarManager.assistActivity(findViewById(R.id.content))
+            ToolbarManager.assistActivity(findViewById(android.R.id.content))
         }
     }
 
@@ -153,7 +153,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .init()
         }
-        ToolbarManager.assistActivity(findViewById(R.id.content))
+        ToolbarManager.assistActivity(findViewById(android.R.id.content))
     }
 
     protected open fun setToolbar(
@@ -175,7 +175,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
                 .init()
         }
         if (isResizeChildOfContent) {
-            ToolbarManager.assistActivity(findViewById(R.id.content))
+            ToolbarManager.assistActivity(findViewById(android.R.id.content))
         }
     }
 

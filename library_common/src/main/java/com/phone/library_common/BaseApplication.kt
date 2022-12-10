@@ -29,6 +29,7 @@ open class BaseApplication : MultiDexApplication() {
         private val TAG = BaseApplication::class.java.simpleName
         private var instance: BaseApplication? = null
 
+        @JvmStatic
         fun get(): BaseApplication {
             return instance!!
         }

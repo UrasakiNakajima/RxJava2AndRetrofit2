@@ -480,7 +480,7 @@ object BitmapManager {
             val prescription = Math.sqrt(scale.toDouble()).toFloat()
             //再次开平方
             val prescription2 = Math.sqrt(prescription.toDouble()).toFloat()
-            //            LogManager.INSTANCE.i(TAG, "scaleImage prescription*****" + prescription);
+            //            LogManager.i(TAG, "scaleImage prescription*****" + prescription);
             i(
                 TAG,
                 "scaleImage prescription2*****$prescription2"
@@ -494,7 +494,7 @@ object BitmapManager {
                 }
                     ?: //                    bitmap = scale(resBitmap, prescription);
                             scale(resBitmap, prescription2)
-                //                LogManager.INSTANCE.i(TAG, i + "scaleImage prescription*****" + prescription);
+                //                LogManager.i(TAG, i + "scaleImage prescription*****" + prescription);
                 i(TAG, i.toString() + "scaleImage prescription2*****" + prescription2)
             }
             return bitmap

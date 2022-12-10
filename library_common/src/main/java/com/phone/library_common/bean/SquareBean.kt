@@ -5,14 +5,14 @@ import androidx.databinding.Bindable
 import com.phone.library_common.BR
 
 class SquareBean {
-    var `data`: Data? = null
+    var `data`: DataSquare? = null
     var errorCode: Int? = null
     var errorMsg: String? = null
 }
 
-class Data {
+class DataSquare {
     var curPage: Int? = null
-    var datas: MutableList<DataX>? = null
+    var datas: MutableList<SubDataSquare>? = null
     var offset: Int? = null
     var over: Boolean? = null
     var pageCount: Int? = null
@@ -20,7 +20,7 @@ class Data {
     var total: Int? = null
 }
 
-class DataX : BaseObservable() {
+class SubDataSquare : BaseObservable() {
     var apkLink: String? = null
     var audit: Int? = null
 

@@ -13,6 +13,7 @@ object TextViewStyleManager {
 
     private val TAG = TextViewStyleManager::class.java.simpleName
 
+    @JvmStatic
     fun setTextViewStyle(
         textView: TextView,
         data: String,
@@ -30,6 +31,7 @@ object TextViewStyleManager {
         textView.text = spannable
     }
 
+    @JvmStatic
     fun setTextViewStyle(
         textView: TextView,
         data: String?,
@@ -50,6 +52,7 @@ object TextViewStyleManager {
         textView.text = spannable
     }
 
+    @JvmStatic
     fun setTextViewStyleVerticalCenter(
         textView: TextView,
         data: String?,

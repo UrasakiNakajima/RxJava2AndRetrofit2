@@ -103,7 +103,7 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         //        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
         //            @Override
         //            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        //                LogManager.INSTANCE.i(TAG, "onLoadMore");
+        //                LogManager.i(TAG, "onLoadMore");
         //                isRefresh = false;
         //
         //            }

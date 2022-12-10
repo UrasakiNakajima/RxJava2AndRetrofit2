@@ -193,8 +193,8 @@ object Base64AndFileManager {
 //        String[] str = {"112", "2321", "3231", "4443", "5321"};
 //        String[] sub1 = Arrays.copyOf(str, 3);
 //        String[] sub2 = Arrays.copyOfRange(str, 3, str.length);
-//        LogManager.INSTANCE.i(TAG, "Arrays.deepToString(sub1)******" + Arrays.deepToString(sub1));
-//        LogManager.INSTANCE.i(TAG, "Arrays.deepToString(sub2)******" + Arrays.deepToString(sub2));
+//        LogManager.i(TAG, "Arrays.deepToString(sub1)******" + Arrays.deepToString(sub1));
+//        LogManager.i(TAG, "Arrays.deepToString(sub2)******" + Arrays.deepToString(sub2));
         var base64Str: String? = null
         if (byteList.size > 0) {
             base64Str = ""

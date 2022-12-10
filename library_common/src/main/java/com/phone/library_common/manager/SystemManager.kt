@@ -16,6 +16,7 @@ object SystemManager {
      *
      * @return 返回当前系统语言。例如：当前设置的是“中文-中国”，则返回“zh-CN”
      */
+    @JvmStatic
     fun getSystemLanguage(): String? {
         return Locale.getDefault().language
     }
@@ -25,6 +26,7 @@ object SystemManager {
      *
      * @return 语言列表
      */
+    @JvmStatic
     fun getSystemLanguageList(): Array<Locale?>? {
         return Locale.getAvailableLocales()
     }
@@ -34,6 +36,7 @@ object SystemManager {
      *
      * @return 系统版本号
      */
+    @JvmStatic
     fun getSystemVersion(): String? {
         return Build.VERSION.RELEASE
     }
@@ -43,6 +46,7 @@ object SystemManager {
      *
      * @return 手机型号
      */
+    @JvmStatic
     fun getSystemModel(): String? {
         return Build.MODEL
     }
@@ -52,6 +56,7 @@ object SystemManager {
      *
      * @return 手机厂商
      */
+    @JvmStatic
     fun getDeviceBrand(): String? {
         return Build.BRAND
     }
@@ -61,6 +66,7 @@ object SystemManager {
      *
      * @return 手机IMEI
      */
+    @JvmStatic
     fun getIMEI(): String? {
         val telephonyManager =
             BaseApplication.get().getSystemService(Activity.TELEPHONY_SERVICE) as TelephonyManager
@@ -87,6 +93,7 @@ object SystemManager {
      *
      * @return 手机CPU_ABI
      */
+    @JvmStatic
     fun getDeviceCpuAbi(): String? {
         return Build.CPU_ABI
     }
@@ -96,6 +103,7 @@ object SystemManager {
      *
      * @return
      */
+    @JvmStatic
     fun getSystemId(): String {
         return SystemIdManager.getSystemId()
     }
