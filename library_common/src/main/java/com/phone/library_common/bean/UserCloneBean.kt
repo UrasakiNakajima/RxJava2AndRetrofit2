@@ -2,8 +2,6 @@ package com.phone.library_common.bean
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer
-import com.phone.library_common.bean.AddressBean
-import com.phone.library_common.bean.AddressBeanListConverter
 import org.greenrobot.greendao.annotation.Convert
 import java.math.BigDecimal
 

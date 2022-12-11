@@ -12,48 +12,18 @@ import android.widget.Toast
 
 abstract class BaseRCFrameLayout(context: Context) : RCFrameLayout(context) {
 
-    private val TAG = "BaseRCFrameLayout"
-    private var mActivity: Activity? = null
+    private val TAG = BaseRCFrameLayout::class.java.simpleName
+    private var mActivity: Activity
     protected var bodyParams: Map<String, String>? = null
-    private var intent: Intent? = null
-    private var bundle: Bundle? = null
 
     init {
         mActivity = context as Activity
         bodyParams = HashMap()
     }
 
-    protected abstract fun initLayout(): View?
+    abstract fun initData()
 
-    protected abstract fun initData()
-
-    protected abstract fun initViews()
-
-    protected open fun initViews(view: View?) {}
-
-    protected open fun initLoadData() {}
-
-    open fun showLoading() {}
-
-    open fun hideLoading() {}
-
-    protected open fun showToast(message: String?) {
-        Toast.makeText(mActivity, message, Toast.LENGTH_LONG).show()
-    }
-
-    protected open fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
-        intent = Intent(mActivity, cls)
-        bundle = Bundle()
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) { //如果参数不是null，才把参数传给后台
-                    bundle!!.putString(key, params[key])
-                }
-            }
-            intent!!.putExtras(bundle!!)
-        }
-        mActivity!!.startActivity(intent)
-    }
+    abstract fun initViews()
 
     private var mStartAnimator = false
 

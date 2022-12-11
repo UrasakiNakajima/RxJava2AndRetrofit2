@@ -87,8 +87,8 @@ class StandardUserDialog(val context: Context) {
 //                userBean.age = "23".toInt()
 //                userBean.birthday = "2000-10-10"
 //                userBean.salary = "7000".toDouble()
-                val addressBeanList: MutableList<AddressBean> =
-                    ArrayList()
+                val addressBeanList =
+                    mutableListOf<AddressBean>()
                 addressBeanList.add(AddressBean("北莱茵-威斯特法伦州", "波恩"))
                 addressBeanList.add(AddressBean("汉堡州", "汉堡"))
                 userBean.addressBeanList = addressBeanList
@@ -126,20 +126,20 @@ class StandardUserDialog(val context: Context) {
     }
 
     fun setUserData(userBean: UserBean) {
-        if (!TextUtils.isEmpty(userBean.userId)) {
-            edtUserId?.setText(userBean.userId)
+        userBean.userId?.let {
+            edtUserId?.setText(it)
         }
-        if (!TextUtils.isEmpty(userBean.password)) {
-            edtPassword?.setText(userBean.password)
+        userBean.password?.let {
+            edtPassword?.setText(it)
         }
-        if (!TextUtils.isEmpty(userBean.birthday)) {
-            edtBirthday?.setText(userBean.birthday)
+        userBean.birthday?.let {
+            edtBirthday?.setText(it)
         }
-        if (userBean.age != null) {
-            edtAge?.setText(userBean.age.toString())
+        userBean.age?.let {
+            edtAge?.setText(it.toString())
         }
-        if (userBean.salary != null) {
-            edtSalary?.setText(userBean.salary.toString())
+        userBean.salary?.let {
+            edtSalary?.setText(it.toString())
         }
     }
 

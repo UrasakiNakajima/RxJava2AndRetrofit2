@@ -30,11 +30,13 @@ class LogInterceptor : Interceptor {
             val stringBuilder = StringBuilder()
             if (request.body() is FormBody) {
                 val body = request.body() as FormBody?
-                for (i in 0 until body!!.size()) {
-                    stringBuilder.append(body.encodedName(i) + "=" + body.encodedValue(i) + ",")
+                body?.let {
+                    for (i in 0 until it.size()) {
+                        stringBuilder.append(it.encodedName(i) + "=" + it.encodedValue(i) + ",")
+                    }
+                    stringBuilder.delete(stringBuilder.length - 1, stringBuilder.length)
+                    LogManager.i(TAG, "| RequestParams:{$stringBuilder}")
                 }
-                stringBuilder.delete(stringBuilder.length - 1, stringBuilder.length)
-                LogManager.i(TAG, "| RequestParams:{$stringBuilder}")
             }
         }
         LogManager.i(TAG, "| BaseResponse:$content")

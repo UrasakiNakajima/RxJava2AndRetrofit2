@@ -99,7 +99,7 @@ class LaunchActivity : BaseRxAppActivity() {
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String?>,
+        permissions: Array<String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -120,12 +120,12 @@ class LaunchActivity : BaseRxAppActivity() {
                             TAG,
                             "onRequestPermissionsResult shouldShowRequestPermissionRationale*****" + ActivityCompat.shouldShowRequestPermissionRationale(
                                 this,
-                                permissions[i]!!
+                                permissions[i]
                             )
                         )
                         if (!ActivityCompat.shouldShowRequestPermissionRationale(
                                 this,
-                                permissions[i]!!
+                                permissions[i]
                             )
                         ) {
                             showSystemSetupDialog()
@@ -155,15 +155,15 @@ class LaunchActivity : BaseRxAppActivity() {
                 .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
                 .setPositiveButton("去授权") { dialog, which ->
                     cancelPermissionsDialog()
-                    intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri = Uri.fromParts("package", applicationContext.packageName, null)
-                    intent!!.data = uri
+                    intent.data = uri
                     startActivityForResult(intent, 207)
                 }
                 .create()
         }
-        mPermissionsDialog!!.setCancelable(false)
-        mPermissionsDialog!!.show()
+        mPermissionsDialog?.setCancelable(false)
+        mPermissionsDialog?.show()
     }
 
     /**
@@ -185,18 +185,16 @@ class LaunchActivity : BaseRxAppActivity() {
                 }
                 .create()
         }
-        mPermissionsDialog!!.setCancelable(false)
-        mPermissionsDialog!!.show()
+        mPermissionsDialog?.setCancelable(false)
+        mPermissionsDialog?.show()
     }
 
     /**
      * 关闭对话框
      */
     private fun cancelPermissionsDialog() {
-        if (mPermissionsDialog != null) {
-            mPermissionsDialog!!.cancel()
-            mPermissionsDialog = null
-        }
+        mPermissionsDialog?.cancel()
+        mPermissionsDialog = null
     }
 
 }

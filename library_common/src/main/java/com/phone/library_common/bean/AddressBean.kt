@@ -1,9 +1,9 @@
 package com.phone.library_common.bean
 
-class AddressBean(county: String?, city: String?) : Cloneable {
+class AddressBean(county: String, city: String) : Cloneable {
 
-    var county: String? = null
-    var city: String? = null
+    var county: String? = county
+    var city: String? = city
 
     @Throws(CloneNotSupportedException::class)
     public override fun clone(): AddressBean {

@@ -114,6 +114,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
         showLoading()
         ThreadPoolManager.get().createSyncThreadPool {
             queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
+            LogManager.i(TAG, "queryUserList*****${queryUserList.size}")
             MainThreadManager {
                 if (queryUserList.size > 0) {
 //            /**
@@ -154,7 +155,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                     + queryUserList.size
                                     + ResourcesManager.getString(R.string.users_b),
                             ResourcesManager.getString(R.string.created_b).length,
-                            ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length + 1,
+                            ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length,
                             28f
                         )
                     }
@@ -181,7 +182,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                     + 0
                                     + ResourcesManager.getString(R.string.users_b),
                             ResourcesManager.getString(R.string.created_b).length,
-                            ResourcesManager.getString(R.string.created_b).length + 2,
+                            ResourcesManager.getString(R.string.created_b).length + 1,
                             28f
                         )
                     }
@@ -222,17 +223,16 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                         ThreadPoolManager.get().createSyncThreadPool {
 //                            List<UserBean> userBeanAddList = new ArrayList<>()
 //                            for (int i = 0 i < 20000 i++) {
-                            val jsonStr =
-                                JSONObject.toJSONString(success)
-                            val userBean =
-                                JSONObject.parseObject(
-                                    jsonStr,
-                                    UserBean::class.java
-                                )
+//                            val jsonStr =
+//                                GsonManager().toJson(success)
+//                            val userBean = GsonManager().convert(
+//                                jsonStr,
+//                                UserBean::class.java
+//                            )
                             //                                userBeanAddList.add(userBean)
 //                            }
 //                            userBeanDaoManager?.insertInTx(userBeanAddList)
-                            userBeanDaoManager?.insert(userBean)
+                            userBeanDaoManager?.insert(success)
                         }
                     }
                     ThreadPoolManager.get().createSyncThreadPool {
@@ -249,7 +249,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                                 + queryUserList.size
                                                 + ResourcesManager.getString(R.string.users_b),
                                         ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length + 1,
+                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length,
                                         28f
                                     )
                                 }
@@ -262,7 +262,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                                 + 0
                                                 + ResourcesManager.getString(R.string.users_b),
                                         ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + 2,
+                                        ResourcesManager.getString(R.string.created_b).length + 1,
                                         28f
                                     )
                                 }
@@ -330,7 +330,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                                 + queryUserList.size
                                                 + ResourcesManager.getString(R.string.users_b),
                                         ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length + 1,
+                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length,
                                         28f
                                     )
                                 }
@@ -343,7 +343,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                                 + 0
                                                 + ResourcesManager.getString(R.string.users_b),
                                         ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + 2,
+                                        ResourcesManager.getString(R.string.created_b).length + 1,
                                         28f
                                     )
                                 }
@@ -390,7 +390,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                                 + queryUserList.size
                                                 + ResourcesManager.getString(R.string.users_b),
                                         ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length + 1,
+                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length ,
                                         28f
                                     )
                                 }
@@ -403,7 +403,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                                 + 0
                                                 + ResourcesManager.getString(R.string.users_b),
                                         ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + 2,
+                                        ResourcesManager.getString(R.string.created_b).length + 1,
                                         28f
                                     )
                                 }
@@ -449,7 +449,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                                 + queryUserList.size
                                                 + ResourcesManager.getString(R.string.users_b),
                                         ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length + 1,
+                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length,
                                         28f
                                     )
                                 }
@@ -462,7 +462,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                                 + 0
                                                 + ResourcesManager.getString(R.string.users_b),
                                         ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + 2,
+                                        ResourcesManager.getString(R.string.created_b).length + 1,
                                         28f
                                     )
                                 }

@@ -219,7 +219,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                     if (number == 1) {
                         val baseMvpRxAppActivity =
                             mRxAppCompatActivity as BaseMvpRxAppActivity<*, *>
-                        baseMvpRxAppActivity.getActivityPageManager()?.exitApp2()
+                        baseMvpRxAppActivity.getActivityPageManager()?.exitApp()
                     } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                         val userBean: UserBean =

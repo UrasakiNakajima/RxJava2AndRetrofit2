@@ -52,17 +52,19 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
     override fun onStart() {
         super.onStart()
         // 下面这些设置必须在此方法(onStart())中才有效
-        val window = dialog!!.window
+        val window = dialog?.window
         // 如果不设置这句代码, 那么弹框就会与四边都有一定的距离
         //        window.setBackgroundDrawableResource(android.R.color.transparent);
-        window!!.setBackgroundDrawableResource(R.drawable.corners_14_color_white)
-        // 设置动画
-        //		window.setWindowAnimations(R.style.BottomDialogAnimation);
-        val params = window.attributes
-        params.gravity = Gravity.BOTTOM
-        // 如果不设置宽度,那么即使你在布局中设置宽度为 match_parent 也不会起作用
-        params.width = resources.displayMetrics.widthPixels
-        window.attributes = params
+        window?.let {
+            window.setBackgroundDrawableResource(R.drawable.corners_14_color_white)
+            // 设置动画
+            //		window.setWindowAnimations(R.style.BottomDialogAnimation);
+            val params = window.attributes
+            params.gravity = Gravity.BOTTOM
+            // 如果不设置宽度,那么即使你在布局中设置宽度为 match_parent 也不会起作用
+            params.width = resources.displayMetrics.widthPixels
+            window.attributes = params
+        }
     }
 
     private var onDialogCallback: OnDialogCallback<Int>? = null

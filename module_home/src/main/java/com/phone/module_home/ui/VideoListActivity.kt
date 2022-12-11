@@ -43,7 +43,7 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         //        isRefresh = true;
         val intent = intent
         val bundle = intent.extras
-        val data = bundle!!.getString("data")
+        val data = bundle?.getString("data")
         i(TAG, "data*****$data")
         val videoListBean = JSONObject.parseObject(
             data,
@@ -62,8 +62,8 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         refreshLayout = findViewById<View>(R.id.refresh_layout) as SmartRefreshLayout
         rcvData = findViewById<View>(R.id.rcv_data) as RecyclerView
         setToolbar(false, R.color.color_FFE066FF)
-        imvBack!!.setColorFilter(ResourcesManager.getColor(R.color.color_FFFFFFFF))
-        layoutBack!!.setOnClickListener { finish() }
+        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.color_FFFFFFFF))
+        layoutBack?.setOnClickListener { finish() }
         initAdapter()
 
         //        Glide.with(this).load("")
@@ -86,8 +86,8 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
     private fun initAdapter() {
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        rcvData!!.layoutManager = linearLayoutManager
-        rcvData!!.itemAnimator = DefaultItemAnimator()
+        rcvData?.layoutManager = linearLayoutManager
+        rcvData?.itemAnimator = DefaultItemAnimator()
         val videoListAdapter = VideoListAdapter(this)
         //        videoListAdapter.setOnItemViewClickListener(new RcvOnItemViewClickListener() {
         //            @Override
@@ -95,11 +95,11 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         //
         //            }
         //        });
-        rcvData!!.adapter = videoListAdapter
+        rcvData?.adapter = videoListAdapter
         videoListAdapter.clearData()
         videoListAdapter.addData(videoListBeanList)
-        refreshLayout!!.setEnableRefresh(false)
-        refreshLayout!!.setEnableLoadMore(false)
+        refreshLayout?.setEnableRefresh(false)
+        refreshLayout?.setEnableLoadMore(false)
         //        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
         //            @Override
         //            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

@@ -23,7 +23,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
 
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
-    protected var mRxAppCompatActivity: RxAppCompatActivity? = null
+    protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected var baseApplication: BaseApplication? = null
 
     protected var rootView: View? = null
@@ -40,8 +40,8 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mRxAppCompatActivity = activity as RxAppCompatActivity?
-        baseApplication = mRxAppCompatActivity?.application as BaseApplication
+        mRxAppCompatActivity = activity as RxAppCompatActivity
+        baseApplication = mRxAppCompatActivity.application as BaseApplication
         initData()
         initViews()
         initLoadData()
@@ -57,7 +57,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
 
     protected fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!mRxAppCompatActivity!!.isFinishing) {
+        if (!mRxAppCompatActivity.isFinishing) {
             val toast: Toast
             val duration: Int
             duration = if (isLongToast) {
@@ -77,7 +77,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
         bgColor: Int, height: Int,
         roundRadius: Int, message: String?
     ) {
-        val frameLayout = FrameLayout(mRxAppCompatActivity!!)
+        val frameLayout = FrameLayout(mRxAppCompatActivity)
         val layoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
@@ -142,15 +142,8 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
     }
 
     override fun onDestroyView() {
-        if (mRxAppCompatActivity != null) {
-            mRxAppCompatActivity = null
-        }
-        if (baseApplication != null) {
-            baseApplication = null
-        }
-        if (rootView != null) {
-            rootView = null
-        }
+        baseApplication = null
+        rootView = null
         super.onDestroyView()
     }
 

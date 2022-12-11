@@ -72,7 +72,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
             }
 
             //结束程序
-            ActivityPageManager.get()?.exitApp2()
+            ActivityPageManager.get().exitApp()
         }
     }
 

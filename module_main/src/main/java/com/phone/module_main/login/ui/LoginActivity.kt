@@ -48,7 +48,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     }
 
     override fun initData() {
-        ActivityPageManager.get()?.finishAllActivityExcept(LoginActivity::class.java)
+        ActivityPageManager.get().finishAllActivityExcept(LoginActivity::class.java)
     }
 
     override fun initViews() {

@@ -38,6 +38,7 @@ class ActivityPageManager private constructor() {
 
         //       Synchronized添加后就是线程安全的的懒汉模式
         @Synchronized
+        @JvmStatic
         fun get(): ActivityPageManager {
             if (instance == null) {
                 instance = ActivityPageManager()
@@ -195,9 +196,9 @@ class ActivityPageManager private constructor() {
     /**
      * 退出应用程序（最後一個存活的Activity退出的时候（onDestroy）做了退出應用程序處理）
      */
-    fun exitApp2() {
+    fun exitApp() {
         try {
-            LogManager.i(TAG, "exitApp2")
+            LogManager.i(TAG, "exitApp")
             finishAllActivity()
         } catch (e: Exception) {
             e.printStackTrace()
