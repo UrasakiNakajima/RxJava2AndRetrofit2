@@ -390,7 +390,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                                 + queryUserList.size
                                                 + ResourcesManager.getString(R.string.users_b),
                                         ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length ,
+                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length,
                                         28f
                                     )
                                 }

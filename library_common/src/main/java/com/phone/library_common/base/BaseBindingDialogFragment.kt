@@ -166,14 +166,6 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
         startActivityForResult(intent, requestCode)
     }
 
-    protected fun isEmpty(dataStr: String?): Boolean {
-        return if (dataStr != null && "" != dataStr) {
-            false
-        } else {
-            true
-        }
-    }
-
     override fun onDestroyView() {
         mRxAppCompatActivity = null
         mBaseApplication = null

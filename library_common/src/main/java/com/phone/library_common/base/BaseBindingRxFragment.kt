@@ -133,14 +133,6 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
         startActivityForResult(intent, requestCode)
     }
 
-    protected fun isEmpty(dataStr: String?): Boolean {
-        return if (dataStr != null && "" != dataStr) {
-            false
-        } else {
-            true
-        }
-    }
-
     override fun onDestroyView() {
         baseApplication = null
         rootView = null

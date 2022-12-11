@@ -81,10 +81,12 @@ class ThreadPoolManager {
 
     fun shutdownSyncThreadPool() {
         syncThreadPool?.shutdown()
+        syncThreadPool = null
     }
 
     fun shutdownNowSyncThreadPool() {
         syncThreadPool?.shutdownNow()
+        syncThreadPool = null
     }
 
 }

@@ -1,4 +1,4 @@
-package com.phone.library_common.adapter
+package com.phone.library_common.base
 
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
@@ -12,7 +12,6 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.phone.library_common.BaseApplication
-import com.phone.library_common.base.BaseRxFragment
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 
@@ -149,14 +148,6 @@ abstract class BaseRxFragment : RxFragment() {
             intent.putExtras(bundle)
         }
         startActivityForResult(intent, requestCode)
-    }
-
-    protected fun isEmpty(dataStr: String?): Boolean {
-        return if (dataStr != null && "" != dataStr) {
-            false
-        } else {
-            true
-        }
     }
 
     override fun onDestroyView() {
