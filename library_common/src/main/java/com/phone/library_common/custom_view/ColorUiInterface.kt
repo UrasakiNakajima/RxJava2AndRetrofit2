@@ -9,7 +9,7 @@ import android.view.View
  */
 interface ColorUiInterface {
 
-    fun getView(): View?
+    fun getView(): View
 
-    fun setTheme(themeId: Theme?)
+    fun setTheme(themeId: Theme)
 }

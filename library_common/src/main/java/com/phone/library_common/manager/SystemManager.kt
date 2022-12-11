@@ -114,9 +114,9 @@ object SystemManager {
 //     * @return
 //     */
 //    public static String getDeviceUUid() {
-//        String androidId = DeviceUtils.getAndroidID();
-//        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) androidId.hashCode() << 32));
-//        return deviceUuid.toString();
+//        String androidId = DeviceUtils.getAndroidID()
+//        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) androidId.hashCode() << 32))
+//        return deviceUuid.toString()
 //    }
 
 }

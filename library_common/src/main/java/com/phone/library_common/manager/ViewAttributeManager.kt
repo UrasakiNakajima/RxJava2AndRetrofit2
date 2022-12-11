@@ -63,21 +63,19 @@ object ViewAttributeManager {
     }
 
     @JvmStatic
-    fun applyBackgroundDrawable(ci: ColorUiInterface?, theme: Theme, paramInt: Int) {
+    fun applyBackgroundDrawable(ci: ColorUiInterface, theme: Theme, paramInt: Int) {
         val ta = theme.obtainStyledAttributes(intArrayOf(paramInt))
         val drawable = ta.getDrawable(0)
-        if (null != ci) {
-            ci.getView()!!.setBackgroundDrawable(drawable)
-        }
+        ci.getView().setBackgroundDrawable(drawable)
         ta.recycle()
     }
 
     @JvmStatic
-    fun applyImageDrawable(ci: ColorUiInterface?, theme: Theme, paramInt: Int) {
+    fun applyImageDrawable(ci: ColorUiInterface, theme: Theme, paramInt: Int) {
         val ta = theme.obtainStyledAttributes(intArrayOf(paramInt))
         val drawable = ta.getDrawable(0)
         if (null != ci && ci is ImageView) {
-            (ci.getView() as ImageView?)!!.setImageDrawable(drawable)
+            (ci.getView() as ImageView).setImageDrawable(drawable)
         }
         ta.recycle()
     }
@@ -87,7 +85,7 @@ object ViewAttributeManager {
         val ta = theme.obtainStyledAttributes(intArrayOf(paramInt))
         val resourceId = ta.getResourceId(0, 0)
         if (ci is TextView) {
-            (ci.getView() as TextView?)!!.setTextAppearance(ci.getView()!!.context, resourceId)
+            (ci.getView() as TextView).setTextAppearance(ci.getView().context, resourceId)
         }
         ta.recycle()
     }
@@ -97,7 +95,7 @@ object ViewAttributeManager {
         val ta = theme.obtainStyledAttributes(intArrayOf(paramInt))
         val resourceId = ta.getColor(0, 0)
         if (ci is TextView) {
-            (ci.getView() as TextView?)!!.setTextColor(resourceId)
+            (ci.getView() as TextView).setTextColor(resourceId)
         }
         ta.recycle()
     }
@@ -107,7 +105,7 @@ object ViewAttributeManager {
         val ta = theme.obtainStyledAttributes(intArrayOf(paramInt))
         val resourceId = ta.getColor(0, 0)
         if (ci is TextView) {
-            (ci.getView() as TextView?)!!.setLinkTextColor(resourceId)
+            (ci.getView() as TextView).setLinkTextColor(resourceId)
         }
         ta.recycle()
     }

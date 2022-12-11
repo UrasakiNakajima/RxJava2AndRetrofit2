@@ -17,14 +17,14 @@ import java.security.MessageDigest
  */
 
 class GlideRoundTransform(
-    context: Context?,
+    context: Context,
     leftTop_radius: Float,
     leftBottom_radius: Float,
     rightTop_radius: Float,
     rightBottom_radius: Float
 ) : Transformation<Bitmap> {
-    private var mBitmapPool: BitmapPool? = null
 
+    private var mBitmapPool: BitmapPool
     private var leftTop_radius = 0f
     private var leftBottom_radius = 0f
     private var rightTop_radius = 0f
@@ -34,9 +34,8 @@ class GlideRoundTransform(
     private var isLeftBottom = false
     private var isRightBottom = false
 
-
     init {
-        mBitmapPool = Glide.get(context!!).bitmapPool
+        mBitmapPool = Glide.get(context).bitmapPool
         this.leftTop_radius = leftTop_radius
         if (leftTop_radius != 0f) {
             isLeftTop = true
@@ -102,7 +101,7 @@ class GlideRoundTransform(
         leftBottom_radius *= finalHeight.toFloat() / outHeight.toFloat()
         rightTop_radius *= finalHeight.toFloat() / outHeight.toFloat()
         rightBottom_radius *= finalHeight.toFloat() / outHeight.toFloat()
-        var outBitmap: Bitmap? = mBitmapPool!![finalWidth, finalHeight, Bitmap.Config.ARGB_8888]
+        var outBitmap: Bitmap? = mBitmapPool[finalWidth, finalHeight, Bitmap.Config.ARGB_8888]
         if (outBitmap == null) {
             outBitmap = Bitmap.createBitmap(finalWidth, finalHeight, Bitmap.Config.ARGB_8888)
         }
@@ -137,7 +136,7 @@ class GlideRoundTransform(
         val path = Path()
         path.addRoundRect(rectF, outerR, Path.Direction.CW)
         canvas.drawPath(path, paint)
-        return BitmapResource.obtain(outBitmap, mBitmapPool!!)!!
+        return BitmapResource.obtain(outBitmap, mBitmapPool)!!
     }
 
     override fun updateDiskCacheKey(messageDigest: MessageDigest) {

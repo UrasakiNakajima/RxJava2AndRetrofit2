@@ -23,6 +23,7 @@ object DateManager {
      * @return
      */
     @SuppressLint("SimpleDateFormat")
+    @JvmStatic
     fun dateToDataStr(date: Date): String? { //可根据需要自行截取数据显示
         LogManager.i(TAG, "getDate choice date millis: " + date.time)
         val format = SimpleDateFormat("yyyy-MM-dd")
@@ -36,6 +37,7 @@ object DateManager {
      * @return
      */
     @SuppressLint("SimpleDateFormat")
+    @JvmStatic
     fun dateToTimeStr(date: Date): String? { //可根据需要自行截取数据显示
         LogManager.i(TAG, "getTime date millis: " + date.time)
         val format = SimpleDateFormat("HH:mm")
@@ -50,26 +52,24 @@ object DateManager {
      */
     @SuppressLint("SimpleDateFormat")
     @Throws(ParseException::class)
-    fun dateStrToMillisecond(dateStr: String?): Long? {
+    @JvmStatic
+    fun dateStrToMillisecond(dateStr: String): Long? {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT+08"))
         //24小时制
         val simpleDateFormat =
             SimpleDateFormat("yyyy-MM-dd")
-        return dateStr?.let {
-            simpleDateFormat.parse(dateStr)?.time
-        }
+        return simpleDateFormat.parse(dateStr)?.time
     }
 
     /**
      * String 转 Data
      */
-    fun stringConvertDate(time: String?): Date? {
+    @JvmStatic
+    fun stringConvertDate(time: String): Date? {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA)
         var data: Date? = null
         try {
-            time?.let {
-                data = sdf.parse(time)
-            }
+            data = sdf.parse(time)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -79,47 +79,49 @@ object DateManager {
     /**
      * 返回发布时间距离当前的时间
      */
-    fun timeAgo(createdTime: Date?): String? {
+    @JvmStatic
+    fun timeAgo(createdTime: Date): String? {
         val format = SimpleDateFormat("MM-dd HH:mm", Locale.CHINA)
-        return createdTime?.let {
-            val agoTimeInMin =
-                (Date(System.currentTimeMillis()).time - createdTime.time) / 1000 / 60
+        val agoTimeInMin =
+            (Date(System.currentTimeMillis()).time - createdTime.time) / 1000 / 60
+        return if (agoTimeInMin <= 1) {
             // 如果在当前时间以前一分钟内
-            if (agoTimeInMin <= 1) {
-                "刚刚"
-            } else if (agoTimeInMin <= 60) {
-                // 如果传入的参数时间在当前时间以前10分钟之内
-                agoTimeInMin.toString() + "分钟前"
-            } else if (agoTimeInMin <= 60 * 24) {
-                agoTimeInMin.div(60).toString() + "小时前"
-            } else if (agoTimeInMin <= 60 * 24 * 2) {
-                agoTimeInMin.div(60 * 24).toString() + "天前"
-            } else {
-                format.format(createdTime)
-            }
+            "刚刚"
+        } else if (agoTimeInMin <= 60) {
+            // 如果传入的参数时间在当前时间以前10分钟之内
+            agoTimeInMin.toString() + "分钟前"
+        } else if (agoTimeInMin <= 60 * 24) {
+            agoTimeInMin.div(60).toString() + "小时前"
+        } else if (agoTimeInMin <= 60 * 24 * 2) {
+            agoTimeInMin.div(60 * 24).toString() + "天前"
+        } else {
+            format.format(createdTime)
         }
     }
 
     /**
      * 根据时间戳 返回发布时间距离当前的时间
      */
-    fun getTimeStampAgo(timeStamp: String?): String? {
-        val time = timeStamp?.toLong()
+    @JvmStatic
+    fun getTimeStampAgo(timeStamp: String): String? {
+        val time = timeStamp.toLong()
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+        val string = sdf.format(time * 1000L)
+        var date: Date? = null
+        try {
+            date = sdf.parse(string)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
 
-        return time?.let {
-            val string = sdf.format(time * 1000L)
-            var date: Date? = null
-            try {
-                date = sdf.parse(string)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-            timeAgo(date)
+        return date?.let {
+            timeAgo(it)
         }
     }
 
+    @JvmStatic
     fun getCurrentTimeStamp(): String {
         return (System.currentTimeMillis() / 1000).toString()
     }
+
 }

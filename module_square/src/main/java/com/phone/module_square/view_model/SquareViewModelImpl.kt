@@ -40,7 +40,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                     if (!TextUtils.isEmpty(success)) {
                         val response =
                             GsonManager()
-                                .convert(success, SquareBean::class.java)
+                                .convert(success ?: "", SquareBean::class.java)
                         val responseData = response.data?.datas ?: mutableListOf()
                         if (responseData.size > 0) {
                             dataxRxFragmentSuccess.value = responseData

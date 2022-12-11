@@ -43,18 +43,14 @@ class SoftKeyboardManager(activity: Activity) {
 
                 //根视图显示高度变小超过200，可以看作软键盘显示了
                 if (rootViewVisibleHeight - visibleHeight > 200) {
-                    if (onSoftKeyBoardChangeListener != null) {
-                        onSoftKeyBoardChangeListener!!.keyBoardShow(rootViewVisibleHeight - visibleHeight)
-                    }
+                    onSoftKeyBoardChangeListener?.keyBoardShow(rootViewVisibleHeight - visibleHeight)
                     rootViewVisibleHeight = visibleHeight
                     return@OnGlobalLayoutListener
                 }
 
                 //根视图显示高度变大超过200，可以看作软键盘隐藏了
                 if (visibleHeight - rootViewVisibleHeight > 200) {
-                    if (onSoftKeyBoardChangeListener != null) {
-                        onSoftKeyBoardChangeListener!!.keyBoardHide(visibleHeight - rootViewVisibleHeight)
-                    }
+                    onSoftKeyBoardChangeListener?.keyBoardHide(visibleHeight - rootViewVisibleHeight)
                     rootViewVisibleHeight = visibleHeight
                     return@OnGlobalLayoutListener
                 }
@@ -98,12 +94,14 @@ class SoftKeyboardManager(activity: Activity) {
         fun hideInputMethod(activity: Activity) {
             val inputMethodManager =
                 activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            if (inputMethodManager.isActive && activity.currentFocus != null) {
-                if (activity.currentFocus!!.windowToken != null) {
-                    inputMethodManager.hideSoftInputFromWindow(
-                        activity.currentFocus!!.windowToken,
-                        InputMethodManager.HIDE_NOT_ALWAYS
-                    )
+            if (inputMethodManager.isActive) {
+                activity.currentFocus?.let {
+                    if (it.windowToken != null) {
+                        inputMethodManager.hideSoftInputFromWindow(
+                            it.windowToken,
+                            InputMethodManager.HIDE_NOT_ALWAYS
+                        )
+                    }
                 }
             }
         }

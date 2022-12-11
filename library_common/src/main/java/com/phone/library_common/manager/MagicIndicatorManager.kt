@@ -6,6 +6,7 @@ import net.lucode.hackware.magicindicator.MagicIndicator
 
 object MagicIndicatorManager {
 
+    @JvmStatic
     fun bindForViewPager2(vp: ViewPager2, miTabs: MagicIndicator) {
         vp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrollStateChanged(state: Int) {
@@ -25,6 +26,7 @@ object MagicIndicatorManager {
         })
     }
 
+    @JvmStatic
     fun bindForViewPager(vp: ViewPager, miTabs: MagicIndicator) {
         vp.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {

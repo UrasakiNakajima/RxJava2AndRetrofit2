@@ -18,9 +18,9 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Note that only one observer is going to be notified of changes.
  *
  * 主要是为了解决Fragment初次创建会执行生命周期的onViewCreated方法，会注册一次（在onViewCreated方法进行注册，
- * 注册方法是viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)，具体看我的项目），跳到
+ * 注册方法是viewModel.getDataxSuccess().observe(this, dataxSuccessObserver)，具体看我的项目），跳到
  * 别的Fragment或者Activity，再返回当前Fragment时，又会执行生命周期的onViewCreated方法，然后再注册一次（在
- * onViewCreated方法进行注册，viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)，
+ * onViewCreated方法进行注册，viewModel.getDataxSuccess().observe(this, dataxSuccessObserver)，
  * 具体看我的项目），所以在这种情况下，普通的MutableLiveData会注册多次后，会回调两次数据（按说会回调多次，但是
  * 实际上只回调两次，具体原因请查看https://blog.csdn.net/vivo_tech/article/details/122553764），我们其实
  * 只需要回调一次数据就可以了，回调多次，会消耗手机性能，用这个SingleLiveData来写，SingleLiveData注册多次，
@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  *
  *
  * 感受：一开始我也没注意到这种情况，还以为MutableLiveData注册多次
- * （注册方法是viewModel!!.getDataxSuccess().observe(this, dataxSuccessObserver!!)，具体看我的项目），
+ * （注册方法是viewModel.getDataxSuccess().observe(this, dataxSuccessObserver)，具体看我的项目），
  * 只回调一次，现实是MutableLiveData注册多次，按说会回调多次，但是实际上只回调两次（Android真是坑多，我也是
  * 服了，不知道设计人员为什么这么设计，真无语。。。）
  *

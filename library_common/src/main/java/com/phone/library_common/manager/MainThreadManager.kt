@@ -9,9 +9,7 @@ class MainThreadManager {
     private var mainThreadHandler: Handler? = null
     private var onCommonSuccessCallback: OnCommonSuccessCallback? = null
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(onCommonSuccessCallback: OnCommonSuccessCallback) {
         if (Looper.myLooper() != Looper.getMainLooper()) {
@@ -19,9 +17,9 @@ class MainThreadManager {
             // If we finish marking off of the main thread, we need to
             // actually do it on the main thread to ensure correct ordering.
             mainThreadHandler = Handler(Looper.getMainLooper())
-            mainThreadHandler!!.post {
+            mainThreadHandler?.post {
                 onCommonSuccessCallback.onSuccess()
-                mainThreadHandler!!.removeCallbacksAndMessages(null)
+                mainThreadHandler?.removeCallbacksAndMessages(null)
                 mainThreadHandler = null
             }
         } else {
@@ -42,13 +40,13 @@ class MainThreadManager {
             // If we finish marking off of the main thread, we need to
             // actually do it on the main thread to ensure correct ordering.
             mainThreadHandler = Handler(Looper.getMainLooper())
-            mainThreadHandler!!.post {
-                onCommonSuccessCallback!!.onSuccess()
-                mainThreadHandler!!.removeCallbacksAndMessages(null)
+            mainThreadHandler?.post {
+                onCommonSuccessCallback?.onSuccess()
+                mainThreadHandler?.removeCallbacksAndMessages(null)
                 mainThreadHandler = null
             }
         } else {
-            onCommonSuccessCallback!!.onSuccess()
+            onCommonSuccessCallback?.onSuccess()
         }
     }
 

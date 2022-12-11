@@ -461,11 +461,14 @@ object PictureManager {
     private fun getRealPathFromURI(context: Context, contentUri: Uri): String? {
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = context.contentResolver.query(contentUri, proj, null, null, null)
-        val columnIndex = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        cursor.moveToFirst()
-        val fileStr = cursor.getString(columnIndex)
-        cursor.close()
-        return fileStr
+        cursor?.let {
+            val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor.moveToFirst()
+            val fileStr = cursor.getString(columnIndex)
+            cursor.close()
+            return fileStr
+        }
+        return null
     }
 
     /**

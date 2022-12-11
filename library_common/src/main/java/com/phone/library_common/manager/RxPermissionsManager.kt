@@ -21,6 +21,7 @@ class RxPermissionsManager {
         private var instance: RxPermissionsManager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
+        @JvmStatic
         @Synchronized
         fun get(): RxPermissionsManager {
             if (instance == null) {

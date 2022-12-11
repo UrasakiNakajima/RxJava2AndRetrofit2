@@ -13,6 +13,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun additionDouble(m1: Double, m2: Double, scale: Int): Double {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -25,6 +26,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun additionDoubleToStr(m1: Double, m2: Double, scale: Int): String? {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -37,6 +39,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun subtractionDouble(m1: Double, m2: Double, scale: Int): Double {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -49,6 +52,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun subtractionDoubleToStr(m1: Double, m2: Double, scale: Int): String? {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -61,6 +65,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun multiplicationDouble(m1: Double, m2: Double, scale: Int): Double {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -73,6 +78,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun multiplicationDoubleToStr(m1: Double, m2: Double, scale: Int): String? {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -85,6 +91,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun multiplicationDoubleToStr(m1: String?, m2: String?, scale: Int): String? {
         val p1 = BigDecimal(m1)
         val p2 = BigDecimal(m2)
@@ -98,6 +105,7 @@ object BigDecimalManager {
      * @param   scale
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun divisionDouble(m1: Double, m2: Double, scale: Int): Double {
         require(scale >= 0) { "Parameter error" }
         val p1 = BigDecimal(java.lang.Double.toString(m1))
@@ -112,6 +120,7 @@ object BigDecimalManager {
      * @param   scale
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun divisionDoubleToStr(m1: Double, m2: Double, scale: Int): String? {
         require(scale >= 0) { "Parameter error" }
         val p1 = BigDecimal(java.lang.Double.toString(m1))
@@ -124,6 +133,7 @@ object BigDecimalManager {
      * @param m1
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun getDoubleKeepDecimals(m1: Double, scale: Int): Double {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         return p1.setScale(scale, BigDecimal.ROUND_HALF_UP).toDouble()
@@ -134,6 +144,7 @@ object BigDecimalManager {
      * @param m1
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun getDoubleKeepDecimalsToStr(m1: Double, scale: Int): String? {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         return p1.setScale(scale, BigDecimal.ROUND_HALF_UP).toPlainString()
@@ -146,6 +157,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun additionDoubleCompatible(m1: Double, m2: Double, scale: Int): Double {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -159,6 +171,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun additionDoubleCompatible(m1: String?, m2: String?, scale: Int): Double {
         val p1 = BigDecimal(m1)
         val p2 = BigDecimal(m2)
@@ -173,6 +186,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun additionDoubleCompatibleToStr(m1: String?, m2: String?, scale: Int): String? {
         val p1 = BigDecimal(m1)
         val p2 = BigDecimal(m2)
@@ -186,6 +200,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun subtractionDoubleCompatible(m1: Double, m2: Double, scale: Int): Double {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -199,6 +214,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun subtractionDoubleCompatible(m1: String?, m2: String?, scale: Int): Double {
         val p1 = BigDecimal(m1)
         val p2 = BigDecimal(m2)
@@ -213,6 +229,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun subtractionDoubleCompatibleToStr(m1: String?, m2: String?, scale: Int): String? {
         val p1 = BigDecimal(m1)
         val p2 = BigDecimal(m2)
@@ -226,6 +243,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun multiplicationDoubleCompatible(m1: Double, m2: Double, scale: Int): Double {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -240,6 +258,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun multiplicationDoubleCompatibleToStr(m1: Double, m2: Double, scale: Int): String? {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -254,6 +273,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun multiplicationDoubleCompatibleToStr(m1: String?, m2: String?, scale: Int): String? {
         val p1 = BigDecimal(m1)
         val p2 = BigDecimal(m2)
@@ -267,6 +287,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun divisionDoubleCompatible(m1: Double, m2: Double, scale: Int): Double {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -281,6 +302,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun divisionDoubleCompatibleToStr(m1: Double, m2: Double, scale: Int): String? {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val p2 = BigDecimal(java.lang.Double.toString(m2))
@@ -294,6 +316,7 @@ object BigDecimalManager {
      * @param m2
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun divisionDoubleCompatible(m1: String?, m2: String?, scale: Int): Double {
         val p1 = BigDecimal(m1)
         val p2 = BigDecimal(m2)
@@ -306,6 +329,7 @@ object BigDecimalManager {
      * @param m1
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun getDoubleKeepDecimalsCompatible(m1: Double, scale: Int): Double {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val value = p1.setScale(scale, BigDecimal.ROUND_DOWN).toDouble()
@@ -318,6 +342,7 @@ object BigDecimalManager {
      * @param m1
      * @return  不加doubleValue()则, 返回BigDecimal对象
      */
+    @JvmStatic
     fun getDoubleKeepDecimalsCompatibleToStr(m1: Double, scale: Int): String? {
         val p1 = BigDecimal(java.lang.Double.toString(m1))
         val value = p1.setScale(scale, BigDecimal.ROUND_DOWN).toDouble()

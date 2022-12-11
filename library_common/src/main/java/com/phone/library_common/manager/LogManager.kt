@@ -29,6 +29,7 @@ object LogManager {
         }
     }
 
+    @JvmStatic
     fun i(TAG: String, message: String, throwable: Throwable?) {
         if (isOpenLog) {
             val strLength = message.length
@@ -48,7 +49,7 @@ object LogManager {
         }
     }
 
-
+    @JvmStatic
     fun e(TAG: String, message: String) {
         if (isOpenLog) {
             val strLength = message.length
@@ -68,6 +69,7 @@ object LogManager {
         }
     }
 
+    @JvmStatic
     fun e(TAG: String, message: String, throwable: Throwable?) {
         if (isOpenLog) {
             val strLength = message.length

@@ -56,6 +56,7 @@ class Okhttp3Manager {
         private var instance: Okhttp3Manager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
+        @JvmStatic
         @Synchronized
         fun get(): Okhttp3Manager {
             if (instance == null) {

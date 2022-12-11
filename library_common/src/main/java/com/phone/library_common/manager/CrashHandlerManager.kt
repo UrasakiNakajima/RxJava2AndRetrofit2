@@ -44,15 +44,15 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
      * @return
      */
     companion object {
-        private var instance: CrashHandlerManager? = null;
+        private var instance: CrashHandlerManager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
         @Synchronized
         fun get(): CrashHandlerManager? {
             if (instance == null) {
-                instance = CrashHandlerManager();
+                instance = CrashHandlerManager()
             }
-            return instance;
+            return instance
         }
     }
 
@@ -88,14 +88,14 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
             return false
         }
 
-//        final String msg = throwable.getLocalizedMessage();
+//        final String msg = throwable.getLocalizedMessage()
 //        new Thread() {
 //            public void run() {
-//                Looper.prepare();
-//                Toast.makeText(mContext, "msg" + msg, Toast.LENGTH_LONG).show();
-//                Looper.loop();
+//                Looper.prepare()
+//                Toast.makeText(mContext, "msg" + msg, Toast.LENGTH_LONG).show()
+//                Looper.loop()
 //            }
-//        }.start();
+//        }.start()
 
         //2.打印异常堆栈（推薦使用，讓系統把異常日誌打印出來）
         throwable.printStackTrace()
@@ -123,7 +123,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
             for (fileName in sortedFiles) {
                 val cr = File(BaseApplication.get().filesDir, fileName)
                 postReport(cr)
-                //cr.delete();
+                //cr.delete()
             }
         }
     }
@@ -136,8 +136,12 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
 
     private fun getCrashReportFiles(): Array<String>? {
         val filesDir = BaseApplication.get().externalCacheDir
-        val filter = FilenameFilter { dir, filename -> filename.endsWith(CRASH_REPORTER_EXTENSION) }
-        return filesDir!!.list(filter)
+        filesDir?.let {
+            val filter =
+                FilenameFilter { dir, filename -> filename.endsWith(CRASH_REPORTER_EXTENSION) }
+            return it.list(filter)
+        }
+        return null
     }
 
     /**
@@ -181,7 +185,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
                 file.createNewFile()
             }
 
-//                FileOutputStream trace = new FileOutputStream(file);
+//                FileOutputStream trace = new FileOutputStream(file)
             val fileOutputStream = FileOutputStream(file)
             val bufferedOutputStream = BufferedOutputStream(fileOutputStream)
             mDeviceCrashInfo.store(bufferedOutputStream, "")
@@ -268,15 +272,15 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
 //        //在Build类中包含各种设备信息,
 //        // 例如: 系统版本号,设备生产商 等帮助调试程序的有用信息
 //        // 具体信息请参考后面的截图
-//        Field[] fields = Build.class.getDeclaredFields();
+//        Field[] fields = Build.class.getDeclaredFields()
 //        for (Field field : fields) {
 //            try {
-//                field.setAccessible(true);
+//                field.setAccessible(true)
 //                //get方法返回指定对象上此 Field 表示的字段的值
-//                mDevInfoMap.put(field.getName(), field.get(null).toString());
-//                LogManager.i(TAG, field.getName() + ":" + field.get(null).toString());
+//                mDevInfoMap.put(field.getName(), field.get(null).toString())
+//                LogManager.i(TAG, field.getName() + ":" + field.get(null).toString())
 //            } catch (Exception e) {
-//                LogManager.i(TAG, "an error occured when collect crash info", e);
+//                LogManager.i(TAG, "an error occured when collect crash info", e)
 //            }
 //        }
 
@@ -297,17 +301,17 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
         }
 
 //        //手机厂商
-//        SystemManager.getDeviceBrand();
+//        SystemManager.getDeviceBrand()
 //        //手机型号
-//        SystemManager.getSystemModel();
+//        SystemManager.getSystemModel()
 //        //手机当前系统语言
-//        SystemManager.getSystemLanguage();
+//        SystemManager.getSystemLanguage()
 //        //手机系统版本号
-//        SystemManager.getSystemVersion();
+//        SystemManager.getSystemVersion()
 //        //手机CPU架构
-//        SystemManager.getDeviceCpuAbi();
+//        SystemManager.getDeviceCpuAbi()
 //        //手機唯一識別碼
-//        SystemManager.getSystemId(mContext);
+//        SystemManager.getSystemId(mContext)
     }
 
 //    /**
@@ -317,16 +321,16 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
 //     * @return
 //     */
 //    public static boolean isNetworkAvailable(Context context) {
-//        ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo[] info = mgr.getAllNetworkInfo();
+//        ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)
+//        NetworkInfo[] info = mgr.getAllNetworkInfo()
 //        if (info != null) {
-//            for (int i = 0; i < info.length; i++) {
+//            for (int i = 0 i < info.length i++) {
 //                if (info[i].getState() == NetworkInfo.State.CONNECTED) {
-//                    return true;
+//                    return true
 //                }
 //            }
 //        }
-//        return false;
+//        return false
 //    }
 
 }

@@ -120,7 +120,8 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
                     } else if (afterDataArr.length == 1) {//当afterData是这种类型的小数时（0. 100.）
                         Toast.makeText(this, "请输入正常整数或小数", Toast.LENGTH_SHORT).show();
                     } else {
-                        this.tevShowInput.setText(edtInput.getText().toString());
+                        tevShowInput.setVisibility(View.VISIBLE);
+                        tevShowInput.setText(edtInput.getText().toString());
                         SoftKeyboardManager.hideInputMethod(this);
                         alertDialog.dismiss();
                     }
@@ -130,7 +131,8 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
                         if (afterDataArr.length > 1 && "0".equals(afterDataArr[1])) {
                             Toast.makeText(this, "请输入正常整数或小数", Toast.LENGTH_SHORT).show();
                         } else {
-                            this.tevShowInput.setText(edtInput.getText().toString());
+                            tevShowInput.setVisibility(View.VISIBLE);
+                            tevShowInput.setText(edtInput.getText().toString());
                             SoftKeyboardManager.hideInputMethod(this);
                             alertDialog.dismiss();
                         }

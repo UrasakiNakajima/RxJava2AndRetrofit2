@@ -18,8 +18,7 @@ class ToolbarManager {
     private val TAG = ToolbarManager::class.java.simpleName
 
     //activity的根视图
-    private var rootView
-            : View? = null
+    private var rootView: View? = null
 
     //纪录根视图的显示高度
     private var rootViewVisibleHeight = 0
@@ -46,14 +45,14 @@ class ToolbarManager {
 
     }
 
-    private var mChildOfContent: View? = null
+    private var mChildOfContent: View
     private var usableHeightPrevious = 0
-    private var frameLayoutParams: ViewGroup.LayoutParams? = null
+    private var frameLayoutParams: ViewGroup.LayoutParams
 
     constructor(content: View) {
         mChildOfContent = content
-        mChildOfContent!!.viewTreeObserver.addOnGlobalLayoutListener { possiblyResizeChildOfContent() }
-        frameLayoutParams = mChildOfContent!!.layoutParams
+        mChildOfContent.viewTreeObserver.addOnGlobalLayoutListener { possiblyResizeChildOfContent() }
+        frameLayoutParams = mChildOfContent.layoutParams
     }
 
     constructor(
@@ -64,19 +63,19 @@ class ToolbarManager {
         //获取activity的根视图
         rootView = activity.window.decorView
         mChildOfContent = content
-        mChildOfContent!!.viewTreeObserver.addOnGlobalLayoutListener {
+        mChildOfContent.viewTreeObserver.addOnGlobalLayoutListener {
             possiblyResizeChildOfContent(
                 onSoftKeyBoardChangeListener
             )
         }
-        frameLayoutParams = mChildOfContent!!.layoutParams
+        frameLayoutParams = mChildOfContent.layoutParams
     }
 
     private fun possiblyResizeChildOfContent() {
         val usableHeightNow = computeUsableHeight()
         if (usableHeightNow != usableHeightPrevious) {
-            frameLayoutParams!!.height = usableHeightNow
-            mChildOfContent!!.requestLayout()
+            frameLayoutParams.height = usableHeightNow
+            mChildOfContent.requestLayout()
             usableHeightPrevious = usableHeightNow
         }
     }
@@ -84,14 +83,14 @@ class ToolbarManager {
     private fun possiblyResizeChildOfContent(onSoftKeyBoardChangeListener: OnSoftKeyBoardChangeListener?) {
         val usableHeightNow = computeUsableHeight()
         if (usableHeightNow != usableHeightPrevious) {
-            frameLayoutParams!!.height = usableHeightNow
-            mChildOfContent!!.requestLayout()
+            frameLayoutParams.height = usableHeightNow
+            mChildOfContent.requestLayout()
             usableHeightPrevious = usableHeightNow
         }
 
         //获取当前根视图在屏幕上显示的大小
         val r = Rect()
-        rootView!!.getWindowVisibleDisplayFrame(r)
+        rootView?.getWindowVisibleDisplayFrame(r)
         val visibleHeight = r.height()
         println("" + visibleHeight)
         if (rootViewVisibleHeight == 0) {
@@ -120,7 +119,7 @@ class ToolbarManager {
 
     private fun computeUsableHeight(): Int {
         val r = Rect()
-        mChildOfContent!!.getWindowVisibleDisplayFrame(r)
+        mChildOfContent.getWindowVisibleDisplayFrame(r)
         return r.bottom
     }
 

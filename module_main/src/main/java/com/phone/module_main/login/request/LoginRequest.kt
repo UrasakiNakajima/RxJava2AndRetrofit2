@@ -29,7 +29,7 @@ interface LoginRequest {
     //    @POST("upload")
     //    Observable<JSONObject> addShopResult(@PartMap Map<String, RequestBody> fileMap,
     //                                              @PartMap Map<String, List<RequestBody>> filesMap);
-    
+
     @POST(ConstantUrl.ADD_SHOP_URL)
     fun addShopResult(@Body requestBody: RequestBody): Observable<ResponseBody>
 

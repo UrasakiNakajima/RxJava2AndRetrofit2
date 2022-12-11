@@ -41,7 +41,10 @@ class LogInterceptor : Interceptor {
         LogManager.i(TAG, "----------End:" + duration + "毫秒----------")
         val builder = response.newBuilder()
         builder.removeHeader("User-Agent") //移除旧的
-            .addHeader("User-Agent", WebSettings.getDefaultUserAgent(BaseApplication.get())) //添加真正的头部
+            .addHeader(
+                "User-Agent",
+                WebSettings.getDefaultUserAgent(BaseApplication.get())
+            ) //添加真正的头部
         return builder
             .body(ResponseBody.create(mediaType, content))
             .build()

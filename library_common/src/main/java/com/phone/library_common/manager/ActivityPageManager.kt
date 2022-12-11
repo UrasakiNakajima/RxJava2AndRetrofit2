@@ -34,15 +34,15 @@ class ActivityPageManager private constructor() {
     val mIsLastAliveActivity = AtomicBoolean(false)
 
     companion object {
-        private var instance: ActivityPageManager? = null;
+        private var instance: ActivityPageManager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
         @Synchronized
-        fun get(): ActivityPageManager? {
+        fun get(): ActivityPageManager {
             if (instance == null) {
-                instance = ActivityPageManager();
+                instance = ActivityPageManager()
             }
-            return instance;
+            return instance!!
         }
     }
 
@@ -78,7 +78,7 @@ class ActivityPageManager private constructor() {
      */
     fun getActivity(cls: Class<*>): Activity? {
         for (activity in mActivityStack) {
-            if (activity!!.javaClass == cls) {
+            if (activity?.javaClass == cls) {
                 return activity
             }
         }
@@ -128,7 +128,7 @@ class ActivityPageManager private constructor() {
      */
     fun finishActivity(clazz: Class<*>) {
         for (activity in mActivityStack) {
-            if (activity!!.javaClass == clazz) {
+            if (activity?.javaClass == clazz) {
                 finishActivity(activity)
                 break
             }
@@ -161,7 +161,7 @@ class ActivityPageManager private constructor() {
      */
     fun finishAllActivityExcept(clazz: Class<*>) {
         for (i in mActivityStack.indices.reversed()) {
-            if (mActivityStack[i] != null && mActivityStack[i]!!.javaClass != clazz) {
+            if (mActivityStack[i] != null && mActivityStack[i]?.javaClass != clazz) {
                 finishActivity(mActivityStack[i])
             }
         }
@@ -172,11 +172,11 @@ class ActivityPageManager private constructor() {
 //     */
 //    public void exitApp() {
 //        try {
-//            finishAllActivity();
+//            finishAllActivity()
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//            e.printStackTrace()
 //        } finally {
-//            System.exit(0);
+//            System.exit(0)
 //        }
 //    }
 
@@ -185,11 +185,11 @@ class ActivityPageManager private constructor() {
     //     */
     //    public void exitApp() {
     //        try {
-    //            finishAllActivity();
+    //            finishAllActivity()
     //        } catch (Exception e) {
-    //            e.printStackTrace();
+    //            e.printStackTrace()
     //        } finally {
-    //            System.exit(0);
+    //            System.exit(0)
     //        }
     //    }
     /**
@@ -219,7 +219,7 @@ class ActivityPageManager private constructor() {
         val list = am.getRunningTasks(1)
         if (list != null && list.size > 0) {
             val cpn = list[0].topActivity
-            return className == cpn!!.className
+            return className == cpn?.className
         }
         return false
     }

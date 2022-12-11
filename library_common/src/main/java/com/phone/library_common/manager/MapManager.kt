@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils
  */
 object MapManager {
 
+    @JvmStatic
     private val TAG = MapManager::class.java.simpleName
 
     /**
@@ -21,6 +22,7 @@ object MapManager {
      * @param map
      * @return
      */
+    @JvmStatic
     fun mapToJsonStr(map: Map<*, *>?): String? {
         val gson = GsonBuilder().enableComplexMapKeySerialization().create()
         return gson.toJson(map)
@@ -32,6 +34,7 @@ object MapManager {
      * @param jsonStr
      * @return
      */
+    @JvmStatic
     fun jsonStrToMap(jsonStr: String?): Map<String, String> {
         val mapTypes: Map<*, *> = JSON.parseObject(jsonStr)
         val bodyParams: MutableMap<String, String> = HashMap()
@@ -48,6 +51,7 @@ object MapManager {
      * @param map
      * @return
      */
+    @JvmStatic
     fun mapToParam(map: Map<String?, Any?>?): String {
         if (map == null) {
             return ""

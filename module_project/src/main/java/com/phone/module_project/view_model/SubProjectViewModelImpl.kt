@@ -46,7 +46,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                     if (!TextUtils.isEmpty(success)) {
                         val type2 = object : TypeToken<ApiResponse<ArticleBean>>() {}.type
                         val response: ApiResponse<ArticleBean> =
-                            GsonManager().fromJson(success, type2)
+                            GsonManager().fromJson(success ?: "", type2)
                         response.data().let {
                             val list = ArticleListBean.trans(it.datas ?: mutableListOf())
                             if (list.size > 0) {
@@ -131,7 +131,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                     if (!TextUtils.isEmpty(success)) {
                         val type2 = object : TypeToken<ApiResponse<ArticleBean>>() {}.type
                         val response: ApiResponse<ArticleBean> =
-                            GsonManager().fromJson(success, type2)
+                            GsonManager().fromJson(success ?: "", type2)
                         response.data().let {
                             val list = ArticleListBean.trans(it.datas ?: mutableListOf())
                             if (list.size > 0) {

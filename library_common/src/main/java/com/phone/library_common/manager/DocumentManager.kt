@@ -16,8 +16,7 @@ object DocumentManager {
     val OPEN_DOCUMENT_TREE_CODE = 8000
     private val sExtSdCardPaths: MutableList<String> = ArrayList()
 
-    private fun DocumentManager() {}
-
+    @JvmStatic
     fun cleanCache() {
         sExtSdCardPaths.clear()
     }
@@ -27,13 +26,13 @@ object DocumentManager {
      *
      * @return A list of external SD card paths.
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @JvmStatic
     private fun getExtSdCardPaths(): Array<String> {
         if (sExtSdCardPaths.size > 0) {
             return sExtSdCardPaths.toTypedArray()
         }
-        for (file in BaseApplication.get()!!.getExternalFilesDirs("external")) {
-            if (file != null && file != BaseApplication.get()!!.getExternalFilesDir("external")) {
+        for (file in BaseApplication.get().getExternalFilesDirs("external")) {
+            if (file != null && file != BaseApplication.get().getExternalFilesDir("external")) {
                 val index = file.absolutePath.lastIndexOf("/Android/data")
                 if (index < 0) {
                     i(TAG, "Unexpected external file dir: " + file.absolutePath)
@@ -60,7 +59,7 @@ object DocumentManager {
      * card. Otherwise,
      * null is returned.
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @JvmStatic
     private fun getExtSdCardFolder(file: File): String? {
         val extSdPaths = getExtSdCardPaths()
         try {
@@ -81,7 +80,7 @@ object DocumentManager {
      * @param file The file.
      * @return true if on external sd card.
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @JvmStatic
     fun isOnExtSdCard(file: File): Boolean {
         return getExtSdCardFolder(file) != null
     }
@@ -95,6 +94,7 @@ object DocumentManager {
      * @param isDirectory flag indicating if the file should be a directory.
      * @return The DocumentFile
      */
+    @JvmStatic
     fun getDocumentFile(
         file: File, isDirectory: Boolean
     ): DocumentFile? {
@@ -131,23 +131,26 @@ object DocumentManager {
         }
 
         // start with root of SD card and then parse through document tree.
-        var document = DocumentFile.fromTreeUri(BaseApplication.get()!!, treeUri)
+        var document = DocumentFile.fromTreeUri(BaseApplication.get(), treeUri)
         if (originalDirectory) return document
-        val parts = relativePath!!.split("/").toTypedArray()
-        for (i in parts.indices) {
-            var nextDocument = document!!.findFile(parts[i])
-            if (nextDocument == null) {
-                nextDocument = if (i < parts.size - 1 || isDirectory) {
-                    document.createDirectory(parts[i])
-                } else {
-                    document.createFile("image", parts[i])
+        relativePath?.let {
+            val parts = relativePath.split("/").toTypedArray()
+            for (i in parts.indices) {
+                var nextDocument = document?.findFile(parts[i])
+                if (nextDocument == null) {
+                    nextDocument = if (i < parts.size - 1 || isDirectory) {
+                        document?.createDirectory(parts[i])
+                    } else {
+                        document?.createFile("image", parts[i])
+                    }
                 }
+                document = nextDocument
             }
-            document = nextDocument
         }
         return document
     }
 
+    @JvmStatic
     fun mkdirs(dir: File): Boolean {
         var res = dir.mkdirs()
         if (!res) {
@@ -160,6 +163,7 @@ object DocumentManager {
         return res
     }
 
+    @JvmStatic
     fun delete(file: File): Boolean {
         var ret = file.delete()
         if (!ret && isOnExtSdCard(file)) {
@@ -171,6 +175,7 @@ object DocumentManager {
         return ret
     }
 
+    @JvmStatic
     fun canWrite(file: File): Boolean {
         var res = file.exists() && file.canWrite()
         if (!res && !file.exists()) {
@@ -187,6 +192,7 @@ object DocumentManager {
         return res
     }
 
+    @JvmStatic
     fun canWrite2(file: File): Boolean {
         var res = canWrite(file)
         if (!res && isOnExtSdCard(file)) {
@@ -196,6 +202,7 @@ object DocumentManager {
         return res
     }
 
+    @JvmStatic
     fun renameTo(src: File, dest: File): Boolean {
         var res = src.renameTo(dest)
         if (!res && isOnExtSdCard(dest)) {
@@ -206,16 +213,16 @@ object DocumentManager {
                 DocumentFile.fromFile(src)
             }
             val destDoc = getDocumentFile(dest.parentFile, true)
-            if (srcDoc != null && destDoc != null) {
+            srcDoc?.let {
                 try {
                     if (src.parent == dest.parent) {
-                        res = srcDoc.renameTo(dest.name)
+                        res = it.renameTo(dest.name)
                     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         res = DocumentsContract.moveDocument(
                             BaseApplication.get().contentResolver,
                             srcDoc.uri,
                             srcDoc.parentFile!!.uri,
-                            destDoc.uri
+                            destDoc!!.uri
                         ) != null
                     }
                 } catch (e: Exception) {
@@ -226,6 +233,7 @@ object DocumentManager {
         return res
     }
 
+    @JvmStatic
     fun getInputStream(destFile: File): InputStream? {
         var `in`: InputStream? = null
         try {
@@ -243,6 +251,7 @@ object DocumentManager {
         return `in`
     }
 
+    @JvmStatic
     fun getOutputStream(destFile: File): OutputStream? {
         var out: OutputStream? = null
         try {
@@ -260,6 +269,7 @@ object DocumentManager {
         return out
     }
 
+    @JvmStatic
     fun saveTreeUri(rootPath: String, uri: Uri): Boolean {
         val file = DocumentFile.fromTreeUri(BaseApplication.get(), uri)
         if (file != null && file.canWrite()) {
@@ -272,6 +282,7 @@ object DocumentManager {
         return false
     }
 
+    @JvmStatic
     fun checkWritableRootPath(rootPath: String): Boolean {
         val root = File(rootPath)
         return if (!root.canWrite()) {

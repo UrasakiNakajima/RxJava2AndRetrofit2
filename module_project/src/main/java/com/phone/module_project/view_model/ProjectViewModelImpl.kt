@@ -36,7 +36,7 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
                 val success = model.projectTabData().execute().body()?.string()
                 val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
                 val response: ApiResponse<MutableList<TabBean>> =
-                    GsonManager().fromJson(success, type2)
+                    GsonManager().fromJson(success ?: "", type2)
                 LogManager.i(TAG, "thread name*****${Thread.currentThread().name}")
 
                 launch(Dispatchers.Main) {
@@ -66,7 +66,7 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
                     if (!TextUtils.isEmpty(success)) {
                         val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
                         val response: ApiResponse<MutableList<TabBean>> =
-                            GsonManager().fromJson(success, type2)
+                            GsonManager().fromJson(success ?: "", type2)
                         response.let {
                             if (response.data().size > 0) {
                                 tabRxActivitySuccess.value = response.data()

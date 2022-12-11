@@ -11,6 +11,7 @@ object SSLSocketManager {
      *
      * @return
      */
+    @JvmStatic
     fun sslSocketFactory(): SSLSocketFactory {
         return try {
             val sslContext = SSLContext.getInstance("SSL")
@@ -43,6 +44,7 @@ object SSLSocketManager {
      *
      * @return
      */
+    @JvmStatic
     fun hostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { s, sslSession -> true }
     }

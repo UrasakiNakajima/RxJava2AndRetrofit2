@@ -10,13 +10,13 @@ import java.io.InputStreamReader
  */
 class GetJsonDataManager {
 
-    fun getJson(fileName: String?): String {
+    fun getJson(fileName: String): String {
         val stringBuilder = StringBuilder()
         try {
             val assetManager = BaseApplication.get().assets
             val bf = BufferedReader(
                 InputStreamReader(
-                    assetManager.open(fileName!!)
+                    assetManager.open(fileName)
                 )
             )
             var line: String?

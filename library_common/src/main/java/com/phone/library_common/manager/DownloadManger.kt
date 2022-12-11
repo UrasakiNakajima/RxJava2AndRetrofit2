@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
  */
 class DownloadManger private constructor() {
 
-    private lateinit var client: OkHttpClient
+    private var client: OkHttpClient
 
     init {
         client = OkHttpClient.Builder()
@@ -59,52 +59,54 @@ class DownloadManger private constructor() {
 
             @Throws(IOException::class)
             override fun onResponse(call: Call, response: Response) {
-                var `is`: InputStream? = null
-                var bis: BufferedInputStream? = null
-                var fos: FileOutputStream? = null
-                var bos: BufferedOutputStream? = null
+                var `is`: InputStream
+                var bis: BufferedInputStream
+                var fos: FileOutputStream
+                var bos: BufferedOutputStream
                 // 储存下载文件的目录
                 val downloadFile = File(saveDir)
                 if (!downloadFile.exists()) {
                     downloadFile.mkdirs()
                 }
 
-                var name: String = System.currentTimeMillis().toString();
-                name = name + "." + suffix;
+                var name: String = System.currentTimeMillis().toString()
+                name = name + "." + suffix
                 LogManager.i(TAG, "download name*****$name")
                 val file = File(downloadFile, name)
                 if (file.exists()) {
                     file.createNewFile()
                 }
                 try {
-                    val buf = ByteArray(1024 * 1024 * 2)
-                    var len = 0
-                    val total = response.body()?.contentLength()
-                    `is` = response.body()?.byteStream()
-                    bis = BufferedInputStream(`is`)
-                    fos = FileOutputStream(file, false)
-                    bos = BufferedOutputStream(fos)
-                    var sum: Long = 0
-                    while (`is`?.read(buf).also { len = it!! } != -1) {
-                        fos.write(buf, 0, len)
-                        sum += len.toLong()
-                        val progress = (sum * 1.0f / total!! * 100).toInt()
-                        // 下载中
+                    response.body()?.let {
+                        val buf = ByteArray(1024 * 1024 * 2)
+                        var len = 0
+                        val total = it.contentLength()
+                        `is` = it.byteStream()
+                        bis = BufferedInputStream(`is`)
+                        fos = FileOutputStream(file, false)
+                        bos = BufferedOutputStream(fos)
+                        var sum: Long = 0
+                        while (`is`.read(buf).also { len = it } != -1) {
+                            fos.write(buf, 0, len)
+                            sum += len.toLong()
+                            val progress = (sum * 1.0f / total * 100).toInt()
+                            // 下载中
+                            val mainThreadManager = MainThreadManager()
+                            mainThreadManager.setOnSubThreadToMainThreadCallback {
+                                listener.onDownloading(progress)
+                            }
+                            mainThreadManager.subThreadToUIThread()
+                        }
+                        bos.flush()
+                        bis.close()
+                        bos.close()
+                        // 下载完成
                         val mainThreadManager = MainThreadManager()
                         mainThreadManager.setOnSubThreadToMainThreadCallback {
-                            listener.onDownloading(progress)
+                            listener.onDownloadSuccess()
                         }
                         mainThreadManager.subThreadToUIThread()
                     }
-                    bos.flush()
-                    bis.close()
-                    bos.close()
-                    // 下载完成
-                    val mainThreadManager = MainThreadManager()
-                    mainThreadManager.setOnSubThreadToMainThreadCallback {
-                        listener.onDownloadSuccess()
-                    }
-                    mainThreadManager.subThreadToUIThread()
                 } catch (e: Exception) {
                     val mainThreadManager = MainThreadManager()
                     mainThreadManager.setOnSubThreadToMainThreadCallback {

@@ -18,6 +18,7 @@ class ThreadPoolManager {
         private var instance: ThreadPoolManager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
+        @JvmStatic
         @Synchronized
         fun get(): ThreadPoolManager {
             if (instance == null) {
@@ -48,7 +49,7 @@ class ThreadPoolManager {
         //创建任务
         val runnable = Runnable { onCommonSuccessCallback.onSuccess() }
         // 将任务交给线程池管理
-        syncThreadPool!!.execute(runnable)
+        syncThreadPool?.execute(runnable)
 //        }
     }
 
@@ -67,35 +68,23 @@ class ThreadPoolManager {
         }
         //创建任务
         val runnable = Runnable { onCommonSuccessCallback.onSuccess() }
-        scheduledThreadPool!!.schedule(runnable, delay, TimeUnit.MILLISECONDS)
+        scheduledThreadPool?.schedule(runnable, delay, TimeUnit.MILLISECONDS)
     }
 
     fun shutdownScheduledThreadPool() {
-        if (scheduledThreadPool != null) {
-            scheduledThreadPool!!.shutdown()
-            scheduledThreadPool = null
-        }
+        scheduledThreadPool?.shutdown()
     }
 
     fun shutdownNowScheduledThreadPool() {
-        if (scheduledThreadPool != null) {
-            scheduledThreadPool!!.shutdownNow()
-            scheduledThreadPool = null
-        }
+        scheduledThreadPool?.shutdownNow()
     }
 
     fun shutdownSyncThreadPool() {
-        if (syncThreadPool != null) {
-            syncThreadPool!!.shutdown()
-            syncThreadPool = null
-        }
+        syncThreadPool?.shutdown()
     }
 
     fun shutdownNowSyncThreadPool() {
-        if (syncThreadPool != null) {
-            syncThreadPool!!.shutdownNow()
-            syncThreadPool = null
-        }
+        syncThreadPool?.shutdownNow()
     }
 
 }

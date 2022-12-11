@@ -66,7 +66,7 @@ object TextViewStyleManager {
         spannable.setSpan(
             AbsoluteSizeSpan(spToPx(size)),
             start,
-            end.toInt(),
+            end,
             Spannable.SPAN_INCLUSIVE_INCLUSIVE
         )
         //SpannableString字体大小不一致垂直居中显示

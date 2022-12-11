@@ -40,7 +40,7 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                     if (!TextUtils.isEmpty(success)) {
                         val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
                         val response: ApiResponse<MutableList<TabBean>> =
-                            GsonManager().fromJson(success, type2)
+                            GsonManager().fromJson(success ?: "", type2)
                         if (response.data().size > 0) {
                             tabRxFragmentSuccess.value = response.data()
                         } else {
@@ -70,7 +70,7 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                     if (!TextUtils.isEmpty(success)) {
                         val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
                         val response: ApiResponse<MutableList<TabBean>> =
-                            GsonManager().fromJson(success, type2)
+                            GsonManager().fromJson(success ?: "", type2)
                         if (response.data().size > 0) {
                             tabRxActivitySuccess.value = response.data()
                         } else {
