@@ -1,9 +1,10 @@
 package com.phone.library_common.custom_view
 
 import android.content.Context
+import android.util.AttributeSet
 import android.widget.VideoView
 
-class MineVideoView(context: Context?) : VideoView(context) {
+class MineVideoView(context: Context, attrs: AttributeSet?) : VideoView(context, attrs) {
 
     private val TAG = MineVideoView::class.java.simpleName
 

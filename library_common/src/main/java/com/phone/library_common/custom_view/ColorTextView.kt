@@ -8,7 +8,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import com.phone.library_common.manager.ViewAttributeManager
 
-class ColorTextView(context: Context, attrs: AttributeSet) : AppCompatTextView(context),
+class ColorTextView(context: Context, attrs: AttributeSet) : AppCompatTextView(context, attrs),
     ColorUiInterface {
 
     private val TAG = ColorTextView::class.java.simpleName

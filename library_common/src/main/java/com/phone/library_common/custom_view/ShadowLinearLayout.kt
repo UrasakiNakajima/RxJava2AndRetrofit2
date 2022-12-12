@@ -16,7 +16,7 @@ import androidx.annotation.RequiresApi
 import com.phone.library_common.R
 import com.phone.library_common.manager.GlideRoundManager
 
-class ShadowLinearLayout(context: Context) : LinearLayout(context, null) {
+class ShadowLinearLayout(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
     private var clickAbleFalseDrawable: Drawable? = null
     private var clickAbleFalseColor = -101

@@ -6,12 +6,13 @@ import android.graphics.Canvas
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Rect
+import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.phone.library_common.R
 
-class DottedLineView(context: Context) : View(context) {
+class DottedLineView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     private val TAG = DottedLineView::class.java.simpleName
     private val mDashPaint = Paint(Paint.ANTI_ALIAS_FLAG)

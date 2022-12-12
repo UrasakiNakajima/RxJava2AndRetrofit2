@@ -2,13 +2,16 @@ package com.phone.library_common.custom_view.rclayout.helper
 
 import android.content.Context
 import android.graphics.Canvas
+import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.Checkable
 import android.widget.FrameLayout
 import com.phone.library_common.custom_view.rclayout.RCAttrs
 import com.phone.library_common.custom_view.rclayout.RCHelper
 
-open class RCFrameLayout(context: Context) : FrameLayout(context), Checkable, RCAttrs {
+open class RCFrameLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs),
+    Checkable,
+    RCAttrs {
 
     private var mRCHelper: RCHelper
 

@@ -11,7 +11,7 @@ import android.view.MotionEvent
  * introduce : 禁止左右滑动
  */
 
-class MineLazyViewPager2(context: Context, attrs: AttributeSet) : LazyViewPager2(context, attrs) {
+class MineLazyViewPager2(context: Context, attrs: AttributeSet?) : LazyViewPager2(context, attrs) {
 
     private val isCanScroll = false
 

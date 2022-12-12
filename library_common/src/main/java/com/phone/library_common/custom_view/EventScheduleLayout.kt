@@ -130,7 +130,7 @@ class EventScheduleLayout(
                                 ScreenManager.dpToPx(12f)
                             )
                             lineViewParams.marginStart = ScreenManager.dpToPx(56f)
-                            var dottedLineView = DottedLineView(mContext)
+                            var dottedLineView = DottedLineView(mContext, null)
                             layoutStart.addView(dottedLineView, lineViewParams)
 
                             //画左边布局
@@ -159,7 +159,7 @@ class EventScheduleLayout(
                                         ScreenManager.dpToPx(3f)
                                     )
                                     lineViewParams2.marginStart = ScreenManager.dpToPx(56f)
-                                    dottedLineView = DottedLineView(mContext)
+                                    dottedLineView = DottedLineView(mContext, null)
                                     outerLayout.addView(dottedLineView, lineViewParams2)
                                     val imvMajorTimeNodeParams = FrameLayout.LayoutParams(
                                         ScreenManager.dpToPx(10f),
@@ -181,7 +181,7 @@ class EventScheduleLayout(
                                         ScreenManager.dpToPx(56f),
                                         ScreenManager.dpToPx(13f), 0, 0
                                     )
-                                    dottedLineView = DottedLineView(mContext)
+                                    dottedLineView = DottedLineView(mContext, null)
                                     outerLayout.addView(dottedLineView, lineViewParams2)
                                     layoutStart.addView(outerLayout, outerLayoutParams)
                                     lineViewParams = LinearLayout.LayoutParams(
@@ -189,7 +189,7 @@ class EventScheduleLayout(
                                         ScreenManager.dpToPx(21f)
                                     )
                                     lineViewParams.marginStart = ScreenManager.dpToPx(56f)
-                                    dottedLineView = DottedLineView(mContext)
+                                    dottedLineView = DottedLineView(mContext, null)
                                     layoutStart.addView(dottedLineView, lineViewParams)
                                     imvHeaderParams = LinearLayout.LayoutParams(
                                         ScreenManager.dpToPx(10f),
@@ -233,7 +233,7 @@ class EventScheduleLayout(
                                         ScreenManager.dpToPx(3f)
                                     )
                                     lineViewParams2.marginStart = ScreenManager.dpToPx(56f)
-                                    dottedLineView = DottedLineView(mContext)
+                                    dottedLineView = DottedLineView(mContext, null)
                                     outerLayout.addView(dottedLineView, lineViewParams2)
                                     val imvMajorTimeNodeParams = FrameLayout.LayoutParams(
                                         ScreenManager.dpToPx(10f),
@@ -255,7 +255,7 @@ class EventScheduleLayout(
                                         ScreenManager.dpToPx(56f),
                                         ScreenManager.dpToPx(13f), 0, 0
                                     )
-                                    dottedLineView = DottedLineView(mContext)
+                                    dottedLineView = DottedLineView(mContext, null)
                                     outerLayout.addView(dottedLineView, lineViewParams2)
                                     layoutStart.addView(outerLayout, outerLayoutParams)
                                     lineViewParams = LinearLayout.LayoutParams(
@@ -263,7 +263,7 @@ class EventScheduleLayout(
                                         ScreenManager.dpToPx(22f)
                                     )
                                     lineViewParams.marginStart = ScreenManager.dpToPx(56f)
-                                    dottedLineView = DottedLineView(mContext)
+                                    dottedLineView = DottedLineView(mContext, null)
                                     layoutStart.addView(dottedLineView, lineViewParams)
                                     val imvSmallTimeNodeParams = LinearLayout.LayoutParams(
                                         ScreenManager.dpToPx(5f),
@@ -278,7 +278,7 @@ class EventScheduleLayout(
                                         ScreenManager.dpToPx(22f)
                                     )
                                     lineViewParams3.marginStart = ScreenManager.dpToPx(56f)
-                                    val dottedLineView2 = DottedLineView(mContext)
+                                    val dottedLineView2 = DottedLineView(mContext, null)
                                     layoutStart.addView(dottedLineView2, lineViewParams3)
                                 }
                             }
@@ -545,7 +545,7 @@ class EventScheduleLayout(
                 ScreenManager.dpToPx(12f)
             )
             lineViewParams.marginStart = ScreenManager.dpToPx(56f)
-            var dottedLineView = DottedLineView(mContext)
+            var dottedLineView = DottedLineView(mContext, null)
             layoutStart.addView(dottedLineView, lineViewParams)
 
             //画左边布局
@@ -574,7 +574,7 @@ class EventScheduleLayout(
                         ScreenManager.dpToPx(3f)
                     )
                     lineViewParams2.marginStart = ScreenManager.dpToPx(56f)
-                    dottedLineView = DottedLineView(mContext)
+                    dottedLineView = DottedLineView(mContext, null)
                     outerLayout.addView(dottedLineView, lineViewParams2)
                     val imvMajorTimeNodeParams = FrameLayout.LayoutParams(
                         ScreenManager.dpToPx(10f),
@@ -596,7 +596,7 @@ class EventScheduleLayout(
                         ScreenManager.dpToPx(56f),
                         ScreenManager.dpToPx(13f), 0, 0
                     )
-                    dottedLineView = DottedLineView(mContext)
+                    dottedLineView = DottedLineView(mContext, null)
                     outerLayout.addView(dottedLineView, lineViewParams2)
                     layoutStart.addView(outerLayout, outerLayoutParams)
                     lineViewParams = LinearLayout.LayoutParams(
@@ -604,7 +604,7 @@ class EventScheduleLayout(
                         ScreenManager.dpToPx(21f)
                     )
                     lineViewParams.marginStart = ScreenManager.dpToPx(56f)
-                    dottedLineView = DottedLineView(mContext)
+                    dottedLineView = DottedLineView(mContext, null)
                     layoutStart.addView(dottedLineView, lineViewParams)
                     imvHeaderParams = LinearLayout.LayoutParams(
                         ScreenManager.dpToPx(10f),
@@ -648,7 +648,7 @@ class EventScheduleLayout(
                         ScreenManager.dpToPx(3f)
                     )
                     lineViewParams2.marginStart = ScreenManager.dpToPx(56f)
-                    dottedLineView = DottedLineView(mContext)
+                    dottedLineView = DottedLineView(mContext, null)
                     outerLayout.addView(dottedLineView, lineViewParams2)
                     val imvMajorTimeNodeParams = FrameLayout.LayoutParams(
                         ScreenManager.dpToPx(10f),
@@ -670,7 +670,7 @@ class EventScheduleLayout(
                         ScreenManager.dpToPx(56f),
                         ScreenManager.dpToPx(13f), 0, 0
                     )
-                    dottedLineView = DottedLineView(mContext)
+                    dottedLineView = DottedLineView(mContext, null)
                     outerLayout.addView(dottedLineView, lineViewParams2)
                     layoutStart.addView(outerLayout, outerLayoutParams)
                     lineViewParams = LinearLayout.LayoutParams(
@@ -678,7 +678,7 @@ class EventScheduleLayout(
                         ScreenManager.dpToPx(22f)
                     )
                     lineViewParams.marginStart = ScreenManager.dpToPx(56f)
-                    dottedLineView = DottedLineView(mContext)
+                    dottedLineView = DottedLineView(mContext, null)
                     layoutStart.addView(dottedLineView, lineViewParams)
                     val imvSmallTimeNodeParams = LinearLayout.LayoutParams(
                         ScreenManager.dpToPx(5f),
@@ -693,7 +693,7 @@ class EventScheduleLayout(
                         ScreenManager.dpToPx(22f)
                     )
                     lineViewParams3.marginStart = ScreenManager.dpToPx(56f)
-                    val dottedLineView2 = DottedLineView(mContext)
+                    val dottedLineView2 = DottedLineView(mContext, null)
                     layoutStart.addView(dottedLineView2, lineViewParams3)
                 }
             }
