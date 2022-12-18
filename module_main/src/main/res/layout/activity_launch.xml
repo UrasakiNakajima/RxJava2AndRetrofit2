@@ -1,39 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_000000"
-    android:orientation="vertical"
+    android:background="@color/color_FFFFC73B"
     tools:context=".login.ui.LaunchActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_000000"
-        android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
-        app:contentInsetStart="0dp" />
+        tools:ignore="UselessParent">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_74"
+            android:background="@color/color_FFFFC73B"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="vertical"
+            app:contentInsetStart="0dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_458"
+            android:background="@drawable/picture_sasuke"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50" />
+
+            <TextView
+                android:id="@+id/tev_android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/corners_25_color_000000"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/android"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_15"
+                tools:ignore="MissingConstraints" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_320" />
+
+            <TextView
+                android:id="@+id/tev_kotlin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/corners_25_color_000000"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/kotlin"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_15"
+                tools:ignore="MissingConstraints" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/tev_android"
+        android:id="@+id/tev_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/corners_25_color_ff198cff"
+        android:layout_marginTop="@dimen/dp_440"
+        android:background="@drawable/corners_25_color_000000"
         android:paddingStart="@dimen/dp_20"
         android:paddingTop="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_10"
-        android:text="@string/android"
+        android:text="@string/app_name2"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_20"
+        android:textSize="@dimen/sp_15"
         tools:ignore="MissingConstraints" />
 
-</LinearLayout>
+</FrameLayout>

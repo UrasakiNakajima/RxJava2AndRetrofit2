@@ -14,21 +14,10 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
     private val TAG = WebViewActivity::class.java.simpleName
     private var loadUrl: String? = null
 
-    /**
-     * 文章标题
-     */
-    private var title: String? = null
 
-    /**
-     * 文章id
-     */
-    private var id: Int? = -1
-
-    /**
-     * 作者
-     */
-    private var author: String? = null
-
+    private var title: String? = null//文章标题
+    private var id: Int? = -1//文章id
+    private var author: String? = null//作者
     private var startTime: Long = 0
     private var requiredTime: Long = 0
 
@@ -53,10 +42,10 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
             mDatabind.activityWebProgressbar.progress = 100
             mBaseApplication.let {
                 layoutWeb.addView(it.webView)
-        //            val layoutParams = FrameLayout.LayoutParams(
-        //                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
-        //            )
-        //            layoutWeb.addView(mBaseApplication.webView, layoutParams)
+                //            val layoutParams = FrameLayout.LayoutParams(
+                //                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
+                //            )
+                //            layoutWeb.addView(mBaseApplication.webView, layoutParams)
                 it.setOnCommonSingleParamCallback(object :
                     OnCommonSingleParamCallback<Int> {
                     override fun onSuccess(success: Int?) {
@@ -100,7 +89,7 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
 //            //这个api仅仅清除自动完成填充的表单数据，并不会清除WebView存储到本地的数据
 //            mBaseApplication.webView.clearFormData()
 
-            mBaseApplication.webView?.loadUrl(it)
+            mBaseApplication.webView.loadUrl(it)
         }
     }
 
@@ -119,7 +108,7 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
     }
 
     override fun onDestroy() {
-        mBaseApplication.webView?.apply {
+        mBaseApplication.webView.apply {
             loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             clearCache(true)
             clearHistory();

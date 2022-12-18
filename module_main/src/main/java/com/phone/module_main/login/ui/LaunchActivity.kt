@@ -1,12 +1,13 @@
 package com.phone.module_main.login.ui
 
 import android.Manifest
+import android.animation.Animator
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.view.animation.LinearInterpolator
@@ -22,9 +23,13 @@ import com.phone.library_common.manager.ThreadPoolManager
 import com.phone.module_main.R
 import com.phone.module_main.main.MainActivity
 
+
 class LaunchActivity : BaseRxAppActivity() {
 
-    private val TAG = LaunchActivity::class.java.simpleName
+    companion object {
+        @JvmStatic
+        private val TAG = LaunchActivity::class.java.simpleName
+    }
 
     private val permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -39,7 +44,12 @@ class LaunchActivity : BaseRxAppActivity() {
     //2、创建一个mPermissionList，逐个判断哪些权限未授予，未授予的权限存储到mPerrrmissionList中
     private val mPermissionList: MutableList<String> = ArrayList()
     private var mPermissionsDialog: AlertDialog? = null
-    private lateinit var animator: ObjectAnimator
+
+    //    private lateinit var animator: ObjectAnimator
+//    private lateinit var animator: ObjectAnimator
+    val animatorSet = AnimatorSet()
+    val animatorSet2 = AnimatorSet()
+    val animatorSet3 = AnimatorSet()
 
     override fun initLayoutId(): Int {
         return R.layout.activity_launch
@@ -51,29 +61,126 @@ class LaunchActivity : BaseRxAppActivity() {
     override fun initViews() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         val tevAndroid = findViewById<View>(R.id.tev_android) as TextView
-        setToolbar(true, R.color.color_000000)
+        val tevAppName = findViewById<View>(R.id.tev_app_name) as TextView
+        val tevKotlin = findViewById<View>(R.id.tev_kotlin) as TextView
+        setToolbar(true, R.color.color_FFFFC73B)
 
-        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(1000, {
+        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(1000) {
             LogManager.i(
                 TAG,
                 "LaunchActivity 500 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
             )
-            animator =
-                ObjectAnimator.ofFloat(
-                    tevAndroid,
-                    "translationY",
-                    ScreenManager.dpToPx(500F).toFloat()
-                )
-            animator.setInterpolator(LinearInterpolator())
-            animator.setDuration(1500)
-            animator.start()
-        })
+
+            // 构造一个在横轴上平移的属性动画
+            val translationYAnimator = ObjectAnimator.ofFloat(
+                tevAndroid,
+                "translationY",
+                0f,
+                ScreenManager.dpToPx(360f).toFloat()
+            )
+//            // 构造一个在透明度上变化的属性动画
+//            val anim2 = ObjectAnimator.ofFloat(tevAndroid, "alpha", 1f, 0.1f, 1f, 0.5f, 1f)
+            // 构造一个围绕中心点旋转的属性动画
+            val rotationAnimator = ObjectAnimator.ofFloat(tevAndroid, "rotation", 0f, 360f)
+            // 构造一个在纵轴上缩放的属性动画
+            val scaleXAnimator = ObjectAnimator.ofFloat(tevAndroid, "scaleX", 1f, 1.5f, 1f)
+            // 构造一个在纵轴上缩放的属性动画
+            val scaleYAnimator = ObjectAnimator.ofFloat(tevAndroid, "scaleY", 1f, 1.5f, 1f)
+            // 创建一个属性动画组合
+//            val animSet = AnimatorSet()
+//            // 把指定的属性动画添加到属性动画组合
+//            val builder = animatorSet.play(anim2)
+////            // 动画播放顺序为：anim1先执行，然后再一起执行anim2、anim3、anim3，最后执行anim5
+//            builder.with(anim3).with(anim4).after(anim1).before(anim5)
+            val animatorList = mutableListOf<ObjectAnimator>()
+            animatorList.add(translationYAnimator)
+//            animatorList.add(anim2)
+            animatorList.add(rotationAnimator)
+            animatorList.add(scaleXAnimator)
+            animatorList.add(scaleYAnimator)
+            animatorSet.playTogether(animatorList as Collection<Animator>?)
+            animatorSet.setInterpolator(LinearInterpolator())
+            animatorSet.duration = 5000 // 设置动画的播放时长
+            animatorSet.start() // 开始播放属性动画
+
+
+            // 构造一个在横轴上平移的属性动画
+            val translationYAnimator2 = ObjectAnimator.ofFloat(
+                tevAppName,
+                "translationY",
+                0f,
+                ScreenManager.dpToPx(-445f).toFloat()
+            )
+//            // 构造一个在透明度上变化的属性动画
+//            val anim2 = ObjectAnimator.ofFloat(tevAndroid, "alpha", 1f, 0.1f, 1f, 0.5f, 1f)
+            // 构造一个围绕中心点旋转的属性动画
+            val rotationAnimator2 = ObjectAnimator.ofFloat(tevAppName, "rotation", 0f, 360f)
+            // 构造一个在纵轴上缩放的属性动画
+            val scaleXAnimator2 = ObjectAnimator.ofFloat(tevAppName, "scaleX", 1f, 1.5f, 1f)
+            // 构造一个在纵轴上缩放的属性动画
+            val scaleYAnimator2 = ObjectAnimator.ofFloat(tevAppName, "scaleY", 1f, 1.5f, 1f)
+            // 创建一个属性动画组合
+//            val animSet = AnimatorSet()
+//            // 把指定的属性动画添加到属性动画组合
+//            val builder2 = animatorSet2.play(anim2)
+////            // 动画播放顺序为：anim1先执行，然后再一起执行anim2、anim3、anim3，最后执行anim5
+//            builder2.with(anim3).with(anim4).after(anim1).before(anim5)
+            val animatorList2 = mutableListOf<ObjectAnimator>()
+            animatorList2.add(translationYAnimator2)
+//            animatorList2.add(anim2)
+            animatorList2.add(rotationAnimator2)
+            animatorList2.add(scaleXAnimator2)
+            animatorList2.add(scaleYAnimator2)
+            animatorSet2.playTogether(animatorList2 as Collection<Animator>?)
+            animatorSet2.setInterpolator(LinearInterpolator())
+            animatorSet2.duration = 5000 // 设置动画的播放时长
+            animatorSet2.start() // 开始播放属性动画
+
+            // 构造一个在横轴上平移的属性动画
+            val translationXAnimator3 = ObjectAnimator.ofFloat(
+                tevKotlin,
+                "translationX",
+                0f,
+                ScreenManager.dpToPx(100f).toFloat()
+            )
+            // 构造一个在横轴上平移的属性动画
+            val translationYAnimator3 = ObjectAnimator.ofFloat(
+                tevKotlin,
+                "translationY",
+                0f,
+                ScreenManager.dpToPx(-410f).toFloat()
+            )
+//            // 构造一个在透明度上变化的属性动画
+//            val anim2 = ObjectAnimator.ofFloat(tevAndroid, "alpha", 1f, 0.1f, 1f, 0.5f, 1f)
+            // 构造一个围绕中心点旋转的属性动画
+            val rotationAnimator3 = ObjectAnimator.ofFloat(tevKotlin, "rotation", 0f, 360f)
+//            // 构造一个在纵轴上缩放的属性动画
+//            val scaleXAnimator3 = ObjectAnimator.ofFloat(tevKotlin, "scaleX", 1f, 1.5f, 1f)
+//            // 构造一个在纵轴上缩放的属性动画
+//            val scaleYAnimator3 = ObjectAnimator.ofFloat(tevKotlin, "scaleY", 1f, 1.5f, 1f)
+            // 创建一个属性动画组合
+//            val animSet3 = AnimatorSet()
+//            // 把指定的属性动画添加到属性动画组合
+//            val builder3 = animatorSet3.play(anim2)
+////            // 动画播放顺序为：anim1先执行，然后再一起执行anim2、anim3、anim3，最后执行anim5
+//            builder3.with(anim3).with(anim4).after(anim1).before(anim5)
+            val animatorList3 = mutableListOf<ObjectAnimator>()
+            animatorList3.add(translationYAnimator3)
+            animatorList3.add(translationXAnimator3)
+            animatorList3.add(rotationAnimator3)
+//            animatorList3.add(scaleXAnimator3)
+//            animatorList3.add(scaleYAnimator3)
+            animatorSet3.playTogether(animatorList3 as Collection<Animator>?)
+            animatorSet3.setInterpolator(LinearInterpolator())
+            animatorSet3.duration = 3000 // 设置动画的播放时长
+            animatorSet3.start() // 开始播放属性动画
+        }
     }
 
     override fun initLoadData() {
 //        initPermissions()
 
-        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(3000, {
+        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(7000, {
             LogManager.i(
                 TAG,
                 "LaunchActivity 3000 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
@@ -231,8 +338,14 @@ class LaunchActivity : BaseRxAppActivity() {
     }
 
     override fun onDestroy() {
-        if (animator.isRunning) {
-            animator.cancel()
+        if (animatorSet.isRunning) {
+            animatorSet.cancel()
+        }
+        if (animatorSet2.isRunning) {
+            animatorSet2.cancel()
+        }
+        if (animatorSet3.isRunning) {
+            animatorSet3.cancel()
         }
         ThreadPoolManager.get().shutdownScheduledThreadPool()
         super.onDestroy()

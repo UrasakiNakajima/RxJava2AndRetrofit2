@@ -66,7 +66,7 @@ class ThreadPoolManager {
         onCommonSuccessCallback: OnCommonSuccessCallback
     ) {
         if (scheduledThreadPool == null) {
-            scheduledThreadPool = Executors.newScheduledThreadPool(3)
+            scheduledThreadPool = Executors.newScheduledThreadPool(1)
         }
         //创建任务
         val runnable = Runnable {
@@ -86,7 +86,7 @@ class ThreadPoolManager {
         onCommonSuccessCallback: OnCommonSuccessCallback
     ) {
         if (scheduledThreadPool == null) {
-            scheduledThreadPool = Executors.newScheduledThreadPool(3)
+            scheduledThreadPool = Executors.newScheduledThreadPool(1)
         }
         //创建任务
         val runnable = Runnable {

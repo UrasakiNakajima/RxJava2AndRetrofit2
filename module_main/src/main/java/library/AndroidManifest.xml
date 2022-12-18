@@ -58,6 +58,7 @@
         <!-- Launch页 -->
         <activity
             android:name=".login.ui.LaunchActivity"
+            android:theme="@style/SplashTheme"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">

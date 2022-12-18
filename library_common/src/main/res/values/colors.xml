@@ -17,7 +17,6 @@
     <color name="color_FFFFFFFF">#FFFFFFFF</color>
     <color name="color_FFFFFF">#FFFFFF</color>
     <color name="color_FF198CFF">#FF198CFF</color>
-
     <color name="color_FFFF530D">#FFFF530D</color>
     <color name="color_FFFFC73B">#FFFFC73B</color>
 
@@ -48,7 +47,6 @@
     <color name="color_ABABAB">#ABABAB</color>
     <color name="color_0000FF">#0000FF</color>
     <color name="color_808080">#808080</color>
-
 
 
     <color name="colorTransparentA">#00000000</color>

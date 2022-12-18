@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">main_module</string>
+    <string name="app_name2">RxJava2AndRetrofit2</string>
 </resources>

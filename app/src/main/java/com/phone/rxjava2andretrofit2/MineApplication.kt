@@ -4,6 +4,7 @@ import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.ThreadPoolManager
 
 class MineApplication : BaseApplication() {
 
@@ -21,20 +22,23 @@ class MineApplication : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        date = getDate()
-        if (date == null || "" == date) {
-            date = "0"
-        }
 
-        //极光推送初始化
-        JPushInterface.setDebugMode(true)
-        JPushInterface.init(this)
-        registrationId = getRegistrationId()
-        if (TextUtils.isEmpty(registrationId)) {
-            //获取RegistrationID唯一标识
-            registrationId = JPushInterface.getRegistrationID(applicationContext)
-            setRegistrationId(registrationId)
-        }
+        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(500, {
+            date = getDate()
+            if (date == null || "" == date) {
+                date = "0"
+            }
+
+            //极光推送初始化
+            JPushInterface.setDebugMode(true)
+            JPushInterface.init(this)
+            registrationId = getRegistrationId()
+            if (TextUtils.isEmpty(registrationId)) {
+                //获取RegistrationID唯一标识
+                registrationId = JPushInterface.getRegistrationID(applicationContext)
+                setRegistrationId(registrationId)
+            }
+        })
     }
 
     fun getUserName(): String? {
