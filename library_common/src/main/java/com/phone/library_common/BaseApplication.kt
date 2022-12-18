@@ -72,7 +72,7 @@ open class BaseApplication : MultiDexApplication() {
         //				LogManager.i(TAG, "throwable message*****" + throwable.getMessage())
         //			}
         //		})
-        ThreadPoolManager.get().createScheduledThreadPool(500, {
+        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(500, {
             val crashHandlerManager = CrashHandlerManager.get()
             crashHandlerManager?.sendPreviousReportsToServer()
             initWebView()
