@@ -6,7 +6,7 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
-import com.phone.library_common.manager.LogManager.i
+import com.phone.library_common.manager.LogManager
 import id.zelory.compressor.Compressor
 import java.io.*
 import java.lang.ref.SoftReference
@@ -93,17 +93,13 @@ object BitmapManager {
     private val CONNECTTIMEOUT = 3000
 
     /**
-     * Private constructor to prohibit nonsense instance creation.
-     */
-    private fun BitmapManager() {}
-
-    /**
      * 图片合成
      *
      * @param bitmap 位图1
      * @param mark   位图2
      * @return Bitmap
      */
+    @JvmStatic
     fun createBitmap(bitmap: Bitmap, mark: Bitmap): Bitmap? {
         val w = bitmap.width
         val h = bitmap.height
@@ -126,6 +122,7 @@ object BitmapManager {
      * @param h      新的高度
      * @return Bitmap
      */
+    @JvmStatic
     fun zoomBitmap(bitmap: Bitmap, w: Int, h: Int): Bitmap? {
         val width = bitmap.width
         val height = bitmap.height
@@ -143,6 +140,7 @@ object BitmapManager {
      * @param angle  旋转角度
      * @return bitmap
      */
+    @JvmStatic
     fun rotate(bitmap: Bitmap, angle: Int): Bitmap? {
         val matrix = Matrix()
         matrix.postRotate(angle.toFloat())
@@ -162,6 +160,7 @@ object BitmapManager {
      * @param bl          颜色代码
      * @return bitmap
      */
+    @JvmStatic
     fun createCircleBitmap(
         source: Bitmap,
         strokeWidth: Int,
@@ -169,7 +168,7 @@ object BitmapManager {
         edge: Int,
         color: Int
     ): Bitmap? {
-        var color = color
+        var colorNew = color
         val diameter = if (source.width < source.height) source.width else source.height
         val target = Bitmap.createBitmap(diameter, diameter, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(target) //创建画布
@@ -184,8 +183,8 @@ object BitmapManager {
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN) //取相交裁剪
         canvas.drawBitmap(source, strokeWidth.toFloat(), strokeWidth.toFloat(), paint)
         if (bl) {
-            if (color == 0) color = -0x15db8 //默认橘黄色
-            paint.color = color
+            if (colorNew == 0) colorNew = -0x15db8 //默认橘黄色
+            paint.color = colorNew
             paint.style = Paint.Style.STROKE //描边
             paint.strokeWidth = edge.toFloat()
             canvas.drawCircle(
@@ -209,6 +208,7 @@ object BitmapManager {
      * @param bl     颜色代码
      * @return bitmap
      */
+    @JvmStatic
     fun createCornerBitmap(
         bitmap: Bitmap,
         rx: Int,
@@ -217,7 +217,7 @@ object BitmapManager {
         edge: Int,
         color: Int
     ): Bitmap? {
-        var color = color
+        var colorNew = color
         val output = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output) //创建画布
         val paint = Paint()
@@ -228,9 +228,9 @@ object BitmapManager {
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN) //取相交裁剪
         canvas.drawBitmap(bitmap, rect, rect, paint)
         if (bl) {
-            if (color == 0) color = -0x15db8 //默认橘黄色
-            paint.color = color
-            paint.color = color
+            if (colorNew == 0) colorNew = -0x15db8 //默认橘黄色
+            paint.color = colorNew
+            paint.color = colorNew
             paint.style = Paint.Style.STROKE //描边
             paint.strokeWidth = edge.toFloat()
             canvas.drawRoundRect(rectF, rx.toFloat(), ry.toFloat(), paint)
@@ -246,6 +246,7 @@ object BitmapManager {
      * @param hScale 裁剪高 0~100%
      * @return bitmap
      */
+    @JvmStatic
     fun cropBitmap(bitmap: Bitmap, wScale: Float, hScale: Float): Bitmap? {
         val w = bitmap.width
         val h = bitmap.height
@@ -263,6 +264,7 @@ object BitmapManager {
      * @param region 倒影区域 0.1~1
      * @return bitmap
      */
+    @JvmStatic
     fun createReflectionBitmap(bitmap: Bitmap, region: Float): Bitmap? {
         val width = bitmap.width
         val height = bitmap.height
@@ -304,6 +306,7 @@ object BitmapManager {
      * @param many   百分比
      * @return
      */
+    @JvmStatic
     fun compressBitmap(bitmap: Bitmap, many: Float): Bitmap? {
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, many.toInt() * 100, baos)
@@ -317,6 +320,7 @@ object BitmapManager {
      * @param bitmap  位图
      * @param maxSize 压缩后的大小，单位kb
      */
+    @JvmStatic
     fun imageZoom(bitmap: Bitmap, maxSize: Double): Bitmap? {
         // 将bitmap放至数组中，意在获得bitmap的大小（与实际读取的原文件要大）
         val baos = ByteArrayOutputStream()
@@ -346,6 +350,7 @@ object BitmapManager {
      * @param h 新的高度
      * @return Bitmap
      */
+    @JvmStatic
     fun scaleWithWH(bitmap: Bitmap?, w: Double, h: Double): Bitmap? {
         return if (w == 0.0 || h == 0.0 || bitmap == null) {
             bitmap
@@ -369,6 +374,7 @@ object BitmapManager {
      * @param data YUV视频流格式
      * @return width 设置高度
      */
+    @JvmStatic
     fun getBitmap(data: ByteArray?, width: Int, height: Int): Bitmap? {
         val yuvimage = YuvImage(data, ImageFormat.NV21, width, height, null)
         //data是onPreviewFrame参数提供
@@ -389,6 +395,7 @@ object BitmapManager {
      * @param resId
      * @return bitmap
      */
+    @JvmStatic
     fun getBitmapResources(context: Context, resId: Int): Bitmap? {
         return BitmapFactory.decodeResource(context.resources, resId)
     }
@@ -399,6 +406,7 @@ object BitmapManager {
      * @return Bitmap
      * @Param path 图片路径
      */
+    @JvmStatic
     fun getBitmapPath(path: String?): Bitmap? {
         return BitmapFactory.decodeFile(path)
     }
@@ -410,6 +418,7 @@ object BitmapManager {
      * @param bmp  位图
      * @return bitmap
      */
+    @JvmStatic
     fun saveFile(path: String?, bmp: Bitmap?): Boolean {
         if (TextUtils.isEmpty(path) || bmp == null) return false
         val file = File(path)
@@ -453,6 +462,7 @@ object BitmapManager {
      *
      * @param bitmap
      */
+    @JvmStatic
     fun doRecycledIfNot(bitmap: Bitmap) {
         if (!bitmap.isRecycled) {
             bitmap.recycle()
@@ -467,7 +477,8 @@ object BitmapManager {
      * @param desHeight 压缩后图片的高度
      * @return 压缩后的图片
      */
-    fun scaleImage(resBitmap: Bitmap, desWidth: Int, desHeight: Int): Bitmap? {
+    @JvmStatic
+    fun scaleImage(resBitmap: Bitmap, desWidth: Int, desHeight: Int): Bitmap {
         val resWidth = resBitmap.width
         val resHeight = resBitmap.height
         if (resHeight > desHeight || resWidth > desWidth) {
@@ -475,29 +486,23 @@ object BitmapManager {
             val heightRatio = desHeight.toFloat() / resHeight.toFloat()
             val widthRatio = desWidth.toFloat() / resWidth.toFloat()
             val scale = if (heightRatio < widthRatio) heightRatio else widthRatio
-            i(TAG, "scaleImage scale*****$scale")
+            LogManager.i(TAG, "scaleImage scale*****$scale")
             //開平方會有一點損失精度
             val prescription = Math.sqrt(scale.toDouble()).toFloat()
             //再次开平方
             val prescription2 = Math.sqrt(prescription.toDouble()).toFloat()
             //            LogManager.i(TAG, "scaleImage prescription*****" + prescription);
-            i(
+            LogManager.i(
                 TAG,
                 "scaleImage prescription2*****$prescription2"
             )
             var bitmap: Bitmap? = null
             //循環壓縮bitmap，防止一次壓縮bitmap卡頓問題（子線程把主線成卡頓了）
             for (i in 0..3) {
-                bitmap = bitmap?.let {
-                    //                    bitmap = scale(bitmap, prescription);
-                    scale(it, prescription2)
-                }
-                    ?: //                    bitmap = scale(resBitmap, prescription);
-                            scale(resBitmap, prescription2)
-                //                LogManager.i(TAG, i + "scaleImage prescription*****" + prescription);
-                i(TAG, i.toString() + "scaleImage prescription2*****" + prescription2)
+                bitmap = scale(bitmap ?: resBitmap, prescription2)
+                LogManager.i(TAG, "$i+scaleImage prescription2*****" + prescription2)
             }
-            return bitmap
+            return bitmap!!
         }
         return resBitmap
     }
@@ -523,6 +528,7 @@ object BitmapManager {
      * @param h      height
      * @return scaleBitmap
      */
+    @JvmStatic
     fun scale(bitmap: Bitmap?, w: Int, h: Int): Bitmap? {
         if (bitmap == null) {
             return null
@@ -543,6 +549,7 @@ object BitmapManager {
      * @param data
      * @return
      */
+    @JvmStatic
     fun saveTakePictureImage(context: Context, data: ByteArray?): Uri? {
         var file = context.getExternalFilesDir("file1")
         file = File(file?.absolutePath + File.separator + System.currentTimeMillis() + ".jpg")
@@ -556,7 +563,7 @@ object BitmapManager {
 
             // 异常时删除保存失败的文件
             try {
-                if (file != null && file.exists() && file.isFile) {
+                if (file.exists() && file.isFile) {
                     file.delete()
                 }
             } catch (ex: Exception) {
@@ -584,6 +591,7 @@ object BitmapManager {
      * @param height
      * @return
      */
+    @JvmStatic
     fun yuvToBitmap(data: ByteArray, width: Int, height: Int): Bitmap? {
         val frameSize = width * height
         val rgba = IntArray(frameSize)
@@ -617,6 +625,7 @@ object BitmapManager {
      * @param height
      * @return
      */
+    @JvmStatic
     fun depthToBitmap(depthBytes: ByteArray, width: Int, height: Int): Bitmap? {
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val argbData = IntArray(width * height)
@@ -639,6 +648,7 @@ object BitmapManager {
      * @param height
      * @return
      */
+    @JvmStatic
     fun rGBToBitmap(bytes: ByteArray, width: Int, height: Int): Bitmap? {
         // use Bitmap.Config.ARGB_8888 instead of type is OK
         val stitchBmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
@@ -665,6 +675,7 @@ object BitmapManager {
      * @param height
      * @return
      */
+    @JvmStatic
     fun bGRToBitmap(bytes: ByteArray, width: Int, height: Int): Bitmap? {
         // use Bitmap.Config.ARGB_8888 instead of type is OK
         val stitchBmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
@@ -683,6 +694,7 @@ object BitmapManager {
         return stitchBmp
     }
 
+    @JvmStatic
     fun aRGBToR(bytes: ByteArray, width: Int, height: Int): ByteArray? {
         val IR = ByteArray(width * height)
         for (i in 0 until width * height) {
@@ -732,13 +744,15 @@ object BitmapManager {
     //        }
     //        return transBmp;
     //    }
+
     /**
      * 获取图片数据
      *
      * @param path
      * @return
      */
-    fun getBitmap(path: String?): Bitmap? {
+    @JvmStatic
+    fun getBitmap(path: String?): Bitmap {
         var fis: FileInputStream? = null
         var bis: BufferedInputStream? = null
         var bm: Bitmap? = null
@@ -757,13 +771,14 @@ object BitmapManager {
                 e.printStackTrace()
             }
         }
-        return bm
+        return bm!!
     }
 
     /**
      * @param bitmap
      * @return
      */
+    @JvmStatic
     fun bitmapToInputStream(bitmap: Bitmap): InputStream {
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
@@ -779,6 +794,7 @@ object BitmapManager {
      * @return
      * @throws Exception
      */
+    @JvmStatic
     fun readStream(imagepath: String?): ByteArray? {
         var fis: FileInputStream? = null
         var bis: BufferedInputStream? = null
@@ -815,6 +831,7 @@ object BitmapManager {
      * @param fileName
      * @throws IOException
      */
+    @JvmStatic
     fun saveFile(bitmap: Bitmap, dirsPath: String, fileName: String): File {
         val dirs = File(dirsPath)
         if (!dirs.exists()) {
@@ -844,6 +861,7 @@ object BitmapManager {
     /**
      * 读取文件的大小
      */
+    @JvmStatic
     fun getFileSize(file: File): Long {
         var size: Long = 0
         if (file.exists()) {
@@ -875,6 +893,7 @@ object BitmapManager {
      * @param size
      * @return
      */
+    @JvmStatic
     fun getDataSize(size: Long): String? {
         val formater = DecimalFormat("####.00")
         return if (size < 1024) {
@@ -902,6 +921,7 @@ object BitmapManager {
      * .setCompressFormat(Bitmap.CompressFormat.PNG)PNG格式的压缩，会导致图片变大，并耗过大的内 存，手机反应缓慢
      * .setCompressFormat(Bitmap.CompressFormat.JPEG)JPEG压缩；压缩速度比PNG快，质量一般，基本上属于1/10的压缩比例
      */
+    @JvmStatic
     fun initCompressorIO(context: Context?, path: String?, dirsPath: String?): File? {
         val dirs2 = File(dirsPath)
         if (!dirs2.exists()) {
@@ -921,6 +941,7 @@ object BitmapManager {
         return file
     }
 
+    @JvmStatic
     fun getAssetFile(context: Context, dirsPath: String, assetFileName: String): File {
         val assetManager = context.assets
         val dirs = File(dirsPath)
@@ -978,11 +999,11 @@ object BitmapManager {
      * @param base64String
      * @return
      */
-    fun base64ToBitmap(base64String: String?): Bitmap? {
-        var base64String = base64String
-        base64String = Uri.decode(base64String)
+    @JvmStatic
+    fun base64ToBitmap(base64String: String): Bitmap {
+        val base64StringNew = Uri.decode(base64String)
         val decode =
-            Base64.decode(base64String, Base64.DEFAULT)
+            Base64.decode(base64StringNew, Base64.DEFAULT)
         return BitmapFactory.decodeByteArray(decode, 0, decode.size)
     }
 

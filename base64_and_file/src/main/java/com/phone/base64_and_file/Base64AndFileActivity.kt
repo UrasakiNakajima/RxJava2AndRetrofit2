@@ -2,6 +2,7 @@ package com.phone.base64_and_file
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Handler
@@ -74,8 +75,8 @@ class Base64AndFileActivity :
     // where this is an Activity or Fragment instance
     //    private Binder binder;
     private lateinit var dirsPath: String
-    private var dirsPathCompressed: String? = null
-    private var dirsPathCompressedRecover: String? = null
+    private lateinit var dirsPathCompressed: String
+    private lateinit var dirsPathCompressedRecover: String
     private var base64StrAdapter: Base64StrAdapter? = null
 
     private var timer: Timer? = null
@@ -93,11 +94,11 @@ class Base64AndFileActivity :
 
     override fun initData() {
         handler = Handler(Looper.getMainLooper())
-        dirsPath = mBaseApplication?.externalCacheDir
+        dirsPath = mBaseApplication.externalCacheDir
             ?.absolutePath + File.separator + "Pictures"
-        dirsPathCompressed = mBaseApplication?.externalCacheDir
+        dirsPathCompressed = mBaseApplication.externalCacheDir
             ?.absolutePath + File.separator + "PicturesCompressed"
-        dirsPathCompressedRecover = mBaseApplication?.externalCacheDir
+        dirsPathCompressedRecover = mBaseApplication.externalCacheDir
             ?.absolutePath + File.separator + "PicturesCompressedRecover"
     }
 
@@ -205,15 +206,15 @@ class Base64AndFileActivity :
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
                     //所有的权限都授予
-                    if (TextUtils.isEmpty(mBaseApplication?.getSystemId())) {
+                    if (TextUtils.isEmpty(mBaseApplication.getSystemId())) {
                         val systemId = getSystemId()
-                        mBaseApplication?.setSystemId(systemId)
+                        mBaseApplication.setSystemId(systemId)
                         LogManager.i(
                             TAG,
-                            "isEmpty systemId*****" + mBaseApplication?.getSystemId()
+                            "isEmpty systemId*****" + mBaseApplication.getSystemId()
                         )
                     } else {
-                        LogManager.i(TAG, "systemId*****" + mBaseApplication?.getSystemId())
+                        LogManager.i(TAG, "systemId*****" + mBaseApplication.getSystemId())
                     }
 
 //                //第一种方法
@@ -294,14 +295,11 @@ class Base64AndFileActivity :
                 @Throws(Exception::class)
                 override fun apply(t: Int): Base64AndFileBean {
                     LogManager.i(TAG, "threadName2*****" + Thread.currentThread().name)
-                    val file =
-                        mBaseApplication?.let {
-                            BitmapManager.getAssetFile(
-                                it,
-                                dirsPath,
-                                "picture_large.webp"
-                            )
-                        }
+                    val file = BitmapManager.getAssetFile(
+                        mBaseApplication,
+                        dirsPath,
+                        "picture_large.webp"
+                    )
                     val base64AndFileBean = Base64AndFileBean()
                     base64AndFileBean.dirsPath = dirsPath
                     base64AndFileBean.dirsPathCompressed = dirsPathCompressed
@@ -315,7 +313,8 @@ class Base64AndFileActivity :
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName3*****" + Thread.currentThread().name)
                 //把图片转化成bitmap
-                val bitmap = BitmapManager.getBitmap(base64AndFileBean.file.absolutePath)
+                val bitmap =
+                    BitmapManager.getBitmap((base64AndFileBean.file ?: File("")).absolutePath)
                 LogManager.i(TAG, "bitmap mWidth*****" + bitmap?.width)
                 LogManager.i(TAG, "bitmap mHeight*****" + bitmap?.height)
                 base64AndFileBean.bitmap = bitmap
@@ -325,7 +324,13 @@ class Base64AndFileActivity :
                 LogManager.i(TAG, "threadName4*****" + Thread.currentThread().name)
                 //再压缩bitmap
                 val bitmapCompressed =
-                    BitmapManager.scaleImage(base64AndFileBean.bitmap, 1280, 960)
+                    BitmapManager.scaleImage(
+                        base64AndFileBean.bitmap ?: Bitmap.createBitmap(
+                            0,
+                            0,
+                            Bitmap.Config.ARGB_8888
+                        ), 1280, 960
+                    )
                 LogManager.i(TAG, "bitmapCompressed mWidth*****" + bitmapCompressed?.width)
                 LogManager.i(TAG, "bitmapCompressed mHeight*****" + bitmapCompressed?.height)
                 base64AndFileBean.bitmapCompressed = bitmapCompressed
@@ -342,43 +347,53 @@ class Base64AndFileActivity :
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName6*****" + Thread.currentThread().name)
                 val mediaFileType =
-                    MediaFileManager.getFileType(base64AndFileBean.file.absolutePath)
+                    MediaFileManager.getFileType((base64AndFileBean.file ?: File("")).absolutePath)
                 val mimeType = mediaFileType.mimeType
                 val typeArr = mimeType.split("/").toTypedArray()
                 val fileType = typeArr[1]
                 //再把压缩后的bitmap保存到本地
                 val fileCompressed = BitmapManager.saveFile(
-                    base64AndFileBean.bitmapCompressed, base64AndFileBean.dirsPathCompressed,
+                    base64AndFileBean.bitmapCompressed ?: Bitmap.createBitmap(
+                        0,
+                        0,
+                        Bitmap.Config.ARGB_8888
+                    ), base64AndFileBean.dirsPathCompressed ?: "",
                     "picture_large_compressed.$fileType"
                 )
                 base64AndFileBean.fileCompressed = fileCompressed
                 LogManager.i(
                     TAG,
-                    "base64AndFileBean.getFileCompressed().getPath()*****" + base64AndFileBean.fileCompressed.path
+                    "base64AndFileBean.getFileCompressed().getPath()*****" + (base64AndFileBean.fileCompressed
+                        ?: File("")).path
                 )
                 LogManager.i(
                     TAG,
-                    "base64AndFileBean.getFileCompressed().getAbsolutePath()*****" + base64AndFileBean.fileCompressed.absolutePath
+                    "base64AndFileBean.getFileCompressed().getAbsolutePath()*****" + (base64AndFileBean.fileCompressed
+                        ?: File("")).absolutePath
                 )
             }
             .observeOn(Schedulers.io()) //给下面分配了异步线程
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName7*****" + Thread.currentThread().name)
-                base64AndFileBean.fileCompressed.let {
+                base64AndFileBean.fileCompressed?.let {
                     if (it.exists()) {
                         val base64Str = Base64AndFileManager.fileToBase64(it)
                         //                base64Str = Base64AndFileManager.fileToBase64Test(file);
 //                    base64Str = Base64AndFileManager.fileToBase64Second(file);
-                        base64AndFileBean.setBase64Str(base64Str)
+                        base64AndFileBean.base64Str = base64Str
                         val fileName = "base64Str.txt"
                         val txtFilePath = FileManager.writeStrToTextFile(
                             base64Str,
-                            base64AndFileBean.dirsPathCompressed,
+                            base64AndFileBean.dirsPathCompressed ?: "",
                             fileName
                         )
                         base64AndFileBean.txtFilePath = txtFilePath
-                        base64AndFileBean.base64StrList =
-                            Base64AndFileManager.getBase64StrList(txtFilePath)
+                        base64AndFileBean.base64StrList.clear()
+                        base64AndFileBean.base64StrList.addAll(
+                            Base64AndFileManager.getBase64StrList(
+                                txtFilePath
+                            )
+                        )
                         //                base64Str = "";
 //                StringBuilder stringBuilder = new StringBuilder();
 //                for (int i = 0; i < base64StrList.size(); i++) {
@@ -423,8 +438,8 @@ class Base64AndFileActivity :
                 val fileType = typeArr[1]
                 //再把压缩后的bitmap保存到本地
                 val fileCompressedRecover = Base64AndFileManager.base64ToFile(
-                    base64AndFileBean.getBase64Str(),
-                    base64AndFileBean.dirsPathCompressedRecover,
+                    base64AndFileBean.base64Str ?: "",
+                    base64AndFileBean.dirsPathCompressedRecover ?: "",
                     "picture_large_compressed_recover.$fileType"
                 )
                 base64AndFileBean.fileCompressedRecover = fileCompressedRecover
@@ -433,7 +448,9 @@ class Base64AndFileActivity :
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName10*****" + Thread.currentThread().name)
                 val bitmapCompressedRecover =
-                    BitmapFactory.decodeFile(base64AndFileBean.fileCompressedRecover.absolutePath)
+                    BitmapFactory.decodeFile(
+                        (base64AndFileBean.fileCompressedRecover ?: File("")).absolutePath
+                    )
                 base64AndFileBean.bitmapCompressedRecover = bitmapCompressedRecover
             } //                .map(new Function<Base64AndFileBean, Bitmap>() {
             //                    @Override

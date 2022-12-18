@@ -11,11 +11,14 @@ import com.bumptech.glide.Glide
 import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.library_common.manager.LogManager.i
 import com.phone.module_home.R
-import com.phone.module_home.bean.VideoListBean.LargeImageListBean
 
 class VideoListAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val TAG = VideoListAdapter::class.java.simpleName
+    companion object{
+        @JvmStatic
+        private val TAG = VideoListAdapter::class.java.simpleName
+    }
+
     private var videoListBeanList: MutableList<LargeImageListBean> = ArrayList()
 
     fun clearData() {

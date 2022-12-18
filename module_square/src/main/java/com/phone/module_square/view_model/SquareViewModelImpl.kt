@@ -21,15 +21,15 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         private val TAG: String = SquareViewModelImpl::class.java.simpleName
     }
 
-    private var model: SquareModelImpl = SquareModelImpl()
+    private var model = SquareModelImpl()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragmentSuccess: SingleLiveData<MutableList<SubDataSquare>> = SingleLiveData()
-    val dataxRxFragmentError: SingleLiveData<String> = SingleLiveData()
+    val dataxRxFragmentSuccess = SingleLiveData<MutableList<SubDataSquare>>()
+    val dataxRxFragmentError = SingleLiveData<String>()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxActivitySuccess: SingleLiveData<MutableList<SubDataSquare>> = SingleLiveData()
-    val dataxRxActivityError: SingleLiveData<String> = SingleLiveData()
+    val dataxRxActivitySuccess = SingleLiveData<MutableList<SubDataSquare>>()
+    val dataxRxActivityError = SingleLiveData<String>()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
         viewModelScope.launch {

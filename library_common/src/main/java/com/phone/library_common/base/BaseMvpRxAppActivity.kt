@@ -31,7 +31,7 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
     protected var url: String? = null
     protected var mBodyParams = ArrayMap<String, String>()
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
-    protected var mBaseApplication: BaseApplication? = null
+    protected lateinit var mBaseApplication: BaseApplication
     private var mActivityPageManager: ActivityPageManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

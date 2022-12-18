@@ -119,7 +119,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     }
 
     override fun loginSuccess(success: String) {
-        mBaseApplication?.setLogin(true)
+        mBaseApplication.setLogin(true)
         startActivity(MainActivity::class.java)
         finish()
     }

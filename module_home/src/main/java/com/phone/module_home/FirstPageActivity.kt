@@ -40,7 +40,7 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
     private var refreshLayout: SmartRefreshLayout? = null
     private var rcvData: RecyclerView? = null
 
-    private var firstPageAdapter: FirstPageAdapter? = null
+    private lateinit var firstPageAdapter: FirstPageAdapter
     private var isRefresh = false
 
     private var amapLocationManager: AMAPLocationManager? = null
@@ -96,7 +96,7 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         rcvData?.itemAnimator = DefaultItemAnimator()
         firstPageAdapter = FirstPageAdapter(mRxAppCompatActivity)
         //		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page)
-        firstPageAdapter?.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
+        firstPageAdapter.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
             //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4"
             //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4"
             //					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4"
@@ -122,7 +122,7 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
                 val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
                 intent.putExtra(
                     "loadUrl",
-                    firstPageAdapter?.mJuheNewsBeanList?.get(position)?.url
+                    firstPageAdapter.mJuheNewsBeanList.get(position).url
                 )
                 startActivity(intent)
             }
@@ -167,13 +167,13 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
     override fun firstPageDataSuccess(success: List<JuheNewsBean>) {
         if (!this.isFinishing) {
             if (isRefresh) {
-                firstPageAdapter?.mJuheNewsBeanList?.clear()
-                firstPageAdapter?.mJuheNewsBeanList?.addAll(success)
-                firstPageAdapter?.clearData()
-                firstPageAdapter?.addData(firstPageAdapter?.mJuheNewsBeanList)
+                firstPageAdapter.mJuheNewsBeanList.clear()
+                firstPageAdapter.mJuheNewsBeanList.addAll(success)
+                firstPageAdapter.clearData()
+                firstPageAdapter.addData(firstPageAdapter.mJuheNewsBeanList)
                 refreshLayout?.finishRefresh()
             } else {
-                firstPageAdapter?.addData(firstPageAdapter?.mJuheNewsBeanList)
+                firstPageAdapter.addData(firstPageAdapter.mJuheNewsBeanList)
                 refreshLayout?.finishLoadMore()
             }
             hideLoading()
@@ -222,17 +222,17 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
 //                User3 user3 = (User3) user
 //                LogManager.i(TAG, user3.toString())
                     if (TextUtils.isEmpty(
-                            mBaseApplication?.getSystemId()
+                            mBaseApplication.getSystemId()
                         )
                     ) {
                         val systemId = getSystemId()
-                        mBaseApplication?.setSystemId(systemId)
+                        mBaseApplication.setSystemId(systemId)
                         LogManager.i(
                             TAG,
-                            "isEmpty systemId*****" + mBaseApplication?.getSystemId()
+                            "isEmpty systemId*****" + mBaseApplication.getSystemId()
                         )
                     } else {
-                        LogManager.i(TAG, "systemId*****" + mBaseApplication?.getSystemId())
+                        LogManager.i(TAG, "systemId*****" + mBaseApplication.getSystemId())
                     }
                     amapLocationManager?.startLocation()
                 }

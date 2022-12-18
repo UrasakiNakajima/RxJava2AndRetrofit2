@@ -23,12 +23,12 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
     private val model = ProjectModelImpl()
 
     //1.首先定义两个SingleLiveData的实例
-    val tabRxFragmentSuccess: SingleLiveData<MutableList<TabBean>> = SingleLiveData()
-    val tabRxFragmentError: SingleLiveData<String> = SingleLiveData()
+    val tabRxFragmentSuccess = SingleLiveData<MutableList<TabBean>>()
+    val tabRxFragmentError = SingleLiveData<String>()
 
     //1.首先定义两个SingleLiveData的实例
-    val tabRxActivitySuccess: SingleLiveData<MutableList<TabBean>> = SingleLiveData()
-    val tabRxActivityError: SingleLiveData<String> = SingleLiveData()
+    val tabRxActivitySuccess = SingleLiveData<MutableList<TabBean>>()
+    val tabRxActivityError = SingleLiveData<String>()
 
     override fun projectTabData() {
         viewModelScope.launch {

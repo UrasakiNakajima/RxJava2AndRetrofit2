@@ -12,7 +12,7 @@ object FileManager {
         strContent: String,
         filePath: String,
         fileName: String
-    ): String? {
+    ): String {
         //生成文件夹之后，再生成文件，不然会出错
         makeFilePath(filePath, fileName)
         val strFilePath = filePath + fileName
@@ -38,7 +38,7 @@ object FileManager {
         } catch (e: Exception) {
             Log.i(TAG, "Error on write File:$e")
         }
-        return filePath2
+        return filePath2!!
     }
 
     //生成文件

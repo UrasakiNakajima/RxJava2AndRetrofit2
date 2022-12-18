@@ -31,7 +31,7 @@ class CompressedPictureThreadPool(
             val file =
                 BitmapManager.getAssetFile(
                     context,
-                    base64AndFileBean.dirsPath,
+                    base64AndFileBean.dirsPath ?: "",
                     "picture_large.webp"
                 )
             LogManager.i(
@@ -46,42 +46,36 @@ class CompressedPictureThreadPool(
 
             //把图片转化成bitmap
             val bitmap = BitmapManager.getBitmap(file.absolutePath)
-            LogManager.i(TAG, "bitmap mWidth*****" + bitmap?.width)
-            LogManager.i(TAG, "bitmap mHeight*****" + bitmap?.height)
+            LogManager.i(TAG, "bitmap mWidth*****" + bitmap.width)
+            LogManager.i(TAG, "bitmap mHeight*****" + bitmap.height)
             base64AndFileBean.bitmap = bitmap
-            bitmap?.let {
-                //再压缩bitmap
-                val bitmapCompressed = BitmapManager.scaleImage(it, 1280, 960)
-                LogManager.i(TAG, "bitmapCompressed mWidth*****" + bitmapCompressed?.width)
-                LogManager.i(TAG, "bitmapCompressed mHeight*****" + bitmapCompressed?.height)
-                bitmapCompressed?.let {
-                    base64AndFileBean.bitmapCompressed = it
-                    //再把压缩后的bitmap保存到本地
-                    val fileCompressed = BitmapManager.saveFile(
-                        it,
-                        base64AndFileBean.dirsPathCompressed,
-                        "picture_large_compressed.png"
-                    )
-                    fileCompressed.let {
-                        LogManager.i(
-                            TAG,
-                            "CompressedPictureThreadPool fileCompressedPath*******" + it.absolutePath
-                        )
-                        LogManager.i(
-                            TAG,
-                            "fileCompressed size*****" + BitmapManager.getDataSize(
-                                BitmapManager.getFileSize(it)
-                            )
-                        )
-                        base64AndFileBean.fileCompressed = it
-                        //                if (bitmap != null) {
-                        //                    bitmap.recycle();
-                        //                    bitmap = null;
-                        //                }
-                        onCommonSingleParamCallback?.onSuccess(base64AndFileBean)
-                    }
-                }
-            }
+            //再压缩bitmap
+            val bitmapCompressed = BitmapManager.scaleImage(bitmap, 1280, 960)
+            LogManager.i(TAG, "bitmapCompressed mWidth*****" + bitmapCompressed.width)
+            LogManager.i(TAG, "bitmapCompressed mHeight*****" + bitmapCompressed.height)
+            base64AndFileBean.bitmapCompressed = bitmapCompressed
+            //再把压缩后的bitmap保存到本地
+            val fileCompressed = BitmapManager.saveFile(
+                bitmapCompressed,
+                base64AndFileBean.dirsPathCompressed ?: "",
+                "picture_large_compressed.png"
+            )
+            LogManager.i(
+                TAG,
+                "CompressedPictureThreadPool fileCompressedPath*******" + fileCompressed.absolutePath
+            )
+            LogManager.i(
+                TAG,
+                "fileCompressed size*****" + BitmapManager.getDataSize(
+                    BitmapManager.getFileSize(fileCompressed)
+                )
+            )
+            base64AndFileBean.fileCompressed = fileCompressed
+            //                if (bitmap != null) {
+            //                    bitmap.recycle();
+            //                    bitmap = null;
+            //                }
+            onCommonSingleParamCallback?.onSuccess(base64AndFileBean)
         }
     }
 

@@ -27,12 +27,12 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
     private val model = SubProjectModelImpl()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragmentSuccess: SingleLiveData<MutableList<ArticleListBean>> = SingleLiveData()
-    val dataxRxFragmentError: SingleLiveData<String> = SingleLiveData()
+    val dataxRxFragmentSuccess = SingleLiveData<MutableList<ArticleListBean>>()
+    val dataxRxFragmentError = SingleLiveData<String>()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxActivitySuccess: SingleLiveData<MutableList<ArticleListBean>> = SingleLiveData()
-    val dataxRxActivityError: SingleLiveData<String> = SingleLiveData()
+    val dataxRxActivitySuccess = SingleLiveData<MutableList<ArticleListBean>>()
+    val dataxRxActivityError = SingleLiveData<String>()
 
     override fun subProjectData(
         pageNum: Int,

@@ -14,9 +14,9 @@ import com.phone.library_common.base.IBaseView
 import com.phone.library_common.manager.LogManager.i
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_home.R
+import com.phone.module_home.adapter.LargeImageListBean
 import com.phone.module_home.adapter.VideoListAdapter
-import com.phone.module_home.bean.VideoListBean
-import com.phone.module_home.bean.VideoListBean.LargeImageListBean
+import com.phone.module_home.adapter.VideoListBean
 import com.phone.module_home.presenter.FirstPagePresenterImpl
 import com.phone.module_home.view.IVideoListView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -24,7 +24,11 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>(),
     IVideoListView {
 
-    private val TAG = "VideoListActivity"
+    companion object {
+        @JvmStatic
+        private val TAG = VideoListActivity::class.java.simpleName
+    }
+
     private var toolbar: Toolbar? = null
     private var layoutBack: FrameLayout? = null
     private var imvBack: ImageView? = null

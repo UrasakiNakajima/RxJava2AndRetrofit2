@@ -24,8 +24,8 @@ class Base64ToPictureThreadPool(var base64AndFileBean: Base64AndFileBean) {
                 "Base64ToPictureThreadPool*******" + Thread.currentThread().name
             )
             val fileCompressedRecover = Base64AndFileManager.base64ToFile(
-                base64AndFileBean.getBase64Str(),
-                base64AndFileBean.dirsPathCompressedRecover,
+                base64AndFileBean.base64Str ?: "",
+                base64AndFileBean.dirsPathCompressedRecover ?: "",
                 "picture_large_compressed_recover"
             )
             //                File fileCompressedRecover = Base64AndFileManager.base64ToFileSecond(
@@ -34,7 +34,7 @@ class Base64ToPictureThreadPool(var base64AndFileBean: Base64AndFileBean) {
 //                        base64AndFileBean.getFile().getName());
 //            File fileCompressedRecover = Base64AndFileManager.base64ToFileThird(base64Str, dirsPath5, fileName);
             val bitmapCompressedRecover =
-                BitmapFactory.decodeFile(fileCompressedRecover?.absolutePath)
+                BitmapFactory.decodeFile(fileCompressedRecover.absolutePath)
             if (bitmapCompressedRecover != null) {
                 base64AndFileBean.bitmapCompressedRecover = bitmapCompressedRecover
                 onCommonSingleParamCallback?.onSuccess(base64AndFileBean)

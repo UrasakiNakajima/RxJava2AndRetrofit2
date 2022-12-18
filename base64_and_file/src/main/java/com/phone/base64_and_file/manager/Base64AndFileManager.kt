@@ -3,7 +3,7 @@ package com.phone.base64_and_file.manager
 import Decoder.BASE64Decoder
 import Decoder.BASE64Encoder
 import android.util.Base64
-import com.phone.library_common.manager.LogManager.i
+import com.phone.library_common.manager.LogManager
 import java.io.*
 import java.util.*
 
@@ -17,11 +17,11 @@ object Base64AndFileManager {
      * @param fileName
      * @return
      */
-    fun base64ToFile(base64Content: String, dirsPath: String, fileName: String): File? {
+    fun base64ToFile(base64Content: String, dirsPath: String, fileName: String): File {
         val decoder = BASE64Decoder()
-        var bais: ByteArrayInputStream? = null
+        val bais: ByteArrayInputStream
         var bis: BufferedInputStream? = null
-        var fos: FileOutputStream? = null
+        val fos: FileOutputStream
         var bos: BufferedOutputStream? = null
         var file: File? = null
         try {
@@ -56,7 +56,7 @@ object Base64AndFileManager {
                 e.printStackTrace()
             }
         }
-        return file
+        return file!!
     }
 
 
@@ -168,7 +168,7 @@ object Base64AndFileManager {
                 e.printStackTrace()
             }
         }
-        i(TAG, "bytes.length******" + bytes!!.size)
+        LogManager.i(TAG, "bytes.length******" + bytes!!.size)
         val byteList: MutableList<ByteArray?> = ArrayList()
         if (bytes.size > 10) {
             val byte1 = bytes.size / 10
@@ -614,9 +614,9 @@ object Base64AndFileManager {
     //        return org.apache.commons.codec.binary.Base64.encodeBase64String(bytes);
     //    }
 
-    fun getBase64StrList(filePath: String?): List<String> {
-        val base64StrList: MutableList<String> = ArrayList()
-        i(TAG, "base64StrList size*****" + base64StrList.size)
+    fun getBase64StrList(filePath: String): List<String> {
+        val base64StrList: MutableList<String> = mutableListOf()
+        LogManager.i(TAG, "base64StrList size*****" + base64StrList.size)
         try {
             val fis = FileInputStream(filePath)
             val bis = BufferedInputStream(fis)
@@ -627,7 +627,7 @@ object Base64AndFileManager {
                 base64Content = String(buffer, 0, len)
                 base64StrList.add(base64Content)
             }
-            i(TAG, "base64StrList size*****" + base64StrList.size)
+            LogManager.i(TAG, "base64StrList size*****" + base64StrList.size)
         } catch (e: IOException) {
             e.printStackTrace()
         }
