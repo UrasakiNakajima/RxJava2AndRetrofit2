@@ -5,7 +5,6 @@ import java.util.concurrent.*
 
 class ThreadPoolManager {
 
-    private val TAG = ThreadPoolManager::class.java.simpleName
     private var syncThreadPool: ExecutorService? = null
     private var scheduledThreadPool: ScheduledExecutorService? = null
 
@@ -15,6 +14,7 @@ class ThreadPoolManager {
      * @return
      */
     companion object {
+        private val TAG = ThreadPoolManager::class.java.simpleName
         private var instance: ThreadPoolManager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
@@ -47,7 +47,9 @@ class ThreadPoolManager {
         }
         //        for (int i = 0 i < 1 i++) {
         //创建任务
-        val runnable = Runnable { onCommonSuccessCallback.onSuccess() }
+        val runnable = Runnable {
+            onCommonSuccessCallback.onSuccess()
+        }
         // 将任务交给线程池管理
         syncThreadPool?.execute(runnable)
 //        }
@@ -64,19 +66,45 @@ class ThreadPoolManager {
         onCommonSuccessCallback: OnCommonSuccessCallback
     ) {
         if (scheduledThreadPool == null) {
-            scheduledThreadPool = Executors.newScheduledThreadPool(1)
+            scheduledThreadPool = Executors.newScheduledThreadPool(3)
         }
         //创建任务
-        val runnable = Runnable { onCommonSuccessCallback.onSuccess() }
+        val runnable = Runnable {
+            onCommonSuccessCallback.onSuccess()
+        }
+        scheduledThreadPool?.schedule(runnable, delay, TimeUnit.MILLISECONDS)
+    }
+
+    /**
+     * 延迟执行的线程池
+     *
+     * @param delay
+     * @param onCommonSuccessCallback
+     */
+    fun createScheduledThreadPoolToUIThread(
+        delay: Long,
+        onCommonSuccessCallback: OnCommonSuccessCallback
+    ) {
+        if (scheduledThreadPool == null) {
+            scheduledThreadPool = Executors.newScheduledThreadPool(3)
+        }
+        //创建任务
+        val runnable = Runnable {
+            MainThreadManager {
+                onCommonSuccessCallback.onSuccess()
+            }
+        }
         scheduledThreadPool?.schedule(runnable, delay, TimeUnit.MILLISECONDS)
     }
 
     fun shutdownScheduledThreadPool() {
         scheduledThreadPool?.shutdown()
+        scheduledThreadPool = null
     }
 
     fun shutdownNowScheduledThreadPool() {
         scheduledThreadPool?.shutdownNow()
+        scheduledThreadPool = null
     }
 
     fun shutdownSyncThreadPool() {

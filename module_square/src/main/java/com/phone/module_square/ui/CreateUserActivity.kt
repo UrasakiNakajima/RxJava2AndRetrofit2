@@ -188,7 +188,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                     }
                 }
                 hideLoading()
-            }.subThreadToUIThread()
+            }
         }
     }
 
@@ -268,7 +268,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                 }
                             }
                             hideLoading()
-                        }.subThreadToUIThread()
+                        }
                     }
                 }
             }
@@ -302,13 +302,13 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                         success.id = userBeanList[0].id
                         ThreadPoolManager.get().createSyncThreadPool {
                             userBeanDaoManager?.update(success)
-                            MainThreadManager({
+                            MainThreadManager {
                                 showToast(
                                     ResourcesManager.getString(R.string.this_user_has_modified),
                                     true
                                 )
-                            })
-                                .subThreadToUIThread()
+                            }
+
                         }
                     } else {
                         showToast(
@@ -349,7 +349,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                 }
                             }
                             hideLoading()
-                        }.subThreadToUIThread()
+                        }
                     }
                 }
             }
@@ -468,7 +468,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
                                 }
                             }
                             hideLoading()
-                        }.subThreadToUIThread()
+                        }
                     }
                 }
             }

@@ -12,10 +12,7 @@ import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.callback.OnCommonSingleParamCallback
-import com.phone.library_common.manager.ActivityPageManager
-import com.phone.library_common.manager.CrashHandlerManager
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.RetrofitManager
+import com.phone.library_common.manager.*
 
 /**
  * author    : Urasaki
@@ -36,15 +33,14 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     //声明 初始化
-    protected var sp: SharedPreferences? = null
-    protected var editor: SharedPreferences.Editor? = null
+    protected lateinit var sp: SharedPreferences
+    protected lateinit var editor: SharedPreferences.Editor
     protected val MODE = Context.MODE_PRIVATE
     private var isLogin = false
     private var accessToken: String? = null
     private var systemId: String? = null
 
     private var activityPageManager: ActivityPageManager? = null
-
     var webView: WebView? = null
 
     override fun onCreate() {
@@ -53,18 +49,20 @@ open class BaseApplication : MultiDexApplication() {
 
         //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
         sp = getSharedPreferences("app", MODE)
-        editor = sp?.edit()
-
+        editor = sp.edit()
         //初始化retrofit
         RetrofitManager.get()
         activityPageManager = ActivityPageManager.get()
-        val crashHandlerManager = CrashHandlerManager.get()
-        crashHandlerManager?.sendPreviousReportsToServer()
         if (true) {
             ARouter.openLog()
             ARouter.openDebug()
         }
         ARouter.init(this)
+
+        LogManager.i(
+            TAG,
+            "BaseApplication createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
+        )
 
         //		RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
         //			@Override
@@ -74,7 +72,11 @@ open class BaseApplication : MultiDexApplication() {
         //				LogManager.i(TAG, "throwable message*****" + throwable.getMessage())
         //			}
         //		})
-        initWebView()
+        ThreadPoolManager.get().createScheduledThreadPool(500, {
+            val crashHandlerManager = CrashHandlerManager.get()
+            crashHandlerManager?.sendPreviousReportsToServer()
+            initWebView()
+        })
     }
 
     override fun attachBaseContext(base: Context?) {
@@ -100,9 +102,9 @@ open class BaseApplication : MultiDexApplication() {
         webSettings?.builtInZoomControls = true //设置内置的缩放控件。若为false，则该WebView不可缩放
         webSettings?.displayZoomControls = false //隐藏原生的缩放控件
         //        //其他细节操作
-//        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK) //关闭webview中缓存
-//        webSettings.setAllowFileAccess(true) //设置可以访问文件
-//        webSettings.setJavaScriptCanOpenWindowsAutomatically(true) //支持通过JS打开新窗口
+//        webSettings?.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK) //关闭webview中缓存
+//        webSettings?.setAllowFileAccess(true) //设置可以访问文件
+//        webSettings?.setJavaScriptCanOpenWindowsAutomatically(true) //支持通过JS打开新窗口
         webSettings?.loadsImagesAutomatically = true //支持自动加载图片
         webSettings?.defaultTextEncodingName = "utf-8" //设置编码格式
 
@@ -115,7 +117,7 @@ open class BaseApplication : MultiDexApplication() {
         //LOAD_CACHE_ELSE_NETWORK，只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。
 
 //        //不使用缓存:
-//        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE)
+//        webSettings?.setCacheMode(WebSettings.LOAD_NO_CACHE)
 
         //步骤2. 选择加载方式
         //方式1. 加载一个网页：
@@ -180,48 +182,48 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     fun isLogin(): Boolean {
-        isLogin = sp?.getBoolean("isLogin", false) == true
+        isLogin = sp.getBoolean("isLogin", false) == true
         LogManager.i(TAG, "isLogin***$isLogin")
         return isLogin
     }
 
     fun setLogin(isLogin: Boolean) {
         LogManager.i(TAG, "setLogin***$isLogin")
-        editor?.putBoolean("isLogin", isLogin)
-        editor?.commit()
+        editor.putBoolean("isLogin", isLogin)
+        editor.commit()
         if (!isLogin) {
             setLogout()
         }
     }
 
     fun getAccessToken(): String? {
-        accessToken = sp?.getString("accessToken", "")
+        accessToken = sp.getString("accessToken", "")
         return accessToken
     }
 
     fun setAccessToken(accessToken: String) {
         LogManager.i(TAG, "setAccessToken***$accessToken")
-        editor?.putString("accessToken", accessToken)
-        editor?.commit()
+        editor.putString("accessToken", accessToken)
+        editor.commit()
     }
 
     fun getSystemId(): String? {
-        systemId = sp?.getString("systemId", "")
+        systemId = sp.getString("systemId", "")
         return systemId
     }
 
     fun setSystemId(systemId: String) {
         LogManager.i(TAG, "setSystemId***$systemId")
-        editor?.putString("systemId", systemId)
-        editor?.commit()
+        editor.putString("systemId", systemId)
+        editor.commit()
     }
 
     fun setLogout() {
         LogManager.i(TAG, "setLogout***")
         //        editor.clear()
-        editor?.remove("accessToken")
-        editor?.remove("isLogin")
-        editor?.commit()
+        editor.remove("accessToken")
+        editor.remove("isLogin")
+        editor.commit()
     }
 
     override fun onTrimMemory(level: Int) {

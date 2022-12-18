@@ -1,17 +1,24 @@
 package com.phone.module_main.login.ui
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
+import android.view.animation.LinearInterpolator
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.phone.library_common.base.BaseRxAppActivity
 import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.ScreenManager
+import com.phone.library_common.manager.ThreadPoolManager
 import com.phone.module_main.R
 import com.phone.module_main.main.MainActivity
 
@@ -32,27 +39,53 @@ class LaunchActivity : BaseRxAppActivity() {
     //2、创建一个mPermissionList，逐个判断哪些权限未授予，未授予的权限存储到mPerrrmissionList中
     private val mPermissionList: MutableList<String> = ArrayList()
     private var mPermissionsDialog: AlertDialog? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var animator: ObjectAnimator
 
     override fun initLayoutId(): Int {
         return R.layout.activity_launch
     }
 
-    override fun initData() {}
+    override fun initData() {
+    }
 
-    override fun initViews() {}
+    override fun initViews() {
+        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        val tevAndroid = findViewById<View>(R.id.tev_android) as TextView
+        setToolbar(true, R.color.color_000000)
+
+        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(1000, {
+            LogManager.i(
+                TAG,
+                "LaunchActivity 500 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
+            )
+            animator =
+                ObjectAnimator.ofFloat(
+                    tevAndroid,
+                    "translationY",
+                    ScreenManager.dpToPx(500F).toFloat()
+                )
+            animator.setInterpolator(LinearInterpolator())
+            animator.setDuration(1500)
+            animator.start()
+        })
+    }
 
     override fun initLoadData() {
 //        initPermissions()
-        if (baseApplication.isLogin()) {
-            startActivity(MainActivity::class.java)
-        } else {
-            startActivity(LoginActivity::class.java)
-        }
-        finish()
+
+        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(3000, {
+            LogManager.i(
+                TAG,
+                "LaunchActivity 3000 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
+            )
+            //Activity 跳转一律放在UI线程去执行
+            if (baseApplication.isLogin()) {
+                startActivity(MainActivity::class.java)
+            } else {
+                startActivity(LoginActivity::class.java)
+            }
+            finish()
+        })
     }
 
     private fun initPermissions() {
@@ -197,4 +230,11 @@ class LaunchActivity : BaseRxAppActivity() {
         mPermissionsDialog = null
     }
 
+    override fun onDestroy() {
+        if (animator.isRunning) {
+            animator.cancel()
+        }
+        ThreadPoolManager.get().shutdownScheduledThreadPool()
+        super.onDestroy()
+    }
 }

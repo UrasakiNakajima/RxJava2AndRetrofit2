@@ -23,13 +23,16 @@ import org.json.JSONArray
 
 class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>() {
 
-    private val TAG = PickerViewActivity::class.java.simpleName
+    companion object {
+        @JvmStatic
+        private val TAG = PickerViewActivity::class.java.simpleName
+    }
 
     protected var bodyParams: Map<String, String>? = null
     private var pvOptions: OptionsPickerView<Any>? = null
-    private var options1Items: List<ProvincesBean> = ArrayList()
-    private var options2Items: ArrayList<ArrayList<String>> = ArrayList()
-    private var options3Items: ArrayList<ArrayList<ArrayList<String>>> = ArrayList()
+    private var options1Items = mutableListOf<ProvincesBean>()
+    private var options2Items = mutableListOf<MutableList<String>>()
+    private var options3Items = mutableListOf<MutableList<MutableList<String>>>()
     var isAnalyticalDataComplete = false
     internal var analyticalDataAsyncTask: AnalyticalDataAsyncTask? = null
 
@@ -40,9 +43,6 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
 
     override fun initData() {
         bodyParams = HashMap()
-        options1Items = ArrayList()
-        options2Items = ArrayList()
-        options3Items = ArrayList()
         analyticalDataAsyncTask =
             AnalyticalDataAsyncTask()
         analyticalDataAsyncTask?.execute()
@@ -149,8 +149,9 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
         /*pvOptions.setPicker(options1Items)//一级选择器
         pvOptions.setPicker(options1Items, options2Items)//二级选择器*/
         pvOptions?.setPicker(
-            options1Items, options2Items as List<MutableList<Any>>?,
-            options3Items as List<MutableList<MutableList<Any>>>?
+            options1Items as List<Any>,
+            options2Items as List<MutableList<String>>,
+            options3Items as List<MutableList<MutableList<String>>>
         ) //三级选择器
         val mDialog = pvOptions?.getDialog()
         if (mDialog != null) {
@@ -193,8 +194,8 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
          */
         options1Items = jsonBean
         for (i in jsonBean.indices) { //遍历省份
-            val cityList = ArrayList<String>() //该省的城市列表（第二级）
-            val province_AreaList = ArrayList<ArrayList<String>>() //该省的所有地区列表（第三极）
+            val cityList = mutableListOf<String>() //该省的城市列表（第二级）
+            val province_AreaList = mutableListOf<MutableList<String>>() //该省的所有地区列表（第三极）
             for (c in jsonBean[i].cityList.indices) { //遍历该省份的所有城市
                 val cityName = jsonBean[i].cityList[c].name
                 cityList.add(cityName) //添加城市
@@ -249,7 +250,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
         super.onDestroy()
     }
 
-    inner class AnalyticalDataAsyncTask() : AsyncTask<String?, Int?, Boolean>() {
+    inner class AnalyticalDataAsyncTask : AsyncTask<String?, Int?, Boolean>() {
 
         /**
          * 这里是开始线程之前执行的,是在UI线程
@@ -306,7 +307,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
         override fun onPostExecute(isAnalyticalDataComplete: Boolean) {
             super.onPostExecute(isAnalyticalDataComplete)
             LogManager.i(
-                this@PickerViewActivity.TAG,
+                TAG,
                 "onPostExecute*****isAnalyticalDataComplete=$isAnalyticalDataComplete"
             )
             if (isAnalyticalDataComplete) {

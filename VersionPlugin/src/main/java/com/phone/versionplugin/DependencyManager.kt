@@ -10,7 +10,7 @@ object BuildVersions {
 
     const val kotlin_version = "1.6.21"
     //AndroidX
-    const val appcompat_version = "1.2.0"
+    const val appcompat_version = "1.4.0"
     const val constraintlayout_version = "2.0.4"
     const val core_version = "1.6.0"
     const val core_ktx_version = "1.6.0"

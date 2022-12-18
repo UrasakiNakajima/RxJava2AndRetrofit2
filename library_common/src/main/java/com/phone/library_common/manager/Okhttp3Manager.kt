@@ -28,7 +28,6 @@ import java.util.concurrent.TimeUnit
 
 class Okhttp3Manager {
 
-    private val TAG = Okhttp3Manager::class.java.simpleName
     var mClient: OkHttpClient
     val UPDATA = 100
 
@@ -53,6 +52,8 @@ class Okhttp3Manager {
      * @return
      */
     companion object {
+        @JvmStatic
+        private val TAG = Okhttp3Manager::class.java.simpleName
         private var instance: Okhttp3Manager? = null
 
         //       Synchronized添加后就是线程安全的的懒汉模式
@@ -89,13 +90,11 @@ class Okhttp3Manager {
             override fun onFailure(call: Call, e: IOException) {
                 LogManager.i(TAG, "getAsync onFailure e*******$e")
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
             }
 
             @Throws(IOException::class)
@@ -105,8 +104,7 @@ class Okhttp3Manager {
                     TAG,
                     "getAsync onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -121,7 +119,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -131,8 +129,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
             }
         })
     }
@@ -165,13 +162,11 @@ class Okhttp3Manager {
             override fun onFailure(call: Call, e: IOException) {
                 LogManager.i(TAG, "getAsync onFailure e*******$e")
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
             }
 
             @Throws(IOException::class)
@@ -181,8 +176,7 @@ class Okhttp3Manager {
                     TAG,
                     "getAsync onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -197,7 +191,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -207,8 +201,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
             }
         })
     }
@@ -244,13 +237,11 @@ class Okhttp3Manager {
             override fun onFailure(call: Call, e: IOException) {
                 LogManager.i(TAG, "getAsync onFailure e*******$e")
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
             }
 
             @Throws(IOException::class)
@@ -260,8 +251,7 @@ class Okhttp3Manager {
                     TAG,
                     "getAsync onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -276,7 +266,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -286,8 +276,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
             }
         })
     }
@@ -301,7 +290,7 @@ class Okhttp3Manager {
     private fun getBodyParams(bodyParams: Map<String, String>): String {
         //1.添加请求参数
         //遍历map中所有参数到builder
-        return if (bodyParams != null && bodyParams.size > 0) {
+        return if (bodyParams.size > 0) {
             val stringBuffer = StringBuffer("?")
             for (key in bodyParams.keys) {
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams[key])) {
@@ -371,13 +360,11 @@ class Okhttp3Manager {
                     "postAsyncString onFailure e*******$e"
                 )
                 LogManager.i(TAG, "postAsyncString onFailure e detailMessage*******" + e.message)
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
             }
 
             @Throws(IOException::class)
@@ -387,8 +374,7 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncString onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -403,7 +389,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -413,8 +399,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
             }
         })
     }
@@ -456,13 +441,11 @@ class Okhttp3Manager {
                     "postAsyncStream onFailure e*******$e"
                 )
                 LogManager.i(TAG, "postAsyncStream onFailure e detailMessage*******" + e.message)
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
             }
 
             @Throws(IOException::class)
@@ -472,8 +455,7 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncStream onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -488,7 +470,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -498,8 +480,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
             }
         })
     }
@@ -516,7 +497,7 @@ class Okhttp3Manager {
         bodyParams: Map<String, String>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        if (bodyParams != null && bodyParams.size > 0) {
+        if (bodyParams.size > 0) {
             LogManager.i(
                 TAG,
                 "postAsyncKeyValuePairs bodyParams*****$bodyParams"
@@ -531,7 +512,7 @@ class Okhttp3Manager {
         val formEncodingBuilder = FormBody.Builder()
         //1.添加请求参数
         //遍历map中所有参数到builder
-        if (bodyParams != null && bodyParams.size > 0) {
+        if (bodyParams.size > 0) {
             for (key in bodyParams.keys) {
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams[key])) {
                     //如果参数不是null，才把参数传给后台
@@ -557,21 +538,11 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncKeyValuePairs onFailure e detailMessage*******" + e.message
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
-
-//                MainThreadManager mainThreadManager2 =
-//                        new MainThreadManager(new OnSubThreadToMainThreadCallback() {
-//                            @Override
-//                            public void onSuccess() {
-//                                onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off))
-//                            }
-//                        })
             }
 
             @Throws(IOException::class)
@@ -581,8 +552,7 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncKeyValuePairs onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -597,7 +567,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -607,8 +577,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
             }
         })
     }
@@ -639,21 +608,11 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncKeyValuePairs onFailure e detailMessage*******" + e.message
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
-
-//                MainThreadManager mainThreadManager2 =
-//                        new MainThreadManager(new OnSubThreadToMainThreadCallback() {
-//                            @Override
-//                            public void onSuccess() {
-//                                onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off))
-//                            }
-//                        })
             }
 
             @Throws(IOException::class)
@@ -663,8 +622,7 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncKeyValuePairs onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -679,7 +637,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -689,8 +647,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
             }
         })
     }
@@ -708,7 +665,7 @@ class Okhttp3Manager {
         bodyParams: Map<String, String>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        if (bodyParams != null && bodyParams.size > 0) {
+        if (bodyParams.size > 0) {
             LogManager.i(
                 TAG,
                 "postAsyncForm bodyParams String*******$bodyParams"
@@ -723,7 +680,7 @@ class Okhttp3Manager {
         val multipartBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
         //1.添加请求参数
         //遍历map中所有参数到builder
-        if (bodyParams != null && bodyParams.size > 0) {
+        if (bodyParams.size > 0) {
             for (key in bodyParams.keys) {
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams[key])) {
                     //如果参数不是null，才把参数传给后台
@@ -742,13 +699,11 @@ class Okhttp3Manager {
             override fun onFailure(call: Call, e: IOException) {
                 LogManager.i(TAG, "postAsyncForm onFailure e*******$e")
                 LogManager.i(TAG, "postAsyncForm onFailure e detailMessage*******" + e.message)
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
             }
 
             @Throws(IOException::class)
@@ -763,8 +718,7 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncForm onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -779,7 +733,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -789,8 +743,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
                 //                } catch (Exception e) {
 //                    e.printStackTrace()
 //                }
@@ -813,7 +766,7 @@ class Okhttp3Manager {
         fileList: List<File>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        if (bodyParams != null && bodyParams.size > 0) {
+        if (bodyParams.size > 0) {
             LogManager.i(
                 TAG,
                 "postAsyncForm bodyParams String*******$bodyParams"
@@ -829,7 +782,7 @@ class Okhttp3Manager {
         val multipartBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
         //1.添加请求参数
         //遍历map中所有参数到builder
-        if (bodyParams != null && bodyParams.size > 0) {
+        if (bodyParams.size > 0) {
             for (key in bodyParams.keys) {
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams[key])) {
                     //如果参数不是null，才把参数传给后台
@@ -839,7 +792,7 @@ class Okhttp3Manager {
         }
 
         //遍历fileList中所有图片绝对路径到builder，并约定key如"upload"作为上传php服务器接受多张图片的key
-        if (fileList != null && fileList.size > 0) {
+        if (fileList.size > 0) {
             for (i in fileList.indices) {
                 if (fileList[i].exists()) {
                     multipartBodyBuilder.addFormDataPart(
@@ -870,13 +823,11 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncFormAndFiles onFailure e detailMessage*******" + e.message
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
             }
 
             @Throws(IOException::class)
@@ -886,8 +837,7 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncFormAndFiles onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -902,7 +852,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -912,8 +862,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
             }
         })
     }
@@ -932,7 +881,7 @@ class Okhttp3Manager {
         filesMap: Map<String, List<File>>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        if (bodyParams != null && bodyParams.size > 0) {
+        if (bodyParams.size > 0) {
             LogManager.i(
                 TAG,
                 "postAsyncForm bodyParams String*******$bodyParams"
@@ -1017,13 +966,11 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncFormAndFiles onFailure e detailMessage*******" + e.message
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
             }
 
             @Throws(IOException::class)
@@ -1033,8 +980,7 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncFormAndFiles onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -1049,7 +995,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -1059,8 +1005,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
             }
         })
     }
@@ -1079,7 +1024,7 @@ class Okhttp3Manager {
         fileList: List<File>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        if (bodyParams != null && bodyParams.size > 0) {
+        if (bodyParams.size > 0) {
             LogManager.i(
                 TAG,
                 "postAsyncForm bodyParams String*******$bodyParams"
@@ -1094,7 +1039,7 @@ class Okhttp3Manager {
         val multipartBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
         //1.添加请求参数
         //遍历map中所有参数到builder
-        if (bodyParams != null && bodyParams.size > 0) {
+        if (bodyParams.size > 0) {
             for (key in bodyParams.keys) {
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams[key])) {
                     //如果参数不是null，才把参数传给后台
@@ -1104,7 +1049,7 @@ class Okhttp3Manager {
         }
 
         //遍历fileList中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
-        if (fileList != null && fileList.size > 0) {
+        if (fileList.size > 0) {
             for (i in fileList.indices) {
                 if (fileList[i].exists()) {
                     multipartBodyBuilder.addFormDataPart(
@@ -1134,13 +1079,11 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncFormAndFiles onFailure e detailMessage*******" + e.message
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback {
+                MainThreadManager {
                     onCommonSingleParamCallback.onError(
                         BaseApplication.get().resources.getString(R.string.network_sneak_off)
                     )
                 }
-                mainThreadManager.subThreadToUIThread()
             }
 
             @Throws(IOException::class)
@@ -1150,8 +1093,7 @@ class Okhttp3Manager {
                     TAG,
                     "postAsyncFormAndFiles onResponse responseString*****$responseString"
                 )
-                val mainThreadManager = MainThreadManager()
-                mainThreadManager.setOnSubThreadToMainThreadCallback(OnCommonSuccessCallback {
+                MainThreadManager {
                     if (!TextUtils.isEmpty(responseString)) {
                         val baseResponse: BaseResponse<*>
                         baseResponse = try {
@@ -1166,7 +1108,7 @@ class Okhttp3Manager {
                                     R.string.server_sneak_off
                                 )
                             )
-                            return@OnCommonSuccessCallback
+                            return@MainThreadManager
                         }
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
@@ -1176,8 +1118,7 @@ class Okhttp3Manager {
                             )
                         )
                     }
-                })
-                mainThreadManager.subThreadToUIThread()
+                }
             }
         })
     }
@@ -1245,7 +1186,7 @@ class Okhttp3Manager {
 //        String alreadyDownloadLength = null
 //        String appContentLength = null
 //        //遍历map中所有参数到builder
-//        if (bodyParams != null && bodyParams.size() > 0) {
+//        if (bodyParams.size() > 0) {
 //            if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
 //                    //如果参数不是null，才把参数传给后台
 //                if ("alreadyDownloadLength".equals(key)) {
@@ -1287,7 +1228,7 @@ class Okhttp3Manager {
 //                String fileName = null
 //                String FILEPATH = null
 //                //遍历map中所有参数到builder
-//                if (bodyParams != null && bodyParams.size() > 0) {
+//                if (bodyParams.size() > 0) {
 //                    for (String key : bodyParams.keySet()) {
 //                        if ("alreadyDownloadLength".equals(key)) {
 //                            alreadyDownloadLength = bodyParams.get(key)
@@ -1458,7 +1399,7 @@ class Okhttp3Manager {
 //        String alreadyDownloadLength = null
 //        String appContentLength = null
 //        //遍历map中所有参数到builder
-//        if (bodyParams != null && bodyParams.size() > 0) {
+//        if (bodyParams.size() > 0) {
 //            for (String key : bodyParams.keySet()) {
 //    if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
 //        //如果参数不是null，才把参数传给后台
@@ -1558,7 +1499,7 @@ class Okhttp3Manager {
     //        String alreadyDownloadLength = null
     //        String appContentLength = null
     //        //遍历map中所有参数到builder
-    //        if (bodyParams != null && bodyParams.size() > 0) {
+    //        if (bodyParams.size() > 0) {
     //            if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
     //                    //如果参数不是null，才把参数传给后台
     //                if ("alreadyDownloadLength".equals(key)) {
@@ -1600,7 +1541,7 @@ class Okhttp3Manager {
     //                String fileName = null
     //                String FILEPATH = null
     //                //遍历map中所有参数到builder
-    //                if (bodyParams != null && bodyParams.size() > 0) {
+    //                if (bodyParams.size() > 0) {
     //                    for (String key : bodyParams.keySet()) {
     //                        if ("alreadyDownloadLength".equals(key)) {
     //                            alreadyDownloadLength = bodyParams.get(key)
@@ -1771,7 +1712,7 @@ class Okhttp3Manager {
     //        String alreadyDownloadLength = null
     //        String appContentLength = null
     //        //遍历map中所有参数到builder
-    //        if (bodyParams != null && bodyParams.size() > 0) {
+    //        if (bodyParams.size() > 0) {
     //            for (String key : bodyParams.keySet()) {
     //    if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(bodyParams.get(key))) {
     //        //如果参数不是null，才把参数传给后台

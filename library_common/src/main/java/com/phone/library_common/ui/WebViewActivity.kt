@@ -51,12 +51,12 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
             layoutBack.setOnClickListener(View.OnClickListener { v: View? -> finish() })
 
             mDatabind.activityWebProgressbar.progress = 100
-            mBaseApplication?.let {
+            mBaseApplication.let {
                 layoutWeb.addView(it.webView)
-//            val layoutParams = FrameLayout.LayoutParams(
-//                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
-//            )
-//            layoutWeb.addView(mBaseApplication.webView, layoutParams)
+        //            val layoutParams = FrameLayout.LayoutParams(
+        //                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
+        //            )
+        //            layoutWeb.addView(mBaseApplication.webView, layoutParams)
                 it.setOnCommonSingleParamCallback(object :
                     OnCommonSingleParamCallback<Int> {
                     override fun onSuccess(success: Int?) {
@@ -100,7 +100,7 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
 //            //这个api仅仅清除自动完成填充的表单数据，并不会清除WebView存储到本地的数据
 //            mBaseApplication.webView.clearFormData()
 
-            mBaseApplication?.webView?.loadUrl(it)
+            mBaseApplication.webView?.loadUrl(it)
         }
     }
 
@@ -119,7 +119,7 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
     }
 
     override fun onDestroy() {
-        mBaseApplication?.webView?.apply {
+        mBaseApplication.webView?.apply {
             loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             clearCache(true)
             clearHistory();

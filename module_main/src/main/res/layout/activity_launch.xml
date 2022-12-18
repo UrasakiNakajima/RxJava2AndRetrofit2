@@ -1,9 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_000000"
+    android:orientation="vertical"
     tools:context=".login.ui.LaunchActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_000000"
+        android:minHeight="?attr/actionBarSize"
+        android:orientation="vertical"
+        app:contentInsetStart="0dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30" />
+
+    <TextView
+        android:id="@+id/tev_android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/corners_25_color_ff198cff"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_10"
+        android:text="@string/android"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_20"
+        tools:ignore="MissingConstraints" />
+
+</LinearLayout>

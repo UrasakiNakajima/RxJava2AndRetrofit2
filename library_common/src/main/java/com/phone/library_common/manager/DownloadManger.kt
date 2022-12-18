@@ -91,28 +91,22 @@ class DownloadManger private constructor() {
                             sum += len.toLong()
                             val progress = (sum * 1.0f / total * 100).toInt()
                             // 下载中
-                            val mainThreadManager = MainThreadManager()
-                            mainThreadManager.setOnSubThreadToMainThreadCallback {
+                            MainThreadManager {
                                 listener.onDownloading(progress)
                             }
-                            mainThreadManager.subThreadToUIThread()
                         }
                         bos.flush()
                         bis.close()
                         bos.close()
                         // 下载完成
-                        val mainThreadManager = MainThreadManager()
-                        mainThreadManager.setOnSubThreadToMainThreadCallback {
+                        MainThreadManager {
                             listener.onDownloadSuccess()
                         }
-                        mainThreadManager.subThreadToUIThread()
                     }
                 } catch (e: Exception) {
-                    val mainThreadManager = MainThreadManager()
-                    mainThreadManager.setOnSubThreadToMainThreadCallback {
+                    MainThreadManager {
                         listener.onDownloadError()
                     }
-                    mainThreadManager.subThreadToUIThread()
                 } finally {
 
                 }
