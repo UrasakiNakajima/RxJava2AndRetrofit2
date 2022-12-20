@@ -76,7 +76,7 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevAndroid,
                 "translationY",
                 0f,
-                ScreenManager.dpToPx(360f).toFloat()
+                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_360).toFloat()).toFloat()
             )
 //            // 构造一个在透明度上变化的属性动画
 //            val anim2 = ObjectAnimator.ofFloat(tevAndroid, "alpha", 1f, 0.1f, 1f, 0.5f, 1f)
@@ -100,16 +100,15 @@ class LaunchActivity : BaseRxAppActivity() {
             animatorList.add(scaleYAnimator)
             animatorSet.playTogether(animatorList as Collection<Animator>?)
             animatorSet.setInterpolator(LinearInterpolator())
-            animatorSet.duration = 5000 // 设置动画的播放时长
+            animatorSet.duration = 3000 // 设置动画的播放时长
             animatorSet.start() // 开始播放属性动画
-
 
             // 构造一个在横轴上平移的属性动画
             val translationYAnimator2 = ObjectAnimator.ofFloat(
                 tevAppName,
                 "translationY",
                 0f,
-                ScreenManager.dpToPx(-445f).toFloat()
+                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_409).toFloat()).toFloat())
             )
 //            // 构造一个在透明度上变化的属性动画
 //            val anim2 = ObjectAnimator.ofFloat(tevAndroid, "alpha", 1f, 0.1f, 1f, 0.5f, 1f)
@@ -133,7 +132,7 @@ class LaunchActivity : BaseRxAppActivity() {
             animatorList2.add(scaleYAnimator2)
             animatorSet2.playTogether(animatorList2 as Collection<Animator>?)
             animatorSet2.setInterpolator(LinearInterpolator())
-            animatorSet2.duration = 5000 // 设置动画的播放时长
+            animatorSet2.duration = 3000 // 设置动画的播放时长
             animatorSet2.start() // 开始播放属性动画
 
             // 构造一个在横轴上平移的属性动画
@@ -141,14 +140,14 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevKotlin,
                 "translationX",
                 0f,
-                ScreenManager.dpToPx(100f).toFloat()
+                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_100).toFloat()).toFloat()
             )
             // 构造一个在横轴上平移的属性动画
             val translationYAnimator3 = ObjectAnimator.ofFloat(
                 tevKotlin,
                 "translationY",
                 0f,
-                ScreenManager.dpToPx(-410f).toFloat()
+                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_390).toFloat()).toFloat())
             )
 //            // 构造一个在透明度上变化的属性动画
 //            val anim2 = ObjectAnimator.ofFloat(tevAndroid, "alpha", 1f, 0.1f, 1f, 0.5f, 1f)
@@ -183,7 +182,7 @@ class LaunchActivity : BaseRxAppActivity() {
         ThreadPoolManager.get().createScheduledThreadPoolToUIThread(7000, {
             LogManager.i(
                 TAG,
-                "LaunchActivity 3000 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
+                "LaunchActivity 7000 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
             )
             //Activity 跳转一律放在UI线程去执行
             if (baseApplication.isLogin()) {

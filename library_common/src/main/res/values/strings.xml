@@ -26,8 +26,8 @@
 
     <string name="data_in_wrong_format">數據格式錯誤</string>
     <string name="request_was_aborted">请求失败</string>
-    <string name="login">登錄</string>
-    <string name="logout">退出登錄</string>
+    <string name="login">login</string>
+    <string name="logout">退出登陸</string>
     <string name="network_sneak_off">網絡開小差了</string>
     <string name="server_sneak_off">服務器開小差了</string>
     <string name="the_passwords_entered_twice_are_inconsistent">两次输入密码不一致</string>
@@ -53,7 +53,7 @@
 
     <string name="confirm_password">确认密码</string>
     <string name="please_check_the_network_connection">请检查网络连接</string>
-    <string name="jump_to_register">跳转到注册</string>
+    <string name="jump_to_register">跳轉到註冊</string>
 
     <string name="first_page_details">首页详情</string>
     <string name="mine_details">我的详情</string>

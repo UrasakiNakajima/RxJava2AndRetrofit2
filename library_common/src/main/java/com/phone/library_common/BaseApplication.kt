@@ -81,6 +81,10 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     private fun initWebView() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val processName = getProcessName()
+            WebView.setDataDirectorySuffix(processName)
+        }
         webView = WebView(this)
         //声明WebSettings子类
         val webSettings = webView.settings

@@ -1,6 +1,5 @@
 package com.phone.library_common.manager
 
-import android.annotation.TargetApi
 import android.net.Uri
 import android.os.Build
 import android.preference.PreferenceManager
