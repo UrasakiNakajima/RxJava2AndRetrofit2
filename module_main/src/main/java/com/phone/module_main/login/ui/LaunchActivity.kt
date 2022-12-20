@@ -215,7 +215,7 @@ class LaunchActivity : BaseRxAppActivity() {
                 if (baseApplication.isLogin()) {
                     startActivity(MainActivity::class.java)
                 } else {
-                    startActivity(MainActivity::class.java)
+                    startActivity(LoginActivity::class.java)
                 }
                 finish()
             }
@@ -223,7 +223,7 @@ class LaunchActivity : BaseRxAppActivity() {
             if (baseApplication.isLogin()) {
                 startActivity(MainActivity::class.java)
             } else {
-                startActivity(MainActivity::class.java)
+                startActivity(LoginActivity::class.java)
             }
             finish()
         }
@@ -279,7 +279,7 @@ class LaunchActivity : BaseRxAppActivity() {
                 if (baseApplication.isLogin()) {
                     startActivity(MainActivity::class.java)
                 } else {
-                    startActivity(MainActivity::class.java)
+                    startActivity(LoginActivity::class.java)
                 }
                 finish()
             }
