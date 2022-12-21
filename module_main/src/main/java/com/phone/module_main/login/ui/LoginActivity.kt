@@ -11,10 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
-import com.phone.library_common.manager.ActivityPageManager
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.ResourcesManager
-import com.phone.library_common.manager.RetrofitManager
+import com.phone.library_common.manager.*
 import com.phone.library_common.manager.SystemManager.getSystemId
 import com.phone.module_main.R
 import com.phone.module_main.login.DataGetVerification
@@ -30,6 +27,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     private var toolbar: Toolbar? = null
     private var layoutBack: FrameLayout? = null
     private var imvBack: ImageView? = null
+    private var imvHeadPortrait: ImageView? = null
     private var edtUserId: EditText? = null
     private var edtPassword: EditText? = null
     private var layoutVerificationCode: FrameLayout? = null
@@ -55,6 +53,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         layoutBack = findViewById<View>(R.id.layout_back) as FrameLayout
         imvBack = findViewById<View>(R.id.imv_back) as ImageView
+        imvHeadPortrait = findViewById<View>(R.id.imv_head_portrait) as ImageView
         edtUserId = findViewById<View>(R.id.edt_user_id) as EditText
         edtPassword = findViewById<View>(R.id.edt_password) as EditText
         layoutVerificationCode = findViewById<View>(R.id.layout_verification_code) as FrameLayout
@@ -65,6 +64,9 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         setToolbar(true, R.color.color_FFFFFFFF)
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.color_000000))
         layoutBack?.setOnClickListener { finish() }
+        imvHeadPortrait?.let {
+            ImageLoaderManager.displayRound(mRxAppCompatActivity, it, R.mipmap.ic_launcher_round)
+        }
         tevGetAuthCode?.setOnClickListener { view: View? -> getAuthCode() }
         tevLogin?.setOnClickListener { //                initLoginWithAuthCode()
             initLogin()

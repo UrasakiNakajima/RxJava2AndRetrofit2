@@ -16,6 +16,7 @@ tasks.withType(JavaCompile) {
 }
 
 android {
+
     compileSdk BuildVersions.compileSdk
 //    buildToolsVersion "31.0.3"
 
@@ -36,7 +37,7 @@ android {
 
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
         manifestPlaceholders = [
@@ -64,13 +65,13 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('../rx_java2_and_retrofit2_release.keystore')
+            storeFile file('../rxjava2_and_retrofit2_release.keystore')
             storePassword 'Xz&150120'
             keyPassword 'Xz&150120'
-            keyAlias 'rx_java2_and_retrofit2'
+            keyAlias 'rxjava2_and_retrofit2'
         }
     }
-
+   
     buildTypes {
         release {
             minifyEnabled false
@@ -86,13 +87,22 @@ android {
         compile.exclude group: 'org.jetbrains' , module:'annotations'
     }
 
-    ndkVersion '21.1.6352462'
+    ndkVersion '25.1.8937393'
 //    externalNativeBuild {
 //        cmake {
 //            path file('src/main/cpp/CMakeLists.txt')
 //            version '3.10.2'
 //        }
 //    }
+
+    // ndk-build模式  app的gradle需要配置这个文件，不然估计会报找不到Android.mk
+    externalNativeBuild {
+        ndkBuild {
+            // Provides a relative path to your ndkBuild script.
+            path file("jni/Android.mk")
+        }
+    }
+
 }
 
 dependencies {

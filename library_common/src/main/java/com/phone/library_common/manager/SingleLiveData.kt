@@ -8,7 +8,7 @@ import com.phone.library_common.manager.LogManager.i
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * A lifecycle-aware observable that sends only new updates after subscription, used for events like
+ * com.phone.rxjava2andretrofit2.A lifecycle-aware observable that sends only new updates after subscription, used for events like
  * navigation and Snackbar messages.
  * <p>
  * This avoids a common problem with events: on configuration change (like rotation) an update

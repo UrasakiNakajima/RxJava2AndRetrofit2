@@ -60,7 +60,21 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="130" />
+        android:layout_weight="30" />
+
+    <ImageView
+        android:id="@+id/imv_head_portrait"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_70"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher_round"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30" />
 
     <EditText
         android:id="@+id/edt_user_id"
@@ -115,7 +129,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="50" />
+        android:layout_weight="30" />
 
     <TextView
         android:id="@+id/tev_register"
@@ -131,6 +145,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="100" />
+        android:layout_weight="130" />
 
 </LinearLayout>

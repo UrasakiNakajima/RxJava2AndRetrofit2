@@ -23,7 +23,7 @@ object DocumentManager {
     /**
      * Get a list of external SD card paths. (Kitkat or higher.)
      *
-     * @return A list of external SD card paths.
+     * @return com.phone.rxjava2andretrofit2.A list of external SD card paths.
      */
     @JvmStatic
     private fun getExtSdCardPaths(): Array<String> {

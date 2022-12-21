@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
+import com.phone.library_common.manager.ImageLoaderManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager.Companion.isNetworkAvailable
 import com.phone.module_main.R
@@ -21,6 +22,7 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
     private var toolbar: Toolbar? = null
     private var layoutBack: FrameLayout? = null
     private var imvBack: ImageView? = null
+    private var imvHeadPortrait: ImageView? = null
     private var edtUserId: EditText? = null
     private var edtPassword: EditText? = null
     private var edtConfirmPassword: EditText? = null
@@ -37,6 +39,7 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
         toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         layoutBack = findViewById<View>(R.id.layout_back) as FrameLayout
         imvBack = findViewById<View>(R.id.imv_back) as ImageView
+        imvHeadPortrait = findViewById<View>(R.id.imv_head_portrait) as ImageView
         edtUserId = findViewById<View>(R.id.edt_user_id) as EditText
         edtPassword = findViewById<View>(R.id.edt_password) as EditText
         edtConfirmPassword = findViewById<View>(R.id.edt_confirm_password) as EditText
@@ -44,6 +47,9 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
         setToolbar(true, R.color.color_FFFFFFFF)
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.color_000000))
         layoutBack?.setOnClickListener { finish() }
+        imvHeadPortrait?.let {
+            ImageLoaderManager.displayRound(mRxAppCompatActivity, it, R.mipmap.ic_launcher_round)
+        }
         tevRegister?.setOnClickListener { initRegister() }
     }
 

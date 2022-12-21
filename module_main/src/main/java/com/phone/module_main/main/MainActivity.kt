@@ -1,5 +1,7 @@
 package com.phone.module_main.main
 
+import android.content.pm.PackageManager
+import android.content.pm.Signature
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -10,11 +12,13 @@ import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
 import com.phone.library_common.custom_view.LazyViewPager
 import com.phone.library_common.custom_view.MineLazyViewPager
+import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_main.BuildConfig
 import com.phone.module_main.R
 import com.phone.module_main.main.presenter.MainPresenterImpl
 import com.phone.module_main.main.view.IMainView
+
 
 /**
  * author    : Urasaki
@@ -69,6 +73,7 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
                 .navigation() as Fragment
             fragmentList.add(mineFragment)
         }
+
     }
 
     override fun initViews() {
