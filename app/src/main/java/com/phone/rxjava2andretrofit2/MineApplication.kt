@@ -1,12 +1,8 @@
 package com.phone.rxjava2andretrofit2
 
-import android.content.pm.PackageManager
-import android.content.pm.Signature
 import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
 import com.phone.library_common.BaseApplication
-import com.phone.library_common.load_data.LoadSoData
-import com.phone.library_common.manager.AesManager
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ThreadPoolManager
 
@@ -26,21 +22,6 @@ class MineApplication : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
-
-        //加载so 文件
-        LoadSoData.loadSoData()
-
-
-        getSignInfo()
-//        val javaGetData = JavaGetData()
-        //获取so 文件的密钥
-        val data = JavaGetData.nativeMethod(this)
-        LogManager.i(TAG, "onCreate data*****$data")
-        val dataStr = "Trump's hair is yellow"
-        val encryptStr = AesManager.encrypt(dataStr, data)
-        val decryptStr = AesManager.decrypt(encryptStr, data)
-        LogManager.i(TAG, "onCreate encryptStr*****$encryptStr")
-        LogManager.i(TAG, "onCreate decryptStr*****$decryptStr")
 
         ThreadPoolManager.get().createScheduledThreadPoolToUIThread(800, {
             date = getDate()
@@ -147,20 +128,6 @@ class MineApplication : BaseApplication() {
         editor.remove("longitude")
         editor.remove("latitude")
         editor.commit()
-    }
-
-    fun getSignInfo() {
-        try {
-            val packageInfo = packageManager.getPackageInfo(
-                packageName, PackageManager.GET_SIGNATURES
-            )
-            val signs: Array<Signature> = packageInfo.signatures
-            val sign: Signature = signs[0]
-            System.out.println(sign.toCharsString())
-            LogManager.i(TAG, "sign*****${sign.toCharsString()}")
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
 }

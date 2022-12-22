@@ -95,14 +95,6 @@ android {
 //        }
 //    }
 
-    // ndk-build模式  app的gradle需要配置这个文件，不然估计会报找不到Android.mk
-    externalNativeBuild {
-        ndkBuild {
-            // Provides a relative path to your ndkBuild script.
-            path file("jni/Android.mk")
-        }
-    }
-
 }
 
 dependencies {

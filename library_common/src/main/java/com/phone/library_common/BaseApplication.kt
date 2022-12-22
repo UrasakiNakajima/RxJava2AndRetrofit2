@@ -2,6 +2,8 @@ package com.phone.library_common
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.content.pm.Signature
 import android.graphics.Bitmap
 import android.os.Build
 import android.webkit.WebChromeClient
@@ -12,6 +14,7 @@ import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_common.load_data.LoadSoData
 import com.phone.library_common.manager.*
 
 /**
@@ -46,6 +49,22 @@ open class BaseApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+
+        //加载so 文件
+        LoadSoData.loadSoData()
+
+
+        getSignInfo()
+//        val javaGetData = JavaGetData()
+        //获取so 文件的密钥
+        val data = JavaGetData.nativeMethod(this)
+        LogManager.i(TAG, "onCreate data*****$data")
+        val dataStr = "Trump's hair is yellow"
+        val encryptStr = AesManager.encrypt(dataStr, data)
+        val decryptStr = AesManager.decrypt(encryptStr, data)
+        LogManager.i(TAG, "onCreate encryptStr*****$encryptStr")
+        LogManager.i(TAG, "onCreate decryptStr*****$decryptStr")
 
         //		RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
         //			@Override
@@ -233,4 +252,19 @@ open class BaseApplication : MultiDexApplication() {
             activityPageManager?.exitApp()
         }
     }
+
+    fun getSignInfo() {
+        try {
+            val packageInfo = packageManager.getPackageInfo(
+                packageName, PackageManager.GET_SIGNATURES
+            )
+            val signs: Array<Signature> = packageInfo.signatures
+            val sign: Signature = signs[0]
+            System.out.println(sign.toCharsString())
+            LogManager.i(TAG, "sign*****${sign.toCharsString()}")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 }

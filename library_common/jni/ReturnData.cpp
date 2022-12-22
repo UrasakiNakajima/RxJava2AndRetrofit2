@@ -42,7 +42,7 @@ const char *getSignString(JNIEnv *env, jobject contextObject) {
 }
 
 extern "C" jstring
-Java_com_phone_rxjava2andretrofit2_JavaGetData_nativeMethod(JNIEnv *env, jclass thiz,
+Java_com_phone_library_1common_JavaGetData_nativeMethod(JNIEnv *env, jclass thiz,
                                                             jobject contextObject) {
 
     const char *signStrng = getSignString(env, contextObject);
