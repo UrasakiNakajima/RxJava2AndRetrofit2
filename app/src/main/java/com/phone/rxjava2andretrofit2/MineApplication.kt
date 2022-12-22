@@ -6,6 +6,7 @@ import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.load_data.LoadSoData
+import com.phone.library_common.manager.AesManager
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ThreadPoolManager
 
@@ -35,6 +36,11 @@ class MineApplication : BaseApplication() {
         //获取so 文件的密钥
         val data = JavaGetData.nativeMethod(this)
         LogManager.i(TAG, "onCreate data*****$data")
+        val dataStr = "Trump's hair is yellow"
+        val encryptStr = AesManager.encrypt(dataStr, data)
+        val decryptStr = AesManager.decrypt(encryptStr, data)
+        LogManager.i(TAG, "onCreate encryptStr*****$encryptStr")
+        LogManager.i(TAG, "onCreate decryptStr*****$decryptStr")
 
         ThreadPoolManager.get().createScheduledThreadPoolToUIThread(800, {
             date = getDate()

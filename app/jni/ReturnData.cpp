@@ -48,7 +48,7 @@ Java_com_phone_rxjava2andretrofit2_JavaGetData_nativeMethod(JNIEnv *env, jclass 
     const char *signStrng = getSignString(env, contextObject);
     if (strcmp(signStrng, RELEASE_SIGN) == 0)//签名一致  返回合法的 api key，否则返回错误
     {
-        return (env)->NewStringUTF("rxjava2_and_retrofit2_rommel");
+        return (env)->NewStringUTF("rxjava_and_re_ro");
     } else {
         return (env)->NewStringUTF("error");
     }
