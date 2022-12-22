@@ -87,7 +87,7 @@ android {
         compile.exclude group: 'org.jetbrains' , module:'annotations'
     }
 
-    ndkVersion '25.1.8937393'
+    ndkVersion '19.2.5345600'
 //    externalNativeBuild {
 //        cmake {
 //            path file('src/main/cpp/CMakeLists.txt')

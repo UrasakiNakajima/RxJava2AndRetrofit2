@@ -95,7 +95,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    ndkVersion '25.1.8937393'
+    ndkVersion '19.2.5345600'
 
 }
 
