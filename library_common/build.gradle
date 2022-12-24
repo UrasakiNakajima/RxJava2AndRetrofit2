@@ -51,11 +51,18 @@ android {
             }
         }
 
+//        externalNativeBuild {
+//            cmake {
+//                cppFlag ""
+//            }
+//        }
+
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
+
     }
 
     packagingOptions {
@@ -84,6 +91,7 @@ android {
 
     sourceSets {
         main {
+            jniLibs.srcDirs = ['libs']
             manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
         }
     }
@@ -92,25 +100,25 @@ android {
         release {
             //java代码中引用的定义形式
             buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             //java代码中引用的定义形式
             buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     ndkVersion '16.1.4479499'
 
-    // ndk-build模式  app的gradle需要配置这个文件，不然估计会报找不到Android.mk
     externalNativeBuild {
-        ndkBuild {
-            // Provides a relative path to your ndkBuild script.
-            path file("jni/Android.mk")
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.10.2'
         }
     }
-
 }
 
 kapt {
@@ -137,6 +145,7 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib:$BuildVersions.kotlin_version"
     api "androidx.appcompat:appcompat:$BuildVersions.appcompat_version"
     api "androidx.constraintlayout:constraintlayout:$BuildVersions.constraintlayout_version"
+    implementation files('libs/BASE64Decoder.jar')
     androidTestApi "androidx.test:runner:$BuildVersions.runner_version"
     androidTestApi "androidx.test.espresso:espresso-core:$BuildVersions.espresso_core_version"
     api "androidx.core:core:$BuildVersions.core_version"
@@ -151,8 +160,6 @@ dependencies {
     testApi "junit:junit:$BuildVersions.junit_version"
     api "com.google.android.material:material:$BuildVersions.material_version"
 
-
-    implementation files('libs/BASE64Decoder.jar')
     //apache StringUtils导入
     api "org.apache.commons:commons-lang3:$BuildVersions.commons_lang_version"
     //apache Base64导入

@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
         // 因为使用的 Kotlin 需要需要添加 Kotlin 插件

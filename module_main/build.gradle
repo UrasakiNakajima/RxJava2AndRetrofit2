@@ -45,6 +45,7 @@ android {
 
     sourceSets {
         main {
+            jniLibs.srcDirs = ['libs']
             manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
         }
     }
@@ -53,12 +54,14 @@ android {
         release {
             //java代码中引用的定义形式
             buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             //java代码中引用的定义形式
             buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

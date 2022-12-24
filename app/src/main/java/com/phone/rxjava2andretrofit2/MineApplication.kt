@@ -3,6 +3,8 @@ package com.phone.rxjava2andretrofit2
 import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
 import com.phone.library_common.BaseApplication
+import com.phone.library_common.JavaGetData
+import com.phone.library_common.manager.AesManager
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ThreadPoolManager
 
@@ -19,12 +21,21 @@ class MineApplication : BaseApplication() {
     private var longitude: String? = null//经度
     private var latitude: String? = null//纬度
     private var registrationId: String? = null
+//    private var isEncryptionRequired: Boolean = false//用户名
 
     override fun onCreate() {
         super.onCreate()
 
         ThreadPoolManager.get().createScheduledThreadPoolToUIThread(800, {
+            setDate("date")
             date = getDate()
+            LogManager.i(TAG, "date*****$date")
+            val dateDecrypt = AesManager.decrypt(
+                date,
+                JavaGetData.nativeMethod(this@MineApplication, BuildConfig.IS_RELEASE)
+            )
+            LogManager.i(TAG, "dateDecrypt*****$dateDecrypt")
+
             if (date == null || "" == date) {
                 date = "0"
             }
@@ -38,6 +49,7 @@ class MineApplication : BaseApplication() {
                 registrationId = JPushInterface.getRegistrationID(applicationContext)
                 setRegistrationId(registrationId)
             }
+
 
         })
     }
@@ -81,7 +93,7 @@ class MineApplication : BaseApplication() {
         return date
     }
 
-    fun setDate(date: String?) {
+    fun setDate(date: String) {
         editor.putString("date", date)
         editor.commit()
     }
@@ -117,6 +129,18 @@ class MineApplication : BaseApplication() {
         editor.putString("registrationId", registrationId)
         editor.commit()
     }
+
+//    fun isEncryptionRequired(): Boolean {
+//        isEncryptionRequired = sp.getBoolean("isEncryptionRequired", false)
+//        LogManager.i(TAG, "isEncryptionRequired***$isEncryptionRequired")
+//        return isEncryptionRequired
+//    }
+//
+//    fun setEncryptionRequired(encryptionRequired: Boolean) {
+//        LogManager.i(TAG, "setEncryptionRequired***$encryptionRequired")
+//        editor.putBoolean("isEncryptionRequired", encryptionRequired)
+//        editor.commit()
+//    }
 
     fun setLogout2() {
         LogManager.i(TAG, "setLogout***")

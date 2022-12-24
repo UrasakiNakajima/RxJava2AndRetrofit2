@@ -50,21 +50,19 @@ open class BaseApplication : MultiDexApplication() {
         super.onCreate()
         instance = this
 
-
-        //加载so 文件
-        LoadSoData.loadSoData()
-
-
         getSignInfo()
 //        val javaGetData = JavaGetData()
         //获取so 文件的密钥
-        val data = JavaGetData.nativeMethod(this)
+        val data = JavaGetData.nativeMethod(this@BaseApplication, BuildConfig.IS_RELEASE)
         LogManager.i(TAG, "onCreate data*****$data")
         val dataStr = "Trump's hair is yellow"
         val encryptStr = AesManager.encrypt(dataStr, data)
         val decryptStr = AesManager.decrypt(encryptStr, data)
         LogManager.i(TAG, "onCreate encryptStr*****$encryptStr")
         LogManager.i(TAG, "onCreate decryptStr*****$decryptStr")
+
+        val data2 = JavaGetData.getStringFromNDK(this@BaseApplication, BuildConfig.IS_RELEASE)
+        LogManager.i(TAG, "onCreate data2*****$data2")
 
         //		RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
         //			@Override

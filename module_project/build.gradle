@@ -69,6 +69,7 @@ android {
 
     sourceSets {
         main {
+            jniLibs.srcDirs = ['libs']
             if (isModule.toBoolean()) {
                 manifest.srcFile 'src/main/java/module/AndroidManifest.xml'
             } else {
@@ -90,14 +91,19 @@ android {
 
     buildTypes {
         release {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     //给Module 内的资源名增加前缀, 避免资源名冲突
     resourcePrefix "project_"
 }

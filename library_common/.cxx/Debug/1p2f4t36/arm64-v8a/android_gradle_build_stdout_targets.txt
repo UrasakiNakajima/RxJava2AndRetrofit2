@@ -1,0 +1,3 @@
+ninja: Entering directory `/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/.cxx/Debug/1p2f4t36/arm64-v8a'
+[1/2] Linking CXX shared library /Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/arm64-v8a/libreturn-data.so
+[2/2] Linking CXX shared library /Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/arm64-v8a/libnative-lib.so

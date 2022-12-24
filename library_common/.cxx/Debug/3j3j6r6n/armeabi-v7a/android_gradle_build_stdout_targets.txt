@@ -1,0 +1,5 @@
+ninja: Entering directory `/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/.cxx/Debug/3j3j6r6n/armeabi-v7a'
+[1/4] Building CXX object CMakeFiles/return-data.dir/return-data.cpp.o
+[2/4] Building CXX object CMakeFiles/native-lib.dir/native-lib.cpp.o
+[3/4] Linking CXX shared library /Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/armeabi-v7a/libreturn-data.so
+[4/4] Linking CXX shared library /Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/armeabi-v7a/libnative-lib.so
