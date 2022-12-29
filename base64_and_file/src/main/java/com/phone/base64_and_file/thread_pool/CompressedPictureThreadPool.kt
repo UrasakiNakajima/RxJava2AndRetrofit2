@@ -3,6 +3,7 @@ package com.phone.base64_and_file.thread_pool
 import android.content.Context
 import com.phone.base64_and_file.bean.Base64AndFileBean
 import com.phone.base64_and_file.manager.BitmapManager
+import com.phone.library_common.BaseApplication
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.manager.LogManager
 import java.util.concurrent.ExecutorService
@@ -40,9 +41,17 @@ class CompressedPictureThreadPool(
             )
             base64AndFileBean.file = file
 
-//            //再压缩本地图片
-//            File result = BitmapManager.initCompressorIO(getApplication(), file.getAbsolutePath(), dirsPath2);
-//            LogManager.i(TAG, "result size*****" + BitmapManager.getDataSize(BitmapManager.getFileSize(result)));
+            //再压缩本地图片
+            BitmapManager.initCompressorIO(BaseApplication.get(), file, {
+                LogManager.i(
+                    TAG,
+                    "initCompressorIO it*****${it.name}"
+                )
+                LogManager.i(
+                    TAG,
+                    "initCompressorIO result size*****${BitmapManager.getDataSize(BitmapManager.getFileSize(it))}"
+                )
+            })
 
             //把图片转化成bitmap
             val bitmap = BitmapManager.getBitmap(file.absolutePath)

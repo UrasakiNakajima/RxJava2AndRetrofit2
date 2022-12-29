@@ -6,8 +6,15 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
+import com.phone.library_common.callback.OnCommonSuccess2Callback
+import com.phone.library_common.callback.OnCommonSuccessCallback
 import com.phone.library_common.manager.LogManager
 import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import id.zelory.compressor.constraint.size
+import kotlinx.coroutines.*
 import java.io.*
 import java.lang.ref.SoftReference
 import java.nio.ByteBuffer
@@ -922,23 +929,17 @@ object BitmapManager {
      * .setCompressFormat(Bitmap.CompressFormat.JPEG)JPEG压缩；压缩速度比PNG快，质量一般，基本上属于1/10的压缩比例
      */
     @JvmStatic
-    fun initCompressorIO(context: Context?, path: String?, dirsPath: String?): File? {
-        val dirs2 = File(dirsPath)
-        if (!dirs2.exists()) {
-            dirs2.mkdirs()
+    fun initCompressorIO(context: Context, actualImageFile: File, onCommonSuccess2Callback: OnCommonSuccess2Callback<File>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            //处理具体逻辑
+            val compressedImageFile = Compressor.compress(context, actualImageFile) {
+                resolution(1280, 960)
+                quality(80)
+                format(Bitmap.CompressFormat.WEBP)
+//            size(2_097_152) // 2 MB
+            }
+            onCommonSuccess2Callback.onSuccess(compressedImageFile)
         }
-        var file: File? = null
-        try {
-            file = Compressor(context) //                    .setMaxWidth(1280)
-                //                    .setMaxHeight(960)
-                .setQuality(50)
-                .setCompressFormat(Bitmap.CompressFormat.PNG)
-                .setDestinationDirectoryPath(dirsPath)
-                .compressToFile(File(path))
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return file
     }
 
     @JvmStatic

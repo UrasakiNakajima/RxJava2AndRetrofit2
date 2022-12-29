@@ -2,20 +2,8 @@ CMake Warning at /Users/erwinnakashima/Library/Android/sdk/ndk/16.1.4479499/buil
   Using custom NDK path (ANDROID_NDK is set):
   /Users/erwinnakashima/Library/Android/sdk/ndk/16.1.4479499
 Call Stack (most recent call first):
-  /Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/share/cmake-3.10/Modules/CMakeDetermineSystem.cmake:94 (include)
+  /Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/.cxx/cmake/debug/arm64-v8a/CMakeFiles/3.10.2/CMakeSystem.cmake:6 (include)
   CMakeLists.txt
 
 
-Check for working C compiler: /Users/erwinnakashima/Library/Android/sdk/ndk/16.1.4479499/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang
-Check for working C compiler: /Users/erwinnakashima/Library/Android/sdk/ndk/16.1.4479499/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang -- works
-Detecting C compiler ABI info
-Detecting C compiler ABI info - done
-Detecting C compile features
-Detecting C compile features - done
-Check for working CXX compiler: /Users/erwinnakashima/Library/Android/sdk/ndk/16.1.4479499/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++
-Check for working CXX compiler: /Users/erwinnakashima/Library/Android/sdk/ndk/16.1.4479499/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ -- works
-Detecting CXX compiler ABI info
-Detecting CXX compiler ABI info - done
-Detecting CXX compile features
-Detecting CXX compile features - done
 Configuring done

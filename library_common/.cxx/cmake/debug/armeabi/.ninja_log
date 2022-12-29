@@ -19,3 +19,14 @@
 3	335	1671889066	CMakeFiles/native-lib.dir/native-lib.cpp.o	aced761d0858ac2c
 315	386	1671889066	/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/armeabi/libreturn-data.so	11370e621fe1c8df
 386	463	1671889066	/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/armeabi/libnative-lib.so	7d4314f724e51aee
+0	10	0	clean	c6470991adac0db9
+1	348	1671893046	CMakeFiles/native-lib.dir/native-lib.cpp.o	aced761d0858ac2c
+1	349	1671893046	CMakeFiles/return-data.dir/return-data.cpp.o	eb8eca19fc3a86d1
+349	447	1671893046	/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/armeabi/libreturn-data.so	11370e621fe1c8df
+447	563	1671893046	/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/armeabi/libnative-lib.so	7d4314f724e51aee
+3	293	1672321116	CMakeFiles/return-data.dir/return-data.cpp.o	eb8eca19fc3a86d1
+4	300	1672321116	CMakeFiles/native-lib.dir/native-lib.cpp.o	aced761d0858ac2c
+293	380	1672321116	/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/armeabi/libreturn-data.so	11370e621fe1c8df
+380	482	1672321116	/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/armeabi/libnative-lib.so	7d4314f724e51aee
+0	142	1672322706	/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/armeabi/libreturn-data.so	11370e621fe1c8df
+142	278	1672322707	/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/src/main/cpp/libs/armeabi/libnative-lib.so	7d4314f724e51aee

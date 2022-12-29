@@ -1,11 +1,13 @@
 package com.phone.library_common
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.Signature
 import android.graphics.Bitmap
 import android.os.Build
+import android.os.Process
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -14,8 +16,8 @@ import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.callback.OnCommonSingleParamCallback
-import com.phone.library_common.load_data.LoadSoData
 import com.phone.library_common.manager.*
+
 
 /**
  * author    : Urasaki
@@ -50,20 +52,6 @@ open class BaseApplication : MultiDexApplication() {
         super.onCreate()
         instance = this
 
-        getSignInfo()
-//        val javaGetData = JavaGetData()
-        //获取so 文件的密钥
-        val data = JavaGetData.nativeMethod(this@BaseApplication, BuildConfig.IS_RELEASE)
-        LogManager.i(TAG, "onCreate data*****$data")
-        val dataStr = "Trump's hair is yellow"
-        val encryptStr = AesManager.encrypt(dataStr, data)
-        val decryptStr = AesManager.decrypt(encryptStr, data)
-        LogManager.i(TAG, "onCreate encryptStr*****$encryptStr")
-        LogManager.i(TAG, "onCreate decryptStr*****$decryptStr")
-
-        val data2 = JavaGetData.getStringFromNDK(this@BaseApplication, BuildConfig.IS_RELEASE)
-        LogManager.i(TAG, "onCreate data2*****$data2")
-
         //		RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
         //			@Override
         //			public void accept(Throwable throwable) {
@@ -72,7 +60,34 @@ open class BaseApplication : MultiDexApplication() {
         //				LogManager.i(TAG, "throwable message*****" + throwable.getMessage())
         //			}
         //		})
+
+        val processName = getProcessName(this)
+        if (processName != null) {
+            LogManager.i(TAG, "processName*****$processName")
+            if (processName == packageName) {
+                //当进程是当前App 的主进程时，才初始化数据
+                //初始化com.phone.rxjava2andretrofit2以包名为进程名，项目默认的进程
+                initData()
+            }
+        }
+    }
+
+    private fun initData() {
         ThreadPoolManager.get().createScheduledThreadPoolToUIThread(500, {
+            getSignInfo()
+            //获取so 文件的密钥
+            val data = JavaGetData.nativeAesKey(this@BaseApplication, BuildConfig.IS_RELEASE)
+            LogManager.i(TAG, "onCreate data*****$data")
+            val dataStr = "Trump's hair is yellow"
+            val encryptStr = AesManager.encrypt(dataStr, data)
+            LogManager.i(TAG, "onCreate encryptStr*****$encryptStr")
+            val decryptStr = AesManager.decrypt(encryptStr, data)
+            LogManager.i(TAG, "onCreate decryptStr*****$decryptStr")
+
+            val data2 = JavaGetData.nativeGetString(this@BaseApplication, BuildConfig.IS_RELEASE)
+            LogManager.i(TAG, "onCreate data2*****$data2")
+
+
             //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
             sp = getSharedPreferences("app", MODE)
             editor = sp.edit()
@@ -81,7 +96,6 @@ open class BaseApplication : MultiDexApplication() {
                 ARouter.openDebug()
             }
             ARouter.init(this)
-
             LogManager.i(
                 TAG,
                 "BaseApplication createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
@@ -95,6 +109,19 @@ open class BaseApplication : MultiDexApplication() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         MultiDex.install(this)
+    }
+
+    protected fun getProcessName(context: Context): String? {
+        val am = context.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val runningApps = am.runningAppProcesses ?: return null
+        for (proInfo in runningApps) {
+            if (proInfo.pid == Process.myPid()) {
+                if (proInfo.processName != null) {
+                    return proInfo.processName
+                }
+            }
+        }
+        return null
     }
 
     private fun initWebView() {

@@ -44,13 +44,12 @@ const char *getSignString(JNIEnv *env, jobject contextObject) {
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_phone_library_1common_JavaGetData_getStringFromNDK(JNIEnv *env, jclass thiz,
-                                                            jobject contextObject,
-                                                            jboolean booleanObject) {
+Java_com_phone_library_1common_JavaGetData_nativeGetString(JNIEnv *env, jclass clazz,
+                                                           jobject context, jboolean is_release) {
     std::string hello = "(*^__^*) 嘻嘻……~Hello from C++ 特朗普的头发是黄色的";
 
-    const char *signStrng = getSignString(env, contextObject);
-    bool isRelease = booleanObject;
+    const char *signStrng = getSignString(env, context);
+    bool isRelease = is_release;
     const char *SIGN;
     if (isRelease) {
         SIGN = SIGN_RELEASE;

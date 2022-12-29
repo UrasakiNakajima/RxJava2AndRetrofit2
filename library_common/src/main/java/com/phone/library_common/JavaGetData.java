@@ -10,7 +10,7 @@ public class JavaGetData {
         System.loadLibrary("native-lib");
     }
 
-    public static native String nativeMethod(Context context, boolean isRelease);
-    public static native String getStringFromNDK(Context context, boolean isRelease);
+    public static native String nativeAesKey(Context context, boolean isRelease);
+    public static native String nativeGetString(Context context, boolean isRelease);
 
 }

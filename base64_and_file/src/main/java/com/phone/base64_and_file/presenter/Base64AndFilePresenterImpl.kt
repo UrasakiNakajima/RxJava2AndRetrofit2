@@ -12,7 +12,7 @@ class Base64AndFilePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>
     IBase64AndFilePresenter {
 
     private val TAG = Base64AndFilePresenterImpl::class.java.simpleName
-    private var model: Base64AndFileModelImpl? = null
+    private var model: Base64AndFileModelImpl
 
     init {
         attachView(baseView)
@@ -27,7 +27,7 @@ class Base64AndFilePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>
         baseView?.let {
             if (baseView is IBase64AndFileView) {
                 val base64AndFileView = baseView
-                model?.showCompressedPicture(
+                model.showCompressedPicture(
                     context,
                     base64AndFileBean,
                     object : OnCommonSingleParamCallback<Base64AndFileBean> {
@@ -48,7 +48,7 @@ class Base64AndFilePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>
         baseView?.let {
             if (baseView is IBase64AndFileView) {
                 val base64AndFileView = baseView
-                model?.showPictureToBase64(
+                model.showPictureToBase64(
                     base64AndFileBean,
                     object : OnCommonSingleParamCallback<Base64AndFileBean> {
                         override fun onSuccess(success: Base64AndFileBean) {
@@ -68,7 +68,7 @@ class Base64AndFilePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>
         baseView?.let {
             if (baseView is IBase64AndFileView) {
                 val base64AndFileView = baseView
-                model?.showBase64ToPicture(
+                model.showBase64ToPicture(
                     base64AndFileBean,
                     object : OnCommonSingleParamCallback<Base64AndFileBean> {
                         override fun onSuccess(success: Base64AndFileBean) {
@@ -85,6 +85,6 @@ class Base64AndFilePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>
 
     override fun detachView() {
         super.detachView()
-        model?.detachViewModel()
+        model.detachViewModel()
     }
 }

@@ -26,16 +26,23 @@ class MineApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
 
+
+        val processName = getProcessName(this)
+        if (processName != null) {
+            LogManager.i(TAG, "processName*****$processName")
+            if (processName == packageName) {
+                //当进程是当前App 的主进程时，才初始化数据
+                //初始化com.phone.rxjava2andretrofit2以包名为进程名，项目默认的进程
+                initData2()
+            }
+        }
+    }
+
+    private fun initData2() {
         ThreadPoolManager.get().createScheduledThreadPoolToUIThread(800, {
             setDate("date")
             date = getDate()
             LogManager.i(TAG, "date*****$date")
-            val dateDecrypt = AesManager.decrypt(
-                date,
-                JavaGetData.nativeMethod(this@MineApplication, BuildConfig.IS_RELEASE)
-            )
-            LogManager.i(TAG, "dateDecrypt*****$dateDecrypt")
-
             if (date == null || "" == date) {
                 date = "0"
             }
@@ -49,8 +56,6 @@ class MineApplication : BaseApplication() {
                 registrationId = JPushInterface.getRegistrationID(applicationContext)
                 setRegistrationId(registrationId)
             }
-
-
         })
     }
 

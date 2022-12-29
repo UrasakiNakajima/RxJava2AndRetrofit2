@@ -43,13 +43,12 @@ const char *getSignString(JNIEnv *env, jobject contextObject) {
             (jstring) (env)->CallObjectMethod(signatureObject, signToStringId), 0);
 }
 
-extern "C" jstring
-Java_com_phone_library_1common_JavaGetData_nativeMethod(JNIEnv *env, jclass thiz,
-                                                        jobject contextObject,
-                                                        jboolean booleanObject) {
-
-    const char *signStrng = getSignString(env, contextObject);
-    bool isRelease = booleanObject;
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_phone_library_1common_JavaGetData_nativeAesKey(JNIEnv *env, jclass clazz, jobject context,
+                                                        jboolean is_release) {
+    const char *signStrng = getSignString(env, context);
+    bool isRelease = is_release;
     const char *SIGN;
     if (isRelease) {
         SIGN = SIGN_RELEASE;
@@ -63,7 +62,6 @@ Java_com_phone_library_1common_JavaGetData_nativeMethod(JNIEnv *env, jclass thiz
         return (env)->NewStringUTF("error");
     }
 }
-
 
 /**
     利用OnLoad钩子,初始化需要用到的Class类.

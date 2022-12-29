@@ -59,7 +59,7 @@ object BuildVersions {
     const val lombok_version = "1.18.24"
     const val magic_indicator_version = "1.7.0"
 
-    const val compressor_version = "2.1.0"
+    const val compressor_version = "3.0.1"
     const val oss_android_sdk_version = "2.9.11"
     const val eventbus_version = "3.1.1"
 

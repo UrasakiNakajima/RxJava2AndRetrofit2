@@ -217,17 +217,18 @@ class Base64AndFileActivity :
                         LogManager.i(TAG, "systemId*****" + mBaseApplication.getSystemId())
                     }
 
-//                //第一种方法
-//                if (getPresenter() != null) {
-//                    showLoading();
-//
-//                    Base64AndFileBean base64AndFileBean = new Base64AndFileBean();
-//                    base64AndFileBean.setDirsPath(dirsPath);
-//                    base64AndFileBean.setDirsPathCompressed(dirsPathCompressed);
-//                    base64AndFileBean.setDirsPathCompressedRecover(dirsPathCompressedRecover);
-//                    getPresenter().showCompressedPicture(getMBaseApplication(),
-//                            base64AndFileBean);
-//                }
+                    //第一种方法
+                    if (presenter != null) {
+                        showLoading();
+                        val base64AndFileBean = Base64AndFileBean()
+                        base64AndFileBean.dirsPath = dirsPath
+                        base64AndFileBean.dirsPathCompressed = dirsPathCompressed
+                        base64AndFileBean.dirsPathCompressedRecover = dirsPathCompressedRecover
+                        presenter.showCompressedPicture(
+                            mBaseApplication,
+                            base64AndFileBean
+                        )
+                    }
 
                     //第二种方法
                     initBase64AndFileTask()
@@ -740,6 +741,8 @@ class Base64AndFileActivity :
         tevBase64ToPicture?.visibility = View.GONE
         imvBase64ToPicture?.visibility = View.VISIBLE
         imvBase64ToPicture?.setImageBitmap(success.bitmap)
+
+        ossPutSaveFile(success.fileCompressedRecover)
         hideLoading()
     }
 

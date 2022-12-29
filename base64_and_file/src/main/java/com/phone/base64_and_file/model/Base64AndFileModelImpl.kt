@@ -13,7 +13,7 @@ import com.phone.library_common.manager.LogManager.i
 class Base64AndFileModelImpl : IBase64AndFileModel {
 
     private val TAG = Base64AndFileModelImpl::class.java.simpleName
-    private var handler: Handler? = null
+    private var handler: Handler
 
     init {
         handler = Handler(Looper.getMainLooper())
@@ -32,11 +32,11 @@ class Base64AndFileModelImpl : IBase64AndFileModel {
         compressedPictureThreadPool.setOnCommonSingleParamCallback(object :
             OnCommonSingleParamCallback<Base64AndFileBean?> {
             override fun onSuccess(success: Base64AndFileBean?) {
-                handler?.post { onCommonSingleParamCallback.onSuccess(success) }
+                handler.post { onCommonSingleParamCallback.onSuccess(success) }
             }
 
             override fun onError(error: String) {
-                handler?.post { onCommonSingleParamCallback.onError(error) }
+                handler.post { onCommonSingleParamCallback.onError(error) }
             }
         })
         compressedPictureThreadPool.submit()
@@ -51,11 +51,11 @@ class Base64AndFileModelImpl : IBase64AndFileModel {
         pictureToBase64ThreadPool.setOnCommonSingleParamCallback(object :
             OnCommonSingleParamCallback<Base64AndFileBean?> {
             override fun onSuccess(success: Base64AndFileBean?) {
-                handler?.post { onCommonSingleParamCallback.onSuccess(success) }
+                handler.post { onCommonSingleParamCallback.onSuccess(success) }
             }
 
             override fun onError(error: String) {
-                handler?.post { onCommonSingleParamCallback.onError(error) }
+                handler.post { onCommonSingleParamCallback.onError(error) }
             }
         })
         pictureToBase64ThreadPool.submit()
@@ -70,18 +70,17 @@ class Base64AndFileModelImpl : IBase64AndFileModel {
         base64ToPictureThreadPool.setOnCommonSingleParamCallback(object :
             OnCommonSingleParamCallback<Base64AndFileBean?> {
             override fun onSuccess(success: Base64AndFileBean?) {
-                handler?.post { onCommonSingleParamCallback.onSuccess(success) }
+                handler.post { onCommonSingleParamCallback.onSuccess(success) }
             }
 
             override fun onError(error: String) {
-                handler?.post { onCommonSingleParamCallback.onError(error) }
+                handler.post { onCommonSingleParamCallback.onError(error) }
             }
         })
         base64ToPictureThreadPool.submit()
     }
 
     override fun detachViewModel() {
-        handler?.removeCallbacksAndMessages(null)
-        handler = null
+        handler.removeCallbacksAndMessages(null)
     }
 }
