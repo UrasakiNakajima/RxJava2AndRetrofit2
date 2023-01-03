@@ -17,6 +17,9 @@ import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.manager.*
+import com.phone.library_common.room.AppRoomDataBase
+import com.phone.library_common.room.Book
+import net.sqlcipher.database.SQLiteDatabase
 
 
 /**
@@ -103,6 +106,36 @@ open class BaseApplication : MultiDexApplication() {
             val crashHandlerManager = CrashHandlerManager.get()
             crashHandlerManager?.sendPreviousReportsToServer()
             initWebView()
+
+            JavaGetData.loadData()
+            val appRoomDataBase = AppRoomDataBase.get()
+            val book = Book()
+            book.bookName = "EnglishXXX"
+            book.anchor = "rommelXXX"
+            appRoomDataBase.bookDao().insert(book)
+            appRoomDataBase.bookDao().insert(book)
+            appRoomDataBase.bookDao().insert(book)
+            appRoomDataBase.bookDao().insert(book)
+            appRoomDataBase.bookDao().insert(book)
+            appRoomDataBase.bookDao().insert(book)
+            appRoomDataBase.bookDao().insert(book)
+            appRoomDataBase.bookDao().insert(book)
+            appRoomDataBase.bookDao().insert(book)
+            val bookList = appRoomDataBase.bookDao().queryAll()
+            LogManager.i(TAG, "bookList*****" + bookList.toString())
+
+            appRoomDataBase.encrypt(
+                AppRoomDataBase.DATABASE_ENCRYPT_NAME,
+                AppRoomDataBase.DATABASE_NAME,
+                "Aa123456"
+            )
+
+            appRoomDataBase.decrypt(
+                AppRoomDataBase.DATABASE_ENCRYPT_NAME,
+                AppRoomDataBase.DATABASE_DECRYPT_NAME,
+                "Aa123456"
+            )
+
         })
     }
 
@@ -291,5 +324,6 @@ open class BaseApplication : MultiDexApplication() {
             e.printStackTrace()
         }
     }
+
 
 }

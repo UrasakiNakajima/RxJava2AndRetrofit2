@@ -51,6 +51,15 @@ android {
             }
         }
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
+
 //        externalNativeBuild {
 //            cmake {
 //                cppFlag ""
@@ -255,5 +264,14 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$BuildVersions.lombok_version"
     kapt "org.projectlombok:lombok:$BuildVersions.lombok_version"
     api "com.github.hackware1993:MagicIndicator:$BuildVersions.magic_indicator_version"
+
+    implementation "androidx.room:room-runtime:$BuildVersions.room_version"
+    kapt "androidx.room:room-compiler:$BuildVersions.room_version"
+    // 可选 - Kotlin扩展和协程支持
+    implementation "androidx.room:room-ktx:$BuildVersions.room_version"
+
+
+    implementation "net.zetetic:android-database-sqlcipher:$BuildVersions.sqlcipher_version"
+
 
 }

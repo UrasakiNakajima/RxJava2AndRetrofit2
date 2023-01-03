@@ -86,6 +86,7 @@ class RetrofitManager {
      * @return
      */
     companion object {
+        @Volatile
         private var instance: RetrofitManager? = null
 
         /**

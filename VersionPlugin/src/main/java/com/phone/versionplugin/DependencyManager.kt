@@ -55,13 +55,15 @@ object BuildVersions {
     const val utilcodex_version = "1.29.0"
     const val logger_version = "2.2.0"
     const val greendao_version = "3.3.0"
-    const val jackson_databind_version = "2.13.2.1"
+    const val jackson_databind_version = "2.11.1"
     const val lombok_version = "1.18.24"
     const val magic_indicator_version = "1.7.0"
 
     const val compressor_version = "3.0.1"
     const val oss_android_sdk_version = "2.9.11"
     const val eventbus_version = "3.1.1"
+    const val room_version = "2.3.0"
+    const val sqlcipher_version = "4.4.3@aar"
 
 
 
