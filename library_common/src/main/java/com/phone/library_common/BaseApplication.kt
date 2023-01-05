@@ -19,7 +19,6 @@ import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.manager.*
 import com.phone.library_common.room.AppRoomDataBase
 import com.phone.library_common.room.Book
-import net.sqlcipher.database.SQLiteDatabase
 
 
 /**
@@ -47,6 +46,7 @@ open class BaseApplication : MultiDexApplication() {
     private var isLogin = false
     private var accessToken: String? = null
     private var systemId: String? = null
+    private var dataEncryptTimes: String = "0"
 
     private var activityPageManager: ActivityPageManager? = null
     lateinit var webView: WebView
@@ -107,35 +107,20 @@ open class BaseApplication : MultiDexApplication() {
             crashHandlerManager?.sendPreviousReportsToServer()
             initWebView()
 
+
+
             JavaGetData.loadData()
             val appRoomDataBase = AppRoomDataBase.get()
             val book = Book()
-            book.bookName = "EnglishXXX"
-            book.anchor = "rommelXXX"
+            book.bookName = "EnglishXVCSS"
+            book.anchor = "rommelXVR"
             appRoomDataBase.bookDao().insert(book)
             appRoomDataBase.bookDao().insert(book)
-            appRoomDataBase.bookDao().insert(book)
-            appRoomDataBase.bookDao().insert(book)
-            appRoomDataBase.bookDao().insert(book)
-            appRoomDataBase.bookDao().insert(book)
-            appRoomDataBase.bookDao().insert(book)
-            appRoomDataBase.bookDao().insert(book)
-            appRoomDataBase.bookDao().insert(book)
+
             val bookList = appRoomDataBase.bookDao().queryAll()
-            LogManager.i(TAG, "bookList*****" + bookList.toString())
-
-            appRoomDataBase.encrypt(
-                AppRoomDataBase.DATABASE_ENCRYPT_NAME,
-                AppRoomDataBase.DATABASE_NAME,
-                "Aa123456"
-            )
-
-            appRoomDataBase.decrypt(
-                AppRoomDataBase.DATABASE_ENCRYPT_NAME,
-                AppRoomDataBase.DATABASE_DECRYPT_NAME,
-                "Aa123456"
-            )
-
+            for (i in 0..bookList.size - 1) {
+                LogManager.i(TAG, "book*****" + bookList.get(i).bookName)
+            }
         })
     }
 
@@ -292,6 +277,17 @@ open class BaseApplication : MultiDexApplication() {
     fun setSystemId(systemId: String) {
         LogManager.i(TAG, "setSystemId***$systemId")
         editor.putString("systemId", systemId)
+        editor.commit()
+    }
+
+    fun getDataEncryptTimes(): String {
+        dataEncryptTimes = sp.getString("dataEncryptTimes", "0").toString()
+        return dataEncryptTimes
+    }
+
+    fun setDataEncryptTimes(dataEncryptTimes: String) {
+        LogManager.i(TAG, "setDataEncryptTimes***$dataEncryptTimes")
+        editor.putString("dataEncryptTimes", dataEncryptTimes)
         editor.commit()
     }
 

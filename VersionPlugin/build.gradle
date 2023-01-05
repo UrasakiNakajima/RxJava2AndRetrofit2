@@ -1,7 +1,16 @@
 buildscript {
     repositories {
-        jcenter()
+        ext.kotlin_version = '1.6.21'
+
+//        maven { url 'https://maven.aliyun.com/repository/google' }
+//        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+//        maven { url 'https://maven.aliyun.com/repository/public' }
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+
         google()
+        mavenCentral()
+        // 需要添加 jcenter 否则会提示找不到 gradlePlugin
+        jcenter()
     }
     dependencies {
         // 因为使用的 Kotlin 需要需要添加 Kotlin 插件
@@ -13,9 +22,15 @@ apply plugin: 'kotlin'
 apply plugin: 'java-gradle-plugin'
 
 repositories {
+//    maven { url 'https://maven.aliyun.com/repository/google' }
+//    maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+//    maven { url 'https://maven.aliyun.com/repository/public' }
+//    maven { url 'https://maven.aliyun.com/repository/jcenter' }
+
+    google()
+    mavenCentral()
     // 需要添加 jcenter 否则会提示找不到 gradlePlugin
     jcenter()
-    google()
 }
 
 dependencies {
