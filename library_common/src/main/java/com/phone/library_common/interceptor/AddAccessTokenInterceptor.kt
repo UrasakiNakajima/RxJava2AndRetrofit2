@@ -2,6 +2,7 @@ package com.phone.library_common.interceptor
 
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.SharedPreferencesManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -15,8 +16,8 @@ class AddAccessTokenInterceptor : Interceptor {
         val builder = chain.request().newBuilder()
 
         //添加accessToken
-        val accessToken = BaseApplication.get().getAccessToken()
-        accessToken?.let {
+        val accessToken = SharedPreferencesManager.get("accessToken", "") as String
+        accessToken.let {
             builder.addHeader("accessToken", accessToken)
             LogManager.i(TAG, "accessToken*****$accessToken")
         }

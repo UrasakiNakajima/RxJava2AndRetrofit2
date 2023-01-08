@@ -39,10 +39,7 @@ import com.phone.library_common.BaseApplication
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.MediaFileManager
-import com.phone.library_common.manager.ResourcesManager
-import com.phone.library_common.manager.RxPermissionsManager
+import com.phone.library_common.manager.*
 import com.phone.library_common.manager.SystemManager.getSystemId
 import com.phone.library_common.service.IFirstPageService
 import com.trello.rxlifecycle3.android.ActivityEvent
@@ -206,15 +203,13 @@ class Base64AndFileActivity :
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
                     //所有的权限都授予
-                    if (TextUtils.isEmpty(mBaseApplication.getSystemId())) {
-                        val systemId = getSystemId()
-                        mBaseApplication.setSystemId(systemId)
-                        LogManager.i(
-                            TAG,
-                            "isEmpty systemId*****" + mBaseApplication.getSystemId()
-                        )
+                    val systemId = SharedPreferencesManager.get("systemId", "") as String
+                    if (TextUtils.isEmpty(systemId)) {
+                        SharedPreferencesManager.put("systemId", getSystemId())
+                        LogManager.i(TAG,
+                            "isEmpty systemId*****${SharedPreferencesManager.get("systemId", "") as String}")
                     } else {
-                        LogManager.i(TAG, "systemId*****" + mBaseApplication.getSystemId())
+                        LogManager.i(TAG, "systemId*****$systemId")
                     }
 
                     //第一种方法

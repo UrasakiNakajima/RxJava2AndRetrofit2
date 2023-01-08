@@ -221,18 +221,13 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
 //                User user = new User2()
 //                User3 user3 = (User3) user
 //                LogManager.i(TAG, user3.toString())
-                    if (TextUtils.isEmpty(
-                            mBaseApplication.getSystemId()
-                        )
-                    ) {
-                        val systemId = getSystemId()
-                        mBaseApplication.setSystemId(systemId)
-                        LogManager.i(
-                            TAG,
-                            "isEmpty systemId*****" + mBaseApplication.getSystemId()
-                        )
+                    val systemId = SharedPreferencesManager.get("systemId", "") as String
+                    if (TextUtils.isEmpty(systemId)) {
+                        SharedPreferencesManager.put("systemId", getSystemId())
+                        LogManager.i(TAG,
+                            "isEmpty systemId*****${SharedPreferencesManager.get("systemId", "") as String}")
                     } else {
-                        LogManager.i(TAG, "systemId*****" + mBaseApplication.getSystemId())
+                        LogManager.i(TAG, "systemId*****$systemId")
                     }
                     amapLocationManager?.startLocation()
                 }

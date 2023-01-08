@@ -40,13 +40,13 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     //声明 初始化
-    protected lateinit var sp: SharedPreferences
-    protected lateinit var editor: SharedPreferences.Editor
-    protected val MODE = Context.MODE_PRIVATE
-    private var isLogin = false
-    private var accessToken: String? = null
-    private var systemId: String? = null
-    private var dataEncryptTimes: String = "0"
+//    protected lateinit var sp: SharedPreferences
+//    protected lateinit var editor: SharedPreferences.Editor
+//    protected val MODE = Context.MODE_PRIVATE
+//    private var isLogin = false
+//    private var accessToken: String? = null
+//    private var systemId: String? = null
+//    private var dataEncryptTimes: String = "0"
 
     private var activityPageManager: ActivityPageManager? = null
     lateinit var webView: WebView
@@ -91,9 +91,12 @@ open class BaseApplication : MultiDexApplication() {
             LogManager.i(TAG, "onCreate data2*****$data2")
 
 
-            //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
-            sp = getSharedPreferences("app", MODE)
-            editor = sp.edit()
+//            //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
+//            sp = getSharedPreferences("app", MODE)
+//            editor = sp.edit()
+            val address = SharedPreferencesManager.get("address", "")
+            LogManager.i(TAG, "address*****$address")
+
             if (true) {
                 ARouter.openLog()
                 ARouter.openDebug()
@@ -112,10 +115,13 @@ open class BaseApplication : MultiDexApplication() {
             JavaGetData.loadData()
             val appRoomDataBase = AppRoomDataBase.get()
             val book = Book()
-            book.bookName = "EnglishXVCSS"
-            book.anchor = "rommelXVR"
+            book.bookName = "EnglishXC"
+            book.anchor = "rommelXC"
             appRoomDataBase.bookDao().insert(book)
-            appRoomDataBase.bookDao().insert(book)
+            val book2 = Book()
+            book2.bookName = "EnglishXC2"
+            book2.anchor = "rommelXC2"
+            appRoomDataBase.bookDao().insert(book2)
 
             val bookList = appRoomDataBase.bookDao().queryAll()
             for (i in 0..bookList.size - 1) {
@@ -243,61 +249,61 @@ open class BaseApplication : MultiDexApplication() {
         this.onCommonSingleParamCallback = onCommonSingleParamCallback
     }
 
-    fun isLogin(): Boolean {
-        isLogin = sp.getBoolean("isLogin", false) == true
-        LogManager.i(TAG, "isLogin***$isLogin")
-        return isLogin
-    }
-
-    fun setLogin(isLogin: Boolean) {
-        LogManager.i(TAG, "setLogin***$isLogin")
-        editor.putBoolean("isLogin", isLogin)
-        editor.commit()
-        if (!isLogin) {
-            setLogout()
-        }
-    }
-
-    fun getAccessToken(): String? {
-        accessToken = sp.getString("accessToken", "")
-        return accessToken
-    }
-
-    fun setAccessToken(accessToken: String) {
-        LogManager.i(TAG, "setAccessToken***$accessToken")
-        editor.putString("accessToken", accessToken)
-        editor.commit()
-    }
-
-    fun getSystemId(): String? {
-        systemId = sp.getString("systemId", "")
-        return systemId
-    }
-
-    fun setSystemId(systemId: String) {
-        LogManager.i(TAG, "setSystemId***$systemId")
-        editor.putString("systemId", systemId)
-        editor.commit()
-    }
-
-    fun getDataEncryptTimes(): String {
-        dataEncryptTimes = sp.getString("dataEncryptTimes", "0").toString()
-        return dataEncryptTimes
-    }
-
-    fun setDataEncryptTimes(dataEncryptTimes: String) {
-        LogManager.i(TAG, "setDataEncryptTimes***$dataEncryptTimes")
-        editor.putString("dataEncryptTimes", dataEncryptTimes)
-        editor.commit()
-    }
-
-    fun setLogout() {
-        LogManager.i(TAG, "setLogout***")
-        //        editor.clear()
-        editor.remove("accessToken")
-        editor.remove("isLogin")
-        editor.commit()
-    }
+//    fun isLogin(): Boolean {
+//        isLogin = sp.getBoolean("isLogin", false) == true
+//        LogManager.i(TAG, "isLogin***$isLogin")
+//        return isLogin
+//    }
+//
+//    fun setLogin(isLogin: Boolean) {
+//        LogManager.i(TAG, "setLogin***$isLogin")
+//        editor.putBoolean("isLogin", isLogin)
+//        editor.commit()
+//        if (!isLogin) {
+//            SharedPreferencesManager.setLogout()
+//        }
+//    }
+//
+//    fun getAccessToken(): String? {
+//        accessToken = sp.getString("accessToken", "")
+//        return accessToken
+//    }
+//
+//    fun setAccessToken(accessToken: String) {
+//        LogManager.i(TAG, "setAccessToken***$accessToken")
+//        editor.putString("accessToken", accessToken)
+//        editor.commit()
+//    }
+//
+//    fun getSystemId(): String? {
+//        systemId = sp.getString("systemId", "")
+//        return systemId
+//    }
+//
+//    fun setSystemId(systemId: String) {
+//        LogManager.i(TAG, "setSystemId***$systemId")
+//        editor.putString("systemId", systemId)
+//        editor.commit()
+//    }
+//
+//    fun getDataEncryptTimes(): String {
+//        dataEncryptTimes = sp.getString("dataEncryptTimes", "0").toString()
+//        return dataEncryptTimes
+//    }
+//
+//    fun setDataEncryptTimes(dataEncryptTimes: String) {
+//        LogManager.i(TAG, "setDataEncryptTimes***$dataEncryptTimes")
+//        editor.putString("dataEncryptTimes", dataEncryptTimes)
+//        editor.commit()
+//    }
+//
+//    fun setLogout() {
+//        LogManager.i(TAG, "setLogout***")
+//        //        editor.clear()
+//        editor.remove("accessToken")
+//        editor.remove("isLogin")
+//        editor.commit()
+//    }
 
     override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)

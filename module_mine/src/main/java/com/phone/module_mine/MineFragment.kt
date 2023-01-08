@@ -13,10 +13,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.base.BaseMvpRxFragment
 import com.phone.library_common.base.IBaseView
 import com.phone.library_common.callback.OnItemViewClickListener
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.ResourcesManager
-import com.phone.library_common.manager.RetrofitManager
-import com.phone.library_common.manager.ScreenManager
+import com.phone.library_common.manager.*
 import com.phone.library_common.ui.WebViewActivity
 import com.phone.module_mine.adapter.MineAdapter
 import com.phone.module_mine.bean.Data
@@ -86,7 +83,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                 }
             })
             tevLogout?.setOnClickListener {
-                mBaseApplication.setLogin(false)
+                SharedPreferencesManager.put("isLogin", false)
                 ARouter.getInstance().build("/main_module/login").navigation()
             }
             tevThreadPool?.setOnClickListener {

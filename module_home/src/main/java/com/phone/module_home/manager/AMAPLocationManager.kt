@@ -112,7 +112,7 @@ class AMAPLocationManager {
 
     private var onCommonSingleParamCallback: OnCommonSingleParamCallback<AMapLocation>? = null
 
-    fun setOnCommonSingleParamCallback(onCommonSingleParamCallback: OnCommonSingleParamCallback<AMapLocation>?) {
+    fun setOnCommonSingleParamCallback(onCommonSingleParamCallback: OnCommonSingleParamCallback<AMapLocation>) {
         this.onCommonSingleParamCallback = onCommonSingleParamCallback
     }
 }

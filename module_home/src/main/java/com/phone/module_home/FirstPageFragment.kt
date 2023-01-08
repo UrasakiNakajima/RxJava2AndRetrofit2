@@ -67,8 +67,9 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
         amapLocationManager = AMAPLocationManager.get()
         amapLocationManager?.setOnCommonSingleParamCallback(object :
             OnCommonSingleParamCallback<AMapLocation> {
-            override fun onSuccess(success: AMapLocation?) {
-                LogManager.i(TAG, "address*****" + success?.address)
+            override fun onSuccess(success: AMapLocation) {
+                SharedPreferencesManager.put("address", success.address)
+                LogManager.i(TAG, "address*****" + SharedPreferencesManager.get("address", ""))
             }
 
             override fun onError(error: String) {
@@ -289,12 +290,13 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
 //                User user = new User2()
 //                User3 user3 = (User3) user
 //                LogManager.i(TAG, user3.toString())
-                    if (TextUtils.isEmpty(mBaseApplication.getSystemId())) {
-                        val systemId = SystemManager.getSystemId()
-                        mBaseApplication.setSystemId(systemId)
-                        LogManager.i(TAG, "isEmpty systemId*****" + mBaseApplication.getSystemId())
+                    val systemId = SharedPreferencesManager.get("systemId", "") as String
+                    if (TextUtils.isEmpty(systemId)) {
+                        SharedPreferencesManager.put("systemId", SystemManager.getSystemId())
+                        LogManager.i(TAG,
+                            "isEmpty systemId*****${SharedPreferencesManager.get("systemId", "") as String}")
                     } else {
-                        LogManager.i(TAG, "systemId*****" + mBaseApplication.getSystemId())
+                        LogManager.i(TAG, "systemId*****$systemId")
                     }
                     amapLocationManager?.startLocation()
                 }

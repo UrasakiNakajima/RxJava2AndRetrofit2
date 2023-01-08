@@ -11,6 +11,7 @@ import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.manager.LogManager.i
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager
+import com.phone.library_common.manager.SharedPreferencesManager
 import com.phone.library_common.manager.UserBeanDaoManager
 import com.phone.module_main.R
 import com.phone.module_main.login.GetVerificationCode
@@ -150,10 +151,8 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                                         success,
                                         LoginResponse::class.java
                                     )
-                                    val mineApplication = BaseApplication.get()
-                                    //											 mineApplication.setUserId(loginResponse.getData().getUserId());
-                                    mineApplication.setAccessToken(loginResponse.data.token)
-                                    mineApplication.setLogin(true)
+                                    SharedPreferencesManager.put("accessToken", loginResponse.data.token)
+                                    SharedPreferencesManager.put("isLogin", true)
                                     loginView.loginWithAuthCodeSuccess(loginResponse.data)
                                 } else {
                                     loginView.loginWithAuthCodeError(

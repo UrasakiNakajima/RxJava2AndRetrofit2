@@ -2,6 +2,7 @@ package com.phone.library_common.interceptor
 
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.SharedPreferencesManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -16,7 +17,7 @@ class ReceivedAccessTokenInterceptor : Interceptor {
         //这里获取请求返回的accessToken
         val accessToken = originalResponse.header("accessToken")
         accessToken?.let {
-            BaseApplication.get().setAccessToken(accessToken)
+            SharedPreferencesManager.put("accessToken", accessToken)
             LogManager.i(TAG, "appToken*****$accessToken")
         }
 

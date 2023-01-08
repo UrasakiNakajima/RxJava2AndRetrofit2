@@ -7,10 +7,10 @@ import com.phone.library_common.BaseApplication
 import com.phone.library_common.BuildConfig
 import com.phone.library_common.JavaGetData
 import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.SharedPreferencesManager
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SQLiteDatabaseHook
 import net.sqlcipher.database.SupportFactory
-import java.io.File
 
 @Database(entities = [Book::class], version = 1)
 abstract class AppRoomDataBase : RoomDatabase() {
@@ -38,7 +38,7 @@ abstract class AppRoomDataBase : RoomDatabase() {
         }, true)
 
 
-        const val DATABASE_NAME = "simple_app.db"
+        const val DATABASE_NAME = "simple_app"
         const val DATABASE_ENCRYPT_NAME = "simple_encrypt_app.db"
         const val DATABASE_DECRYPT_NAME = "simple_decrypt_app.db"
 
@@ -69,14 +69,14 @@ abstract class AppRoomDataBase : RoomDatabase() {
                     .openHelperFactory(factory)
                     .build()
 
-                val dataEncryptTimes = BaseApplication.get().getDataEncryptTimes()
+                val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "")
                 if ("0".equals(dataEncryptTimes)) {
                     encrypt(
                         DATABASE_ENCRYPT_NAME,
                         DATABASE_NAME,
                         DATABASE_ENCRYPT_KEY
                     )
-                    BaseApplication.get().setDataEncryptTimes("1")
+                    SharedPreferencesManager.put("dataEncryptTimes", "1")
                 }
             }
             return databaseInstance!!
