@@ -18,7 +18,7 @@ object SharedPreferencesManager {
     val SHARED_NAME = "shared_app"
 
     @JvmStatic
-    val data = JavaGetData.nativeAesKey(BaseApplication.get(), BuildConfig.IS_RELEASE)
+    val aesKey = JavaGetData.nativeAesKey(BaseApplication.get(), BuildConfig.IS_RELEASE)
 
     @JvmStatic
     fun put(key: String, any: Any) {
@@ -26,14 +26,18 @@ object SharedPreferencesManager {
         val editor: SharedPreferences.Editor = sp.edit()
 
         if (any is String) {
-            editor.putString(key, any)
-
-//            val encryptStr = AesManager.encrypt(any, data)
+//            editor.putString(key, any)
 //            if ("address".equals(key)) {
 //                LogManager.i(TAG, "put String key*****$key")
-//                LogManager.i(TAG, "put String address*****$encryptStr")
+//                LogManager.i(TAG, "put String address*****$any")
 //            }
-//            editor.putString(key, encryptStr)
+
+            val encryptStr = AesManager.encrypt(any, aesKey)
+            if ("address".equals(key)) {
+                LogManager.i(TAG, "put String key*****$key")
+                LogManager.i(TAG, "put String address*****$encryptStr")
+            }
+            editor.putString(key, encryptStr)
         } else if (any is Int) {
             editor.putInt(key, any)
         } else if (any is Long) {
@@ -51,20 +55,20 @@ object SharedPreferencesManager {
         val sp = BaseApplication.get().getSharedPreferences(SHARED_NAME, MODE)
 
         return (if (defaultAny is String) {
-//            val decryptStr = AesManager.decrypt(sp.getString(key, defaultAny), data)
-//            if (decryptStr != null) {
-//                if ("address".equals(key)) {
-//                    LogManager.i(TAG, "get String key*****$key")
-//                    LogManager.i(TAG, "get String decryptStr*****$decryptStr")
-//                }
-//                decryptStr
-//            } else {
-            val data = sp.getString(key, defaultAny)
-            if ("address".equals(key)) {
-                LogManager.i(TAG, "get String data*****$data")
+            val decryptStr = AesManager.decrypt(sp.getString(key, defaultAny), aesKey)
+            if (decryptStr != null) {
+                if ("address".equals(key)) {
+                    LogManager.i(TAG, "get String key*****$key")
+                    LogManager.i(TAG, "get String decryptStr*****$decryptStr")
+                }
+                decryptStr
+            } else {
+                val data = sp.getString(key, defaultAny)
+                if ("address".equals(key)) {
+                    LogManager.i(TAG, "get String data*****$data")
+                }
+                data
             }
-            data
-//            }
         } else if (defaultAny is Int) {
             sp.getInt(key, defaultAny)
         } else if (defaultAny is Long) {
