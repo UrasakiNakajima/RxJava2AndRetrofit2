@@ -1,14 +1,39 @@
 package com.phone.library_common.glide_binding_adapter
 
 import android.text.TextUtils
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.phone.library_common.R
+import com.phone.library_common.manager.LogManager
 
 
 object CommonBindingAdapter {
 
+    @JvmStatic
     val TAG = CommonBindingAdapter::class.java.simpleName
+
+    @JvmStatic
+    @BindingAdapter(value = arrayOf("app:author", "app:chapterName", "app:envelopePic"), requireAll = false)
+    fun bindView(view: View, author: String?, chapterName: String?, envelopePic: String?) {
+        view.setOnClickListener {
+            LogManager.i(TAG, "bindView")
+            author?.let {
+                LogManager.i(TAG, "author@*****${author}")
+            }
+            chapterName?.let {
+                LogManager.i(TAG, "chapterName@*****${chapterName}")
+            }
+            envelopePic?.let {
+                LogManager.i(TAG, "envelopePic@*****${envelopePic}")
+            }
+        }
+    }
+
+
+    /**
+     * 加载图片,做高斯模糊处理
+     */
 
     @JvmStatic
     @BindingAdapter("imageUrl")

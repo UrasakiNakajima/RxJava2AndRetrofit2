@@ -119,13 +119,13 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             tevKotlinCoroutine.setOnClickListener {
                 startActivity(KotlinCoroutineActivity::class.java)
             }
-            tevThreeLevelLinkageList.setOnClickListener {
-                startActivity(PickerViewActivity::class.java)
-            }
-            imvPicture.setOnClickListener {
-//                ARouter.getInstance().build("/module_project/ui/event_schedule").navigation()
-                startActivity(Base64AndFileActivity::class.java)
-            }
+//            tevThreeLevelLinkageList.setOnClickListener {
+//                startActivity(PickerViewActivity::class.java)
+//            }
+//            imvPicture.setOnClickListener {
+////                ARouter.getInstance().build("/module_project/ui/event_schedule").navigation()
+//                startActivity(Base64AndFileActivity::class.java)
+//            }
         }
 
     }
@@ -178,6 +178,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                     chapterName = success.get(1).chapterName
                     link = success.get(1).link
                     envelopePic = success.get(1).envelopePic
+                    desc = success.get(1).desc
+                    LogManager.i(TAG, "desc@*****${desc}")
                 }
                 val ISquareService: ISquareService =
                     ARouter.getInstance().build("/module_square/SquareServiceImpl")

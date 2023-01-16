@@ -259,7 +259,10 @@
                     android:paddingBottom="@dimen/dp_10"
                     android:text="@string/three_level_linkage_list"
                     android:textColor="@color/color_FFFFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_16"
+                    app:author="@{subDataSquare.author}"
+                    app:chapterName="@{subDataSquare.desc}"
+                    app:envelopePic="@{subDataSquare.envelopePic}" />
 
                 <View
                     android:layout_width="match_parent"
@@ -277,7 +280,9 @@
                     android:layout_gravity="center_horizontal"
                     android:scaleType="fitXY"
                     android:src="@drawable/default_project_img"
-                    app:imageUrl="@{subDataSquare.envelopePic}"
+                    app:author="@{subDataSquare.author}"
+                    app:chapterName="@{subDataSquare.chapterName}"
+                    app:envelopePic="@{subDataSquare.envelopePic}"
                     tools:ignore="ContentDescription" />
 
             </LinearLayout>
