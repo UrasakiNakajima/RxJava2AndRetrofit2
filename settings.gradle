@@ -1,49 +1,66 @@
-//pluginManagement {
-//
-//    repositories {
-//        gradlePluginPortal()
+pluginManagement {
+
+    repositories {
+        gradlePluginPortal()
 //        maven { url 'https://maven.aliyun.com/repository/google' }
 //        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
 //        maven { url 'https://maven.aliyun.com/repository/public' }
 //        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-//
-//
-////        maven { url "https://kotlin.bintray.com/kotlinx/" }
-//        google()
-//        mavenCentral()
-//        jcenter()
-//        maven { url 'https://jitpack.io' }
-////        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
-//
-////        // fcm
-////        maven { url "https://maven.google.com" }
-////        // hms
-////        maven { url 'http://developer.huawei.com/repo/'}
-//    }
-//}
-//dependencyResolutionManagement {
-//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-//
-//    repositories {
+
+
+//        maven { url "https://kotlin.bintray.com/kotlinx/" }
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+//        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
+
+//        // fcm
+//        maven { url "https://maven.google.com" }
+//        // hms
+//        maven { url 'http://developer.huawei.com/repo/'}
+
+//        // ADD THE FOLLOWING
+//        configurations.all {
+//            resolutionStrategy {
+//                force 'org.xerial:sqlite-jdbc:3.34.0'
+//            }
+//        }
+    }
+
+
+
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
+    repositories {
 //        maven { url 'https://maven.aliyun.com/repository/google' }
 //        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
 //        maven { url 'https://maven.aliyun.com/repository/public' }
 //        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-//
-//
-////        maven { url "https://kotlin.bintray.com/kotlinx/" }
-//        google()
-//        mavenCentral()
-//        jcenter()
-//        maven { url 'https://jitpack.io' }
-////        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
-//
-////        // fcm
-////        maven { url "https://maven.google.com" }
-////        // hms
-////        maven { url 'http://developer.huawei.com/repo/'}
-//    }
-//}
+
+
+//        maven { url "https://kotlin.bintray.com/kotlinx/" }
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+//        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
+
+//        // fcm
+//        maven { url "https://maven.google.com" }
+//        // hms
+//        maven { url 'http://developer.huawei.com/repo/'}
+
+//        // ADD THE FOLLOWING
+//        configurations.all {
+//            resolutionStrategy {
+//                force 'org.xerial:sqlite-jdbc:3.34.0'
+//            }
+//        }
+    }
+}
 rootProject.name = "RxJava2AndRetrofit2"
 include ':aidl_client'
 include ':aidl_server'

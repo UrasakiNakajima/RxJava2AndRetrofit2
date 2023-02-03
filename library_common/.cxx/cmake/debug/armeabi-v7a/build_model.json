@@ -215,7 +215,6 @@
     "objFolder": "/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/build/intermediates/cmake/debug/obj",
     "variantName": "debug",
     "validAbiList": [
-      "ARMEABI",
       "ARMEABI_V7A",
       "ARM64_V8A"
     ],

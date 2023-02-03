@@ -62,7 +62,7 @@ object BuildVersions {
     const val compressor_version = "3.0.1"
     const val oss_android_sdk_version = "2.9.11"
     const val eventbus_version = "3.1.1"
-    const val room_version = "2.3.0"
+    const val room_version = "2.4.0-alpha03"
     const val sqlcipher_version = "4.4.3@aar"
 
 

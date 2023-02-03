@@ -114,9 +114,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':library_common')
     // room
-    def room_version = "2.2.5"
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-runtime:$BuildVersions.room_version"
+    annotationProcessor "androidx.room:room-compiler:$BuildVersions.room_version"
 
 //    implementation project(path: ':irecyclerview')
 
