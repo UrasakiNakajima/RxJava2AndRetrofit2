@@ -20,12 +20,6 @@ pluginManagement {
 //        // hms
 //        maven { url 'http://developer.huawei.com/repo/'}
 
-//        // ADD THE FOLLOWING
-//        configurations.all {
-//            resolutionStrategy {
-//                force 'org.xerial:sqlite-jdbc:3.34.0'
-//            }
-//        }
     }
 
 
@@ -53,12 +47,6 @@ dependencyResolutionManagement {
 //        // hms
 //        maven { url 'http://developer.huawei.com/repo/'}
 
-//        // ADD THE FOLLOWING
-//        configurations.all {
-//            resolutionStrategy {
-//                force 'org.xerial:sqlite-jdbc:3.34.0'
-//            }
-//        }
     }
 }
 rootProject.name = "RxJava2AndRetrofit2"
