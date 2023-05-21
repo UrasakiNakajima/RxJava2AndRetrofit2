@@ -4,6 +4,7 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -25,6 +26,7 @@ import com.phone.module_main.R
 import com.phone.module_main.main.MainActivity
 
 
+@SuppressLint("CustomSplashScreen")
 class LaunchActivity : BaseRxAppActivity() {
 
     companion object {
@@ -101,7 +103,7 @@ class LaunchActivity : BaseRxAppActivity() {
             animatorList.add(scaleYAnimator)
             animatorSet.playTogether(animatorList as Collection<Animator>?)
             animatorSet.setInterpolator(LinearInterpolator())
-            animatorSet.duration = 3000 // 设置动画的播放时长
+            animatorSet.duration = 2000 // 设置动画的播放时长
             animatorSet.start() // 开始播放属性动画
 
             // 构造一个在横轴上平移的属性动画
@@ -109,7 +111,8 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevAppName,
                 "translationY",
                 0f,
-                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_409).toFloat()).toFloat())
+                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_409).toFloat())
+                    .toFloat())
             )
 //            // 构造一个在透明度上变化的属性动画
 //            val anim2 = ObjectAnimator.ofFloat(tevAndroid, "alpha", 1f, 0.1f, 1f, 0.5f, 1f)
@@ -133,7 +136,7 @@ class LaunchActivity : BaseRxAppActivity() {
             animatorList2.add(scaleYAnimator2)
             animatorSet2.playTogether(animatorList2 as Collection<Animator>?)
             animatorSet2.setInterpolator(LinearInterpolator())
-            animatorSet2.duration = 3000 // 设置动画的播放时长
+            animatorSet2.duration = 2000 // 设置动画的播放时长
             animatorSet2.start() // 开始播放属性动画
 
             // 构造一个在横轴上平移的属性动画
@@ -148,7 +151,8 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevKotlin,
                 "translationY",
                 0f,
-                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_390).toFloat()).toFloat())
+                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_390).toFloat())
+                    .toFloat())
             )
 //            // 构造一个在透明度上变化的属性动画
 //            val anim2 = ObjectAnimator.ofFloat(tevAndroid, "alpha", 1f, 0.1f, 1f, 0.5f, 1f)
@@ -172,7 +176,7 @@ class LaunchActivity : BaseRxAppActivity() {
 //            animatorList3.add(scaleYAnimator3)
             animatorSet3.playTogether(animatorList3 as Collection<Animator>?)
             animatorSet3.setInterpolator(LinearInterpolator())
-            animatorSet3.duration = 3000 // 设置动画的播放时长
+            animatorSet3.duration = 2000 // 设置动画的播放时长
             animatorSet3.start() // 开始播放属性动画
         }
     }
@@ -180,7 +184,7 @@ class LaunchActivity : BaseRxAppActivity() {
     override fun initLoadData() {
 //        initPermissions()
 
-        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(7000, {
+        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(3500, {
             LogManager.i(
                 TAG,
                 "LaunchActivity 7000 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"

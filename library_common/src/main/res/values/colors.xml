@@ -16,6 +16,10 @@
 
     <color name="color_FFFFFFFF">#FFFFFFFF</color>
     <color name="color_FFFFFF">#FFFFFF</color>
+    <color name="color_33FFFFFF">#33FFFFFF</color>
+    <color name="color_80FFFFFF">#80FFFFFF</color>
+    <color name="color_CCFFFFFF">#CCFFFFFF</color>
+
     <color name="color_FF198CFF">#FF198CFF</color>
     <color name="color_FFFF530D">#FFFF530D</color>
     <color name="color_FFFFC73B">#FFFFC73B</color>
@@ -48,8 +52,9 @@
     <color name="color_0000FF">#0000FF</color>
     <color name="color_808080">#808080</color>
 
-
-    <color name="colorTransparentA">#00000000</color>
     <color name="red">#EF3939</color>
+
+    <!-- 完全透明色 -->
+    <color name="color_transparent">#00000000</color>
 
 </resources>

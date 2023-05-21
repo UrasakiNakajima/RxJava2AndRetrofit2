@@ -103,7 +103,9 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             }
             tevAndroidAndJs.setOnClickListener {
                 //Jump with parameters
-                ARouter.getInstance().build("/android_and_js/ui/android_and_js").navigation()
+                ARouter.getInstance()
+                    .build("/android_and_js/ui/android_and_js")
+                    .navigation()
             }
             tevEditTextInputLimits.run {
                 setOnClickListener {
@@ -118,6 +120,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             }
             tevKotlinCoroutine.setOnClickListener {
                 startActivity(KotlinCoroutineActivity::class.java)
+            }
+            tevMounting.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance()
+                    .build("/module_main/mounting")
+                    .navigation()
             }
 //            tevThreeLevelLinkageList.setOnClickListener {
 //                startActivity(PickerViewActivity::class.java)

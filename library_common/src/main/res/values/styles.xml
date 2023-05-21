@@ -102,4 +102,9 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="NoActionBarTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+    </style>
+
+
 </resources>

@@ -17,7 +17,7 @@ import com.phone.library_common.BaseApplication
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 
-abstract class BaseBindingRxFragment<DB : ViewDataBinding> : RxFragment() {
+abstract class BaseBindingRxFragment<DB : ViewDataBinding>() : RxFragment() {
 
     private val TAG = BaseBindingRxFragment::class.java.simpleName
 

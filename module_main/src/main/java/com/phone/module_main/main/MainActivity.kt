@@ -144,22 +144,27 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
                 tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
                 layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.black))
             }
+
             1 -> {
                 tevProject?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
                 layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.white))
             }
+
             2 -> {
                 tevSquare?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
                 layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.white))
             }
+
             3 -> {
                 tevResourceCenter?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
                 layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.white))
             }
+
             4 -> {
                 tevMine?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
                 layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.black))
             }
+
             else -> {
                 tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
                 layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.black))

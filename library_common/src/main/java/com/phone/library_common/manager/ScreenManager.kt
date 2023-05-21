@@ -71,6 +71,14 @@ object ScreenManager {
     }
 
     /**
+     * 拿到资源文件的dp值
+     */
+    @JvmStatic
+    fun getDimenPx(dpValue: Int): Int {
+        return BaseApplication.get().resources.getDimension(dpValue).toInt()
+    }
+
+    /**
      * 拿到资源文件的sp值
      */
     @JvmStatic

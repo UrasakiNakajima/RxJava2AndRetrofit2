@@ -122,14 +122,14 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
         if (isDarkFont) {
             ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                 .statusBarDarkFont(isDarkFont)
-                .statusBarColor(R.color.color_FFFFFFFF) //状态栏颜色，不写默认透明色
+//                .statusBarColor(R.color.color_FFFFFFFF) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .keyboardEnable(true)
                 .init()
         } else {
             ImmersionBar.with(this)
                 .statusBarDarkFont(isDarkFont)
-                .statusBarColor(R.color.color_FF198CFF) //状态栏颜色，不写默认透明色
+//                .statusBarColor(R.color.color_FF198CFF) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .keyboardEnable(true)
                 .init()
@@ -171,6 +171,28 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
             ImmersionBar.with(this)
                 .statusBarDarkFont(isDarkFont)
                 .statusBarColor(color) //状态栏颜色，不写默认透明色
+                //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                .init()
+        }
+        if (isResizeChildOfContent) {
+            ToolbarManager.assistActivity(findViewById(android.R.id.content))
+        }
+    }
+
+    protected open fun setToolbarNew(
+        isDarkFont: Boolean,
+        isResizeChildOfContent: Boolean
+    ) {
+        if (isDarkFont) {
+            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .statusBarDarkFont(isDarkFont)
+//                .statusBarColor(color) //状态栏颜色，不写默认透明色
+                //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                .init()
+        } else {
+            ImmersionBar.with(this)
+                .statusBarDarkFont(isDarkFont)
+//                .statusBarColor(color) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .init()
         }

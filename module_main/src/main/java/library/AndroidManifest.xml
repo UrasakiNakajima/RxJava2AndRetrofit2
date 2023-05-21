@@ -40,7 +40,6 @@
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
-
         <meta-data
             android:name="com.phone.library_common.okhttp3_app_glide_module.Okhttp3AppGlideModule"
             android:value="AppGlideModule" />
@@ -53,15 +52,13 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-        <!-- Launch页 -->
+        </provider> <!-- Launch页 -->
         <activity
             android:name=".login.ui.LaunchActivity"
-            android:theme="@style/SplashTheme"
             android:exported="true"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -82,14 +79,18 @@
             android:name=".main.CustomViewActivity"
             android:exported="false"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".main.MainActivity"
-            android:exported="false"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".main.MountingActivity"
+            android:exported="true"
+            android:theme="@style/NoActionBarTheme" />
+
     </application>
 
 </manifest>

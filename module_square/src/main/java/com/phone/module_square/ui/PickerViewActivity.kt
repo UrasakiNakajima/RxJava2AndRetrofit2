@@ -168,7 +168,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
                 dialogWindow.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim) //修改动画样式
                 dialogWindow.setGravity(Gravity.BOTTOM) //改成Bottom,底部显示
                 dialogWindow.setDimAmount(0.3f)
-                dialogWindow.decorView.setBackgroundColor(ResourcesManager.getColor(R.color.colorTransparentA))
+                dialogWindow.decorView.setBackgroundColor(ResourcesManager.getColor(R.color.color_transparent))
                 dialogWindow.decorView.setPadding(0, 0, 0, 0)
                 dialogWindow.setLayout(
                     ViewGroup.LayoutParams.MATCH_PARENT,
