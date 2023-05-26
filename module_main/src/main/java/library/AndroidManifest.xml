@@ -87,7 +87,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".main.MountingActivity"
+            android:name=".mounting.MountingActivity"
             android:exported="true"
             android:theme="@style/NoActionBarTheme" />
 

@@ -615,7 +615,7 @@ object Base64AndFileManager {
     //    }
 
     fun getBase64StrList(filePath: String): List<String> {
-        val base64StrList: MutableList<String> = mutableListOf()
+        val base64StrList = mutableListOf<String>()
         LogManager.i(TAG, "base64StrList size*****" + base64StrList.size)
         try {
             val fis = FileInputStream(filePath)

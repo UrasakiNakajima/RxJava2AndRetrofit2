@@ -1,4 +1,4 @@
-package com.phone.module_main.main;
+package com.phone.module_main.mounting.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.module_main.R;
+import com.phone.module_main.mounting.bean.CommodityBean;
 
 import java.util.ArrayList;
 import java.util.List;

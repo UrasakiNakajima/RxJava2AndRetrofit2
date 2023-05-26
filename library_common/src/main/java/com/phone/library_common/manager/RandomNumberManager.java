@@ -1,6 +1,4 @@
-package com.phone.module_main;
-
-import com.phone.library_common.manager.LogManager;
+package com.phone.library_common.manager;
 
 import java.util.ArrayList;
 import java.util.List;

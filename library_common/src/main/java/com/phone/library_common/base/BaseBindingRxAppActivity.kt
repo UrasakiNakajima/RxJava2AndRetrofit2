@@ -4,12 +4,14 @@ import android.app.ActivityManager
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Looper
 import android.os.Process
 import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -19,7 +21,11 @@ import com.gyf.immersionbar.ImmersionBar
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.R
 import com.phone.library_common.manager.ActivityPageManager
-import com.phone.library_common.manager.*
+import com.phone.library_common.manager.CrashHandlerManager
+import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.ResourcesManager
+import com.phone.library_common.manager.ToolbarManager
+import com.phone.library_common.manager.ToolbarManager.Companion.assistActivity
 import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
@@ -158,6 +164,74 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
         }
         if (isResizeChildOfContent) {
             ToolbarManager.assistActivity(findViewById(android.R.id.content))
+        }
+    }
+
+    protected open fun setToolbar2(isDarkFont: Boolean, statusBarColor: Int) {
+        if (isDarkFont) {
+            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .statusBarDarkFont(isDarkFont)
+                .statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
+                //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                .keyboardEnable(true)
+                .init()
+        } else {
+            ImmersionBar.with(this)
+                .statusBarDarkFont(isDarkFont)
+                .statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
+                //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                .keyboardEnable(true)
+                .init()
+        }
+    }
+
+    /**
+     * 顶部栏吸顶专用
+     */
+    protected open fun setToolbar2(
+        isDarkFont: Boolean,
+        statusBarColor: Int,
+        isResizeChildOfContent: Boolean
+    ) {
+        if (isDarkFont) {
+            val window = window
+            window.clearFlags(
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                        or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+            )
+            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = Color.TRANSPARENT
+            //        window.setNavigationBarColor(Color.TRANSPARENT);
+            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .statusBarDarkFont(isDarkFont)
+                .statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
+                //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                .keyboardEnable(true)
+                .init()
+        } else {
+            ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+                .statusBarDarkFont(isDarkFont)
+                .statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
+                //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+                .keyboardEnable(true)
+                .init()
+            val window = window
+            window.clearFlags(
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                        or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+            )
+            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = Color.TRANSPARENT
+            //        window.setNavigationBarColor(Color.TRANSPARENT);
+        }
+        if (isResizeChildOfContent) {
+            assistActivity(findViewById(android.R.id.content))
         }
     }
 
