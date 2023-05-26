@@ -47,7 +47,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_270"
                             android:scaleType="centerCrop"
-                            android:src="@mipmap/picture26"
+                            android:src="@mipmap/picture_manami_enosawa2"
                             tools:ignore="ContentDescription" />
 
                         <androidx.appcompat.widget.Toolbar

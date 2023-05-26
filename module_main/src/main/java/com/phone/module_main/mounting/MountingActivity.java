@@ -40,7 +40,7 @@ public class MountingActivity extends BaseBindingRxAppActivity<ActivityMountingB
 
     @Override
     protected void initViews() {
-        setToolbar2(true, R.color.color_transparent, false);
+        setToolbar2(false, R.color.color_transparent, false);
         setMounting();
 
         mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_FFFFFFFF));
@@ -65,6 +65,7 @@ public class MountingActivity extends BaseBindingRxAppActivity<ActivityMountingB
         });
         mDatabind.appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {
             if (verticalOffset < 0) {
+                setToolbar2(true, R.color.color_transparent, false);
                 double slideHeight = Math.abs(verticalOffset);
                 if (slideHeight < slideMaxHeight) {
                     int proportion = (int) ((slideHeight / slideMaxHeight) * 255);
@@ -77,6 +78,7 @@ public class MountingActivity extends BaseBindingRxAppActivity<ActivityMountingB
                 mDatabind.tevTitle.setTextColor(ResourcesManager.getColor(R.color.color_99000000));
                 mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_99000000));
             } else {
+                setToolbar2(false, R.color.color_transparent, false);
                 mDatabind.toolbar.setBackgroundColor(ResourcesManager.getColor(R.color.color_transparent));
                 mDatabind.tevTitle.setTextColor(ResourcesManager.getColor(R.color.color_FFFFFFFF));
                 mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_FFFFFFFF));
