@@ -3,6 +3,10 @@ package com.phone.library_common.manager
 import java.math.BigDecimal
 import java.text.NumberFormat
 
+/**
+ * 如果计算的数值总和很大很大，超过50 0000，请使用带有ToStr的方法，不然double数字会转成科学计数法显示，
+ * 还有如果计算的后数值小数点很多，超过6位，请使用带有ToStr的方法，不然double数字可能会失去精度。
+ */
 object BigDecimalManager {
 
     private val TAG = BigDecimalManager::class.java.simpleName
