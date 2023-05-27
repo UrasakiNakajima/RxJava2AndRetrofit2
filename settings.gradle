@@ -1,7 +1,6 @@
 pluginManagement {
 
     repositories {
-        gradlePluginPortal()
 //        maven { url 'https://maven.aliyun.com/repository/google' }
 //        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
 //        maven { url 'https://maven.aliyun.com/repository/public' }
@@ -13,6 +12,7 @@ pluginManagement {
         mavenCentral()
         jcenter()
         maven { url 'https://jitpack.io' }
+        gradlePluginPortal()
 //        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
 
 //        // fcm
@@ -40,6 +40,7 @@ dependencyResolutionManagement {
         mavenCentral()
         jcenter()
         maven { url 'https://jitpack.io' }
+        gradlePluginPortal()
 //        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
 
 //        // fcm

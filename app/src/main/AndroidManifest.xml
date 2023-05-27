@@ -38,6 +38,19 @@
         android:protectionLevel="signature" />
     <uses-permission android:name="${applicationId}.permission.JOPERATE_MESSAGE" />
 
+    <queries package="${applicationId}">
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE">
+
+            </action>
+        </intent>
+        <intent>
+            <action android:name="android.media.action.ACTION_VIDEO_CAPTURE">
+
+            </action>
+        </intent>
+    </queries>
+
     <application
         android:name=".MineApplication"
         android:allowBackup="true"
@@ -105,6 +118,7 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
+
 
     </application>
 

@@ -88,17 +88,17 @@ class SquareActivity :
             tevKillApp.setOnClickListener {
                 LogManager.i(TAG, "tevKillApp")
                 number = 1
-                initRxPermissionsRxFragment(number)
+                initRxPermissions(number)
             }
             tevCreateAnException.run {
                 setOnClickListener {
                     number = 2
-                    initRxPermissionsRxFragment(number)
+                    initRxPermissions(number)
                 }
             }
             tevCreateAnException2.setOnClickListener {
                 number = 3
-                initRxPermissionsRxFragment(number)
+                initRxPermissions(number)
             }
             tevAndroidAndJs.setOnClickListener {
                 showCustomToast(
@@ -209,7 +209,7 @@ class SquareActivity :
     /**
      * 請求權限，RxFragment里需要的时候直接调用就行了
      */
-    private fun initRxPermissionsRxFragment(number: Int) {
+    private fun initRxPermissions(number: Int) {
         val rxPermissionsManager = RxPermissionsManager.get()
         rxPermissionsManager.initRxPermissions(
             this,

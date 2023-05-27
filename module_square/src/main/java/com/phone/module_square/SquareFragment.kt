@@ -9,7 +9,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.BaseMvvmRxFragment
@@ -17,7 +16,7 @@ import com.phone.library_common.bean.*
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.manager.*
 import com.phone.library_common.service.ISquareService
-import com.phone.module_square.databinding.FragmentSquareBinding
+import com.phone.module_square.databinding.SquareFragmentSquareBinding
 import com.phone.module_square.ui.*
 import com.phone.module_square.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
@@ -29,7 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * introduce :
  */
 @Route(path = "/module_square/square")
-class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareBinding>() {
+class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSquareBinding>() {
 
     companion object {
         private val TAG: String = SquareFragment::class.java.simpleName
@@ -48,7 +47,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
         Manifest.permission.READ_PHONE_STATE
     )
 
-    override fun initLayoutId() = R.layout.fragment_square
+    override fun initLayoutId() = R.layout.square_fragment_square
 
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
@@ -85,21 +84,21 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
             tevKillApp.setOnClickListener {
                 LogManager.i(TAG, "tevKillApp")
                 number = 1
-                initRxPermissionsRxFragment(number)
+                initRxPermissions(number)
             }
             tevCreateAnException.setOnClickListener {
                 number = 2
-                initRxPermissionsRxFragment(number)
+                initRxPermissions(number)
             }
             tevCreateAnException.apply {
                 setOnClickListener {
                     number = 2
-                    initRxPermissionsRxFragment(number)
+                    initRxPermissions(number)
                 }
             }
             tevCreateAnException2.setOnClickListener {
                 number = 3
-                initRxPermissionsRxFragment(number)
+                initRxPermissions(number)
             }
             tevAndroidAndJs.setOnClickListener {
                 //Jump with parameters
@@ -125,6 +124,12 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
                 //Jump with parameters
                 ARouter.getInstance()
                     .build("/module_main/mounting")
+                    .navigation()
+            }
+            tevJsbridge.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance()
+                    .build("/module_square/jsbridge")
                     .navigation()
             }
 //            tevThreeLevelLinkageList.setOnClickListener {
@@ -218,7 +223,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, FragmentSquareB
     /**
      * 請求權限，RxFragment里需要的时候直接调用就行了
      */
-    private fun initRxPermissionsRxFragment(number: Int) {
+    private fun initRxPermissions(number: Int) {
         val rxPermissionsManager = RxPermissionsManager.get()
         rxPermissionsManager.initRxPermissions2(
             this,

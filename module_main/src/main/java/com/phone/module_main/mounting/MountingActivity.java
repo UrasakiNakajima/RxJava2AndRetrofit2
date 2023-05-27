@@ -11,7 +11,7 @@ import com.phone.library_common.manager.LogManager;
 import com.phone.library_common.manager.ResourcesManager;
 import com.phone.library_common.manager.ScreenManager;
 import com.phone.module_main.R;
-import com.phone.module_main.databinding.ActivityMountingBinding;
+import com.phone.module_main.databinding.MainActivityMountingBinding;
 import com.phone.module_main.mounting.adapter.MineCommonNavigatorAdapter;
 import com.phone.module_main.mounting.fragment.CommodityFragment;
 
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Route(path = "/module_main/mounting")
-public class MountingActivity extends BaseBindingRxAppActivity<ActivityMountingBinding> {
+public class MountingActivity extends BaseBindingRxAppActivity<MainActivityMountingBinding> {
 
     private static final String TAG = MountingActivity.class.getSimpleName();
     private int imvBannerHeight;
@@ -30,7 +30,7 @@ public class MountingActivity extends BaseBindingRxAppActivity<ActivityMountingB
 
     @Override
     protected int initLayoutId() {
-        return R.layout.activity_mounting;
+        return R.layout.main_activity_mounting;
     }
 
     @Override

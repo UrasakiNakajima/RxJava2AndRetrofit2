@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_common.base.BaseMvpRxAppActivity
@@ -90,7 +91,7 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
             supportFragmentManager, fragmentList
         )
         mineViewPager?.adapter = fragmentStatePagerAdapter
-        mineViewPager?.setOnPageChangeListener(object : LazyViewPager.OnPageChangeListener {
+        mineViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,

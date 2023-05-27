@@ -110,6 +110,9 @@
     <string name="create_user">创建用户</string>
     <string name="kotlin_coroutine">kotlin coroutine</string>
     <string name="mounting">mounting</string>
+    <string name="jsbridge">jsbridge</string>
+    <string name="function_to_js">functionToJs</string>
+    <string name="function_to_js2">functionToJs2</string>
 
 
     <string name="created_b">创建了&#8194;</string>

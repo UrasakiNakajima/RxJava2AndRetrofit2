@@ -19,13 +19,14 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
 import com.phone.library_common.R;
+import com.phone.library_common.manager.ResourcesManager;
 
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Locale;
-
-import androidx.annotation.RequiresApi;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -77,7 +78,7 @@ public class MaterialVideoView extends LinearLayout
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
-        setBackgroundColor(getResources().getColor(R.color.black));
+        setBackgroundColor(ResourcesManager.getColor(R.color.color_FF000000));
         View view = LayoutInflater.from(context).inflate(R.layout.material_video_layout, null);
         initView(view);
         setData(url, VIDEO_TYPE_URI);

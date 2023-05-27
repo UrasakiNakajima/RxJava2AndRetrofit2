@@ -3,6 +3,7 @@ package com.phone.library_common.custom_view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
+import androidx.viewpager.widget.ViewPager
 
 /**
  * author    : Urasaki
@@ -11,7 +12,7 @@ import android.view.MotionEvent
  * introduce : 禁止左右滑动
  */
 
-class MineLazyViewPager(context: Context, attrs: AttributeSet?) : LazyViewPager(context, attrs) {
+class MineLazyViewPager(context: Context, attrs: AttributeSet?) : ViewPager(context, attrs) {
 
     private val isCanScroll = false
 

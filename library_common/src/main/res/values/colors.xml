@@ -11,6 +11,9 @@
     <color name="color_999999">#999999</color>
     <color name="color_555555">#555555</color>
     <color name="color_000000">#000000</color>
+    <color name="black">#FF000000</color>
+
+    <color name="color_FF000000">#FF000000</color>
     <color name="color_80000000">#80000000</color>
     <color name="color_99000000">#99000000</color>
     <color name="color_54000000">#54000000</color>
@@ -22,6 +25,7 @@
     <color name="color_CCFFFFFF">#CCFFFFFF</color>
 
     <color name="color_FF198CFF">#FF198CFF</color>
+    <color name="blue">#FF198CFF</color>
     <color name="color_FFFF530D">#FFFF530D</color>
     <color name="color_FFFFC73B">#FFFFC73B</color>
 

@@ -1,28 +1,20 @@
 package com.phone.module_square.ui
 
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.fastjson.JSONObject
 import com.phone.library_common.base.BaseBindingRxAppActivity
-import com.phone.library_common.base.BaseRxAppActivity
 import com.phone.library_common.bean.UserBean
 import com.phone.library_common.dialog.StandardDialog
 import com.phone.library_common.dialog.StandardUserDialog
 import com.phone.library_common.manager.*
 import com.phone.module_square.R
 import com.phone.module_square.adapter.UserBeanAdapter
-import com.phone.module_square.databinding.ActivityCreateUserBinding
+import com.phone.module_square.databinding.SquareActivityCreateUserBinding
 import java.util.*
 
-class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>() {
+class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBinding>() {
 
     private val TAG = CreateUserActivity::class.java.simpleName
     private var userBeanDaoManager: UserBeanDaoManager? = null
@@ -38,7 +30,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<ActivityCreateUserBinding>()
             : StandardDialog? = null
     private var queryUserList: List<UserBean> = mutableListOf()
 
-    override fun initLayoutId() = R.layout.activity_create_user
+    override fun initLayoutId() = R.layout.square_activity_create_user
 
     override fun initData() {
         userBeanDaoManager = UserBeanDaoManager()

@@ -267,6 +267,27 @@
                     android:background="@color/color_555555" />
 
                 <TextView
+                    android:id="@+id/tev_jsbridge"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="@string/jsbridge"
+                    android:textColor="@color/color_FFFFFFFF"
+                    android:textSize="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/color_555555" />
+
+                <TextView
                     android:id="@+id/tev_three_level_linkage_list"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_45"

@@ -54,9 +54,9 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
-                        "room.schemaLocation":"$projectDir/schemas".toString(),
-                        "room.incremental":"true",
-                        "room.expandProjection":"true"]
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
             }
         }
 
@@ -231,7 +231,15 @@ dependencies {
 //    api "com.alibaba:fastjson:$BuildVersions.fastjson_version.android"
 
     //图片和视频选择框架导入（这个框架的手机拍照功能有bug，不要使用）
-    api "com.github.LuckSiege.PictureSelector:picture_library:$BuildVersions.picture_selector_version"
+    // PictureSelector basic (Necessary)
+    api "io.github.lucksiege:pictureselector:$BuildVersions.picture_selector_version"
+    // image compress library (Not necessary)
+    api "io.github.lucksiege:compress:$BuildVersions.picture_selector_version"
+    // uCrop library (Not necessary)
+    api "io.github.lucksiege:ucrop:$BuildVersions.picture_selector_version"
+    // simple camerax library (Not necessary)
+    api "io.github.lucksiege:camerax:$BuildVersions.picture_selector_version"
+
     //刷新和加载Layout导入,核心必须依赖
     api "com.scwang.smart:refresh-layout-kernel:$BuildVersions.refresh_layout_version"
     api "com.scwang.smart:refresh-header-classics:$BuildVersions.refresh_layout_version"    //经典刷新头
@@ -272,8 +280,8 @@ dependencies {
     // 可选 - Kotlin扩展和协程支持
     implementation "androidx.room:room-ktx:$BuildVersions.room_version"
 
-
     implementation "net.zetetic:android-database-sqlcipher:$BuildVersions.sqlcipher_version"
+    api "com.github.lzyzsd:jsbridge:$BuildVersions.jsbridge_version"
 
 
 }
