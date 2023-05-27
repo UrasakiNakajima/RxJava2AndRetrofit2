@@ -184,7 +184,7 @@ class LaunchActivity : BaseRxAppActivity() {
     override fun initLoadData() {
 //        initPermissions()
 
-        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(3500, {
+        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(5000, {
             LogManager.i(
                 TAG,
                 "LaunchActivity 7000 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"

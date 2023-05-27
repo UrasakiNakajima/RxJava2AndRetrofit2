@@ -242,7 +242,7 @@ dependencies {
 //    api "com.scwang.smart:refresh-footer-ball:$BuildVersions.refresh_layout_version"        //球脉冲加载
 //    api "com.scwang.smart:refresh-footer-classics:$BuildVersions.refresh_layout_version"    //经典加载
 
-    api 'com.github.hackware1993:MagicIndicator:1.7.0'
+    api "com.github.hackware1993:MagicIndicator:$BuildVersions.magic_indicator_version"
 
     //选择时间和省市县三级联动框架
     api "com.contrarywind:Android-PickerView:$BuildVersions.picker_view_version"
