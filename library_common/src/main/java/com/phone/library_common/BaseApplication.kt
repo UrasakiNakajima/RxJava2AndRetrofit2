@@ -128,7 +128,7 @@ open class BaseApplication : MultiDexApplication() {
                 LogManager.i(TAG, "book*****" + bookList.get(i).bookName)
             }
 
-            CountingAlgorithm.countingAlgorithm()
+//            CountingAlgorithm.countingAlgorithm()
         })
     }
 
