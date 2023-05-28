@@ -64,18 +64,25 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
 
 
         val appRoomDataBase = AppRoomDataBase.get()
-        val book = Book()
-        book.bookName = "EnglishXC"
-        book.anchor = "rommelXC"
-        appRoomDataBase.bookDao().insert(book)
-        val book2 = Book()
-        book2.bookName = "EnglishXC2"
-        book2.anchor = "rommelXC2"
-        appRoomDataBase.bookDao().insert(book2)
+//        val book = Book()
+//        book.bookName = "EnglishXC"
+//        book.anchor = "rommelXC"
+//        appRoomDataBase.bookDao().insert(book)
+//        val book2 = Book()
+//        book2.bookName = "EnglishXC2"
+//        book2.anchor = "rommelXC2"
+//        appRoomDataBase.bookDao().insert(book2)
         val bookList = appRoomDataBase.bookDao().queryAll()
         for (i in 0..bookList.size - 1) {
             LogManager.i(TAG, "book*****" + bookList.get(i).bookName)
         }
+
+
+//        AppRoomDataBase.decrypt(
+//            AppRoomDataBase.DATABASE_DECRYPT_NAME,
+//            AppRoomDataBase.DATABASE_ENCRYPT_NAME,
+//            AppRoomDataBase.DATABASE_DECRYPT_KEY
+//        )
     }
 
     override fun initObservers() {

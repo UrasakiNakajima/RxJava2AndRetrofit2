@@ -22,6 +22,8 @@ abstract class AppRoomDataBase : RoomDatabase() {
 
         val DATABASE_ENCRYPT_KEY =
             JavaGetData.nativeDatabaseEncryptKey(BaseApplication.get(), BuildConfig.IS_RELEASE)
+        val DATABASE_DECRYPT_KEY =
+            JavaGetData.nativeDatabaseEncryptKey(BaseApplication.get(), BuildConfig.IS_RELEASE)
         val passphrase = SQLiteDatabase.getBytes(DATABASE_ENCRYPT_KEY.toCharArray())
         val factory = SupportFactory(passphrase, object : SQLiteDatabaseHook {
             override fun preKey(database: SQLiteDatabase?) {
@@ -146,6 +148,7 @@ abstract class AppRoomDataBase : RoomDatabase() {
                         decryptedDatabaseFile.getAbsolutePath()
                     )
                 )
+                //输出要解密的数据库表和数据到解密后的数据库文件中
                 database.rawExecSQL("SELECT sqlcipher_export('" + decryptedName.split(".")[0] + "');")
                 database.rawExecSQL("DETACH DATABASE " + decryptedName.split(".")[0] + ";")
 
