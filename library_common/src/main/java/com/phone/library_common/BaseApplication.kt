@@ -17,8 +17,6 @@ import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.manager.*
-import com.phone.library_common.room.AppRoomDataBase
-import com.phone.library_common.room.Book
 
 
 /**
@@ -70,9 +68,10 @@ open class BaseApplication : MultiDexApplication() {
             if (processName == packageName) {
                 //当进程是当前App 的主进程时，才初始化数据
                 //初始化com.phone.rxjava2andretrofit2以包名为进程名，项目默认的进程
-                initData()
+
             }
         }
+        initData()
     }
 
     private fun initData() {
@@ -90,12 +89,17 @@ open class BaseApplication : MultiDexApplication() {
             val data2 = JavaGetData.nativeGetString(this@BaseApplication, BuildConfig.IS_RELEASE)
             LogManager.i(TAG, "onCreate data2*****$data2")
 
-
 //            //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
 //            sp = getSharedPreferences("app", MODE)
 //            editor = sp.edit()
             val address = SharedPreferencesManager.get("address", "")
             LogManager.i(TAG, "address*****$address")
+
+
+            JavaGetData.loadData()
+//            CountingAlgorithm.countingAlgorithm()
+
+
 
             if (true) {
                 ARouter.openLog()
@@ -109,26 +113,6 @@ open class BaseApplication : MultiDexApplication() {
             val crashHandlerManager = CrashHandlerManager.get()
             crashHandlerManager?.sendPreviousReportsToServer()
             initWebView()
-
-
-
-            JavaGetData.loadData()
-            val appRoomDataBase = AppRoomDataBase.get()
-            val book = Book()
-            book.bookName = "EnglishXC"
-            book.anchor = "rommelXC"
-            appRoomDataBase.bookDao().insert(book)
-            val book2 = Book()
-            book2.bookName = "EnglishXC2"
-            book2.anchor = "rommelXC2"
-            appRoomDataBase.bookDao().insert(book2)
-
-            val bookList = appRoomDataBase.bookDao().queryAll()
-            for (i in 0..bookList.size - 1) {
-                LogManager.i(TAG, "book*****" + bookList.get(i).bookName)
-            }
-
-//            CountingAlgorithm.countingAlgorithm()
         })
     }
 

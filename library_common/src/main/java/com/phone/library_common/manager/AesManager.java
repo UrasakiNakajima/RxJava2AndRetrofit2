@@ -68,12 +68,12 @@ public class AesManager {
         String cSrc = "www.gowhere.so";
         System.out.println(cSrc);
         // 加密
-        String enString = encrypt(cSrc, cKey);
-        System.out.println("加密后的字串是：" + enString);
+        String encryptString = encrypt(cSrc, cKey);
+        System.out.println("加密后的字串是：" + encryptString);
 
         // 解密
-        String DeString = decrypt(enString, cKey);
-        System.out.println("解密后的字串是：" + DeString);
+        String decryptString = decrypt(encryptString, cKey);
+        System.out.println("解密后的字串是：" + decryptString);
     }
 
 

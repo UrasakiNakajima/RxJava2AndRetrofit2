@@ -18,18 +18,16 @@ abstract class AppRoomDataBase : RoomDatabase() {
     abstract fun bookDao(): BookDao
 
     companion object {
-        private const val TAG = "AppRoomDataBase"
+        private val TAG = AppRoomDataBase::class.java.simpleName
 
         val DATABASE_ENCRYPT_KEY =
             JavaGetData.nativeDatabaseEncryptKey(BaseApplication.get(), BuildConfig.IS_RELEASE)
         val passphrase = SQLiteDatabase.getBytes(DATABASE_ENCRYPT_KEY.toCharArray())
         val factory = SupportFactory(passphrase, object : SQLiteDatabaseHook {
             override fun preKey(database: SQLiteDatabase?) {
-                LogManager.i(TAG, "preKey")
             }
 
             override fun postKey(database: SQLiteDatabase?) {
-                LogManager.i(TAG, "postKey")
 //                database?.execSQL("PRAGMA cipher_page_size = 1024")
 //                database?.execSQL("PRAGMA kdf_iter = 64000")
 //                database?.execSQL("PRAGMA cipher_hmac_algorithm = HMAC_SHA1")
@@ -85,18 +83,18 @@ abstract class AppRoomDataBase : RoomDatabase() {
         /**
          * 加密数据库
          * @param encryptedName 加密后的数据库名称
-         * @param decryptedName 要加密的数据库名称
+         * @param name 要加密的数据库名称
          * @param key 密码
          */
         @JvmStatic
-        fun encrypt(encryptedName: String, decryptedName: String, key: String) {
+        fun encrypt(encryptedName: String, name: String, key: String) {
             try {
-                val databaseFile = BaseApplication.get().getDatabasePath(decryptedName)
+                val databaseFile = BaseApplication.get().getDatabasePath(name)
                 LogManager.i(TAG, "databaseFile*****${databaseFile.absolutePath}")
                 val database: SQLiteDatabase =
                     SQLiteDatabase.openOrCreateDatabase(databaseFile, "", null) //打开要加密的数据库
 
-                /*String passwordString = "1234"; //只能对已加密的数据库修改密码，且无法直接修改为“”或null的密码
+                /*String passwordString = "123456"; //只能对已加密的数据库修改密码，且无法直接修改为“”或null的密码
                 database.changePassword(passwordString.toCharArray());*/
                 val encrypteddatabaseFile =
                     BaseApplication.get().getDatabasePath(encryptedName) //新建加密后的数据库文件
@@ -128,31 +126,31 @@ abstract class AppRoomDataBase : RoomDatabase() {
 
         /**
          * 解密数据库
-         * @param encryptedName 要解密的数据库名称
          * @param decryptedName 解密后的数据库名称
+         * @param name 要解密的数据库名称
          * @param key 密码
          */
         @JvmStatic
-        fun decrypt(encryptedName: String, decryptedName: String, key: String) {
+        fun decrypt(decryptedName: String, name: String, key: String) {
             try {
-                val databaseFile = BaseApplication.get().getDatabasePath(encryptedName)
+                val databaseFile = BaseApplication.get().getDatabasePath(name)
                 val database: SQLiteDatabase =
                     SQLiteDatabase.openOrCreateDatabase(databaseFile, key, null)
-                val decrypteddatabaseFile = BaseApplication.get().getDatabasePath(decryptedName)
+                val decryptedDatabaseFile = BaseApplication.get().getDatabasePath(decryptedName)
                 //deleteDatabase(SDcardPath + decryptedName);
 
                 //连接到解密后的数据库，并设置密码为空
                 database.rawExecSQL(
                     String.format(
                         "ATTACH DATABASE '%s' as " + decryptedName.split(".")[0] + " KEY '';",
-                        decrypteddatabaseFile.getAbsolutePath()
+                        decryptedDatabaseFile.getAbsolutePath()
                     )
                 )
                 database.rawExecSQL("SELECT sqlcipher_export('" + decryptedName.split(".")[0] + "');")
                 database.rawExecSQL("DETACH DATABASE " + decryptedName.split(".")[0] + ";")
 
                 val decrypteddatabase: SQLiteDatabase =
-                    SQLiteDatabase.openOrCreateDatabase(decrypteddatabaseFile, "", null)
+                    SQLiteDatabase.openOrCreateDatabase(decryptedDatabaseFile, "", null)
                 //decrypteddatabase.setVersion(database.getVersion());
                 decrypteddatabase.close()
                 database.close()

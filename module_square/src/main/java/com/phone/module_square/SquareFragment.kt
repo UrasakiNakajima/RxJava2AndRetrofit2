@@ -15,6 +15,8 @@ import com.phone.library_common.base.BaseMvvmRxFragment
 import com.phone.library_common.bean.*
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.manager.*
+import com.phone.library_common.room.AppRoomDataBase
+import com.phone.library_common.room.Book
 import com.phone.library_common.service.ISquareService
 import com.phone.module_square.databinding.SquareFragmentSquareBinding
 import com.phone.module_square.ui.*
@@ -58,8 +60,22 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
     override fun initData() {
         mDatabind.viewModel = viewModel
         mDatabind.subDataSquare = subDataSquare
-
         mDatabind.executePendingBindings()
+
+
+        val appRoomDataBase = AppRoomDataBase.get()
+        val book = Book()
+        book.bookName = "EnglishXC"
+        book.anchor = "rommelXC"
+        appRoomDataBase.bookDao().insert(book)
+        val book2 = Book()
+        book2.bookName = "EnglishXC2"
+        book2.anchor = "rommelXC2"
+        appRoomDataBase.bookDao().insert(book2)
+        val bookList = appRoomDataBase.bookDao().queryAll()
+        for (i in 0..bookList.size - 1) {
+            LogManager.i(TAG, "book*****" + bookList.get(i).bookName)
+        }
     }
 
     override fun initObservers() {

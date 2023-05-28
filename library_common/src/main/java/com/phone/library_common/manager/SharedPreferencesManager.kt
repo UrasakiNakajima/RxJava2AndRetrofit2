@@ -2,9 +2,8 @@ package com.phone.library_common.manager
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.text.TextUtils
 import com.phone.library_common.BaseApplication
-import com.phone.library_common.BuildConfig
-import com.phone.library_common.JavaGetData
 
 object SharedPreferencesManager {
 
@@ -18,26 +17,12 @@ object SharedPreferencesManager {
     val SHARED_NAME = "shared_app"
 
     @JvmStatic
-    val aesKey = JavaGetData.nativeAesKey(BaseApplication.get(), BuildConfig.IS_RELEASE)
-
-    @JvmStatic
     fun put(key: String, any: Any) {
         val sp = BaseApplication.get().getSharedPreferences(SHARED_NAME, MODE)
         val editor: SharedPreferences.Editor = sp.edit()
 
         if (any is String) {
-//            editor.putString(key, any)
-//            if ("address".equals(key)) {
-//                LogManager.i(TAG, "put String key*****$key")
-//                LogManager.i(TAG, "put String address*****$any")
-//            }
-
-            val encryptStr = AesManager.encrypt(any, aesKey)
-            if ("address".equals(key)) {
-                LogManager.i(TAG, "put String key*****$key")
-                LogManager.i(TAG, "put String address*****$encryptStr")
-            }
-            editor.putString(key, encryptStr)
+            editor.putString(key, any)
         } else if (any is Int) {
             editor.putInt(key, any)
         } else if (any is Long) {
@@ -51,24 +36,20 @@ object SharedPreferencesManager {
     }
 
     @JvmStatic
+    fun putDecryptStr(key: String, aesKey: String, str: String) {
+        val sp = BaseApplication.get().getSharedPreferences(SHARED_NAME, MODE)
+        val editor: SharedPreferences.Editor = sp.edit()
+        val encryptStr = AesManager.encrypt(str, aesKey)
+        editor.putString(key, encryptStr)
+        editor.apply()
+    }
+
+    @JvmStatic
     fun get(key: String, defaultAny: Any): Any {
         val sp = BaseApplication.get().getSharedPreferences(SHARED_NAME, MODE)
 
         return (if (defaultAny is String) {
-            val decryptStr = AesManager.decrypt(sp.getString(key, defaultAny), aesKey)
-            if (decryptStr != null) {
-                if ("address".equals(key)) {
-                    LogManager.i(TAG, "get String key*****$key")
-                    LogManager.i(TAG, "get String decryptStr*****$decryptStr")
-                }
-                decryptStr
-            } else {
-                val data = sp.getString(key, defaultAny)
-                if ("address".equals(key)) {
-                    LogManager.i(TAG, "get String data*****$data")
-                }
-                data
-            }
+            sp.getString(key, defaultAny)
         } else if (defaultAny is Int) {
             sp.getInt(key, defaultAny)
         } else if (defaultAny is Long) {
@@ -80,6 +61,17 @@ object SharedPreferencesManager {
         } else {
             defaultAny
         }) as Any
+    }
+
+    @JvmStatic
+    fun getDecryptStr(key: String, aesKey: String, defaultStr: String): String {
+        val sp = BaseApplication.get().getSharedPreferences(SHARED_NAME, MODE)
+        val decryptStr = AesManager.decrypt(sp.getString(key, defaultStr), aesKey)
+        return if (!TextUtils.isEmpty(decryptStr)) {
+            decryptStr
+        } else {
+            sp.getString(key, defaultStr)!!
+        }
     }
 
     fun setLogout() {
