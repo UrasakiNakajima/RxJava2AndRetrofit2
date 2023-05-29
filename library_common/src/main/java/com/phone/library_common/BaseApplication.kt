@@ -17,6 +17,7 @@ import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.manager.*
+import com.phone.library_common.room.AppRoomDataBase
 
 
 /**
@@ -97,8 +98,8 @@ open class BaseApplication : MultiDexApplication() {
 
 
             JavaGetData.loadData()
+            AppRoomDataBase.get()
 //            CountingAlgorithm.countingAlgorithm()
-
 
 
             if (true) {

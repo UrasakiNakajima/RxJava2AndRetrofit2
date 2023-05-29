@@ -65,8 +65,9 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
 
         val appRoomDataBase = AppRoomDataBase.get()
 //        val book = Book()
-//        book.bookName = "EnglishXC"
-//        book.anchor = "rommelXC"
+//        book.bookName = "English A"
+//        book.anchor = "rommel A"
+////        book.briefIntroduction = "这是一本关于童话的书"
 //        appRoomDataBase.bookDao().insert(book)
 //        val book2 = Book()
 //        book2.bookName = "EnglishXC2"

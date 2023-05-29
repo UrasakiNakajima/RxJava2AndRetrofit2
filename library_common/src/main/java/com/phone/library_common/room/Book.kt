@@ -16,4 +16,7 @@ class Book {
     @Ignore
     var price: Int = 0
 
+//    @ColumnInfo(name = "brief_introduction")
+//    var briefIntroduction: String? = null
+
 }
