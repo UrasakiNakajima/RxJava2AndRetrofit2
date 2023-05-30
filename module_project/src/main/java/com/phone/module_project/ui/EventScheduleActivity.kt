@@ -7,16 +7,16 @@ import com.phone.library_common.base.BaseBindingRxAppActivity
 import com.phone.library_common.callback.OnDialogCallback
 import com.phone.library_common.fragment.EventScheduleDialogFragment
 import com.phone.module_project.R
-import com.phone.module_project.databinding.ActivityEventScheduleBinding
+import com.phone.module_project.databinding.ProjectActivityEventScheduleBinding
 
 @Route(path = "/module_project/ui/event_schedule")
-class EventScheduleActivity : BaseBindingRxAppActivity<ActivityEventScheduleBinding>() {
+class EventScheduleActivity : BaseBindingRxAppActivity<ProjectActivityEventScheduleBinding>() {
 
     companion object {
         private const val TAG = "EventScheduleActivity"
     }
 
-    override fun initLayoutId() = R.layout.activity_event_schedule
+    override fun initLayoutId() = R.layout.project_activity_event_schedule
 
     override fun initData() {
     }

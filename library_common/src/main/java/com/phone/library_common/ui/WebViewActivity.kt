@@ -5,11 +5,11 @@ import android.view.View
 import com.phone.library_common.R
 import com.phone.library_common.base.BaseBindingRxAppActivity
 import com.phone.library_common.callback.OnCommonSingleParamCallback
-import com.phone.library_common.databinding.ActivityWebViewBinding
+import com.phone.library_common.databinding.LibraryActivityWebViewBinding
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 
-class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
+class WebViewActivity : BaseBindingRxAppActivity<LibraryActivityWebViewBinding>() {
 
     private val TAG = WebViewActivity::class.java.simpleName
     private var loadUrl: String? = null
@@ -21,7 +21,7 @@ class WebViewActivity : BaseBindingRxAppActivity<ActivityWebViewBinding>() {
     private var startTime: Long = 0
     private var requiredTime: Long = 0
 
-    override fun initLayoutId() = R.layout.activity_web_view
+    override fun initLayoutId() = R.layout.library_activity_web_view
 
     override fun initData() {
         val bundle = getIntent()?.extras

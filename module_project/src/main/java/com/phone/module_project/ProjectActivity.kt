@@ -10,7 +10,7 @@ import com.phone.library_common.adapter.TabNavigatorAdapter
 import com.phone.library_common.base.BaseMvvmAppRxActivity
 import com.phone.library_common.bean.TabBean
 import com.phone.library_common.manager.*
-import com.phone.module_project.databinding.ActivityProjectBinding
+import com.phone.module_project.databinding.ProjectActivityProjectBinding
 import com.phone.module_project.fragment.SubProjectFragment
 import com.phone.module_project.view.IProjectView
 import com.phone.module_project.view_model.ProjectViewModelImpl
@@ -18,13 +18,13 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 
 class ProjectActivity :
-    BaseMvvmAppRxActivity<ProjectViewModelImpl, ActivityProjectBinding>(),
+    BaseMvvmAppRxActivity<ProjectViewModelImpl, ProjectActivityProjectBinding>(),
     IProjectView {
 
     private val TAG = ProjectFragment::class.java.simpleName
     private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
-    override fun initLayoutId() = R.layout.activity_project
+    override fun initLayoutId() = R.layout.project_activity_project
 
     override fun initViewModel() =
         ViewModelProvider(mRxAppCompatActivity).get(ProjectViewModelImpl::class.java)

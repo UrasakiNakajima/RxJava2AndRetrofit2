@@ -23,7 +23,7 @@ class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), I
     private var imvBack: ImageView? = null
     private var tevTitle: TextView? = null
 
-    override fun initLayoutId() = R.layout.activity_user_data
+    override fun initLayoutId() = R.layout.mine_activity_user_data
 
     override fun initData() {
     }

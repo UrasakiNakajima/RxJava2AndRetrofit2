@@ -17,7 +17,7 @@ class ObserverActivity : BaseRxAppActivity() {
     val mineObservable = MineObservable();
 
     override fun initLayoutId(): Int {
-        return R.layout.activity_observer
+        return R.layout.square_activity_observer
     }
 
     override fun initData() {

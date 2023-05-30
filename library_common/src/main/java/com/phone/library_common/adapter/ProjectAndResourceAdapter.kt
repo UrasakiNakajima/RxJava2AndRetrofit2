@@ -10,8 +10,8 @@ import com.phone.library_common.R
 import com.phone.library_common.bean.ArticleListBean
 import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.library_common.common.Constants
-import com.phone.library_common.databinding.ItemProjectBinding
-import com.phone.library_common.databinding.ItemResourceBinding
+import com.phone.library_common.databinding.LibraryItemProjectBinding
+import com.phone.library_common.databinding.LibraryItemResourceBinding
 
 class ProjectAndResourceAdapter(val context: Context, val list: MutableList<ArticleListBean>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -39,17 +39,17 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == Constants.ITEM_ARTICLE) {
-            val binding: ItemResourceBinding = DataBindingUtil.inflate(
+            val binding: LibraryItemResourceBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(context),
-                R.layout.item_resource,
+                R.layout.library_item_resource,
                 parent,
                 false
             )
             ArticleViewHolder(binding.root)
         } else {
-            val binding: ItemProjectBinding = DataBindingUtil.inflate(
+            val binding: LibraryItemProjectBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(context),
-                R.layout.item_project,
+                R.layout.library_item_project,
                 parent,
                 false
             )
@@ -68,11 +68,11 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
 
         val binding = if (holder is ArticleViewHolder) {
             //获取ViewDataBinding
-            DataBindingUtil.getBinding<ItemResourceBinding>(holder.itemView)?.apply {
+            DataBindingUtil.getBinding<LibraryItemResourceBinding>(holder.itemView)?.apply {
                 dataBean = list[position]
             }
         } else {
-            DataBindingUtil.getBinding<ItemProjectBinding>(holder.itemView)?.apply {
+            DataBindingUtil.getBinding<LibraryItemProjectBinding>(holder.itemView)?.apply {
                 dataBean = list[position]
             }
         }

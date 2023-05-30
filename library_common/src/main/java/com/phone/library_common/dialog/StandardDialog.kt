@@ -21,7 +21,7 @@ class StandardDialog(val context: Context) {
     private var tevOk: TextView? = null
 
     init {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.dialog_standard, null, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.library_dialog_standard, null, false)
         tevTitle = view.findViewById<View>(R.id.tev_title) as TextView
         tevContent = view.findViewById<View>(R.id.tev_content) as TextView
         viewHorizontalLine = view.findViewById(R.id.view_horizontal_line) as View

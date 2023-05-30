@@ -29,7 +29,7 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
     private var tevRegister: TextView? = null
 
     override fun initLayoutId(): Int {
-        return R.layout.activity_register
+        return R.layout.main_activity_register
     }
 
     override fun initData() {

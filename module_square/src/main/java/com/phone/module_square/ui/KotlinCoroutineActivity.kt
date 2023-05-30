@@ -17,7 +17,7 @@ class KotlinCoroutineActivity : BaseRxAppActivity() {
         intArrayOf(1, 2, 3) //还有FloatArray DoubleArray CharArray，都属于kotlin 的 built-in函数
     var str: String = "Lili"
 
-    override fun initLayoutId() = R.layout.activity_kotlin_coroutine
+    override fun initLayoutId() = R.layout.square_activity_kotlin_coroutine
 
     override fun initData() {
 

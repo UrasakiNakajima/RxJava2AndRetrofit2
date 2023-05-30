@@ -41,7 +41,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
 
     @Override
     protected int initLayoutId() {
-        return R.layout.activity_edit_text_input_limits;
+        return R.layout.square_activity_edit_text_input_limits;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
      * 则要在点击Dialog确认按钮之前进行提示，这样就不会填入不符合规范的整数或小数了。
      */
     private void showEditTextInputLimitsDialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_layout_edit_text_input_limits, null, false);
+        View view = LayoutInflater.from(this).inflate(R.layout.square_dialog_layout_edit_text_input_limits, null, false);
         EditText edtInput = (EditText) view.findViewById(R.id.edt_input);
         TextView tevCancel = (TextView) view.findViewById(R.id.tev_cancel);
         TextView tevConfirm = (TextView) view.findViewById(R.id.tev_confirm);

@@ -2,7 +2,7 @@ package com.phone.module_home.dialog_fragment
 
 import com.phone.library_common.base.BaseBindingDialogFragment
 import com.phone.module_home.R
-import com.phone.module_home.databinding.DialogFragmentShowDownloadBinding
+import com.phone.module_home.databinding.HomeDialogFragmentShowDownloadBinding
 
 /**
  *    author : Urasaki
@@ -11,7 +11,7 @@ import com.phone.module_home.databinding.DialogFragmentShowDownloadBinding
  *    desc   :
  *    version: 1.0
  */
-class ShowDownloadDialogFragment : BaseBindingDialogFragment<DialogFragmentShowDownloadBinding>() {
+class ShowDownloadDialogFragment : BaseBindingDialogFragment<HomeDialogFragmentShowDownloadBinding>() {
 
     companion object {
         private const val TAG = "ShowDownloadDialogFragment"
@@ -22,7 +22,7 @@ class ShowDownloadDialogFragment : BaseBindingDialogFragment<DialogFragmentShowD
         }
     }
 
-    override fun initLayoutId() = R.layout.dialog_fragment_show_download
+    override fun initLayoutId() = R.layout.home_dialog_fragment_show_download
 
     override fun initData() {
 

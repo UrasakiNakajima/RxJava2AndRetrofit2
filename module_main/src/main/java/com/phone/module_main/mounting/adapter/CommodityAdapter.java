@@ -39,7 +39,7 @@ public class CommodityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_commodity, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.main_item_commodity, parent, false);
         return new BodyHolder(view);
     }
 

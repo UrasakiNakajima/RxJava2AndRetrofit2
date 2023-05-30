@@ -17,13 +17,13 @@ import com.phone.library_common.manager.RetrofitManager
 import com.phone.library_common.manager.ScreenManager
 import com.phone.library_common.ui.WebViewActivity
 import com.phone.module_project.R
-import com.phone.module_project.databinding.FragmentProjectSubBinding
+import com.phone.module_project.databinding.ProjectFragmentProjectSubBinding
 import com.phone.module_project.view.ISubProjectView
 import com.phone.module_project.view_model.SubProjectViewModelImpl
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
-class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentProjectSubBinding>(),
+class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, ProjectFragmentProjectSubBinding>(),
     ISubProjectView {
 
     companion object {
@@ -46,7 +46,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
     private var tabId: Int = 0
     private var pageNum: Int = 1
 
-    override fun initLayoutId() = R.layout.fragment_project_sub
+    override fun initLayoutId() = R.layout.project_fragment_project_sub
 
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity

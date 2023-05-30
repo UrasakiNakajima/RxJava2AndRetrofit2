@@ -54,7 +54,7 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
         Manifest.permission.ACCESS_FINE_LOCATION
     )
 
-    override fun initLayoutId() = R.layout.activity_first_page
+    override fun initLayoutId() = R.layout.home_activity_first_page
 
     override fun initData() {
         isRefresh = true

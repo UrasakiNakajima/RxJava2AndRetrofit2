@@ -6,15 +6,15 @@ import android.webkit.*
 import com.phone.library_common.base.BaseBindingRxFragment
 import com.phone.library_common.manager.LogManager
 import com.phone.module_resource.R
-import com.phone.module_resource.databinding.FragmentAndroidAndJsBinding
+import com.phone.module_resource.databinding.ResourceFragmentAndroidAndJsBinding
 
-class AndroidAndJsFragment : BaseBindingRxFragment<FragmentAndroidAndJsBinding>() {
+class AndroidAndJsFragment : BaseBindingRxFragment<ResourceFragmentAndroidAndJsBinding>() {
 
     val TAG = AndroidAndJsFragment::class.java.simpleName
     var webSettings: WebSettings? = null
 
     override fun initLayoutId(): Int {
-        return R.layout.fragment_android_and_js
+        return R.layout.resource_fragment_android_and_js
     }
 
     override fun initData() {

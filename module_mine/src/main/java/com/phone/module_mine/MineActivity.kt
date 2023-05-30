@@ -53,7 +53,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
 
-    override fun initLayoutId() = R.layout.activity_mine
+    override fun initLayoutId() = R.layout.mine_activity_mine
 
     override fun initData() {
     }

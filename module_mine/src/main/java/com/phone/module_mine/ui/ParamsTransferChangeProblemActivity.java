@@ -50,7 +50,7 @@ public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
 
     @Override
     protected int initLayoutId() {
-        return R.layout.activity_params_transfer_change_problem;
+        return R.layout.mine_activity_params_transfer_change_problem;
     }
 
     @Override

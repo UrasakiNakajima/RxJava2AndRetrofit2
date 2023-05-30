@@ -40,7 +40,7 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
     //    private boolean isRefresh;
 
     override fun initLayoutId(): Int {
-        return R.layout.activity_video_list
+        return R.layout.home_activity_video_list
     }
 
     override fun initData() {

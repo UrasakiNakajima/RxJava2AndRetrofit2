@@ -35,7 +35,7 @@ class FirstPageAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.item_first_page, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.home_item_first_page, parent, false)
         return BodyHolder(view)
     }
 

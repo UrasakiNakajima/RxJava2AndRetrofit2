@@ -42,7 +42,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     private var phoneDevice: String? = null
 
     override fun initLayoutId(): Int {
-        return R.layout.activity_login
+        return R.layout.main_activity_login
     }
 
     override fun initData() {

@@ -40,7 +40,7 @@ class DecimalOperationActivity : BaseRxAppActivity() {
     private var tevDecimalOperationRounding: TextView? = null
     private var tevDecimalOperationRejection: TextView? = null
 
-    override fun initLayoutId() = R.layout.activity_decimal_operation
+    override fun initLayoutId() = R.layout.square_activity_decimal_operation
 
     override fun initData() {
     }

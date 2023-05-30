@@ -57,7 +57,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
 
-    override fun initLayoutId() = R.layout.fragment_mine
+    override fun initLayoutId() = R.layout.mine_fragment_mine
 
     override fun initData() {
     }

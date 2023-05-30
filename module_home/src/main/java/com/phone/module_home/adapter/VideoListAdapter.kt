@@ -34,7 +34,7 @@ class VideoListAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.item_video_list, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.home_item_video_list, parent, false)
         return BodyHolder(view)
     }
 

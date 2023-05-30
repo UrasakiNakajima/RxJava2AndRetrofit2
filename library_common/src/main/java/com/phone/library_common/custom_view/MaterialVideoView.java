@@ -79,7 +79,7 @@ public class MaterialVideoView extends LinearLayout
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
         setBackgroundColor(ResourcesManager.getColor(R.color.color_FF000000));
-        View view = LayoutInflater.from(context).inflate(R.layout.material_video_layout, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.library_material_video_layout, null);
         initView(view);
         setData(url, VIDEO_TYPE_URI);
         addView(view);
