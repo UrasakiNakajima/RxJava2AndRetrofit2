@@ -48,7 +48,7 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
 
     @Override
     protected int initLayoutId() {
-        return R.layout.activity_thread_pool;
+        return R.layout.mine_activity_thread_pool;
     }
 
     @Override

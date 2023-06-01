@@ -34,13 +34,13 @@ class UserBeanAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View
         return if (viewType == TYPE_HEADER) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_user_header, parent, false)
+            view = LayoutInflater.from(context).inflate(R.layout.square_item_user_header, parent, false)
             HeaderHolder(view)
         } else if (viewType == TYPE_FOOTER) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_user_footer, parent, false)
+            view = LayoutInflater.from(context).inflate(R.layout.square_item_user_footer, parent, false)
             FooterHolder(view)
         } else {
-            view = LayoutInflater.from(context).inflate(R.layout.item_user_body, parent, false)
+            view = LayoutInflater.from(context).inflate(R.layout.square_item_user_body, parent, false)
             BodyHolder(view)
         }
     }

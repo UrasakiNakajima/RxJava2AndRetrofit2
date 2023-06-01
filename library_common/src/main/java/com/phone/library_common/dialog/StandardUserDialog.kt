@@ -38,7 +38,7 @@ class StandardUserDialog(val context: Context) {
 
     init {
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.dialog_standard_create_user, null, false)
+            LayoutInflater.from(context).inflate(R.layout.library_dialog_standard_create_user, null, false)
         tevTitle = view.findViewById<View>(R.id.tev_title) as TextView
         edtUserId = view.findViewById<View>(R.id.edt_user_id) as EditText
         edtPassword = view.findViewById<View>(R.id.edt_password) as EditText

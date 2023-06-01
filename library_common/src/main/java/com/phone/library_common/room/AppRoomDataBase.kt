@@ -15,7 +15,7 @@ import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SQLiteDatabaseHook
 import net.sqlcipher.database.SupportFactory
 
-@Database(entities = [Book::class], version = 3)
+@Database(entities = [Book::class], version = 5)
 abstract class AppRoomDataBase : RoomDatabase() {
     //创建DAO的抽象类
     abstract fun bookDao(): BookDao
@@ -39,10 +39,10 @@ abstract class AppRoomDataBase : RoomDatabase() {
 //                database?.execSQL("PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_SHA1")
             }
         }, true)
-        val MIGRATION_2_3 = object : Migration(2, 3) {
+        val MIGRATION_3_5 = object : Migration(3, 5) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                //对Book表增加一个score字段
-                database.execSQL("ALTER TABLE Book ADD COLUMN brief_introduction TEXT NOT NULL 	DEFAULT ''")
+//                //对Book表增加一个score字段
+//                database.execSQL("ALTER TABLE Book ADD COLUMN brief_introduction TEXT NOT NULL 	DEFAULT ''")
             }
         }
 
@@ -74,7 +74,7 @@ abstract class AppRoomDataBase : RoomDatabase() {
                     DATABASE_ENCRYPT_NAME
                 )
                     .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
-                    .addMigrations(MIGRATION_2_3)
+                    .addMigrations(MIGRATION_3_5)
                     .openHelperFactory(factory)
                     .build()
 

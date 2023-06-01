@@ -1,7 +1,5 @@
 package com.phone.module_main.main
 
-import android.content.pm.PackageManager
-import android.content.pm.Signature
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -11,9 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
-import com.phone.library_common.custom_view.LazyViewPager
 import com.phone.library_common.custom_view.MineLazyViewPager
-import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_main.BuildConfig
 import com.phone.module_main.R
@@ -43,7 +39,7 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
     private val fragmentList: MutableList<Fragment> = ArrayList()
 
     override fun initLayoutId(): Int {
-        return R.layout.activity_main
+        return R.layout.main_activity_main
     }
 
     override fun initData() {

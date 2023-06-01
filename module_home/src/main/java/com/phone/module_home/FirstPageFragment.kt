@@ -60,7 +60,7 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
         Manifest.permission.ACCESS_FINE_LOCATION
     )
 
-    override fun initLayoutId() = R.layout.fragment_first_page
+    override fun initLayoutId() = R.layout.home_fragment_first_page
 
     override fun initData() {
         isRefresh = true

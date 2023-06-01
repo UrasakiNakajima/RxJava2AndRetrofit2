@@ -33,7 +33,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_mine, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.mine_item_mine, parent, false)
         return BodyHolder(view)
     }
 

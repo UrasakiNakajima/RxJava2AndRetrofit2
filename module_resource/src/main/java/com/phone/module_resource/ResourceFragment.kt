@@ -11,7 +11,7 @@ import com.phone.library_common.adapter.TabNavigatorAdapter
 import com.phone.library_common.base.BaseMvvmRxFragment
 import com.phone.library_common.bean.TabBean
 import com.phone.library_common.manager.*
-import com.phone.module_resource.databinding.FragmentResourceBinding
+import com.phone.module_resource.databinding.ResourceFragmentResourceBinding
 import com.phone.module_resource.fragment.AndroidAndJsFragment
 import com.phone.module_resource.fragment.SubResourceFragment
 import com.phone.module_resource.view.IResourceView
@@ -20,13 +20,13 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 
 @Route(path = "/module_resource/resource")
-class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResourceBinding>(),
+class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, ResourceFragmentResourceBinding>(),
     IResourceView {
 
     private val TAG = ResourceFragment::class.java.simpleName
     private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
-    override fun initLayoutId() = R.layout.fragment_resource
+    override fun initLayoutId() = R.layout.resource_fragment_resource
 
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity

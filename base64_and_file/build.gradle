@@ -53,7 +53,8 @@ android {
             manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
         }
     }
-
+    //给Module 内的资源名增加前缀, 避免资源名冲突
+    resourcePrefix "base64_"
 }
 
 dependencies {

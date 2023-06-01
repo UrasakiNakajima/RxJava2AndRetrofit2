@@ -17,7 +17,7 @@ import com.phone.library_common.bean.*
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.manager.*
 import com.phone.library_common.service.ISquareService
-import com.phone.module_square.databinding.ActivitySquareBinding
+import com.phone.module_square.databinding.SquareActivitySquareBinding
 import com.phone.module_square.ui.*
 import com.phone.module_square.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * introduce :
  */
 class SquareActivity :
-    BaseMvvmAppRxActivity<SquareViewModelImpl, ActivitySquareBinding>() {
+    BaseMvvmAppRxActivity<SquareViewModelImpl, SquareActivitySquareBinding>() {
 
     companion object {
         private val TAG: String = SquareActivity::class.java.simpleName
@@ -48,7 +48,7 @@ class SquareActivity :
         Manifest.permission.READ_PHONE_STATE
     )
 
-    override fun initLayoutId() = R.layout.activity_square
+    override fun initLayoutId() = R.layout.square_activity_square
 
     override fun initViewModel() =
         ViewModelProvider(mRxAppCompatActivity).get(SquareViewModelImpl::class.java)

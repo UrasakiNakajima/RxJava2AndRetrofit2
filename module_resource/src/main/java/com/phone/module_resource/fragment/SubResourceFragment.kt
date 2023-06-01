@@ -17,14 +17,14 @@ import com.phone.library_common.manager.RetrofitManager
 import com.phone.library_common.manager.ScreenManager
 import com.phone.library_common.ui.WebViewActivity
 import com.phone.module_resource.R
-import com.phone.module_resource.databinding.FragmentResourceSubBinding
+import com.phone.module_resource.databinding.ResourceFragmentResourceSubBinding
 import com.phone.module_resource.view.ISubResourceView
 import com.phone.module_square.view_model.SubResourceViewModelImpl
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 class SubResourceFragment :
-    BaseMvvmRxFragment<SubResourceViewModelImpl, FragmentResourceSubBinding>(),
+    BaseMvvmRxFragment<SubResourceViewModelImpl, ResourceFragmentResourceSubBinding>(),
     ISubResourceView {
 
     private val TAG = SubResourceFragment::class.java.simpleName
@@ -44,7 +44,7 @@ class SubResourceFragment :
     private var tabId: Int = 0
     private var pageNum: Int = 1
 
-    override fun initLayoutId() = R.layout.fragment_resource_sub
+    override fun initLayoutId() = R.layout.resource_fragment_resource_sub
 
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity

@@ -10,7 +10,7 @@ import com.phone.library_common.adapter.TabNavigatorAdapter
 import com.phone.library_common.base.BaseMvvmAppRxActivity
 import com.phone.library_common.bean.TabBean
 import com.phone.library_common.manager.*
-import com.phone.module_resource.databinding.ActivityResourceBinding
+import com.phone.module_resource.databinding.ResourceActivityResourceBinding
 import com.phone.module_resource.fragment.AndroidAndJsFragment
 import com.phone.module_resource.fragment.SubResourceFragment
 import com.phone.module_resource.view.IResourceView
@@ -19,13 +19,13 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 
 class ResourceActivity :
-    BaseMvvmAppRxActivity<ResourceViewModelImpl, ActivityResourceBinding>(),
+    BaseMvvmAppRxActivity<ResourceViewModelImpl, ResourceActivityResourceBinding>(),
     IResourceView {
 
     private val TAG = ResourceActivity::class.java.simpleName
     private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
-    override fun initLayoutId() = R.layout.activity_resource
+    override fun initLayoutId() = R.layout.resource_activity_resource
 
     override fun initViewModel() =
         ViewModelProvider(mRxAppCompatActivity).get(ResourceViewModelImpl::class.java)

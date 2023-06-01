@@ -21,7 +21,7 @@ public class CustomViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_view);
+        setContentView(R.layout.main_activity_custom_view);
         initViews();
 
         EventScheduleListBean.DataDTO.RowsDTO rowsDTO = new EventScheduleListBean.DataDTO.RowsDTO();

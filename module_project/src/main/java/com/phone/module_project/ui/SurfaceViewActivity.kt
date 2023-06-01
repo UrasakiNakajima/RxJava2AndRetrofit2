@@ -76,7 +76,7 @@ class SurfaceViewActivity : BaseRxAppActivity() {
     //    private var isStopTimerImvPlay: Boolean = false
     private var disposable: Disposable? = null
 
-    override fun initLayoutId() = R.layout.activity_surface_view
+    override fun initLayoutId() = R.layout.project_activity_surface_view
 
     override fun initData() {
 //        playProgress = 0

@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.android_and_js.databinding.ActivityAndroidAndJsBinding
+import com.phone.android_and_js.databinding.JsActivityAndroidAndJsBinding
 import com.phone.library_common.base.BaseBindingRxAppActivity
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 
 @Route(path = "/android_and_js/ui/android_and_js")
-class AndroidAndJsActivity : BaseBindingRxAppActivity<ActivityAndroidAndJsBinding>() {
+class AndroidAndJsActivity : BaseBindingRxAppActivity<JsActivityAndroidAndJsBinding>() {
 
     companion object {
         private val TAG = AndroidAndJsActivity::class.java.simpleName
@@ -26,7 +26,7 @@ class AndroidAndJsActivity : BaseBindingRxAppActivity<ActivityAndroidAndJsBindin
 
     private var webSettings: WebSettings? = null
 
-    override fun initLayoutId(): Int = R.layout.activity_android_and_js
+    override fun initLayoutId(): Int = R.layout.js_activity_android_and_js
 
     override fun initData() {
     }

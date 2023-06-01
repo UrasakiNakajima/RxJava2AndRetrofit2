@@ -16,12 +16,12 @@ import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_square.R
 import com.phone.module_square.bean.ProvincesBean
-import com.phone.module_square.databinding.ActivityPickerViewBinding
+import com.phone.module_square.databinding.SquareActivityPickerViewBinding
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import org.json.JSONArray
 
-class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>() {
+class PickerViewActivity : BaseBindingRxAppActivity<SquareActivityPickerViewBinding>() {
 
     companion object {
         @JvmStatic
@@ -39,7 +39,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
     // where this is an Activity or Fragment instance
     private var rxPermissions: RxPermissions? = null
 
-    override fun initLayoutId() = R.layout.activity_picker_view
+    override fun initLayoutId() = R.layout.square_activity_picker_view
 
     override fun initData() {
         bodyParams = HashMap()

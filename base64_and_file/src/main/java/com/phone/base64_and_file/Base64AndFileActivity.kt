@@ -87,7 +87,7 @@ class Base64AndFileActivity :
         Manifest.permission.READ_PHONE_STATE
     )
 
-    override fun initLayoutId() = R.layout.activity_base64_and_file
+    override fun initLayoutId() = R.layout.base64_activity_base64_and_file
 
     override fun initData() {
         handler = Handler(Looper.getMainLooper())

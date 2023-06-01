@@ -7,7 +7,7 @@ import com.phone.library_common.base.BaseBindingDialogFragment
 import com.phone.library_common.bean.EventScheduleListBean
 import com.phone.library_common.callback.OnDialogCallback
 import com.phone.library_common.custom_view.EventScheduleLayout
-import com.phone.library_common.databinding.DialogFragmentEventScheduleBinding
+import com.phone.library_common.databinding.LibraryDialogFragmentEventScheduleBinding
 
 /**
  * author : Urasaki
@@ -17,7 +17,7 @@ import com.phone.library_common.databinding.DialogFragmentEventScheduleBinding
  * version: 1.0
  */
 class EventScheduleDialogFragment :
-    BaseBindingDialogFragment<DialogFragmentEventScheduleBinding>() {
+    BaseBindingDialogFragment<LibraryDialogFragmentEventScheduleBinding>() {
 
     private val TAG = EventScheduleDialogFragment::class.java.simpleName
 
@@ -77,7 +77,7 @@ class EventScheduleDialogFragment :
         }
     }
 
-    override fun initLayoutId(): Int = R.layout.dialog_fragment_event_schedule
+    override fun initLayoutId(): Int = R.layout.library_dialog_fragment_event_schedule
 
     override fun initData() {
     }

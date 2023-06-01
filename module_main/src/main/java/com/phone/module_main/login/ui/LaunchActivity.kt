@@ -55,7 +55,7 @@ class LaunchActivity : BaseRxAppActivity() {
     val animatorSet3 = AnimatorSet()
 
     override fun initLayoutId(): Int {
-        return R.layout.activity_launch
+        return R.layout.main_activity_launch
     }
 
     override fun initData() {

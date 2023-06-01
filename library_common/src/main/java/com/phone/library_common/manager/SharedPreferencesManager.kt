@@ -17,20 +17,20 @@ object SharedPreferencesManager {
     val SHARED_NAME = "shared_app"
 
     @JvmStatic
-    fun put(key: String, any: Any) {
+    fun put(key: String, defaultAny: Any) {
         val sp = BaseApplication.instance().getSharedPreferences(SHARED_NAME, MODE)
         val editor: SharedPreferences.Editor = sp.edit()
 
-        if (any is String) {
-            editor.putString(key, any)
-        } else if (any is Int) {
-            editor.putInt(key, any)
-        } else if (any is Long) {
-            editor.putLong(key, any)
-        } else if (any is Float) {
-            editor.putFloat(key, any)
-        } else if (any is Boolean) {
-            editor.putBoolean(key, any)
+        if (defaultAny is String) {
+            editor.putString(key, defaultAny)
+        } else if (defaultAny is Int) {
+            editor.putInt(key, defaultAny)
+        } else if (defaultAny is Long) {
+            editor.putLong(key, defaultAny)
+        } else if (defaultAny is Float) {
+            editor.putFloat(key, defaultAny)
+        } else if (defaultAny is Boolean) {
+            editor.putBoolean(key, defaultAny)
         }
         editor.apply()
     }

@@ -55,7 +55,7 @@ class VideoViewActivity : BaseRxAppActivity() {
     private var timer: Timer? = null
 
     override fun initLayoutId(): Int {
-        return R.layout.activity_video_view
+        return R.layout.project_activity_video_view
     }
 
     override fun initData() {
