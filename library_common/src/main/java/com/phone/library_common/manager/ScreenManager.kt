@@ -31,7 +31,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun dpToPx(dpValue: Float): Int {
-        val scale = BaseApplication.get().resources.displayMetrics.density
+        val scale = BaseApplication.instance().resources.displayMetrics.density
         return (dpValue * scale + 0.5f).toInt()
     }
 
@@ -40,7 +40,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun pxToDp(pxValue: Float): Int {
-        val scale = BaseApplication.get().resources.displayMetrics.density
+        val scale = BaseApplication.instance().resources.displayMetrics.density
         return (pxValue / scale + 0.5f).toInt()
     }
 
@@ -49,7 +49,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun pxToSp(pxValue: Float): Int {
-        val fontScale = BaseApplication.get().resources.displayMetrics.scaledDensity
+        val fontScale = BaseApplication.instance().resources.displayMetrics.scaledDensity
         return (pxValue / fontScale + 0.5f).toInt()
     }
 
@@ -58,7 +58,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun spToPx(spValue: Float): Int {
-        val fontScale = BaseApplication.get().resources.displayMetrics.scaledDensity
+        val fontScale = BaseApplication.instance().resources.displayMetrics.scaledDensity
         return (spValue * fontScale + 0.5f).toInt()
     }
 
@@ -67,7 +67,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun getDimenDp(dpValue: Int): Int {
-        return pxToDp(BaseApplication.get().resources.getDimension(dpValue))
+        return pxToDp(BaseApplication.instance().resources.getDimension(dpValue))
     }
 
     /**
@@ -75,7 +75,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun getDimenPx(dpValue: Int): Int {
-        return BaseApplication.get().resources.getDimension(dpValue).toInt()
+        return BaseApplication.instance().resources.getDimension(dpValue).toInt()
     }
 
     /**
@@ -83,7 +83,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun getDimenSp(spValue: Int): Int {
-        return pxToSp(BaseApplication.get().resources.getDimension(spValue))
+        return pxToSp(BaseApplication.instance().resources.getDimension(spValue))
     }
 
     /**
@@ -91,7 +91,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun getScreenHeight(): Int {
-        return BaseApplication.get().resources.displayMetrics.heightPixels
+        return BaseApplication.instance().resources.displayMetrics.heightPixels
     }
 
     /**
@@ -99,7 +99,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun getScreenWidth(): Int {
-        return BaseApplication.get().resources.displayMetrics.widthPixels
+        return BaseApplication.instance().resources.displayMetrics.widthPixels
     }
 
     /**
@@ -176,12 +176,12 @@ object ScreenManager {
     private fun getInternalDimensionSize(key: String): Int {
         var result = 0
         try {
-            val resourceId = BaseApplication.get().resources.getIdentifier(key, "dimen", "android")
+            val resourceId = BaseApplication.instance().resources.getIdentifier(key, "dimen", "android")
             if (resourceId > 0) {
                 result = Math.round(
-                    BaseApplication.get().resources.getDimensionPixelSize(resourceId) *
+                    BaseApplication.instance().resources.getDimensionPixelSize(resourceId) *
                             Resources.getSystem().displayMetrics.density /
-                            BaseApplication.get().resources.displayMetrics.density
+                            BaseApplication.instance().resources.displayMetrics.density
                 )
             }
         } catch (ignored: NotFoundException) {

@@ -45,7 +45,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
         super.onCreate(savedInstanceState)
         mRxAppCompatActivity = this
         mBaseApplication = application as BaseApplication
-        mActivityPageManager = ActivityPageManager.get()
+        mActivityPageManager = ActivityPageManager.instance()
         mActivityPageManager?.addActivity(this)
 
         mDatabind = DataBindingUtil.setContentView(this, initLayoutId())
@@ -324,7 +324,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
             }
         }
         LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
-        val crashHandlerManager = CrashHandlerManager.get()
+        val crashHandlerManager = CrashHandlerManager.instance()
         crashHandlerManager?.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
         try {
             Thread.sleep(1000)

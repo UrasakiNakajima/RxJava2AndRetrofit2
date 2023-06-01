@@ -12,9 +12,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.JsbridgeActivity"
-            android:launchMode="singleTask"
+            android:name=".ui.New2Activity"
             android:exported="false" />
+        <activity
+            android:name=".ui.NewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.JsbridgeActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.KotlinCoroutineActivity"
             android:exported="false"

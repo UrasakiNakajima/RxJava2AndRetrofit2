@@ -10,7 +10,7 @@ class ResourceModelImpl : IResourceModel {
     private val TAG = ResourceModelImpl::class.java.simpleName
 
     override fun resourceTabData(): Call<ResponseBody> {
-        return RetrofitManager.get().mRetrofit
+        return RetrofitManager.instance().mRetrofit
             .create(ResourceRequest::class.java)
             .getResourceTabData()
     }

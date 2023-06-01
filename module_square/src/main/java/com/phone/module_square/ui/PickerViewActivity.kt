@@ -96,7 +96,10 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
 
                         // 所有的权限都授予
                         LogManager.i(TAG, "所有的权限都授予")
-                        LogManager.i(TAG, "用户已经同意该权限 permission.name*****" + permission.name)
+                        LogManager.i(
+                            TAG,
+                            "用户已经同意该权限 permission.name*****" + permission.name
+                        )
 
 //                        Intent bindIntent = new Intent(this, Base64AndFileService.class)
 //                        // 绑定服务和活动，之后活动就可以去调服务的方法了
@@ -184,7 +187,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<ActivityPickerViewBinding>()
          * 关键逻辑在于循环体
          *
          */
-        val JsonData = GetJsonDataManager().getJson("province.json") //获取assets目录下的json文件数据
+        val JsonData = GetJsonDataManager.getJson("province.json") //获取assets目录下的json文件数据
         val jsonBean = parseData(JsonData) //用Gson 转成实体
         /**
          * 添加省份数据

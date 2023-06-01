@@ -66,13 +66,13 @@ class SquareActivity :
                 LogManager.i(TAG, "onChanged*****dataxRxActivitySuccess")
                 squareDataSuccess(it)
             } else {
-                squareDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
+                squareDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.dataxRxActivityError.observe(this, {
             LogManager.i(TAG, "onChanged*****dataxRxActivityError")
             squareDataError(
-                it ?: BaseApplication.get().resources.getString(R.string.no_data_available)
+                it ?: BaseApplication.instance().resources.getString(R.string.no_data_available)
             )
         })
     }
@@ -210,7 +210,7 @@ class SquareActivity :
      * 請求權限，RxFragment里需要的时候直接调用就行了
      */
     private fun initRxPermissions(number: Int) {
-        val rxPermissionsManager = RxPermissionsManager.get()
+        val rxPermissionsManager = RxPermissionsManager.instance()
         rxPermissionsManager.initRxPermissions(
             this,
             permissions,
@@ -235,7 +235,7 @@ class SquareActivity :
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } catch (e: Exception) {
-                            ExceptionManager.get().throwException(e)
+                            ExceptionManager.instance().throwException(e)
                         }
                     }
                 }
@@ -289,7 +289,7 @@ class SquareActivity :
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.squareData2(this, currentPage)
         } else {
-            squareDataError(BaseApplication.get().resources.getString(R.string.please_check_the_network_connection))
+            squareDataError(BaseApplication.instance().resources.getString(R.string.please_check_the_network_connection))
         }
 
         LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())

@@ -42,7 +42,7 @@ class CompressedPictureThreadPool(
             base64AndFileBean.file = file
 
             //再压缩本地图片
-            BitmapManager.initCompressorIO(BaseApplication.get(), file, {
+            BitmapManager.initCompressorIO(BaseApplication.instance(), file, {
                 LogManager.i(
                     TAG,
                     "initCompressorIO it*****${it.name}"

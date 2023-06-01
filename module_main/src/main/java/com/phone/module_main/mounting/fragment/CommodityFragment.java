@@ -81,7 +81,19 @@ public class CommodityFragment extends BaseBindingRxFragment<MainFragmentCommodi
                 + "处处带来改变。循环利用，" +
                 "打开新思路。力保个人信息安全，" +
                 "这很 iPhone", 5900, 1000));
-        commodityBeanList.add(new CommodityBean(0, commodity + "14", "精心设计，"
+        commodityBeanList.add(new CommodityBean(0, commodity + "11", "精心设计，"
+                + "处处带来改变。循环利用，" +
+                "打开新思路。力保个人信息安全，" +
+                "这很 iPhone", 5900, 1000));
+        commodityBeanList.add(new CommodityBean(0, commodity + "11", "精心设计，"
+                + "处处带来改变。循环利用，" +
+                "打开新思路。力保个人信息安全，" +
+                "这很 iPhone", 5900, 1000));
+        commodityBeanList.add(new CommodityBean(0, commodity + "12", "精心设计，"
+                + "处处带来改变。循环利用，" +
+                "打开新思路。力保个人信息安全，" +
+                "这很 iPhone", 5900, 1000));
+        commodityBeanList.add(new CommodityBean(0, commodity + "12", "精心设计，"
                 + "处处带来改变。循环利用，" +
                 "打开新思路。力保个人信息安全，" +
                 "这很 iPhone", 5900, 1000));

@@ -30,13 +30,17 @@ class ReadAndWriteManager {
      */
     companion object {
         private var instance: ReadAndWriteManager? = null
-
-        //       Synchronized添加后就是线程安全的的懒汉模式
-        @Synchronized
-        fun get(): ReadAndWriteManager? {
-            if (instance == null) {
-                instance = ReadAndWriteManager()
+            get() {
+                if (field == null) {
+                    field = ReadAndWriteManager()
+                }
+                return field
             }
+
+        //Synchronized添加后就是线程安全的的懒汉模式
+        @Synchronized
+        @JvmStatic
+        fun instance(): ReadAndWriteManager? {
             return instance
         }
     }
@@ -61,7 +65,7 @@ class ReadAndWriteManager {
                 TAG,
                 "Observable thread is*****" + Thread.currentThread().name
             )
-            val FILEPATH = (BaseApplication.get().externalCacheDir
+            val FILEPATH = (BaseApplication.instance().externalCacheDir
                 .toString() + File.separator
                     + "Mine")
             val dirs = File(FILEPATH)
@@ -109,7 +113,7 @@ class ReadAndWriteManager {
     fun readExternal(filename: String): String {
         val stringBuilder = StringBuilder("")
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
-            BaseApplication.get().externalCacheDir?.let {
+            BaseApplication.instance().externalCacheDir?.let {
                 //打开文件输入流
                 val inputStream = FileInputStream(it.absolutePath + File.separator + filename)
                 val buffer = ByteArray(1024)

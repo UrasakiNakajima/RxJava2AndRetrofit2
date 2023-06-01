@@ -39,12 +39,12 @@ class ResourceActivity :
                 LogManager.i(TAG, "onChanged*****tabRxActivitySuccess")
                 resourceTabDataSuccess(it)
             } else {
-                resourceTabDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
+                resourceTabDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.tabRxActivityError.observe(this, {
             LogManager.i(TAG, "onChanged*****tabRxActivityError")
-            resourceTabDataError(it ?: BaseApplication.get().resources.getString(R.string.no_data_available))
+            resourceTabDataError(it ?: BaseApplication.instance().resources.getString(R.string.no_data_available))
         })
     }
 

@@ -45,13 +45,17 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
      */
     companion object {
         private var instance: CrashHandlerManager? = null
-
-        //       Synchronized添加后就是线程安全的的懒汉模式
-        @Synchronized
-        fun get(): CrashHandlerManager? {
-            if (instance == null) {
-                instance = CrashHandlerManager()
+            get() {
+                if (field == null) {
+                    field = CrashHandlerManager()
+                }
+                return field
             }
+
+        //Synchronized添加后就是线程安全的的懒汉模式
+        @Synchronized
+        @JvmStatic
+        fun instance(): CrashHandlerManager? {
             return instance
         }
     }
@@ -72,7 +76,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
             }
 
             //结束程序
-            ActivityPageManager.get().exitApp()
+            ActivityPageManager.instance().exitApp()
         }
     }
 
@@ -121,7 +125,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
         if (crFiles != null && crFiles.size > 0) {
             val sortedFiles = TreeSet(Arrays.asList(*crFiles))
             for (fileName in sortedFiles) {
-                val cr = File(BaseApplication.get().filesDir, fileName)
+                val cr = File(BaseApplication.instance().filesDir, fileName)
                 postReport(cr)
                 //cr.delete()
             }
@@ -135,7 +139,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
     private val CRASH_REPORTER_EXTENSION = ".cr"
 
     private fun getCrashReportFiles(): Array<String>? {
-        val filesDir = BaseApplication.get().externalCacheDir
+        val filesDir = BaseApplication.instance().externalCacheDir
         filesDir?.let {
             val filter =
                 FilenameFilter { dir, filename -> filename.endsWith(CRASH_REPORTER_EXTENSION) }
@@ -175,7 +179,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
             val time = formatdate.format(Date(timestamp))
             val fileName = "crash-$time-$timestamp.txt"
             val path =
-                BaseApplication.get().externalCacheDir.toString() + "/crash_xy/" //     /sdcard/crash/crash-time-timestamp.log
+                BaseApplication.instance().externalCacheDir.toString() + "/crash_xy/" //     /sdcard/crash/crash-time-timestamp.log
             val dirs = File(path)
             if (!dirs.exists()) {
                 dirs.mkdirs()
@@ -223,7 +227,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
             val time = formatdate.format(Date(timestamp))
             val fileName = "aCrash-$time-$timestamp.txt"
             val path =
-                BaseApplication.get().externalCacheDir.toString() + "/aCrash_xy/" //     /sdcard/crash/crash-time-timestamp.log
+                BaseApplication.instance().externalCacheDir.toString() + "/aCrash_xy/" //     /sdcard/crash/crash-time-timestamp.log
             val dirs = File(path)
             if (!dirs.exists()) {
                 dirs.mkdirs()
@@ -251,9 +255,9 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
      */
     private fun collectDeviceInfo() {
         try {
-            val packageManager = BaseApplication.get().packageManager
+            val packageManager = BaseApplication.instance().packageManager
             val packageInfo = packageManager.getPackageInfo(
-                BaseApplication.get().packageName,
+                BaseApplication.instance().packageName,
                 PackageManager.GET_ACTIVITIES
             )
             if (packageInfo != null) {

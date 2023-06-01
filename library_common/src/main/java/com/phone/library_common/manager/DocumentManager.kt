@@ -30,8 +30,8 @@ object DocumentManager {
         if (sExtSdCardPaths.size > 0) {
             return sExtSdCardPaths.toTypedArray()
         }
-        for (file in BaseApplication.get().getExternalFilesDirs("external")) {
-            if (file != null && file != BaseApplication.get().getExternalFilesDir("external")) {
+        for (file in BaseApplication.instance().getExternalFilesDirs("external")) {
+            if (file != null && file != BaseApplication.instance().getExternalFilesDir("external")) {
                 val index = file.absolutePath.lastIndexOf("/Android/data")
                 if (index < 0) {
                     i(TAG, "Unexpected external file dir: " + file.absolutePath)
@@ -119,7 +119,7 @@ object DocumentManager {
             originalDirectory = true
             //continue
         }
-        val `as` = PreferenceManager.getDefaultSharedPreferences(BaseApplication.get()).getString(
+        val `as` = PreferenceManager.getDefaultSharedPreferences(BaseApplication.instance()).getString(
             baseFolder,
             null
         )
@@ -130,7 +130,7 @@ object DocumentManager {
         }
 
         // start with root of SD card and then parse through document tree.
-        var document = DocumentFile.fromTreeUri(BaseApplication.get(), treeUri)
+        var document = DocumentFile.fromTreeUri(BaseApplication.instance(), treeUri)
         if (originalDirectory) return document
         relativePath?.let {
             val parts = relativePath.split("/").toTypedArray()
@@ -218,7 +218,7 @@ object DocumentManager {
                         res = it.renameTo(dest.name)
                     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         res = DocumentsContract.moveDocument(
-                            BaseApplication.get().contentResolver,
+                            BaseApplication.instance().contentResolver,
                             srcDoc.uri,
                             srcDoc.parentFile!!.uri,
                             destDoc!!.uri
@@ -239,7 +239,7 @@ object DocumentManager {
             if (!canWrite2(destFile) && isOnExtSdCard(destFile)) {
                 val file = getDocumentFile(destFile, false)
                 if (file != null && file.canWrite()) {
-                    `in` = BaseApplication.get().contentResolver.openInputStream(file.uri)
+                    `in` = BaseApplication.instance().contentResolver.openInputStream(file.uri)
                 }
             } else {
                 `in` = FileInputStream(destFile)
@@ -257,7 +257,7 @@ object DocumentManager {
             if (!canWrite2(destFile) && isOnExtSdCard(destFile)) {
                 val file = getDocumentFile(destFile, false)
                 if (file != null && file.canWrite()) {
-                    out = BaseApplication.get().contentResolver.openOutputStream(file.uri)
+                    out = BaseApplication.instance().contentResolver.openOutputStream(file.uri)
                 }
             } else {
                 out = FileOutputStream(destFile)
@@ -270,9 +270,9 @@ object DocumentManager {
 
     @JvmStatic
     fun saveTreeUri(rootPath: String, uri: Uri): Boolean {
-        val file = DocumentFile.fromTreeUri(BaseApplication.get(), uri)
+        val file = DocumentFile.fromTreeUri(BaseApplication.instance(), uri)
         if (file != null && file.canWrite()) {
-            val perf = PreferenceManager.getDefaultSharedPreferences(BaseApplication.get())
+            val perf = PreferenceManager.getDefaultSharedPreferences(BaseApplication.instance())
             perf.edit().putString(rootPath, uri.toString()).apply()
             return true
         } else {
@@ -289,13 +289,13 @@ object DocumentManager {
                 val documentFile = getDocumentFile(root, true)
                 documentFile == null || !documentFile.canWrite()
             } else {
-                val perf = PreferenceManager.getDefaultSharedPreferences(BaseApplication.get())
+                val perf = PreferenceManager.getDefaultSharedPreferences(BaseApplication.instance())
                 val documentUri = perf.getString(rootPath, "")
                 if (documentUri == null || documentUri.isEmpty()) {
                     true
                 } else {
                     val file =
-                        DocumentFile.fromTreeUri(BaseApplication.get(), Uri.parse(documentUri))
+                        DocumentFile.fromTreeUri(BaseApplication.instance(), Uri.parse(documentUri))
                     !(file != null && file.canWrite())
                 }
             }

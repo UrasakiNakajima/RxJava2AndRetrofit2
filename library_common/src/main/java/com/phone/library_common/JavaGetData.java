@@ -11,7 +11,7 @@ public class JavaGetData {
     }
 
     public static void loadData() {
-        SQLiteDatabase.loadLibs(BaseApplication.get());
+        SQLiteDatabase.loadLibs(BaseApplication.instance());
     }
 
     public static native String nativeAesKey(Context context, boolean isRelease);

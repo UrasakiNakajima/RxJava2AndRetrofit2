@@ -38,13 +38,13 @@ class ProjectActivity :
                 LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
                 projectTabDataSuccess(it)
             } else {
-                projectTabDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
+                projectTabDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.tabRxActivityError.observe(this, {
             LogManager.i(TAG, "onChanged*****tabRxFragmentError")
             projectTabDataError(
-                it ?: BaseApplication.get().resources.getString(R.string.no_data_available)
+                it ?: BaseApplication.instance().resources.getString(R.string.no_data_available)
             )
         })
     }

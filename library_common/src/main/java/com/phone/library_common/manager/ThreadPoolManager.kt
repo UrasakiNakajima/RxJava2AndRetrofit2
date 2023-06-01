@@ -16,14 +16,17 @@ class ThreadPoolManager {
     companion object {
         private val TAG = ThreadPoolManager::class.java.simpleName
         private var instance: ThreadPoolManager? = null
-
-        //       Synchronized添加后就是线程安全的的懒汉模式
-        @JvmStatic
-        @Synchronized
-        fun get(): ThreadPoolManager {
-            if (instance == null) {
-                instance = ThreadPoolManager()
+            get() {
+                if (field == null) {
+                    field = ThreadPoolManager()
+                }
+                return field
             }
+
+        //Synchronized添加后就是线程安全的的懒汉模式
+        @Synchronized
+        @JvmStatic
+        fun get(): ThreadPoolManager {
             return instance!!
         }
     }

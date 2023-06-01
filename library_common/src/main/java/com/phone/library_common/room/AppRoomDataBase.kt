@@ -3,16 +3,19 @@ package com.phone.library_common.room
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.BuildConfig
 import com.phone.library_common.JavaGetData
+import com.phone.library_common.manager.ActivityPageManager
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.SharedPreferencesManager
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SQLiteDatabaseHook
 import net.sqlcipher.database.SupportFactory
 
-@Database(entities = [Book::class], version = 2)
+@Database(entities = [Book::class], version = 3)
 abstract class AppRoomDataBase : RoomDatabase() {
     //创建DAO的抽象类
     abstract fun bookDao(): BookDao
@@ -21,9 +24,9 @@ abstract class AppRoomDataBase : RoomDatabase() {
         private val TAG = AppRoomDataBase::class.java.simpleName
 
         val DATABASE_ENCRYPT_KEY =
-            JavaGetData.nativeDatabaseEncryptKey(BaseApplication.get(), BuildConfig.IS_RELEASE)
+            JavaGetData.nativeDatabaseEncryptKey(BaseApplication.instance(), BuildConfig.IS_RELEASE)
         val DATABASE_DECRYPT_KEY =
-            JavaGetData.nativeDatabaseEncryptKey(BaseApplication.get(), BuildConfig.IS_RELEASE)
+            JavaGetData.nativeDatabaseEncryptKey(BaseApplication.instance(), BuildConfig.IS_RELEASE)
         val passphrase = SQLiteDatabase.getBytes(DATABASE_ENCRYPT_KEY.toCharArray())
         val factory = SupportFactory(passphrase, object : SQLiteDatabaseHook {
             override fun preKey(database: SQLiteDatabase?) {
@@ -36,29 +39,27 @@ abstract class AppRoomDataBase : RoomDatabase() {
 //                database?.execSQL("PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_SHA1")
             }
         }, true)
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //对Book表增加一个score字段
+                database.execSQL("ALTER TABLE Book ADD COLUMN brief_introduction TEXT NOT NULL 	DEFAULT ''")
+            }
+        }
 
-
-//        val MIGRATION_2_3 = object : Migration(2, 3) {
-//            override fun migrate(database: SupportSQLiteDatabase) {
-//                //对Book表增加一个score字段
-//                database.execSQL("ALTER TABLE Book ADD COLUMN brief_introduction TEXT NOT NULL 	DEFAULT ''")
-//            }
-//        }
-
-        const val DATABASE_NAME = "simple_app.db"
-        const val DATABASE_ENCRYPT_NAME = "simple_encrypt_app.db"
-        const val DATABASE_DECRYPT_NAME = "simple_decrypt_app.db"
+        const val DATABASE_NAME = "book_app.db"
+        const val DATABASE_ENCRYPT_NAME = "book_encrypt_app.db"
+        const val DATABASE_DECRYPT_NAME = "book_decrypt_app.db"
 
 
         @Volatile
-        private var databaseInstance: AppRoomDataBase? = null
+        private var instance: AppRoomDataBase? = null
 
         @Synchronized
         @JvmStatic
-        fun get(): AppRoomDataBase {
-            if (databaseInstance == null) {
+        fun instance(): AppRoomDataBase {
+            if (instance == null) {
 //                databaseInstance = Room.databaseBuilder(
-//                    BaseApplication.get(),
+//                    BaseApplication.instance(),
 //                    AppRoomDataBase::class.java,
 //                    DATABASE_NAME
 //                )
@@ -67,13 +68,13 @@ abstract class AppRoomDataBase : RoomDatabase() {
 //                    .build()
 
 
-                databaseInstance = Room.databaseBuilder(
-                    BaseApplication.get(),
+                instance = Room.databaseBuilder(
+                    BaseApplication.instance(),
                     AppRoomDataBase::class.java,
                     DATABASE_ENCRYPT_NAME
                 )
                     .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
-//                    .addMigrations(MIGRATION_2_3)
+                    .addMigrations(MIGRATION_2_3)
                     .openHelperFactory(factory)
                     .build()
 
@@ -87,7 +88,7 @@ abstract class AppRoomDataBase : RoomDatabase() {
                     SharedPreferencesManager.put("dataEncryptTimes", "1")
                 }
             }
-            return databaseInstance!!
+            return instance!!
         }
 
 
@@ -100,7 +101,7 @@ abstract class AppRoomDataBase : RoomDatabase() {
         @JvmStatic
         fun encrypt(encryptedName: String, name: String, key: String) {
             try {
-                val databaseFile = BaseApplication.get().getDatabasePath(name)
+                val databaseFile = BaseApplication.instance().getDatabasePath(name)
                 LogManager.i(TAG, "databaseFile*****${databaseFile.absolutePath}")
                 val database: SQLiteDatabase =
                     SQLiteDatabase.openOrCreateDatabase(databaseFile, "", null) //打开要加密的数据库
@@ -108,7 +109,7 @@ abstract class AppRoomDataBase : RoomDatabase() {
                 /*String passwordString = "123456"; //只能对已加密的数据库修改密码，且无法直接修改为“”或null的密码
                 database.changePassword(passwordString.toCharArray());*/
                 val encrypteddatabaseFile =
-                    BaseApplication.get().getDatabasePath(encryptedName) //新建加密后的数据库文件
+                    BaseApplication.instance().getDatabasePath(encryptedName) //新建加密后的数据库文件
                 LogManager.i(TAG, "encrypteddatabaseFile*****${encrypteddatabaseFile.absolutePath}")
                 //deleteDatabase(SDcardPath + encryptedName);
 
@@ -144,10 +145,11 @@ abstract class AppRoomDataBase : RoomDatabase() {
         @JvmStatic
         fun decrypt(decryptedName: String, name: String, key: String) {
             try {
-                val databaseFile = BaseApplication.get().getDatabasePath(name)
+                val databaseFile = BaseApplication.instance().getDatabasePath(name)
                 val database: SQLiteDatabase =
                     SQLiteDatabase.openOrCreateDatabase(databaseFile, key, null)
-                val decryptedDatabaseFile = BaseApplication.get().getDatabasePath(decryptedName)
+                val decryptedDatabaseFile =
+                    BaseApplication.instance().getDatabasePath(decryptedName)
                 //deleteDatabase(SDcardPath + decryptedName);
 
                 //连接到解密后的数据库，并设置密码为空

@@ -53,14 +53,14 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                                 dataxRxFragmentSuccess.value = list
                             } else {
                                 dataxRxFragmentError.value =
-                                    BaseApplication.get().resources.getString(
+                                    BaseApplication.instance().resources.getString(
                                         R.string.no_data_available
                                     )
                             }
                         }
                     } else {
                         dataxRxFragmentError.value =
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.loading_failed
                             )
                     }
@@ -104,11 +104,11 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
 //                                dataxRxFragmentSuccess.value = response.data.datas
 //                            } else {
 //                                dataxRxFragmentError.value =
-//                                    BaseApplication.get().resources.getString(R.string.no_data_available)
+//                                    BaseApplication.instance().resources.getString(R.string.no_data_available)
 //                            }
 //                        } else {
 //                            dataxRxFragmentError.value =
-//                                BaseApplication.get().resources.getString(R.string.loading_failed)
+//                                BaseApplication.instance().resources.getString(R.string.loading_failed)
 //                        }
 //                    }
 //
@@ -138,14 +138,14 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                                 dataxRxActivitySuccess.value = list
                             } else {
                                 dataxRxActivityError.value =
-                                    BaseApplication.get().resources.getString(
+                                    BaseApplication.instance().resources.getString(
                                         R.string.no_data_available
                                     )
                             }
                         }
                     } else {
                         dataxRxFragmentError.value =
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.loading_failed
                             )
                     }

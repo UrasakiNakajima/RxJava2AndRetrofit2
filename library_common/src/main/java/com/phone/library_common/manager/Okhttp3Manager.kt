@@ -52,17 +52,19 @@ class Okhttp3Manager {
      * @return
      */
     companion object {
-        @JvmStatic
         private val TAG = Okhttp3Manager::class.java.simpleName
         private var instance: Okhttp3Manager? = null
-
-        //       Synchronized添加后就是线程安全的的懒汉模式
-        @JvmStatic
-        @Synchronized
-        fun get(): Okhttp3Manager {
-            if (instance == null) {
-                instance = Okhttp3Manager()
+            get() {
+                if (field == null) {
+                    field = Okhttp3Manager()
+                }
+                return field
             }
+
+        //Synchronized添加后就是线程安全的的懒汉模式
+        @Synchronized
+        @JvmStatic
+        fun instance(): Okhttp3Manager {
             return instance!!
         }
     }
@@ -92,7 +94,7 @@ class Okhttp3Manager {
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -115,7 +117,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -124,7 +126,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -164,7 +166,7 @@ class Okhttp3Manager {
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -187,7 +189,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -196,7 +198,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -239,7 +241,7 @@ class Okhttp3Manager {
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -262,7 +264,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -271,7 +273,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -362,7 +364,7 @@ class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncString onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -385,7 +387,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -394,7 +396,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -443,7 +445,7 @@ class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncStream onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -466,7 +468,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -475,7 +477,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -540,7 +542,7 @@ class Okhttp3Manager {
                 )
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -563,7 +565,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -572,7 +574,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -610,7 +612,7 @@ class Okhttp3Manager {
                 )
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -633,7 +635,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -642,7 +644,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -701,7 +703,7 @@ class Okhttp3Manager {
                 LogManager.i(TAG, "postAsyncForm onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -729,7 +731,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -738,7 +740,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -825,7 +827,7 @@ class Okhttp3Manager {
                 )
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -848,7 +850,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -857,7 +859,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -968,7 +970,7 @@ class Okhttp3Manager {
                 )
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -991,7 +993,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -1000,7 +1002,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -1081,7 +1083,7 @@ class Okhttp3Manager {
                 )
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.get().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
                     )
                 }
             }
@@ -1104,7 +1106,7 @@ class Okhttp3Manager {
                         } catch (e: Exception) {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
-                                BaseApplication.get().resources.getString(
+                                BaseApplication.instance().resources.getString(
                                     R.string.server_sneak_off
                                 )
                             )
@@ -1113,7 +1115,7 @@ class Okhttp3Manager {
                         onCommonSingleParamCallback.onSuccess(responseString)
                     } else {
                         onCommonSingleParamCallback.onError(
-                            BaseApplication.get().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.server_sneak_off
                             )
                         )
@@ -1775,7 +1777,7 @@ class Okhttp3Manager {
      * @return
      */
     fun isNetworkAvailable(): Boolean {
-        val connectivityManager = BaseApplication.get()
+        val connectivityManager = BaseApplication.instance()
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         //如果仅仅是用来判断网络连接
         //connectivityManager.getActiveNetworkInfo().isAvailable()

@@ -40,7 +40,7 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
         super.onCreate(savedInstanceState)
         mRxAppCompatActivity = this
         baseApplication = application as BaseApplication
-        mActivityPageManager = ActivityPageManager.get()
+        mActivityPageManager = ActivityPageManager.instance()
         mActivityPageManager?.addActivity(mRxAppCompatActivity)
         setContentView(initLayoutId())
         initData()
@@ -283,7 +283,7 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
             }
         }
         i(TAG, "执行killAppProcess，應用開始自殺")
-        val crashHandlerManager = CrashHandlerManager.get()
+        val crashHandlerManager = CrashHandlerManager.instance()
         crashHandlerManager?.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
         try {
             Thread.sleep(1000)

@@ -18,7 +18,7 @@ object SharedPreferencesManager {
 
     @JvmStatic
     fun put(key: String, any: Any) {
-        val sp = BaseApplication.get().getSharedPreferences(SHARED_NAME, MODE)
+        val sp = BaseApplication.instance().getSharedPreferences(SHARED_NAME, MODE)
         val editor: SharedPreferences.Editor = sp.edit()
 
         if (any is String) {
@@ -37,7 +37,7 @@ object SharedPreferencesManager {
 
     @JvmStatic
     fun putDecryptStr(key: String, aesKey: String, str: String) {
-        val sp = BaseApplication.get().getSharedPreferences(SHARED_NAME, MODE)
+        val sp = BaseApplication.instance().getSharedPreferences(SHARED_NAME, MODE)
         val editor: SharedPreferences.Editor = sp.edit()
         val encryptStr = AesManager.encrypt(str, aesKey)
         editor.putString(key, encryptStr)
@@ -46,7 +46,7 @@ object SharedPreferencesManager {
 
     @JvmStatic
     fun get(key: String, defaultAny: Any): Any {
-        val sp = BaseApplication.get().getSharedPreferences(SHARED_NAME, MODE)
+        val sp = BaseApplication.instance().getSharedPreferences(SHARED_NAME, MODE)
 
         return (if (defaultAny is String) {
             sp.getString(key, defaultAny)
@@ -65,7 +65,7 @@ object SharedPreferencesManager {
 
     @JvmStatic
     fun getDecryptStr(key: String, aesKey: String, defaultStr: String): String {
-        val sp = BaseApplication.get().getSharedPreferences(SHARED_NAME, MODE)
+        val sp = BaseApplication.instance().getSharedPreferences(SHARED_NAME, MODE)
         val decryptStr = AesManager.decrypt(sp.getString(key, defaultStr), aesKey)
         return if (!TextUtils.isEmpty(decryptStr)) {
             decryptStr
@@ -75,7 +75,7 @@ object SharedPreferencesManager {
     }
 
     fun setLogout() {
-        val sp = BaseApplication.get().getSharedPreferences(SHARED_NAME, MODE)
+        val sp = BaseApplication.instance().getSharedPreferences(SHARED_NAME, MODE)
         val editor: SharedPreferences.Editor = sp.edit()
 
         editor.clear()

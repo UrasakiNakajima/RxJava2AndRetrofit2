@@ -42,7 +42,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 val firstPageView = baseView
                 //                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
-                RetrofitManager.get()
+                RetrofitManager.instance()
                     .responseString2(
                         rxFragment,
                         model.firstPage(bodyParams),
@@ -98,7 +98,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 ////                                    FirstPageResponse firstPageResponse = JSON.parse(responseString, FirstPageResponse.class);
                 //                                    firstPageView.firstPageDataSuccess(baseResponse.getMessage());
                 //                                } else {
-                //                                    firstPageView.firstPageDataError(BaseApplication.get().getResources().getString(R.string.data_in_wrong_format));
+                //                                    firstPageView.firstPageDataError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
                 //                                }
                 //                                firstPageView.hideLoading();
                 //                            }
@@ -107,7 +107,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 //                            public void accept(Throwable throwable) throws Exception {
                 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
-                //                                firstPageView.firstPageDataError(BaseApplication.get().getResources().getString(R.string.request_was_aborted));
+                //                                firstPageView.firstPageDataError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
                 //                                firstPageView.hideLoading();
                 //                            }
                 //                        });
@@ -125,7 +125,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 val firstPageView = baseView
                 //                firstPageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
-                RetrofitManager.get()
+                RetrofitManager.instance()
                     .responseString(
                         rxAppCompatActivity,
                         model.firstPage(bodyParams),
@@ -181,7 +181,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 ////                                    FirstPageResponse firstPageResponse = JSON.parse(responseString, FirstPageResponse.class);
                 //                                    firstPageView.firstPageDataSuccess(baseResponse.getMessage());
                 //                                } else {
-                //                                    firstPageView.firstPageDataError(BaseApplication.get().getResources().getString(R.string.data_in_wrong_format));
+                //                                    firstPageView.firstPageDataError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
                 //                                }
                 //                                firstPageView.hideLoading();
                 //                            }
@@ -190,7 +190,7 @@ class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 //                            public void accept(Throwable throwable) throws Exception {
                 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
-                //                                firstPageView.firstPageDataError(BaseApplication.get().getResources().getString(R.string.request_was_aborted));
+                //                                firstPageView.firstPageDataError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
                 //                                firstPageView.hideLoading();
                 //                            }
                 //                        });

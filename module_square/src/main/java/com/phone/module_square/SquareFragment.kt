@@ -63,7 +63,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
         mDatabind.executePendingBindings()
 
 
-        val appRoomDataBase = AppRoomDataBase.get()
+        val appRoomDataBase = AppRoomDataBase.instance()
 //        val book = Book()
 //        book.bookName = "English A"
 //        book.anchor = "rommel A"
@@ -92,13 +92,13 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                 LogManager.i(TAG, "onChanged*****dataxRxFragmentSuccess")
                 squareDataSuccess(it)
             } else {
-                squareDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
+                squareDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.dataxRxFragmentError.observe(this, {
             LogManager.i(TAG, "onChanged*****dataxRxFragmentError")
             squareDataError(
-                it ?: BaseApplication.get().resources.getString(R.string.no_data_available)
+                it ?: BaseApplication.instance().resources.getString(R.string.no_data_available)
             )
         })
     }
@@ -248,7 +248,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
      * 請求權限，RxFragment里需要的时候直接调用就行了
      */
     private fun initRxPermissions(number: Int) {
-        val rxPermissionsManager = RxPermissionsManager.get()
+        val rxPermissionsManager = RxPermissionsManager.instance()
         rxPermissionsManager.initRxPermissions2(
             this,
             permissions,
@@ -273,7 +273,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } catch (e: Exception) {
-                            ExceptionManager.get().throwException(e)
+                            ExceptionManager.instance().throwException(e)
                         }
                     }
                 }
@@ -327,7 +327,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.squareData(this, currentPage)
         } else {
-            squareDataError(BaseApplication.get().resources.getString(R.string.please_check_the_network_connection))
+            squareDataError(BaseApplication.instance().resources.getString(R.string.please_check_the_network_connection))
         }
 
         LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())

@@ -279,7 +279,7 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
      * RxFragment里需要的时候直接调用就行了
      */
     private fun initRxPermissionsRxFragment() {
-        val rxPermissionsManager = RxPermissionsManager.get()
+        val rxPermissionsManager = RxPermissionsManager.instance()
         rxPermissionsManager.initRxPermissions2(
             this,
             permissions,

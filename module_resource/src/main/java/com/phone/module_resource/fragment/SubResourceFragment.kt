@@ -64,7 +64,7 @@ class SubResourceFragment :
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                 subResourceDataSuccess(it)
             } else {
-                subResourceDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
+                subResourceDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.dataxRxFragmentError.observe(this, {

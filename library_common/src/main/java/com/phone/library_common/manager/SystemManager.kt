@@ -69,10 +69,10 @@ object SystemManager {
     @JvmStatic
     fun getIMEI(): String? {
         val telephonyManager =
-            BaseApplication.get().getSystemService(Activity.TELEPHONY_SERVICE) as TelephonyManager
+            BaseApplication.instance().getSystemService(Activity.TELEPHONY_SERVICE) as TelephonyManager
         return if (telephonyManager != null) {
             if (ActivityCompat.checkSelfPermission(
-                    BaseApplication.get(),
+                    BaseApplication.instance(),
                     Manifest.permission.READ_PHONE_STATE
                 ) != PackageManager.PERMISSION_GRANTED
             ) {

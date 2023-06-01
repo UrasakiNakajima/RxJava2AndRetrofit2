@@ -92,7 +92,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         rxAppCompatActivity: RxAppCompatActivity,
         currentPage: String
     ) {
-        RetrofitManager.get()
+        RetrofitManager.instance()
             .responseString5(rxAppCompatActivity,
                 model.squareData(currentPage),
                 object : OnCommonSingleParamCallback<String> {

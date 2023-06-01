@@ -62,14 +62,14 @@ class AMAPLocationManager {
                 }
             }
         }
-        AMapLocationClient.updatePrivacyShow(BaseApplication.get(), true, true)
-        AMapLocationClient.updatePrivacyAgree(BaseApplication.get(), true)
+        AMapLocationClient.updatePrivacyShow(BaseApplication.instance(), true, true)
+        AMapLocationClient.updatePrivacyAgree(BaseApplication.instance(), true)
         //初始化定位
         try {
-            mLocationClient = AMapLocationClient(BaseApplication.get())
+            mLocationClient = AMapLocationClient(BaseApplication.instance())
         } catch (e: Exception) {
             e.printStackTrace()
-            ExceptionManager.get().throwException(e)
+            ExceptionManager.instance().throwException(e)
         }
         //设置定位回调监听
         mLocationClient?.setLocationListener(mLocationListener)

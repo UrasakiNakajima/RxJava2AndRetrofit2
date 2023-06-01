@@ -24,7 +24,7 @@ public class MainModelImpl implements IMainModel {
 
     @Override
     public Observable<ResponseBody> mainData(Map<String, String> bodyParams) {
-        return RetrofitManager.get().mRetrofit
+        return RetrofitManager.instance().mRetrofit
                 .create(MainRequest.class)
                 .getMainData(bodyParams);
     }

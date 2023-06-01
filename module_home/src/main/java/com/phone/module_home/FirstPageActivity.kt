@@ -210,7 +210,7 @@ class FirstPageActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
      * RxAppCompatActivity里需要的时候直接调用就行了
      */
     private fun initRxPermissions() {
-        val rxPermissionsManager = RxPermissionsManager.get()
+        val rxPermissionsManager = RxPermissionsManager.instance()
         rxPermissionsManager.initRxPermissions(
             this,
             permissions,

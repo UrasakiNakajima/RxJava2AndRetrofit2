@@ -45,7 +45,7 @@ class LogInterceptor : Interceptor {
         builder.removeHeader("User-Agent") //移除旧的
             .addHeader(
                 "User-Agent",
-                WebSettings.getDefaultUserAgent(BaseApplication.get())
+                WebSettings.getDefaultUserAgent(BaseApplication.instance())
             ) //添加真正的头部
         return builder
             .body(ResponseBody.create(mediaType, content))

@@ -221,7 +221,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, FragmentP
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.subProjectData(pageNum, tabId)
         } else {
-            subProjectDataError(BaseApplication.get().resources.getString(R.string.please_check_the_network_connection));
+            subProjectDataError(BaseApplication.instance().resources.getString(R.string.please_check_the_network_connection));
         }
     }
 

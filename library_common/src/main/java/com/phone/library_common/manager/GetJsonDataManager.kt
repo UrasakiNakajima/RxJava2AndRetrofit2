@@ -8,12 +8,13 @@ import java.io.InputStreamReader
 /**
  * 不會造成App崩潰的異常（被try(){}catch拋出來的異常）管理類
  */
-class GetJsonDataManager {
+object GetJsonDataManager {
 
+    @JvmStatic
     fun getJson(fileName: String): String {
         val stringBuilder = StringBuilder()
         try {
-            val assetManager = BaseApplication.get().assets
+            val assetManager = BaseApplication.instance().assets
             val bf = BufferedReader(
                 InputStreamReader(
                     assetManager.open(fileName)

@@ -196,7 +196,7 @@ class Base64AndFileActivity :
      * 請求權限，RxAppCompatActivity里需要的时候直接调用就行了
      */
     private fun initRxPermissions() {
-        val rxPermissionsManager = RxPermissionsManager.get()
+        val rxPermissionsManager = RxPermissionsManager.instance()
         rxPermissionsManager.initRxPermissions(
             this,
             permissions,
@@ -206,8 +206,15 @@ class Base64AndFileActivity :
                     val systemId = SharedPreferencesManager.get("systemId", "") as String
                     if (TextUtils.isEmpty(systemId)) {
                         SharedPreferencesManager.put("systemId", getSystemId())
-                        LogManager.i(TAG,
-                            "isEmpty systemId*****${SharedPreferencesManager.get("systemId", "") as String}")
+                        LogManager.i(
+                            TAG,
+                            "isEmpty systemId*****${
+                                SharedPreferencesManager.get(
+                                    "systemId",
+                                    ""
+                                ) as String
+                            }"
+                        )
                     } else {
                         LogManager.i(TAG, "systemId*****$systemId")
                     }
@@ -250,7 +257,8 @@ class Base64AndFileActivity :
                 .setPositiveButton("去授权") { dialog, which ->
                     cancelPermissionsDialog()
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts("package", BaseApplication.get()?.packageName, null)
+                    val uri =
+                        Uri.fromParts("package", BaseApplication.instance()?.packageName, null)
                     intent.data = uri
                     startActivityForResult(intent, 207)
                 }
@@ -557,7 +565,7 @@ class Base64AndFileActivity :
                     // 请求异常。
                     // 本地异常，如网络异常等。
                     clientExcepion.printStackTrace()
-                    //                    ExceptionManager.get()?.throwException(getRxAppCompatActivity(), clientExcepion);
+                    //                    ExceptionManager.instance()?.throwException(getRxAppCompatActivity(), clientExcepion);
                     // 服务异常。
                     LogManager.i(TAG, "onFailure ErrorCode*****" + serviceException.errorCode)
                     LogManager.i(TAG, "onFailure RequestId*****" + serviceException.requestId)
@@ -565,7 +573,7 @@ class Base64AndFileActivity :
                     LogManager.i(TAG, "onFailure RawMessage*****" + serviceException.rawMessage)
                     LogManager.i(TAG, "onFailure threadName*****" + Thread.currentThread().name)
                     LogManager.i(TAG, "onFailure serviceException*****$serviceException")
-                    //                    ExceptionManager.get()?.throwException(getRxAppCompatActivity(), clientExcepion);
+                    //                    ExceptionManager.instance()?.throwException(getRxAppCompatActivity(), clientExcepion);
                     Observable.create<Int> { emitter ->
                         emitter.onNext(0)
                         LogManager.i(

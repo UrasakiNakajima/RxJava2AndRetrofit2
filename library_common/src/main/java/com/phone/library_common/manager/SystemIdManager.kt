@@ -118,12 +118,12 @@ object SystemIdManager {
      */
     @JvmStatic
     fun getIMIEStatus(): String {
-        val telephonyManager = BaseApplication.get()
+        val telephonyManager = BaseApplication.instance()
             .getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         var iMIEStatus: String? = null
         if (Build.VERSION.SDK_INT >= 23) {
             if (ActivityCompat.checkSelfPermission(
-                    BaseApplication.get(),
+                    BaseApplication.instance(),
                     Manifest.permission.READ_PHONE_STATE
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
@@ -247,7 +247,7 @@ object SystemIdManager {
     @JvmStatic
     private fun getSystemIdDir(): File {
         val file: File
-        val dirs = File(BaseApplication.get().externalCacheDir, CACHE_IMAGE_DIR)
+        val dirs = File(BaseApplication.instance().externalCacheDir, CACHE_IMAGE_DIR)
         if (!dirs.exists()) {
             i(TAG, "!dir.exists()")
             //            dir.mkdirs();

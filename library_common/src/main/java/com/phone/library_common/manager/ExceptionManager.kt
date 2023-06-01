@@ -12,15 +12,18 @@ class ExceptionManager private constructor() {
      */
     companion object {
         private val TAG = ExceptionManager::class.java.simpleName
-
         private var instance: ExceptionManager? = null
-
-        //       Synchronized添加后就是线程安全的的懒汉模式
-        @Synchronized
-        fun get(): ExceptionManager {
-            if (instance == null) {
-                instance = ExceptionManager()
+            get() {
+                if (field == null) {
+                    field = ExceptionManager()
+                }
+                return field
             }
+
+        //Synchronized添加后就是线程安全的的懒汉模式
+        @Synchronized
+        @JvmStatic
+        fun instance(): ExceptionManager {
             return instance!!
         }
     }
@@ -45,7 +48,7 @@ class ExceptionManager private constructor() {
 //        //4.打印异常堆栈（不推薦使用，打印的不是很詳細，報錯具體哪行沒打印出來，故不要使用這種方法）
 //        throwable.fillInStackTrace()
 //        LogManager.i(TAG, "stackTrace", throwable)
-        val crashHandlerManager = CrashHandlerManager.get()
+        val crashHandlerManager = CrashHandlerManager.instance()
         //收集設備信息和保存異常日誌到文件
         crashHandlerManager?.handleException(throwable)
     }

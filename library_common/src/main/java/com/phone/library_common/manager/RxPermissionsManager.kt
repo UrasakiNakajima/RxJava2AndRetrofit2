@@ -17,16 +17,18 @@ class RxPermissionsManager {
      */
     companion object {
         private val TAG = RxPermissionsManager::class.java.simpleName
-
         private var instance: RxPermissionsManager? = null
-
-        //       Synchronized添加后就是线程安全的的懒汉模式
-        @JvmStatic
-        @Synchronized
-        fun get(): RxPermissionsManager {
-            if (instance == null) {
-                instance = RxPermissionsManager()
+            get() {
+                if (field == null) {
+                    field = RxPermissionsManager()
+                }
+                return field
             }
+
+        //Synchronized添加后就是线程安全的的懒汉模式
+        @Synchronized
+        @JvmStatic
+        fun instance(): RxPermissionsManager {
             return instance!!
         }
     }

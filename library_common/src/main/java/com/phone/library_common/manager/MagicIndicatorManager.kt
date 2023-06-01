@@ -14,7 +14,11 @@ object MagicIndicatorManager {
                 miTabs.onPageScrollStateChanged(state)
             }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 miTabs.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
@@ -33,7 +37,11 @@ object MagicIndicatorManager {
                 miTabs.onPageScrollStateChanged(state)
             }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 miTabs.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
 

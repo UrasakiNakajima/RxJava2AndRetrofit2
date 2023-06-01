@@ -43,13 +43,13 @@ class ResourceFragment : BaseMvvmRxFragment<ResourceViewModelImpl, FragmentResou
                 LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
                 resourceTabDataSuccess(it)
             } else {
-                resourceTabDataError(BaseApplication.get().resources.getString(R.string.no_data_available))
+                resourceTabDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
             }
         })
         viewModel.tabRxFragmentError.observe(this, {
             LogManager.i(TAG, "onChanged*****tabRxFragmentError")
             resourceTabDataError(
-                it ?: BaseApplication.get().resources.getString(R.string.no_data_available)
+                it ?: BaseApplication.instance().resources.getString(R.string.no_data_available)
             )
         })
     }

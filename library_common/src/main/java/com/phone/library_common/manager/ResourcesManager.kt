@@ -7,12 +7,12 @@ object ResourcesManager {
 
     @JvmStatic
     fun getString(stringId: Int): String {
-        return BaseApplication.get().resources.getString(stringId)
+        return BaseApplication.instance().resources.getString(stringId)
     }
 
     @JvmStatic
     fun getColor(colorId: Int): Int {
-//        return BaseApplication.get().getResources().getColor(colorId);
-        return ContextCompat.getColor(BaseApplication.get(), colorId)
+//        return BaseApplication.instance().getResources().getColor(colorId);
+        return ContextCompat.getColor(BaseApplication.instance(), colorId)
     }
 }

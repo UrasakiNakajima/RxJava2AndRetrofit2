@@ -31,9 +31,12 @@ open class BaseApplication : MultiDexApplication() {
     companion object {
         private val TAG = BaseApplication::class.java.simpleName
         private var instance: BaseApplication? = null
+            get() {
+                return field
+            }
 
         @JvmStatic
-        fun get(): BaseApplication {
+        fun instance(): BaseApplication {
             return instance!!
         }
     }
@@ -98,7 +101,7 @@ open class BaseApplication : MultiDexApplication() {
 
 
             JavaGetData.loadData()
-            AppRoomDataBase.get()
+            AppRoomDataBase.instance()
 //            CountingAlgorithm.countingAlgorithm()
 
 
@@ -111,7 +114,7 @@ open class BaseApplication : MultiDexApplication() {
                 TAG,
                 "BaseApplication createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
             )
-            val crashHandlerManager = CrashHandlerManager.get()
+            val crashHandlerManager = CrashHandlerManager.instance()
             crashHandlerManager?.sendPreviousReportsToServer()
             initWebView()
         })

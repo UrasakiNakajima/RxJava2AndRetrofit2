@@ -7,11 +7,7 @@ class GsonManager {
 
     val TAG = GsonManager::class.java.simpleName
     private var gson: Gson
-//    private static Gson gson;
-//    private static GsonManager gsonManager;
 
-    //    private static Gson gson;
-    //    private static GsonManager gsonManager;
     init {
         gson = Gson()
     }
@@ -21,32 +17,22 @@ class GsonManager {
 //     *
 //     * @return
 //     */
-//    public static GsonManager getInstance() {
-//        if (gsonManager == null) {
-//            synchronized (GsonManager.class) {
-//                if (gsonManager == null) {
-//                    gsonManager = new GsonManager();
+//    companion object {
+//        private var instance: GsonManager? = null
+//            get() {
+//                if (field == null) {
+//                    field = GsonManager()
 //                }
+//                return field
 //            }
+//
+//        //Synchronized添加后就是线程安全的的懒汉模式
+//        @Synchronized
+//        @JvmStatic
+//        fun instance(): GsonManager {
+//            return instance!!
 //        }
-//        return gsonManager;
 //    }
-
-    //    /**
-    //     * 线程安全的单例模式
-    //     *
-    //     * @return
-    //     */
-    //    public static GsonManager getInstance() {
-    //        if (gsonManager == null) {
-    //            synchronized (GsonManager.class) {
-    //                if (gsonManager == null) {
-    //                    gsonManager = new GsonManager();
-    //                }
-    //            }
-    //        }
-    //        return gsonManager;
-    //    }
 
     /**
      * 将json转化为对应的实体对象
@@ -76,4 +62,5 @@ class GsonManager {
     fun toJson(src: Any): String {
         return gson.toJson(src)
     }
+
 }

@@ -35,14 +35,17 @@ class ActivityPageManager private constructor() {
 
     companion object {
         private var instance: ActivityPageManager? = null
+            get() {
+                if (field == null) {
+                    field = ActivityPageManager()
+                }
+                return field
+            }
 
-        //       Synchronized添加后就是线程安全的的懒汉模式
+        //Synchronized添加后就是线程安全的的懒汉模式
         @Synchronized
         @JvmStatic
-        fun get(): ActivityPageManager {
-            if (instance == null) {
-                instance = ActivityPageManager()
-            }
+        fun instance(): ActivityPageManager {
             return instance!!
         }
     }

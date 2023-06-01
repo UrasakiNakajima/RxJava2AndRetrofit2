@@ -45,7 +45,7 @@ class RetrofitManager {
      */
     init {
         //缓存
-        val cacheFile = File(BaseApplication.get().externalCacheDir, "cache")
+        val cacheFile = File(BaseApplication.instance().externalCacheDir, "cache")
         val cache = Cache(cacheFile, 1024 * 1024 * 10) //10Mb
         val rewriteCacheControlInterceptor = RewriteCacheControlInterceptor()
         val loggingInterceptor = HttpLoggingInterceptor()
@@ -65,19 +65,15 @@ class RetrofitManager {
             .addInterceptor(rewriteCacheControlInterceptor) //                .addNetworkInterceptor(rewriteCacheControlInterceptor)
             //                .addInterceptor(headerInterceptor)
             .addInterceptor(loggingInterceptor) //                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
-            .cache(cache)
-            .sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置
+            .cache(cache).sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置
             .hostnameVerifier(SSLSocketManager.hostnameVerifier()) //配置
             //                .proxy(Proxy.NO_PROXY)
             .build()
 
         // 初始化Retrofit
-        mRetrofit = Retrofit.Builder()
-            .client(client)
-            .baseUrl(ConstantUrl.BASE_URL)
+        mRetrofit = Retrofit.Builder().client(client).baseUrl(ConstantUrl.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     }
 
     /**
@@ -88,6 +84,19 @@ class RetrofitManager {
     companion object {
         @Volatile
         private var instance: RetrofitManager? = null
+            get() {
+                if (field == null) {
+                    field = RetrofitManager()
+                }
+                return field
+            }
+
+        //Synchronized添加后就是线程安全的的懒汉模式
+        @Synchronized
+        @JvmStatic
+        fun instance(): RetrofitManager {
+            return instance!!
+        }
 
         /**
          * 查询网络的Cache-Control设置，头部Cache-Control设为max-age=0
@@ -105,17 +114,6 @@ class RetrofitManager {
          * max-stale 指示客户机可以接收超出超时期间的响应消息。如果指定max-stale消息的值，那么客户机可接收超出超时期指定值之内的响应消息。
          */
         private const val CACHE_CONTROL_CACHE = "only-if-cached, max-stale=$CACHE_STALE_SEC"
-
-
-        //       Synchronized添加后就是线程安全的的懒汉模式
-        @Synchronized
-        @JvmStatic
-        fun get(): RetrofitManager {
-            if (instance == null) {
-                instance = RetrofitManager()
-            }
-            return instance!!
-        }
 
         fun buildSign(secret: String, time: Long): String {
             //        Map treeMap = new TreeMap(params)// treeMap默认会以key值升序排序
@@ -161,8 +159,8 @@ class RetrofitManager {
          * @return
          */
         fun isNetworkAvailable(): Boolean {
-            val connectivityManager = BaseApplication.get().applicationContext
-                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val connectivityManager =
+                BaseApplication.instance().applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             //如果仅仅是用来判断网络连接
             //connectivityManager.getActiveNetworkInfo().isAvailable()
             val info = connectivityManager.allNetworkInfo
@@ -196,13 +194,11 @@ class RetrofitManager {
      * @return
      */
     fun multipartBody(
-        bodyParams: Map<String, String>,
-        fileMap: Map<String, File>
+        bodyParams: Map<String, String>, fileMap: Map<String, File>
     ): RequestBody {
         val MEDIA_TYPE = MediaType.parse("image/*")
         // form 表单形式上传
-        val multipartBodyBuilder =
-            MultipartBody.Builder().setType(MultipartBody.FORM)
+        val multipartBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
         //1.添加请求参数
         //遍历map中所有参数到builder
         if (bodyParams.size > 0) {
@@ -210,8 +206,7 @@ class RetrofitManager {
                 bodyParams[key]?.let {
                     //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(
-                        key,
-                        it
+                        key, it
                     )
                 }
             }
@@ -223,13 +218,10 @@ class RetrofitManager {
                 val file = fileMap[key]
                 if (file != null && file.exists()) { //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(
-                        key,
-                        file.name,
-                        RequestBody.create(MEDIA_TYPE, file)
+                        key, file.name, RequestBody.create(MEDIA_TYPE, file)
                     )
                     LogManager.i(
-                        TAG,
-                        "file.getName()*****" + file.name
+                        TAG, "file.getName()*****" + file.name
                     )
                 }
             }
@@ -254,8 +246,7 @@ class RetrofitManager {
     ): RequestBody? {
         val MEDIA_TYPE = MediaType.parse("image/*")
         // form 表单形式上传
-        val multipartBodyBuilder =
-            MultipartBody.Builder().setType(MultipartBody.FORM)
+        val multipartBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
         //1.添加请求参数
         //遍历map中所有参数到builder
         if (bodyParams.size > 0) {
@@ -266,8 +257,7 @@ class RetrofitManager {
                 ) {
                     //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(
-                        key,
-                        Objects.requireNonNull(bodyParams[key])
+                        key, Objects.requireNonNull(bodyParams[key])
                     )
                 }
             }
@@ -279,13 +269,10 @@ class RetrofitManager {
                 val file = fileMap[key]
                 if (file != null && file.exists()) { //如果参数不是null，才把参数传给后台
                     multipartBodyBuilder.addFormDataPart(
-                        key,
-                        file.name,
-                        RequestBody.create(MEDIA_TYPE, file)
+                        key, file.name, RequestBody.create(MEDIA_TYPE, file)
                     )
                     LogManager.i(
-                        TAG,
-                        "file.getName()*****" + file.name
+                        TAG, "file.getName()*****" + file.name
                     )
                 }
             }
@@ -299,13 +286,10 @@ class RetrofitManager {
                     for (i in files.indices) {
                         if (files[i].exists()) {
                             multipartBodyBuilder.addFormDataPart(
-                                key,
-                                files[i].name,
-                                RequestBody.create(MEDIA_TYPE, files[i])
+                                key, files[i].name, RequestBody.create(MEDIA_TYPE, files[i])
                             )
                             LogManager.i(
-                                TAG, "files.get(i).getName()*****" + files[i]!!
-                                    .name
+                                TAG, "files.get(i).getName()*****" + files[i]!!.name
                             )
                         }
                     }
@@ -330,23 +314,20 @@ class RetrofitManager {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach()
-            .subscribeOn(Schedulers.io())
+        observable.onTerminateDetach().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //AutoDispose的关键语句
             .`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(appCompatActivity)))
             .subscribe({ responseBody ->
                 val responseString = responseBody?.string()
                 LogManager.i(TAG, "responseString*****$responseString")
                 onCommonSingleParamCallback.onSuccess(responseString)
-            }
-            ) { throwable ->
+            }) { throwable ->
                 LogManager.i(TAG, "throwable*****$throwable")
                 LogManager.i(
-                    TAG,
-                    "throwable message*****" + throwable.message
+                    TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.get().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
             }
     }
 
@@ -363,8 +344,7 @@ class RetrofitManager {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach()
-            .subscribeOn(Schedulers.io())
+        observable.onTerminateDetach().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //AutoDispose的关键语句（解决RxJava2导致的内存泄漏的）
             .`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(fragment)))
             .subscribe({ responseBody ->
@@ -388,15 +368,13 @@ class RetrofitManager {
                 //                                                   manager.unSubscribe()
                 //                                               }
                 //                                           })
-            }
-            ) { throwable ->
+            }) { throwable ->
                 LogManager.i(TAG, "throwable*****$throwable")
                 LogManager.i(
-                    TAG,
-                    "throwable message*****" + throwable.message
+                    TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.get().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
             }
     }
 
@@ -413,11 +391,9 @@ class RetrofitManager {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach()
-            .subscribeOn(Schedulers.io())
+        observable.onTerminateDetach().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
-            .compose(rxAppCompatActivity.bindToLifecycle())
-            .subscribe({ responseBody ->
+            .compose(rxAppCompatActivity.bindToLifecycle()).subscribe({ responseBody ->
                 val responseString = responseBody.string()
                 LogManager.i(TAG, "responseString*****$responseString")
                 onCommonSingleParamCallback.onSuccess(responseString)
@@ -427,12 +403,12 @@ class RetrofitManager {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class)
 //                                       } catch (Exception e) {
 //                                           //如果不是标准json字符串，就返回错误提示
-//                                           onCommonSingleParamCallback.onError(BaseApplication.get().getResources().getString(R.string.server_sneak_off))
+//                                           onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
 //                                           return
 //                                       }
 //                                       onCommonSingleParamCallback.onSuccess(responseString)
 //                                   } else {
-//                                       onCommonSingleParamCallback.onError(BaseApplication.get().getResources().getString(R.string.server_sneak_off))
+//                                       onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
 //                                   }
 
 
@@ -452,15 +428,13 @@ class RetrofitManager {
                 //                                                   manager.unSubscribe()
                 //                                               }
                 //                                           })
-            }
-            ) { throwable ->
+            }) { throwable ->
                 LogManager.i(TAG, "throwable*****$throwable")
                 LogManager.i(
-                    TAG,
-                    "throwable message*****" + throwable.message
+                    TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.get().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
             }
     }
 
@@ -477,23 +451,20 @@ class RetrofitManager {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach()
-            .subscribeOn(Schedulers.io())
+        observable.onTerminateDetach().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
             .compose(rxAppCompatActivity.bindUntilEvent(ActivityEvent.DESTROY))
             .subscribe({ responseBody ->
                 val responseString = responseBody.string()
                 LogManager.i(TAG, "responseString*****$responseString")
                 onCommonSingleParamCallback.onSuccess(responseString)
-            }
-            ) { throwable ->
+            }) { throwable ->
                 LogManager.i(TAG, "throwable*****$throwable")
                 LogManager.i(
-                    TAG,
-                    "throwable message*****" + throwable.message
+                    TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.get().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
             }
     }
 
@@ -510,11 +481,9 @@ class RetrofitManager {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach()
-            .subscribeOn(Schedulers.io())
+        observable.onTerminateDetach().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
-            .compose(rxFragment.bindToLifecycle())
-            .subscribe({ responseBody ->
+            .compose(rxFragment.bindToLifecycle()).subscribe({ responseBody ->
                 val responseString = responseBody.string()
                 LogManager.i(TAG, "responseString*****$responseString")
                 onCommonSingleParamCallback.onSuccess(responseString)
@@ -524,12 +493,12 @@ class RetrofitManager {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class)
 //                                       } catch (Exception e) {
 //                                           //如果不是标准json字符串，就返回错误提示
-//                                           onCommonSingleParamCallback.onError(BaseApplication.get().getResources().getString(R.string.server_sneak_off))
+//                                           onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
 //                                           return
 //                                       }
 //                                       onCommonSingleParamCallback.onSuccess(responseString)
 //                                   } else {
-//                                       onCommonSingleParamCallback.onError(BaseApplication.get().getResources().getString(R.string.server_sneak_off))
+//                                       onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
 //                                   }
 
 
@@ -549,15 +518,13 @@ class RetrofitManager {
                 //                                                   manager.unSubscribe()
                 //                                               }
                 //                                           })
-            }
-            ) { throwable ->
+            }) { throwable ->
                 LogManager.i(TAG, "throwable*****$throwable")
                 LogManager.i(
-                    TAG,
-                    "throwable message*****" + throwable.message
+                    TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.get().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
             }
     }
 
@@ -574,11 +541,9 @@ class RetrofitManager {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach()
-            .subscribeOn(Schedulers.io())
+        observable.onTerminateDetach().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
-            .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY))
-            .subscribe({ responseBody ->
+            .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY)).subscribe({ responseBody ->
                 val responseString = responseBody.string()
                 LogManager.i(TAG, "responseString*****$responseString")
                 onCommonSingleParamCallback.onSuccess(responseString)
@@ -588,12 +553,12 @@ class RetrofitManager {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class)
 //                                       } catch (Exception e) {
 //                                           //如果不是标准json字符串，就返回错误提示
-//                                           onCommonSingleParamCallback.onError(BaseApplication.get().getResources().getString(R.string.server_sneak_off))
+//                                           onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
 //                                           return
 //                                       }
 //                                       onCommonSingleParamCallback.onSuccess(responseString)
 //                                   } else {
-//                                       onCommonSingleParamCallback.onError(BaseApplication.get().getResources().getString(R.string.server_sneak_off))
+//                                       onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
 //                                   }
 
 
@@ -613,15 +578,13 @@ class RetrofitManager {
                 //                                                   manager.unSubscribe()
                 //                                               }
                 //                                           })
-            }
-            ) { throwable ->
+            }) { throwable ->
                 LogManager.i(TAG, "throwable*****$throwable")
                 LogManager.i(
-                    TAG,
-                    "throwable message*****" + throwable.message
+                    TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.get().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
             }
     }
 
