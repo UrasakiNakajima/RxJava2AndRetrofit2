@@ -9,7 +9,7 @@ public class JavaGetData {
     }
 
     /**
-     * 这里的nativeAesKey 法按说不能直接调用return-data.cpp文件的
+     * 这里的nativeAesKey方法按说不能直接调用return-data.cpp文件的
      * Java_com_phone_library_1common_JavaGetData_nativeAesKey方法，
      * 只能调用lib文件夹下的return-data.so动态库文件的方法，
      * 可能是因为和library_common写在同一个Project下，
