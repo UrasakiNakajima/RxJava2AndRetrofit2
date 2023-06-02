@@ -14,7 +14,7 @@ object BuildVersions {
     const val constraintlayout_version = "2.0.4"
     const val core_version = "1.6.0"
     const val core_ktx_version = "1.6.0"
-    const val lifecycle_version = "2.2.0"
+    const val lifecycle_version = "2.5.1"
     const val cardview_version = "1.0.0"
     const val multidex_version = "2.0.1"
     const val runner_version = "1.4.0"

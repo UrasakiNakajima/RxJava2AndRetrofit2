@@ -1,9 +1,10 @@
 import com.phone.versionplugin.BuildVersions
 
 plugins {
-    id 'com.phone.versionplugin'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    //ARouter需要用到
     id 'kotlin-kapt'
+    id 'com.phone.versionplugin'
 }
 if (isModule.toBoolean()) {
     //可独立运行的app

@@ -3,9 +3,9 @@ import com.phone.versionplugin.BuildVersions
 plugins {
     //body app（不可单独运行）
     id 'com.android.application'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    //ARouter需要用到
     id 'kotlin-kapt'
-//    id 'org.jetbrains.kotlin.android'
     id 'com.phone.versionplugin'
 }
 //apply plugin: 'com.google.gms.google-services'

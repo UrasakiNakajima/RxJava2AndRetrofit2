@@ -2,9 +2,9 @@ import com.phone.versionplugin.BuildVersions
 
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    //ARouter需要用到
     id 'kotlin-kapt'
-//    id 'org.jetbrains.kotlin.android'
     id 'com.phone.versionplugin'
 }
 
