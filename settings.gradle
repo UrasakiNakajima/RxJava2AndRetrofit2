@@ -56,3 +56,4 @@ include ':aidl_server'
 include ':app', ':module_main', ':module_home', ':module_project', ':module_square', ':module_resource', ':module_mine', ':library_common', ':base64_and_file', ':android_and_js'
 include ':sts_server'
 includeBuild("VersionPlugin")
+include ':call_third_party_so'
