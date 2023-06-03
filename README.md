@@ -17,6 +17,11 @@ RxJava2 和Retrofit2 项目，添加自动管理token 功能，添加RxJava2 生
 14.double 类型精度丢失问题以及解决方法，博客地址https://blog.csdn.net/NakajimaFN/article/details/125912091?spm=1001.2014.3001.5502；  
 15.double 精确的加减乘除运算，并保留5位小数，博客地址https://blog.csdn.net/NakajimaFN/article/details/126145751；  
 16.Android 捕获异常，并打印日志文件到本地，博客地址https://blog.csdn.net/NakajimaFN/article/details/125023500?spm=1001.2014.3001.5502；  
+17.RSA 加密的使用，博客地址https://blog.csdn.net/NakajimaFN/article/details/125913821?spm=1001.2014.3001.5502；  
+18.Mac 查看Android apk keystore文件签名信息，博客地址https://blog.csdn.net/NakajimaFN/article/details/125937113?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22125937113%22%2C%22source%22%3A%22NakajimaFN%22%7D；  
+19.Android 杀掉App所有相关的进程，并退出应用程序（彻底杀死App），博客地址https://blog.csdn.net/NakajimaFN/article/details/124820534?spm=1001.2014.3001.5502；  
+20.Android 获取手机系统版本号、获取手机型号、获取手机厂商、获取手机IMEI、获取手机CPU_ABI、获取手机唯一识别码，博客地址https://blog.csdn.net/NakajimaFN/article/details/125025659?spm=1001.2014.3001.5502；  
+
 
 
 此项目大部分java 文件已更新成kotlin 文件，  
