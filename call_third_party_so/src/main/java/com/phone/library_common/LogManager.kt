@@ -4,7 +4,7 @@ import android.util.Log
 
 object LogManager {
 
-    private val isOpenLog = true
+    private val isOpenLog = !BuildConfig.IS_RELEASE
 
     //规定每段显示的长度
     private val LOG_MAXLENGTH = 2000
