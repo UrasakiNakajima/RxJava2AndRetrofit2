@@ -155,9 +155,9 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
      * @return
      */
     private fun saveCrashInfoToFile(throwable: Throwable): String? {
-        val buffer = StringBuffer()
+        val builder = StringBuilder()
         for ((key, value) in mDevInfoMap) {
-            buffer.append(key).append("=").append(value).append('\n')
+            builder.append(key).append("=").append(value).append('\n')
         }
         //可以用其回收在字符串缓冲区中的输出来构造字符串
         val writer: Writer = StringWriter()
@@ -173,7 +173,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
         }
         printWriter.close()
         val result = writer.toString()
-        buffer.append(result)
+        builder.append(result)
         try {
             val timestamp = System.currentTimeMillis()
             val time = formatdate.format(Date(timestamp))
@@ -198,7 +198,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
             //output 针对内存来说的 output到file中
             val fos = FileOutputStream(file)
             val bos = BufferedOutputStream(fos)
-            bos.write(buffer.toString().toByteArray())
+            bos.write(builder.toString().toByteArray())
             bos.flush()
             bos.close()
             return fileName
