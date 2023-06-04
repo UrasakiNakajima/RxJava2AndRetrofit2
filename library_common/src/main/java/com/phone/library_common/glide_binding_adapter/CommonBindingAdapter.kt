@@ -4,7 +4,9 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.R
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
 
 
@@ -27,6 +29,9 @@ object CommonBindingAdapter {
             envelopePic?.let {
                 LogManager.i(TAG, "envelopePic@*****${envelopePic}")
             }
+
+//                ARouter.getInstance().build(ConstantData.Route.ROUTE_EVENT_SCHEDULE).navigation()
+            ARouter.getInstance().build(ConstantData.Route.ROUTE_BASE64_AND_FILE).navigation()
         }
     }
 

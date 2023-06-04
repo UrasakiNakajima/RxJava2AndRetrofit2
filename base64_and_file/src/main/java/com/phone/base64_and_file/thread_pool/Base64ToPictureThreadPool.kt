@@ -5,6 +5,7 @@ import com.phone.base64_and_file.bean.Base64AndFileBean
 import com.phone.base64_and_file.manager.Base64AndFileManager
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.MediaFileManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -23,16 +24,30 @@ class Base64ToPictureThreadPool(var base64AndFileBean: Base64AndFileBean) {
                 TAG,
                 "Base64ToPictureThreadPool*******" + Thread.currentThread().name
             )
+
+            val mediaFileType =
+                MediaFileManager.getFileType(base64AndFileBean.fileCompressed?.absolutePath)
+            val mimeType = mediaFileType.mimeType
+            val typeArr = mimeType.split("/").toTypedArray()
+            val fileType = typeArr[1]
+            //再把压缩后的bitmap保存到本地
             val fileCompressedRecover = Base64AndFileManager.base64ToFile(
                 base64AndFileBean.base64Str ?: "",
                 base64AndFileBean.dirsPathCompressedRecover ?: "",
-                "picture_large_compressed_recover"
+                "picture_large_compressed_recover.$fileType"
             )
-            //                File fileCompressedRecover = Base64AndFileManager.base64ToFileSecond(
-//                        base64AndFileBean.getBase64Str(),
-//                        base64AndFileBean.getDirsPathCompressedRecover(),
-//                        base64AndFileBean.getFile().getName());
-//            File fileCompressedRecover = Base64AndFileManager.base64ToFileThird(base64Str, dirsPath5, fileName);
+//            val fileCompressedRecover = Base64AndFileManager.base64ToFileSecond(
+//                base64AndFileBean.base64Str ?: "",
+//                base64AndFileBean.dirsPathCompressedRecover ?: "",
+//                "picture_large_compressed_recover.$fileType"
+//            )
+//            val fileCompressedRecover = Base64AndFileManager.base64ToFileThird(
+//                base64AndFileBean.base64Str ?: "",
+//                base64AndFileBean.dirsPathCompressedRecover ?: "",
+//                "picture_large_compressed_recover.$fileType")
+            base64AndFileBean.fileCompressedRecover = fileCompressedRecover
+
+
             val bitmapCompressedRecover =
                 BitmapFactory.decodeFile(fileCompressedRecover.absolutePath)
             if (bitmapCompressedRecover != null) {

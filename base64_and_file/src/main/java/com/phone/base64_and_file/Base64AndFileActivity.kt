@@ -19,6 +19,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.alibaba.sdk.android.oss.*
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback
@@ -39,9 +40,10 @@ import com.phone.library_common.BaseApplication
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
 import com.phone.library_common.manager.SystemManager.getSystemId
-import com.phone.library_common.service.IFirstPageService
+import com.phone.library_common.service.IHomeService
 import com.trello.rxlifecycle3.android.ActivityEvent
 import io.reactivex.*
 import io.reactivex.Observable
@@ -52,6 +54,7 @@ import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+@Route(path = ConstantData.Route.ROUTE_BASE64_AND_FILE)
 class Base64AndFileActivity :
     BaseMvpRxAppActivity<IBaseView, Base64AndFilePresenterImpl>(), IBase64AndFileView {
 
@@ -117,12 +120,12 @@ class Base64AndFileActivity :
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.white))
         layoutBack?.setOnClickListener { v: View? -> finish() }
         tevRequestPermissions?.setOnClickListener {
-            val firstPageService =
-                ARouter.getInstance().build("/module_home/FirstPageServiceImpl")
-                    .navigation() as IFirstPageService
+            val homeService =
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
+                    .navigation() as IHomeService
             LogManager.i(
                 TAG,
-                "firstPageService.firstPageDataList******" + firstPageService.mFirstPageDataList.toString()
+                "homeService.mHomeDataList******" + homeService.mHomeDataList.toString()
             )
 
             LogManager.i(TAG, "tevRequestPermissions")
@@ -219,18 +222,18 @@ class Base64AndFileActivity :
                         LogManager.i(TAG, "systemId*****$systemId")
                     }
 
-                    //第一种方法
-                    if (presenter != null) {
-                        showLoading();
-                        val base64AndFileBean = Base64AndFileBean()
-                        base64AndFileBean.dirsPath = dirsPath
-                        base64AndFileBean.dirsPathCompressed = dirsPathCompressed
-                        base64AndFileBean.dirsPathCompressedRecover = dirsPathCompressedRecover
-                        presenter.showCompressedPicture(
-                            mBaseApplication,
-                            base64AndFileBean
-                        )
-                    }
+//                    //第一种方法
+//                    if (presenter != null) {
+//                        showLoading();
+//                        val base64AndFileBean = Base64AndFileBean()
+//                        base64AndFileBean.dirsPath = dirsPath
+//                        base64AndFileBean.dirsPathCompressed = dirsPathCompressed
+//                        base64AndFileBean.dirsPathCompressedRecover = dirsPathCompressedRecover
+//                        presenter.showCompressedPicture(
+//                            mBaseApplication,
+//                            base64AndFileBean
+//                        )
+//                    }
 
                     //第二种方法
                     initBase64AndFileTask()

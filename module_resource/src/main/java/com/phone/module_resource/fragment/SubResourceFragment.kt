@@ -1,21 +1,20 @@
 package com.phone.module_resource.fragment
 
-import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.adapter.ProjectAndResourceAdapter
 import com.phone.library_common.base.BaseMvvmRxFragment
 import com.phone.library_common.bean.ArticleListBean
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.library_common.manager.ScreenManager
-import com.phone.library_common.ui.WebViewActivity
 import com.phone.module_resource.R
 import com.phone.module_resource.databinding.ResourceFragmentResourceSubBinding
 import com.phone.module_resource.view.ISubResourceView
@@ -49,8 +48,7 @@ class SubResourceFragment :
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
      */
-    override fun initViewModel() =
-        ViewModelProvider(this).get(SubResourceViewModelImpl::class.java)
+    override fun initViewModel() = ViewModelProvider(this).get(SubResourceViewModelImpl::class.java)
 
     override fun initData() {
         type = arguments?.getInt("type") ?: 0
@@ -76,22 +74,21 @@ class SubResourceFragment :
     }
 
     override fun initViews() {
-        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(
-            object : OnRefreshLoadMoreListener {
-                override fun onLoadMore(refreshLayout: RefreshLayout) {
-                    LogManager.i(TAG, "onLoadMore")
-                    isRefresh = false
-                    pageNum++
-                    initSubResource(tabId, pageNum)
-                }
+        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                LogManager.i(TAG, "onLoadMore")
+                isRefresh = false
+                pageNum++
+                initSubResource(tabId, pageNum)
+            }
 
-                override fun onRefresh(refreshLayout: RefreshLayout) {
-                    LogManager.i(TAG, "onRefresh")
-                    isRefresh = true
-                    pageNum = 1
-                    initSubResource(tabId, pageNum)
-                }
-            })
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                LogManager.i(TAG, "onRefresh")
+                isRefresh = true
+                pageNum = 1
+                initSubResource(tabId, pageNum)
+            }
+        })
     }
 
     private fun initAdapter(list: MutableList<ArticleListBean>) {
@@ -112,28 +109,12 @@ class SubResourceFragment :
                     when (view.id) {
                         //子项
                         R.id.root -> {
-                            val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
-                            intent.putExtras(Bundle().apply {
-                                subResourceAdapter?.list?.get(i)?.let {
-                                    putString(
-                                        "loadUrl",
-                                        it.link
-                                    )
-                                    putString(
-                                        "title",
-                                        it.title
-                                    )
-                                    putString(
-                                        "author",
-                                        it.author
-                                    )
-                                    putInt(
-                                        "id",
-                                        it.id
-                                    )
-                                }
-                            })
-                            startActivity(intent)
+                            subResourceAdapter?.list?.get(i)?.let {
+                                ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW)
+                                    .withString("loadUrl", it.link).withString("title", it.title)
+                                    .withString("author", it.author).withInt("id", it.id)
+                                    .navigation()
+                            }
                         }
                         //收藏
                         R.id.ivCollect -> {

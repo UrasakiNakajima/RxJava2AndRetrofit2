@@ -7,10 +7,12 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.google.gson.Gson
 import com.phone.library_common.base.BaseBindingRxAppActivity
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.GetJsonDataManager
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
@@ -21,6 +23,7 @@ import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import org.json.JSONArray
 
+@Route(path = ConstantData.Route.ROUTE_PICKER_VIEW)
 class PickerViewActivity : BaseBindingRxAppActivity<SquareActivityPickerViewBinding>() {
 
     companion object {

@@ -9,8 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
 import com.phone.library_common.manager.SystemManager.getSystemId
 import com.phone.module_main.R
@@ -18,9 +20,8 @@ import com.phone.module_main.login.DataGetVerification
 import com.phone.module_main.login.DataLogin
 import com.phone.module_main.login.presenter.LoginPresenterImpl
 import com.phone.module_main.login.view.ILoginView
-import com.phone.module_main.main.MainActivity
 
-@Route(path = "/main_module/login")
+@Route(path = ConstantData.Route.ROUTE_LOGIN)
 class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILoginView {
 
     private val TAG = LoginActivity::class.java.simpleName
@@ -71,7 +72,10 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         tevLogin?.setOnClickListener { //                initLoginWithAuthCode()
             initLogin()
         }
-        tevJumpToRegister?.setOnClickListener { startActivity(RegisterActivity::class.java) }
+        tevJumpToRegister?.setOnClickListener {
+            ARouter.getInstance().build(ConstantData.Route.ROUTE_REGISTER)
+                .navigation()
+        }
     }
 
     override fun initLoadData() {
@@ -111,9 +115,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     }
 
     override fun loginWithAuthCodeSuccess(success: DataLogin) {
-        //		showToast(success.getUserName(), true)
-        startActivity(MainActivity::class.java)
-        finish()
+        customStartActivity()
     }
 
     override fun loginWithAuthCodeError(error: String) {
@@ -121,13 +123,18 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     }
 
     override fun loginSuccess(success: String) {
-        SharedPreferencesManager.put("isLogin", true)
-        startActivity(MainActivity::class.java)
-        finish()
+        customStartActivity()
     }
 
     override fun loginError(error: String) {
         showToast(error, true)
+    }
+
+    private fun customStartActivity() {
+        SharedPreferencesManager.put("isLogin", true)
+        ARouter.getInstance().build(ConstantData.Route.ROUTE_MAIN)
+            .navigation()
+        finish()
     }
 
     private fun getAuthCode() {

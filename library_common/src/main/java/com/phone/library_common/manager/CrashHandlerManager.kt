@@ -179,7 +179,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
             val time = formatdate.format(Date(timestamp))
             val fileName = "crash-$time-$timestamp.txt"
             val path =
-                BaseApplication.instance().externalCacheDir.toString() + "/crash_xy/" //     /sdcard/crash/crash-time-timestamp.log
+                BaseApplication.instance().externalCacheDir?.absolutePath + File.separator + "crash_xy" //     /sdcard/crash/crash-time-timestamp.log
             val dirs = File(path)
             if (!dirs.exists()) {
                 dirs.mkdirs()
@@ -227,7 +227,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
             val time = formatdate.format(Date(timestamp))
             val fileName = "aCrash-$time-$timestamp.txt"
             val path =
-                BaseApplication.instance().externalCacheDir.toString() + "/aCrash_xy/" //     /sdcard/crash/crash-time-timestamp.log
+                BaseApplication.instance().externalCacheDir?.absolutePath + File.separator + "aCrash_xy" //     /sdcard/crash/crash-time-timestamp.log
             val dirs = File(path)
             if (!dirs.exists()) {
                 dirs.mkdirs()

@@ -2,13 +2,16 @@ package com.phone.library_common.ui
 
 import android.text.Html
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.R
 import com.phone.library_common.base.BaseBindingRxAppActivity
 import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.databinding.LibraryActivityWebViewBinding
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 
+@Route(path = ConstantData.Route.ROUTE_WEB_VIEW)
 class WebViewActivity : BaseBindingRxAppActivity<LibraryActivityWebViewBinding>() {
 
     private val TAG = WebViewActivity::class.java.simpleName

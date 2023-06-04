@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.library_common.base.BaseRxAppActivity;
+import com.phone.library_common.common.ConstantData;
 import com.phone.library_common.manager.LogManager;
 import com.phone.library_common.manager.ResourcesManager;
 import com.phone.module_mine.R;
@@ -23,6 +25,8 @@ import java.util.List;
  * date      :
  * introduce : 参数传递值改变问题
  */
+
+@Route(path = ConstantData.Route.ROUTE_PARAMS_TRANSFER_CHANGE_PROBLEM)
 public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
 
     private static final String TAG = ParamsTransferChangeProblemActivity.class.getSimpleName();

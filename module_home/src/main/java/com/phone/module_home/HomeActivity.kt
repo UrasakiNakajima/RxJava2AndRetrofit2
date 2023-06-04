@@ -6,52 +6,47 @@ import android.net.Uri
 import android.provider.Settings
 import android.text.TextUtils
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
-import com.phone.library_common.base.BaseMvpRxFragment
+import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
 import com.phone.library_common.bean.FirstPageResponse.ResultData.JuheNewsBean
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
-import com.phone.library_common.service.IFirstPageService
-import com.phone.library_common.service.ISquareService
-import com.phone.library_common.ui.WebViewActivity
+import com.phone.library_common.manager.ScreenManager.dpToPx
+import com.phone.library_common.manager.SystemManager.getSystemId
 import com.phone.module_home.adapter.FirstPageAdapter
 import com.phone.module_home.manager.AMAPLocationManager
 import com.phone.module_home.presenter.FirstPagePresenterImpl
 import com.phone.module_home.view.IFirstPageView
-import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
-@Route(path = "/module_home/home")
-class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>(), IFirstPageView {
+class HomeActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>(),
+    IFirstPageView {
 
-    private val TAG = FirstPageFragment::class.java.simpleName
-    private var layoutOutLayer: FrameLayout? = null
+    private val TAG = HomeActivity::class.java.simpleName
     private var toolbar: Toolbar? = null
     private var tevTitle: TextView? = null
     private var tevRequestPermissionAndStartLocating: TextView? = null
     private var refreshLayout: SmartRefreshLayout? = null
     private var rcvData: RecyclerView? = null
-    private var loadView: QMUILoadingView? = null
 
-    private var firstPageAdapter: FirstPageAdapter? = null
+    private lateinit var firstPageAdapter: FirstPageAdapter
     private var isRefresh = false
 
-    private var mPermissionsDialog: AlertDialog? = null
     private var amapLocationManager: AMAPLocationManager? = null
 
+    private var mPermissionsDialog: AlertDialog? = null
     private val permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -60,7 +55,7 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
         Manifest.permission.ACCESS_FINE_LOCATION
     )
 
-    override fun initLayoutId() = R.layout.home_fragment_first_page
+    override fun initLayoutId() = R.layout.home_activity_home
 
     override fun initData() {
         isRefresh = true
@@ -68,8 +63,7 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
         amapLocationManager?.setOnCommonSingleParamCallback(object :
             OnCommonSingleParamCallback<AMapLocation> {
             override fun onSuccess(success: AMapLocation) {
-                SharedPreferencesManager.put("address", success.address)
-                LogManager.i(TAG, "address*****" + SharedPreferencesManager.get("address", ""))
+                LogManager.i(TAG, "address*****" + success.address)
             }
 
             override fun onError(error: String) {
@@ -79,25 +73,21 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     }
 
     override fun initViews() {
-        layoutOutLayer = rootView?.findViewById<View>(R.id.layout_out_layer) as FrameLayout
-        toolbar = rootView?.findViewById<View>(R.id.toolbar) as Toolbar
-        tevTitle = rootView?.findViewById<View>(R.id.tev_title) as TextView
+        toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        tevTitle = findViewById<View>(R.id.tev_title) as TextView
         tevRequestPermissionAndStartLocating =
-            rootView?.findViewById<View>(R.id.tev_request_permission_and_start_locating) as TextView
-        refreshLayout = rootView?.findViewById<View>(R.id.refresh_layout) as SmartRefreshLayout
-        rcvData = rootView?.findViewById<View>(R.id.rcv_data) as RecyclerView
-        loadView = rootView?.findViewById<View>(R.id.loadView) as QMUILoadingView
+            findViewById<View>(R.id.tev_request_permission_and_start_locating) as TextView
+        refreshLayout = findViewById<View>(R.id.refresh_layout) as SmartRefreshLayout
+        rcvData = findViewById<View>(R.id.rcv_data) as RecyclerView
+        setToolbar(false, R.color.color_FFE066FF)
         tevRequestPermissionAndStartLocating?.setOnClickListener {
-            val ISquareService = ARouter.getInstance().build("/module_square/SquareServiceImpl")
-                .navigation() as ISquareService
-            LogManager.i(
-                TAG,
-                "squareService.getSquareDataList()******" + ISquareService.mSquareDataList.toString()
+            showToast(
+                ResourcesManager.getString(R.string.this_function_can_only_be_used_under_componentization),
+                false
             )
-
-            LogManager.i(TAG, "tevRequestPermissions")
-            initRxPermissionsRxFragment()
+            //                initRxPermissions()
         }
+
         initAdapter()
     }
 
@@ -107,7 +97,8 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
         rcvData?.layoutManager = linearLayoutManager
         rcvData?.itemAnimator = DefaultItemAnimator()
         firstPageAdapter = FirstPageAdapter(mRxAppCompatActivity)
-        firstPageAdapter?.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
+        //		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page)
+        firstPageAdapter.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
             //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4"
             //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4"
             //					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4"
@@ -130,12 +121,9 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
             //
             //				}
             if (view.id == R.id.ll_root) {
-                val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
-                intent.putExtra(
-                    "loadUrl",
-                    firstPageAdapter?.mJuheNewsBeanList?.get(position)?.url
-                )
-                startActivity(intent)
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW)
+                    .withString("loadUrl", firstPageAdapter.mJuheNewsBeanList.get(position).url)
+                    .navigation()
             }
         }
         rcvData?.adapter = firstPageAdapter
@@ -154,109 +142,51 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     }
 
     override fun initLoadData() {
-        initFirstPage()
-        LogManager.i(TAG, "FirstPageFragment initLoadData")
-
-        //		startAsyncTask()
-
-//        try {
-//            //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-//            User user = new User2()
-//            User3 user3 = (User3) user
-//            LogManager.i(TAG, user3.toString())
-//        } catch (Exception e) {
-//            ExceptionManager.getInstance().throwException(getRxAppCompatActivity(), e)
-//        }
+        refreshLayout?.autoRefresh()
     }
 
     override fun attachPresenter(): FirstPagePresenterImpl {
         return FirstPagePresenterImpl(this)
     }
 
-//	private void startAsyncTask() {
-//
-//		// This async task is an anonymous class and therefore has a hidden reference to the outer
-//		// class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
-//		// the activity instance will leak.
-//		new AsyncTask<Void, Void, Void>() {
-//			@Override
-//			protected Void doInBackground(Void... params) {
-//				// Do some slow work in background
-//				SystemClock.sleep(10000)
-//				return null
-//			}
-//		}.execute()
-//
-//		Toast.makeText(getRxAppCompatActivity(), "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
-//	}
-
-    //	private void startAsyncTask() {
-    //
-    //		// This async task is an anonymous class and therefore has a hidden reference to the outer
-    //		// class MainActivity. If the activity gets destroyed before the task finishes (e.g. rotation),
-    //		// the activity instance will leak.
-    //		new AsyncTask<Void, Void, Void>() {
-    //			@Override
-    //			protected Void doInBackground(Void... params) {
-    //				// Do some slow work in background
-    //				SystemClock.sleep(10000)
-    //				return null
-    //			}
-    //		}.execute()
-    //
-    //		Toast.makeText(getRxAppCompatActivity(), "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
-    //	}
-
     override fun showLoading() {
-        loadView?.let {
-            if (it.isShown) {
-                it.visibility = View.VISIBLE
-                it.start()
-            }
+        if (!mLoadView.isShown) {
+            mLoadView.visibility = View.VISIBLE
+            mLoadView.start()
         }
     }
 
     override fun hideLoading() {
-        loadView?.let {
-            if (it.isShown) {
-                it.stop()
-                it.visibility = View.GONE
-            }
+        if (mLoadView.isShown) {
+            mLoadView.stop()
+            mLoadView.visibility = View.GONE
         }
     }
 
     override fun firstPageDataSuccess(success: List<JuheNewsBean>) {
-        if (!mRxAppCompatActivity.isFinishing) {
+        if (!this.isFinishing) {
             if (isRefresh) {
-                firstPageAdapter?.clearData()
-                firstPageAdapter?.addData(success)
+                firstPageAdapter.mJuheNewsBeanList.clear()
+                firstPageAdapter.mJuheNewsBeanList.addAll(success)
+                firstPageAdapter.clearData()
+                firstPageAdapter.addData(firstPageAdapter.mJuheNewsBeanList)
                 refreshLayout?.finishRefresh()
             } else {
-                firstPageAdapter?.addData(success)
+                firstPageAdapter.addData(firstPageAdapter.mJuheNewsBeanList)
                 refreshLayout?.finishLoadMore()
             }
-            LogManager.i(
-                TAG,
-                "firstPageAdapter?.mJuheNewsBeanList*****" + firstPageAdapter?.mJuheNewsBeanList.toString()
-            )
-
-            val IFirstPageService =
-                ARouter.getInstance().build("/module_home/FirstPageServiceImpl")
-                    .navigation() as IFirstPageService
-            IFirstPageService.mFirstPageDataList =
-                firstPageAdapter?.mJuheNewsBeanList ?: mutableListOf()
             hideLoading()
         }
     }
 
     override fun firstPageDataError(error: String) {
-        if (!mRxAppCompatActivity.isFinishing) {
-//            showToast(error, true)
+        if (!this.isFinishing) {
+            //            showToast(error, true)
             showCustomToast(
-                ScreenManager.dpToPx(20f), ScreenManager.dpToPx(20f),
-                18, resources.getColor(R.color.white),
-                resources.getColor(R.color.color_FF198CFF), ScreenManager.dpToPx(40f),
-                ScreenManager.dpToPx(20f), error,
+                dpToPx(20f), dpToPx(20f),
+                16, ResourcesManager.getColor(R.color.white),
+                ResourcesManager.getColor(R.color.color_FFE066FF), dpToPx(40f),
+                dpToPx(20f), error,
                 true
             )
             if (isRefresh) {
@@ -276,11 +206,11 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     }
 
     /**
-     * RxFragment里需要的时候直接调用就行了
+     * RxAppCompatActivity里需要的时候直接调用就行了
      */
-    private fun initRxPermissionsRxFragment() {
+    private fun initRxPermissions() {
         val rxPermissionsManager = RxPermissionsManager.instance()
-        rxPermissionsManager.initRxPermissions2(
+        rxPermissionsManager.initRxPermissions(
             this,
             permissions,
             object : OnCommonRxPermissionsCallback {
@@ -292,7 +222,7 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
 //                LogManager.i(TAG, user3.toString())
                     val systemId = SharedPreferencesManager.get("systemId", "") as String
                     if (TextUtils.isEmpty(systemId)) {
-                        SharedPreferencesManager.put("systemId", SystemManager.getSystemId())
+                        SharedPreferencesManager.put("systemId", getSystemId())
                         LogManager.i(TAG,
                             "isEmpty systemId*****${SharedPreferencesManager.get("systemId", "") as String}")
                     } else {
@@ -316,15 +246,13 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
     private fun showSystemSetupDialog() {
         cancelPermissionsDialog()
         if (mPermissionsDialog == null) {
-            mPermissionsDialog = AlertDialog.Builder(mRxAppCompatActivity)
+            mPermissionsDialog = AlertDialog.Builder(this)
                 .setTitle("权限设置")
                 .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
                 .setPositiveButton("去授权") { dialog, which ->
                     cancelPermissionsDialog()
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts(
-                        "package", mBaseApplication.packageName, null
-                    )
+                    val uri = Uri.fromParts("package", applicationContext.packageName, null)
                     intent.data = uri
                     startActivityForResult(intent, 207)
                 }
@@ -349,19 +277,11 @@ class FirstPageFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>()
             mBodyParams.clear()
             mBodyParams["type"] = "yule"
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter?.firstPage(this, mBodyParams)
+            presenter.firstPage2(mRxAppCompatActivity, mBodyParams)
         } else {
-            firstPageDataError(resources.getString(R.string.please_check_the_network_connection))
+            firstPageDataError(ResourcesManager.getString(R.string.please_check_the_network_connection))
+            hideLoading()
         }
-    }
-
-    override fun onDestroyView() {
-        layoutOutLayer?.removeAllViews()
-        layoutOutLayer = null
-        if (amapLocationManager != null) {
-            amapLocationManager?.destoryLocation()
-        }
-        super.onDestroyView()
     }
 
 }

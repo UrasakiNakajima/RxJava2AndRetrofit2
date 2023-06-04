@@ -13,14 +13,11 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.base.BaseMvpRxFragment
 import com.phone.library_common.base.IBaseView
 import com.phone.library_common.callback.OnItemViewClickListener
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
-import com.phone.library_common.ui.WebViewActivity
 import com.phone.module_mine.adapter.MineAdapter
 import com.phone.module_mine.bean.Data
 import com.phone.module_mine.presenter.MinePresenterImpl
-import com.phone.module_mine.ui.ParamsTransferChangeProblemActivity
-import com.phone.module_mine.ui.ThreadPoolActivity
-import com.phone.module_mine.ui.UserDataActivity
 import com.phone.module_mine.view.IMineView
 import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -34,7 +31,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
  * introduce :
  */
 
-@Route(path = "/module_mine/mine")
+@Route(path = ConstantData.Route.ROUTE_MINE)
 class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineView {
 
     companion object {
@@ -79,18 +76,19 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
                 override fun onClick(v: View?) {
 //                initMine()
-                    startActivity(UserDataActivity::class.java)
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_USER_DATA).navigation()
                 }
             })
             tevLogout?.setOnClickListener {
                 SharedPreferencesManager.put("isLogin", false)
-                ARouter.getInstance().build("/main_module/login").navigation()
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_LOGIN).navigation()
             }
             tevThreadPool?.setOnClickListener {
-                startActivity(ThreadPoolActivity::class.java)
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL).navigation()
             }
             tevParamsTransferChangeProblem?.setOnClickListener {
-                startActivity(ParamsTransferChangeProblemActivity::class.java)
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_PARAMS_TRANSFER_CHANGE_PROBLEM)
+                    .navigation()
             }
 
             initAdapter()
@@ -117,12 +115,9 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                     //                        .navigation()
 
                     if (view?.id == R.id.ll_root) {
-                        val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
-                        intent.putExtra(
-                            "loadUrl",
-                            mineAdapter.mJuheNewsBeanList.get(position).url
-                        )
-                        startActivity(intent)
+                        ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW)
+                            .withString("loadUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
+                            .navigation()
                     }
                 }
             })

@@ -1,10 +1,17 @@
 package com.phone.module_square.ui
 
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.phone.library_common.base.BaseBindingRxAppActivity
+import com.phone.library_common.base.BaseMvvmAppRxActivity
 import com.phone.library_common.base.BaseRxAppActivity
+import com.phone.library_common.common.ConstantData
+import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_square.R
+import com.phone.module_square.databinding.SquareActivityKotlinCoroutineBinding
 import kotlinx.coroutines.*
 
-class KotlinCoroutineActivity : BaseRxAppActivity() {
+@Route(path = ConstantData.Route.ROUTE_KOTLIN_COROUTINE)
+class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCoroutineBinding>() {
 
     companion object {
         private val TAG = KotlinCoroutineActivity::class.java.simpleName
@@ -24,6 +31,9 @@ class KotlinCoroutineActivity : BaseRxAppActivity() {
     }
 
     override fun initViews() {
+        setToolbar(true)
+        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_80000000))
+        mDatabind.layoutBack.setOnClickListener { v -> finish() }
 
     }
 
@@ -35,8 +45,6 @@ class KotlinCoroutineActivity : BaseRxAppActivity() {
     }
 
     fun coroutine() {
-
-
         GlobalScope.launch { // 在后台启动一个新的协程并继续
             delay(1000L) // 无阻塞的等待1秒钟（默认时间单位是毫秒）
             println("World!") // 在延迟后打印输出
@@ -184,6 +192,14 @@ class KotlinCoroutineActivity : BaseRxAppActivity() {
         val name: String = "",
         val age: Int = 0,
     )
+
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
+    }
 
 
 }

@@ -301,10 +301,7 @@
                     android:paddingBottom="@dimen/dp_10"
                     android:text="@string/three_level_linkage_list"
                     android:textColor="@color/color_FFFFFFFF"
-                    android:textSize="@dimen/sp_16"
-                    app:author="@{subDataSquare.author}"
-                    app:chapterName="@{subDataSquare.desc}"
-                    app:envelopePic="@{subDataSquare.envelopePic}" />
+                    android:textSize="@dimen/sp_16" />
 
                 <View
                     android:layout_width="match_parent"

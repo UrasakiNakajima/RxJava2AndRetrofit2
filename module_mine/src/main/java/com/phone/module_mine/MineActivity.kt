@@ -8,20 +8,19 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
 import com.phone.library_common.callback.OnItemViewClickListener
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.library_common.manager.ScreenManager
-import com.phone.library_common.ui.WebViewActivity
+import com.phone.library_common.manager.SharedPreferencesManager
 import com.phone.module_mine.adapter.MineAdapter
 import com.phone.module_mine.bean.Data
 import com.phone.module_mine.presenter.MinePresenterImpl
-import com.phone.module_mine.ui.ParamsTransferChangeProblemActivity
-import com.phone.module_mine.ui.ThreadPoolActivity
-import com.phone.module_mine.ui.UserDataActivity
 import com.phone.module_mine.view.IMineView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -33,7 +32,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
  * date      :
  * introduce :
  */
-//@Route(path = "/module_mine/ui/mine_details")
+
 class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMineView {
 
     companion object {
@@ -70,27 +69,26 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
         rcvData = findViewById(R.id.rcv_data)
 
         setToolbar(false, R.color.color_FF198CFF)
+
         tevTitle?.setOnClickListener(object : View.OnClickListener {
 
             override fun onClick(v: View?) {
 //                initMine()
-                startActivity(UserDataActivity::class.java)
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_USER_DATA).navigation()
             }
         })
         tevLogout?.setOnClickListener {
-            showToast(
-                ResourcesManager.getString(R.string.this_function_can_only_be_used_under_componentization),
-                false
-            )
-//            baseApplication?.isLogin = false
-//            ARouter.getInstance().build("/main_module/login").navigation()
+            SharedPreferencesManager.put("isLogin", false)
+            ARouter.getInstance().build(ConstantData.Route.ROUTE_LOGIN).navigation()
         }
         tevThreadPool?.setOnClickListener {
-            startActivity(ThreadPoolActivity::class.java)
+            ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL).navigation()
         }
         tevParamsTransferChangeProblem?.setOnClickListener {
-            startActivity(ParamsTransferChangeProblemActivity::class.java)
+            ARouter.getInstance().build(ConstantData.Route.ROUTE_PARAMS_TRANSFER_CHANGE_PROBLEM)
+                .navigation()
         }
+
         initAdapter()
     }
 
@@ -113,9 +111,9 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
 //                        .navigation()
 
                 if (view?.id == R.id.ll_root) {
-                    val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
-                    intent.putExtra("loadUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
-                    startActivity(intent)
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW)
+                        .withString("loadUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
+                        .navigation()
                 }
 //                startActivity(UserDataActivity::class.java)
             }

@@ -37,8 +37,8 @@ class ExceptionManager private constructor() {
 //        //1.调试打印堆栈而不退出（推薦使用，開發人員用Log就可以把異常日誌打印出來）
 //        LogManager.i(TAG, Log.getStackTraceString(throwable))
 
-        //2.打印异常堆栈（推薦使用，讓系統把異常日誌打印出來）
-        throwable.printStackTrace()
+//        //2.打印异常堆栈（推薦使用，讓系統把異常日誌打印出來）
+//        throwable.printStackTrace()
 
 //        //3.获取当前线程的堆栈（不推薦使用，打印的不是很詳細，報錯具體哪行沒打印出來，故不要使用這種方法）
 //        for (StackTraceElement i : Thread.currentThread().getStackTrace()) {

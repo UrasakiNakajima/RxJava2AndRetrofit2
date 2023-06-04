@@ -7,10 +7,11 @@ import android.webkit.*
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.android_and_js.databinding.JsActivityAndroidAndJsBinding
 import com.phone.library_common.base.BaseBindingRxAppActivity
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 
-@Route(path = "/android_and_js/ui/android_and_js")
+@Route(path = ConstantData.Route.ROUTE_ANDROID_AND_JS)
 class AndroidAndJsActivity : BaseBindingRxAppActivity<JsActivityAndroidAndJsBinding>() {
 
     companion object {

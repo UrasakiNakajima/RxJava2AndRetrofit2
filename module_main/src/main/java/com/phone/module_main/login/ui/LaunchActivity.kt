@@ -17,13 +17,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.base.BaseRxAppActivity
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ScreenManager
 import com.phone.library_common.manager.SharedPreferencesManager
 import com.phone.library_common.manager.ThreadPoolManager
 import com.phone.module_main.R
-import com.phone.module_main.main.MainActivity
 
 
 @SuppressLint("CustomSplashScreen")
@@ -189,15 +190,21 @@ class LaunchActivity : BaseRxAppActivity() {
                 TAG,
                 "LaunchActivity 7000 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
             )
-            //Activity 跳转一律放在UI线程去执行
 
-            if (SharedPreferencesManager.get("isLogin", false) as Boolean) {
-                startActivity(MainActivity::class.java)
-            } else {
-                startActivity(LoginActivity::class.java)
-            }
-            finish()
+            //Activity 跳转一律放在UI线程去执行
+            customStartActivity()
         })
+    }
+
+    private fun customStartActivity() {
+        if (SharedPreferencesManager.get("isLogin", false) as Boolean) {
+            ARouter.getInstance().build(ConstantData.Route.ROUTE_MAIN)
+                .navigation()
+        } else {
+            ARouter.getInstance().build(ConstantData.Route.ROUTE_LOGIN)
+                .navigation()
+        }
+        finish()
     }
 
     private fun initPermissions() {
@@ -218,20 +225,10 @@ class LaunchActivity : BaseRxAppActivity() {
             if (mPermissionList.size > 0) { //有权限没有通过，需要申请
                 ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE)
             } else {
-                if (SharedPreferencesManager.get("isLogin", false) as Boolean) {
-                    startActivity(MainActivity::class.java)
-                } else {
-                    startActivity(LoginActivity::class.java)
-                }
-                finish()
+                customStartActivity()
             }
         } else {
-            if (SharedPreferencesManager.get("isLogin", false) as Boolean) {
-                startActivity(MainActivity::class.java)
-            } else {
-                startActivity(LoginActivity::class.java)
-            }
-            finish()
+            customStartActivity()
         }
     }
 
@@ -282,12 +279,7 @@ class LaunchActivity : BaseRxAppActivity() {
                     }
                 }
             } else {
-                if (SharedPreferencesManager.get("isLogin", false) as Boolean) {
-                    startActivity(MainActivity::class.java)
-                } else {
-                    startActivity(LoginActivity::class.java)
-                }
-                finish()
+                customStartActivity()
             }
         }
     }

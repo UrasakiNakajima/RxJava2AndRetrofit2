@@ -4,8 +4,10 @@ import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.base.BaseBindingRxAppActivity
 import com.phone.library_common.bean.UserBean
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.dialog.StandardDialog
 import com.phone.library_common.dialog.StandardUserDialog
 import com.phone.library_common.manager.*
@@ -14,6 +16,7 @@ import com.phone.module_square.adapter.UserBeanAdapter
 import com.phone.module_square.databinding.SquareActivityCreateUserBinding
 import java.util.*
 
+@Route(path = ConstantData.Route.ROUTE_CREATE_USER)
 class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBinding>() {
 
     private val TAG = CreateUserActivity::class.java.simpleName

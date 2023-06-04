@@ -16,7 +16,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.library_common.base.BaseRxAppActivity;
+import com.phone.library_common.common.ConstantData;
 import com.phone.library_common.common.DecimalInputFilter;
 import com.phone.library_common.common.DecimalTextWatcher;
 import com.phone.library_common.manager.ResourcesManager;
@@ -29,6 +31,8 @@ import com.phone.module_square.R;
  * date      :
  * introduce :
  */
+
+@Route(path = ConstantData.Route.ROUTE_EDIT_TEXT_INPUT_LIMITS)
 public class EditTextInputLimitsActivity extends BaseRxAppActivity {
 
     private static final String TAG = EditTextInputLimitsActivity.class.getSimpleName();

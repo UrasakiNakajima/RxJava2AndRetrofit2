@@ -5,13 +5,16 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_mine.R
 import com.phone.module_mine.presenter.MinePresenterImpl
 import com.phone.module_mine.view.IUserDataView
 
+@Route(path = ConstantData.Route.ROUTE_USER_DATA)
 class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IUserDataView {
 
     companion object {

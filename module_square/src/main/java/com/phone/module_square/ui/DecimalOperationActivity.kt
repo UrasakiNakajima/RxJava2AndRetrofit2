@@ -5,7 +5,9 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.base.BaseRxAppActivity
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.BigDecimalManager.additionDouble
 import com.phone.library_common.manager.BigDecimalManager.additionDoubleCompatible
 import com.phone.library_common.manager.BigDecimalManager.divisionDouble
@@ -30,6 +32,8 @@ import com.phone.module_square.R
  * date      :
  * introduce : 如果计算的数值总和很大很大，超过50 0000，请使用带有ToStr的方法，不然double数字会转成科学计数法显示
  */
+
+@Route(path = ConstantData.Route.ROUTE_DECIMAL_OPERATION)
 class DecimalOperationActivity : BaseRxAppActivity() {
 
     private val TAG = DecimalOperationActivity::class.java.simpleName

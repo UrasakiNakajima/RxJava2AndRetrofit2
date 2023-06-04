@@ -1,18 +1,18 @@
-package com.phone.module_main.main
+package com.phone.module_main
 
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.custom_view.MineLazyViewPager
 import com.phone.library_common.manager.ResourcesManager
-import com.phone.module_main.BuildConfig
-import com.phone.module_main.R
 import com.phone.module_main.main.presenter.MainPresenterImpl
 import com.phone.module_main.main.view.IMainView
 
@@ -23,6 +23,8 @@ import com.phone.module_main.main.view.IMainView
  * date      :
  * introduce :
  */
+
+@Route(path = ConstantData.Route.ROUTE_MAIN)
 class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMainView {
 
     private val TAG = MainActivity::class.java.simpleName
@@ -46,27 +48,27 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
         if (!BuildConfig.IS_MODULE) {
             //Jump with parameters
             val firstPageFragment = ARouter.getInstance()
-                .build("/module_home/home") //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .build(ConstantData.Route.ROUTE_HOME) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation() as Fragment
             fragmentList.add(firstPageFragment)
             //Jump with parameters
             val projectFragment = ARouter.getInstance()
-                .build("/module_project/project") //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .build(ConstantData.Route.ROUTE_PROJECT) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation() as Fragment
             fragmentList.add(projectFragment)
             //Jump with parameters
             val squareFragment = ARouter.getInstance()
-                .build("/module_square/square") //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .build(ConstantData.Route.ROUTE_SQUARE) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation() as Fragment
             fragmentList.add(squareFragment)
             //Jump with parameters
             val resourceFragment = ARouter.getInstance()
-                .build("/module_resource/resource") //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .build(ConstantData.Route.ROUTE_RESOURCE) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation() as Fragment
             fragmentList.add(resourceFragment)
             //Jump with parameters
             val mineFragment = ARouter.getInstance()
-                .build("/module_mine/mine") //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .build(ConstantData.Route.ROUTE_MINE) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation() as Fragment
             fragmentList.add(mineFragment)
         }

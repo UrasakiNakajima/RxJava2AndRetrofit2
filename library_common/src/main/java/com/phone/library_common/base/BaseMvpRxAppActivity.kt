@@ -323,27 +323,25 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
 
     private fun killAppProcess() {
         LogManager.i(TAG, "killAppProcess")
-        mBaseApplication?.let {
-            val manager = it.getSystemService(ACTIVITY_SERVICE) as ActivityManager
-            val processInfos = manager.runningAppProcesses
-            // 先杀掉相关进程，最后再杀掉主进程
-            for (runningAppProcessInfo in processInfos) {
-                if (runningAppProcessInfo.pid != Process.myPid()) {
-                    Process.killProcess(runningAppProcessInfo.pid)
-                }
+        val manager = mBaseApplication.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val processInfos = manager.runningAppProcesses
+        // 先杀掉相关进程，最后再杀掉主进程
+        for (runningAppProcessInfo in processInfos) {
+            if (runningAppProcessInfo.pid != Process.myPid()) {
+                Process.killProcess(runningAppProcessInfo.pid)
             }
-            LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
-            val crashHandlerManager = CrashHandlerManager.instance()
-            crashHandlerManager?.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
-            try {
-                Thread.sleep(1000)
-            } catch (e: InterruptedException) {
-                LogManager.i(TAG, "error")
-            }
-            Process.killProcess(Process.myPid())
-            // 正常退出程序，也就是结束当前正在运行的 java 虚拟机
-            System.exit(0)
         }
+        LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
+        val crashHandlerManager = CrashHandlerManager.instance()
+        crashHandlerManager?.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
+        try {
+            Thread.sleep(1000)
+        } catch (e: InterruptedException) {
+            LogManager.i(TAG, "error")
+        }
+        Process.killProcess(Process.myPid())
+        // 正常退出程序，也就是结束当前正在运行的 java 虚拟机
+        System.exit(0)
     }
 
     override fun onDestroy() {

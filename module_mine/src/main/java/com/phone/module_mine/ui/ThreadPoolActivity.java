@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.library_common.base.BaseRxAppActivity;
+import com.phone.library_common.common.ConstantData;
 import com.phone.library_common.manager.LogManager;
 import com.phone.library_common.manager.ResourcesManager;
 import com.phone.module_mine.R;
@@ -26,6 +28,8 @@ import java.util.concurrent.Future;
  * date      :
  * introduce : 记一次Java参数传递时（传Vector，就是线程安全的List）值发生变化问题
  */
+
+@Route(path = ConstantData.Route.ROUTE_THREAD_POOL)
 public class ThreadPoolActivity extends BaseRxAppActivity {
 
     private static final String TAG = ThreadPoolActivity.class.getSimpleName();

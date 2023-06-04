@@ -60,12 +60,6 @@ android {
             }
         }
 
-//        externalNativeBuild {
-//            cmake {
-//                cppFlag ""
-//            }
-//        }
-
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
@@ -120,6 +114,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     ndkVersion '16.1.4479499'
 
     externalNativeBuild {
@@ -128,6 +123,7 @@ android {
             version '3.10.2'
         }
     }
+
     //给Module 内的资源名增加前缀, 避免资源名冲突
     resourcePrefix "library_"
 }

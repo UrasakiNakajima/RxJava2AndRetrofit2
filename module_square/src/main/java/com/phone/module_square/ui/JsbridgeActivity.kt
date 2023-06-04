@@ -12,13 +12,14 @@ import com.github.lzyzsd.jsbridge.DefaultHandler
 import com.google.gson.Gson
 import com.phone.library_common.base.BaseBindingRxAppActivity
 import com.phone.library_common.bean.UserBean
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareActivityJsbridgeBinding
 
 
-@Route(path = "/module_square/jsbridge")
+@Route(path = ConstantData.Route.ROUTE_JSBRIDGE)
 class JsbridgeActivity : BaseBindingRxAppActivity<SquareActivityJsbridgeBinding>() {
 
     companion object {
@@ -47,6 +48,8 @@ class JsbridgeActivity : BaseBindingRxAppActivity<SquareActivityJsbridgeBinding>
     override fun initViews() {
         setToolbar(true)
         mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_80000000))
+        mDatabind.layoutBack.setOnClickListener { v -> finish() }
+
         mDatabind.tevFunctionToJs.setOnClickListener {
             val userBean = UserBean()
             userBean.id = 1

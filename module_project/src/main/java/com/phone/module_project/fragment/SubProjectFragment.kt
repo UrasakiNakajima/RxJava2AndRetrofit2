@@ -1,21 +1,20 @@
 package com.phone.module_project.fragment
 
-import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.adapter.ProjectAndResourceAdapter
 import com.phone.library_common.base.BaseMvvmRxFragment
 import com.phone.library_common.bean.ArticleListBean
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.library_common.manager.ScreenManager
-import com.phone.library_common.ui.WebViewActivity
 import com.phone.module_project.R
 import com.phone.module_project.databinding.ProjectFragmentProjectSubBinding
 import com.phone.module_project.view.ISubProjectView
@@ -23,7 +22,8 @@ import com.phone.module_project.view_model.SubProjectViewModelImpl
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
-class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, ProjectFragmentProjectSubBinding>(),
+class SubProjectFragment :
+    BaseMvvmRxFragment<SubProjectViewModelImpl, ProjectFragmentProjectSubBinding>(),
     ISubProjectView {
 
     companion object {
@@ -51,8 +51,7 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, ProjectFr
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
      */
-    override fun initViewModel() =
-        ViewModelProvider(this).get(SubProjectViewModelImpl::class.java)
+    override fun initViewModel() = ViewModelProvider(this).get(SubProjectViewModelImpl::class.java)
 
     override fun initData() {
         type = arguments?.getInt("type") ?: 0
@@ -78,22 +77,21 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, ProjectFr
     }
 
     override fun initViews() {
-        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(
-            object : OnRefreshLoadMoreListener {
-                override fun onLoadMore(refreshLayout: RefreshLayout) {
-                    LogManager.i(TAG, "onLoadMore")
-                    isRefresh = false
-                    pageNum++
-                    initSubProject(pageNum, tabId)
-                }
+        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                LogManager.i(TAG, "onLoadMore")
+                isRefresh = false
+                pageNum++
+                initSubProject(pageNum, tabId)
+            }
 
-                override fun onRefresh(refreshLayout: RefreshLayout) {
-                    LogManager.i(TAG, "onRefresh")
-                    isRefresh = true
-                    pageNum = 1
-                    initSubProject(pageNum, tabId)
-                }
-            })
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                LogManager.i(TAG, "onRefresh")
+                isRefresh = true
+                pageNum = 1
+                initSubProject(pageNum, tabId)
+            }
+        })
     }
 
     private fun initAdapter(list: MutableList<ArticleListBean>) {
@@ -114,28 +112,12 @@ class SubProjectFragment : BaseMvvmRxFragment<SubProjectViewModelImpl, ProjectFr
                     when (view.id) {
                         //子项
                         R.id.root -> {
-                            val intent = Intent(mRxAppCompatActivity, WebViewActivity::class.java)
-                            intent.putExtras(Bundle().apply {
-                                subProjectAdapter?.list?.get(i)?.let {
-                                    putString(
-                                        "loadUrl",
-                                        it.link
-                                    )
-                                    putString(
-                                        "title",
-                                        it.title
-                                    )
-                                    putString(
-                                        "author",
-                                        it.author
-                                    )
-                                    putInt(
-                                        "id",
-                                        it.id
-                                    )
-                                }
-                            })
-                            startActivity(intent)
+                            subProjectAdapter?.list?.get(i)?.let {
+                                ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW)
+                                    .withString("loadUrl", it.link).withString("title", it.title)
+                                    .withString("author", it.author).withInt("id", it.id)
+                                    .navigation()
+                            }
                         }
                         //收藏
                         R.id.ivCollect -> {

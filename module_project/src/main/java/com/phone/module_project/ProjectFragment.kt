@@ -10,6 +10,7 @@ import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_common.adapter.TabNavigatorAdapter
 import com.phone.library_common.base.BaseMvvmRxFragment
 import com.phone.library_common.bean.TabBean
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
 import com.phone.module_project.databinding.ProjectFragmentProjectBinding
 import com.phone.module_project.fragment.SubProjectFragment
@@ -18,7 +19,7 @@ import com.phone.module_project.view_model.ProjectViewModelImpl
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 
-@Route(path = "/module_project/project")
+@Route(path = ConstantData.Route.ROUTE_PROJECT)
 class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragmentProjectBinding>(),
     IProjectView {
 

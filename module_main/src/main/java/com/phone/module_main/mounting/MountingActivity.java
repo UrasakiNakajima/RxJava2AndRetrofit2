@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter;
 import com.phone.library_common.base.BaseBindingRxAppActivity;
+import com.phone.library_common.common.ConstantData;
 import com.phone.library_common.manager.LogManager;
 import com.phone.library_common.manager.ResourcesManager;
 import com.phone.library_common.manager.ScreenManager;
@@ -21,7 +22,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import java.util.ArrayList;
 import java.util.List;
 
-@Route(path = "/module_main/mounting")
+@Route(path = ConstantData.Route.ROUTE_MOUNTING)
 public class MountingActivity extends BaseBindingRxAppActivity<MainActivityMountingBinding> {
 
     private static final String TAG = MountingActivity.class.getSimpleName();

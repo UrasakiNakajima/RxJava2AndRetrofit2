@@ -3,14 +3,15 @@ package com.phone.module_home
 import android.content.Context
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.bean.FirstPageResponse.ResultData.JuheNewsBean
-import com.phone.library_common.service.IFirstPageService
+import com.phone.library_common.common.ConstantData
+import com.phone.library_common.service.IHomeService
 
-@Route(path = "/module_home/FirstPageServiceImpl")
-class FirstPageServiceImpl : IFirstPageService {
+@Route(path = ConstantData.Route.ROUTE_HOME_SERVICE)
+class HomeServiceImpl : IHomeService {
 
-    private val TAG = FirstPageServiceImpl::class.java.simpleName
+    private val TAG = HomeServiceImpl::class.java.simpleName
 
-    override var mFirstPageDataList: MutableList<JuheNewsBean> = mutableListOf()
+    override var mHomeDataList: MutableList<JuheNewsBean> = mutableListOf()
         get() {
             return field
         }

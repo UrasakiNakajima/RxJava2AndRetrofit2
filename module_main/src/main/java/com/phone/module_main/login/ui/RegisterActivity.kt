@@ -7,8 +7,10 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.ImageLoaderManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager.Companion.isNetworkAvailable
@@ -16,6 +18,7 @@ import com.phone.module_main.R
 import com.phone.module_main.login.presenter.LoginPresenterImpl
 import com.phone.module_main.login.view.IRegisterView
 
+@Route(path = ConstantData.Route.ROUTE_REGISTER)
 class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), IRegisterView {
 
     private val TAG = RegisterActivity::class.java.simpleName

@@ -21,7 +21,7 @@
             android:value="356a1587ceff55b9378d7ad70923b553" />
 
         <activity
-            android:name=".FirstPageActivity"
+            android:name=".HomeActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">

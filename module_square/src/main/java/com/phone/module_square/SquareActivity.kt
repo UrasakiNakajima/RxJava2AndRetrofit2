@@ -9,16 +9,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.immersionbar.ImmersionBar
-import com.phone.base64_and_file.Base64AndFileActivity
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.BaseMvvmAppRxActivity
 import com.phone.library_common.bean.*
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
+import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
 import com.phone.library_common.service.ISquareService
 import com.phone.module_square.databinding.SquareActivitySquareBinding
-import com.phone.module_square.ui.*
 import com.phone.module_square.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -90,7 +89,11 @@ class SquareActivity :
                 number = 1
                 initRxPermissions(number)
             }
-            tevCreateAnException.run {
+            tevCreateAnException.setOnClickListener {
+                number = 2
+                initRxPermissions(number)
+            }
+            tevCreateAnException.apply {
                 setOnClickListener {
                     number = 2
                     initRxPermissions(number)
@@ -101,32 +104,47 @@ class SquareActivity :
                 initRxPermissions(number)
             }
             tevAndroidAndJs.setOnClickListener {
-                showCustomToast(
-                    ResourcesManager.getString(R.string.this_function_can_only_be_used_under_componentization),
-                    false
-                )
-
-//                //Jump with parameters
-//                ARouter.getInstance().build("/android_and_js/ui").navigation()
+                //Jump with parameters
+                ARouter.getInstance()
+                    .build(ConstantData.Route.ROUTE_ANDROID_AND_JS)
+                    .navigation()
             }
-            tevEditTextInputLimits.setOnClickListener {
-                startActivity(EditTextInputLimitsActivity::class.java)
+            tevEditTextInputLimits.run {
+                setOnClickListener {
+                    ARouter.getInstance()
+                        .build(ConstantData.Route.ROUTE_EDIT_TEXT_INPUT_LIMITS)
+                        .navigation()
+                }
             }
             tevDecimalOperation.setOnClickListener {
-                startActivity(DecimalOperationActivity::class.java)
+                ARouter.getInstance()
+                    .build(ConstantData.Route.ROUTE_DECIMAL_OPERATION)
+                    .navigation()
             }
             tevCreateUser.setOnClickListener {
-                startActivity(CreateUserActivity::class.java)
+                ARouter.getInstance()
+                    .build(ConstantData.Route.ROUTE_CREATE_USER)
+                    .navigation()
             }
             tevKotlinCoroutine.setOnClickListener {
-                startActivity(KotlinCoroutineActivity::class.java)
+                ARouter.getInstance()
+                    .build(ConstantData.Route.ROUTE_KOTLIN_COROUTINE)
+                    .navigation()
+            }
+            tevMounting.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance()
+                    .build(ConstantData.Route.ROUTE_MOUNTING)
+                    .navigation()
+            }
+            tevJsbridge.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance()
+                    .build(ConstantData.Route.ROUTE_JSBRIDGE)
+                    .navigation()
             }
             tevThreeLevelLinkageList.setOnClickListener {
-                startActivity(PickerViewActivity::class.java)
-            }
-            imvPicture.setOnClickListener {
-//                ARouter.getInstance().build("/module_project/ui/event_schedule").navigation()
-                startActivity(Base64AndFileActivity::class.java)
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
             }
         }
     }
