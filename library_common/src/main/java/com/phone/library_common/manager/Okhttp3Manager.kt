@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit
  * introduce : 联网okhttp3管理类
  */
 
-class Okhttp3Manager {
+class Okhttp3Manager private constructor() {
 
     var mClient: OkHttpClient
     val UPDATA = 100
@@ -53,6 +53,7 @@ class Okhttp3Manager {
      */
     companion object {
         private val TAG = Okhttp3Manager::class.java.simpleName
+        @Volatile
         private var instance: Okhttp3Manager? = null
             get() {
                 if (field == null) {

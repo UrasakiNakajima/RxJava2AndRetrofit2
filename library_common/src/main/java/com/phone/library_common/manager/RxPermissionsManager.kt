@@ -17,6 +17,7 @@ class RxPermissionsManager {
      */
     companion object {
         private val TAG = RxPermissionsManager::class.java.simpleName
+        @Volatile
         private var instance: RxPermissionsManager? = null
             get() {
                 if (field == null) {

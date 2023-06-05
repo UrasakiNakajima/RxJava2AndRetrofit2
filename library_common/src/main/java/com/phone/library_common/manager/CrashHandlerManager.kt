@@ -44,6 +44,7 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
      * @return
      */
     companion object {
+        @Volatile
         private var instance: CrashHandlerManager? = null
             get() {
                 if (field == null) {

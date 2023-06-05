@@ -69,7 +69,7 @@ class LaunchActivity : BaseRxAppActivity() {
         val tevKotlin = findViewById<View>(R.id.tev_kotlin) as TextView
         setToolbar(true, R.color.color_FFFFC73B)
 
-        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(1000) {
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000) {
             LogManager.i(
                 TAG,
                 "LaunchActivity 500 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
@@ -185,7 +185,7 @@ class LaunchActivity : BaseRxAppActivity() {
     override fun initLoadData() {
 //        initPermissions()
 
-        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(5000, {
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(5000, {
             LogManager.i(
                 TAG,
                 "LaunchActivity 7000 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
@@ -344,7 +344,7 @@ class LaunchActivity : BaseRxAppActivity() {
         if (animatorSet3.isRunning) {
             animatorSet3.cancel()
         }
-        ThreadPoolManager.get().shutdownScheduledThreadPool()
+        ThreadPoolManager.instance().shutdownScheduledThreadPool()
         super.onDestroy()
     }
 }

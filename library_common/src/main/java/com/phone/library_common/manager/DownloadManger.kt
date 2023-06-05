@@ -29,23 +29,19 @@ class DownloadManger private constructor() {
 
     companion object {
         private val TAG = DownloadManger::class.java.simpleName
-
-        private var manager: DownloadManger? = null
+        @Volatile
+        private var instance: DownloadManger? = null
             get() {
                 if (field == null) {
-                    synchronized(DownloadManger::class.java) {
-                        if (field == null) {
-                            field = DownloadManger()
-                        }
-                    }
+                    field = DownloadManger()
                 }
-
                 return field
             }
 
         @Synchronized
-        fun get(): DownloadManger {
-            return manager!!
+        @JvmStatic
+        fun instance(): DownloadManger {
+            return instance!!
         }
     }
 

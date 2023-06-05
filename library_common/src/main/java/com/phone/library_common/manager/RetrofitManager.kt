@@ -34,7 +34,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.experimental.and
 
-class RetrofitManager {
+class RetrofitManager private constructor() {
 
     private val TAG = RetrofitManager::class.java.simpleName
     lateinit var mRetrofit: Retrofit

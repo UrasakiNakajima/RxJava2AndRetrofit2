@@ -18,7 +18,7 @@ import java.io.*
  * introduce :
  */
 
-class ReadAndWriteManager {
+class ReadAndWriteManager private constructor() {
 
     private val TAG = ReadAndWriteManager::class.java.simpleName
     private var manager: ReadAndWriteManager? = null
@@ -29,6 +29,7 @@ class ReadAndWriteManager {
      * @return
      */
     companion object {
+        @Volatile
         private var instance: ReadAndWriteManager? = null
             get() {
                 if (field == null) {

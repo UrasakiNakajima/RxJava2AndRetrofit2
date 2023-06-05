@@ -40,7 +40,7 @@ class MineApplication : BaseApplication() {
     }
 
     private fun initData2() {
-        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(800, {
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(800, {
             SharedPreferencesManager.put("date", "date")
             val date = SharedPreferencesManager.get("date", "") as String
             LogManager.i(TAG, "date*****$date")

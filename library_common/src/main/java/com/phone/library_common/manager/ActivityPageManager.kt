@@ -34,6 +34,7 @@ class ActivityPageManager private constructor() {
     val mIsLastAliveActivity = AtomicBoolean(false)
 
     companion object {
+        @Volatile
         private var instance: ActivityPageManager? = null
             get() {
                 if (field == null) {

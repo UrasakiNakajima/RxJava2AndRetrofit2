@@ -79,7 +79,7 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     private fun initData() {
-        ThreadPoolManager.get().createScheduledThreadPoolToUIThread(500, {
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(500, {
             getSignInfo()
             //获取so 文件的密钥
             val data = JavaGetData.nativeAesKey(this@BaseApplication, BuildConfig.IS_RELEASE)

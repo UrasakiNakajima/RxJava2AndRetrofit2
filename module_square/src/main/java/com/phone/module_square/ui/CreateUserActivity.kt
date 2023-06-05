@@ -107,7 +107,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
 
     private fun queryUserList() {
         showLoading()
-        ThreadPoolManager.get().createSyncThreadPool {
+        ThreadPoolManager.instance().createSyncThreadPool {
             queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
             LogManager.i(TAG, "queryUserList*****${queryUserList.size}")
             MainThreadManager {
@@ -215,7 +215,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                             true
                         )
                     } else {
-                        ThreadPoolManager.get().createSyncThreadPool {
+                        ThreadPoolManager.instance().createSyncThreadPool {
 //                            List<UserBean> userBeanAddList = new ArrayList<>()
 //                            for (int i = 0 i < 20000 i++) {
 //                            val jsonStr =
@@ -230,7 +230,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                             userBeanDaoManager?.insert(success)
                         }
                     }
-                    ThreadPoolManager.get().createSyncThreadPool {
+                    ThreadPoolManager.instance().createSyncThreadPool {
                         queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
                         MainThreadManager {
                             if (queryUserList.size > 0) {
@@ -295,7 +295,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                             .userId == success.userId
                     ) {
                         success.id = userBeanList[0].id
-                        ThreadPoolManager.get().createSyncThreadPool {
+                        ThreadPoolManager.instance().createSyncThreadPool {
                             userBeanDaoManager?.update(success)
                             MainThreadManager {
                                 showToast(
@@ -311,7 +311,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                             true
                         )
                     }
-                    ThreadPoolManager.get().createSyncThreadPool {
+                    ThreadPoolManager.instance().createSyncThreadPool {
                         queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
                         MainThreadManager {
                             if (queryUserList.size > 0) {
@@ -368,7 +368,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                     deleteUserDialog?.hideStandardDialog()
                     deleteUserDialog = null
                     showLoading()
-                    ThreadPoolManager.get().createSyncThreadPool {
+                    ThreadPoolManager.instance().createSyncThreadPool {
                         userBeanDaoManager?.delete(
                             userBeanAdapter?.userBeanList?.get(position) ?: UserBean()
                         )
@@ -428,7 +428,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                     deleteAllUserDialog?.hideStandardDialog()
                     deleteAllUserDialog = null
                     showLoading()
-                    ThreadPoolManager.get().createSyncThreadPool {
+                    ThreadPoolManager.instance().createSyncThreadPool {
                         queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
                         userBeanDaoManager?.deleteInTx(queryUserList)
                         queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
@@ -472,7 +472,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
 
     override fun onDestroy() {
         userBeanDaoManager?.closeConnection()
-        ThreadPoolManager.get().shutdownNowSyncThreadPool()
+        ThreadPoolManager.instance().shutdownNowSyncThreadPool()
         super.onDestroy()
     }
 
