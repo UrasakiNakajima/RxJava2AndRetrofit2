@@ -130,7 +130,7 @@ dependencies {
 //    implementation 'com.shuyu:gsyVideoPlayer-arm64:8.0.0'
 
     //百分比进度条
-    implementation 'cn.bingoogolapple:bga-progressbar:1.0.1@aar'
+    implementation "cn.bingoogolapple:bga-progressbar:$BuildVersions.bga_progressbar_version"
 
     //定位功能
     implementation 'com.amap.api:location:latest.integration'

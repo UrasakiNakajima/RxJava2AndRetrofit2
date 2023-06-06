@@ -149,7 +149,7 @@ greendao {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api "org.jetbrains.kotlin:kotlin-stdlib:$BuildVersions.kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib:$BuildVersions.kotlin_stdlib_version"
     api "androidx.appcompat:appcompat:$BuildVersions.appcompat_version"
     api "androidx.constraintlayout:constraintlayout:$BuildVersions.constraintlayout_version"
     implementation files('libs/BASE64Decoder.jar')

@@ -9,6 +9,9 @@ object BuildVersions {
     const val schemaVersion = 12
 
     const val kotlin_version = "1.6.21"
+    const val kotlin_stdlib_version = "1.6.21"
+    const val kotlin_gradle_plugin_version = "1.6.21"
+
     //AndroidX
     const val appcompat_version = "1.4.0"
     const val constraintlayout_version = "2.0.4"
@@ -20,6 +23,8 @@ object BuildVersions {
     const val runner_version = "1.4.0"
     const val espresso_core_version = "3.4.0"
     const val recyclerview_version = "1.2.0"
+    const val kotlinx_coroutines_android_version = "1.3.9"
+    const val kotlinx_coroutines_core_version = "1.3.9"
 
     const val material_version = "1.4.0"
     const val junit_version = "4.12"
@@ -41,14 +46,16 @@ object BuildVersions {
     const val rxpermissions_version = "0.11"
     const val rxlifecycle_version = "3.1.0"
 
-    const val autodispose_version = "1.0.0-RC2"
-    const val glide_version = "4.11.0"
     const val immersionbar_version = "3.2.2"
     const val qmui_version = "2.0.0-alpha10"
     const val fastjson_version = "1.2.61"
     const val picture_selector_version = "v3.0.9"
     const val refresh_layout_version = "2.0.1"
     const val picker_view_version = "4.1.8"
+    const val bga_progressbar_version = "1.0.1@aar"
+
+    const val glide_version = "4.11.0"
+    const val autodispose_version = "1.0.0-RC2"
     const val arouter_api_version = "1.5.2"
     const val arouter_compiler_version = "1.5.2"
     const val leakcanary_version = "2.7"

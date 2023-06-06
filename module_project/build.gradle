@@ -120,7 +120,7 @@ dependencies {
     implementation project(path: ':library_common')
 
     //kotlin databinding
-    kapt "com.android.databinding:compiler:4.1.1"
+    kapt "com.android.databinding:compiler:$BuildVersions.databinding_version"
 
     //Android路由（用于不同app之间的跳转）
 //    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
