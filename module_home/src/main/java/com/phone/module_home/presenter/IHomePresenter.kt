@@ -10,7 +10,7 @@ import com.trello.rxlifecycle3.components.support.RxFragment
  * introduce :
  */
 
-interface IFirstPagePresenter {
+interface IHomePresenter {
 
     fun firstPage(rxFragment: RxFragment, bodyParams: Map<String, String>)
 

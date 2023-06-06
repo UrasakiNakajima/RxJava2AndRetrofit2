@@ -13,11 +13,11 @@ import com.phone.library_common.bean.FirstPageResponse.ResultData.JuheNewsBean
 import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.module_home.R
 
-class FirstPageAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         @JvmStatic
-        private val TAG = FirstPageAdapter::class.java.simpleName
+        private val TAG = HomeAdapter::class.java.simpleName
     }
 
     var mJuheNewsBeanList: MutableList<JuheNewsBean> = ArrayList()

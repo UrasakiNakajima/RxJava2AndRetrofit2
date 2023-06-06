@@ -23,15 +23,15 @@ import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
 import com.phone.library_common.manager.ScreenManager.dpToPx
 import com.phone.library_common.manager.SystemManager.getSystemId
-import com.phone.module_home.adapter.FirstPageAdapter
+import com.phone.module_home.adapter.HomeAdapter
 import com.phone.module_home.manager.AMAPLocationManager
-import com.phone.module_home.presenter.FirstPagePresenterImpl
+import com.phone.module_home.presenter.HomePresenterImpl
 import com.phone.module_home.view.IFirstPageView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
-class HomeActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>(),
+class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
     IFirstPageView {
 
     private val TAG = HomeActivity::class.java.simpleName
@@ -41,7 +41,7 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>(),
     private var refreshLayout: SmartRefreshLayout? = null
     private var rcvData: RecyclerView? = null
 
-    private lateinit var firstPageAdapter: FirstPageAdapter
+    private lateinit var homeAdapter: HomeAdapter
     private var isRefresh = false
 
     private var amapLocationManager: AMAPLocationManager? = null
@@ -96,9 +96,9 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>(),
         linearLayoutManager.orientation = RecyclerView.VERTICAL
         rcvData?.layoutManager = linearLayoutManager
         rcvData?.itemAnimator = DefaultItemAnimator()
-        firstPageAdapter = FirstPageAdapter(mRxAppCompatActivity)
+        homeAdapter = HomeAdapter(mRxAppCompatActivity)
         //		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page)
-        firstPageAdapter.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
+        homeAdapter.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
             //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4"
             //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4"
             //					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4"
@@ -122,11 +122,11 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>(),
             //				}
             if (view.id == R.id.ll_root) {
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW)
-                    .withString("loadUrl", firstPageAdapter.mJuheNewsBeanList.get(position).url)
+                    .withString("loadUrl", homeAdapter.mJuheNewsBeanList.get(position).url)
                     .navigation()
             }
         }
-        rcvData?.adapter = firstPageAdapter
+        rcvData?.adapter = homeAdapter
         refreshLayout?.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
@@ -145,8 +145,8 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>(),
         refreshLayout?.autoRefresh()
     }
 
-    override fun attachPresenter(): FirstPagePresenterImpl {
-        return FirstPagePresenterImpl(this)
+    override fun attachPresenter(): HomePresenterImpl {
+        return HomePresenterImpl(this)
     }
 
     override fun showLoading() {
@@ -166,13 +166,13 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>(),
     override fun firstPageDataSuccess(success: List<JuheNewsBean>) {
         if (!this.isFinishing) {
             if (isRefresh) {
-                firstPageAdapter.mJuheNewsBeanList.clear()
-                firstPageAdapter.mJuheNewsBeanList.addAll(success)
-                firstPageAdapter.clearData()
-                firstPageAdapter.addData(firstPageAdapter.mJuheNewsBeanList)
+                homeAdapter.mJuheNewsBeanList.clear()
+                homeAdapter.mJuheNewsBeanList.addAll(success)
+                homeAdapter.clearData()
+                homeAdapter.addData(homeAdapter.mJuheNewsBeanList)
                 refreshLayout?.finishRefresh()
             } else {
-                firstPageAdapter.addData(firstPageAdapter.mJuheNewsBeanList)
+                homeAdapter.addData(homeAdapter.mJuheNewsBeanList)
                 refreshLayout?.finishLoadMore()
             }
             hideLoading()

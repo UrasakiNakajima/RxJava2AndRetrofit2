@@ -12,7 +12,7 @@ import okhttp3.ResponseBody
  * introduce :
  */
 
-class FirstPageModelImpl : IFirstPageModel {
+class HomeModelImpl : IHomeModel {
 
     private val TAG = "FirstPageModelImpl"
 

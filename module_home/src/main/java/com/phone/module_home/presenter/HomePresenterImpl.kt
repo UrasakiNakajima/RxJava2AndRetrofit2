@@ -10,7 +10,7 @@ import com.phone.library_common.manager.LogManager.i
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_home.R
-import com.phone.module_home.model.FirstPageModelImpl
+import com.phone.module_home.model.HomeModelImpl
 import com.phone.module_home.view.IFirstPageView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
@@ -22,17 +22,17 @@ import com.trello.rxlifecycle3.components.support.RxFragment
  * introduce : Presenter登录模块的（一个小模块对应一个Presenter）
  */
 
-class FirstPagePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
-    IFirstPagePresenter {
+class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
+    IHomePresenter {
 
     private val TAG = "FirstPagePresenterImpl"
 
     //    private IFirstPageView firstPageView;//P需要与V 交互，所以需要持有V的引用
-    private var model: FirstPageModelImpl
+    private var model: HomeModelImpl
 
     init {
         attachView(baseView)
-        model = FirstPageModelImpl()
+        model = HomeModelImpl()
     }
 
     override fun firstPage(rxFragment: RxFragment, bodyParams: Map<String, String>) {

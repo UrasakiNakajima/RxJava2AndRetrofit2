@@ -25,9 +25,9 @@ import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
 import com.phone.library_common.service.IHomeService
 import com.phone.library_common.service.ISquareService
-import com.phone.module_home.adapter.FirstPageAdapter
+import com.phone.module_home.adapter.HomeAdapter
 import com.phone.module_home.manager.AMAPLocationManager
-import com.phone.module_home.presenter.FirstPagePresenterImpl
+import com.phone.module_home.presenter.HomePresenterImpl
 import com.phone.module_home.view.IFirstPageView
 import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -35,7 +35,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 @Route(path = ConstantData.Route.ROUTE_HOME)
-class HomeFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>(), IFirstPageView {
+class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IFirstPageView {
 
     private val TAG = HomeFragment::class.java.simpleName
     private var layoutOutLayer: FrameLayout? = null
@@ -46,7 +46,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>(), IFi
     private var rcvData: RecyclerView? = null
     private var loadView: QMUILoadingView? = null
 
-    private var firstPageAdapter: FirstPageAdapter? = null
+    private var homeAdapter: HomeAdapter? = null
     private var isRefresh = false
 
     private var mPermissionsDialog: AlertDialog? = null
@@ -106,8 +106,8 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>(), IFi
         linearLayoutManager.orientation = RecyclerView.VERTICAL
         rcvData?.layoutManager = linearLayoutManager
         rcvData?.itemAnimator = DefaultItemAnimator()
-        firstPageAdapter = FirstPageAdapter(mRxAppCompatActivity)
-        firstPageAdapter?.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
+        homeAdapter = HomeAdapter(mRxAppCompatActivity)
+        homeAdapter?.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
             //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4"
             //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4"
             //					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4"
@@ -131,11 +131,11 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>(), IFi
             //				}
             if (view.id == R.id.ll_root) {
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW)
-                    .withString("loadUrl", firstPageAdapter?.mJuheNewsBeanList?.get(position)?.url)
+                    .withString("loadUrl", homeAdapter?.mJuheNewsBeanList?.get(position)?.url)
                     .navigation()
             }
         }
-        rcvData?.adapter = firstPageAdapter
+        rcvData?.adapter = homeAdapter
         refreshLayout?.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
@@ -166,8 +166,8 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>(), IFi
 //        }
     }
 
-    override fun attachPresenter(): FirstPagePresenterImpl {
-        return FirstPagePresenterImpl(this)
+    override fun attachPresenter(): HomePresenterImpl {
+        return HomePresenterImpl(this)
     }
 
 //	private void startAsyncTask() {
@@ -225,23 +225,23 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, FirstPagePresenterImpl>(), IFi
     override fun firstPageDataSuccess(success: List<JuheNewsBean>) {
         if (!mRxAppCompatActivity.isFinishing) {
             if (isRefresh) {
-                firstPageAdapter?.clearData()
-                firstPageAdapter?.addData(success)
+                homeAdapter?.clearData()
+                homeAdapter?.addData(success)
                 refreshLayout?.finishRefresh()
             } else {
-                firstPageAdapter?.addData(success)
+                homeAdapter?.addData(success)
                 refreshLayout?.finishLoadMore()
             }
             LogManager.i(
                 TAG,
-                "firstPageAdapter?.mJuheNewsBeanList*****" + firstPageAdapter?.mJuheNewsBeanList.toString()
+                "firstPageAdapter?.mJuheNewsBeanList*****" + homeAdapter?.mJuheNewsBeanList.toString()
             )
 
             val homeService =
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
                     .navigation() as IHomeService
             homeService.mHomeDataList =
-                firstPageAdapter?.mJuheNewsBeanList ?: mutableListOf()
+                homeAdapter?.mJuheNewsBeanList ?: mutableListOf()
             hideLoading()
         }
     }

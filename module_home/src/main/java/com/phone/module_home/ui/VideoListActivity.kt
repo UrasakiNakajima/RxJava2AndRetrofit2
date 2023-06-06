@@ -17,11 +17,11 @@ import com.phone.module_home.R
 import com.phone.module_home.adapter.LargeImageListBean
 import com.phone.module_home.adapter.VideoListAdapter
 import com.phone.module_home.adapter.VideoListBean
-import com.phone.module_home.presenter.FirstPagePresenterImpl
+import com.phone.module_home.presenter.HomePresenterImpl
 import com.phone.module_home.view.IVideoListView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
-class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl>(),
+class VideoListActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
     IVideoListView {
 
     companion object {
@@ -122,8 +122,8 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, FirstPagePresenterImpl
 
     override fun initLoadData() {}
 
-    override fun attachPresenter(): FirstPagePresenterImpl {
-        return FirstPagePresenterImpl(this)
+    override fun attachPresenter(): HomePresenterImpl {
+        return HomePresenterImpl(this)
     }
 
     override fun videoListSuccess(success: String) {}

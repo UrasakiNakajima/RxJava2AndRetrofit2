@@ -10,7 +10,7 @@ import okhttp3.ResponseBody
  * introduce :
  */
 
-interface IFirstPageModel {
+interface IHomeModel {
 
     fun firstPage(bodyParams: Map<String, String>): Observable<ResponseBody>
 
