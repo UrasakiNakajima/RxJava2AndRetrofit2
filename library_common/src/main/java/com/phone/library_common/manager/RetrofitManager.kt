@@ -65,7 +65,8 @@ class RetrofitManager private constructor() {
             .addInterceptor(rewriteCacheControlInterceptor) //                .addNetworkInterceptor(rewriteCacheControlInterceptor)
             //                .addInterceptor(headerInterceptor)
             .addInterceptor(loggingInterceptor) //                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
-            .cache(cache).sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置
+            .cache(cache)
+            .sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置
             .hostnameVerifier(SSLSocketManager.hostnameVerifier()) //配置
             //                .proxy(Proxy.NO_PROXY)
             .build()
