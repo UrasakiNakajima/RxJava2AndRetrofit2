@@ -17,6 +17,7 @@
 *.ap_
 *.aab
 .cxx
+*.json
 
 # Files for the ART/Dalvik VM
 *.dex
