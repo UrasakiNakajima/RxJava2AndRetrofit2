@@ -32,30 +32,33 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
 
     override fun resourceTabData() {
         viewModelScope.launch {
+            //开启viewModelScope.launch这种协程之后依然是在当前线程
+            var success: String? = null
             withContext(Dispatchers.IO) {
-                val success =
+                //然后切换到IO线程
+                success =
                     model.resourceTabData().execute().body()?.string()
-                launch(Dispatchers.Main) {
-                    LogManager.i(TAG, "resourceTabData response*****$success")
-                    if (!TextUtils.isEmpty(success)) {
-                        val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
-                        val response: ApiResponse<MutableList<TabBean>> =
-                            GsonManager().fromJson(success ?: "", type2)
-                        if (response.data().size > 0) {
-                            tabRxFragmentSuccess.value = response.data()
-                        } else {
-                            tabRxFragmentError.value =
-                                BaseApplication.instance().resources.getString(
-                                    R.string.no_data_available
-                                )
-                        }
-                    } else {
-                        tabRxFragmentError.value =
-                            BaseApplication.instance().resources.getString(
-                                R.string.loading_failed
-                            )
-                    }
+            }
+
+            //viewModelScope.launch开启协程之后，是在当前线程，然后上面那个IO线程执行完了，就会切换回当前线程
+            LogManager.i(TAG, "resourceTabData response*****$success")
+            if (!TextUtils.isEmpty(success)) {
+                val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
+                val response: ApiResponse<MutableList<TabBean>> =
+                    GsonManager().fromJson(success ?: "", type2)
+                if (response.data().size > 0) {
+                    tabRxFragmentSuccess.value = response.data()
+                } else {
+                    tabRxFragmentError.value =
+                        BaseApplication.instance().resources.getString(
+                            R.string.no_data_available
+                        )
                 }
+            } else {
+                tabRxFragmentError.value =
+                    BaseApplication.instance().resources.getString(
+                        R.string.loading_failed
+                    )
             }
         }
     }

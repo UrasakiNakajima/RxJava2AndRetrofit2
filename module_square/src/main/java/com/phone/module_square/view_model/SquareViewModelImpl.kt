@@ -12,6 +12,8 @@ import com.phone.module_square.R
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,6 +24,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     }
 
     private var model = SquareModelImpl()
+    private val jobList = mutableListOf<Job>()
 
     //1.首先定义两个SingleLiveData的实例
     val dataxRxFragmentSuccess = SingleLiveData<MutableList<SubDataSquare>>()
@@ -32,29 +35,16 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     val dataxRxActivityError = SingleLiveData<String>()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val success = model.squareData2(currentPage).execute().body()?.string()
-                launch(Dispatchers.Main) {
-                    LogManager.i(TAG, "success*****$success")
-                    if (!TextUtils.isEmpty(success)) {
-                        val response =
-                            GsonManager()
-                                .convert(success ?: "", SquareBean::class.java)
-                        val responseData = response.data?.datas ?: mutableListOf()
-                        if (responseData.size > 0) {
-                            dataxRxFragmentSuccess.value = responseData
-                        } else {
-                            dataxRxFragmentError.value =
-                                ResourcesManager.getString(R.string.no_data_available)
-                        }
-                    } else {
-                        dataxRxFragmentError.value =
-                            ResourcesManager.getString(R.string.loading_failed)
-                    }
-                }
+        val job = GlobalScope.launch {
+            //开启GlobalScope.launch这种协程之后就是在线程执行了
+            val subDataSquareList = squareDataSuspend(currentPage)
+
+            withContext(Dispatchers.Main) {
+                //然后切换到主线程
+                dataxRxFragmentSuccess.value = subDataSquareList
             }
         }
+        jobList.add(job)
 
 //            RetrofitManager.getInstance()
 //                .responseStringRxFragmentBindToLifecycle(rxFragment,
@@ -86,6 +76,32 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 //                        }
 //                    })
 //        }
+    }
+
+    /**
+     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
+     */
+    suspend fun squareDataSuspend(currentPage: String): MutableList<SubDataSquare> {
+        val subDataSquareList = mutableListOf<SubDataSquare>()
+        LogManager.i(TAG, "squareDataSuspend thread name*****${Thread.currentThread().name}")
+
+        withContext(Dispatchers.IO) {
+            val success = model.squareData2(currentPage).execute().body()?.string()
+            LogManager.i(TAG, "success*****$success")
+            if (!TextUtils.isEmpty(success)) {
+                val response =
+                    GsonManager().convert(success ?: "", SquareBean::class.java)
+                LogManager.i(TAG, "withContext thread name*****${Thread.currentThread().name}")
+
+                val responseData = response.data?.datas ?: mutableListOf()
+                if (responseData.size > 0) {
+                    subDataSquareList.clear()
+                    subDataSquareList.addAll(responseData)
+                }
+            }
+        }
+
+        return subDataSquareList
     }
 
     override fun squareData2(
@@ -120,6 +136,15 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                         dataxRxActivityError.value = error
                     }
                 })
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        for (i in 0..jobList.size - 1) {
+            if (jobList.get(i).isActive) {
+                jobList.get(i).cancel()
+            }
+        }
     }
 
 }

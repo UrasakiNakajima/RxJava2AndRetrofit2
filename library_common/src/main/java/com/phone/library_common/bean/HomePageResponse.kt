@@ -3,7 +3,7 @@ package com.phone.library_common.bean
 import android.os.Parcel
 import android.os.Parcelable
 
-class FirstPageResponse(`in`: Parcel) {
+class HomePageResponse(`in`: Parcel) {
 
     var reason: String? = null
     var result: ResultData? = null
@@ -25,13 +25,13 @@ class FirstPageResponse(`in`: Parcel) {
         return 0
     }
 
-    val CREATOR: Parcelable.Creator<FirstPageResponse> =
-        object : Parcelable.Creator<FirstPageResponse> {
-            override fun createFromParcel(`in`: Parcel): FirstPageResponse {
-                return FirstPageResponse(`in`)
+    val CREATOR: Parcelable.Creator<HomePageResponse> =
+        object : Parcelable.Creator<HomePageResponse> {
+            override fun createFromParcel(`in`: Parcel): HomePageResponse {
+                return HomePageResponse(`in`)
             }
 
-            override fun newArray(size: Int): Array<FirstPageResponse?> {
+            override fun newArray(size: Int): Array<HomePageResponse?> {
                 return arrayOfNulls(size)
             }
         }

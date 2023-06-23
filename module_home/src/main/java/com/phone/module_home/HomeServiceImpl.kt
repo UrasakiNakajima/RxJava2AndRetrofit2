@@ -2,7 +2,7 @@ package com.phone.module_home
 
 import android.content.Context
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.bean.FirstPageResponse.ResultData.JuheNewsBean
+import com.phone.library_common.bean.HomePageResponse.ResultData.JuheNewsBean
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.service.IHomeService
 

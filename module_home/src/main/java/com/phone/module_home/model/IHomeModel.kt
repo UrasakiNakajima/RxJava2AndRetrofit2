@@ -2,6 +2,7 @@ package com.phone.module_home.model
 
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import retrofit2.Call
 
 /**
  * author    : Urasaki
@@ -12,8 +13,10 @@ import okhttp3.ResponseBody
 
 interface IHomeModel {
 
-    fun firstPage(bodyParams: Map<String, String>): Observable<ResponseBody>
+    fun homePage(bodyParams: Map<String, String>): Observable<ResponseBody>
 
-    fun firstPageDetails(bodyParams: Map<String, String>): Observable<ResponseBody>
+    fun homePage2(bodyParams: Map<String, String>): Call<ResponseBody>
+
+    fun homePageDetails(bodyParams: Map<String, String>): Observable<ResponseBody>
 
 }

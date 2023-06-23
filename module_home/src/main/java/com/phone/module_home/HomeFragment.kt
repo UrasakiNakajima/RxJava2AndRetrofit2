@@ -18,7 +18,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.phone.library_common.base.BaseMvpRxFragment
 import com.phone.library_common.base.IBaseView
-import com.phone.library_common.bean.FirstPageResponse.ResultData.JuheNewsBean
+import com.phone.library_common.bean.HomePageResponse.ResultData.JuheNewsBean
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.common.ConstantData
@@ -28,14 +28,14 @@ import com.phone.library_common.service.ISquareService
 import com.phone.module_home.adapter.HomeAdapter
 import com.phone.module_home.manager.AMAPLocationManager
 import com.phone.module_home.presenter.HomePresenterImpl
-import com.phone.module_home.view.IFirstPageView
+import com.phone.module_home.view.IHomePageView
 import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 @Route(path = ConstantData.Route.ROUTE_HOME)
-class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IFirstPageView {
+class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePageView {
 
     private val TAG = HomeFragment::class.java.simpleName
     private var layoutOutLayer: FrameLayout? = null
@@ -222,7 +222,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IFirstPa
         }
     }
 
-    override fun firstPageDataSuccess(success: List<JuheNewsBean>) {
+    override fun homePageDataSuccess(success: List<JuheNewsBean>) {
         if (!mRxAppCompatActivity.isFinishing) {
             if (isRefresh) {
                 homeAdapter?.clearData()
@@ -246,7 +246,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IFirstPa
         }
     }
 
-    override fun firstPageDataError(error: String) {
+    override fun homePageDataError(error: String) {
         if (!mRxAppCompatActivity.isFinishing) {
 //            showToast(error, true)
             showCustomToast(
@@ -290,8 +290,15 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IFirstPa
                     val systemId = SharedPreferencesManager.get("systemId", "") as String
                     if (TextUtils.isEmpty(systemId)) {
                         SharedPreferencesManager.put("systemId", SystemManager.getSystemId())
-                        LogManager.i(TAG,
-                            "isEmpty systemId*****${SharedPreferencesManager.get("systemId", "") as String}")
+                        LogManager.i(
+                            TAG,
+                            "isEmpty systemId*****${
+                                SharedPreferencesManager.get(
+                                    "systemId",
+                                    ""
+                                ) as String
+                            }"
+                        )
                     } else {
                         LogManager.i(TAG, "systemId*****$systemId")
                     }
@@ -346,9 +353,9 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IFirstPa
             mBodyParams.clear()
             mBodyParams["type"] = "yule"
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter?.firstPage(this, mBodyParams)
+            presenter?.homePage(this, mBodyParams)
         } else {
-            firstPageDataError(resources.getString(R.string.please_check_the_network_connection))
+            homePageDataError(resources.getString(R.string.please_check_the_network_connection))
         }
     }
 

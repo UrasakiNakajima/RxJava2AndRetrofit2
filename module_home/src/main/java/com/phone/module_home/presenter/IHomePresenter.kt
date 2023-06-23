@@ -12,8 +12,8 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 
 interface IHomePresenter {
 
-    fun firstPage(rxFragment: RxFragment, bodyParams: Map<String, String>)
+    fun homePage(rxFragment: RxFragment, bodyParams: Map<String, String>)
 
-    fun firstPage2(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
+    fun homePage2(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
 
 }

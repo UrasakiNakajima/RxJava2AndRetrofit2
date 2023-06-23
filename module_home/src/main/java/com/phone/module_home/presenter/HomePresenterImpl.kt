@@ -3,17 +3,22 @@ package com.phone.module_home.presenter
 import android.text.TextUtils
 import com.phone.library_common.base.BasePresenter
 import com.phone.library_common.base.IBaseView
-import com.phone.library_common.bean.FirstPageResponse
+import com.phone.library_common.bean.HomePageResponse
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.manager.GsonManager
-import com.phone.library_common.manager.LogManager.i
+import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_home.R
 import com.phone.module_home.model.HomeModelImpl
-import com.phone.module_home.view.IFirstPageView
+import com.phone.module_home.view.IHomePageView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * author    : Urasaki
@@ -25,67 +30,94 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
     IHomePresenter {
 
-    private val TAG = "FirstPagePresenterImpl"
+    private val TAG = "HomePresenterImpl"
 
-    //    private IFirstPageView firstPageView;//P需要与V 交互，所以需要持有V的引用
+    //    private IFirstPageView homePageView;//P需要与V 交互，所以需要持有V的引用
     private var model: HomeModelImpl
+    private val jobList = mutableListOf<Job>()
 
     init {
         attachView(baseView)
         model = HomeModelImpl()
     }
 
-    override fun firstPage(rxFragment: RxFragment, bodyParams: Map<String, String>) {
+    override fun homePage(rxFragment: RxFragment, bodyParams: Map<String, String>) {
         val baseView = obtainView()
         if (baseView != null) {
-            if (baseView is IFirstPageView) {
-                val firstPageView = baseView
-                //                firstPageView.showLoading();
+            if (baseView is IHomePageView) {
+                val homePageView = baseView
                 //rxjava2+retrofit2请求（响应速度更快）
-                RetrofitManager.instance()
-                    .responseString2(
-                        rxFragment,
-                        model.firstPage(bodyParams),
-                        object : OnCommonSingleParamCallback<String> {
-                            override fun onSuccess(success: String) {
-                                i(TAG, "success*****$success")
-                                if (!TextUtils.isEmpty(success)) {
-                                    //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
-                                    val response = GsonManager().convert(
-                                        success,
-                                        FirstPageResponse::class.java
-                                    )
 
-                                    //											 String jsonStr = new GsonManager().toJson(response);
-                                    if (response.error_code == 0) {
-                                        firstPageView.firstPageDataSuccess(
-                                            response.result?.data ?: mutableListOf()
-                                        )
-                                    } else {
-                                        firstPageView.firstPageDataError(
-                                            response.reason ?: ResourcesManager.getString(
-                                                R.string.loading_failed
-                                            )
-                                        )
-                                    }
-                                } else {
-                                    firstPageView.firstPageDataError(
-                                        ResourcesManager.getString(
-                                            R.string.loading_failed
-                                        )
-                                    )
-                                }
-                            }
+                LogManager.i(TAG, "homePage thread name*****${Thread.currentThread().name}")
 
-                            override fun onError(error: String) {
-                                i(TAG, "error*****$error")
-                                firstPageView.firstPageDataError(error)
-                            }
-                        })
-                //				compositeDisposable.add(disposable);
+                val job = GlobalScope.launch {
+                    //开启GlobalScope.launch这种协程之后就是在线程执行了
+                    val homePageList = homePageSuspend(bodyParams)
+                    LogManager.i(TAG, "homePage2 thread name*****${Thread.currentThread().name}")
+
+                    withContext(Dispatchers.Main) {
+                        //然后切换到主线程
+                        LogManager.i(
+                            TAG,
+                            "withContext thread name*****${Thread.currentThread().name}"
+                        )
+
+                        if (homePageList.size > 0) {
+                            homePageView.homePageDataSuccess(homePageList)
+                        } else {
+                            homePageView.homePageDataError(
+                                ResourcesManager.getString(
+                                    R.string.loading_failed
+                                )
+                            )
+                        }
+                    }
+                }
+                jobList.add(job)
+
+//                RetrofitManager.instance()
+//                    .responseString2(
+//                        rxFragment,
+//                        model.homePage(bodyParams),
+//                        object : OnCommonSingleParamCallback<String> {
+//                            override fun onSuccess(success: String) {
+//                                i(TAG, "success*****$success")
+//                                if (!TextUtils.isEmpty(success)) {
+//                                    //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
+//                                    val response = GsonManager().convert(
+//                                        success,
+//                                        FirstPageResponse::class.java
+//                                    )
+//
+//                                    //											 String jsonStr = new GsonManager().toJson(response);
+//                                    if (response.error_code == 0) {
+//                                        homePageView.homePageDataSuccess(
+//                                            response.result?.data ?: mutableListOf()
+//                                        )
+//                                    } else {
+//                                        homePageView.homePageDataError(
+//                                            response.reason ?: ResourcesManager.getString(
+//                                                R.string.loading_failed
+//                                            )
+//                                        )
+//                                    }
+//                                } else {
+//                                    homePageView.homePageDataError(
+//                                        ResourcesManager.getString(
+//                                            R.string.loading_failed
+//                                        )
+//                                    )
+//                                }
+//                            }
+//
+//                            override fun onError(error: String) {
+//                                i(TAG, "error*****$error")
+//                                homePageView.homePageDataError(error)
+//                            }
+//                        })
 
                 ////                rxjava2+retrofit2请求（响应速度更快）
-                //                disposable = model.firstPageData(bodyParams)
+                //                disposable = model.homePageData(bodyParams)
                 //                        .subscribeOn(Schedulers.io())
                 //                        .observeOn(AndroidSchedulers.mainThread())
                 //                        .subscribe(new Consumer<JSONObject>() {
@@ -95,64 +127,91 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 //                                LogManager.i(TAG, "responseString*****" + responseString);
                 //                                BaseResponse baseResponse = JSON.parseObject(responseString, BaseResponse.class);
                 //                                if (baseResponse.getCode() == 200) {
-                ////                                    FirstPageResponse firstPageResponse = JSON.parse(responseString, FirstPageResponse.class);
-                //                                    firstPageView.firstPageDataSuccess(baseResponse.getMessage());
+                ////                                    FirstPageResponse homePageResponse = JSON.parse(responseString, FirstPageResponse.class);
+                //                                    homePageView.homePageDataSuccess(baseResponse.getMessage());
                 //                                } else {
-                //                                    firstPageView.firstPageDataError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
+                //                                    homePageView.homePageDataError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
                 //                                }
-                //                                firstPageView.hideLoading();
+                //                                homePageView.hideLoading();
                 //                            }
                 //                        }, new Consumer<Throwable>() {
                 //                            @Override
                 //                            public void accept(Throwable throwable) throws Exception {
                 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
-                //                                firstPageView.firstPageDataError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
-                //                                firstPageView.hideLoading();
+                //                                homePageView.homePageDataError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
+                //                                homePageView.hideLoading();
                 //                            }
                 //                        });
             }
         }
     }
 
-    override fun firstPage2(
+    /**
+     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
+     */
+    suspend fun homePageSuspend(bodyParams: Map<String, String>): List<HomePageResponse.ResultData.JuheNewsBean> {
+        val homePageList = mutableListOf<HomePageResponse.ResultData.JuheNewsBean>()
+        withContext(Dispatchers.IO) {
+            //切换到IO线程
+            val success = model.homePage2(bodyParams).execute().body()?.string()
+            success?.let {
+                //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
+                val response = GsonManager().convert(
+                    success,
+                    HomePageResponse::class.java
+                )
+                //											 String jsonStr = new GsonManager().toJson(response);
+                if (response.error_code == 0) {
+                    val responseData = response.result?.data ?: mutableListOf()
+                    if (responseData.size > 0) {
+                        homePageList.clear()
+                        homePageList.addAll(responseData)
+                    }
+                }
+            }
+        }
+        return homePageList
+    }
+
+    override fun homePage2(
         rxAppCompatActivity: RxAppCompatActivity,
         bodyParams: Map<String, String>
     ) {
         val baseView = obtainView()
         if (baseView != null) {
-            if (baseView is IFirstPageView) {
-                val firstPageView = baseView
-                //                firstPageView.showLoading();
+            if (baseView is IHomePageView) {
+                val homePageView = baseView
+                //                homePageView.showLoading();
                 //rxjava2+retrofit2请求（响应速度更快）
                 RetrofitManager.instance()
                     .responseString(
                         rxAppCompatActivity,
-                        model.firstPage(bodyParams),
+                        model.homePage(bodyParams),
                         object : OnCommonSingleParamCallback<String> {
                             override fun onSuccess(success: String) {
-                                i(TAG, "success*****$success")
+                                LogManager.i(TAG, "success*****$success")
                                 if (!TextUtils.isEmpty(success)) {
 
                                     //                                    FirstPageResponse response = JSONObject.parseObject(success, FirstPageResponse.class);
                                     val response = GsonManager().convert(
                                         success,
-                                        FirstPageResponse::class.java
+                                        HomePageResponse::class.java
                                     )
                                     //											 String jsonStr = new GsonManager().toJson(response);
                                     if (response.error_code == 0) {
-                                        firstPageView.firstPageDataSuccess(
+                                        homePageView.homePageDataSuccess(
                                             response.result?.data ?: mutableListOf()
                                         )
                                     } else {
-                                        firstPageView.firstPageDataError(
+                                        homePageView.homePageDataError(
                                             response.reason ?: ResourcesManager.getString(
                                                 R.string.loading_failed
                                             )
                                         )
                                     }
                                 } else {
-                                    firstPageView.firstPageDataError(
+                                    homePageView.homePageDataError(
                                         ResourcesManager.getString(
                                             R.string.loading_failed
                                         )
@@ -161,14 +220,14 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                             }
 
                             override fun onError(error: String) {
-                                i(TAG, "error*****$error")
-                                firstPageView.firstPageDataError(error)
+                                LogManager.i(TAG, "error*****$error")
+                                homePageView.homePageDataError(error)
                             }
                         })
                 //				compositeDisposable.add(disposable);
 
                 ////                rxjava2+retrofit2请求（响应速度更快）
-                //                disposable = model.firstPageData(bodyParams)
+                //                disposable = model.homePageData(bodyParams)
                 //                        .subscribeOn(Schedulers.io())
                 //                        .observeOn(AndroidSchedulers.mainThread())
                 //                        .subscribe(new Consumer<JSONObject>() {
@@ -178,22 +237,31 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 //                                LogManager.i(TAG, "responseString*****" + responseString);
                 //                                BaseResponse baseResponse = JSON.parseObject(responseString, BaseResponse.class);
                 //                                if (baseResponse.getCode() == 200) {
-                ////                                    FirstPageResponse firstPageResponse = JSON.parse(responseString, FirstPageResponse.class);
-                //                                    firstPageView.firstPageDataSuccess(baseResponse.getMessage());
+                ////                                    FirstPageResponse homePageResponse = JSON.parse(responseString, FirstPageResponse.class);
+                //                                    homePageView.homePageDataSuccess(baseResponse.getMessage());
                 //                                } else {
-                //                                    firstPageView.firstPageDataError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
+                //                                    homePageView.homePageDataError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
                 //                                }
-                //                                firstPageView.hideLoading();
+                //                                homePageView.hideLoading();
                 //                            }
                 //                        }, new Consumer<Throwable>() {
                 //                            @Override
                 //                            public void accept(Throwable throwable) throws Exception {
                 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
-                //                                firstPageView.firstPageDataError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
-                //                                firstPageView.hideLoading();
+                //                                homePageView.homePageDataError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
+                //                                homePageView.hideLoading();
                 //                            }
                 //                        });
+            }
+        }
+    }
+
+    override fun detachView() {
+        super.detachView()
+        for (i in 0..jobList.size - 1) {
+            if (jobList.get(i).isActive) {
+                jobList.get(i).cancel()
             }
         }
     }

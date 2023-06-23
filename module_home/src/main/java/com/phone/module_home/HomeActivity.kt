@@ -16,7 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
-import com.phone.library_common.bean.FirstPageResponse.ResultData.JuheNewsBean
+import com.phone.library_common.bean.HomePageResponse.ResultData.JuheNewsBean
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.common.ConstantData
@@ -26,13 +26,13 @@ import com.phone.library_common.manager.SystemManager.getSystemId
 import com.phone.module_home.adapter.HomeAdapter
 import com.phone.module_home.manager.AMAPLocationManager
 import com.phone.module_home.presenter.HomePresenterImpl
-import com.phone.module_home.view.IFirstPageView
+import com.phone.module_home.view.IHomePageView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
-    IFirstPageView {
+    IHomePageView {
 
     private val TAG = HomeActivity::class.java.simpleName
     private var toolbar: Toolbar? = null
@@ -163,7 +163,7 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
         }
     }
 
-    override fun firstPageDataSuccess(success: List<JuheNewsBean>) {
+    override fun homePageDataSuccess(success: List<JuheNewsBean>) {
         if (!this.isFinishing) {
             if (isRefresh) {
                 homeAdapter.mJuheNewsBeanList.clear()
@@ -179,7 +179,7 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
         }
     }
 
-    override fun firstPageDataError(error: String) {
+    override fun homePageDataError(error: String) {
         if (!this.isFinishing) {
             //            showToast(error, true)
             showCustomToast(
@@ -223,8 +223,15 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
                     val systemId = SharedPreferencesManager.get("systemId", "") as String
                     if (TextUtils.isEmpty(systemId)) {
                         SharedPreferencesManager.put("systemId", getSystemId())
-                        LogManager.i(TAG,
-                            "isEmpty systemId*****${SharedPreferencesManager.get("systemId", "") as String}")
+                        LogManager.i(
+                            TAG,
+                            "isEmpty systemId*****${
+                                SharedPreferencesManager.get(
+                                    "systemId",
+                                    ""
+                                ) as String
+                            }"
+                        )
                     } else {
                         LogManager.i(TAG, "systemId*****$systemId")
                     }
@@ -277,9 +284,9 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
             mBodyParams.clear()
             mBodyParams["type"] = "yule"
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter.firstPage2(mRxAppCompatActivity, mBodyParams)
+            presenter.homePage2(mRxAppCompatActivity, mBodyParams)
         } else {
-            firstPageDataError(ResourcesManager.getString(R.string.please_check_the_network_connection))
+            homePageDataError(ResourcesManager.getString(R.string.please_check_the_network_connection))
             hideLoading()
         }
     }

@@ -1,9 +1,10 @@
 package com.phone.module_home.model
 
 import com.phone.library_common.manager.RetrofitManager
-import com.phone.module_home.request.FirstPageRequest
+import com.phone.module_home.request.HomePageRequest
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import retrofit2.Call
 
 /**
  * author    : Urasaki
@@ -14,25 +15,31 @@ import okhttp3.ResponseBody
 
 class HomeModelImpl : IHomeModel {
 
-    private val TAG = "FirstPageModelImpl"
+    private val TAG = "HomeModelImpl"
 
-    override fun firstPage(bodyParams: Map<String, String>): Observable<ResponseBody> {
+    override fun homePage(bodyParams: Map<String, String>): Observable<ResponseBody> {
         return RetrofitManager.instance().mRetrofit
-            .create(FirstPageRequest::class.java)
-            .getFirstPage(bodyParams)
+            .create(HomePageRequest::class.java)
+            .getHomePage(bodyParams)
     }
 
-    override fun firstPageDetails(bodyParams: Map<String, String>): Observable<ResponseBody> {
+    override fun homePage2(bodyParams: Map<String, String>): Call<ResponseBody> {
         return RetrofitManager.instance().mRetrofit
-            .create(FirstPageRequest::class.java)
-            .getFirstPageDetails(bodyParams)
+            .create(HomePageRequest::class.java)
+            .getHomePage2(bodyParams)
+    }
+
+    override fun homePageDetails(bodyParams: Map<String, String>): Observable<ResponseBody> {
+        return RetrofitManager.instance().mRetrofit
+            .create(HomePageRequest::class.java)
+            .getHomePageDetails(bodyParams)
     }
 
     //    @Override
-    //    public Observable<FirstPageResponse.QuestionBean> firstPageData(Map<String, String> bodyParams) {
+    //    public Observable<HomePageResponse.QuestionBean> homePageData(Map<String, String> bodyParams) {
     //        return RetrofitManager.instance().mRetrofit
-    //                .create(FirstPageRequest.class)
-    //                .getFirstPageData(bodyParams);
+    //                .create(HomePageRequest.class)
+    //                .getHomePageData(bodyParams);
     //    }
 
 }

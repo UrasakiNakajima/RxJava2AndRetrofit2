@@ -35,36 +35,36 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
     val dataxRxActivityError = SingleLiveData<String>()
 
     override fun subProjectData(
-        pageNum: Int,
-        tabId: Int
+        pageNum: Int, tabId: Int
     ) {
         viewModelScope.launch {
+            //开启viewModelScope.launch这种协程之后依然是在当前线程
+            var success: String? = null
             withContext(Dispatchers.IO) {
-                val success = model.subProjectData2(pageNum, tabId).execute().body()?.string()
-                launch(Dispatchers.Main) {
-                    LogManager.i(TAG, "subProjectData response pageNum$pageNum*****$success")
-                    if (!TextUtils.isEmpty(success)) {
-                        val type2 = object : TypeToken<ApiResponse<ArticleBean>>() {}.type
-                        val response: ApiResponse<ArticleBean> =
-                            GsonManager().fromJson(success ?: "", type2)
-                        response.data().let {
-                            val list = ArticleListBean.trans(it.datas ?: mutableListOf())
-                            if (list.size > 0) {
-                                dataxRxFragmentSuccess.value = list
-                            } else {
-                                dataxRxFragmentError.value =
-                                    BaseApplication.instance().resources.getString(
-                                        R.string.no_data_available
-                                    )
-                            }
-                        }
+                //切换到IO线程
+                success = model.subProjectData2(pageNum, tabId).execute().body()?.string()
+            }
+
+            //viewModelScope.launch开启协程之后，是在当前线程，然后上面那个IO线程执行完了，就会切换回当前线程
+            LogManager.i(TAG, "subProjectData response pageNum$pageNum*****$success")
+            if (!TextUtils.isEmpty(success)) {
+                val type2 = object : TypeToken<ApiResponse<ArticleBean>>() {}.type
+                val response: ApiResponse<ArticleBean> =
+                    GsonManager().fromJson(success ?: "", type2)
+                response.data().let {
+                    val list = ArticleListBean.trans(it.datas ?: mutableListOf())
+                    if (list.size > 0) {
+                        dataxRxFragmentSuccess.value = list
                     } else {
-                        dataxRxFragmentError.value =
-                            BaseApplication.instance().resources.getString(
-                                R.string.loading_failed
-                            )
+                        dataxRxFragmentError.value = BaseApplication.instance().resources.getString(
+                            R.string.no_data_available
+                        )
                     }
                 }
+            } else {
+                dataxRxFragmentError.value = BaseApplication.instance().resources.getString(
+                    R.string.loading_failed
+                )
             }
         }
 
@@ -120,8 +120,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
     }
 
     override fun subProjectData2(
-        pageNum: Int,
-        tabId: Int
+        pageNum: Int, tabId: Int
     ) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -144,10 +143,9 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                             }
                         }
                     } else {
-                        dataxRxFragmentError.value =
-                            BaseApplication.instance().resources.getString(
-                                R.string.loading_failed
-                            )
+                        dataxRxFragmentError.value = BaseApplication.instance().resources.getString(
+                            R.string.loading_failed
+                        )
                     }
                 }
             }

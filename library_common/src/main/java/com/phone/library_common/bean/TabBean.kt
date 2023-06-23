@@ -30,5 +30,9 @@ class TabBean() : BaseObservable() {
     var userControlSetTop = false
     var visible = 0
     var children: List<*>? = null
+    override fun toString(): String {
+        return "TabBean(courseId=$courseId, id=$id, order=$order, parentChapterId=$parentChapterId, userControlSetTop=$userControlSetTop, visible=$visible, children=$children)"
+    }
+
 
 }

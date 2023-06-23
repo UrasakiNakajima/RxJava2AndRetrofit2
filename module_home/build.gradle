@@ -117,6 +117,7 @@ dependencies {
     // room
     implementation "androidx.room:room-runtime:$BuildVersions.room_version"
     annotationProcessor "androidx.room:room-compiler:$BuildVersions.room_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$BuildVersions.lifecycle_runtime_ktx_version"
 
 //    implementation project(path: ':irecyclerview')
 
