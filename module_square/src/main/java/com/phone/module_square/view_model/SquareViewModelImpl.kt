@@ -87,12 +87,11 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         LogManager.i(TAG, "squareDataSuspend thread name*****${Thread.currentThread().name}")
 
         withContext(Dispatchers.IO) {
+            LogManager.i(TAG, "squareDataSuspend withContext thread name*****${Thread.currentThread().name}")
             val success = model.squareData2(currentPage).execute().body()?.string()
-            LogManager.i(TAG, "success*****$success")
             if (!TextUtils.isEmpty(success)) {
                 val response =
                     GsonManager().convert(success ?: "", SquareBean::class.java)
-                LogManager.i(TAG, "withContext thread name*****${Thread.currentThread().name}")
 
                 val responseData = response.data?.datas ?: mutableListOf()
                 if (responseData.size > 0) {

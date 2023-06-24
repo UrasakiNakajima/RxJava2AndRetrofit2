@@ -54,11 +54,6 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                     val homePageList = homePageSuspend(bodyParams)
                     LogManager.i(TAG, "homePage2 thread name*****${Thread.currentThread().name}")
 
-                    LogManager.i(
-                        TAG,
-                        "withContext thread name*****${Thread.currentThread().name}"
-                    )
-
                     if (homePageList.size > 0) {
                         homePageView.homePageDataSuccess(homePageList)
                     } else {
@@ -149,6 +144,11 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
     suspend fun homePageSuspend(bodyParams: Map<String, String>): List<HomePageResponse.ResultData.JuheNewsBean> {
         val homePageList = mutableListOf<HomePageResponse.ResultData.JuheNewsBean>()
         withContext(Dispatchers.IO) {
+            LogManager.i(
+                TAG,
+                "homePageSuspend withContext thread name*****${Thread.currentThread().name}"
+            )
+
             //切换到IO线程
             val success = model.homePage2(bodyParams).execute().body()?.string()
             success?.let {
