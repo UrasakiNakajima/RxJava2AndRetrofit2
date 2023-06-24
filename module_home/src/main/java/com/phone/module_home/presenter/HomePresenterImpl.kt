@@ -15,8 +15,8 @@ import com.phone.module_home.view.IHomePageView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -34,7 +34,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
 
     //    private IFirstPageView homePageView;//P需要与V 交互，所以需要持有V的引用
     private var model: HomeModelImpl
-    private val jobList = mutableListOf<Job>()
+    val scope = MainScope()
 
     init {
         attachView(baseView)
@@ -50,30 +50,25 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
 
                 LogManager.i(TAG, "homePage thread name*****${Thread.currentThread().name}")
 
-                val job = GlobalScope.launch {
-                    //开启GlobalScope.launch这种协程之后就是在线程执行了
+                scope.launch {//开启MainScope这种协程之后就是在MAIN线程执行了
                     val homePageList = homePageSuspend(bodyParams)
                     LogManager.i(TAG, "homePage2 thread name*****${Thread.currentThread().name}")
 
-                    withContext(Dispatchers.Main) {
-                        //然后切换到主线程
-                        LogManager.i(
-                            TAG,
-                            "withContext thread name*****${Thread.currentThread().name}"
-                        )
+                    LogManager.i(
+                        TAG,
+                        "withContext thread name*****${Thread.currentThread().name}"
+                    )
 
-                        if (homePageList.size > 0) {
-                            homePageView.homePageDataSuccess(homePageList)
-                        } else {
-                            homePageView.homePageDataError(
-                                ResourcesManager.getString(
-                                    R.string.loading_failed
-                                )
+                    if (homePageList.size > 0) {
+                        homePageView.homePageDataSuccess(homePageList)
+                    } else {
+                        homePageView.homePageDataError(
+                            ResourcesManager.getString(
+                                R.string.loading_failed
                             )
-                        }
+                        )
                     }
                 }
-                jobList.add(job)
 
 //                RetrofitManager.instance()
 //                    .responseString2(
@@ -148,7 +143,8 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
     }
 
     /**
-     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
+     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程），
+     * IO线程执行完毕就会切换回MAIN线程
      */
     suspend fun homePageSuspend(bodyParams: Map<String, String>): List<HomePageResponse.ResultData.JuheNewsBean> {
         val homePageList = mutableListOf<HomePageResponse.ResultData.JuheNewsBean>()
@@ -171,6 +167,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
                 }
             }
         }
+
         return homePageList
     }
 
@@ -259,11 +256,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
 
     override fun detachView() {
         super.detachView()
-        for (i in 0..jobList.size - 1) {
-            if (jobList.get(i).isActive) {
-                jobList.get(i).cancel()
-            }
-        }
+        scope.cancel()
     }
 
 }

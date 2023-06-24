@@ -35,14 +35,14 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     val dataxRxActivityError = SingleLiveData<String>()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
-        val job = GlobalScope.launch {
-            //开启GlobalScope.launch这种协程之后就是在线程执行了
-            val subDataSquareList = squareDataSuspend(currentPage)
+        LogManager.i(TAG, "squareData thread name*****${Thread.currentThread().name}")
 
-            withContext(Dispatchers.Main) {
-                //然后切换到主线程
-                dataxRxFragmentSuccess.value = subDataSquareList
-            }
+        val job = GlobalScope.launch(Dispatchers.Main) {
+            //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了（根据指定的线程来）
+
+            val subDataSquareList = squareDataSuspend(currentPage)
+            LogManager.i(TAG, "squareData2 thread name*****${Thread.currentThread().name}")
+            dataxRxFragmentSuccess.value = subDataSquareList
         }
         jobList.add(job)
 
@@ -79,7 +79,8 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     }
 
     /**
-     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
+     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程），
+     * IO线程执行完毕就会切换回MAIN线程
      */
     suspend fun squareDataSuspend(currentPage: String): MutableList<SubDataSquare> {
         val subDataSquareList = mutableListOf<SubDataSquare>()
@@ -141,9 +142,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     override fun onCleared() {
         super.onCleared()
         for (i in 0..jobList.size - 1) {
-            if (jobList.get(i).isActive) {
-                jobList.get(i).cancel()
-            }
+            jobList.get(i).cancel()
         }
     }
 
