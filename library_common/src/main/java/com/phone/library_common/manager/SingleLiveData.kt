@@ -4,7 +4,6 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.phone.library_common.manager.LogManager.i
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -41,7 +40,7 @@ class SingleLiveData<T>() : MutableLiveData<T>() {
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T?>) {
         if (hasActiveObservers()) {
-            i(TAG, "Multiple observers registered but only one will be notified of changes.")
+            LogManager.i(TAG, "Multiple observers registered but only one will be notified of changes.")
         }
 
         // Observe the internal MutableLiveData

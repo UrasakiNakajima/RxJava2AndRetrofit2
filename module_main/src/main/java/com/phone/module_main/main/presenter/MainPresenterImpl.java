@@ -4,6 +4,7 @@ import com.phone.library_common.base.BasePresenter;
 import com.phone.library_common.base.IBaseView;
 import com.phone.library_common.callback.OnCommonSingleParamCallback;
 import com.phone.library_common.manager.RetrofitManager;
+import com.phone.module_main.main.model.IMainModel;
 import com.phone.module_main.main.model.MainModelImpl;
 import com.phone.module_main.main.view.IMainView;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
@@ -23,7 +24,7 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
 
     private static final String TAG = "MainPresenterImpl";
     //    private IResourceChildView mainView;//P需要与V 交互，所以需要持有V的引用
-    private final MainModelImpl model = new MainModelImpl();
+    private final IMainModel model = new MainModelImpl();
 
     public MainPresenterImpl(IBaseView baseView) {
         attachView(baseView);

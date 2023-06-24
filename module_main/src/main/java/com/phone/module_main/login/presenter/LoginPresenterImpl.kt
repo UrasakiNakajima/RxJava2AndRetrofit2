@@ -16,6 +16,7 @@ import com.phone.library_common.manager.UserBeanDaoManager
 import com.phone.module_main.R
 import com.phone.module_main.login.GetVerificationCode
 import com.phone.module_main.login.LoginResponse
+import com.phone.module_main.login.model.ILoginModel
 import com.phone.module_main.login.model.LoginModelImpl
 import com.phone.module_main.login.view.ILoginView
 import com.phone.module_main.login.view.IRegisterView
@@ -34,7 +35,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
     private val TAG = LoginPresenterImpl::class.java.simpleName
 
     //    private IResourceChildView loginView;//P需要与V 交互，所以需要持有V的引用
-    private lateinit var model: LoginModelImpl
+    private var model: ILoginModel
 
     init {
         attachView(baseView)

@@ -23,7 +23,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
     }
 
     //    private IResourceChildView feedbackView;//P需要与V 交互，所以需要持有V的引用
-    private var model: MineModelImpl = MineModelImpl();
+    private var model = MineModelImpl();
 
     init {
         attachView(baseView)

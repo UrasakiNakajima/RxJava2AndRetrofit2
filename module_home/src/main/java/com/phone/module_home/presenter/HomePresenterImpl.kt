@@ -11,6 +11,7 @@ import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_home.R
 import com.phone.module_home.model.HomeModelImpl
+import com.phone.module_home.model.IHomeModel
 import com.phone.module_home.view.IHomePageView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
@@ -33,8 +34,8 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
     private val TAG = "HomePresenterImpl"
 
     //    private IFirstPageView homePageView;//P需要与V 交互，所以需要持有V的引用
-    private var model: HomeModelImpl
-    val scope = MainScope()
+    private var model: IHomeModel
+    val mainScope = MainScope()
 
     init {
         attachView(baseView)
@@ -50,7 +51,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
 
                 LogManager.i(TAG, "homePage thread name*****${Thread.currentThread().name}")
 
-                scope.launch {//开启MainScope这种协程之后就是在MAIN线程执行了
+                mainScope.launch {//开启MainScope这种协程之后就是在MAIN线程执行了
                     val homePageList = homePageSuspend(bodyParams)
                     LogManager.i(TAG, "homePage2 thread name*****${Thread.currentThread().name}")
 
@@ -256,7 +257,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
 
     override fun detachView() {
         super.detachView()
-        scope.cancel()
+        mainScope.cancel()
     }
 
 }

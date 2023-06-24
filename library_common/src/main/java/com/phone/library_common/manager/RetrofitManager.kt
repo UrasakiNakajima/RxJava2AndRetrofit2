@@ -37,7 +37,8 @@ import kotlin.experimental.and
 class RetrofitManager private constructor() {
 
     private val TAG = RetrofitManager::class.java.simpleName
-    lateinit var mRetrofit: Retrofit
+    @JvmField
+    val mRetrofit: Retrofit
 
     /**
      * 私有构造器 无法外部创建
