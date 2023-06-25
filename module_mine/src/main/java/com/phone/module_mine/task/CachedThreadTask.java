@@ -21,7 +21,8 @@ public class CachedThreadTask implements Runnable {
     public void run() {
         LogManager.i(TAG, "cachedThreadTask:" + taskName + " is doing...");
         try {
-            Thread.sleep(SLEEP_GAP);
+            //模拟请求用户信息（需要时间比较短的，CPU密集型操作）
+            Thread.sleep(2 * SLEEP_GAP);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

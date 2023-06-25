@@ -41,9 +41,14 @@
             android:background="@color/color_4876FF"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="@string/logout"
+            android:text="logout"
             android:textColor="@color/color_FFFFFFFF"
             android:textSize="@dimen/sp_16" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_FFFFFFFF" />
 
         <TextView
             android:id="@+id/tev_thread_pool"
@@ -53,9 +58,14 @@
             android:background="@color/color_FFFFC73B"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="@string/thread_pool"
+            android:text="thread pool"
             android:textColor="@color/color_FFFFFFFF"
             android:textSize="@dimen/sp_16" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_FFFFFFFF" />
 
         <TextView
             android:id="@+id/tev_params_transfer_change_problem"

@@ -59,6 +59,12 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
     private TextView tevStopThreadPool2;
 
 
+    private ExecutorService singleThreadExecutor;
+    private ExecutorService fixedThreadPool;
+    private ExecutorService cachedThreadPool;
+    private ScheduledExecutorService scheduledThreadPool;
+    private ExecutorService customThreadPool;
+
     private ExecutorService excutor;
     private ExecutorService excutor2;
     private Handler handler;
@@ -133,62 +139,77 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
     private void startSingleThreadExecutor() {
         //只有一个核心线程，没有非核心线程，线程队列是int最大值
         //线程池中的任务是按照提交的次序顺序执行的
-        ExecutorService excutor = Executors.newSingleThreadExecutor();
+        singleThreadExecutor = Executors.newSingleThreadExecutor();
         for (int i = 0; i < 10; i++) {
-            excutor.execute(new SingleThreadTask());
+            singleThreadExecutor.execute(new SingleThreadTask());
         }
-        //实际上需要等待所有的任务执行完毕之后，才会shutdown
-        excutor.shutdown();
+        //shutdown函数修改线程池状态为SHUTDOWN
+        //不再接收新提交的任务
+        //中断线程池中空闲的线程
+        //第③步只是中断了空闲的线程，但正在执行的任务以及线程池任务队列中的任务会继续执行完毕
+        singleThreadExecutor.shutdown();
     }
 
     private void startFixedThreadPool() {
-        //只有几个自定义的核心线程，没有非核心线程，线程队列是int最大值
-        ExecutorService excutor = Executors.newFixedThreadPool(5);
+        //CPU密集型线程池：只有几个自定义的核心线程，没有非核心线程，线程队列是int最大值
+        fixedThreadPool = Executors.newFixedThreadPool(5);
         for (int i = 0; i < 10; i++) {
-            excutor.execute(new FixedThreadTask());
+            fixedThreadPool.execute(new FixedThreadTask());
         }
-        //实际上需要等待所有的任务执行完毕之后，才会shutdown
-        excutor.shutdown();
+        //shutdown函数修改线程池状态为SHUTDOWN
+        //不再接收新提交的任务
+        //中断线程池中空闲的线程
+        //第③步只是中断了空闲的线程，但正在执行的任务以及线程池任务队列中的任务会继续执行完毕
+        fixedThreadPool.shutdown();
     }
 
     private void startCachedThreadPool() {
-        //只有非核心线程，非核心线程最多可以达到int的最大值，非核心线程的最大空闲时间是60s，
+        //IO密集型线程池：只有非核心线程，非核心线程最多可以达到int的最大值，非核心线程的最大空闲时间是60s，
         //没有核心线程，线程队列特点
         //（1）内部容量是0
         //（2）每次删除操作都要等待插入操作
         //（3）每次插入操作都要等待删除操作
         //（4）一个元素，一旦有了插入线程和移除线程，那么很快由插入线程移交给移除线程，这个容器相当于通道，本身不存储元素
         //（5）在多任务队列，是最快的处理任务方式。
-        ExecutorService excutor = Executors.newCachedThreadPool();
+        cachedThreadPool = Executors.newCachedThreadPool();
         for (int i = 0; i < 10; i++) {
-            excutor.execute(new CachedThreadTask());
+            cachedThreadPool.execute(new CachedThreadTask());
         }
-        //实际上需要等待所有的任务执行完毕之后，才会shutdown
-        excutor.shutdown();
+        //shutdown函数修改线程池状态为SHUTDOWN
+        //不再接收新提交的任务
+        //中断线程池中空闲的线程
+        //第③步只是中断了空闲的线程，但正在执行的任务以及线程池任务队列中的任务会继续执行完毕
+        cachedThreadPool.shutdown();
     }
 
     private void startScheduledThreadPool() {
         //核心线程是自定义的，最大线程数可以达到int的最大值，非核心线程的最大空闲时间是0.01s，
         //线程队列是最大是int最大值，使用优先级队列DelayedWorkQueue，保证添加到队列中的任务，
         //会按照任务的延时时间进行排序，延时时间少的任务首先被获取。
-        ScheduledExecutorService excutor = Executors.newScheduledThreadPool(5);
+        scheduledThreadPool = Executors.newScheduledThreadPool(5);
         for (int i = 0; i < 10; i++) {
-            excutor.scheduleAtFixedRate(new ScheduledThreadTask(), 0, 500, MILLISECONDS);
+            scheduledThreadPool.scheduleAtFixedRate(new ScheduledThreadTask(), 0, 500, MILLISECONDS);
         }
-        //实际上需要等待所有的任务执行完毕之后，才会shutdown
-        excutor.shutdown();
+        //shutdown函数修改线程池状态为SHUTDOWN
+        //不再接收新提交的任务
+        //中断线程池中空闲的线程
+        //第③步只是中断了空闲的线程，但正在执行的任务以及线程池任务队列中的任务会继续执行完毕
+        scheduledThreadPool.shutdown();
     }
 
     private void startCustomThreadPool() {
         //自定义线程池
-        ExecutorService excutor = new ThreadPoolExecutor(5, 10,
+        customThreadPool = new ThreadPoolExecutor(5, 10,
                 60L, TimeUnit.SECONDS,
                 new LinkedBlockingQueue<Runnable>());
         for (int i = 0; i < 30; i++) {
-            excutor.execute(new FixedThreadTask());
+            customThreadPool.execute(new FixedThreadTask());
         }
-        //实际上需要等待所有的任务执行完毕之后，才会shutdown
-        excutor.shutdown();
+        //shutdown函数修改线程池状态为SHUTDOWN
+        //不再接收新提交的任务
+        //中断线程池中空闲的线程
+        //第③步只是中断了空闲的线程，但正在执行的任务以及线程池任务队列中的任务会继续执行完毕
+        customThreadPool.shutdown();
     }
 
 
@@ -320,6 +341,41 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
             handler = null;
+        }
+        if (singleThreadExecutor != null && singleThreadExecutor.isShutdown()) {
+            //shutdownNow函数修改线程池状态为STOP
+            //不再接收任务提交
+            //尝试中断线程池中所有的线程（包括正在执行的线程）
+            //返回正在等待执行的任务列表 List<Runnable>
+            singleThreadExecutor.shutdownNow();
+        }
+        if (fixedThreadPool != null && fixedThreadPool.isShutdown()) {
+            //shutdownNow函数修改线程池状态为STOP
+            //不再接收任务提交
+            //尝试中断线程池中所有的线程（包括正在执行的线程）
+            //返回正在等待执行的任务列表 List<Runnable>
+            fixedThreadPool.shutdownNow();
+        }
+        if (cachedThreadPool != null && cachedThreadPool.isShutdown()) {
+            //shutdownNow函数修改线程池状态为STOP
+            //不再接收任务提交
+            //尝试中断线程池中所有的线程（包括正在执行的线程）
+            //返回正在等待执行的任务列表 List<Runnable>
+            cachedThreadPool.shutdownNow();
+        }
+        if (scheduledThreadPool != null && scheduledThreadPool.isShutdown()) {
+            //shutdownNow函数修改线程池状态为STOP
+            //不再接收任务提交
+            //尝试中断线程池中所有的线程（包括正在执行的线程）
+            //返回正在等待执行的任务列表 List<Runnable>
+            scheduledThreadPool.shutdownNow();
+        }
+        if (customThreadPool != null && customThreadPool.isShutdown()) {
+            //shutdownNow函数修改线程池状态为STOP
+            //不再接收任务提交
+            //尝试中断线程池中所有的线程（包括正在执行的线程）
+            //返回正在等待执行的任务列表 List<Runnable>
+            customThreadPool.shutdownNow();
         }
         stopThreadPool();
         stopThreadPool2();
