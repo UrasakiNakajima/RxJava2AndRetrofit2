@@ -1,14 +1,25 @@
 package com.phone.module_square.ui
 
+import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.base.BaseBindingRxAppActivity
 import com.phone.library_common.base.BaseMvvmAppRxActivity
 import com.phone.library_common.base.BaseRxAppActivity
 import com.phone.library_common.common.ConstantData
+import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareActivityKotlinCoroutineBinding
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
+
+/**
+ * author    : Urasaki
+ * e-mail    : 1164688204@qq.com
+ * date      :
+ * introduce : 多种协程的创建方式及其使用方式
+ */
 
 @Route(path = ConstantData.Route.ROUTE_KOTLIN_COROUTINE)
 class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCoroutineBinding>() {
@@ -17,12 +28,9 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
         private val TAG = KotlinCoroutineActivity::class.java.simpleName
     }
 
-    var number: Int = 10 //还有Double Float Long Short Byte
-    var char: Char = 'c'
-    var isFood: Boolean = true
-    var ages: IntArray =
-        intArrayOf(1, 2, 3) //还有FloatArray DoubleArray CharArray，都属于kotlin 的 built-in函数
-    var str: String = "Lili"
+    var mJob: Job? = null
+    var mCoroutineScope: CoroutineScope? = null
+    var mMainScope: CoroutineScope? = null
 
     override fun initLayoutId() = R.layout.square_activity_kotlin_coroutine
 
@@ -35,171 +43,190 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
         mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_80000000))
         mDatabind.layoutBack.setOnClickListener { v -> finish() }
 
+        mDatabind.tevStartRunBlocking.setOnClickListener {
+            startRunBlocking()
+        }
+        mDatabind.tevStartGlobalScope.setOnClickListener {
+            startGlobalScope()
+        }
+        mDatabind.tevStartCoroutineScope.setOnClickListener {
+            startCoroutineScope()
+        }
+        mDatabind.tevStartMainScope.setOnClickListener {
+            startMainScope()
+        }
+        mDatabind.tevStartLifecycleScope.setOnClickListener {
+            startLifecycleScope()
+        }
+    }
+
+    private fun startRunBlocking() {
+        //方法一：使用 runBlocking 顶层函数
+        //启动一个新协程，并阻塞当前线程，直到其内部所有逻辑及子协程逻辑全部执行完成。
+        //不建议使用
+        //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了
+        runBlocking {
+            LogManager.i(TAG, "runBlocking thread name*****${Thread.currentThread().name}")
+
+            requestUserInfo()
+            downloadFile()
+        }
+    }
+
+    private fun startGlobalScope() {
+        //方法二：使用 GlobalScope 单例对象直接调用launch开启协程
+        //在应用范围内启动一个新协程，协程的生命周期与应用程序一致。
+        //由于这样启动的协程存在启动协程的组件已被销毁但协程还存在的情况，极限情况下可能导致资源耗尽，
+        //所以Activity 销毁的时候记得要取消掉，避免内存泄漏
+        //不建议使用，尤其是在客户端这种需要频繁创建销毁组件的场景。
+        //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了（根据指定的线程来）
+        mJob = GlobalScope.launch(Dispatchers.Main) {
+            LogManager.i(TAG, "GlobalScope thread name*****${Thread.currentThread().name}")
+
+            showLoading()
+            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            requestUserInfo()
+            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            downloadFile()
+            hideLoading()
+        }
+    }
+
+    private fun startCoroutineScope() {
+        //方法三：行通过 CoroutineContext 创建一个 CoroutineScope 对象
+        //Activity 销毁的时候记得要取消掉，避免内存泄漏
+        //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了（根据指定的线程来）
+        mCoroutineScope = CoroutineScope(Dispatchers.Main)
+        mCoroutineScope?.launch {
+            LogManager.i(TAG, "mCoroutineScope thread name*****${Thread.currentThread().name}")
+            showLoading()
+            calculatePi()
+            hideLoading()
+        }
+
+
+//        mCoroutineScope?.launch {
+//            LogManager.i(TAG, "mCoroutineScope2 thread name*****${Thread.currentThread().name}")
+//            requestUserInfo()
+//        }
+//        mCoroutineScope?.launch {
+//            LogManager.i(TAG, "mCoroutineScope3 thread name*****${Thread.currentThread().name}")
+//            videoDecoding()
+//        }
+    }
+
+    private fun startMainScope() {
+        //方法三：行通过 CoroutineContext 创建一个 CoroutineScope 对象
+        //Activity 销毁的时候记得要取消掉，避免内存泄漏
+        //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了
+        mMainScope = MainScope()
+        mMainScope?.launch {//开启MainScope这种协程之后就是在MAIN线程执行了
+            LogManager.i(TAG, "mainScope thread name*****${Thread.currentThread().name}")
+
+            showLoading()
+            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            requestUserInfo()
+            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            videoDecoding()
+            hideLoading()
+        }
+    }
+
+    private fun startLifecycleScope() {
+        //此种创建方式只能在Activity内部创建，它自动绑定Activity生命周期，不用处理内容泄漏问题
+        //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了
+        lifecycleScope.launch {
+            LogManager.i(TAG, "lifecycleScope thread name*****${Thread.currentThread().name}")
+
+            showLoading()
+            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            requestUserInfo()
+            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            videoDecoding()
+            hideLoading()
+        }
     }
 
     override fun initLoadData() {
-//        test()
-//        test2()
-
-//        coroutine()
-    }
-
-    fun coroutine() {
-        GlobalScope.launch { // 在后台启动一个新的协程并继续
-            delay(1000L) // 无阻塞的等待1秒钟（默认时间单位是毫秒）
-            println("World!") // 在延迟后打印输出
-        }
-        println("Hello,") // 主线程的协程将会继续等待
-        Thread.sleep(2000L) // 阻塞主线程2秒钟来保证 JVM 存活
-
-
-        GlobalScope.launch { // 在后台启动一个新的协程并继续
-            delay(1000L)
-            println("World!")
-        }
-        println("Hello,") // 主线程中的代码会立即执行
-        runBlocking {     // 但是这个函数阻塞了主线程
-            delay(2000L)  // ……我们延迟2秒来保证 JVM 的存活
-        }
-
-
-
-        GlobalScope.launch { // 在后台启动一个新的协程并继续
-            delay(1000L)
-            println("World!")
-        }
-        println("Hello,") // 主线程中的代码会立即执行
-        runBlocking {     // 但是这个函数阻塞了主线程
-            delay(2000L)  // ……我们延迟2秒来保证 JVM 的存活
-        }
 
     }
-
-
-    fun main() = runBlocking<Unit> { // 开始执行主协程
-        GlobalScope.launch { // 在后台开启一个新的协程并继续
-            delay(1000L)
-            println("World!")
-        }
-        println("Hello,") // 主协程在这里会立即执行
-        delay(2000L)      // 延迟2秒来保证 JVM 存活
-    }
-
-    fun test() {
-        val list = listOf(1, 2, 3, 4, 5, 6) // 是个内联函数
-
-        //最大最小、加减、总和
-        list.any { it > 4 } // 只要有符合条件的，就返回true
-        list.all { it > 3 } // 集合的全部元素都符合条件，才返回true
-        list.none { it < 1 } // 集合的全部元素都不符合条件，才返回true
-        list.count { it > 3 } // 返回集合中符合条件的总数
-        list.sum() // 请求总和，只有Int类型的list可使用
-        list.sumOf { // 每个元素都做一定操作后的值相加获得所有的元素总和
-            it + 1
-        }
-        list.maxOrNull() // 返回集合中最大的元素，可为null，元素继承Comparable类型的list可使用
-        list.minOrNull() // 返回集合中最小的元素，可为null，元素继承Comparable类型的list可使用
-
-
-        //遍历
-        list.forEach { // 遍历每一个元素，没有返回值
-            print(it)
-        }
-        list.onEach { // 遍历每一个元素，返回集合本身
-            print(it)
-        }.size // 可以引用到数量
-        list.forEachIndexed { index, value -> // 遍历每一个元素，包含下标和值
-            print("下标 $index 值 $value")
-        }
-        //过滤
-        list.drop(3) // 从0开始，去除前3个元素，返回剩余的元素列表
-        list.dropWhile { it > 3 } //从0开始，去除符合条件的前面的元素(该元素不去除)，返回剩余的元素列表
-        list.dropLastWhile { it > 3 } // 同上，只不过从最后开始去除
-        list.filter { it > 3 } //返回所有符合条件的元素的列表
-        list.filterNot { it > 3 } //返回所有不符合条件的元素的列表
-        list.slice(2..5) //切片，返回2到5的元素组成的列表
-        list.take(3) // 返回前3个元素组成列表
-        list.takeLast(3) // 返回最后的3个元素组成的列表
-        list.takeWhile { it > 3 } //从0开始，返回符合条件的前面的元素(该元素不返回)组成的集合，和drop相反
-        list.takeLastWhile { it > 3 }// 同上，只不过从最后开始取
-
-
-        val students: List<Student> = listOf()
-        val mapResult = students.map {
-            "你好" + it.name
-        }
-        println("mapResult $mapResult")
-        val flatmapResult: List<String> = list.flatMap {
-            listOf("数字是" + 1)
-        }
-        println("flatmapResult $flatmapResult")
-    }
-
-    fun test2() {
-        val list = listOf(
-            User("Jack", 18, listOf("吃饭", "睡觉")),
-            User("Tom", 18, listOf("跑步", "游泳")),
-            User("Lili", 18, listOf("篮球", "跳远"))
-        )
-        //map:将List中每个元素转换成新的元素,并添加到一个新的List中,最后将新List返回
-        val mapResult = list.map {
-            it.name
-        }
-        //flatMap:返回指定list的所有元素，组成的一个list (表达式中必须返回list)
-        val flatMapResult = list.flatMap {
-            listOf(it.name)  // name不是list，需要包装成list
-        }
-        println("mapResult = $mapResult")
-        println("flatMapResult = $flatMapResult")
-
-
-        //map:将List中每个元素转换成新的元素,并添加到一个新的List中,最后将新List返回
-        val mapResult2 = list.map {
-            it.ability
-        }
-        //flatMap:返回指定list的所有元素，组成的一个list (表达式中必修返回list)
-        val flatMapResult2 = list.flatMap {
-            it.ability  //本身是list不用再包装
-        }
-        println("mapResult2 = $mapResult2")
-        println("flatMapResult2 = $flatMapResult2")
-
-
-        val user = User("Jack", 18, listOf("吃饭", "喝水"))
-        val result = with(user) { //最后一行为返回值
-            "年龄是 $age"
-        }
-        val result2 = user.run { //最后一行为返回值
-            "年龄是 $age"
-        }
-        println("result = $result")
-        println("result2 = $result2")
-        val result3 = user.apply { //返回该对象本身
-            age = 999
-        }
-        println("result3 = $result3")
-
-
-    }
-
-    data class User(
-        val name: String = "Jack",
-        var age: Int = 28,
-        val ability: List<String> = listOf()
-    )
-
-    data class Student(
-        val name: String = "",
-        val age: Int = 0,
-    )
 
     override fun showLoading() {
-
+        if (!mLoadView.isShown) {
+            mLoadView.visibility = View.VISIBLE
+            mLoadView.start()
+        }
     }
 
     override fun hideLoading() {
-
+        if (mLoadView.isShown) {
+            mLoadView.stop()
+            mLoadView.visibility = View.GONE
+        }
     }
 
+    /**
+     * IO密集型协程：模拟请求用户信息（需要时间比较短的）
+     */
+    private suspend fun requestUserInfo() {
+        LogManager.i(TAG, "start requestUserInfo")
+        withContext(Dispatchers.IO) {
+            delay(2 * 1000)
+        }
+        LogManager.i(TAG, "end requestUserInfo")
+    }
+
+    /**
+     * IO密集型协程：模拟下载文件
+     */
+    private suspend fun downloadFile() {
+        LogManager.i(TAG, "start downloadFile")
+        withContext(Dispatchers.IO) {
+//            //这个是真正的模拟下载文件需要的时长
+//            delay(60 * 1000)
+
+            //这里只是想早点看到效果，所以减少了时长
+            delay(5 * 1000)
+        }
+        LogManager.i(TAG, "end downloadFile")
+    }
+
+    /**
+     * CPU密集型协程：模拟计算圆周率（需要时间比较长的）
+     */
+    private suspend fun calculatePi() {
+        LogManager.i(TAG, "start calculatePi")
+        withContext(Dispatchers.Default) {
+//            //这个是真正的模拟计算圆周率需要的时长
+//            delay(5 * 60 * 1000)
+
+            //这里只是想早点看到效果，所以减少了时长
+            delay(10 * 1000)
+        }
+        LogManager.i(TAG, "end calculatePi")
+    }
+
+    /**
+     * CPU密集型协程：模拟视频解码（需要时间比较长的）
+     */
+    private suspend fun videoDecoding() {
+        LogManager.i(TAG, "start videoDecoding")
+        withContext(Dispatchers.Default) {
+//            //这个是真正的模拟视频解码需要的时长
+//            delay(20 * 60 * 1000)
+
+            //这里只是想早点看到效果，所以减少了时长
+            delay(10 * 1000)
+        }
+        LogManager.i(TAG, "end videoDecoding")
+    }
+
+    override fun onDestroy() {
+        //这几个任务要在Activity 销毁的时候取消，避免内存泄漏
+        mJob?.cancel()
+        mCoroutineScope?.cancel()
+        mMainScope?.cancel()
+        super.onDestroy()
+    }
 
 }

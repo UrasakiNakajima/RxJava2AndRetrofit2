@@ -58,16 +58,16 @@ class EventScheduleActivity : BaseBindingRxAppActivity<ProjectActivityEventSched
     }
 
     override fun showLoading() {
-        if (!loadView.isShown()) {
-            loadView.setVisibility(View.VISIBLE)
-            loadView.start()
+        if (!mLoadView.isShown()) {
+            mLoadView.setVisibility(View.VISIBLE)
+            mLoadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (loadView.isShown()) {
-            loadView.stop()
-            loadView.setVisibility(View.GONE)
+        if (mLoadView.isShown()) {
+            mLoadView.stop()
+            mLoadView.setVisibility(View.GONE)
         }
     }
 

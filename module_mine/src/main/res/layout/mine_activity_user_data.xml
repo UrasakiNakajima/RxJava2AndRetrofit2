@@ -7,14 +7,10 @@
     android:orientation="vertical"
     tools:context=".ui.UserDataActivity">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_24" />
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
+        android:layout_height="@dimen/dp_73"
         android:background="@color/color_FF198CFF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
@@ -22,7 +18,8 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_48">
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginTop="@dimen/dp_25">
 
             <FrameLayout
                 android:id="@+id/layout_back"

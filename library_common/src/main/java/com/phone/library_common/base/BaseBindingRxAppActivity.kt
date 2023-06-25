@@ -32,7 +32,7 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActivity(), IBaseView {
 
     private val TAG = BaseBindingRxAppActivity::class.java.simpleName
-    protected lateinit var loadView: QMUILoadingView
+    protected lateinit var mLoadView: QMUILoadingView
     protected lateinit var layoutParams: FrameLayout.LayoutParams
 
     //该类绑定的ViewDataBinding
@@ -52,8 +52,8 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
         mDatabind.lifecycleOwner = mRxAppCompatActivity
         initData()
         initViews()
-        loadView = QMUILoadingView(this)
-        loadView.also {
+        mLoadView = QMUILoadingView(this)
+        mLoadView.also {
             it.visibility = View.GONE
             it.setSize(100)
             it.setColor(ResourcesManager.getColor(R.color.color_333333))
@@ -62,7 +62,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
             FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
         )
         layoutParams.gravity = Gravity.CENTER
-        addContentView(loadView, layoutParams)
+        addContentView(mLoadView, layoutParams)
         initLoadData()
     }
 
