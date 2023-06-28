@@ -6,6 +6,8 @@ import com.phone.library_common.common.ApiException
 import com.phone.library_common.manager.LogManager
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONException
@@ -32,6 +34,17 @@ open class BaseViewModel : ViewModel() {
      */
     protected suspend fun <T> executeRequest(block: suspend () -> ApiResponse<T>): ApiResponse<T> =
         withContext(Dispatchers.IO) {
+
+//            //协程内部只开启多个launch是并行的
+//            launch {
+//                delay(2000)
+//                LogManager.i(TAG, "launch delay(2000)")
+//            }
+//            launch {
+//                delay(1000)
+//                LogManager.i(TAG, "launch delay(1000)")
+//            }
+
             var response: ApiResponse<T>
             runCatching {
                 block()

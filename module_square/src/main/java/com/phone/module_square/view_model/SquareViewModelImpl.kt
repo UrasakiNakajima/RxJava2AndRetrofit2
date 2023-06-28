@@ -13,6 +13,8 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -37,8 +39,19 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         LogManager.i(TAG, "squareData thread name*****${Thread.currentThread().name}")
 
         mJob?.cancel()
-        mJob = GlobalScope.launch(Dispatchers.Main) {
-            //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了（根据指定的线程来）
+        mJob = GlobalScope.launch(Dispatchers.Main) { //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了（根据指定的线程来）
+
+//            //协程内部只开启多个async是并行的
+//            async {
+//                delay(2000)
+//                LogManager.i(TAG, "async delay(2000)")
+//            }
+//            async {
+//                delay(1000)
+//                LogManager.i(TAG, "async delay(1000)")
+//            }
+
+
             val apiResponse = executeRequest { mModel.squareData(currentPage) }
 
             if (apiResponse.data != null && apiResponse.errorCode == 0) {

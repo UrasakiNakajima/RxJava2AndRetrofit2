@@ -18,6 +18,7 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -30,7 +31,9 @@ import kotlinx.coroutines.withContext
 
 class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHomePresenter {
 
-    private val TAG = "HomePresenterImpl"
+    companion object {
+        private val TAG = HomePresenterImpl::class.java.simpleName
+    }
 
     //    private IFirstPageView homePageView;//P需要与V 交互，所以需要持有V的引用
     private var model: IHomeModel
@@ -49,9 +52,27 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
                 homePageView.showLoading()
 
                 mainScope.launch {//开启MainScope这种协程之后就是在MAIN线程执行了
-                    LogManager.i(TAG, "homePage launch thread name*****" + Thread.currentThread().name)
+
+//                    //协程内部只开启多个launch是并行的
+//                    launch {
+//                        delay(2000)
+//                        LogManager.i(TAG, "launch delay(2000)")
+//                    }
+//                    launch {
+//                        delay(1000)
+//                        LogManager.i(TAG, "launch delay(1000)")
+//                    }
+
+
+                    LogManager.i(
+                        TAG,
+                        "homePage launch thread name*****" + Thread.currentThread().name
+                    )
                     val apiResponse = executeRequest { model.homePage(bodyParams) }
-                    LogManager.i(TAG, "homePage launch2 thread name*****" + Thread.currentThread().name)
+                    LogManager.i(
+                        TAG,
+                        "homePage launch2 thread name*****" + Thread.currentThread().name
+                    )
                     if (apiResponse.result != null && apiResponse.error_code == 0) {
                         val list = apiResponse.result?.data ?: mutableListOf()
                         if (list.size > 0) {

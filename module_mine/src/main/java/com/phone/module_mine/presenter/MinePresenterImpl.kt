@@ -18,9 +18,13 @@ import com.phone.module_mine.view.IMineView
 import com.phone.module_mine.view.IUserDataView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
@@ -43,6 +47,37 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                 baseView.showLoading()
 
                 mainScope.launch {
+
+//                    LogManager.i(TAG, "mainScope.launch")
+//                    //协程内部开启多个withContext和launch的时候，有一个规律，执行第一个withContext的时候，就会串行执行，
+//                    //然后执行完了第一个withContext，再并行执行第一个launch和第二个withContext，执行第二个withContext
+//                    //的时候，又会串行执行，然后执行完了第二个withContext，再并行执行第二个launch和第三个withContext，
+//                    //执行第三个withContext的时候，又会串行执行，然后执行完了第三个withContext，再执行最后一个launch
+//                    withContext(Dispatchers.IO) {//第一个withContext
+//                        delay(3000)
+//                        LogManager.i(TAG, "withContext delay(3000)")
+//                    }
+//                    launch {//第一个withContext
+//                        delay(1000)
+//                        LogManager.i(TAG, "launch delay(1000)")
+//                    }
+//                    withContext(Dispatchers.IO) {//第二个withContext
+//                        delay(1000)
+//                        LogManager.i(TAG, "withContext delay(1000)")
+//                    }
+//                    launch {//第二个withContext
+//                        delay(2000)
+//                        LogManager.i(TAG, "async delay(2000)")
+//                    }
+//                    withContext(Dispatchers.IO) {//第三个withContext
+//                        delay(2000)
+//                        LogManager.i(TAG, "withContext delay(2000)")
+//                    }
+//                    launch {//第三个withContext
+//                        delay(1000)
+//                        LogManager.i(TAG, "launch delay(1000)")
+//                    }
+
                     val apiResponse = executeRequest2 { model.mineData(bodyParams) }
                     if (apiResponse.result != null && apiResponse.error_code == 0) {
                         val list = apiResponse.result?.data ?: mutableListOf()

@@ -13,6 +13,7 @@ import com.phone.library_common.manager.SingleLiveData
 import com.phone.module_resource.R
 import com.phone.module_resource.model.ResourceModelImpl
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -31,10 +32,20 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
     val tabRxActivityError = SingleLiveData<String>()
 
     override fun resourceTabData() {
-        viewModelScope.launch {
-            //开启viewModelScope.launch这种协程之后依然是在当前线程
-            val apiResponse = executeRequest { model.resourceTabData() }
+        viewModelScope.launch { //开启viewModelScope.launch这种协程之后依然是在当前线程
 
+//            //协程内部只开启多个withContext是串行的
+//            withContext(Dispatchers.IO) {
+//                delay(2000)
+//                LogManager.i(TAG, "withContext delay(2000)")
+//            }
+//            withContext(Dispatchers.IO) {
+//                delay(1000)
+//                LogManager.i(TAG, "withContext delay(1000)")
+//            }
+
+
+            val apiResponse = executeRequest { model.resourceTabData() }
             //viewModelScope.launch开启协程之后，是在当前线程，然后上面那个IO线程执行完了，就会切换回当前线程
             if (apiResponse.data != null && apiResponse.errorCode == 0) {
                 apiResponse.data.also {
