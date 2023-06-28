@@ -1,7 +1,6 @@
 package com.phone.module_square.view_model
 
 import android.text.TextUtils
-import androidx.lifecycle.viewModelScope
 import com.phone.library_common.base.BaseViewModel
 import com.phone.library_common.bean.SubDataSquare
 import com.phone.library_common.bean.SquareBean
@@ -23,126 +22,72 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         private val TAG: String = SquareViewModelImpl::class.java.simpleName
     }
 
-    private var model = SquareModelImpl()
-    private val jobList = mutableListOf<Job>()
+    private var mModel = SquareModelImpl()
+    private var mJob: Job? = null
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragmentSuccess = SingleLiveData<MutableList<SubDataSquare>>()
+    val dataxRxFragmentSuccess = SingleLiveData<List<SubDataSquare>>()
     val dataxRxFragmentError = SingleLiveData<String>()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxActivitySuccess = SingleLiveData<MutableList<SubDataSquare>>()
+    val dataxRxActivitySuccess = SingleLiveData<List<SubDataSquare>>()
     val dataxRxActivityError = SingleLiveData<String>()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
         LogManager.i(TAG, "squareData thread name*****${Thread.currentThread().name}")
 
-        val job = GlobalScope.launch(Dispatchers.Main) {
+        mJob?.cancel()
+        mJob = GlobalScope.launch(Dispatchers.Main) {
             //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了（根据指定的线程来）
+            val apiResponse = execute { mModel.squareData(currentPage) }
 
-            val subDataSquareList = squareDataSuspend(currentPage)
-            LogManager.i(TAG, "squareData2 thread name*****${Thread.currentThread().name}")
-            dataxRxFragmentSuccess.value = subDataSquareList
-        }
-        jobList.add(job)
-
-//            RetrofitManager.getInstance()
-//                .responseStringRxFragmentBindToLifecycle(rxFragment,
-//                    model.squareData(currentPage),
-//                    object : OnCommonSingleParamCallback<String> {
-//                        override fun onSuccess(success: String) {
-//                            LogManager.i(TAG, "success*****$success")
-//                            if (!TextUtils.isEmpty(success)) {
-//                                val response: SquareBean =
-//                                    new GsonManager().convert(success, SquareBean::class.java)
-//                                if (response.data?.datas != null && response.data!!.datas!!.size > 0) {
-////                                LogManager.i(TAG, "response*****${response.toString()}")
-//
-//
-//                                    dataxRxFragmentSuccess.value = response.data!!.datas
-//                                } else {
-//                                    dataxRxFragmentError.value =
-//                                        ResourcesManager.getString(R.string.no_data_available)
-//                                }
-//                            } else {
-//                                dataxRxFragmentError.value =
-//                                    ResourcesManager.getString(R.string.loading_failed)
-//                            }
-//                        }
-//
-//                        override fun onError(error: String) {
-//                            LogManager.i(TAG, "error*****$error")
-//                            dataxRxFragmentError.value = error
-//                        }
-//                    })
-//        }
-    }
-
-    /**
-     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程），
-     * IO线程执行完毕就会切换回MAIN线程
-     */
-    suspend fun squareDataSuspend(currentPage: String): MutableList<SubDataSquare> {
-        val subDataSquareList = mutableListOf<SubDataSquare>()
-        LogManager.i(TAG, "squareDataSuspend thread name*****${Thread.currentThread().name}")
-
-        withContext(Dispatchers.IO) {
-            LogManager.i(TAG, "squareDataSuspend withContext thread name*****${Thread.currentThread().name}")
-            val success = model.squareData2(currentPage).execute().body()?.string()
-            if (!TextUtils.isEmpty(success)) {
-                val response =
-                    GsonManager().convert(success ?: "", SquareBean::class.java)
-
-                val responseData = response.data?.datas ?: mutableListOf()
+            if (apiResponse.data != null && apiResponse.errorCode == 0) {
+                val responseData = apiResponse.data?.datas ?: mutableListOf()
                 if (responseData.size > 0) {
-                    subDataSquareList.clear()
-                    subDataSquareList.addAll(responseData)
+                    dataxRxFragmentSuccess.value = responseData
+                } else {
+                    dataxRxFragmentError.value =
+                        ResourcesManager.getString(R.string.no_data_available)
                 }
+            } else {
+                dataxRxFragmentError.value = apiResponse.errorMsg
             }
         }
-
-        return subDataSquareList
     }
 
     override fun squareData2(
-        rxAppCompatActivity: RxAppCompatActivity,
-        currentPage: String
+        rxAppCompatActivity: RxAppCompatActivity, currentPage: String
     ) {
-        RetrofitManager.instance()
-            .responseString5(rxAppCompatActivity,
-                model.squareData(currentPage),
-                object : OnCommonSingleParamCallback<String> {
-                    override fun onSuccess(success: String) {
-                        LogManager.i(TAG, "success*****$success")
-                        if (!TextUtils.isEmpty(success)) {
-                            val response =
-                                GsonManager()
-                                    .convert(success, SquareBean::class.java)
-                            val responseData = response.data?.datas ?: mutableListOf()
-                            if (responseData.size > 0) {
-                                dataxRxActivitySuccess.value = responseData
-                            } else {
-                                dataxRxActivityError.value =
-                                    ResourcesManager.getString(R.string.no_data_available)
-                            }
+        RetrofitManager.instance().responseString5(rxAppCompatActivity,
+            mModel.squareData2(currentPage),
+            object : OnCommonSingleParamCallback<String> {
+                override fun onSuccess(success: String) {
+                    LogManager.i(TAG, "success*****$success")
+                    if (!TextUtils.isEmpty(success)) {
+                        val response = GsonManager().convert(success, SquareBean::class.java)
+                        val responseData = response.data?.datas ?: mutableListOf()
+                        if (responseData.size > 0) {
+                            dataxRxActivitySuccess.value = responseData
                         } else {
                             dataxRxActivityError.value =
-                                ResourcesManager.getString(R.string.loading_failed)
+                                ResourcesManager.getString(R.string.no_data_available)
                         }
+                    } else {
+                        dataxRxActivityError.value =
+                            ResourcesManager.getString(R.string.loading_failed)
                     }
+                }
 
-                    override fun onError(error: String) {
-                        LogManager.i(TAG, "error*****$error")
-                        dataxRxActivityError.value = error
-                    }
-                })
+                override fun onError(error: String) {
+                    LogManager.i(TAG, "error*****$error")
+                    dataxRxActivityError.value = error
+                }
+            })
     }
 
     override fun onCleared() {
         super.onCleared()
-        for (i in 0..jobList.size - 1) {
-            jobList.get(i).cancel()
-        }
+        mJob?.cancel()
     }
 
 }

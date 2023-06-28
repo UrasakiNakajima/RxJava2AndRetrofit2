@@ -80,6 +80,7 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
         //所以Activity 销毁的时候记得要取消掉，避免内存泄漏
         //不建议使用，尤其是在客户端这种需要频繁创建销毁组件的场景。
         //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了（根据指定的线程来）
+        mJob?.cancel()
         mJob = GlobalScope.launch(Dispatchers.Main) {
             LogManager.i(TAG, "GlobalScope thread name*****${Thread.currentThread().name}")
 

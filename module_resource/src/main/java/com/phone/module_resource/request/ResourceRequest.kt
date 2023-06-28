@@ -1,5 +1,8 @@
 package com.phone.module_resource.request
 
+import com.phone.library_common.bean.ApiResponse
+import com.phone.library_common.bean.ArticleBean
+import com.phone.library_common.bean.TabBean
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.common.ConstantUrl
 import io.reactivex.Observable
@@ -13,22 +16,26 @@ interface ResourceRequest {
 
     @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
     @GET(ConstantUrl.RESOURCE_TAB_URL)
-    fun getResourceTabData(): Call<ResponseBody>
+    suspend fun getResourceTabData(): ApiResponse<MutableList<TabBean>>
+
+    @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
+    @GET(ConstantUrl.RESOURCE_TAB_URL)
+    suspend fun getResourceTabData2(): Call<ResponseBody>
+
+    @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
+    @GET(ConstantUrl.SUB_RESOURCE_URL)
+    suspend fun getSubResourceData(
+        @Path("id") id: Int,
+        @Path("pageNum") pageNum: Int
+    ): ApiResponse<ArticleBean>
 
     @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
 //    @FormUrlEncoded
     @GET(ConstantUrl.SUB_RESOURCE_URL)
-    fun getSubResourceData(
+    suspend fun getSubResourceData2(
         @Path("id") id: Int,
         @Path("pageNum") pageNum: Int
     ): Observable<ResponseBody>
-
-    @Headers("urlname:${ConstantData.TO_RESOURCE_FLAG}")
-    @GET(ConstantUrl.SUB_RESOURCE_URL)
-    fun getSubResourceData2(
-        @Path("id") id: Int,
-        @Path("pageNum") pageNum: Int
-    ): Call<ResponseBody>
 
 
 }

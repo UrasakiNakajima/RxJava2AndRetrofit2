@@ -1,5 +1,7 @@
 package com.phone.module_home.model
 
+import com.phone.library_common.bean.ApiResponse2
+import com.phone.library_common.bean.ResultData
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_home.request.HomePageRequest
 import io.reactivex.Observable
@@ -17,13 +19,13 @@ class HomeModelImpl : IHomeModel {
 
     private val TAG = "HomeModelImpl"
 
-    override fun homePage(bodyParams: Map<String, String>): Observable<ResponseBody> {
+    override suspend fun homePage(bodyParams: Map<String, String>): ApiResponse2<ResultData> {
         return RetrofitManager.instance().mRetrofit
             .create(HomePageRequest::class.java)
             .getHomePage(bodyParams)
     }
 
-    override fun homePage2(bodyParams: Map<String, String>): Call<ResponseBody> {
+    override fun homePage2(bodyParams: Map<String, String>): Observable<ResponseBody> {
         return RetrofitManager.instance().mRetrofit
             .create(HomePageRequest::class.java)
             .getHomePage2(bodyParams)

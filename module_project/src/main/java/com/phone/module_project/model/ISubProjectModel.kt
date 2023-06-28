@@ -1,17 +1,18 @@
 package com.phone.module_project.model
 
-import io.reactivex.Observable
+import com.phone.library_common.bean.ApiResponse
+import com.phone.library_common.bean.ArticleBean
 import okhttp3.ResponseBody
 import retrofit2.Call
 
 interface ISubProjectModel {
 
-    fun subProjectData(
+    suspend fun subProjectData(
         pageNum: Int,
         tabId: Int
-    ): Observable<ResponseBody>
+    ): ApiResponse<ArticleBean>
 
-    fun subProjectData2(
+    suspend fun subProjectData2(
         pageNum: Int,
         tabId: Int
     ): Call<ResponseBody>

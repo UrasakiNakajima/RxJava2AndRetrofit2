@@ -1,10 +1,14 @@
 package com.phone.module_resource.model
 
+import com.phone.library_common.bean.ApiResponse
+import com.phone.library_common.bean.TabBean
 import okhttp3.ResponseBody
 import retrofit2.Call
 
 interface IResourceModel {
 
-    fun resourceTabData(): Call<ResponseBody>
+    suspend fun resourceTabData(): ApiResponse<MutableList<TabBean>>
+
+    suspend fun resourceTabData2(): Call<ResponseBody>
 
 }

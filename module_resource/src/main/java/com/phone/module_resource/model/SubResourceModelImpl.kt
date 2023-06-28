@@ -1,28 +1,29 @@
 package com.phone.module_resource.model
 
+import com.phone.library_common.bean.ApiResponse
+import com.phone.library_common.bean.ArticleBean
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_resource.request.ResourceRequest
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import retrofit2.Call
 
 class SubResourceModelImpl : ISubResourceModel {
 
     private val TAG = SubResourceModelImpl::class.java.simpleName
 
-    override fun subResourceData(
+    override suspend fun subResourceData(
         tabId: Int,
         pageNum: Int
-    ): Observable<ResponseBody> {
+    ): ApiResponse<ArticleBean> {
         return RetrofitManager.instance().mRetrofit
             .create(ResourceRequest::class.java)
             .getSubResourceData(tabId, pageNum)
     }
 
-    override fun subResourceData2(
+    override suspend fun subResourceData2(
         tabId: Int,
         pageNum: Int
-    ): Call<ResponseBody> {
+    ): Observable<ResponseBody> {
         return RetrofitManager.instance().mRetrofit
             .create(ResourceRequest::class.java)
             .getSubResourceData2(tabId, pageNum)

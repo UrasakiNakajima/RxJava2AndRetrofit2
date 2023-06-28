@@ -33,32 +33,24 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
     override fun resourceTabData() {
         viewModelScope.launch {
             //开启viewModelScope.launch这种协程之后依然是在当前线程
-            var success: String? = null
-            withContext(Dispatchers.IO) {
-                //然后切换到IO线程
-                success =
-                    model.resourceTabData().execute().body()?.string()
-            }
+            val apiResponse = execute { model.resourceTabData() }
 
             //viewModelScope.launch开启协程之后，是在当前线程，然后上面那个IO线程执行完了，就会切换回当前线程
-            LogManager.i(TAG, "resourceTabData response*****$success")
-            if (!TextUtils.isEmpty(success)) {
-                val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
-                val response: ApiResponse<MutableList<TabBean>> =
-                    GsonManager().fromJson(success ?: "", type2)
-                if (response.data().size > 0) {
-                    tabRxFragmentSuccess.value = response.data()
-                } else {
-                    tabRxFragmentError.value =
-                        BaseApplication.instance().resources.getString(
-                            R.string.no_data_available
-                        )
+            if (apiResponse.data != null && apiResponse.errorCode == 0) {
+                apiResponse.data.also {
+                    val list = it ?: mutableListOf()
+                    if (list.size > 0) {
+                        tabRxFragmentSuccess.value = list
+                    } else {
+                        tabRxFragmentError.value =
+                            BaseApplication.instance().resources.getString(
+                                R.string.no_data_available
+                            )
+                    }
                 }
             } else {
                 tabRxFragmentError.value =
-                    BaseApplication.instance().resources.getString(
-                        R.string.loading_failed
-                    )
+                    apiResponse.errorMsg
             }
         }
     }
@@ -67,7 +59,7 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val success =
-                    model.resourceTabData().execute().body()?.string()
+                    model.resourceTabData2().execute().body()?.string()
                 launch(Dispatchers.Main) {
                     LogManager.i(TAG, "resourceTabData response*****$success")
                     if (!TextUtils.isEmpty(success)) {
@@ -92,5 +84,6 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
             }
         }
     }
+
 
 }

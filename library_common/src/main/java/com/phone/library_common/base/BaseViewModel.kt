@@ -1,8 +1,7 @@
 package com.phone.library_common.base
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.phone.library_common.bean.ApiResponse
 import com.phone.library_common.common.ApiException
 import com.phone.library_common.manager.LogManager
 import kotlinx.coroutines.CancellationException
@@ -29,25 +28,26 @@ open class BaseViewModel : ViewModel() {
     }
 
     /**
-     * 错误信息liveData
+     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
      */
-    val errorLiveData = MutableLiveData<ApiException>()
-
-    protected fun <T> launch(block: suspend () -> T) {
-        viewModelScope.launch {
+    protected suspend fun <T> execute(block: suspend () -> ApiResponse<T>): ApiResponse<T> {
+        var response: ApiResponse<T>? = null
+        withContext(Dispatchers.IO) {
             runCatching {
                 block()
+            }.onSuccess {
+                response = it
             }.onFailure {
                 it.printStackTrace()
-                getApiException(it).apply {
-                    withContext(Dispatchers.Main) {
-//                        toast(errorMessage)
-                        //统一响应错误信息
-                        errorLiveData.value = this@apply
-                    }
-                }
-            }
+                response = ApiResponse<T>()
+                val apiException = getApiException(it)
+                response?.errorCode = apiException.errorCode
+                response?.errorMsg = apiException.errorMessage
+                response?.error = apiException
+            }.getOrDefault(ApiResponse<T>())
         }
+        LogManager.i(TAG, "launch thread name*****${Thread.currentThread().name}")
+        return response!!
     }
 
     /**
@@ -58,18 +58,23 @@ open class BaseViewModel : ViewModel() {
             is UnknownHostException -> {
                 ApiException("网络异常", -100)
             }
+
             is JSONException -> {//|| e is JsonParseException
                 ApiException("数据异常", -100)
             }
+
             is SocketTimeoutException -> {
                 ApiException("连接超时", -100)
             }
+
             is ConnectException -> {
                 ApiException("连接错误", -100)
             }
+
             is HttpException -> {
                 ApiException("http code ${e.code()}", -100)
             }
+
             is ApiException -> {
                 e
             }
@@ -80,6 +85,7 @@ open class BaseViewModel : ViewModel() {
             is CancellationException -> {
                 ApiException("", -10)
             }
+
             else -> {
                 ApiException("未知错误", -100)
             }

@@ -1,7 +1,7 @@
 package com.phone.module_mine.view
 
 import com.phone.library_common.base.IBaseView
-import com.phone.module_mine.bean.Data
+import com.phone.library_common.bean.Data
 
 interface IMineView : IBaseView {
 

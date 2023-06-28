@@ -1,5 +1,7 @@
 package com.phone.module_mine.model
 
+import com.phone.library_common.bean.ApiResponse3
+import com.phone.library_common.bean.MineResult
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_mine.request.MineRequest
 import io.reactivex.Observable
@@ -11,27 +13,30 @@ class MineModelImpl : IMineModel {
         private val TAG = MineModelImpl::class.java.simpleName
     }
 
-    override fun mineData(bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
-                .create(MineRequest::class.java)
-                .getMineData(bodyParams)
+    override suspend fun mineData(bodyParams: Map<String, String>): ApiResponse3<MineResult> {
+        return RetrofitManager.instance().mRetrofit.create(MineRequest::class.java)
+            .getMineData(bodyParams)
+    }
+
+    override fun mineData2(bodyParams: Map<String, String>): Observable<ResponseBody> {
+        return RetrofitManager.instance().mRetrofit.create(MineRequest::class.java)
+            .getMineData2(bodyParams)
     }
 
     override fun mineDetails(bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
-                .create(MineRequest::class.java)
-                .getMineDetails(bodyParams)
+        return RetrofitManager.instance().mRetrofit.create(MineRequest::class.java)
+            .getMineDetails(bodyParams)
     }
 
     override fun userData(bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
-                .create(MineRequest::class.java)
-                .getUserData(bodyParams)
+        return RetrofitManager.instance().mRetrofit.create(MineRequest::class.java)
+            .getUserData(bodyParams)
     }
 
-    override fun userData(accessToken: String, bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
-                .create(MineRequest::class.java)
-                .getUserData(accessToken, bodyParams)
+    override fun userData(
+        accessToken: String, bodyParams: Map<String, String>
+    ): Observable<ResponseBody> {
+        return RetrofitManager.instance().mRetrofit.create(MineRequest::class.java)
+            .getUserData(accessToken, bodyParams)
     }
 }

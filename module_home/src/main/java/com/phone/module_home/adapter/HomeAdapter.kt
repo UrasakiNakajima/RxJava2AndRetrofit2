@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.phone.library_common.bean.HomePageResponse.ResultData.JuheNewsBean
+import com.phone.library_common.bean.ResultData
 import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.module_home.R
 
@@ -20,7 +20,7 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         private val TAG = HomeAdapter::class.java.simpleName
     }
 
-    var mJuheNewsBeanList: MutableList<JuheNewsBean> = ArrayList()
+    var mJuheNewsBeanList: MutableList<ResultData.JuheNewsBean> = ArrayList()
 
     fun clearData() {
         notifyItemRangeRemoved(0, mJuheNewsBeanList.size)
@@ -28,7 +28,7 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         mJuheNewsBeanList.clear()
     }
 
-    fun addData(dataBeanList: List<JuheNewsBean>) {
+    fun addData(dataBeanList: List<ResultData.JuheNewsBean>) {
         notifyItemRangeInserted(mJuheNewsBeanList.size, dataBeanList.size)
         mJuheNewsBeanList.addAll(dataBeanList)
     }

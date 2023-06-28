@@ -1,8 +1,9 @@
 package com.phone.module_project.model
 
+import com.phone.library_common.bean.ApiResponse
+import com.phone.library_common.bean.ArticleBean
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_project.request.ProjectRequest
-import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Call
 
@@ -12,16 +13,16 @@ class SubProjectModelImpl : ISubProjectModel {
         private val TAG: String = SubProjectModelImpl::class.java.simpleName
     }
 
-    override fun subProjectData(
+    override suspend fun subProjectData(
         pageNum: Int,
         tabId: Int
-    ): Observable<ResponseBody> {
+    ): ApiResponse<ArticleBean> {
         return RetrofitManager.instance().mRetrofit
             .create(ProjectRequest::class.java)
             .getSubProjectData(pageNum, tabId)
     }
 
-    override fun subProjectData2(
+    override suspend fun subProjectData2(
         pageNum: Int,
         tabId: Int
     ): Call<ResponseBody> {

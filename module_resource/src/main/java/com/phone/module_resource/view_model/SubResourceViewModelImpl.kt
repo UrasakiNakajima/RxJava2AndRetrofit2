@@ -35,33 +35,22 @@ class SubResourceViewModelImpl() : BaseViewModel(), ISubResourceViewModel {
         pageNum: Int
     ) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val success =
-                    model.subResourceData2(tabId, pageNum).execute().body()?.string()
-                launch(Dispatchers.Main) {
-                    LogManager.i(TAG, "subResourceData response pageNum$pageNum*****$success")
-                    if (!TextUtils.isEmpty(success)) {
-                        val type2 = object : TypeToken<ApiResponse<ArticleBean>>() {}.type
-                        val response: ApiResponse<ArticleBean> =
-                            GsonManager().fromJson(success ?: "", type2)
-                        response.data().let {
-                            val list = ArticleListBean.trans(it.datas ?: mutableListOf())
-                            if (list.size > 0) {
-                                dataxRxFragmentSuccess.value = list
-                            } else {
-                                dataxRxFragmentError.value =
-                                    BaseApplication.instance().resources.getString(
-                                        R.string.no_data_available
-                                    )
-                            }
-                        }
+            val apiResponse = execute { model.subResourceData(tabId, pageNum) }
+            if (apiResponse.data != null && apiResponse.errorCode == 0) {
+                apiResponse.also {
+                    val list = ArticleListBean.trans(it.data?.datas ?: mutableListOf())
+                    if (list.size > 0) {
+                        dataxRxFragmentSuccess.value = list
                     } else {
                         dataxRxFragmentError.value =
                             BaseApplication.instance().resources.getString(
-                                R.string.loading_failed
+                                R.string.no_data_available
                             )
                     }
                 }
+            } else {
+                dataxRxFragmentError.value =
+                    apiResponse.errorMsg
             }
         }
     }

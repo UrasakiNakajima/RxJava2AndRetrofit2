@@ -1,7 +1,7 @@
 package com.phone.module_home.view
 
 import com.phone.library_common.base.IBaseView
-import com.phone.library_common.bean.HomePageResponse.ResultData.JuheNewsBean
+import com.phone.library_common.bean.ResultData
 
 /**
  * author    : Urasaki
@@ -11,7 +11,7 @@ import com.phone.library_common.bean.HomePageResponse.ResultData.JuheNewsBean
  */
 interface IHomePageView : IBaseView {
 
-    fun homePageDataSuccess(success: List<JuheNewsBean>)
+    fun homePageDataSuccess(success: List<ResultData.JuheNewsBean>)
 
     fun homePageDataError(error: String)
 }

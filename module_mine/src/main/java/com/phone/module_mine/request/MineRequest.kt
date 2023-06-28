@@ -1,5 +1,7 @@
 package com.phone.module_mine.request
 
+import com.phone.library_common.bean.ApiResponse3
+import com.phone.library_common.bean.MineResult
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.common.ConstantUrl
 import io.reactivex.Observable
@@ -13,7 +15,11 @@ interface MineRequest {
 
     @Headers("urlname:${ConstantData.TO_MINE_FLAG}")
     @GET(ConstantUrl.MINE_URL)
-    fun getMineData(@QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
+    suspend fun getMineData(@QueryMap bodyParams: Map<String, String>): ApiResponse3<MineResult>
+
+    @Headers("urlname:${ConstantData.TO_MINE_FLAG}")
+    @GET(ConstantUrl.MINE_URL)
+    fun getMineData2(@QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
     @Headers("urlname:${ConstantData.TO_MINE_FLAG}")
     @GET(ConstantUrl.FIRST_PAGE_DETAILS_URL)
@@ -25,7 +31,10 @@ interface MineRequest {
     fun getUserData(@QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
 
     @GET(ConstantUrl.USER_DATA)
-    fun getUserData(@Header("appToken") accessToken: String, @QueryMap bodyParams: Map<String, String>): Observable<ResponseBody>
+    fun getUserData(
+        @Header("appToken") accessToken: String,
+        @QueryMap bodyParams: Map<String, String>
+    ): Observable<ResponseBody>
 
 
 }

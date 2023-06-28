@@ -1,6 +1,5 @@
 package com.phone.module_mine
 
-import android.content.Intent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -12,11 +11,11 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.base.BaseMvpRxFragment
 import com.phone.library_common.base.IBaseView
+import com.phone.library_common.bean.Data
 import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
 import com.phone.module_mine.adapter.MineAdapter
-import com.phone.module_mine.bean.Data
 import com.phone.module_mine.presenter.MinePresenterImpl
 import com.phone.module_mine.view.IMineView
 import com.qmuiteam.qmui.widget.QMUILoadingView

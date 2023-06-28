@@ -1,20 +1,26 @@
 package com.phone.module_mine.presenter
 
 import android.text.TextUtils
+import com.google.gson.reflect.TypeToken
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.base.BasePresenter
 import com.phone.library_common.base.IBaseView
+import com.phone.library_common.bean.ApiResponse3
+import com.phone.library_common.bean.MineResult
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.manager.GsonManager
 import com.phone.library_common.manager.LogManager
+import com.phone.library_common.manager.ResourcesManager
 import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_mine.R
-import com.phone.module_mine.bean.MineResponse
 import com.phone.module_mine.model.MineModelImpl
 import com.phone.module_mine.view.IMineView
 import com.phone.module_mine.view.IUserDataView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
@@ -24,6 +30,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 
     //    private IResourceChildView feedbackView;//P需要与V 交互，所以需要持有V的引用
     private var model = MineModelImpl();
+    private val mainScope = MainScope()
 
     init {
         attachView(baseView)
@@ -34,110 +41,97 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         if (baseView != null) {
             if (baseView is IMineView) {
                 baseView.showLoading()
-                RetrofitManager.instance()
-                    .responseString7(
-                        rxFragment,
-                        model.mineData(bodyParams),
-                        object : OnCommonSingleParamCallback<String> {
-                            override fun onSuccess(success: String) {
-                                LogManager.i(TAG, "mineData success*****$success")
-                                if (!TextUtils.isEmpty(success)) {
-//                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
-//                                    val gson = Gson()
-//                                    val response = gson.fromJson(success, MineResponse::class.java)
-                                    val response = GsonManager()
-                                        .convert(success, MineResponse::class.java)
 
-                                    if (response.error_code == 0) {
-                                        baseView.mineDataSuccess(response.result.data)
-                                    } else {
-                                        baseView.mineDataError(response.reason)
-                                    }
-                                } else {
-                                    baseView.mineDataError(
-                                        BaseApplication.instance().resources.getString(
-                                            R.string.loading_failed
-                                        )
-                                    )
-                                }
-                                baseView.hideLoading()
-                            }
-
-                            override fun onError(error: String) {
-                                LogManager.i(TAG, "error*****$error")
-                                baseView.mineDataError(error)
-                                baseView.hideLoading()
-                            }
-                        })
-//                compositeDisposable.add(disposable)
+                mainScope.launch {
+                    val apiResponse = execute2 { model.mineData(bodyParams) }
+                    if (apiResponse.result != null && apiResponse.error_code == 0) {
+                        val list = apiResponse.result?.data ?: mutableListOf()
+                        if (list.size > 0) {
+                            baseView.mineDataSuccess(list)
+                        } else {
+                            baseView.mineDataError(
+                                ResourcesManager.getString(
+                                    R.string.no_data_available
+                                )
+                            )
+                        }
+                    } else {
+                        baseView.mineDataError(
+                            apiResponse.reason ?: BaseApplication.instance().resources.getString(
+                                R.string.loading_failed
+                            )
+                        )
+                    }
+                    baseView.hideLoading()
+                }
             }
         }
     }
 
     override fun mineData2(
-        rxAppCompatActivity: RxAppCompatActivity,
-        bodyParams: Map<String, String>
+        rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>
     ) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {
                 baseView.showLoading()
-                RetrofitManager.instance()
-                    .responseString5(
-                        rxAppCompatActivity,
-                        model.mineData(bodyParams),
-                        object : OnCommonSingleParamCallback<String> {
-                            override fun onSuccess(success: String) {
-                                LogManager.i(TAG, "mineData success*****$success")
-                                if (!TextUtils.isEmpty(success)) {
+                RetrofitManager.instance().responseString5(rxAppCompatActivity,
+                    model.mineData2(bodyParams),
+                    object : OnCommonSingleParamCallback<String> {
+                        override fun onSuccess(success: String) {
+                            LogManager.i(TAG, "mineData success*****$success")
+                            if (!TextUtils.isEmpty(success)) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
-                                    val response = GsonManager()
-                                        .convert(success, MineResponse::class.java)
-//                                    String jsonStr = GsonManager . getInstance ().toJson(response);
-                                    if (response.error_code == 0) {
-                                        baseView.mineDataSuccess(response.result.data)
-                                    } else {
-                                        baseView.mineDataError(response.reason)
-                                    }
+                                val type2 =
+                                    object : TypeToken<ApiResponse3<MineResult>>() {}.type
+                                val response: ApiResponse3<MineResult> =
+                                    GsonManager().fromJson(success ?: "", type2)
+                                if (response.result != null && response.error_code == 0) {
+                                    val list = response.result?.data ?: mutableListOf()
+                                    baseView.mineDataSuccess(list)
                                 } else {
                                     baseView.mineDataError(
-                                        BaseApplication.instance().resources.getString(
-                                            R.string.loading_failed
-                                        )
+                                        response.reason
+                                            ?: BaseApplication.instance().resources.getString(
+                                                R.string.loading_failed
+                                            )
                                     )
                                 }
-                                baseView.hideLoading()
+                            } else {
+                                baseView.mineDataError(
+                                    BaseApplication.instance().resources.getString(
+                                        R.string.loading_failed
+                                    )
+                                )
                             }
+                            baseView.hideLoading()
+                        }
 
-                            override fun onError(error: String) {
-                                LogManager.i(TAG, "error*****$error")
-                                baseView.mineDataError(error)
-                                baseView.hideLoading()
-                            }
-                        })
-//                compositeDisposable.add(disposable)
+                        override fun onError(error: String) {
+                            LogManager.i(TAG, "error*****$error")
+                            baseView.mineDataError(error)
+                            baseView.hideLoading()
+                        }
+                    })
             }
         }
     }
 
     override fun userData(
-        rxAppCompatActivity: RxAppCompatActivity,
-        bodyParams: Map<String, String>
+        rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>
     ) {
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
                 baseView.showLoading()
-                RetrofitManager.instance()
-                    .responseString5(
-                        rxAppCompatActivity,
-                        model.userData(bodyParams),
-                        object : OnCommonSingleParamCallback<String> {
-                            override fun onSuccess(success: String) {
-                                LogManager.i(TAG, "userData success*****$success")
-                                if (!TextUtils.isEmpty(success)) {
+                RetrofitManager.instance().responseString5(rxAppCompatActivity,
+                    model.userData(bodyParams),
+                    object : OnCommonSingleParamCallback<String> {
+                        override fun onSuccess(success: String) {
+                            LogManager.i(TAG, "userData success*****$success")
+                            if (!TextUtils.isEmpty(success)) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
@@ -148,23 +142,22 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    } else {
 //                                        baseView.mineDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
 //                                    }
-                                } else {
-                                    baseView.userDataError(
-                                        BaseApplication.instance().resources.getString(
-                                            R.string.loading_failed
-                                        )
+                            } else {
+                                baseView.userDataError(
+                                    BaseApplication.instance().resources.getString(
+                                        R.string.loading_failed
                                     )
-                                }
-                                baseView.hideLoading()
+                                )
                             }
+                            baseView.hideLoading()
+                        }
 
-                            override fun onError(error: String) {
-                                LogManager.i(TAG, "error*****$error")
-                                baseView.userDataError(error)
-                                baseView.hideLoading()
-                            }
-                        })
-//                compositeDisposable.add(disposable)
+                        override fun onError(error: String) {
+                            LogManager.i(TAG, "error*****$error")
+                            baseView.userDataError(error)
+                            baseView.hideLoading()
+                        }
+                    })
             }
         }
     }
@@ -178,14 +171,12 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         if (baseView != null) {
             if (baseView is IUserDataView) {
                 baseView.showLoading()
-                RetrofitManager.instance()
-                    .responseString5(
-                        rxAppCompatActivity,
-                        model.userData(accessToken, bodyParams),
-                        object : OnCommonSingleParamCallback<String> {
-                            override fun onSuccess(success: String) {
-                                LogManager.i(TAG, "userData success*****$success")
-                                if (!TextUtils.isEmpty(success)) {
+                RetrofitManager.instance().responseString5(rxAppCompatActivity,
+                    model.userData(accessToken, bodyParams),
+                    object : OnCommonSingleParamCallback<String> {
+                        override fun onSuccess(success: String) {
+                            LogManager.i(TAG, "userData success*****$success")
+                            if (!TextUtils.isEmpty(success)) {
 //                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
 //                                    val gson = Gson()
 //                                    val response = gson.fromJson(success, MineResponse::class.java)
@@ -196,24 +187,29 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    } else {
 //                                        baseView.mineDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
 //                                    }
-                                } else {
-                                    baseView.userDataError(
-                                        BaseApplication.instance().resources.getString(
-                                            R.string.loading_failed
-                                        )
+                            } else {
+                                baseView.userDataError(
+                                    BaseApplication.instance().resources.getString(
+                                        R.string.loading_failed
                                     )
-                                }
-                                baseView.hideLoading()
+                                )
                             }
+                            baseView.hideLoading()
+                        }
 
-                            override fun onError(error: String) {
-                                LogManager.i(TAG, "error*****$error")
-                                baseView.userDataError(error)
-                                baseView.hideLoading()
-                            }
-                        })
-//                compositeDisposable.add(disposable)
+                        override fun onError(error: String) {
+                            LogManager.i(TAG, "error*****$error")
+                            baseView.userDataError(error)
+                            baseView.hideLoading()
+                        }
+                    })
             }
         }
     }
+
+    override fun detachView() {
+        super.detachView()
+        mainScope.cancel()
+    }
+
 }

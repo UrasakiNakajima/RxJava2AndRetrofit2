@@ -1,10 +1,14 @@
 package com.phone.module_project.model
 
+import com.phone.library_common.bean.ApiResponse
+import com.phone.library_common.bean.TabBean
 import okhttp3.ResponseBody
 import retrofit2.Call
 
 interface IProjectModel {
 
-    fun projectTabData(): Call<ResponseBody>
+    suspend fun projectTabData(): ApiResponse<MutableList<TabBean>>
+
+    fun projectTabData2(): Call<ResponseBody>
 
 }

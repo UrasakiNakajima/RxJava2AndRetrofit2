@@ -18,7 +18,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.phone.library_common.base.BaseMvpRxFragment
 import com.phone.library_common.base.IBaseView
-import com.phone.library_common.bean.HomePageResponse.ResultData.JuheNewsBean
+import com.phone.library_common.bean.ResultData
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.common.ConstantData
@@ -222,7 +222,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
         }
     }
 
-    override fun homePageDataSuccess(success: List<JuheNewsBean>) {
+    override fun homePageDataSuccess(success: List<ResultData.JuheNewsBean>) {
         if (!mRxAppCompatActivity.isFinishing) {
             if (isRefresh) {
                 homeAdapter?.clearData()

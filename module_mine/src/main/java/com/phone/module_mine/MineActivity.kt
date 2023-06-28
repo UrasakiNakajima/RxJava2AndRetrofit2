@@ -1,6 +1,5 @@
 package com.phone.module_mine
 
-import android.content.Intent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
+import com.phone.library_common.bean.Data
 import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
@@ -19,7 +19,6 @@ import com.phone.library_common.manager.RetrofitManager
 import com.phone.library_common.manager.ScreenManager
 import com.phone.library_common.manager.SharedPreferencesManager
 import com.phone.module_mine.adapter.MineAdapter
-import com.phone.module_mine.bean.Data
 import com.phone.module_mine.presenter.MinePresenterImpl
 import com.phone.module_mine.view.IMineView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout

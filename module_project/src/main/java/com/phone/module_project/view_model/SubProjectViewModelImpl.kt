@@ -37,22 +37,13 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
     override fun subProjectData(
         pageNum: Int, tabId: Int
     ) {
-        viewModelScope.launch {
-            //开启viewModelScope.launch这种协程之后依然是在当前线程
-            var success: String? = null
-            withContext(Dispatchers.IO) {
-                //切换到IO线程
-                success = model.subProjectData2(pageNum, tabId).execute().body()?.string()
-            }
+        viewModelScope.launch { //开启viewModelScope.launch这种协程之后依然是在当前线程
+            val apiResponse = execute { model.subProjectData(pageNum, tabId) }
 
             //viewModelScope.launch开启协程之后，是在当前线程，然后上面那个IO线程执行完了，就会切换回当前线程
-            LogManager.i(TAG, "subProjectData response pageNum$pageNum*****$success")
-            if (!TextUtils.isEmpty(success)) {
-                val type2 = object : TypeToken<ApiResponse<ArticleBean>>() {}.type
-                val response: ApiResponse<ArticleBean> =
-                    GsonManager().fromJson(success ?: "", type2)
-                response.data().let {
-                    val list = ArticleListBean.trans(it.datas ?: mutableListOf())
+            if (apiResponse.data != null && apiResponse.errorCode == 0) {
+                apiResponse.data.let {
+                    val list = ArticleListBean.trans(it?.datas ?: mutableListOf())
                     if (list.size > 0) {
                         dataxRxFragmentSuccess.value = list
                     } else {
@@ -62,61 +53,10 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                     }
                 }
             } else {
-                dataxRxFragmentError.value = BaseApplication.instance().resources.getString(
-                    R.string.loading_failed
-                )
+                dataxRxFragmentError.value =
+                    apiResponse.errorMsg
             }
         }
-
-//        RetrofitManager.getInstance()
-//            .responseStringAutoDispose(
-//                rxFragment,
-//                model.subProjectData(currentPage),
-//                object : OnCommonSingleParamCallback<String> {
-//                    override fun onSuccess(success: String) {
-//                        LogManager.i(TAG, "success*****$success")
-//                        if (!TextUtils.isEmpty(success)) {
-////                            val response2: ProjectBean = new GsonManager().convert(success, ProjectBean::class.java)
-////                            response2.data.datas.get(0).author = null
-////                            val jsonString: String = new GsonManager().toJson(response2)
-////                            LogManager.i(TAG, "jsonString*****${jsonString}")
-////                            val manager: ReadAndWriteManager = ReadAndWriteManager.getInstance()
-////                            manager.writeExternal("mineLog.txt",
-////                                    jsonString,
-////                                    object : OnCommonSingleParamCallback<Boolean> {
-////                                        override fun onSuccess(success: Boolean?) {
-////                                            LogManager.i(TAG, "success*****" + success!!)
-////                                            manager.unSubscribe()
-////                                        }
-////
-////                                        override fun onError(error: String) {
-////                                            LogManager.i(TAG, "error*****$error")
-////                                            manager.unSubscribe()
-////                                        }
-////                                    })
-////                            val response: ProjectBean = new GsonManager().convert(jsonString, ProjectBean::class.java)
-//
-//                            val response: ProjectBean =
-//                                new GsonManager().convert(success, ProjectBean::class.java)
-//                            if (response.data.datas != null && response.data.datas.size > 0) {
-////                                LogManager.i(TAG, "response*****${response.toString()}")
-//
-//                                dataxRxFragmentSuccess.value = response.data.datas
-//                            } else {
-//                                dataxRxFragmentError.value =
-//                                    BaseApplication.instance().resources.getString(R.string.no_data_available)
-//                            }
-//                        } else {
-//                            dataxRxFragmentError.value =
-//                                BaseApplication.instance().resources.getString(R.string.loading_failed)
-//                        }
-//                    }
-//
-//                    override fun onError(error: String) {
-//                        LogManager.i(TAG, "error*****$error")
-//                        dataxRxFragmentError.value = error
-//                    }
-//                })
     }
 
     override fun subProjectData2(
