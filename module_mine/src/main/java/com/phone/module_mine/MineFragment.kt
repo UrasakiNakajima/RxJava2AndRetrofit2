@@ -205,12 +205,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
             presenter?.mineData(rxFragment, mBodyParams)
         } else {
-            showToast(resources.getString(R.string.please_check_the_network_connection), true)
-            if (isRefresh) {
-                refreshLayout?.finishRefresh()
-            } else {
-                refreshLayout?.finishLoadMore()
-            }
+            mineDataError(resources.getString(R.string.please_check_the_network_connection))
         }
     }
 

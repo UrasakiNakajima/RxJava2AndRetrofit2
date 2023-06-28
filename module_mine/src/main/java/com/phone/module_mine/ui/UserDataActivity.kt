@@ -10,6 +10,7 @@ import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.ResourcesManager
+import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_mine.R
 import com.phone.module_mine.presenter.MinePresenterImpl
 import com.phone.module_mine.view.IUserDataView
@@ -66,18 +67,24 @@ class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), I
 
     override fun userDataSuccess(success: String) {
 
+        hideLoading()
     }
 
     override fun userDataError(error: String) {
 
+        hideLoading()
     }
 
     private fun initUserData() {
-        mBodyParams.clear()
-        mBodyParams.put("loginType", "3")
-
-        presenter.userData(this, mBodyParams)
+        showLoading()
+        if (RetrofitManager.isNetworkAvailable()) {
+            mBodyParams.clear()
+            mBodyParams.put("loginType", "3")
+            presenter.userData(this, mBodyParams)
 //        presenter.userData(this, baseApplication.accessToken, mBodyParams)
+        } else {
+            userDataError(ResourcesManager.getString(R.string.please_check_the_network_connection))
+        }
     }
 
 }

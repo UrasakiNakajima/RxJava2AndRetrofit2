@@ -200,15 +200,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
             presenter.mineData2(mRxAppCompatActivity, mBodyParams)
         } else {
-            showToast(
-                ResourcesManager.getString(R.string.please_check_the_network_connection),
-                true
-            )
-            if (isRefresh) {
-                refreshLayout?.finishRefresh()
-            } else {
-                refreshLayout?.finishLoadMore()
-            }
+            mineDataError(ResourcesManager.getString(R.string.please_check_the_network_connection))
         }
     }
 

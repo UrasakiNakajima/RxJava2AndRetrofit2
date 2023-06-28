@@ -44,8 +44,6 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {
-                baseView.showLoading()
-
                 mainScope.launch {
 
 //                    LogManager.i(TAG, "mainScope.launch")
@@ -97,7 +95,6 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                             )
                         )
                     }
-                    baseView.hideLoading()
                 }
             }
         }
@@ -109,7 +106,6 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IMineView) {
-                baseView.showLoading()
                 RetrofitManager.instance().responseString5(rxAppCompatActivity,
                     model.mineData2(bodyParams),
                     object : OnCommonSingleParamCallback<String> {
@@ -141,13 +137,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                     )
                                 )
                             }
-                            baseView.hideLoading()
                         }
 
                         override fun onError(error: String) {
                             LogManager.i(TAG, "error*****$error")
                             baseView.mineDataError(error)
-                            baseView.hideLoading()
                         }
                     })
             }
@@ -160,7 +154,6 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
-                baseView.showLoading()
                 RetrofitManager.instance().responseString5(rxAppCompatActivity,
                     model.userData(bodyParams),
                     object : OnCommonSingleParamCallback<String> {
@@ -184,13 +177,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                     )
                                 )
                             }
-                            baseView.hideLoading()
                         }
 
                         override fun onError(error: String) {
                             LogManager.i(TAG, "error*****$error")
                             baseView.userDataError(error)
-                            baseView.hideLoading()
                         }
                     })
             }
@@ -205,7 +196,6 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
-                baseView.showLoading()
                 RetrofitManager.instance().responseString5(rxAppCompatActivity,
                     model.userData(accessToken, bodyParams),
                     object : OnCommonSingleParamCallback<String> {
@@ -229,13 +219,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                     )
                                 )
                             }
-                            baseView.hideLoading()
                         }
 
                         override fun onError(error: String) {
                             LogManager.i(TAG, "error*****$error")
                             baseView.userDataError(error)
-                            baseView.hideLoading()
                         }
                     })
             }

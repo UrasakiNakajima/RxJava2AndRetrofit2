@@ -287,7 +287,6 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
             presenter.homePage2(mRxAppCompatActivity, mBodyParams)
         } else {
             homePageDataError(ResourcesManager.getString(R.string.please_check_the_network_connection))
-            hideLoading()
         }
     }
 

@@ -49,7 +49,6 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
         if (baseView != null) {
             if (baseView is IHomePageView) {
                 val homePageView = baseView
-                homePageView.showLoading()
 
                 mainScope.launch {//开启MainScope这种协程之后就是在MAIN线程执行了
 
@@ -93,7 +92,6 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
                             )
                         )
                     }
-                    homePageView.hideLoading()
                     LogManager.i(TAG, "homePage2 thread name*****${Thread.currentThread().name}")
                 }
 
@@ -108,7 +106,6 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
         if (baseView != null) {
             if (baseView is IHomePageView) {
                 val homePageView = baseView
-                homePageView.showLoading()
                 //rxjava2+retrofit2请求（响应速度更快）
                 RetrofitManager.instance().responseString(rxAppCompatActivity,
                     model.homePage2(bodyParams),
@@ -137,13 +134,11 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
                                     )
                                 )
                             }
-                            homePageView.hideLoading()
                         }
 
                         override fun onError(error: String) {
                             LogManager.i(TAG, "error*****$error")
                             homePageView.homePageDataError(error)
-                            homePageView.hideLoading()
                         }
                     })
                 //				compositeDisposable.add(disposable);
