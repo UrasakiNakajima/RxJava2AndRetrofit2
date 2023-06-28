@@ -30,9 +30,9 @@ open class BaseViewModel : ViewModel() {
     /**
      * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
      */
-    protected suspend fun <T> execute(block: suspend () -> ApiResponse<T>): ApiResponse<T> {
-        var response: ApiResponse<T>? = null
+    protected suspend fun <T> executeRequest(block: suspend () -> ApiResponse<T>): ApiResponse<T> =
         withContext(Dispatchers.IO) {
+            var response: ApiResponse<T>
             runCatching {
                 block()
             }.onSuccess {
@@ -41,14 +41,11 @@ open class BaseViewModel : ViewModel() {
                 it.printStackTrace()
                 response = ApiResponse<T>()
                 val apiException = getApiException(it)
-                response?.errorCode = apiException.errorCode
-                response?.errorMsg = apiException.errorMessage
-                response?.error = apiException
+                response.errorCode = apiException.errorCode
+                response.errorMsg = apiException.errorMessage
+                response.error = apiException
             }.getOrDefault(ApiResponse<T>())
         }
-        LogManager.i(TAG, "launch thread name*****${Thread.currentThread().name}")
-        return response!!
-    }
 
     /**
      * 捕获异常信息

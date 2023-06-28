@@ -35,7 +35,7 @@ class SubResourceViewModelImpl() : BaseViewModel(), ISubResourceViewModel {
         pageNum: Int
     ) {
         viewModelScope.launch {
-            val apiResponse = execute { model.subResourceData(tabId, pageNum) }
+            val apiResponse = executeRequest { model.subResourceData(tabId, pageNum) }
             if (apiResponse.data != null && apiResponse.errorCode == 0) {
                 apiResponse.also {
                     val list = ArticleListBean.trans(it.data?.datas ?: mutableListOf())

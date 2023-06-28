@@ -36,8 +36,7 @@ open class BasePresenter<T> {
     }
 
     private fun isAttach(): Boolean {
-        return modelView != null &&
-                modelView?.get() != null
+        return modelView != null && modelView?.get() != null
     }
 
     open fun detachView() {
@@ -50,9 +49,9 @@ open class BasePresenter<T> {
     /**
      * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
      */
-    protected suspend fun <T> execute(block: suspend () -> ApiResponse2<T>): ApiResponse2<T> {
-        var response: ApiResponse2<T>? = null
+    protected suspend fun <T> executeRequest(block: suspend () -> ApiResponse2<T>): ApiResponse2<T> =
         withContext(Dispatchers.IO) {
+            var response: ApiResponse2<T>
             runCatching {
                 block()
             }.onSuccess {
@@ -61,22 +60,18 @@ open class BasePresenter<T> {
                 it.printStackTrace()
                 response = ApiResponse2<T>()
                 val apiException = getApiException(it)
-                response?.error_code = apiException.errorCode
-                response?.reason = apiException.errorMessage
-                response?.error = apiException
+                response.error_code = apiException.errorCode
+                response.reason = apiException.errorMessage
+                response.error = apiException
             }.getOrDefault(ApiResponse2<T>())
         }
-        LogManager.i(TAG, "launch thread name*****${Thread.currentThread().name}")
-
-        return response!!
-    }
 
     /**
      * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
      */
-    protected suspend fun <T> execute2(block: suspend () -> ApiResponse3<T>): ApiResponse3<T> {
-        var response: ApiResponse3<T>? = null
+    protected suspend fun <T> executeRequest2(block: suspend () -> ApiResponse3<T>): ApiResponse3<T> =
         withContext(Dispatchers.IO) {
+            var response: ApiResponse3<T>
             runCatching {
                 block()
             }.onSuccess {
@@ -85,15 +80,11 @@ open class BasePresenter<T> {
                 it.printStackTrace()
                 response = ApiResponse3<T>()
                 val apiException = getApiException(it)
-                response?.error_code = apiException.errorCode
-                response?.reason = apiException.errorMessage
-                response?.error = apiException
+                response.error_code = apiException.errorCode
+                response.reason = apiException.errorMessage
+                response.error = apiException
             }.getOrDefault(ApiResponse3<T>())
         }
-        LogManager.i(TAG, "launch thread name*****${Thread.currentThread().name}")
-
-        return response!!
-    }
 
     /**
      * 捕获异常信息

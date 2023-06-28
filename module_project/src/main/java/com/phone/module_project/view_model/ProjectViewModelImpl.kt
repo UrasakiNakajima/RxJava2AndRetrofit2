@@ -60,7 +60,7 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
 //        }
 
         viewModelScope.launch {
-            val apiResponse = execute { model.projectTabData() }
+            val apiResponse = executeRequest { model.projectTabData() }
             if (apiResponse.errorCode == 0) {
                 val responseData = apiResponse.data ?: mutableListOf()
                 if (responseData.size > 0) {

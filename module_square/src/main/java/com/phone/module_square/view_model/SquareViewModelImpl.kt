@@ -39,7 +39,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         mJob?.cancel()
         mJob = GlobalScope.launch(Dispatchers.Main) {
             //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了（根据指定的线程来）
-            val apiResponse = execute { mModel.squareData(currentPage) }
+            val apiResponse = executeRequest { mModel.squareData(currentPage) }
 
             if (apiResponse.data != null && apiResponse.errorCode == 0) {
                 val responseData = apiResponse.data?.datas ?: mutableListOf()

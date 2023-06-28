@@ -49,7 +49,9 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
                 homePageView.showLoading()
 
                 mainScope.launch {//开启MainScope这种协程之后就是在MAIN线程执行了
-                    val apiResponse = execute { model.homePage(bodyParams) }
+                    LogManager.i(TAG, "homePage launch thread name*****" + Thread.currentThread().name)
+                    val apiResponse = executeRequest { model.homePage(bodyParams) }
+                    LogManager.i(TAG, "homePage launch2 thread name*****" + Thread.currentThread().name)
                     if (apiResponse.result != null && apiResponse.error_code == 0) {
                         val list = apiResponse.result?.data ?: mutableListOf()
                         if (list.size > 0) {

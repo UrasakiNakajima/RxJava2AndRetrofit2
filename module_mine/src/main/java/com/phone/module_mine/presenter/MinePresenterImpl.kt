@@ -43,7 +43,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                 baseView.showLoading()
 
                 mainScope.launch {
-                    val apiResponse = execute2 { model.mineData(bodyParams) }
+                    val apiResponse = executeRequest2 { model.mineData(bodyParams) }
                     if (apiResponse.result != null && apiResponse.error_code == 0) {
                         val list = apiResponse.result?.data ?: mutableListOf()
                         if (list.size > 0) {
