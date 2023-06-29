@@ -46,7 +46,7 @@
         <item name="android:windowBackground">@drawable/picture3</item>
     </style>
 
-    <!-- 资讯频道 -->
+    <!-- 我的频道 -->
     <style name="news_summary_card_view">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

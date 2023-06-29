@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.reflect.TypeToken
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.base.BaseViewModel
+import com.phone.library_common.base.State
 import com.phone.library_common.bean.ApiResponse
 import com.phone.library_common.bean.TabBean
 import com.phone.library_common.manager.GsonManager
@@ -13,7 +14,6 @@ import com.phone.library_common.manager.SingleLiveData
 import com.phone.module_resource.R
 import com.phone.module_resource.model.ResourceModelImpl
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -25,11 +25,8 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
 
     private val model = ResourceModelImpl()
 
-    val tabRxFragmentSuccess = SingleLiveData<MutableList<TabBean>>()
-    val tabRxFragmentError = SingleLiveData<String>()
-
-    val tabRxActivitySuccess = SingleLiveData<MutableList<TabBean>>()
-    val tabRxActivityError = SingleLiveData<String>()
+    val tabRxFragment = SingleLiveData<State<MutableList<TabBean>>>()
+    val tabRxActivity = SingleLiveData<State<MutableList<TabBean>>>()
 
     override fun resourceTabData() {
         viewModelScope.launch { //开启viewModelScope.launch这种协程之后依然是在当前线程
@@ -51,17 +48,19 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                 apiResponse.data.also {
                     val list = it ?: mutableListOf()
                     if (list.size > 0) {
-                        tabRxFragmentSuccess.value = list
+                        tabRxFragment.value = State.SuccessState(list)
                     } else {
-                        tabRxFragmentError.value =
+                        tabRxFragment.value = State.ErrorState(
                             BaseApplication.instance().resources.getString(
                                 R.string.no_data_available
                             )
+                        )
                     }
                 }
             } else {
-                tabRxFragmentError.value =
+                tabRxFragment.value = State.ErrorState(
                     apiResponse.errorMsg
+                )
             }
         }
     }
@@ -78,23 +77,27 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                         val response: ApiResponse<MutableList<TabBean>> =
                             GsonManager().fromJson(success ?: "", type2)
                         if (response.data().size > 0) {
-                            tabRxActivitySuccess.value = response.data()
+                            tabRxActivity.value =
+                                State.SuccessState(response.data ?: mutableListOf())
                         } else {
-                            tabRxActivityError.value =
-                                BaseApplication.instance().resources.getString(
-                                    R.string.no_data_available
+                            tabRxActivity.value =
+                                State.ErrorState(
+                                    BaseApplication.instance().resources.getString(
+                                        R.string.no_data_available
+                                    )
                                 )
                         }
                     } else {
-                        tabRxActivityError.value =
-                            BaseApplication.instance().resources.getString(
-                                R.string.loading_failed
+                        tabRxActivity.value =
+                            State.ErrorState(
+                                BaseApplication.instance().resources.getString(
+                                    R.string.loading_failed
+                                )
                             )
                     }
                 }
             }
         }
     }
-
 
 }

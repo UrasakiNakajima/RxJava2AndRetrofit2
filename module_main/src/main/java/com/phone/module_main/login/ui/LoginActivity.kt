@@ -107,27 +107,39 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     }
 
     override fun getAuthCodeSuccess(success: DataGetVerification) {
-        showToast(success.content, true)
+        if (!mRxAppCompatActivity.isFinishing) {
+            showToast(success.content, true)
+        }
     }
 
     override fun getAuthCodeError(error: String) {
-        showToast(error, true)
+        if (!mRxAppCompatActivity.isFinishing) {
+            showToast(error, true)
+        }
     }
 
     override fun loginWithAuthCodeSuccess(success: DataLogin) {
-        customStartActivity()
+        if (!mRxAppCompatActivity.isFinishing) {
+            customStartActivity()
+        }
     }
 
     override fun loginWithAuthCodeError(error: String) {
-        showToast(error, true)
+        if (!mRxAppCompatActivity.isFinishing) {
+            showToast(error, true)
+        }
     }
 
     override fun loginSuccess(success: String) {
-        customStartActivity()
+        if (!mRxAppCompatActivity.isFinishing) {
+            customStartActivity()
+        }
     }
 
     override fun loginError(error: String) {
-        showToast(error, true)
+        if (!mRxAppCompatActivity.isFinishing) {
+            showToast(error, true)
+        }
     }
 
     private fun customStartActivity() {

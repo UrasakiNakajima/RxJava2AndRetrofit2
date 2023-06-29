@@ -93,7 +93,7 @@ open class BaseViewModel : ViewModel() {
              * 强行结束协程，与java中InterruptException类似，所以不必理会,只需将toast隐藏即可
              */
             is CancellationException -> {
-                ApiException("", -10)
+                ApiException("取消请求异常", -10)
             }
 
             else -> {

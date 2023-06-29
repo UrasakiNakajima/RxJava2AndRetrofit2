@@ -50,7 +50,6 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     private val mineAdapter by lazy {
         MineAdapter(mRxAppCompatActivity)
     }
-    private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
 
     override fun initLayoutId() = R.layout.mine_fragment_mine
@@ -95,7 +94,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     private fun initAdapter() {
-        linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
+        val linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
         rcvData?.layoutManager = (linearLayoutManager)
         rcvData?.itemAnimator = DefaultItemAnimator()
@@ -114,14 +113,14 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                     //                        .navigation()
 
                     if (view?.id == R.id.ll_root) {
-                        ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW)
-                            .withString("loadUrl", mineAdapter.mJuheNewsBeanList.get(position).url)
-                            .navigation()
+                        ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW).withString(
+                            "loadUrl", mineAdapter.mJuheNewsBeanList.get(position).url
+                        ).navigation()
                     }
                 }
             })
         }
-        rcvData?.setAdapter(mineAdapter)
+        rcvData?.adapter = mineAdapter
 
         refreshLayout?.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
@@ -145,54 +144,64 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     override fun attachPresenter() = MinePresenterImpl(this)
 
     override fun showLoading() {
-        loadView?.let {
-            if (!it.isShown()) {
-                it.setVisibility(View.VISIBLE)
-                it.start()
+        if (!mRxAppCompatActivity.isFinishing) {
+            loadView?.let {
+                if (!it.isShown()) {
+                    it.setVisibility(View.VISIBLE)
+                    it.start()
+                }
             }
         }
     }
 
     override fun hideLoading() {
-        loadView?.let {
-            if (it.isShown()) {
-                it.stop()
-                it.setVisibility(View.GONE)
+        if (!mRxAppCompatActivity.isFinishing) {
+            loadView?.let {
+                if (it.isShown()) {
+                    it.stop()
+                    it.setVisibility(View.GONE)
+                }
             }
         }
     }
 
     override fun mineDataSuccess(success: MutableList<Data>) {
-        mineAdapter.let {
-            if (isRefresh) {
-                it.clearData()
-                it.addData(it.mJuheNewsBeanList)
-                refreshLayout?.finishRefresh()
-            } else {
-                it.clearData()
-                it.addData(it.mJuheNewsBeanList)
-                refreshLayout?.finishLoadMore()
+        if (!mRxAppCompatActivity.isFinishing) {
+            mineAdapter.let {
+                if (isRefresh) {
+                    it.clearData()
+                    it.addData(success)
+                    refreshLayout?.finishRefresh()
+                } else {
+                    it.clearData()
+                    it.addData(success)
+                    refreshLayout?.finishLoadMore()
+                }
             }
+            hideLoading()
         }
     }
 
     override fun mineDataError(error: String) {
-        showCustomToast(
-            ScreenManager.dpToPx(20f),
-            ScreenManager.dpToPx(20f),
-            18,
-            ResourcesManager.getColor(R.color.white),
-            ResourcesManager.getColor(R.color.color_FFE066FF),
-            ScreenManager.dpToPx(40f),
-            ScreenManager.dpToPx(20f),
-            error,
-            true
-        )
+        if (!mRxAppCompatActivity.isFinishing) {
+            showCustomToast(
+                ScreenManager.dpToPx(20f),
+                ScreenManager.dpToPx(20f),
+                18,
+                ResourcesManager.getColor(R.color.white),
+                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ScreenManager.dpToPx(40f),
+                ScreenManager.dpToPx(20f),
+                error,
+                true
+            )
 
-        if (isRefresh) {
-            refreshLayout?.finishRefresh(false)
-        } else {
-            refreshLayout?.finishLoadMore(false)
+            if (isRefresh) {
+                refreshLayout?.finishRefresh(false)
+            } else {
+                refreshLayout?.finishLoadMore(false)
+            }
+            hideLoading()
         }
     }
 

@@ -81,11 +81,15 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
     }
 
     override fun registerSuccess(success: String) {
-        startActivity(LoginActivity::class.java)
+        if (!mRxAppCompatActivity.isFinishing) {
+            startActivity(LoginActivity::class.java)
+        }
     }
 
     override fun registerError(error: String) {
-        showToast(error, true)
+        if (!mRxAppCompatActivity.isFinishing) {
+            showToast(error, true)
+        }
     }
 
     private fun initRegister() {

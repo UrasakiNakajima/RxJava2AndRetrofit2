@@ -12,13 +12,13 @@ class SquareModelImpl() : ISquareModel {
     override suspend fun squareData(currentPage: String): ApiResponse<DataSquare> {
         return RetrofitManager.instance().mRetrofit
             .create(SquareRequest::class.java)
-            .getSquareData2(currentPage)
+            .getSquareData(currentPage)
     }
 
     override fun squareData2(currentPage: String): Observable<ResponseBody> {
         return RetrofitManager.instance().mRetrofit
             .create(SquareRequest::class.java)
-            .getSquareData(currentPage)
+            .getSquareData2(currentPage)
     }
 
 

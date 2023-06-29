@@ -207,11 +207,15 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
     }
 
     override fun mainDataSuccess(success: String) {
-        showToast(success, true)
+        if (!mRxAppCompatActivity.isFinishing) {
+            showToast(success, true)
+        }
     }
 
     override fun mainDataError(error: String) {
-        showToast(error, true)
+        if (!mRxAppCompatActivity.isFinishing) {
+            showToast(error, true)
+        }
     }
 
 }

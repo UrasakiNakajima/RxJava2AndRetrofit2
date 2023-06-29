@@ -18,7 +18,6 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
     companion object {
         private val TAG = MineAdapter::class.java.simpleName
     }
-
     val mJuheNewsBeanList = mutableListOf<Data>()
 
     fun clearData() {
@@ -39,23 +38,28 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is BodyHolder) {
-            val bodyHolder: BodyHolder = holder as BodyHolder
-            val juheNewsBean: Data = mJuheNewsBeanList.get(position)
-            val title: String = juheNewsBean.title
-            val author: String = juheNewsBean.author_name
-            val time: String = juheNewsBean.date
-            val imgSrc: String = juheNewsBean.thumbnail_pic_s
-            val imgMid: String = juheNewsBean.thumbnail_pic_s02
-            val imgRight: String = juheNewsBean.thumbnail_pic_s03
+            val juheNewsBean = mJuheNewsBeanList.get(position)
+            val title = juheNewsBean.title
+            val author = juheNewsBean.author_name
+            val time = juheNewsBean.date
+            val imgSrc = juheNewsBean.thumbnail_pic_s
+            val imgMid = juheNewsBean.thumbnail_pic_s02
+            val imgRight = juheNewsBean.thumbnail_pic_s03
 
-            bodyHolder.newsSummaryTitleTv.setText(title)
-            bodyHolder.newsSummaryAuthor.setText(author)
-            bodyHolder.newsSummaryTime.setText(time)
-            Glide.with(context).load(imgSrc).into(bodyHolder.newsSummaryPhotoIvLeft)
-            Glide.with(context).load(imgMid).into(bodyHolder.newsSummaryPhotoIvMiddle)
-            Glide.with(context).load(imgRight).into(bodyHolder.newsSummaryPhotoIvRight)
+            holder.newsSummaryTitleTv.setText(title)
+            holder.newsSummaryAuthor.setText(author)
+            holder.newsSummaryTime.setText(time)
+            imgSrc?.let {
+                Glide.with(context).load(imgSrc).into(holder.newsSummaryPhotoIvLeft)
+            }
+            imgMid?.let {
+                Glide.with(context).load(imgMid).into(holder.newsSummaryPhotoIvMiddle)
+            }
+            imgRight?.let {
+                Glide.with(context).load(imgRight).into(holder.newsSummaryPhotoIvRight)
+            }
 
-            bodyHolder.llRoot.setOnClickListener(View.OnClickListener { view: View? ->
+            holder.llRoot.setOnClickListener({ view: View? ->
                 onItemViewClickListener.onItemClickListener(
                     position,
                     view

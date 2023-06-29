@@ -48,7 +48,6 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     private var rcvData: RecyclerView? = null
 
     private val mineAdapter by lazy { MineAdapter(mRxAppCompatActivity) }
-    private lateinit var linearLayoutManager: LinearLayoutManager
     private var isRefresh: Boolean = true
 
     override fun initLayoutId() = R.layout.mine_activity_mine
@@ -92,7 +91,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     private fun initAdapter() {
-        linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
+        val linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
         rcvData?.layoutManager = (linearLayoutManager)
         rcvData?.itemAnimator = DefaultItemAnimator()
@@ -142,14 +141,14 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     override fun showLoading() {
-        if (!mLoadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing() && !mLoadView.isShown()) {
             mLoadView.setVisibility(View.VISIBLE)
             mLoadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (mLoadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing() && mLoadView.isShown()) {
             mLoadView.stop()
             mLoadView.setVisibility(View.GONE)
         }

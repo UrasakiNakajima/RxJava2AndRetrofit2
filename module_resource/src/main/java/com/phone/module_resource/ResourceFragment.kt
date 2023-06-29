@@ -9,6 +9,7 @@ import com.phone.library_common.BaseApplication
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_common.adapter.TabNavigatorAdapter
 import com.phone.library_common.base.BaseMvvmRxFragment
+import com.phone.library_common.base.State
 import com.phone.library_common.bean.TabBean
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
@@ -40,19 +41,23 @@ class ResourceFragment :
     }
 
     override fun initObservers() {
-        viewModel.tabRxFragmentSuccess.observe(this, {
-            if (it != null && it.size > 0) {
-                LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
-                resourceTabDataSuccess(it)
-            } else {
-                resourceTabDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+        viewModel.tabRxFragment.observe(this, {
+            LogManager.i(TAG, "onChanged*****tabRxFragment")
+            when (it) {
+                is State.SuccessState -> {
+                    if (it.list != null && it.list.size > 0) {
+                        resourceTabDataSuccess(it.list)
+                    } else {
+                        resourceTabDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+                    }
+                }
+
+                is State.ErrorState -> {
+                    resourceTabDataError(
+                        it.errorMsg
+                    )
+                }
             }
-        })
-        viewModel.tabRxFragmentError.observe(this, {
-            LogManager.i(TAG, "onChanged*****tabRxFragmentError")
-            resourceTabDataError(
-                it ?: BaseApplication.instance().resources.getString(R.string.no_data_available)
-            )
         })
     }
 
@@ -65,54 +70,58 @@ class ResourceFragment :
     }
 
     override fun showLoading() {
-        if (!mDatabind.loadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
             mDatabind.loadView.setVisibility(View.VISIBLE)
             mDatabind.loadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (mDatabind.loadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
             mDatabind.loadView.setVisibility(View.GONE)
         }
     }
 
     override fun resourceTabDataSuccess(success: MutableList<TabBean>) {
-        val fragmentList = mutableListOf<Fragment>()
-        val dataList = mutableListOf<TabBean>()
-        val tabBean = TabBean()
-        tabBean.name = ResourcesManager.getString(R.string.android_and_js_interactive)
-        dataList.add(tabBean)
-        dataList.addAll(success)
+        if (!mRxAppCompatActivity.isFinishing) {
+            val fragmentList = mutableListOf<Fragment>()
+            val dataList = mutableListOf<TabBean>()
+            val tabBean = TabBean()
+            tabBean.name = ResourcesManager.getString(R.string.android_and_js_interactive)
+            dataList.add(tabBean)
+            dataList.addAll(success)
 
-        for (i in dataList) {
-            if (ResourcesManager.getString(R.string.android_and_js_interactive).equals(i.name)) {
-                fragmentList.add(AndroidAndJsFragment())
-            } else {
-                fragmentList.add(SubResourceFragment().apply {
-                    //想各个fragment传递信息
-                    val bundle = Bundle()
-                    bundle.putInt("type", 20)
-                    bundle.putInt("tabId", i.id)
-                    bundle.putString("name", i.name)
-                    arguments = bundle
-                })
+            for (i in dataList) {
+                if (ResourcesManager.getString(R.string.android_and_js_interactive)
+                        .equals(i.name)
+                ) {
+                    fragmentList.add(AndroidAndJsFragment())
+                } else {
+                    fragmentList.add(SubResourceFragment().apply {
+                        //想各个fragment传递信息
+                        val bundle = Bundle()
+                        bundle.putInt("type", 20)
+                        bundle.putInt("tabId", i.id)
+                        bundle.putString("name", i.name)
+                        arguments = bundle
+                    })
+                }
             }
-        }
 
-        fragmentStatePagerAdapter =
-            TabFragmentStatePagerAdapter(
-                childFragmentManager,
-                fragmentList
-            )
-        mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
-        //下划线绑定
-        val commonNavigator = CommonNavigator(mRxAppCompatActivity)
-        commonNavigator.adapter = getCommonNavigatorAdapter(dataList)
-        mDatabind.tabLayout.navigator = commonNavigator
-        MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
-        hideLoading()
+            fragmentStatePagerAdapter =
+                TabFragmentStatePagerAdapter(
+                    childFragmentManager,
+                    fragmentList
+                )
+            mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
+            //下划线绑定
+            val commonNavigator = CommonNavigator(mRxAppCompatActivity)
+            commonNavigator.adapter = getCommonNavigatorAdapter(dataList)
+            mDatabind.tabLayout.navigator = commonNavigator
+            MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
+            hideLoading()
+        }
     }
 
     override fun resourceTabDataError(error: String) {

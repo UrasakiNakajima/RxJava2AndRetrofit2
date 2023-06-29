@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.reflect.TypeToken
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.base.BaseViewModel
+import com.phone.library_common.base.State
 import com.phone.library_common.bean.ApiResponse
 import com.phone.library_common.bean.ArticleBean
 import com.phone.library_common.bean.ArticleListBean
@@ -27,12 +28,10 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
     private val model = SubProjectModelImpl()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragmentSuccess = SingleLiveData<MutableList<ArticleListBean>>()
-    val dataxRxFragmentError = SingleLiveData<String>()
+    val dataxRxFragment = SingleLiveData<State<MutableList<ArticleListBean>>>()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxActivitySuccess = SingleLiveData<MutableList<ArticleListBean>>()
-    val dataxRxActivityError = SingleLiveData<String>()
+    val dataxRxActivity = SingleLiveData<State<MutableList<ArticleListBean>>>()
 
     override fun subProjectData(
         pageNum: Int, tabId: Int
@@ -45,16 +44,18 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                 apiResponse.data.let {
                     val list = ArticleListBean.trans(it?.datas ?: mutableListOf())
                     if (list.size > 0) {
-                        dataxRxFragmentSuccess.value = list
+                        dataxRxFragment.value = State.SuccessState(list)
                     } else {
-                        dataxRxFragmentError.value = BaseApplication.instance().resources.getString(
-                            R.string.no_data_available
+                        dataxRxFragment.value = State.ErrorState(
+                            BaseApplication.instance().resources.getString(
+                                R.string.no_data_available
+                            )
                         )
                     }
                 }
             } else {
-                dataxRxFragmentError.value =
-                    apiResponse.errorMsg
+                dataxRxFragment.value =
+                    State.ErrorState(apiResponse.errorMsg)
             }
         }
     }
@@ -74,17 +75,21 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                         response.data().let {
                             val list = ArticleListBean.trans(it.datas ?: mutableListOf())
                             if (list.size > 0) {
-                                dataxRxActivitySuccess.value = list
+                                dataxRxActivity.value = State.SuccessState(list)
                             } else {
-                                dataxRxActivityError.value =
-                                    BaseApplication.instance().resources.getString(
-                                        R.string.no_data_available
+                                dataxRxActivity.value =
+                                    State.ErrorState(
+                                        BaseApplication.instance().resources.getString(
+                                            R.string.no_data_available
+                                        )
                                     )
                             }
                         }
                     } else {
-                        dataxRxFragmentError.value = BaseApplication.instance().resources.getString(
-                            R.string.loading_failed
+                        dataxRxFragment.value = State.ErrorState(
+                            BaseApplication.instance().resources.getString(
+                                R.string.loading_failed
+                            )
                         )
                     }
                 }
@@ -92,5 +97,6 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
         }
     }
 
-
 }
+
+

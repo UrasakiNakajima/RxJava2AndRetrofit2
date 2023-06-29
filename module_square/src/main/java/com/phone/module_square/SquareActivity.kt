@@ -12,6 +12,7 @@ import com.gyf.immersionbar.ImmersionBar
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.BaseMvvmAppRxActivity
+import com.phone.library_common.base.State
 import com.phone.library_common.bean.*
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.common.ConstantData
@@ -60,19 +61,23 @@ class SquareActivity :
     }
 
     override fun initObservers() {
-        viewModel.dataxRxActivitySuccess.observe(this, {
-            if (it != null && it.size > 0) {
-                LogManager.i(TAG, "onChanged*****dataxRxActivitySuccess")
-                squareDataSuccess(it)
-            } else {
-                squareDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+        viewModel.dataxRxActivity.observe(this, {
+            LogManager.i(TAG, "onChanged*****dataxRxActivity")
+            when (it) {
+                is State.SuccessState -> {
+                    if (it.list != null && it.list.size > 0) {
+                        squareDataSuccess(it.list)
+                    } else {
+                        squareDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+                    }
+                }
+
+                is State.ErrorState -> {
+                    squareDataError(
+                        it.errorMsg
+                    )
+                }
             }
-        })
-        viewModel.dataxRxActivityError.observe(this, {
-            LogManager.i(TAG, "onChanged*****dataxRxActivityError")
-            squareDataError(
-                it ?: BaseApplication.instance().resources.getString(R.string.no_data_available)
-            )
         })
     }
 
@@ -176,14 +181,14 @@ class SquareActivity :
 //    }
 
     fun showLoading() {
-        if (!mDatabind.loadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
             mDatabind.loadView.setVisibility(View.VISIBLE)
             mDatabind.loadView.start()
         }
     }
 
     fun hideLoading() {
-        if (mDatabind.loadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
             mDatabind.loadView.setVisibility(View.GONE)
         }

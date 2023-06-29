@@ -8,6 +8,7 @@ import com.phone.library_common.BaseApplication
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_common.adapter.TabNavigatorAdapter
 import com.phone.library_common.base.BaseMvvmAppRxActivity
+import com.phone.library_common.base.State
 import com.phone.library_common.bean.TabBean
 import com.phone.library_common.manager.*
 import com.phone.module_project.databinding.ProjectActivityProjectBinding
@@ -33,19 +34,23 @@ class ProjectActivity :
     }
 
     override fun initObservers() {
-        viewModel.tabRxActivitySuccess.observe(this, {
-            if (it != null && it.size > 0) {
-                LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
-                projectTabDataSuccess(it)
-            } else {
-                projectTabDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+        viewModel.dataxRxActivity.observe(this, {
+            LogManager.i(TAG, "onChanged*****dataxRxActivity")
+            when (it) {
+                is State.SuccessState -> {
+                    if (it.list != null && it.list.size > 0) {
+                        projectTabDataSuccess(it.list)
+                    } else {
+                        projectTabDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+                    }
+                }
+
+                is State.ErrorState -> {
+                    projectTabDataError(
+                        it.errorMsg
+                    )
+                }
             }
-        })
-        viewModel.tabRxActivityError.observe(this, {
-            LogManager.i(TAG, "onChanged*****tabRxFragmentError")
-            projectTabDataError(
-                it ?: BaseApplication.instance().resources.getString(R.string.no_data_available)
-            )
         })
     }
 
@@ -58,43 +63,45 @@ class ProjectActivity :
     }
 
     override fun showLoading() {
-        if (!mDatabind.loadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
             mDatabind.loadView.setVisibility(View.VISIBLE)
             mDatabind.loadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (mDatabind.loadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
             mDatabind.loadView.setVisibility(View.GONE)
         }
     }
 
     override fun projectTabDataSuccess(success: MutableList<TabBean>) {
-        val fragmentList = mutableListOf<Fragment>()
-        success.forEach {
-            fragmentList.add(SubProjectFragment().apply {
-                //想各个fragment传递信息
-                val bundle = Bundle()
-                bundle.putInt("type", 20)
-                bundle.putInt("tabId", it.id)
-                bundle.putString("name", it.name)
-                arguments = bundle
-            })
+        if (!mRxAppCompatActivity.isFinishing) {
+            val fragmentList = mutableListOf<Fragment>()
+            success.forEach {
+                fragmentList.add(SubProjectFragment().apply {
+                    //想各个fragment传递信息
+                    val bundle = Bundle()
+                    bundle.putInt("type", 20)
+                    bundle.putInt("tabId", it.id)
+                    bundle.putString("name", it.name)
+                    arguments = bundle
+                })
+            }
+            fragmentStatePagerAdapter =
+                TabFragmentStatePagerAdapter(
+                    supportFragmentManager,
+                    fragmentList
+                )
+            mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
+            //下划线绑定
+            val commonNavigator = CommonNavigator(mRxAppCompatActivity)
+            commonNavigator.adapter = getCommonNavigatorAdapter(success)
+            mDatabind.tabLayout.navigator = commonNavigator
+            MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
+            hideLoading()
         }
-        fragmentStatePagerAdapter =
-            TabFragmentStatePagerAdapter(
-                supportFragmentManager,
-                fragmentList
-            )
-        mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
-        //下划线绑定
-        val commonNavigator = CommonNavigator(mRxAppCompatActivity)
-        commonNavigator.adapter = getCommonNavigatorAdapter(success)
-        mDatabind.tabLayout.navigator = commonNavigator
-        MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
-        hideLoading()
     }
 
     override fun projectTabDataError(error: String) {

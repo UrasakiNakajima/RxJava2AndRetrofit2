@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.adapter.ProjectAndResourceAdapter
 import com.phone.library_common.base.BaseMvvmRxFragment
+import com.phone.library_common.base.State
 import com.phone.library_common.bean.ArticleListBean
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
@@ -56,19 +57,21 @@ class SubResourceFragment :
     }
 
     override fun initObservers() {
-        viewModel.dataxRxFragmentSuccess.observe(this, {
-            if (it != null && it.size > 0) {
-                LogManager.i(TAG, "onChanged*****dataxSuccessObserver")
+        viewModel.dataxRxFragment.observe(this, {
+            LogManager.i(TAG, "onChanged*****dataxRxFragment")
+            when (it) {
+                is State.SuccessState -> {
+                    if (it.list != null && it.list.size > 0) {
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
-                subResourceDataSuccess(it)
-            } else {
-                subResourceDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
-            }
-        })
-        viewModel.dataxRxFragmentError.observe(this, {
-            it?.let {
-                LogManager.i(TAG, "onChanged*****dataxErrorObserver")
-                subResourceDataError(it)
+                        subResourceDataSuccess(it.list)
+                    } else {
+                        subResourceDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+                    }
+                }
+
+                is State.ErrorState -> {
+                    subResourceDataError(it.errorMsg)
+                }
             }
         })
     }
@@ -139,14 +142,14 @@ class SubResourceFragment :
     }
 
     override fun showLoading() {
-        if (!mDatabind.loadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
             mDatabind.loadView.setVisibility(View.VISIBLE)
             mDatabind.loadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (mDatabind.loadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
             mDatabind.loadView.setVisibility(View.GONE)
         }
