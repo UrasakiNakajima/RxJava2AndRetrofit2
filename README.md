@@ -1,5 +1,5 @@
 # RxJava2AndRetrofit2
-RxJava2 和Retrofit2 项目，添加自动管理token 功能，添加RxJava2 生命周期管理，使用App 架构设计是MVP 模式和MVVM 模式，同时使用组件化，除此以外，还有以下功能：
+RxJava2 和Retrofit2 项目，使用Kotlin+RxJava2+Retrofit2+MVVM架构+组件化，添加自动管理token 功能，添加RxJava2 生命周期管理，集成极光推送、阿里云Oss对象存储和高德地图定位功能，除此以外，还有以下功能：
 
 1.Android 与JS 交互功能，博客地址https://blog.csdn.net/NakajimaFN/article/details/117927813?spm=1001.2014.3001.5502；  
 2.JSBridge 框架来实现Android 与H5 交互，博客地址https://blog.csdn.net/NakajimaFN/article/details/130908360?spm=1001.2014.3001.5502；  

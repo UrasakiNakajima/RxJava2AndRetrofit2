@@ -25,15 +25,20 @@ class AMAPLocationManager {
     companion object {
         private val TAG: String = AMAPLocationManager::class.java.getSimpleName()
 
+        @Volatile
         private var instance: AMAPLocationManager? = null
+            get() {
+                if (field == null) {
+                    field = AMAPLocationManager()
+                }
+                return field
+            }
 
         //       Synchronized添加后就是线程安全的的懒汉模式
-        @Synchronized @JvmStatic
-        fun get(): AMAPLocationManager? {
-            if (instance == null) {
-                instance = AMAPLocationManager()
-            }
-            return instance
+        @Synchronized
+        @JvmStatic
+        fun instance(): AMAPLocationManager {
+            return instance!!
         }
     }
 

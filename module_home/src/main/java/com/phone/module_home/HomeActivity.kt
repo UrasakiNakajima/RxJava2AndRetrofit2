@@ -59,7 +59,7 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
 
     override fun initData() {
         isRefresh = true
-        amapLocationManager = AMAPLocationManager.get()
+        amapLocationManager = AMAPLocationManager.instance()
         amapLocationManager?.setOnCommonSingleParamCallback(object :
             OnCommonSingleParamCallback<AMapLocation> {
             override fun onSuccess(success: AMapLocation) {

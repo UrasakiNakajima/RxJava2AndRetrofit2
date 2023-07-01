@@ -25,6 +25,7 @@ import com.alibaba.sdk.android.oss.*
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
 import com.alibaba.sdk.android.oss.common.OSSLog
+import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
@@ -55,8 +56,8 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 @Route(path = ConstantData.Route.ROUTE_BASE64_AND_FILE)
-class Base64AndFileActivity :
-    BaseMvpRxAppActivity<IBaseView, Base64AndFilePresenterImpl>(), IBase64AndFileView {
+class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePresenterImpl>(),
+    IBase64AndFileView {
 
     private val TAG = Base64AndFileActivity::class.java.simpleName
     private var toolbar: Toolbar? = null
@@ -94,12 +95,11 @@ class Base64AndFileActivity :
 
     override fun initData() {
         handler = Handler(Looper.getMainLooper())
-        dirsPath = mBaseApplication.externalCacheDir
-            ?.absolutePath + File.separator + "Pictures"
-        dirsPathCompressed = mBaseApplication.externalCacheDir
-            ?.absolutePath + File.separator + "PicturesCompressed"
-        dirsPathCompressedRecover = mBaseApplication.externalCacheDir
-            ?.absolutePath + File.separator + "PicturesCompressedRecover"
+        dirsPath = mBaseApplication.externalCacheDir?.absolutePath + File.separator + "Pictures"
+        dirsPathCompressed =
+            mBaseApplication.externalCacheDir?.absolutePath + File.separator + "PicturesCompressed"
+        dirsPathCompressedRecover =
+            mBaseApplication.externalCacheDir?.absolutePath + File.separator + "PicturesCompressedRecover"
     }
 
     override fun initViews() {
@@ -120,12 +120,10 @@ class Base64AndFileActivity :
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.white))
         layoutBack?.setOnClickListener { v: View? -> finish() }
         tevRequestPermissions?.setOnClickListener {
-            val homeService =
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
-                    .navigation() as IHomeService
+            val homeService = ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
+                .navigation() as IHomeService
             LogManager.i(
-                TAG,
-                "homeService.mHomeDataList******" + homeService.mHomeDataList.toString()
+                TAG, "homeService.mHomeDataList******" + homeService.mHomeDataList.toString()
             )
 
             LogManager.i(TAG, "tevRequestPermissions")
@@ -200,8 +198,7 @@ class Base64AndFileActivity :
      */
     private fun initRxPermissions() {
         val rxPermissionsManager = RxPermissionsManager.instance()
-        rxPermissionsManager.initRxPermissions(
-            this,
+        rxPermissionsManager.initRxPermissions(this,
             permissions,
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
@@ -210,11 +207,9 @@ class Base64AndFileActivity :
                     if (TextUtils.isEmpty(systemId)) {
                         SharedPreferencesManager.put("systemId", getSystemId())
                         LogManager.i(
-                            TAG,
-                            "isEmpty systemId*****${
+                            TAG, "isEmpty systemId*****${
                                 SharedPreferencesManager.get(
-                                    "systemId",
-                                    ""
+                                    "systemId", ""
                                 ) as String
                             }"
                         )
@@ -254,8 +249,7 @@ class Base64AndFileActivity :
     private fun showSystemSetupDialog() {
         cancelPermissionsDialog()
         if (mPermissionsDialog == null) {
-            mPermissionsDialog = AlertDialog.Builder(this)
-                .setTitle("权限设置")
+            mPermissionsDialog = AlertDialog.Builder(this).setTitle("权限设置")
                 .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
                 .setPositiveButton("去授权") { dialog, which ->
                     cancelPermissionsDialog()
@@ -264,8 +258,7 @@ class Base64AndFileActivity :
                         Uri.fromParts("package", BaseApplication.instance()?.packageName, null)
                     intent.data = uri
                     startActivityForResult(intent, 207)
-                }
-                .create()
+                }.create()
         }
         mPermissionsDialog?.setCancelable(false)
         mPermissionsDialog?.setCanceledOnTouchOutside(false)
@@ -303,9 +296,7 @@ class Base64AndFileActivity :
                 override fun apply(t: Int): Base64AndFileBean {
                     LogManager.i(TAG, "threadName2*****" + Thread.currentThread().name)
                     val file = BitmapManager.getAssetFile(
-                        mBaseApplication,
-                        dirsPath,
-                        "picture_large.webp"
+                        mBaseApplication, dirsPath, "picture_large.webp"
                     )
                     val base64AndFileBean = Base64AndFileBean()
                     base64AndFileBean.dirsPath = dirsPath
@@ -315,8 +306,7 @@ class Base64AndFileActivity :
                     return base64AndFileBean
                 }
 
-            })
-            .observeOn(Schedulers.io()) //给下面分配了异步线程
+            }).observeOn(Schedulers.io()) //给下面分配了异步线程
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName3*****" + Thread.currentThread().name)
                 //把图片转化成bitmap
@@ -325,32 +315,26 @@ class Base64AndFileActivity :
                 LogManager.i(TAG, "bitmap mWidth*****" + bitmap?.width)
                 LogManager.i(TAG, "bitmap mHeight*****" + bitmap?.height)
                 base64AndFileBean.bitmap = bitmap
-            }
-            .observeOn(Schedulers.io()) //给下面分配了异步线程
+            }.observeOn(Schedulers.io()) //给下面分配了异步线程
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName4*****" + Thread.currentThread().name)
                 //再压缩bitmap
-                val bitmapCompressed =
-                    BitmapManager.scaleImage(
-                        base64AndFileBean.bitmap ?: Bitmap.createBitmap(
-                            0,
-                            0,
-                            Bitmap.Config.ARGB_8888
-                        ), 1280, 960
-                    )
+                val bitmapCompressed = BitmapManager.scaleImage(
+                    base64AndFileBean.bitmap ?: Bitmap.createBitmap(
+                        0, 0, Bitmap.Config.ARGB_8888
+                    ), 1280, 960
+                )
                 LogManager.i(TAG, "bitmapCompressed mWidth*****" + bitmapCompressed?.width)
                 LogManager.i(TAG, "bitmapCompressed mHeight*****" + bitmapCompressed?.height)
                 base64AndFileBean.bitmapCompressed = bitmapCompressed
-            }
-            .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
+            }.observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName5*****" + Thread.currentThread().name)
                 //展示压缩过的图片
                 tevCompressedPicture?.visibility = View.GONE
                 imvCompressedPicture?.visibility = View.VISIBLE
                 imvCompressedPicture?.setImageBitmap(base64AndFileBean.bitmapCompressed)
-            }
-            .observeOn(Schedulers.io()) //给下面分配了异步线程
+            }.observeOn(Schedulers.io()) //给下面分配了异步线程
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName6*****" + Thread.currentThread().name)
                 val mediaFileType =
@@ -361,10 +345,9 @@ class Base64AndFileActivity :
                 //再把压缩后的bitmap保存到本地
                 val fileCompressed = BitmapManager.saveFile(
                     base64AndFileBean.bitmapCompressed ?: Bitmap.createBitmap(
-                        0,
-                        0,
-                        Bitmap.Config.ARGB_8888
-                    ), base64AndFileBean.dirsPathCompressed ?: "",
+                        0, 0, Bitmap.Config.ARGB_8888
+                    ),
+                    base64AndFileBean.dirsPathCompressed ?: "",
                     "picture_large_compressed.$fileType"
                 )
                 base64AndFileBean.fileCompressed = fileCompressed
@@ -378,8 +361,7 @@ class Base64AndFileActivity :
                     "base64AndFileBean.getFileCompressed().getAbsolutePath()*****" + (base64AndFileBean.fileCompressed
                         ?: File("")).absolutePath
                 )
-            }
-            .observeOn(Schedulers.io()) //给下面分配了异步线程
+            }.observeOn(Schedulers.io()) //给下面分配了异步线程
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName7*****" + Thread.currentThread().name)
                 base64AndFileBean.fileCompressed?.let {
@@ -390,9 +372,7 @@ class Base64AndFileActivity :
                         base64AndFileBean.base64Str = base64Str
                         val fileName = "base64Str.txt"
                         val txtFilePath = FileManager.writeStrToTextFile(
-                            base64Str,
-                            base64AndFileBean.dirsPathCompressed ?: "",
-                            fileName
+                            base64Str, base64AndFileBean.dirsPathCompressed ?: "", fileName
                         )
                         base64AndFileBean.txtFilePath = txtFilePath
                         base64AndFileBean.base64StrList.clear()
@@ -412,8 +392,7 @@ class Base64AndFileActivity :
 //                    LogManager.i(TAG, "base64StrList******" + base64StrList.get(base64StrList.size() - 1));
                     }
                 }
-            }
-            .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
+            }.observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName8*****" + Thread.currentThread().name)
                 tevPictureToBase64?.visibility = View.GONE
@@ -424,8 +403,7 @@ class Base64AndFileActivity :
                     .subscribeOn(Schedulers.io()) //给上面分配了异步线程
                     .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
                     //解决RxJava2导致的内存泄漏问题
-                    .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                    .subscribe {
+                    .compose(bindUntilEvent(ActivityEvent.DESTROY)).subscribe {
                         LogManager.i(TAG, "threadNameC*****" + Thread.currentThread().name)
                         base64AndFileBean.base64StrList.let {
                             if (it.size > 0) {
@@ -434,8 +412,7 @@ class Base64AndFileActivity :
                             }
                         }
                     }
-            }
-            .observeOn(Schedulers.io()) //给下面分配了异步线程
+            }.observeOn(Schedulers.io()) //给下面分配了异步线程
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName9*****" + Thread.currentThread().name)
                 val mediaFileType =
@@ -450,14 +427,12 @@ class Base64AndFileActivity :
                     "picture_large_compressed_recover.$fileType"
                 )
                 base64AndFileBean.fileCompressedRecover = fileCompressedRecover
-            }
-            .observeOn(Schedulers.io()) //给下面分配了异步线程
+            }.observeOn(Schedulers.io()) //给下面分配了异步线程
             .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName10*****" + Thread.currentThread().name)
-                val bitmapCompressedRecover =
-                    BitmapFactory.decodeFile(
-                        (base64AndFileBean.fileCompressedRecover ?: File("")).absolutePath
-                    )
+                val bitmapCompressedRecover = BitmapFactory.decodeFile(
+                    (base64AndFileBean.fileCompressedRecover ?: File("")).absolutePath
+                )
                 base64AndFileBean.bitmapCompressedRecover = bitmapCompressedRecover
             } //                .map(new Function<Base64AndFileBean, Bitmap>() {
             //                    @Override
@@ -467,17 +442,16 @@ class Base64AndFileActivity :
             //                        return bitmapCompressedRecover;
             //                    }
             //                })
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { base64AndFileBean ->
+            .observeOn(AndroidSchedulers.mainThread()).doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName11*****" + Thread.currentThread().name)
                 tevBase64ToPicture?.visibility = View.GONE
                 imvBase64ToPicture?.visibility = View.VISIBLE
                 imvBase64ToPicture?.setImageBitmap(base64AndFileBean.bitmapCompressedRecover)
-            }
-            .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
+            }.observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
             //解决RxJava2导致的内存泄漏问题
-            .compose(bindUntilEvent(ActivityEvent.DESTROY))
-            .subscribe { base64AndFileBean -> ossPutSaveFile(base64AndFileBean.fileCompressedRecover) }
+            .compose(bindUntilEvent(ActivityEvent.DESTROY)).subscribe { base64AndFileBean ->
+                ossPutSaveFile(base64AndFileBean.fileCompressedRecover)
+            }
     }
 
     private fun ossPutSaveFile(file: File?) {
@@ -491,21 +465,19 @@ class Base64AndFileActivity :
         val token = "xxxxxxx"
         //expiration
         val expiration = "xxxxxxx"
-        //这里要使用阿里云的STS，不要自己配置（这个是模拟代码，所以这样使用的）
+
+        //请注意：这里应该后端集成，而且这里要使用阿里云的STS，不要Android 自己配置（我这个是Android 端配置了后端的依赖，
+        //然后能上传成功，但是这里没有做token 校验也可以上传成功，实际上应该后端去集成）
         val credentialProvider = OSSCredentialProvider {
             OSSFederationToken(
-                accessKeyId,
-                accessKeySecret,
-                token,
-                expiration
+                accessKeyId, accessKeySecret, token, expiration
             )
         }
-
-
-//        // 填写STS应用服务器地址。（使用这个，服务端要部署STS）
-//        String stsServer = "https://example.com";
-//        // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
-//        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
+//        //请注意：Android 端按照这个写STS应用服务器地址，然后初始化OSSAuthCredentialsProvider（使用这个，后端要部署STS，
+//        //这个stsServer也是后端提供的）
+//        val stsServer = "https://example.com";
+//        //推荐使用OSSAuthCredentialsProvider，token过期可以及时更新。
+//        val credentialProvider = OSSAuthCredentialsProvider(stsServer);
 
 
         // 配置类如果不设置，会有默认配置。
@@ -529,12 +501,10 @@ class Base64AndFileActivity :
         val put = PutObjectRequest("rx-java2-and-retrofit2-bucket", objectKey, file?.absolutePath)
 
         // 异步上传时可以设置进度回调。
-        put.progressCallback =
-            OSSProgressCallback { request, currentSize, totalSize ->
-                //                LogManager.i(TAG, "currentSize: " + currentSize + " totalSize: " + totalSize);
-            }
-        val task = oss.asyncPutObject(
-            put,
+        put.progressCallback = OSSProgressCallback { request, currentSize, totalSize ->
+            //                LogManager.i(TAG, "currentSize: " + currentSize + " totalSize: " + totalSize);
+        }
+        val task = oss.asyncPutObject(put,
             object : OSSCompletedCallback<PutObjectRequest?, PutObjectResult> {
                 override fun onSuccess(request: PutObjectRequest?, result: PutObjectResult) {
                     LogManager.i(TAG, "onSuccess ETag*****" + result.eTag)
@@ -543,17 +513,14 @@ class Base64AndFileActivity :
                     Observable.create<Int> { emitter ->
                         emitter.onNext(0)
                         LogManager.i(
-                            TAG,
-                            "onSuccess threadName2*****" + Thread.currentThread().name
+                            TAG, "onSuccess threadName2*****" + Thread.currentThread().name
                         )
                     } //                        .subscribeOn(Schedulers.io()) //给上面分配了异步线程
                         .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
                         //解决RxJava2导致的内存泄漏问题
-                        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                        .subscribe {
+                        .compose(bindUntilEvent(ActivityEvent.DESTROY)).subscribe {
                             LogManager.i(
-                                TAG,
-                                "onSuccess threadName3*****" + Thread.currentThread().name
+                                TAG, "onSuccess threadName3*****" + Thread.currentThread().name
                             )
                             hideLoading()
                             showToast("upload success", true)
@@ -580,17 +547,14 @@ class Base64AndFileActivity :
                     Observable.create<Int> { emitter ->
                         emitter.onNext(0)
                         LogManager.i(
-                            TAG,
-                            "onFailure threadName2*****" + Thread.currentThread().name
+                            TAG, "onFailure threadName2*****" + Thread.currentThread().name
                         )
                     } //                        .subscribeOn(Schedulers.io()) //给上面分配了异步线程
                         .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
                         //解决RxJava2导致的内存泄漏问题
-                        .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                        .subscribe {
+                        .compose(bindUntilEvent(ActivityEvent.DESTROY)).subscribe {
                             LogManager.i(
-                                TAG,
-                                "onFailure threadName3*****" + Thread.currentThread().name
+                                TAG, "onFailure threadName3*****" + Thread.currentThread().name
                             )
                             hideLoading()
                             showToast("upload error", true)
