@@ -150,16 +150,20 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
     }
 
     override fun showLoading() {
-        if (!mLoadView.isShown) {
-            mLoadView.visibility = View.VISIBLE
-            mLoadView.start()
+        if (!mRxAppCompatActivity.isFinishing) {
+            if (!mLoadView.isShown()) {
+                mLoadView.visibility = View.VISIBLE
+                mLoadView.start()
+            }
         }
     }
 
     override fun hideLoading() {
-        if (mLoadView.isShown) {
-            mLoadView.stop()
-            mLoadView.visibility = View.GONE
+        if (!mRxAppCompatActivity.isFinishing) {
+            if (mLoadView.isShown()) {
+                mLoadView.stop()
+                mLoadView.setVisibility(View.GONE)
+            }
         }
     }
 

@@ -138,12 +138,17 @@ class SubResourceFragment :
     }
 
     override fun initLoadData() {
-        mDatabind.refreshLayout.autoRefresh()
+        showLoading()
+        if (RetrofitManager.isNetworkAvailable()) {
+            initSubResource(tabId, pageNum)
+        } else {
+            subResourceDataError(BaseApplication.instance().resources.getString(R.string.please_check_the_network_connection))
+        }
     }
 
     override fun showLoading() {
         if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.visibility = View.VISIBLE
             mDatabind.loadView.start()
         }
     }
@@ -151,7 +156,7 @@ class SubResourceFragment :
     override fun hideLoading() {
         if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
-            mDatabind.loadView.setVisibility(View.GONE)
+            mDatabind.loadView.visibility = View.GONE
         }
     }
 
@@ -192,16 +197,11 @@ class SubResourceFragment :
     }
 
     private fun initSubResource(tabId: Int, pageNum: Int) {
+        showLoading()
         if (RetrofitManager.isNetworkAvailable()) {
-            showLoading()
             viewModel.subResourceData(tabId, pageNum)
         } else {
             subResourceDataError(resources.getString(R.string.please_check_the_network_connection))
-            if (isRefresh) {
-                mDatabind.refreshLayout.finishRefresh()
-            } else {
-                mDatabind.refreshLayout.finishLoadMore()
-            }
         }
     }
 

@@ -13,7 +13,7 @@ import com.phone.library_common.base.IBaseView
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.ImageLoaderManager
 import com.phone.library_common.manager.ResourcesManager
-import com.phone.library_common.manager.RetrofitManager.Companion.isNetworkAvailable
+import com.phone.library_common.manager.RetrofitManager
 import com.phone.module_main.R
 import com.phone.module_main.login.presenter.LoginPresenterImpl
 import com.phone.module_main.login.view.IRegisterView
@@ -82,6 +82,7 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
 
     override fun registerSuccess(success: String) {
         if (!mRxAppCompatActivity.isFinishing) {
+            hideLoading()
             startActivity(LoginActivity::class.java)
         }
     }
@@ -89,11 +90,13 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
     override fun registerError(error: String) {
         if (!mRxAppCompatActivity.isFinishing) {
             showToast(error, true)
+            hideLoading()
         }
     }
 
     private fun initRegister() {
-        if (isNetworkAvailable()) {
+        showLoading()
+        if (RetrofitManager.isNetworkAvailable()) {
             val password = edtPassword?.text.toString()
             val confirmPassword = edtConfirmPassword?.text.toString()
             if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(confirmPassword) && password == confirmPassword) {
@@ -110,12 +113,14 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
                     ResourcesManager.getString(R.string.the_passwords_entered_twice_are_inconsistent),
                     true
                 )
+                hideLoading()
             }
         } else {
             showToast(
                 ResourcesManager.getString(R.string.please_check_the_network_connection),
                 true
             )
+            hideLoading()
         }
     }
 

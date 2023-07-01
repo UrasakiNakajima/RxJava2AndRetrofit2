@@ -109,17 +109,20 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     override fun getAuthCodeSuccess(success: DataGetVerification) {
         if (!mRxAppCompatActivity.isFinishing) {
             showToast(success.content, true)
+            hideLoading()
         }
     }
 
     override fun getAuthCodeError(error: String) {
         if (!mRxAppCompatActivity.isFinishing) {
             showToast(error, true)
+            hideLoading()
         }
     }
 
     override fun loginWithAuthCodeSuccess(success: DataLogin) {
         if (!mRxAppCompatActivity.isFinishing) {
+            hideLoading()
             customStartActivity()
         }
     }
@@ -127,11 +130,13 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     override fun loginWithAuthCodeError(error: String) {
         if (!mRxAppCompatActivity.isFinishing) {
             showToast(error, true)
+            hideLoading()
         }
     }
 
     override fun loginSuccess(success: String) {
         if (!mRxAppCompatActivity.isFinishing) {
+            hideLoading()
             customStartActivity()
         }
     }
@@ -139,6 +144,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     override fun loginError(error: String) {
         if (!mRxAppCompatActivity.isFinishing) {
             showToast(error, true)
+            hideLoading()
         }
     }
 
@@ -176,15 +182,25 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
             showToast(ResourcesManager.getString(R.string.please_input_a_password), true)
             return
         }
-        mBodyParams.clear()
-        mBodyParams["account"] = userId!!
-        mBodyParams["captcha"] = verificationCode!!
-        mBodyParams["type"] = "1" //1 APP
-        mBodyParams["phoneDevice"] = phoneDevice!!
-        presenter.loginWithAuthCode(this, mBodyParams)
+        showLoading()
+        if (RetrofitManager.isNetworkAvailable()) {
+            mBodyParams.clear()
+            mBodyParams["account"] = userId!!
+            mBodyParams["captcha"] = verificationCode!!
+            mBodyParams["type"] = "1" //1 APP
+            mBodyParams["phoneDevice"] = phoneDevice!!
+            presenter.loginWithAuthCode(this, mBodyParams)
+        } else {
+            showToast(
+                ResourcesManager.getString(R.string.please_check_the_network_connection),
+                true
+            )
+            hideLoading()
+        }
     }
 
     private fun initLogin() {
+        showLoading()
         if (RetrofitManager.isNetworkAvailable()) {
             userId = edtUserId?.text.toString()
             password = edtPassword?.text.toString()
@@ -205,6 +221,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
                 ResourcesManager.getString(R.string.please_check_the_network_connection),
                 true
             )
+            hideLoading()
         }
     }
 

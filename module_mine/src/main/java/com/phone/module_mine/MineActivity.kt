@@ -21,6 +21,7 @@ import com.phone.library_common.manager.SharedPreferencesManager
 import com.phone.module_mine.adapter.MineAdapter
 import com.phone.module_mine.presenter.MinePresenterImpl
 import com.phone.module_mine.view.IMineView
+import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -141,14 +142,14 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
     }
 
     override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && !mLoadView.isShown()) {
-            mLoadView.setVisibility(View.VISIBLE)
+        if (!mRxAppCompatActivity.isFinishing && !mLoadView.isShown()) {
+            mLoadView.visibility = View.VISIBLE
             mLoadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && mLoadView.isShown()) {
+        if (!mRxAppCompatActivity.isFinishing && mLoadView.isShown()) {
             mLoadView.stop()
             mLoadView.setVisibility(View.GONE)
         }
@@ -166,6 +167,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
                 mineAdapter.addData(success)
                 refreshLayout?.finishLoadMore()
             }
+            hideLoading()
         }
     }
 
@@ -188,10 +190,12 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
             } else {
                 refreshLayout?.finishLoadMore(false)
             }
+            hideLoading()
         }
     }
 
     private fun initMine() {
+        showLoading()
         if (RetrofitManager.isNetworkAvailable()) {
             mBodyParams.clear()
 

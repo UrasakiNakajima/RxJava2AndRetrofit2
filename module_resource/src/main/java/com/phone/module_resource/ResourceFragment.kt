@@ -23,8 +23,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 
 @Route(path = ConstantData.Route.ROUTE_RESOURCE)
 class ResourceFragment :
-    BaseMvvmRxFragment<ResourceViewModelImpl, ResourceFragmentResourceBinding>(),
-    IResourceView {
+    BaseMvvmRxFragment<ResourceViewModelImpl, ResourceFragmentResourceBinding>(), IResourceView {
 
     private val TAG = ResourceFragment::class.java.simpleName
     private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
@@ -34,8 +33,7 @@ class ResourceFragment :
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
      */
-    override fun initViewModel() =
-        ViewModelProvider(this).get(ResourceViewModelImpl::class.java)
+    override fun initViewModel() = ViewModelProvider(this).get(ResourceViewModelImpl::class.java)
 
     override fun initData() {
     }
@@ -71,7 +69,7 @@ class ResourceFragment :
 
     override fun showLoading() {
         if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.visibility = View.VISIBLE
             mDatabind.loadView.start()
         }
     }
@@ -79,7 +77,7 @@ class ResourceFragment :
     override fun hideLoading() {
         if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
-            mDatabind.loadView.setVisibility(View.GONE)
+            mDatabind.loadView.visibility = View.GONE
         }
     }
 
@@ -109,11 +107,9 @@ class ResourceFragment :
                 }
             }
 
-            fragmentStatePagerAdapter =
-                TabFragmentStatePagerAdapter(
-                    childFragmentManager,
-                    fragmentList
-                )
+            fragmentStatePagerAdapter = TabFragmentStatePagerAdapter(
+                childFragmentManager, fragmentList
+            )
             mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
             //下划线绑定
             val commonNavigator = CommonNavigator(mRxAppCompatActivity)
@@ -137,8 +133,8 @@ class ResourceFragment :
                 error,
                 true
             )
+            hideLoading()
         }
-        hideLoading()
     }
 
     private fun initResourceTabData() {

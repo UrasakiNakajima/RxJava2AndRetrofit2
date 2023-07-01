@@ -54,8 +54,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
      */
-    override fun initViewModel() =
-        ViewModelProvider(this).get(SquareViewModelImpl::class.java)
+    override fun initViewModel() = ViewModelProvider(this).get(SquareViewModelImpl::class.java)
 
     override fun initData() {
         mDatabind.viewModel = viewModel
@@ -130,43 +129,30 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
             }
             tevAndroidAndJs.setOnClickListener {
                 //Jump with parameters
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_ANDROID_AND_JS)
-                    .navigation()
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_ANDROID_AND_JS).navigation()
             }
             tevEditTextInputLimits.run {
                 setOnClickListener {
-                    ARouter.getInstance()
-                        .build(ConstantData.Route.ROUTE_EDIT_TEXT_INPUT_LIMITS)
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_EDIT_TEXT_INPUT_LIMITS)
                         .navigation()
                 }
             }
             tevDecimalOperation.setOnClickListener {
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_DECIMAL_OPERATION)
-                    .navigation()
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_DECIMAL_OPERATION).navigation()
             }
             tevCreateUser.setOnClickListener {
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_CREATE_USER)
-                    .navigation()
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_CREATE_USER).navigation()
             }
             tevKotlinCoroutine.setOnClickListener {
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_KOTLIN_COROUTINE)
-                    .navigation()
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_KOTLIN_COROUTINE).navigation()
             }
             tevMounting.setOnClickListener {
                 //Jump with parameters
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_MOUNTING)
-                    .navigation()
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_MOUNTING).navigation()
             }
             tevJsbridge.setOnClickListener {
                 //Jump with parameters
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_JSBRIDGE)
-                    .navigation()
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_JSBRIDGE).navigation()
             }
             tevThreeLevelLinkageList.setOnClickListener {
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
@@ -201,17 +187,17 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
 //        Toast.makeText(mRxAppCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
 //    }
 
-    fun showLoading() {
+    override fun showLoading() {
         if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.visibility = View.VISIBLE
             mDatabind.loadView.start()
         }
     }
 
-    fun hideLoading() {
+    override fun hideLoading() {
         if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
-            mDatabind.loadView.setVisibility(View.GONE)
+            mDatabind.loadView.visibility = View.GONE
         }
     }
 
@@ -227,7 +213,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                     LogManager.i(TAG, "desc@*****${desc}")
                 }
                 val ISquareService: ISquareService =
-                    ARouter.getInstance().build("/module_square/SquareServiceImpl")
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_SERVICE)
                         .navigation() as ISquareService
                 ISquareService.mSquareDataList = success
             }
@@ -257,8 +243,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
      */
     private fun initRxPermissions(number: Int) {
         val rxPermissionsManager = RxPermissionsManager.instance()
-        rxPermissionsManager.initRxPermissions2(
-            this,
+        rxPermissionsManager.initRxPermissions2(this,
             permissions,
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
@@ -269,15 +254,13 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                         baseMvpRxAppActivity.getActivityPageManager()?.exitApp()
                     } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                        val userBean: UserBean =
-                            UserBean2()
+                        val userBean: UserBean = UserBean2()
                         val user3 = userBean as UserBean3
                         LogManager.i(TAG, user3.toString())
                     } else if (number == 3) {
                         try {
                             //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                            val userBean: UserBean =
-                                UserBean2()
+                            val userBean: UserBean = UserBean2()
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } catch (e: Exception) {
@@ -301,21 +284,17 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
     private fun showSystemSetupDialog() {
         cancelPermissionsDialog()
         if (mPermissionsDialog == null) {
-            mPermissionsDialog = AlertDialog.Builder(mRxAppCompatActivity)
-                .setTitle("权限设置")
+            mPermissionsDialog = AlertDialog.Builder(mRxAppCompatActivity).setTitle("权限设置")
                 .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
                 .setPositiveButton("去授权") { dialog, which ->
                     cancelPermissionsDialog()
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri = Uri.fromParts(
-                        "package",
-                        mRxAppCompatActivity.applicationContext.packageName,
-                        null
+                        "package", mRxAppCompatActivity.applicationContext.packageName, null
                     )
                     intent.data = uri
                     startActivityForResult(intent, 207)
-                }
-                .create()
+                }.create()
         }
         mPermissionsDialog?.setCancelable(false)
         mPermissionsDialog?.setCanceledOnTouchOutside(false)

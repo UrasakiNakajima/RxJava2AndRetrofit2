@@ -49,6 +49,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         initData()
         initObservers()
         initViews()
+        mDatabind.root
         initLoadData()
     }
 
@@ -63,6 +64,10 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     protected abstract fun initViews()
 
     protected abstract fun initLoadData()
+
+    protected abstract fun showLoading()
+
+    protected abstract fun hideLoading()
 
     protected fun showCustomToast(
         left: Int, right: Int,

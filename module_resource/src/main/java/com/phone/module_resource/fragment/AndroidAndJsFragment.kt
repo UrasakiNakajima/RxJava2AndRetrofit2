@@ -20,7 +20,6 @@ class AndroidAndJsFragment : BaseBindingRxFragment<ResourceFragmentAndroidAndJsB
     override fun initData() {
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     override fun initViews() {
         mDatabind.apply {
             tevAndroidToJs.setOnClickListener { view ->

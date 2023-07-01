@@ -44,7 +44,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     private var tevRequestPermissionAndStartLocating: TextView? = null
     private var refreshLayout: SmartRefreshLayout? = null
     private var rcvData: RecyclerView? = null
-    private var loadView: QMUILoadingView? = null
+    private lateinit var loadView: QMUILoadingView
 
     private var homeAdapter: HomeAdapter? = null
     private var isRefresh = false
@@ -79,16 +79,18 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     }
 
     override fun initViews() {
-        layoutOutLayer = rootView?.findViewById<View>(R.id.layout_out_layer) as FrameLayout
-        toolbar = rootView?.findViewById<View>(R.id.toolbar) as Toolbar
-        tevTitle = rootView?.findViewById<View>(R.id.tev_title) as TextView
-        tevRequestPermissionAndStartLocating =
-            rootView?.findViewById<View>(R.id.tev_request_permission_and_start_locating) as TextView
-        refreshLayout = rootView?.findViewById<View>(R.id.refresh_layout) as SmartRefreshLayout
-        rcvData = rootView?.findViewById<View>(R.id.rcv_data) as RecyclerView
-        loadView = rootView?.findViewById<View>(R.id.loadView) as QMUILoadingView
+        rootView?.let {
+            layoutOutLayer = it.findViewById<View>(R.id.layout_out_layer) as FrameLayout
+            toolbar = it.findViewById<View>(R.id.toolbar) as Toolbar
+            tevTitle = it.findViewById<View>(R.id.tev_title) as TextView
+            tevRequestPermissionAndStartLocating =
+                it.findViewById<View>(R.id.tev_request_permission_and_start_locating) as TextView
+            refreshLayout = it.findViewById<View>(R.id.refresh_layout) as SmartRefreshLayout
+            rcvData = it.findViewById<View>(R.id.rcv_data) as RecyclerView
+            loadView = it.findViewById<View>(R.id.load_view) as QMUILoadingView
+        }
         tevRequestPermissionAndStartLocating?.setOnClickListener {
-            val ISquareService = ARouter.getInstance().build("/module_square/SquareServiceImpl")
+            val ISquareService = ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_SERVICE)
                 .navigation() as ISquareService
             LogManager.i(
                 TAG,
@@ -205,20 +207,16 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     //	}
 
     override fun showLoading() {
-        loadView?.let {
-            if (it.isShown) {
-                it.visibility = View.VISIBLE
-                it.start()
-            }
+        if (!mRxAppCompatActivity.isFinishing && !loadView.isShown()) {
+            loadView.visibility = View.VISIBLE
+            loadView.start()
         }
     }
 
     override fun hideLoading() {
-        loadView?.let {
-            if (it.isShown) {
-                it.stop()
-                it.visibility = View.GONE
-            }
+        if (!mRxAppCompatActivity.isFinishing && loadView.isShown()) {
+            loadView.stop()
+            loadView.setVisibility(View.GONE)
         }
     }
 

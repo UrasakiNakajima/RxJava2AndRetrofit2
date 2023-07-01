@@ -64,7 +64,7 @@ class ProjectActivity :
 
     override fun showLoading() {
         if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.visibility = View.VISIBLE
             mDatabind.loadView.start()
         }
     }
@@ -72,7 +72,7 @@ class ProjectActivity :
     override fun hideLoading() {
         if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
-            mDatabind.loadView.setVisibility(View.GONE)
+            mDatabind.loadView.visibility = View.GONE
         }
     }
 
@@ -117,13 +117,13 @@ class ProjectActivity :
                 error,
                 true
             )
+            hideLoading()
         }
-        hideLoading()
     }
 
     private fun initProjectTabData() {
+        showLoading()
         if (RetrofitManager.isNetworkAvailable()) {
-            showLoading()
             viewModel.projectTabData2()
         } else {
             projectTabDataError(resources!!.getString(R.string.please_check_the_network_connection))

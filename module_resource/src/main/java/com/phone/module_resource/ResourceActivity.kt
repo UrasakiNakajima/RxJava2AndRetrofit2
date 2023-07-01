@@ -65,7 +65,7 @@ class ResourceActivity :
 
     override fun showLoading() {
         if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.visibility = View.VISIBLE
             mDatabind.loadView.start()
         }
     }
@@ -73,12 +73,12 @@ class ResourceActivity :
     override fun hideLoading() {
         if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
-            mDatabind.loadView.setVisibility(View.GONE)
+            mDatabind.loadView.visibility = View.GONE
         }
     }
 
     override fun resourceTabDataSuccess(success: MutableList<TabBean>) {
-        if (!mRxAppCompatActivity.isFinishing){
+        if (!mRxAppCompatActivity.isFinishing) {
             val fragmentList = mutableListOf<Fragment>()
             val dataList = mutableListOf<TabBean>()
             val tabBean = TabBean()
@@ -87,7 +87,9 @@ class ResourceActivity :
             dataList.addAll(success)
 
             for (i in dataList) {
-                if (ResourcesManager.getString(R.string.android_and_js_interactive).equals(i.name)) {
+                if (ResourcesManager.getString(R.string.android_and_js_interactive)
+                        .equals(i.name)
+                ) {
                     fragmentList.add(AndroidAndJsFragment())
                 } else {
                     fragmentList.add(SubResourceFragment().apply {
@@ -127,13 +129,13 @@ class ResourceActivity :
                 error,
                 true
             )
+            hideLoading()
         }
-        hideLoading()
     }
 
     private fun initResourceTabData() {
+        showLoading()
         if (RetrofitManager.isNetworkAvailable()) {
-            showLoading()
             viewModel.resourceTabData2()
         } else {
             resourceTabDataError(resources!!.getString(R.string.please_check_the_network_connection))

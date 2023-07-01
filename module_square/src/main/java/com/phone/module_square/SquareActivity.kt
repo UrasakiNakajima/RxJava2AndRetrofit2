@@ -180,17 +180,17 @@ class SquareActivity :
 //        Toast.makeText(mRxAppCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
 //    }
 
-    fun showLoading() {
+    override fun showLoading() {
         if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.visibility = View.VISIBLE
             mDatabind.loadView.start()
         }
     }
 
-    fun hideLoading() {
+    override fun hideLoading() {
         if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
-            mDatabind.loadView.setVisibility(View.GONE)
+            mDatabind.loadView.visibility = View.GONE
         }
     }
 
@@ -204,7 +204,7 @@ class SquareActivity :
                     envelopePic = success.get(1).envelopePic
                 }
                 val ISquareService: ISquareService =
-                    ARouter.getInstance().build("/module_square/SquareServiceImpl")
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_SERVICE)
                         .navigation() as ISquareService
                 ISquareService.mSquareDataList = success
             }

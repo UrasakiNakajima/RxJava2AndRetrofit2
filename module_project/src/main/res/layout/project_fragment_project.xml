@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.phone.module_project.view_model.ProjectViewModelImpl" />
@@ -74,7 +75,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:color="@color/color_FF999999"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:qmui_loading_view_size="@dimen/dp_33" />
 
     </FrameLayout>
 

@@ -135,7 +135,6 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
         if (baseView != null) {
             if (baseView is ILoginView) {
                 val loginView = baseView
-                loginView.showLoading()
                 Objects.requireNonNull(RetrofitManager.instance())
                     .responseString(
                         rxAppCompatActivity,
@@ -225,7 +224,6 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
         if (baseView != null) {
             if (baseView is ILoginView) {
                 val loginView = baseView
-                loginView.showLoading()
                 val userId = bodyParams["userId"]
                 val password = bodyParams["password"]
                 val userBeanDaoManager = UserBeanDaoManager()
@@ -244,7 +242,6 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                 } else {
                     loginView.loginError(ResourcesManager.getString(R.string.this_user_cannot_be_found))
                 }
-                loginView.hideLoading()
             }
         }
     }

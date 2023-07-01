@@ -39,14 +39,14 @@
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-
         <com.qmuiteam.qmui.widget.QMUILoadingView
             android:id="@+id/load_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:color="@color/color_FF999999"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:qmui_loading_view_size="@dimen/dp_33" />
 
     </FrameLayout>
 

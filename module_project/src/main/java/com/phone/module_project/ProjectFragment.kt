@@ -32,8 +32,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
      */
-    override fun initViewModel() =
-        ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
+    override fun initViewModel() = ViewModelProvider(this).get(ProjectViewModelImpl::class.java)
 
     override fun initData() {
     }
@@ -69,7 +68,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
 
     override fun showLoading() {
         if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.visibility = View.VISIBLE
             mDatabind.loadView.start()
         }
     }
@@ -94,11 +93,9 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
                     arguments = bundle
                 })
             }
-            fragmentStatePagerAdapter =
-                TabFragmentStatePagerAdapter(
-                    childFragmentManager,
-                    fragmentList
-                )
+            fragmentStatePagerAdapter = TabFragmentStatePagerAdapter(
+                childFragmentManager, fragmentList
+            )
             mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
             //下划线绑定
             val commonNavigator = CommonNavigator(mRxAppCompatActivity)

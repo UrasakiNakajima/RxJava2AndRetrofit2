@@ -45,7 +45,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     private var tevParamsTransferChangeProblem: TextView? = null
     private var refreshLayout: SmartRefreshLayout? = null
     private var rcvData: RecyclerView? = null
-    private var loadView: QMUILoadingView? = null
+    private lateinit var loadView: QMUILoadingView
 
     private val mineAdapter by lazy {
         MineAdapter(mRxAppCompatActivity)
@@ -144,24 +144,16 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     override fun attachPresenter() = MinePresenterImpl(this)
 
     override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing) {
-            loadView?.let {
-                if (!it.isShown()) {
-                    it.setVisibility(View.VISIBLE)
-                    it.start()
-                }
-            }
+        if (!mRxAppCompatActivity.isFinishing && !loadView.isShown()) {
+            loadView.visibility = View.VISIBLE
+            loadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing) {
-            loadView?.let {
-                if (it.isShown()) {
-                    it.stop()
-                    it.setVisibility(View.GONE)
-                }
-            }
+        if (!mRxAppCompatActivity.isFinishing && loadView.isShown()) {
+            loadView.stop()
+            loadView.setVisibility(View.GONE)
         }
     }
 

@@ -164,6 +164,10 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
 
     protected abstract fun initLoadData()
 
+    protected abstract fun showLoading()
+
+    protected abstract fun hideLoading()
+
     protected fun showCustomToast(message: String, isLongToast: Boolean) {
         val frameLayout = FrameLayout(this)
         val layoutParams = FrameLayout.LayoutParams(

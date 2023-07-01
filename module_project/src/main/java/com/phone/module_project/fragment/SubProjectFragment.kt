@@ -140,15 +140,17 @@ class SubProjectFragment :
     }
 
     override fun initLoadData() {
-        LogManager.i(TAG, "initLoadData")
-        mDatabind.refreshLayout.autoRefresh()
-
-        LogManager.i(TAG, "SubProjectFragment initLoadData")
+        showLoading()
+        if (RetrofitManager.isNetworkAvailable()) {
+            initSubProject(pageNum, tabId)
+        } else {
+            subProjectDataError(BaseApplication.instance().resources.getString(R.string.please_check_the_network_connection))
+        }
     }
 
     override fun showLoading() {
         if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.setVisibility(View.VISIBLE)
+            mDatabind.loadView.visibility = View.VISIBLE
             mDatabind.loadView.start()
         }
     }
@@ -156,7 +158,7 @@ class SubProjectFragment :
     override fun hideLoading() {
         if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
             mDatabind.loadView.stop()
-            mDatabind.loadView.setVisibility(View.GONE)
+            mDatabind.loadView.visibility = View.GONE
         }
     }
 

@@ -9,11 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.phone.library_common.bean.EventScheduleListBean;
 import com.phone.library_common.custom_view.EventScheduleLayout;
 import com.phone.module_main.R;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomViewActivity extends AppCompatActivity {
+public class CustomViewActivity extends RxAppCompatActivity {
 
     private static final String TAG = "CustomViewActivity";
     private FrameLayout layoutEventSchedule;
