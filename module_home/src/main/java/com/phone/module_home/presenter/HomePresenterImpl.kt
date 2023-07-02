@@ -175,8 +175,8 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
     }
 
     override fun detachView() {
-        super.detachView()
         mainScope.cancel()
+        super.detachView()
     }
 
 }

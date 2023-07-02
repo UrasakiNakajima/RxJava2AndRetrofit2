@@ -47,15 +47,15 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                 mainScope.launch {
 
 //                    LogManager.i(TAG, "mainScope.launch")
-//                    //协程内部开启多个withContext和launch的时候，有一个规律，执行第一个withContext的时候，就会串行执行，
+//                    //协程内部开启多个withContext、launch{}和async{}的时候，有一个规律，执行第一个withContext的时候，就会串行执行，
 //                    //然后执行完了第一个withContext，再并行执行第一个launch和第二个withContext，执行第二个withContext
-//                    //的时候，又会串行执行，然后执行完了第二个withContext，再并行执行第二个launch和第三个withContext，
+//                    //的时候，又会串行执行，然后执行完了第二个withContext，再并行执行第一个async和第三个withContext，
 //                    //执行第三个withContext的时候，又会串行执行，然后执行完了第三个withContext，再执行最后一个launch
 //                    withContext(Dispatchers.IO) {//第一个withContext
 //                        delay(3000)
 //                        LogManager.i(TAG, "withContext delay(3000)")
 //                    }
-//                    launch {//第一个withContext
+//                    launch {//第一个launch
 //                        delay(1000)
 //                        LogManager.i(TAG, "launch delay(1000)")
 //                    }
@@ -63,7 +63,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                        delay(1000)
 //                        LogManager.i(TAG, "withContext delay(1000)")
 //                    }
-//                    launch {//第二个withContext
+//                    async {//第一个async
 //                        delay(2000)
 //                        LogManager.i(TAG, "async delay(2000)")
 //                    }
@@ -71,7 +71,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                        delay(2000)
 //                        LogManager.i(TAG, "withContext delay(2000)")
 //                    }
-//                    launch {//第三个withContext
+//                    launch {//第二个launch
 //                        delay(1000)
 //                        LogManager.i(TAG, "launch delay(1000)")
 //                    }
@@ -231,8 +231,8 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
     }
 
     override fun detachView() {
-        super.detachView()
         mainScope.cancel()
+        super.detachView()
     }
 
 }

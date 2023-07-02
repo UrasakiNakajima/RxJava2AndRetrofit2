@@ -100,8 +100,8 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
     }
 
     override fun onCleared() {
-        super.onCleared()
         mJob?.cancel()
+        super.onCleared()
     }
 
 }
