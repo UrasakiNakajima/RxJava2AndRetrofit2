@@ -163,7 +163,14 @@ class SubResourceFragment :
     override fun subResourceDataSuccess(success: MutableList<ArticleListBean>) {
         if (!mRxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                initAdapter(success)
+                if (subResourceAdapter == null) {
+                    initAdapter(success)
+                } else {
+                    subResourceAdapter?.let {
+                        it.clearData()
+                        it.addData(success)
+                    }
+                }
                 mDatabind.refreshLayout.finishRefresh()
             } else {
                 subResourceAdapter?.addData(success)

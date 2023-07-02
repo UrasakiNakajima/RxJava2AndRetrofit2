@@ -41,7 +41,7 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
     private var refreshLayout: SmartRefreshLayout? = null
     private var rcvData: RecyclerView? = null
 
-    private lateinit var homeAdapter: HomeAdapter
+    private val homeAdapter by lazy { HomeAdapter(mRxAppCompatActivity) }
     private var isRefresh = false
 
     private var amapLocationManager: AMAPLocationManager? = null
@@ -96,7 +96,6 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
         linearLayoutManager.orientation = RecyclerView.VERTICAL
         rcvData?.layoutManager = linearLayoutManager
         rcvData?.itemAnimator = DefaultItemAnimator()
-        homeAdapter = HomeAdapter(mRxAppCompatActivity)
         //		firstPageAdapter = new FirstPageAdapter2(activity, R.layout.item_first_page)
         homeAdapter.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
             //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4"
@@ -170,13 +169,13 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
     override fun homePageDataSuccess(success: List<ResultData.JuheNewsBean>) {
         if (!this.isFinishing) {
             if (isRefresh) {
-                homeAdapter.mJuheNewsBeanList.clear()
-                homeAdapter.mJuheNewsBeanList.addAll(success)
-                homeAdapter.clearData()
-                homeAdapter.addData(homeAdapter.mJuheNewsBeanList)
+                homeAdapter.also {
+                    it.clearData()
+                    it.addData(success)
+                }
                 refreshLayout?.finishRefresh()
             } else {
-                homeAdapter.addData(homeAdapter.mJuheNewsBeanList)
+                homeAdapter.addData(success)
                 refreshLayout?.finishLoadMore()
             }
             hideLoading()

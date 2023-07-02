@@ -46,7 +46,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     private var rcvData: RecyclerView? = null
     private lateinit var loadView: QMUILoadingView
 
-    private var homeAdapter: HomeAdapter? = null
+    private val homeAdapter by lazy { HomeAdapter(mRxAppCompatActivity) }
     private var isRefresh = false
 
     private var mPermissionsDialog: AlertDialog? = null
@@ -90,8 +90,9 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
             loadView = it.findViewById<View>(R.id.load_view) as QMUILoadingView
         }
         tevRequestPermissionAndStartLocating?.setOnClickListener {
-            val ISquareService = ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_SERVICE)
-                .navigation() as ISquareService
+            val ISquareService =
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_SERVICE)
+                    .navigation() as ISquareService
             LogManager.i(
                 TAG,
                 "squareService.getSquareDataList()******" + ISquareService.mSquareDataList.toString()
@@ -108,8 +109,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
         linearLayoutManager.orientation = RecyclerView.VERTICAL
         rcvData?.layoutManager = linearLayoutManager
         rcvData?.itemAnimator = DefaultItemAnimator()
-        homeAdapter = HomeAdapter(mRxAppCompatActivity)
-        homeAdapter?.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
+        homeAdapter.setOnItemViewClickListener { position, view -> //				if (view.getId() == R.id.tev_data) {
             //					//					url = "http://rbv01.ku6.com/omtSn0z_PTREtneb3GRtGg.mp4"
             //					//					url = "http://rbv01.ku6.com/7lut5JlEO-v6a8K3X9xBNg.mp4"
             //					url = "https://t-cmcccos.cxzx10086.cn/statics/shopping/detective_conan_japanese.mp4"
@@ -223,23 +223,23 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     override fun homePageDataSuccess(success: List<ResultData.JuheNewsBean>) {
         if (!mRxAppCompatActivity.isFinishing) {
             if (isRefresh) {
-                homeAdapter?.clearData()
-                homeAdapter?.addData(success)
+                homeAdapter.also {
+                    it.clearData()
+                    it.addData(success)
+                }
                 refreshLayout?.finishRefresh()
             } else {
-                homeAdapter?.addData(success)
+                homeAdapter.addData(success)
                 refreshLayout?.finishLoadMore()
             }
             LogManager.i(
                 TAG,
-                "firstPageAdapter?.mJuheNewsBeanList*****" + homeAdapter?.mJuheNewsBeanList.toString()
+                "firstPageAdapter.mJuheNewsBeanList*****" + homeAdapter.mJuheNewsBeanList.toString()
             )
 
-            val homeService =
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
-                    .navigation() as IHomeService
-            homeService.mHomeDataList =
-                homeAdapter?.mJuheNewsBeanList ?: mutableListOf()
+            val homeService = ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
+                .navigation() as IHomeService
+            homeService.mHomeDataList = homeAdapter.mJuheNewsBeanList
             hideLoading()
         }
     }
@@ -248,10 +248,14 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
         if (!mRxAppCompatActivity.isFinishing) {
 //            showToast(error, true)
             showCustomToast(
-                ScreenManager.dpToPx(20f), ScreenManager.dpToPx(20f),
-                18, resources.getColor(R.color.white),
-                resources.getColor(R.color.color_FF198CFF), ScreenManager.dpToPx(40f),
-                ScreenManager.dpToPx(20f), error,
+                ScreenManager.dpToPx(20f),
+                ScreenManager.dpToPx(20f),
+                18,
+                resources.getColor(R.color.white),
+                resources.getColor(R.color.color_FF198CFF),
+                ScreenManager.dpToPx(40f),
+                ScreenManager.dpToPx(20f),
+                error,
                 true
             )
             if (isRefresh) {
@@ -289,11 +293,9 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
                     if (TextUtils.isEmpty(systemId)) {
                         SharedPreferencesManager.put("systemId", SystemManager.getSystemId())
                         LogManager.i(
-                            TAG,
-                            "isEmpty systemId*****${
+                            TAG, "isEmpty systemId*****${
                                 SharedPreferencesManager.get(
-                                    "systemId",
-                                    ""
+                                    "systemId", ""
                                 ) as String
                             }"
                         )
@@ -318,8 +320,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     private fun showSystemSetupDialog() {
         cancelPermissionsDialog()
         if (mPermissionsDialog == null) {
-            mPermissionsDialog = AlertDialog.Builder(mRxAppCompatActivity)
-                .setTitle("权限设置")
+            mPermissionsDialog = AlertDialog.Builder(mRxAppCompatActivity).setTitle("权限设置")
                 .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
                 .setPositiveButton("去授权") { dialog, which ->
                     cancelPermissionsDialog()
@@ -329,8 +330,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
                     )
                     intent.data = uri
                     startActivityForResult(intent, 207)
-                }
-                .create()
+                }.create()
         }
         mPermissionsDialog?.setCancelable(false)
         mPermissionsDialog?.setCanceledOnTouchOutside(false)

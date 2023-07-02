@@ -141,8 +141,10 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
 //            String userResponseListJsonStr = JSONObject.toJSONString(userResponseListBean)
 //            LogManager.i(TAG, "userResponseListJsonStr******" + userResponseListJsonStr)
                     Collections.reverse(queryUserList)
-                    userBeanAdapter?.clearData()
-                    userBeanAdapter?.addData(queryUserList)
+                    userBeanAdapter?.let {
+                        it.clearData()
+                        it.addData(queryUserList)
+                    }
                     mDatabind.tevTitle.let {
                         TextViewStyleManager.setTextViewStyleVerticalCenter(
                             it,

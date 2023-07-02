@@ -159,16 +159,15 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
     override fun mineDataSuccess(success: MutableList<Data>) {
         if (!mRxAppCompatActivity.isFinishing) {
-            mineAdapter.let {
-                if (isRefresh) {
+            if (isRefresh) {
+                mineAdapter.also {
                     it.clearData()
                     it.addData(success)
-                    refreshLayout?.finishRefresh()
-                } else {
-                    it.clearData()
-                    it.addData(success)
-                    refreshLayout?.finishLoadMore()
                 }
+                refreshLayout?.finishRefresh()
+            } else {
+                mineAdapter.addData(success)
+                refreshLayout?.finishLoadMore()
             }
             hideLoading()
         }

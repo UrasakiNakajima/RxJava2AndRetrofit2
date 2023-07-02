@@ -165,7 +165,14 @@ class SubProjectFragment :
     override fun subProjectDataSuccess(success: MutableList<ArticleListBean>) {
         if (!mRxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                initAdapter(success)
+                if (subProjectAdapter == null) {
+                    initAdapter(success)
+                } else {
+                    subProjectAdapter?.let {
+                        it.clearData()
+                        it.addData(success)
+                    }
+                }
                 mDatabind.refreshLayout.finishRefresh()
             } else {
                 subProjectAdapter?.addData(success)
