@@ -61,10 +61,10 @@ class SubProjectFragment :
 
     override fun initObservers() {
         viewModel.dataxRxFragment.observe(this, {
+//            LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
             when (it) {
                 is State.SuccessState -> {
                     if (it.list != null && it.list.size > 0) {
-                        LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
                         subProjectDataSuccess(it.list)
                     } else {
                         subProjectDataError(ResourcesManager.getString(R.string.no_data_available))

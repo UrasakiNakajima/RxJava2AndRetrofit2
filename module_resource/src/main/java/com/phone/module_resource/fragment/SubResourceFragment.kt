@@ -58,7 +58,7 @@ class SubResourceFragment :
 
     override fun initObservers() {
         viewModel.dataxRxFragment.observe(this, {
-            LogManager.i(TAG, "onChanged*****dataxRxFragment")
+//            LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
                     if (it.list != null && it.list.size > 0) {

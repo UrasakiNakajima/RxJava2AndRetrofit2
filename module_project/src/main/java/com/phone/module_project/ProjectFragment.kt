@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
@@ -17,6 +18,9 @@ import com.phone.module_project.databinding.ProjectFragmentProjectBinding
 import com.phone.module_project.fragment.SubProjectFragment
 import com.phone.module_project.view.IProjectView
 import com.phone.module_project.view_model.ProjectViewModelImpl
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 
@@ -39,7 +43,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
 
     override fun initObservers() {
         viewModel.dataxRxFragment.observe(this, {
-            LogManager.i(TAG, "onChanged*****dataxRxFragment")
+//            LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
                     if (it.list != null && it.list.size > 0) {
@@ -62,7 +66,27 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     }
 
     override fun initLoadData() {
-        LogManager.i(TAG, "ProjectFragment initLoadData")
+//        lifecycleScope.launch {
+//            LogManager.i(TAG, "lifecycleScope.launch thread name*****" + Thread.currentThread().name)
+//            launch {
+//                delay(1000)
+//                LogManager.i(TAG, "launch delay(1000)")
+//            }
+//            async {
+//                delay(2000)
+//                LogManager.i(TAG, "async delay(2000)")
+//            }
+//            async {
+//                delay(1000)
+//                LogManager.i(TAG, "async delay(1000)")
+//            }
+//            launch {
+//                delay(2000)
+//                LogManager.i(TAG, "launch delay(2000)")
+//            }
+//        }
+
+//        LogManager.i(TAG, "ProjectFragment initLoadData")
         initProjectTabData()
     }
 

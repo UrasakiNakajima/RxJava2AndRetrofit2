@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.BaseApplication
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
@@ -18,6 +19,11 @@ import com.phone.module_resource.fragment.AndroidAndJsFragment
 import com.phone.module_resource.fragment.SubResourceFragment
 import com.phone.module_resource.view.IResourceView
 import com.phone.module_resource.view_model.ResourceViewModelImpl
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 
@@ -40,7 +46,7 @@ class ResourceFragment :
 
     override fun initObservers() {
         viewModel.tabRxFragment.observe(this, {
-            LogManager.i(TAG, "onChanged*****tabRxFragment")
+//            LogManager.i(TAG, "onChanged*****tabRxFragment")
             when (it) {
                 is State.SuccessState -> {
                     if (it.list != null && it.list.size > 0) {
@@ -63,7 +69,67 @@ class ResourceFragment :
     }
 
     override fun initLoadData() {
-        LogManager.i(TAG, "ResourceFragment initLoadData")
+//        lifecycleScope.launch {
+//            LogManager.i(TAG, "viewModelScope.launch thread name*****" + Thread.currentThread().name)
+//            //协程内部开启多个withContext、launch{}和async{}的时候，有一个规律，执行第一个withContext的时候就会串行执行（遇到withContext函数就会串行执行），
+//            //然后执行完了第一个withContext，再并行执行第一个launch、第一个async、第二个launch、第二个async、第二个withContext，执行第二个withContext
+//            //的时候又会串行执行（遇到withContext函数就会串行执行），然后执行完了第二个withContext，再并行执行第三个async、第四个async、第三个launch、第四个launch、第三个withContext，
+//            //执行第三个withContext的时候又会串行执行（遇到withContext函数就会串行执行），然后执行完了第三个withContext，再执行第五个launch和第五个async。
+//            withContext(Dispatchers.IO) {//第一个withContext
+//                delay(2000)
+//                LogManager.i(TAG, "first withContext delay(2000)")
+//            }
+//            launch {//第一个launch
+//                delay(1000)
+//                LogManager.i(TAG, "first launch delay(1000)")
+//            }
+//            async {//第一个async
+//                delay(1000)
+//                LogManager.i(TAG, "first async delay(1000)")
+//            }
+//            launch {//第二个launch
+//                delay(1000)
+//                LogManager.i(TAG, "second launch delay(1000)")
+//            }
+//            async {//第二个async
+//                delay(1000)
+//                LogManager.i(TAG, "second async delay(1000)")
+//            }
+//            withContext(Dispatchers.IO) {//第二个withContext
+//                delay(2000)
+//                LogManager.i(TAG, "second withContext delay(2000)")
+//            }
+//            async {//第三个async
+//                delay(2000)
+//                LogManager.i(TAG, "third async delay(2000)")
+//            }
+//            async {//第四个async
+//                delay(2000)
+//                LogManager.i(TAG, "fourth async delay(2000)")
+//            }
+//            launch {//第三个launch
+//                delay(2000)
+//                LogManager.i(TAG, "third launch delay(2000)")
+//            }
+//            launch {//第四个launch
+//                delay(2000)
+//                LogManager.i(TAG, "fourth launch delay(2000)")
+//            }
+//            withContext(Dispatchers.IO) {//第三个withContext
+//                delay(1000)
+//                LogManager.i(TAG, "third withContext delay(1000)")
+//            }
+//            launch {//第五个launch
+//                delay(1000)
+//                LogManager.i(TAG, "fifth launch delay(1000)")
+//            }
+//            async {//第五个async
+//                delay(1000)
+//                LogManager.i(TAG, "fifth async delay(1000)")
+//            }
+//        }
+
+//        LogManager.i(TAG, "ResourceFragment initLoadData")
         initResourceTabData()
     }
 
