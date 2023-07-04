@@ -61,7 +61,7 @@ class EventScheduleLayout(
             ScreenManager.dpToPx(75f), LinearLayout.LayoutParams.MATCH_PARENT
         )
         //		LayoutParams layoutParamsStart = new LayoutParams(
-        //			ScreenManager.ScreenManager.dpToPx(getResources().getDimension((int) (R.dimen.dp_75))), LayoutParams.MATCH_PARENT);
+        //			ScreenManager.ScreenManager.dpToPx(getResources().getDimension((int) (R.dimen.library_dp_75))), LayoutParams.MATCH_PARENT);
         val layoutParamsEnd = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT
         )

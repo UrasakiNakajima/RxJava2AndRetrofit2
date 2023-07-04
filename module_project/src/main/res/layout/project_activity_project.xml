@@ -25,7 +25,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
+                android:layout_height="@dimen/library_dp_48"
                 android:background="@color/library_color_FF198CFF"
                 android:minHeight="?attr/actionBarSize"
                 android:orientation="vertical"
@@ -34,17 +34,17 @@
                 <TextView
                     android:id="@+id/tev_title"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
+                    android:layout_height="@dimen/library_dp_48"
                     android:gravity="center"
                     android:text="@string/library_project"
                     android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/library_sp_20" />
 
             </androidx.appcompat.widget.Toolbar>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_54"
+                android:layout_height="@dimen/library_dp_54"
                 android:background="?attr/library_main_bg_1"
                 android:elevation="6dp">
 
@@ -58,7 +58,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/library_dp_1"
                 android:background="@color/library_color_FF999999" />
 
             <androidx.viewpager.widget.ViewPager
@@ -76,7 +76,7 @@
             android:layout_gravity="center"
             android:color="@color/library_color_FF999999"
             android:visibility="gone"
-            app:qmui_loading_view_size="@dimen/dp_33" />
+            app:qmui_loading_view_size="@dimen/library_dp_33" />
 
     </FrameLayout>
 

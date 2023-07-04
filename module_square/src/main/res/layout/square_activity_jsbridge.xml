@@ -19,7 +19,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_73"
+            android:layout_height="@dimen/library_dp_73"
             android:background="@color/library_color_FFFFFFFF"
             app:contentInsetStart="0dp">
 
@@ -30,11 +30,11 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_25" />
+                    android:layout_height="@dimen/library_dp_25" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
+                    android:layout_height="@dimen/library_dp_48"
                     tools:ignore="UselessLeaf">
 
                     <FrameLayout
@@ -44,11 +44,11 @@
 
                         <ImageView
                             android:id="@+id/imv_back"
-                            android:layout_width="@dimen/dp_9"
-                            android:layout_height="@dimen/dp_16"
+                            android:layout_width="@dimen/library_dp_9"
+                            android:layout_height="@dimen/library_dp_16"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginStart="@dimen/dp_12"
-                            android:layout_marginEnd="@dimen/dp_12"
+                            android:layout_marginStart="@dimen/library_dp_12"
+                            android:layout_marginEnd="@dimen/library_dp_12"
                             android:src="@mipmap/icon_arrowhead_left"
                             android:visibility="visible"
                             tools:ignore="ContentDescription" />
@@ -62,7 +62,7 @@
                         android:layout_gravity="center"
                         android:text="@string/library_jsbridge"
                         android:textColor="@color/library_color_80000000"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="@dimen/library_sp_18" />
 
                 </FrameLayout>
 
@@ -80,14 +80,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/library_color_FFD0D6EC"
-                android:padding="@dimen/dp_10"
+                android:padding="@dimen/library_dp_10"
                 android:text="@string/library_function_to_js"
                 android:textColor="@color/library_color_FF198CFF"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/library_sp_16" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/library_dp_1"
                 android:background="@color/library_color_80000000" />
 
             <TextView
@@ -95,16 +95,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/library_color_FFD0D6EC"
-                android:padding="@dimen/dp_10"
+                android:padding="@dimen/library_dp_10"
                 android:text="@string/library_function_to_js2"
                 android:textColor="@color/library_color_FF198CFF"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/library_sp_16" />
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
+            android:layout_height="@dimen/library_dp_1"
             android:background="@color/library_color_80000000" />
 
         <com.github.lzyzsd.jsbridge.BridgeWebView

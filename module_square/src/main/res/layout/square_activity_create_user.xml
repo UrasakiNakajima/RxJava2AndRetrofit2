@@ -17,7 +17,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_73"
+            android:layout_height="@dimen/library_dp_73"
             android:background="@color/library_color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
@@ -25,28 +25,28 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_73"
+                android:layout_height="@dimen/library_dp_73"
                 android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_25" />
+                    android:layout_height="@dimen/library_dp_25" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48">
+                    android:layout_height="@dimen/library_dp_48">
 
                     <FrameLayout
                         android:id="@+id/layout_back"
-                        android:layout_width="@dimen/dp_36"
+                        android:layout_width="@dimen/library_dp_36"
                         android:layout_height="match_parent"
                         android:gravity="start"
                         tools:ignore="UselessParent">
 
                         <ImageView
                             android:id="@+id/imv_back"
-                            android:layout_width="@dimen/dp_9"
-                            android:layout_height="@dimen/dp_16"
+                            android:layout_width="@dimen/library_dp_9"
+                            android:layout_height="@dimen/library_dp_16"
                             android:layout_gravity="center"
                             android:src="@mipmap/icon_arrowhead_left"
                             tools:ignore="ContentDescription" />
@@ -56,11 +56,11 @@
                     <TextView
                         android:id="@+id/tev_title"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_48"
+                        android:layout_height="@dimen/library_dp_48"
                         android:gravity="center"
                         android:text="@string/library_create_user"
                         android:textColor="@color/library_white"
-                        android:textSize="@dimen/sp_17" />
+                        android:textSize="@dimen/library_sp_17" />
 
                 </FrameLayout>
 
@@ -83,17 +83,17 @@
             android:background="@color/library_color_FFFFC73B"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:paddingStart="@dimen/dp_15"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_15"
-            android:paddingBottom="@dimen/dp_10"
+            android:paddingStart="@dimen/library_dp_15"
+            android:paddingTop="@dimen/library_dp_10"
+            android:paddingEnd="@dimen/library_dp_15"
+            android:paddingBottom="@dimen/library_dp_10"
             android:text="@string/library_create_user"
             android:textColor="@color/library_color_FFFFFF"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/library_sp_16" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
+            android:layout_height="@dimen/library_dp_1"
             android:background="@color/library_color_FFFFFF" />
 
         <TextView
@@ -104,13 +104,13 @@
             android:background="@color/library_color_FFFFC73B"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:paddingStart="@dimen/dp_15"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_15"
-            android:paddingBottom="@dimen/dp_10"
+            android:paddingStart="@dimen/library_dp_15"
+            android:paddingTop="@dimen/library_dp_10"
+            android:paddingEnd="@dimen/library_dp_15"
+            android:paddingBottom="@dimen/library_dp_10"
             android:text="@string/library_delete_all_user"
             android:textColor="@color/library_color_FFFFFF"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/library_sp_16" />
 
     </LinearLayout>
 

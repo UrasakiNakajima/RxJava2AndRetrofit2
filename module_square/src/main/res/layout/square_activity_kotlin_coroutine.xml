@@ -20,7 +20,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_73"
+                android:layout_height="@dimen/library_dp_73"
                 android:background="@color/library_color_FFFFFFFF"
                 app:contentInsetStart="0dp">
 
@@ -31,11 +31,11 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_25" />
+                        android:layout_height="@dimen/library_dp_25" />
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_48"
+                        android:layout_height="@dimen/library_dp_48"
                         tools:ignore="UselessLeaf">
 
                         <FrameLayout
@@ -45,11 +45,11 @@
 
                             <ImageView
                                 android:id="@+id/imv_back"
-                                android:layout_width="@dimen/dp_9"
-                                android:layout_height="@dimen/dp_16"
+                                android:layout_width="@dimen/library_dp_9"
+                                android:layout_height="@dimen/library_dp_16"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginStart="@dimen/dp_12"
-                                android:layout_marginEnd="@dimen/dp_12"
+                                android:layout_marginStart="@dimen/library_dp_12"
+                                android:layout_marginEnd="@dimen/library_dp_12"
                                 android:src="@mipmap/icon_arrowhead_left"
                                 android:visibility="visible"
                                 tools:ignore="ContentDescription" />
@@ -63,7 +63,7 @@
                             android:layout_gravity="center"
                             android:text="@string/library_kotlin_coroutine"
                             android:textColor="@color/library_color_80000000"
-                            android:textSize="@dimen/sp_18" />
+                            android:textSize="@dimen/library_sp_18" />
 
                     </FrameLayout>
 
@@ -75,98 +75,98 @@
             <TextView
                 android:id="@+id/tev_start_runBlocking"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_45"
+                android:layout_height="@dimen/library_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginTop="@dimen/library_dp_20"
                 android:background="@drawable/corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
+                android:paddingStart="@dimen/library_dp_15"
+                android:paddingEnd="@dimen/library_dp_15"
                 android:text="startRunBlocking"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/library_sp_15" />
 
             <TextView
                 android:id="@+id/tev_start_global_scope"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_45"
+                android:layout_height="@dimen/library_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/library_dp_10"
                 android:background="@drawable/corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
+                android:paddingStart="@dimen/library_dp_15"
+                android:paddingEnd="@dimen/library_dp_15"
                 android:text="startGlobalScope"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/library_sp_15" />
 
             <TextView
                 android:id="@+id/tev_start_coroutine_scope"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_45"
+                android:layout_height="@dimen/library_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/library_dp_10"
                 android:background="@drawable/corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
+                android:paddingStart="@dimen/library_dp_15"
+                android:paddingEnd="@dimen/library_dp_15"
                 android:text="startCoroutineScope"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/library_sp_15" />
 
             <TextView
                 android:id="@+id/tev_start_main_scope"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_45"
+                android:layout_height="@dimen/library_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/library_dp_10"
                 android:background="@drawable/corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
+                android:paddingStart="@dimen/library_dp_15"
+                android:paddingEnd="@dimen/library_dp_15"
                 android:text="startMainScope"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/library_sp_15" />
 
             <TextView
                 android:id="@+id/tev_start_view_model_scope"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_45"
+                android:layout_height="@dimen/library_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/library_dp_10"
                 android:background="@drawable/corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
+                android:paddingStart="@dimen/library_dp_15"
+                android:paddingEnd="@dimen/library_dp_15"
                 android:text="startViewModelScope"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/library_sp_15" />
 
             <TextView
                 android:id="@+id/tev_start_lifecycle_scope"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_45"
+                android:layout_height="@dimen/library_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/library_dp_10"
                 android:background="@drawable/corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_15"
-                android:paddingEnd="@dimen/dp_15"
+                android:paddingStart="@dimen/library_dp_15"
+                android:paddingEnd="@dimen/library_dp_15"
                 android:text="startLifecycleScope"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/library_sp_15" />
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"
-                android:layout_marginTop="@dimen/dp_10" />
+                android:layout_height="@dimen/library_dp_100"
+                android:layout_marginTop="@dimen/library_dp_10" />
 
         </LinearLayout>
 
@@ -178,7 +178,7 @@
             android:layout_gravity="center"
             android:color="@color/library_color_FF999999"
             android:visibility="gone"
-            app:qmui_loading_view_size="@dimen/dp_33" />
+            app:qmui_loading_view_size="@dimen/library_dp_33" />
 
     </FrameLayout>
 

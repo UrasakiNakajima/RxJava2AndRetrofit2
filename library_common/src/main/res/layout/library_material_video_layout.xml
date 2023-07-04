@@ -36,21 +36,21 @@
     <LinearLayout
         android:id="@+id/lay_playControl"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="@dimen/library_dp_40"
         android:layout_gravity="bottom"
         android:background="#54000000"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
+        android:paddingLeft="@dimen/library_dp_10"
+        android:paddingRight="@dimen/library_dp_10"
         android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_current_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/library_dp_10"
+            android:layout_marginRight="@dimen/library_dp_10"
             android:text="@string/library_start_time"
             android:textColor="@color/library_white" />
 
@@ -64,8 +64,8 @@
             android:id="@+id/tv_total_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/library_dp_10"
+            android:layout_marginRight="@dimen/library_dp_10"
             android:text="@string/library_start_time"
             android:textColor="@color/library_white" />
     </LinearLayout>

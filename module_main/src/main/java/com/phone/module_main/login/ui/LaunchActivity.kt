@@ -80,7 +80,7 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevAndroid,
                 "translationY",
                 0f,
-                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_360).toFloat()).toFloat()
+                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_360).toFloat()).toFloat()
             )
 //            // 构造一个在透明度上变化的属性动画
 //            val anim2 = ObjectAnimator.ofFloat(tevAndroid, "alpha", 1f, 0.1f, 1f, 0.5f, 1f)
@@ -112,7 +112,7 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevAppName,
                 "translationY",
                 0f,
-                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_409).toFloat())
+                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_409).toFloat())
                     .toFloat())
             )
 //            // 构造一个在透明度上变化的属性动画
@@ -145,14 +145,14 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevKotlin,
                 "translationX",
                 0f,
-                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_100).toFloat()).toFloat()
+                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_100).toFloat()).toFloat()
             )
             // 构造一个在横轴上平移的属性动画
             val translationYAnimator3 = ObjectAnimator.ofFloat(
                 tevKotlin,
                 "translationY",
                 0f,
-                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.dp_390).toFloat())
+                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_390).toFloat())
                     .toFloat())
             )
 //            // 构造一个在透明度上变化的属性动画

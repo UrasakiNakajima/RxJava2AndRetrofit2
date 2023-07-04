@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/library_news_summary_card_view"
     app:cardBackgroundColor="@color/library_white"
-    app:cardElevation="@dimen/dp_2"
+    app:cardElevation="@dimen/library_dp_2"
     app:library_dayNightBackgroundAttr="dayNightBackground">
 
     <LinearLayout
@@ -18,12 +18,12 @@
             android:id="@+id/news_summary_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/item_margin"
-            android:layout_marginTop="@dimen/item_margin"
-            android:layout_marginRight="@dimen/item_margin"
+            android:layout_marginLeft="@dimen/library_item_margin"
+            android:layout_marginTop="@dimen/library_item_margin"
+            android:layout_marginRight="@dimen/library_item_margin"
             android:singleLine="true"
             android:textColor="@color/library_color_FF333333"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/library_sp_14"
             tools:text="爽肤水的肤色我热热饭是电风扇的" />
 
         <LinearLayout
@@ -54,7 +54,7 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_45"
+            android:layout_height="@dimen/library_dp_45"
             android:layout_below="@id/news_summary_photo_iv_group"
             tools:ignore="ObsoleteLayoutParam">
 
@@ -64,9 +64,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/item_margin"
+                android:layout_marginStart="@dimen/library_item_margin"
                 android:textColor="@color/library_light_gray"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/library_sp_15"
                 tools:text="作者名" />
 
             <TextView
@@ -75,9 +75,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/item_margin"
+                android:layout_marginEnd="@dimen/library_item_margin"
                 android:textColor="@color/library_light_gray"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/library_sp_15"
                 tools:ignore="RelativeOverlap"
                 tools:text="2018-08-01" />
 

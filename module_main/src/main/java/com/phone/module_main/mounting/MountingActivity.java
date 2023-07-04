@@ -60,8 +60,8 @@ public class MountingActivity extends BaseBindingRxAppActivity<MainActivityMount
             if (mDatabind.imvBanner.getHeight() > 0) {
                 imvBannerHeight = mDatabind.imvBanner.getHeight();
                 slideMaxHeight = imvBannerHeight
-                        - ScreenManager.getDimenPx(R.dimen.dp_73)
-                        - ScreenManager.getDimenPx(R.dimen.dp_1);
+                        - ScreenManager.getDimenPx(R.dimen.library_dp_73)
+                        - ScreenManager.getDimenPx(R.dimen.library_dp_1);
             }
         });
         mDatabind.appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {

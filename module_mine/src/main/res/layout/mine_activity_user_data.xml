@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_73"
+        android:layout_height="@dimen/library_dp_73"
         android:background="@color/library_color_FF198CFF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
@@ -18,20 +18,20 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_48"
-            android:layout_marginTop="@dimen/dp_25">
+            android:layout_height="@dimen/library_dp_48"
+            android:layout_marginTop="@dimen/library_dp_25">
 
             <FrameLayout
                 android:id="@+id/layout_back"
-                android:layout_width="@dimen/dp_36"
+                android:layout_width="@dimen/library_dp_36"
                 android:layout_height="match_parent"
                 android:gravity="start"
                 tools:ignore="UselessParent">
 
                 <ImageView
                     android:id="@+id/imv_back"
-                    android:layout_width="@dimen/dp_6"
-                    android:layout_height="@dimen/dp_11"
+                    android:layout_width="@dimen/library_dp_6"
+                    android:layout_height="@dimen/library_dp_11"
                     android:layout_gravity="center"
                     android:src="@mipmap/icon_arrowhead_left"
                     tools:ignore="ContentDescription" />
@@ -41,12 +41,12 @@
             <TextView
                 android:id="@+id/tev_title"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_48"
+                android:layout_height="@dimen/library_dp_48"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/library_user_details"
                 android:textColor="@color/library_white"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="@dimen/library_sp_20" />
 
         </FrameLayout>
 

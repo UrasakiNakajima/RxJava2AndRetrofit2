@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/library_dp_10"
         android:orientation="horizontal">
 
         <TextView
@@ -16,9 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginStart="@dimen/library_dp_20"
             android:text="@string/library_mounting"
-            android:textSize="@dimen/sp_16"
+            android:textSize="@dimen/library_sp_16"
             android:textStyle="bold"
             tools:ignore="SpUsage" />
 
@@ -27,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginStart="@dimen/library_dp_20"
             android:text="@string/library_mounting"
-            android:textSize="@dimen/sp_18"
+            android:textSize="@dimen/library_sp_18"
             tools:ignore="SpUsage" />
 
         <TextView
@@ -37,9 +37,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginStart="@dimen/library_dp_20"
             android:text="@string/library_mounting"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/library_sp_14"
             tools:ignore="SpUsage" />
 
     </LinearLayout>
@@ -48,10 +48,10 @@
         android:id="@+id/tev_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/library_dp_20"
+        android:layout_marginTop="@dimen/library_dp_10"
         android:text="@string/library_mounting"
-        android:textSize="@dimen/sp_14"
+        android:textSize="@dimen/library_sp_14"
         tools:ignore="SpUsage" />
 
 </LinearLayout>

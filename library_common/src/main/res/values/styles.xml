@@ -50,9 +50,9 @@
     <style name="library_news_summary_card_view">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/dp_4</item>
-        <item name="android:layout_marginEnd">@dimen/dp_4</item>
-        <item name="android:layout_marginTop">@dimen/dp_5</item>
+        <item name="android:layout_marginStart">@dimen/library_dp_4</item>
+        <item name="android:layout_marginEnd">@dimen/library_dp_4</item>
+        <item name="android:layout_marginTop">@dimen/library_dp_5</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
@@ -60,7 +60,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_margin">@dimen/item_margin</item>
+        <item name="android:layout_margin">@dimen/library_item_margin</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
 
@@ -83,21 +83,21 @@
 
     <style name="library_text_1">
         <item name="android:textColor">?attr/library_theme_color_1</item>
-        <item name="android:textSize">@dimen/text_1</item>
+        <item name="android:textSize">@dimen/library_text_1</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
 
     <style name="library_text_2">
         <item name="android:textColor">?attr/library_theme_color_2</item>
-        <item name="android:textSize">@dimen/text_2</item>
+        <item name="android:textSize">@dimen/library_text_2</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
 
     <style name="library_text_3">
         <item name="android:textColor">?attr/library_theme_color_3</item>
-        <item name="android:textSize">@dimen/text_3</item>
+        <item name="android:textSize">@dimen/library_text_3</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>

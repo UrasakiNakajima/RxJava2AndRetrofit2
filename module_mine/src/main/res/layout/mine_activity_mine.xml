@@ -15,7 +15,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_73"
+            android:layout_height="@dimen/library_dp_73"
             android:background="@color/library_color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
@@ -24,12 +24,12 @@
             <TextView
                 android:id="@+id/tev_title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginTop="@dimen/dp_25"
+                android:layout_height="@dimen/library_dp_48"
+                android:layout_marginTop="@dimen/library_dp_25"
                 android:gravity="center"
                 android:text="@string/library_mine"
                 android:textColor="@color/library_white"
-                android:textSize="@dimen/sp_20" />
+                android:textSize="@dimen/library_sp_20" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -46,38 +46,38 @@
                 <TextView
                     android:id="@+id/tev_logout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="@dimen/library_dp_50"
                     android:layout_gravity="center"
                     android:background="@color/library_color_FF333333"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="logout"
                     android:textColor="@color/library_color_80FFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/library_sp_16" />
 
                 <TextView
                     android:id="@+id/tev_thread_pool"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="@dimen/library_dp_50"
                     android:layout_gravity="center"
                     android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="thread pool"
                     android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/library_sp_16" />
 
                 <TextView
                     android:id="@+id/tev_params_transfer_change_problem"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="@dimen/library_dp_50"
                     android:layout_gravity="center"
                     android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@string/library_params_transfer_change_problem"
                     android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/library_sp_16" />
 
                 <com.scwang.smart.refresh.layout.SmartRefreshLayout
                     android:id="@+id/refresh_layout"

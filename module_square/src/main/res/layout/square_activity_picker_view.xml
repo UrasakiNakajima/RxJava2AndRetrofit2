@@ -16,7 +16,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_73"
+            android:layout_height="@dimen/library_dp_73"
             android:background="@color/library_color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
@@ -24,28 +24,28 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_73"
+                android:layout_height="@dimen/library_dp_73"
                 android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_25" />
+                    android:layout_height="@dimen/library_dp_25" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48">
+                    android:layout_height="@dimen/library_dp_48">
 
                     <FrameLayout
                         android:id="@+id/layout_back"
-                        android:layout_width="@dimen/dp_36"
+                        android:layout_width="@dimen/library_dp_36"
                         android:layout_height="match_parent"
                         android:gravity="start"
                         tools:ignore="UselessParent">
 
                         <ImageView
                             android:id="@+id/imv_back"
-                            android:layout_width="@dimen/dp_9"
-                            android:layout_height="@dimen/dp_16"
+                            android:layout_width="@dimen/library_dp_9"
+                            android:layout_height="@dimen/library_dp_16"
                             android:layout_gravity="center"
                             android:src="@mipmap/icon_arrowhead_left"
                             tools:ignore="ContentDescription" />
@@ -60,7 +60,7 @@
                         android:gravity="center"
                         android:text="@string/library_three_level_linkage_list"
                         android:textColor="@color/library_color_FFFFFFFF"
-                        android:textSize="@dimen/sp_20" />
+                        android:textSize="@dimen/library_sp_20" />
 
                 </FrameLayout>
 
@@ -70,20 +70,20 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_30" />
+            android:layout_height="@dimen/library_dp_30" />
 
         <TextView
             android:id="@+id/tev_show"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_50"
-            android:layout_marginStart="@dimen/dp_20"
+            android:layout_height="@dimen/library_dp_50"
+            android:layout_marginStart="@dimen/library_dp_20"
             android:background="@drawable/corners_25_color_ff198cff"
             android:gravity="center"
-            android:paddingStart="@dimen/dp_20"
-            android:paddingEnd="@dimen/dp_20"
+            android:paddingStart="@dimen/library_dp_20"
+            android:paddingEnd="@dimen/library_dp_20"
             android:text="@string/library_show_data"
             android:textColor="@color/library_white"
-            android:textSize="@dimen/sp_18" />
+            android:textSize="@dimen/library_sp_18" />
 
     </LinearLayout>
 

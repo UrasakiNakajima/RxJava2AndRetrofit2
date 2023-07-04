@@ -20,7 +20,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_73"
+                android:layout_height="@dimen/library_dp_73"
                 android:background="@color/library_color_FF198CFF"
                 android:minHeight="?attr/actionBarSize"
                 android:orientation="vertical"
@@ -28,16 +28,16 @@
 
                 <FrameLayout
                     android:id="@+id/layout_back"
-                    android:layout_width="@dimen/dp_36"
-                    android:layout_height="@dimen/dp_48"
-                    android:layout_marginTop="@dimen/dp_25"
+                    android:layout_width="@dimen/library_dp_36"
+                    android:layout_height="@dimen/library_dp_48"
+                    android:layout_marginTop="@dimen/library_dp_25"
                     android:gravity="start"
                     tools:ignore="UselessParent">
 
                     <ImageView
                         android:id="@+id/imv_back"
-                        android:layout_width="@dimen/dp_9"
-                        android:layout_height="@dimen/dp_16"
+                        android:layout_width="@dimen/library_dp_9"
+                        android:layout_height="@dimen/library_dp_16"
                         android:layout_gravity="center"
                         android:src="@mipmap/icon_arrowhead_left"
                         tools:ignore="ContentDescription" />
@@ -47,13 +47,13 @@
                 <TextView
                     android:id="@+id/tev_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_48"
+                    android:layout_height="@dimen/library_dp_48"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_25"
+                    android:layout_marginTop="@dimen/library_dp_25"
                     android:gravity="center"
                     android:text="@string/library_params_transfer_change_problem"
                     android:textColor="@color/library_white"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/library_sp_20" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -65,13 +65,13 @@
                 android:background="@color/library_color_FFFFC73B"
                 android:gravity="start|center_vertical"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_17"
-                android:paddingTop="@dimen/dp_17"
-                android:paddingEnd="@dimen/dp_17"
-                android:paddingBottom="@dimen/dp_17"
+                android:paddingStart="@dimen/library_dp_17"
+                android:paddingTop="@dimen/library_dp_17"
+                android:paddingEnd="@dimen/library_dp_17"
+                android:paddingBottom="@dimen/library_dp_17"
                 android:text="before_change:userBean"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/library_sp_16" />
 
             <TextView
                 android:id="@+id/tev_number_before_change"
@@ -81,13 +81,13 @@
                 android:background="@color/library_color_FFFFC73B"
                 android:gravity="start|center_vertical"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_17"
-                android:paddingTop="@dimen/dp_17"
-                android:paddingEnd="@dimen/dp_17"
-                android:paddingBottom="@dimen/dp_17"
+                android:paddingStart="@dimen/library_dp_17"
+                android:paddingTop="@dimen/library_dp_17"
+                android:paddingEnd="@dimen/library_dp_17"
+                android:paddingBottom="@dimen/library_dp_17"
                 android:text="before_change:number"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/library_sp_16" />
 
             <TextView
                 android:id="@+id/tev_str_before_change"
@@ -97,13 +97,13 @@
                 android:background="@color/library_color_FFFFC73B"
                 android:gravity="start|center_vertical"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_17"
-                android:paddingTop="@dimen/dp_17"
-                android:paddingEnd="@dimen/dp_17"
-                android:paddingBottom="@dimen/dp_17"
+                android:paddingStart="@dimen/library_dp_17"
+                android:paddingTop="@dimen/library_dp_17"
+                android:paddingEnd="@dimen/library_dp_17"
+                android:paddingBottom="@dimen/library_dp_17"
                 android:text="before_change:str"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/library_sp_16" />
 
             <TextView
                 android:id="@+id/tev_stringList_before_change"
@@ -113,13 +113,13 @@
                 android:background="@color/library_color_FFFFC73B"
                 android:gravity="start|center_vertical"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_17"
-                android:paddingTop="@dimen/dp_17"
-                android:paddingEnd="@dimen/dp_17"
-                android:paddingBottom="@dimen/dp_17"
+                android:paddingStart="@dimen/library_dp_17"
+                android:paddingTop="@dimen/library_dp_17"
+                android:paddingEnd="@dimen/library_dp_17"
+                android:paddingBottom="@dimen/library_dp_17"
                 android:text="before_change:stringList"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/library_sp_16" />
 
             <LinearLayout
                 android:id="@+id/layout_after_change"
@@ -129,7 +129,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50" />
+                    android:layout_height="@dimen/library_dp_50" />
 
                 <TextView
                     android:id="@+id/tev_user_after_change"
@@ -139,13 +139,13 @@
                     android:background="@color/library_color_FFFFC73B"
                     android:gravity="start|center_vertical"
                     android:includeFontPadding="false"
-                    android:paddingStart="@dimen/dp_17"
-                    android:paddingTop="@dimen/dp_17"
-                    android:paddingEnd="@dimen/dp_17"
-                    android:paddingBottom="@dimen/dp_17"
+                    android:paddingStart="@dimen/library_dp_17"
+                    android:paddingTop="@dimen/library_dp_17"
+                    android:paddingEnd="@dimen/library_dp_17"
+                    android:paddingBottom="@dimen/library_dp_17"
                     android:text="after_change:userBean"
                     android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/library_sp_16" />
 
                 <TextView
                     android:id="@+id/tev_number_after_change"
@@ -155,13 +155,13 @@
                     android:background="@color/library_color_FFFFC73B"
                     android:gravity="start|center_vertical"
                     android:includeFontPadding="false"
-                    android:paddingStart="@dimen/dp_17"
-                    android:paddingTop="@dimen/dp_17"
-                    android:paddingEnd="@dimen/dp_17"
-                    android:paddingBottom="@dimen/dp_17"
+                    android:paddingStart="@dimen/library_dp_17"
+                    android:paddingTop="@dimen/library_dp_17"
+                    android:paddingEnd="@dimen/library_dp_17"
+                    android:paddingBottom="@dimen/library_dp_17"
                     android:text="after_change:number"
                     android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/library_sp_16" />
 
                 <TextView
                     android:id="@+id/tev_str_after_change"
@@ -171,13 +171,13 @@
                     android:background="@color/library_color_FFFFC73B"
                     android:gravity="start|center_vertical"
                     android:includeFontPadding="false"
-                    android:paddingStart="@dimen/dp_17"
-                    android:paddingTop="@dimen/dp_17"
-                    android:paddingEnd="@dimen/dp_17"
-                    android:paddingBottom="@dimen/dp_17"
+                    android:paddingStart="@dimen/library_dp_17"
+                    android:paddingTop="@dimen/library_dp_17"
+                    android:paddingEnd="@dimen/library_dp_17"
+                    android:paddingBottom="@dimen/library_dp_17"
                     android:text="after_change:str"
                     android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/library_sp_16" />
 
                 <TextView
                     android:id="@+id/tev_stringList_after_change"
@@ -187,19 +187,19 @@
                     android:background="@color/library_color_FFFFC73B"
                     android:gravity="start|center_vertical"
                     android:includeFontPadding="false"
-                    android:paddingStart="@dimen/dp_17"
-                    android:paddingTop="@dimen/dp_17"
-                    android:paddingEnd="@dimen/dp_17"
-                    android:paddingBottom="@dimen/dp_17"
+                    android:paddingStart="@dimen/library_dp_17"
+                    android:paddingTop="@dimen/library_dp_17"
+                    android:paddingEnd="@dimen/library_dp_17"
+                    android:paddingBottom="@dimen/library_dp_17"
                     android:text="after_change;stringList"
                     android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/library_sp_16" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_50" />
+                android:layout_height="@dimen/library_dp_50" />
 
             <TextView
                 android:id="@+id/tev_user_after_change2"
@@ -209,13 +209,13 @@
                 android:background="@color/library_color_FFFFC73B"
                 android:gravity="start|center_vertical"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_17"
-                android:paddingTop="@dimen/dp_17"
-                android:paddingEnd="@dimen/dp_17"
-                android:paddingBottom="@dimen/dp_17"
+                android:paddingStart="@dimen/library_dp_17"
+                android:paddingTop="@dimen/library_dp_17"
+                android:paddingEnd="@dimen/library_dp_17"
+                android:paddingBottom="@dimen/library_dp_17"
                 android:text="after_change:userBean"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/library_sp_16" />
 
             <TextView
                 android:id="@+id/tev_stringList_after_change2"
@@ -225,13 +225,13 @@
                 android:background="@color/library_color_FFFFC73B"
                 android:gravity="start|center_vertical"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp_17"
-                android:paddingTop="@dimen/dp_17"
-                android:paddingEnd="@dimen/dp_17"
-                android:paddingBottom="@dimen/dp_17"
+                android:paddingStart="@dimen/library_dp_17"
+                android:paddingTop="@dimen/library_dp_17"
+                android:paddingEnd="@dimen/library_dp_17"
+                android:paddingBottom="@dimen/library_dp_17"
                 android:text="after_change;stringList"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/library_sp_16" />
 
         </LinearLayout>
 

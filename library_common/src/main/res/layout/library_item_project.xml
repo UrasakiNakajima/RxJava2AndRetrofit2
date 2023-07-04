@@ -15,13 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple_bg"
-        android:paddingTop="@dimen/padding">
+        android:paddingTop="@dimen/library_padding">
 
         <ImageView
             android:id="@+id/ivTitle"
-            android:layout_width="@dimen/dp_95"
-            android:layout_height="@dimen/dp_95"
-            android:layout_marginStart="@dimen/dp_16"
+            android:layout_width="@dimen/library_dp_95"
+            android:layout_height="@dimen/library_dp_95"
+            android:layout_marginStart="@dimen/library_dp_16"
             android:scaleType="center"
             app:imageUrl="@{dataBean.picUrl}"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,14 +33,14 @@
             style="@style/library_text_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginStart="@dimen/library_dp_10"
+            android:layout_marginEnd="@dimen/library_dp_16"
             android:text="@{dataBean.title}"
             android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@+id/ivTitle"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginLeft="@dimen/dp_16"
+            app:layout_goneMarginLeft="@dimen/library_dp_16"
             tools:text="标题" />
 
         <TextView
@@ -48,8 +48,8 @@
             style="@style/library_text_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_marginTop="@dimen/library_dp_10"
+            android:layout_marginEnd="@dimen/library_dp_16"
             android:maxLines="2"
             android:text="@{dataBean.desc}"
             app:layout_constraintLeft_toLeftOf="@+id/tvTitle"
@@ -72,9 +72,9 @@
             articleCollect="@{dataBean.collect}"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="@dimen/dp_16"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/library_dp_16"
+            android:paddingStart="@dimen/library_dp_10"
+            android:paddingTop="@dimen/library_dp_10"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@id/ivTitle"
             app:layout_constraintRight_toRightOf="parent"
@@ -83,7 +83,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginTop="@dimen/library_dp_16"
             android:background="?attr/library_division_line"
             app:layout_constraintTop_toBottomOf="@+id/ivTitle" />
 

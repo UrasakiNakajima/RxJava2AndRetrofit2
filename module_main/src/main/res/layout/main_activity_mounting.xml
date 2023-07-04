@@ -45,14 +45,14 @@
                         <ImageView
                             android:id="@+id/imv_banner"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_270"
+                            android:layout_height="@dimen/library_dp_270"
                             android:scaleType="centerCrop"
                             android:src="@mipmap/picture_manami_enosawa2"
                             tools:ignore="ContentDescription" />
 
                         <androidx.appcompat.widget.Toolbar
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_73"
+                            android:layout_height="@dimen/library_dp_73"
                             app:contentInsetStart="0dp"
                             app:layout_collapseMode="pin" />
 
@@ -60,14 +60,14 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_50"
+                        android:layout_height="@dimen/library_dp_50"
                         android:orientation="vertical"
                         tools:ignore="UselessLeaf">
 
                         <net.lucode.hackware.magicindicator.MagicIndicator
                             android:id="@+id/magic_indicator"
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/dp_40"
+                            android:layout_height="@dimen/library_dp_40"
                             android:layout_gravity="center" />
 
                     </FrameLayout>
@@ -88,7 +88,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_73"
+            android:layout_height="@dimen/library_dp_73"
             android:background="@color/library_color_transparent"
             app:contentInsetStart="0dp">
 
@@ -99,11 +99,11 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_25" />
+                    android:layout_height="@dimen/library_dp_25" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
+                    android:layout_height="@dimen/library_dp_48"
                     tools:ignore="UselessLeaf">
 
                     <FrameLayout
@@ -113,11 +113,11 @@
 
                         <ImageView
                             android:id="@+id/imv_back"
-                            android:layout_width="@dimen/dp_9"
-                            android:layout_height="@dimen/dp_16"
+                            android:layout_width="@dimen/library_dp_9"
+                            android:layout_height="@dimen/library_dp_16"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginStart="@dimen/dp_12"
-                            android:layout_marginEnd="@dimen/dp_12"
+                            android:layout_marginStart="@dimen/library_dp_12"
+                            android:layout_marginEnd="@dimen/library_dp_12"
                             android:src="@mipmap/icon_arrowhead_left"
                             android:visibility="visible"
                             tools:ignore="ContentDescription" />
@@ -131,7 +131,7 @@
                         android:layout_gravity="center"
                         android:text="@string/library_mounting"
                         android:textColor="@color/library_color_808080"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="@dimen/library_sp_18" />
 
                 </FrameLayout>
 

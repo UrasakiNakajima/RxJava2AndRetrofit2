@@ -263,7 +263,7 @@ class ShadowLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context
     //动态设置阴影扩散区域
     fun setShadowLimit(mShadowLimit: Int) {
         if (isShowShadow) {
-            val dip5 = context.resources.getDimension(R.dimen.dp_5).toInt()
+            val dip5 = context.resources.getDimension(R.dimen.library_dp_5).toInt()
             if (mShadowLimit >= dip5) {
                 this.mShadowLimit = mShadowLimit.toFloat()
             } else {
@@ -699,7 +699,7 @@ class ShadowLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context
             topShow = !attr.getBoolean(R.styleable.library_ShadowLayout_library_hl_shadowHiddenTop, false)
             mCornerRadius = attr.getDimension(
                 R.styleable.library_ShadowLayout_library_hl_cornerRadius,
-                resources.getDimension(R.dimen.dp_0)
+                resources.getDimension(R.dimen.library_dp_0)
             )
             mCornerRadius_leftTop =
                 attr.getDimension(R.styleable.library_ShadowLayout_library_hl_cornerRadius_leftTop, -1f)
@@ -716,7 +716,7 @@ class ShadowLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context
                 //如果阴影没有设置阴影扩散区域，那么默认隐藏阴影
                 isShowShadow = false
             } else {
-                val dip5 = context.resources.getDimension(R.dimen.dp_5).toInt()
+                val dip5 = context.resources.getDimension(R.dimen.library_dp_5).toInt()
                 if (mShadowLimit < dip5) {
                     mShadowLimit = dip5.toFloat()
                 }

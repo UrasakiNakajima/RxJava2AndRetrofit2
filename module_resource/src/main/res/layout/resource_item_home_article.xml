@@ -15,14 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple_bg"
-        android:paddingTop="@dimen/padding">
+        android:paddingTop="@dimen/library_padding">
 
         <TextView
             android:id="@+id/tvTag"
             style="@style/library_text_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/padding"
+            android:layout_marginStart="@dimen/library_padding"
             android:text="@{dataBean.topTitle}"
             android:textColor="@color/library_red"
             tools:text="置顶 " />
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="@dimen/padding"
+            android:layout_marginEnd="@dimen/library_padding"
             android:text="@{dataBean.date}"
             tools:text="2020-03-08" />
 
@@ -52,9 +52,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDate"
-            android:layout_marginLeft="@dimen/padding"
+            android:layout_marginLeft="@dimen/library_padding"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="@dimen/padding"
+            android:layout_marginRight="@dimen/library_padding"
             android:maxLines="3"
             android:text="@{dataBean.title}"
             tools:text="分布式协调工具之zookeeper使用篇-Zookeeper系统核心模型" />
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvTitle"
-            android:layout_marginStart="@dimen/padding"
+            android:layout_marginStart="@dimen/library_padding"
             android:layout_marginTop="10dp"
             android:text="@{dataBean.articleTag}"
             tools:text="开发环境" />
@@ -76,7 +76,7 @@
             android:layout_height="30dp"
             android:layout_alignTop="@+id/tvChapterName"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/padding"
+            android:layout_marginEnd="@dimen/library_padding"
             android:padding="5dp"
             app:articleCollect="@{dataBean.collect}"
             tools:ignore="ContentDescription" />
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_below="@+id/tvChapterName"
-            android:layout_marginTop="@dimen/padding"
+            android:layout_marginTop="@dimen/library_padding"
             android:background="?attr/library_division_line" />
     </RelativeLayout>
 
