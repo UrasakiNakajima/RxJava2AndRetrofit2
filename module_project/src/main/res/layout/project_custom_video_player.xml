@@ -23,7 +23,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
-        android:text="@string/time" />
+        android:text="@string/library_time" />
 
     <View
         android:layout_width="match_parent"
@@ -41,9 +41,9 @@
             android:id="@+id/btn_play"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_50"
-            android:background="@color/color_FFE066FF"
+            android:background="@color/library_color_FFE066FF"
             android:gravity="center"
-            android:text="@string/play" />
+            android:text="@string/library_play" />
 
         <View
             android:layout_width="@dimen/dp_10"
@@ -53,9 +53,9 @@
             android:id="@+id/btn_pause"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_50"
-            android:background="@color/color_FFE066FF"
+            android:background="@color/library_color_FFE066FF"
             android:gravity="center"
-            android:text="@string/pause" />
+            android:text="@string/library_pause" />
 
         <View
             android:layout_width="@dimen/dp_10"
@@ -65,9 +65,9 @@
             android:id="@+id/btn_stop"
             android:layout_width="@dimen/dp_100"
             android:layout_height="@dimen/dp_50"
-            android:background="@color/color_FFE066FF"
+            android:background="@color/library_color_FFE066FF"
             android:gravity="center"
-            android:text="@string/stop" />
+            android:text="@string/library_stop" />
 
         <View
             android:layout_width="@dimen/dp_10"

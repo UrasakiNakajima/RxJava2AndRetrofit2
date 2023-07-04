@@ -93,7 +93,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                     if (it.success != null && it.success.size > 0) {
                         squareDataSuccess(it.success)
                     } else {
-                        squareDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+                        squareDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
                     }
                 }
 
@@ -227,8 +227,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
                 18,
-                ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FF198CFF),
+                ResourcesManager.getColor(R.color.library_white),
+                ResourcesManager.getColor(R.color.library_color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
                 error,
@@ -314,7 +314,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.squareData(this, currentPage)
         } else {
-            squareDataError(BaseApplication.instance().resources.getString(R.string.please_check_the_network_connection))
+            squareDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
         }
 
         LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())

@@ -43,7 +43,7 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
                     dataxRxFragment.value = State.SuccessState(responseData)
                 } else {
                     dataxRxFragment.value =
-                        State.ErrorState(ResourcesManager.getString(R.string.no_data_available))
+                        State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
                 }
             } else {
                 dataxRxFragment.value =
@@ -71,7 +71,7 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
                             } else {
                                 dataxRxActivity.value = State.ErrorState(
                                     BaseApplication.instance().resources.getString(
-                                        R.string.no_data_available
+                                        R.string.library_no_data_available
                                     )
                                 )
 
@@ -80,7 +80,7 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
                     } else {
                         dataxRxActivity.value = State.ErrorState(
                             BaseApplication.instance().resources.getString(
-                                R.string.loading_failed
+                                R.string.library_loading_failed
                             )
                         )
                     }

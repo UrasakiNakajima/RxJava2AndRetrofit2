@@ -33,13 +33,13 @@ class WebViewActivity : BaseBindingRxAppActivity<LibraryActivityWebViewBinding>(
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.color_FF198CFF)
+        setToolbar(false, R.color.library_color_FF198CFF)
 
         mDatabind.apply {
             title?.let {
                 tevTitle.setText(Html.fromHtml(it))
             }
-            imvBack.setColorFilter(ResourcesManager.getColor(R.color.white))
+            imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_white))
             layoutBack.setOnClickListener(View.OnClickListener { v: View? -> finish() })
 
             mDatabind.activityWebProgressbar.progress = 100

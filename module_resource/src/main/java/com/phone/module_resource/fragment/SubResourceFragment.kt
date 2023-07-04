@@ -65,7 +65,7 @@ class SubResourceFragment :
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                         subResourceDataSuccess(it.success)
                     } else {
-                        subResourceDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+                        subResourceDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
                     }
                 }
 
@@ -142,7 +142,7 @@ class SubResourceFragment :
         if (RetrofitManager.isNetworkAvailable()) {
             initSubResource(tabId, pageNum)
         } else {
-            subResourceDataError(BaseApplication.instance().resources.getString(R.string.please_check_the_network_connection))
+            subResourceDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
         }
     }
 
@@ -186,8 +186,8 @@ class SubResourceFragment :
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
                 18,
-                ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FF198CFF),
+                ResourcesManager.getColor(R.color.library_white),
+                ResourcesManager.getColor(R.color.library_color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
                 error,
@@ -208,7 +208,7 @@ class SubResourceFragment :
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.subResourceData(tabId, pageNum)
         } else {
-            subResourceDataError(resources.getString(R.string.please_check_the_network_connection))
+            subResourceDataError(resources.getString(R.string.library_please_check_the_network_connection))
         }
     }
 

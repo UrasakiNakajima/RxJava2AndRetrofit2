@@ -59,6 +59,8 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    //给Module 内的资源名增加前缀, 避免资源名冲突
+    resourcePrefix "call_so_"
 }
 
 dependencies {

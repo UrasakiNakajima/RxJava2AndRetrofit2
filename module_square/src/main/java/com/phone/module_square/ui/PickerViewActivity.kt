@@ -53,8 +53,8 @@ class PickerViewActivity : BaseBindingRxAppActivity<SquareActivityPickerViewBind
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.color_FF198CFF)
-        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.white))
+        setToolbar(false, R.color.library_color_FF198CFF)
+        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_white))
         mDatabind.layoutBack.setOnClickListener { view: View? -> finish() }
         mDatabind.tevShow.setOnClickListener { v: View? ->
             pvOptions?.show()
@@ -146,8 +146,8 @@ class PickerViewActivity : BaseBindingRxAppActivity<SquareActivityPickerViewBind
             .setTitleText("城市选择")
             .setDividerColor(Color.BLACK)
             .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
-            .setSubmitColor(ResourcesManager.getColor(R.color.color_FF198CFF))
-            .setCancelColor(ResourcesManager.getColor(R.color.colorBlack666))
+            .setSubmitColor(ResourcesManager.getColor(R.color.library_color_FF198CFF))
+            .setCancelColor(ResourcesManager.getColor(R.color.library_colorBlack666))
             .setContentTextSize(20)
             .isDialog(true)
             .build<Any>()
@@ -174,7 +174,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<SquareActivityPickerViewBind
                 dialogWindow.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim) //修改动画样式
                 dialogWindow.setGravity(Gravity.BOTTOM) //改成Bottom,底部显示
                 dialogWindow.setDimAmount(0.3f)
-                dialogWindow.decorView.setBackgroundColor(ResourcesManager.getColor(R.color.color_transparent))
+                dialogWindow.decorView.setBackgroundColor(ResourcesManager.getColor(R.color.library_color_transparent))
                 dialogWindow.decorView.setPadding(0, 0, 0, 0)
                 dialogWindow.setLayout(
                     ViewGroup.LayoutParams.MATCH_PARENT,

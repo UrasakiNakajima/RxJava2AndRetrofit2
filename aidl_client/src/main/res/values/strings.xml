@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">aidl_client</string>
+    <string name="client_app_name">aidl_client</string>
 
 
-    <string name="connect_server_service">连接服务端</string>
-    <string name="add_book">添加书</string>
+    <string name="client_connect_server_service">连接服务端</string>
+    <string name="client_add_book">添加书</string>
 </resources>

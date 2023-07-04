@@ -50,29 +50,29 @@ class UserBeanAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
             val headerHolder = holder
             if (!TextUtils.isEmpty(userBeanList[position].userId)) {
                 headerHolder.tevUserId.text =
-                    getString(R.string.user_id_b) + userBeanList[position].userId
+                    getString(R.string.library_user_id_b) + userBeanList[position].userId
             } else {
-                headerHolder.tevUserId.text = getString(R.string.user_id_b)
+                headerHolder.tevUserId.text = getString(R.string.library_user_id_b)
             }
             if (!TextUtils.isEmpty(userBeanList[position].birthday)) {
                 headerHolder.tevBirthday.text =
-                    getString(R.string.birthday_b) + userBeanList[position].birthday
+                    getString(R.string.library_birthday_b) + userBeanList[position].birthday
             } else {
-                headerHolder.tevBirthday.text = getString(R.string.birthday_b)
+                headerHolder.tevBirthday.text = getString(R.string.library_birthday_b)
             }
             if (userBeanList[position].salary != null) {
                 headerHolder.tevSalary.text =
-                    getString(R.string.salary_b) + userBeanList[position].salary
+                    getString(R.string.library_salary_b) + userBeanList[position].salary
             } else {
-                headerHolder.tevSalary.text = getString(R.string.salary_b)
+                headerHolder.tevSalary.text = getString(R.string.library_salary_b)
             }
             if (userBeanList[position].addressBeanList != null && userBeanList[position].addressBeanList.size > 0) {
                 if (userBeanList[position].addressBeanList[0] != null) {
-                    headerHolder.tevAddress.text = (getString(R.string.address_b)
+                    headerHolder.tevAddress.text = (getString(R.string.library_address_b)
                             + userBeanList[position].addressBeanList[0].city)
                 }
             } else {
-                headerHolder.tevAddress.text = getString(R.string.address_b)
+                headerHolder.tevAddress.text = getString(R.string.library_address_b)
             }
             headerHolder.tevUpdate.setOnClickListener { v: View? ->
                 onItemViewClickListener?.onItemClickListener(
@@ -90,27 +90,27 @@ class UserBeanAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
             val footerHolder = holder
             if (!TextUtils.isEmpty(userBeanList[position].userId)) {
                 footerHolder.tevUserId.text =
-                    getString(R.string.user_id_b) + userBeanList[position].userId
+                    getString(R.string.library_user_id_b) + userBeanList[position].userId
             } else {
-                footerHolder.tevUserId.text = getString(R.string.user_id_b)
+                footerHolder.tevUserId.text = getString(R.string.library_user_id_b)
             }
             if (!TextUtils.isEmpty(userBeanList[position].birthday)) {
                 footerHolder.tevBirthday.text =
-                    getString(R.string.birthday_b) + userBeanList[position].birthday
+                    getString(R.string.library_birthday_b) + userBeanList[position].birthday
             } else {
-                footerHolder.tevBirthday.text = getString(R.string.birthday_b)
+                footerHolder.tevBirthday.text = getString(R.string.library_birthday_b)
             }
             if (userBeanList[position].salary != null) {
                 footerHolder.tevSalary.text =
-                    getString(R.string.salary_b) + userBeanList[position].salary
+                    getString(R.string.library_salary_b) + userBeanList[position].salary
             } else {
-                footerHolder.tevSalary.text = getString(R.string.salary_b)
+                footerHolder.tevSalary.text = getString(R.string.library_salary_b)
             }
             if (userBeanList[position].addressBeanList != null && userBeanList[position].addressBeanList.size > 0) {
-                footerHolder.tevAddress.text = (getString(R.string.address_b)
+                footerHolder.tevAddress.text = (getString(R.string.library_address_b)
                         + userBeanList[position].addressBeanList[0].city)
             } else {
-                footerHolder.tevAddress.text = getString(R.string.address_b)
+                footerHolder.tevAddress.text = getString(R.string.library_address_b)
             }
             footerHolder.tevUpdate.setOnClickListener { v: View? ->
                 onItemViewClickListener?.onItemClickListener(
@@ -128,27 +128,27 @@ class UserBeanAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
             val bodyHolder = holder as BodyHolder
             if (!TextUtils.isEmpty(userBeanList[position].userId)) {
                 bodyHolder.tevUserId.text =
-                    getString(R.string.user_id_b) + userBeanList[position].userId
+                    getString(R.string.library_user_id_b) + userBeanList[position].userId
             } else {
-                bodyHolder.tevUserId.text = getString(R.string.user_id_b)
+                bodyHolder.tevUserId.text = getString(R.string.library_user_id_b)
             }
             if (!TextUtils.isEmpty(userBeanList[position].birthday)) {
                 bodyHolder.tevBirthday.text =
-                    getString(R.string.birthday_b) + userBeanList[position].birthday
+                    getString(R.string.library_birthday_b) + userBeanList[position].birthday
             } else {
-                bodyHolder.tevBirthday.text = getString(R.string.birthday_b)
+                bodyHolder.tevBirthday.text = getString(R.string.library_birthday_b)
             }
             if (userBeanList[position].salary != null) {
                 bodyHolder.tevSalary.text =
-                    getString(R.string.salary_b) + userBeanList[position].salary
+                    getString(R.string.library_salary_b) + userBeanList[position].salary
             } else {
-                bodyHolder.tevSalary.text = getString(R.string.salary_b)
+                bodyHolder.tevSalary.text = getString(R.string.library_salary_b)
             }
             if (userBeanList[position].addressBeanList != null && userBeanList[position].addressBeanList.size > 0) {
-                bodyHolder.tevAddress.text = (getString(R.string.address_b)
+                bodyHolder.tevAddress.text = (getString(R.string.library_address_b)
                         + userBeanList[position].addressBeanList[0].city)
             } else {
-                bodyHolder.tevAddress.text = getString(R.string.address_b)
+                bodyHolder.tevAddress.text = getString(R.string.library_address_b)
             }
             bodyHolder.tevUpdate.setOnClickListener { v: View? ->
                 onItemViewClickListener?.onItemClickListener(

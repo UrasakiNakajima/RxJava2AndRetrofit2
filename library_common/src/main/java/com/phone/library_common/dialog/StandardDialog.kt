@@ -32,7 +32,7 @@ class StandardDialog(val context: Context) {
 
         //设置R.style.standard_dialog_style就可以去掉
         //AlertDialog的默认边框，此时AlertDialog的layout的宽高就是AlertDialog的宽高
-        alertDialog = AlertDialog.Builder(context, R.style.standard_dialog_style)
+        alertDialog = AlertDialog.Builder(context, R.style.library_standard_dialog_style)
             .setView(view)
             .create()
         tevCancel?.setOnClickListener { v: View? ->

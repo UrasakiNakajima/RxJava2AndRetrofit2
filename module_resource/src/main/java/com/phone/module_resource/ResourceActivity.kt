@@ -41,7 +41,7 @@ class ResourceActivity :
                     if (it.success != null && it.success.size > 0) {
                         resourceTabDataSuccess(it.success)
                     } else {
-                        resourceTabDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+                        resourceTabDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
                     }
                 }
 
@@ -55,7 +55,7 @@ class ResourceActivity :
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.color_FF198CFF)
+        setToolbar(false, R.color.library_color_FF198CFF)
     }
 
     override fun initLoadData() {
@@ -82,12 +82,12 @@ class ResourceActivity :
             val fragmentList = mutableListOf<Fragment>()
             val dataList = mutableListOf<TabBean>()
             val tabBean = TabBean()
-            tabBean.name = ResourcesManager.getString(R.string.android_and_js_interactive)
+            tabBean.name = ResourcesManager.getString(R.string.library_android_and_js_interactive)
             dataList.add(tabBean)
             dataList.addAll(success)
 
             for (i in dataList) {
-                if (ResourcesManager.getString(R.string.android_and_js_interactive)
+                if (ResourcesManager.getString(R.string.library_android_and_js_interactive)
                         .equals(i.name)
                 ) {
                     fragmentList.add(AndroidAndJsFragment())
@@ -122,8 +122,8 @@ class ResourceActivity :
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
                 18,
-                ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ResourcesManager.getColor(R.color.library_white),
+                ResourcesManager.getColor(R.color.library_color_FFE066FF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
                 error,
@@ -138,7 +138,7 @@ class ResourceActivity :
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.resourceTabData2()
         } else {
-            resourceTabDataError(resources!!.getString(R.string.please_check_the_network_connection))
+            resourceTabDataError(resources!!.getString(R.string.library_please_check_the_network_connection))
         }
     }
 

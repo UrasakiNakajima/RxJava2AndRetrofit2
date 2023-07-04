@@ -41,10 +41,10 @@ public class MountingActivity extends BaseBindingRxAppActivity<MainActivityMount
 
     @Override
     protected void initViews() {
-        setToolbar2(false, R.color.color_transparent, false);
+        setToolbar2(false, R.color.library_color_transparent, false);
         setMounting();
 
-        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_FFFFFFFF));
+        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_color_FFFFFFFF));
         mDatabind.layoutBack.setOnClickListener(v -> {
             finish();
         });
@@ -66,7 +66,7 @@ public class MountingActivity extends BaseBindingRxAppActivity<MainActivityMount
         });
         mDatabind.appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {
             if (verticalOffset < 0) {
-                setToolbar2(true, R.color.color_transparent, false);
+                setToolbar2(true, R.color.library_color_transparent, false);
                 double slideHeight = Math.abs(verticalOffset);
                 if (slideHeight < slideMaxHeight) {
                     int proportion = (int) ((slideHeight / slideMaxHeight) * 255);
@@ -74,15 +74,15 @@ public class MountingActivity extends BaseBindingRxAppActivity<MainActivityMount
                     int color = Color.argb(proportion, 255, 255, 255);
                     mDatabind.toolbar.setBackgroundColor(color);
                 } else {
-                    mDatabind.toolbar.setBackgroundColor(ResourcesManager.getColor(R.color.color_FFFFFFFF));
+                    mDatabind.toolbar.setBackgroundColor(ResourcesManager.getColor(R.color.library_color_FFFFFFFF));
                 }
-                mDatabind.tevTitle.setTextColor(ResourcesManager.getColor(R.color.color_99000000));
-                mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_99000000));
+                mDatabind.tevTitle.setTextColor(ResourcesManager.getColor(R.color.library_color_99000000));
+                mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_color_99000000));
             } else {
-                setToolbar2(false, R.color.color_transparent, false);
-                mDatabind.toolbar.setBackgroundColor(ResourcesManager.getColor(R.color.color_transparent));
-                mDatabind.tevTitle.setTextColor(ResourcesManager.getColor(R.color.color_FFFFFFFF));
-                mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_FFFFFFFF));
+                setToolbar2(false, R.color.library_color_transparent, false);
+                mDatabind.toolbar.setBackgroundColor(ResourcesManager.getColor(R.color.library_color_transparent));
+                mDatabind.tevTitle.setTextColor(ResourcesManager.getColor(R.color.library_color_FFFFFFFF));
+                mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_color_FFFFFFFF));
             }
         });
     }

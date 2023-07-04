@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_73"
-            android:background="@color/color_FF198CFF"
+            android:background="@color/library_color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             app:contentInsetStart="0dp">
 
@@ -55,8 +55,8 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:text="@string/information_details"
-                    android:textColor="@color/white"
+                    android:text="@string/library_information_details"
+                    android:textColor="@color/library_white"
                     android:textSize="@dimen/sp_17"
                     android:textStyle="bold"
                     android:visibility="visible" />
@@ -68,7 +68,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_1"
-            android:background="@color/color_FF999999" />
+            android:background="@color/library_color_FF999999" />
 
         <FrameLayout
             android:layout_width="match_parent"

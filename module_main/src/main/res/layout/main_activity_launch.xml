@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_FFFFC73B"
+    android:background="@color/library_color_FFFFC73B"
     tools:context=".login.ui.LaunchActivity">
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_74"
-            android:background="@color/color_FFFFC73B"
+            android:background="@color/library_color_FFFFC73B"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
             app:contentInsetStart="0dp" />
@@ -42,8 +42,8 @@
                 android:paddingTop="@dimen/dp_10"
                 android:paddingEnd="@dimen/dp_20"
                 android:paddingBottom="@dimen/dp_10"
-                android:text="@string/android"
-                android:textColor="@color/white"
+                android:text="@string/library_android"
+                android:textColor="@color/library_white"
                 android:textSize="@dimen/sp_15"
                 tools:ignore="MissingConstraints" />
 
@@ -61,8 +61,8 @@
                 android:paddingTop="@dimen/dp_10"
                 android:paddingEnd="@dimen/dp_20"
                 android:paddingBottom="@dimen/dp_10"
-                android:text="@string/kotlin"
-                android:textColor="@color/white"
+                android:text="@string/library_kotlin"
+                android:textColor="@color/library_white"
                 android:textSize="@dimen/sp_15"
                 tools:ignore="MissingConstraints" />
 
@@ -81,8 +81,8 @@
         android:paddingTop="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_20"
         android:paddingBottom="@dimen/dp_10"
-        android:text="@string/app_name2"
-        android:textColor="@color/white"
+        android:text="@string/main_app_name2"
+        android:textColor="@color/library_white"
         android:textSize="@dimen/sp_15"
         tools:ignore="MissingConstraints" />
 

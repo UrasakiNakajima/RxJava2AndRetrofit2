@@ -179,8 +179,8 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
                 18,
-                ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ResourcesManager.getColor(R.color.library_white),
+                ResourcesManager.getColor(R.color.library_color_FFE066FF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
                 error,
@@ -205,7 +205,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
             presenter?.mineData(rxFragment, mBodyParams)
         } else {
-            mineDataError(resources.getString(R.string.please_check_the_network_connection))
+            mineDataError(resources.getString(R.string.library_please_check_the_network_connection))
         }
     }
 

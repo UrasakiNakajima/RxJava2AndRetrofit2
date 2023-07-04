@@ -53,7 +53,7 @@ class StandardUserDialog(val context: Context) {
             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         //设置R.style.standard_dialog_style2就可以去掉
         //AlertDialog的默认边框，此时AlertDialog的layout的宽高就是AlertDialog的宽高
-        alertDialog = AlertDialog.Builder(context, R.style.standard_dialog_style)
+        alertDialog = AlertDialog.Builder(context, R.style.library_standard_dialog_style)
             .setView(view)
             .create()
         tevCancel?.setOnClickListener { v: View? ->
@@ -97,7 +97,7 @@ class StandardUserDialog(val context: Context) {
                 Toast.makeText(
                     context,
                     context.getResources()
-                        .getString(R.string.please_fill_in_the_information_completely),
+                        .getString(R.string.library_please_fill_in_the_information_completely),
                     Toast.LENGTH_SHORT
                 ).show();
             }

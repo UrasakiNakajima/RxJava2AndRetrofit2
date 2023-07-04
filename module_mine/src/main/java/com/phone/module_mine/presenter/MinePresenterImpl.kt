@@ -88,14 +88,14 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                         } else {
                             baseView.mineDataError(
                                 ResourcesManager.getString(
-                                    R.string.no_data_available
+                                    R.string.library_no_data_available
                                 )
                             )
                         }
                     } else {
                         baseView.mineDataError(
                             apiResponse.reason ?: BaseApplication.instance().resources.getString(
-                                R.string.loading_failed
+                                R.string.library_loading_failed
                             )
                         )
                     }
@@ -130,14 +130,14 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                                     baseView.mineDataError(
                                         response.reason
                                             ?: BaseApplication.instance().resources.getString(
-                                                R.string.loading_failed
+                                                R.string.library_loading_failed
                                             )
                                     )
                                 }
                             } else {
                                 baseView.mineDataError(
                                     BaseApplication.instance().resources.getString(
-                                        R.string.loading_failed
+                                        R.string.library_loading_failed
                                     )
                                 )
                             }
@@ -172,12 +172,12 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    if (response.ans_list != null && response.ans_list.size > 0) {
 //                                        baseView.mineDataSuccess(response.ans_list)
 //                                    } else {
-//                                        baseView.mineDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+//                                        baseView.mineDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
 //                                    }
                             } else {
                                 baseView.userDataError(
                                     BaseApplication.instance().resources.getString(
-                                        R.string.loading_failed
+                                        R.string.library_loading_failed
                                     )
                                 )
                             }
@@ -214,12 +214,12 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    if (response.ans_list != null && response.ans_list.size > 0) {
 //                                        baseView.mineDataSuccess(response.ans_list)
 //                                    } else {
-//                                        baseView.mineDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
+//                                        baseView.mineDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
 //                                    }
                             } else {
                                 baseView.userDataError(
                                     BaseApplication.instance().resources.getString(
-                                        R.string.loading_failed
+                                        R.string.library_loading_failed
                                     )
                                 )
                             }

@@ -1,4 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
-    <string name="app_name">android_and_js</string>
+    <string name="js_app_name">android_and_js</string>
 
 </resources>

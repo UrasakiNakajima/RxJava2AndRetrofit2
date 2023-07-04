@@ -13,7 +13,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
-        android:background="@color/color_FFE066FF"
+        android:background="@color/library_color_FFE066FF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
         app:contentInsetStart="0dp">
@@ -44,8 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
                 android:gravity="center"
-                android:text="@string/first_page_details"
-                android:textColor="@color/color_FF198CFF"
+                android:text="@string/library_first_page_details"
+                android:textColor="@color/library_color_FF198CFF"
                 android:textSize="@dimen/sp_20" />
 
         </FrameLayout>
@@ -56,7 +56,7 @@
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/library_white"
         app:srlAccentColor="@android:color/white"
         app:srlEnablePreviewInEditMode="true"
         app:srlPrimaryColor="#444444">

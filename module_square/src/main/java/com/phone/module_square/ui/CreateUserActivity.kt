@@ -40,9 +40,9 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.color_FF198CFF)
+        setToolbar(false, R.color.library_color_FF198CFF)
         mDatabind.apply {
-            imvBack.setColorFilter(ResourcesManager.getColor(R.color.white))
+            imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_white))
             layoutBack.setOnClickListener { v: View? -> finish() }
             tevCreateUser.setOnClickListener { v: View? -> showCreateUserDialog() }
             tevDeleteAllUser.setOnClickListener { v: View? -> showDeleteAllUserDialog() }
@@ -148,11 +148,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                     mDatabind.tevTitle.let {
                         TextViewStyleManager.setTextViewStyleVerticalCenter(
                             it,
-                            ResourcesManager.getString(R.string.created_b)
+                            ResourcesManager.getString(R.string.library_created_b)
                                     + queryUserList.size
-                                    + ResourcesManager.getString(R.string.users_b),
-                            ResourcesManager.getString(R.string.created_b).length,
-                            ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length,
+                                    + ResourcesManager.getString(R.string.library_users_b),
+                            ResourcesManager.getString(R.string.library_created_b).length,
+                            ResourcesManager.getString(R.string.library_created_b).length + queryUserList.size.toString().length,
                             28f
                         )
                     }
@@ -175,11 +175,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                     mDatabind.tevTitle.let {
                         TextViewStyleManager.setTextViewStyleVerticalCenter(
                             it,
-                            ResourcesManager.getString(R.string.created_b)
+                            ResourcesManager.getString(R.string.library_created_b)
                                     + 0
-                                    + ResourcesManager.getString(R.string.users_b),
-                            ResourcesManager.getString(R.string.created_b).length,
-                            ResourcesManager.getString(R.string.created_b).length + 1,
+                                    + ResourcesManager.getString(R.string.library_users_b),
+                            ResourcesManager.getString(R.string.library_created_b).length,
+                            ResourcesManager.getString(R.string.library_created_b).length + 1,
                             28f
                         )
                     }
@@ -192,7 +192,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
     private fun showCreateUserDialog() {
         if (createUserDialog == null) {
             createUserDialog = StandardUserDialog(this)
-            createUserDialog?.setTevTitle(ResourcesManager.getString(R.string.create_user))
+            createUserDialog?.setTevTitle(ResourcesManager.getString(R.string.library_create_user))
             //            createUserDialog?.setCannotHide()
             createUserDialog?.setOnCommonSuccessCallback {
                 createUserDialog?.hideStandardDialog()
@@ -213,7 +213,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                             .userId == success.userId
                     ) {
                         showToast(
-                            ResourcesManager.getString(R.string.this_user_has_been_added),
+                            ResourcesManager.getString(R.string.library_this_user_has_been_added),
                             true
                         )
                     } else {
@@ -242,11 +242,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
-                                        ResourcesManager.getString(R.string.created_b)
+                                        ResourcesManager.getString(R.string.library_created_b)
                                                 + queryUserList.size
-                                                + ResourcesManager.getString(R.string.users_b),
-                                        ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length,
+                                                + ResourcesManager.getString(R.string.library_users_b),
+                                        ResourcesManager.getString(R.string.library_created_b).length,
+                                        ResourcesManager.getString(R.string.library_created_b).length + queryUserList.size.toString().length,
                                         28f
                                     )
                                 }
@@ -255,11 +255,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
-                                        ResourcesManager.getString(R.string.created_b)
+                                        ResourcesManager.getString(R.string.library_created_b)
                                                 + 0
-                                                + ResourcesManager.getString(R.string.users_b),
-                                        ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + 1,
+                                                + ResourcesManager.getString(R.string.library_users_b),
+                                        ResourcesManager.getString(R.string.library_created_b).length,
+                                        ResourcesManager.getString(R.string.library_created_b).length + 1,
                                         28f
                                     )
                                 }
@@ -275,7 +275,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
     private fun showUpdateUserDialog(position: Int) {
         if (updateUserDialog == null) {
             updateUserDialog = StandardUserDialog(this)
-            updateUserDialog?.setTevTitle(ResourcesManager.getString(R.string.create_user))
+            updateUserDialog?.setTevTitle(ResourcesManager.getString(R.string.library_create_user))
             updateUserDialog?.setUserData(queryUserList.get(position))
             //            updateUserDialog?.setCannotHide()
             updateUserDialog?.setOnCommonSuccessCallback {
@@ -301,7 +301,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                             userBeanDaoManager?.update(success)
                             MainThreadManager {
                                 showToast(
-                                    ResourcesManager.getString(R.string.this_user_has_modified),
+                                    ResourcesManager.getString(R.string.library_this_user_has_modified),
                                     true
                                 )
                             }
@@ -309,7 +309,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                         }
                     } else {
                         showToast(
-                            ResourcesManager.getString(R.string.this_user_cannot_be_found),
+                            ResourcesManager.getString(R.string.library_this_user_cannot_be_found),
                             true
                         )
                     }
@@ -323,11 +323,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
-                                        ResourcesManager.getString(R.string.created_b)
+                                        ResourcesManager.getString(R.string.library_created_b)
                                                 + queryUserList.size
-                                                + ResourcesManager.getString(R.string.users_b),
-                                        ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length,
+                                                + ResourcesManager.getString(R.string.library_users_b),
+                                        ResourcesManager.getString(R.string.library_created_b).length,
+                                        ResourcesManager.getString(R.string.library_created_b).length + queryUserList.size.toString().length,
                                         28f
                                     )
                                 }
@@ -336,11 +336,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
-                                        ResourcesManager.getString(R.string.created_b)
+                                        ResourcesManager.getString(R.string.library_created_b)
                                                 + 0
-                                                + ResourcesManager.getString(R.string.users_b),
-                                        ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + 1,
+                                                + ResourcesManager.getString(R.string.library_users_b),
+                                        ResourcesManager.getString(R.string.library_created_b).length,
+                                        ResourcesManager.getString(R.string.library_created_b).length + 1,
                                         28f
                                     )
                                 }
@@ -356,7 +356,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
     private fun showDeleteUserDialog(position: Int) {
         if (deleteUserDialog == null) {
             deleteUserDialog = StandardDialog(this)
-            deleteUserDialog?.setTevContent(ResourcesManager.getString(R.string.delete_user))
+            deleteUserDialog?.setTevContent(ResourcesManager.getString(R.string.library_delete_user))
             //            deleteUserDialog?.setCannotHide()
             deleteUserDialog?.setOnCommonSuccessCallback {
                 deleteUserDialog?.hideStandardDialog()
@@ -383,11 +383,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
-                                        ResourcesManager.getString(R.string.created_b)
+                                        ResourcesManager.getString(R.string.library_created_b)
                                                 + queryUserList.size
-                                                + ResourcesManager.getString(R.string.users_b),
-                                        ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length,
+                                                + ResourcesManager.getString(R.string.library_users_b),
+                                        ResourcesManager.getString(R.string.library_created_b).length,
+                                        ResourcesManager.getString(R.string.library_created_b).length + queryUserList.size.toString().length,
                                         28f
                                     )
                                 }
@@ -396,11 +396,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
-                                        ResourcesManager.getString(R.string.created_b)
+                                        ResourcesManager.getString(R.string.library_created_b)
                                                 + 0
-                                                + ResourcesManager.getString(R.string.users_b),
-                                        ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + 1,
+                                                + ResourcesManager.getString(R.string.library_users_b),
+                                        ResourcesManager.getString(R.string.library_created_b).length,
+                                        ResourcesManager.getString(R.string.library_created_b).length + 1,
                                         28f
                                     )
                                 }
@@ -416,7 +416,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
     private fun showDeleteAllUserDialog() {
         if (deleteAllUserDialog == null) {
             deleteAllUserDialog = StandardDialog(this)
-            deleteAllUserDialog?.setTevContent(ResourcesManager.getString(R.string.delete_all_user))
+            deleteAllUserDialog?.setTevContent(ResourcesManager.getString(R.string.library_delete_all_user))
             //            deleteAllUserDialog?.setCannotHide()
             deleteAllUserDialog?.setOnCommonSuccessCallback {
                 deleteAllUserDialog?.hideStandardDialog()
@@ -442,11 +442,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
-                                        ResourcesManager.getString(R.string.created_b)
+                                        ResourcesManager.getString(R.string.library_created_b)
                                                 + queryUserList.size
-                                                + ResourcesManager.getString(R.string.users_b),
-                                        ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + queryUserList.size.toString().length,
+                                                + ResourcesManager.getString(R.string.library_users_b),
+                                        ResourcesManager.getString(R.string.library_created_b).length,
+                                        ResourcesManager.getString(R.string.library_created_b).length + queryUserList.size.toString().length,
                                         28f
                                     )
                                 }
@@ -455,11 +455,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
-                                        ResourcesManager.getString(R.string.created_b)
+                                        ResourcesManager.getString(R.string.library_created_b)
                                                 + 0
-                                                + ResourcesManager.getString(R.string.users_b),
-                                        ResourcesManager.getString(R.string.created_b).length,
-                                        ResourcesManager.getString(R.string.created_b).length + 1,
+                                                + ResourcesManager.getString(R.string.library_users_b),
+                                        ResourcesManager.getString(R.string.library_created_b).length,
+                                        ResourcesManager.getString(R.string.library_created_b).length + 1,
                                         28f
                                     )
                                 }

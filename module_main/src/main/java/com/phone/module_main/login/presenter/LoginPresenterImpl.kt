@@ -71,7 +71,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                                 } else {
                                     loginView.getAuthCodeError(
                                         BaseApplication.instance().resources.getString(
-                                            R.string.data_in_wrong_format
+                                            R.string.library_data_in_wrong_format
                                         )
                                     )
                                 }
@@ -83,7 +83,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                                 // 异常处理
                                 loginView.getAuthCodeError(
                                     BaseApplication.instance().resources.getString(
-                                        R.string.request_was_aborted
+                                        R.string.library_request_was_aborted
                                     )
                                 )
                                 loginView.hideLoading()
@@ -110,7 +110,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                 //                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
                 //                                    loginView.loginSuccess(loginResponse.getData());
                 //                                } else {
-                //                                    loginView.loginError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
+                //                                    loginView.loginError(BaseApplication.instance().getResources().getString(R.string.library_data_in_wrong_format));
                 //                                }
                 //                                loginView.hideLoading();
                 //                            }
@@ -119,7 +119,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                 //                            public void accept(Throwable throwable) throws Exception {
                 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
-                //                                loginView.loginError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
+                //                                loginView.loginError(BaseApplication.instance().getResources().getString(R.string.library_request_was_aborted));
                 //                                loginView.hideLoading();
                 //                            }
                 //                        });
@@ -160,7 +160,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                                 } else {
                                     loginView.loginWithAuthCodeError(
                                         BaseApplication.instance().resources.getString(
-                                            R.string.data_in_wrong_format
+                                            R.string.library_data_in_wrong_format
                                         )
                                     )
                                 }
@@ -172,7 +172,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                                 // 异常处理
                                 loginView.loginWithAuthCodeError(
                                     BaseApplication.instance().resources.getString(
-                                        R.string.request_was_aborted
+                                        R.string.library_request_was_aborted
                                     )
                                 )
                                 loginView.hideLoading()
@@ -199,7 +199,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                 //                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
                 //                                    loginView.loginSuccess(loginResponse.getData());
                 //                                } else {
-                //                                    loginView.loginError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
+                //                                    loginView.loginError(BaseApplication.instance().getResources().getString(R.string.library_data_in_wrong_format));
                 //                                }
                 //                                loginView.hideLoading();
                 //                            }
@@ -208,7 +208,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                 //                            public void accept(Throwable throwable) throws Exception {
                 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
-                //                                loginView.loginError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
+                //                                loginView.loginError(BaseApplication.instance().getResources().getString(R.string.library_request_was_aborted));
                 //                                loginView.hideLoading();
                 //                            }
                 //                        });
@@ -234,13 +234,13 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                         if (password == userBean.password) {
                             loginView.loginSuccess("")
                         } else {
-                            loginView.loginError(ResourcesManager.getString(R.string.please_enter_the_correct_password))
+                            loginView.loginError(ResourcesManager.getString(R.string.library_please_enter_the_correct_password))
                         }
                     } else {
-                        loginView.loginError(ResourcesManager.getString(R.string.this_user_cannot_be_found))
+                        loginView.loginError(ResourcesManager.getString(R.string.library_this_user_cannot_be_found))
                     }
                 } else {
-                    loginView.loginError(ResourcesManager.getString(R.string.this_user_cannot_be_found))
+                    loginView.loginError(ResourcesManager.getString(R.string.library_this_user_cannot_be_found))
                 }
             }
         }
@@ -268,7 +268,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
 //                                    //                                    mineApplication.setUserId(loginResponse.getData().getUserId() + "");
 //                                    registerView.registerSuccess(success);
 //                                } else {
-//                                    registerView.registerError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
+//                                    registerView.registerError(BaseApplication.instance().getResources().getString(R.string.library_data_in_wrong_format));
 //                                }
 //                                registerView.hideLoading();
 //                            }
@@ -277,7 +277,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
 //                            public void onError(String error) {
 //                                LogManager.i(TAG, "error*****" + error);
 //                                // 异常处理
-//                                registerView.registerError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
+//                                registerView.registerError(BaseApplication.instance().getResources().getString(R.string.library_request_was_aborted));
 //                                registerView.hideLoading();
 //                            }
 //                        });
@@ -291,7 +291,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                                 userBeanDaoManager.queryByQueryBuilder(userId)
                             }
                         if (userBeanList != null && userBeanList.size > 0 && userId == userBeanList[0].userId) {
-                            registerView.registerError(ResourcesManager.getString(R.string.this_user_is_already_registered))
+                            registerView.registerError(ResourcesManager.getString(R.string.library_this_user_is_already_registered))
                         } else {
                             val userBean = UserBean()
                             userBean.userId = userId
@@ -300,10 +300,10 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                             registerView.registerSuccess("")
                         }
                     } else {
-                        registerView.registerError(ResourcesManager.getString(R.string.please_input_a_password))
+                        registerView.registerError(ResourcesManager.getString(R.string.library_please_input_a_password))
                     }
                 } else {
-                    registerView.registerError(ResourcesManager.getString(R.string.please_enter_one_user_name))
+                    registerView.registerError(ResourcesManager.getString(R.string.library_please_enter_one_user_name))
                 }
                 userBeanDaoManager.closeConnection()
                 registerView.hideLoading()

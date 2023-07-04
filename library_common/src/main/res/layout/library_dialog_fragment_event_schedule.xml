@@ -23,8 +23,8 @@
                 android:layout_marginStart="@dimen/dp_14"
                 android:layout_marginTop="@dimen/dp_19"
                 android:includeFontPadding="false"
-                android:text="@string/event_schedule"
-                android:textColor="@color/color_FF333333"
+                android:text="@string/library_event_schedule"
+                android:textColor="@color/library_color_FF333333"
                 android:textSize="@dimen/sp_15"
                 android:textStyle="bold" />
 

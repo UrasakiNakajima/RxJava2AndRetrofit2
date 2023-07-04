@@ -78,7 +78,7 @@ public class MaterialVideoView extends LinearLayout
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
-        setBackgroundColor(ResourcesManager.getColor(R.color.color_FF000000));
+        setBackgroundColor(ResourcesManager.getColor(R.color.library_color_FF000000));
         View view = LayoutInflater.from(context).inflate(R.layout.library_material_video_layout, null);
         initView(view);
         setData(url, VIDEO_TYPE_URI);
@@ -276,7 +276,7 @@ public class MaterialVideoView extends LinearLayout
      * 重置
      */
     public void reset() {
-        tv_current_time.setText(getResources().getString(R.string.start_time));
+        tv_current_time.setText(getResources().getString(R.string.library_start_time));
         mSeekBar.setProgress(0);
         mCurrentProgressBar.setProgress(0);
         seekTo(0);

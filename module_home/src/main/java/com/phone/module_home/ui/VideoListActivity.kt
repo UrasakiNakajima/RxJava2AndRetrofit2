@@ -65,8 +65,8 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
         tevTitle = findViewById<View>(R.id.tev_title) as TextView
         refreshLayout = findViewById<View>(R.id.refresh_layout) as SmartRefreshLayout
         rcvData = findViewById<View>(R.id.rcv_data) as RecyclerView
-        setToolbar(false, R.color.color_FFE066FF)
-        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.color_FFFFFFFF))
+        setToolbar(false, R.color.library_color_FFE066FF)
+        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.library_color_FFFFFFFF))
         layoutBack?.setOnClickListener { finish() }
         initAdapter()
 

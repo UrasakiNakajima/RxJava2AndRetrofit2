@@ -62,8 +62,8 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         tevGetAuthCode = findViewById<View>(R.id.tev_get_auth_code) as TextView
         tevLogin = findViewById<View>(R.id.tev_login) as TextView
         tevJumpToRegister = findViewById<View>(R.id.tev_jump_to_register) as TextView
-        setToolbar(true, R.color.color_FFFFFFFF)
-        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.color_000000))
+        setToolbar(true, R.color.library_color_FFFFFFFF)
+        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.library_color_000000))
         layoutBack?.setOnClickListener { finish() }
         imvHeadPortrait?.let {
             ImageLoaderManager.displayRound(mRxAppCompatActivity, it, R.mipmap.ic_launcher_round)
@@ -171,15 +171,15 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         verificationCode = edtVerificationCode?.text.toString()
         phoneDevice = getSystemId()
         if (TextUtils.isEmpty(userId)) {
-            showToast(ResourcesManager.getString(R.string.please_enter_one_user_name), true)
+            showToast(ResourcesManager.getString(R.string.library_please_enter_one_user_name), true)
             return
         }
         if (TextUtils.isEmpty(verificationCode)) {
-            showToast(ResourcesManager.getString(R.string.please_input_a_password), true)
+            showToast(ResourcesManager.getString(R.string.library_please_input_a_password), true)
             return
         }
         if (TextUtils.isEmpty(phoneDevice)) {
-            showToast(ResourcesManager.getString(R.string.please_input_a_password), true)
+            showToast(ResourcesManager.getString(R.string.library_please_input_a_password), true)
             return
         }
         showLoading()
@@ -192,7 +192,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
             presenter.loginWithAuthCode(this, mBodyParams)
         } else {
             showToast(
-                ResourcesManager.getString(R.string.please_check_the_network_connection),
+                ResourcesManager.getString(R.string.library_please_check_the_network_connection),
                 true
             )
             hideLoading()
@@ -205,11 +205,11 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
             userId = edtUserId?.text.toString()
             password = edtPassword?.text.toString()
             if (TextUtils.isEmpty(userId)) {
-                showToast(ResourcesManager.getString(R.string.please_enter_one_user_name), true)
+                showToast(ResourcesManager.getString(R.string.library_please_enter_one_user_name), true)
                 return
             }
             if (TextUtils.isEmpty(password)) {
-                showToast(ResourcesManager.getString(R.string.please_input_a_password), true)
+                showToast(ResourcesManager.getString(R.string.library_please_input_a_password), true)
                 return
             }
             mBodyParams.clear()
@@ -218,7 +218,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
             presenter.login(this, mBodyParams)
         } else {
             showToast(
-                ResourcesManager.getString(R.string.please_check_the_network_connection),
+                ResourcesManager.getString(R.string.library_please_check_the_network_connection),
                 true
             )
             hideLoading()

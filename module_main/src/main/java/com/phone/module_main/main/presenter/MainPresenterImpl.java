@@ -65,7 +65,7 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
 ////                                    FirstPageResponse firstPageResponse = JSON.parse(responseString, FirstPageResponse.class);
 //                                    mainView.mainDataSuccess(baseResponse.getMessage());
 //                                } else {
-//                                    mainView.mainDataError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
+//                                    mainView.mainDataError(BaseApplication.instance().getResources().getString(R.string.library_data_in_wrong_format));
 //                                }
 //                                mainView.hideLoading();
 //                            }
@@ -74,7 +74,7 @@ public class MainPresenterImpl extends BasePresenter<IBaseView>
 //                            public void accept(Throwable throwable) throws Exception {
 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
 //                                // 异常处理
-//                                mainView.mainDataError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
+//                                mainView.mainDataError(BaseApplication.instance().getResources().getString(R.string.library_request_was_aborted));
 //                                mainView.hideLoading();
 //                            }
 //                        });

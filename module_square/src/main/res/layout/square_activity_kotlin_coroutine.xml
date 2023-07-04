@@ -21,7 +21,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_73"
-                android:background="@color/color_FFFFFFFF"
+                android:background="@color/library_color_FFFFFFFF"
                 app:contentInsetStart="0dp">
 
                 <LinearLayout
@@ -61,8 +61,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="@string/kotlin_coroutine"
-                            android:textColor="@color/color_80000000"
+                            android:text="@string/library_kotlin_coroutine"
+                            android:textColor="@color/library_color_80000000"
                             android:textSize="@dimen/sp_18" />
 
                     </FrameLayout>
@@ -84,7 +84,7 @@
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:text="startRunBlocking"
-                android:textColor="@color/color_FFFFFFFF"
+                android:textColor="@color/library_color_FFFFFFFF"
                 android:textSize="@dimen/sp_15" />
 
             <TextView
@@ -99,7 +99,7 @@
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:text="startGlobalScope"
-                android:textColor="@color/color_FFFFFFFF"
+                android:textColor="@color/library_color_FFFFFFFF"
                 android:textSize="@dimen/sp_15" />
 
             <TextView
@@ -114,7 +114,7 @@
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:text="startCoroutineScope"
-                android:textColor="@color/color_FFFFFFFF"
+                android:textColor="@color/library_color_FFFFFFFF"
                 android:textSize="@dimen/sp_15" />
 
             <TextView
@@ -129,7 +129,7 @@
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:text="startMainScope"
-                android:textColor="@color/color_FFFFFFFF"
+                android:textColor="@color/library_color_FFFFFFFF"
                 android:textSize="@dimen/sp_15" />
 
             <TextView
@@ -144,7 +144,7 @@
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:text="startViewModelScope"
-                android:textColor="@color/color_FFFFFFFF"
+                android:textColor="@color/library_color_FFFFFFFF"
                 android:textSize="@dimen/sp_15" />
 
             <TextView
@@ -159,7 +159,7 @@
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_15"
                 android:text="startLifecycleScope"
-                android:textColor="@color/color_FFFFFFFF"
+                android:textColor="@color/library_color_FFFFFFFF"
                 android:textSize="@dimen/sp_15" />
 
 
@@ -176,7 +176,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:color="@color/color_FF999999"
+            android:color="@color/library_color_FF999999"
             android:visibility="gone"
             app:qmui_loading_view_size="@dimen/dp_33" />
 

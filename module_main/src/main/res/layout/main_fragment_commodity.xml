@@ -14,7 +14,7 @@
             android:id="@+id/rcv_commodity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_FFFFFFFF" />
+            android:background="@color/library_color_FFFFFFFF" />
 
     </LinearLayout>
 

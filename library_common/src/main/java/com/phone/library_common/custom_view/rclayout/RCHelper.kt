@@ -43,9 +43,9 @@ class RCHelper(val context: Context, val attrs: AttributeSet?) {
     }
 
     fun initAttrs() {
-        val ta = context.obtainStyledAttributes(attrs, R.styleable.RCAttrs)
-        mRoundAsCircle = ta.getBoolean(R.styleable.RCAttrs_round_as_circle, false)
-        mStrokeColorStateList = ta.getColorStateList(R.styleable.RCAttrs_stroke_color)
+        val ta = context.obtainStyledAttributes(attrs, R.styleable.library_RCAttrs)
+        mRoundAsCircle = ta.getBoolean(R.styleable.library_RCAttrs_library_round_as_circle, false)
+        mStrokeColorStateList = ta.getColorStateList(R.styleable.library_RCAttrs_library_stroke_color)
         if (mStrokeColorStateList != null) {
             mStrokeColorStateList?.let {
                 mStrokeColor = it.defaultColor
@@ -55,20 +55,20 @@ class RCHelper(val context: Context, val attrs: AttributeSet?) {
             mStrokeColor = Color.WHITE
             mDefaultStrokeColor = Color.WHITE
         }
-        mStrokeWidth = ta.getDimensionPixelSize(R.styleable.RCAttrs_stroke_width, 0)
-        mClipBackground = ta.getBoolean(R.styleable.RCAttrs_clip_background, false)
-        val roundCorner = ta.getDimensionPixelSize(R.styleable.RCAttrs_round_corner, 0)
+        mStrokeWidth = ta.getDimensionPixelSize(R.styleable.library_RCAttrs_library_stroke_width, 0)
+        mClipBackground = ta.getBoolean(R.styleable.library_RCAttrs_library_clip_background, false)
+        val roundCorner = ta.getDimensionPixelSize(R.styleable.library_RCAttrs_library_round_corner, 0)
         val roundCornerTopLeft = ta.getDimensionPixelSize(
-            R.styleable.RCAttrs_round_corner_top_left, roundCorner
+            R.styleable.library_RCAttrs_library_round_corner_top_left, roundCorner
         )
         val roundCornerTopRight = ta.getDimensionPixelSize(
-            R.styleable.RCAttrs_round_corner_top_right, roundCorner
+            R.styleable.library_RCAttrs_library_round_corner_top_right, roundCorner
         )
         val roundCornerBottomLeft = ta.getDimensionPixelSize(
-            R.styleable.RCAttrs_round_corner_bottom_left, roundCorner
+            R.styleable.library_RCAttrs_library_round_corner_bottom_left, roundCorner
         )
         val roundCornerBottomRight = ta.getDimensionPixelSize(
-            R.styleable.RCAttrs_round_corner_bottom_right, roundCorner
+            R.styleable.library_RCAttrs_library_round_corner_bottom_right, roundCorner
         )
         ta.recycle()
         radii[0] = roundCornerTopLeft.toFloat()

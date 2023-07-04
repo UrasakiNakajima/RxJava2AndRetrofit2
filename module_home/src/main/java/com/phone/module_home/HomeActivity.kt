@@ -79,10 +79,10 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
             findViewById<View>(R.id.tev_request_permission_and_start_locating) as TextView
         refreshLayout = findViewById<View>(R.id.refresh_layout) as SmartRefreshLayout
         rcvData = findViewById<View>(R.id.rcv_data) as RecyclerView
-        setToolbar(false, R.color.color_FFE066FF)
+        setToolbar(false, R.color.library_color_FFE066FF)
         tevRequestPermissionAndStartLocating?.setOnClickListener {
             showToast(
-                ResourcesManager.getString(R.string.this_function_can_only_be_used_under_componentization),
+                ResourcesManager.getString(R.string.library_this_function_can_only_be_used_under_componentization),
                 false
             )
             //                initRxPermissions()
@@ -187,8 +187,8 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
             //            showToast(error, true)
             showCustomToast(
                 dpToPx(20f), dpToPx(20f),
-                16, ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FFE066FF), dpToPx(40f),
+                16, ResourcesManager.getColor(R.color.library_white),
+                ResourcesManager.getColor(R.color.library_color_FFE066FF), dpToPx(40f),
                 dpToPx(20f), error,
                 true
             )
@@ -289,7 +289,7 @@ class HomeActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
             presenter.homePage2(mRxAppCompatActivity, mBodyParams)
         } else {
-            homePageDataError(ResourcesManager.getString(R.string.please_check_the_network_connection))
+            homePageDataError(ResourcesManager.getString(R.string.library_please_check_the_network_connection))
         }
     }
 

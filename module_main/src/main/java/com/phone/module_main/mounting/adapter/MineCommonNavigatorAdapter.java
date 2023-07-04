@@ -40,7 +40,7 @@ public class MineCommonNavigatorAdapter extends CommonNavigatorAdapter {
         colorTransitionPagerTitleView.setSelectedColor(Color.parseColor("#ffffff"));//选中时状态
         colorTransitionPagerTitleView.setTextSize(18);
         colorTransitionPagerTitleView.setText(titleList.get(index));
-        colorTransitionPagerTitleView.setTextColor(ResourcesManager.getColor(R.color.color_FF333333));
+        colorTransitionPagerTitleView.setTextColor(ResourcesManager.getColor(R.color.library_color_FF333333));
         colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

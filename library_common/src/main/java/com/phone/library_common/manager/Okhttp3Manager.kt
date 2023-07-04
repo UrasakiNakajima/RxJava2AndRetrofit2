@@ -95,7 +95,7 @@ class Okhttp3Manager private constructor() {
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -119,7 +119,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -128,7 +128,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -167,7 +167,7 @@ class Okhttp3Manager private constructor() {
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -191,7 +191,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -200,7 +200,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -242,7 +242,7 @@ class Okhttp3Manager private constructor() {
                 LogManager.i(TAG, "getAsync onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -266,7 +266,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -275,7 +275,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -365,7 +365,7 @@ class Okhttp3Manager private constructor() {
                 LogManager.i(TAG, "postAsyncString onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -389,7 +389,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -398,7 +398,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -446,7 +446,7 @@ class Okhttp3Manager private constructor() {
                 LogManager.i(TAG, "postAsyncStream onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -470,7 +470,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -479,7 +479,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -543,7 +543,7 @@ class Okhttp3Manager private constructor() {
                 )
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -567,7 +567,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -576,7 +576,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -613,7 +613,7 @@ class Okhttp3Manager private constructor() {
                 )
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -637,7 +637,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -646,7 +646,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -704,7 +704,7 @@ class Okhttp3Manager private constructor() {
                 LogManager.i(TAG, "postAsyncForm onFailure e detailMessage*******" + e.message)
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -733,7 +733,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -742,7 +742,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -828,7 +828,7 @@ class Okhttp3Manager private constructor() {
                 )
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -852,7 +852,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -861,7 +861,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -971,7 +971,7 @@ class Okhttp3Manager private constructor() {
                 )
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -995,7 +995,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -1004,7 +1004,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -1084,7 +1084,7 @@ class Okhttp3Manager private constructor() {
                 )
                 MainThreadManager {
                     onCommonSingleParamCallback.onError(
-                        BaseApplication.instance().resources.getString(R.string.network_sneak_off)
+                        BaseApplication.instance().resources.getString(R.string.library_network_sneak_off)
                     )
                 }
             }
@@ -1108,7 +1108,7 @@ class Okhttp3Manager private constructor() {
                             //如果不是标准json字符串，就返回错误提示
                             onCommonSingleParamCallback.onError(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.server_sneak_off
+                                    R.string.library_server_sneak_off
                                 )
                             )
                             return@MainThreadManager
@@ -1117,7 +1117,7 @@ class Okhttp3Manager private constructor() {
                     } else {
                         onCommonSingleParamCallback.onError(
                             BaseApplication.instance().resources.getString(
-                                R.string.server_sneak_off
+                                R.string.library_server_sneak_off
                             )
                         )
                     }
@@ -1153,7 +1153,7 @@ class Okhttp3Manager private constructor() {
 //                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                    @Override
 //                    public void onSuccess() {
-//                        onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off))
+//                        onCommonSingleParamCallback.onError(context.getResources().getString(R.string.library_network_sneak_off))
 //                    }
 //                })
 //                mainThreadManager.subThreadToUIThread()
@@ -1218,7 +1218,7 @@ class Okhttp3Manager private constructor() {
 //                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
 //                    @Override
 //                    public void onSuccess() {
-//                        onDownloadCallback.onError(context.getResources().getString(R.string.network_sneak_off))
+//                        onDownloadCallback.onError(context.getResources().getString(R.string.library_network_sneak_off))
 //                    }
 //                })
 //                mainThreadManager.subThreadToUIThread()
@@ -1339,7 +1339,7 @@ class Okhttp3Manager private constructor() {
 //                                    mainThreadManager.subThreadToUIThread()
 //                                    LogManager.i(TAG, "alreadyDownloadLengthDownloading=" + alreadyDownloadLengthDownloading)
 //                                } else {//没连网呢
-//                                    onDownloadCallback.onError(context.getResources().getString(R.string.please_check_the_network_connection))
+//                                    onDownloadCallback.onError(context.getResources().getString(R.string.library_please_check_the_network_connection))
 //                                    break
 //                                }
 //                            }
@@ -1466,7 +1466,7 @@ class Okhttp3Manager private constructor() {
     //                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
     //                    @Override
     //                    public void onSuccess() {
-    //                        onCommonSingleParamCallback.onError(context.getResources().getString(R.string.network_sneak_off))
+    //                        onCommonSingleParamCallback.onError(context.getResources().getString(R.string.library_network_sneak_off))
     //                    }
     //                })
     //                mainThreadManager.subThreadToUIThread()
@@ -1531,7 +1531,7 @@ class Okhttp3Manager private constructor() {
     //                mainThreadManager.setOnSubThreadToMainThreadCallback(new OnSubThreadToMainThreadCallback() {
     //                    @Override
     //                    public void onSuccess() {
-    //                        onDownloadCallback.onError(context.getResources().getString(R.string.network_sneak_off))
+    //                        onDownloadCallback.onError(context.getResources().getString(R.string.library_network_sneak_off))
     //                    }
     //                })
     //                mainThreadManager.subThreadToUIThread()
@@ -1652,7 +1652,7 @@ class Okhttp3Manager private constructor() {
     //                                    mainThreadManager.subThreadToUIThread()
     //                                    LogManager.i(TAG, "alreadyDownloadLengthDownloading=" + alreadyDownloadLengthDownloading)
     //                                } else {//没连网呢
-    //                                    onDownloadCallback.onError(context.getResources().getString(R.string.please_check_the_network_connection))
+    //                                    onDownloadCallback.onError(context.getResources().getString(R.string.library_please_check_the_network_connection))
     //                                    break
     //                                }
     //                            }

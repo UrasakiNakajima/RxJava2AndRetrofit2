@@ -251,8 +251,8 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
                 18,
-                resources.getColor(R.color.white),
-                resources.getColor(R.color.color_FF198CFF),
+                resources.getColor(R.color.library_white),
+                resources.getColor(R.color.library_color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
                 error,
@@ -353,7 +353,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
             presenter?.homePage(this, mBodyParams)
         } else {
-            homePageDataError(resources.getString(R.string.please_check_the_network_connection))
+            homePageDataError(resources.getString(R.string.library_please_check_the_network_connection))
         }
     }
 

@@ -21,8 +21,8 @@
             android:includeFontPadding="false"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="@string/tips"
-            android:textColor="@color/color_333333"
+            android:text="@string/library_tips"
+            android:textColor="@color/library_color_333333"
             android:textSize="15sp"
             tools:ignore="MissingConstraints" />
 
@@ -35,12 +35,12 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
-            android:hint="@string/user_id"
+            android:hint="@string/library_user_id"
             android:includeFontPadding="false"
             android:lineSpacingExtra="2dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/library_color_333333"
             android:textSize="15sp"
             tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields" />
 
@@ -53,12 +53,12 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
-            android:hint="@string/password"
+            android:hint="@string/library_password"
             android:includeFontPadding="false"
             android:lineSpacingExtra="2dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/library_color_333333"
             android:textSize="15sp"
             tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields" />
 
@@ -71,12 +71,12 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
-            android:hint="@string/birthday"
+            android:hint="@string/library_birthday"
             android:includeFontPadding="false"
             android:lineSpacingExtra="2dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/library_color_333333"
             android:textSize="15sp"
             tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields" />
 
@@ -89,13 +89,13 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
-            android:hint="@string/age"
+            android:hint="@string/library_age"
             android:includeFontPadding="false"
             android:inputType="number"
             android:lineSpacingExtra="2dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/library_color_333333"
             android:textSize="15sp"
             tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields" />
 
@@ -108,13 +108,13 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/corners_6_color_ffffff_stroke_1_color_4876ff"
-            android:hint="@string/salary"
+            android:hint="@string/library_salary"
             android:includeFontPadding="false"
             android:inputType="number|numberDecimal"
             android:lineSpacingExtra="2dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/library_color_333333"
             android:textSize="15sp"
             tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields" />
 
@@ -123,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="20dp"
-            android:background="@color/color_ABABAB" />
+            android:background="@color/library_color_ABABAB" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -138,8 +138,8 @@
                 android:layout_weight="130"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="@string/cancel"
-                android:textColor="@color/color_989898"
+                android:text="@string/library_cancel"
+                android:textColor="@color/library_color_989898"
                 android:textSize="15sp"
                 tools:ignore="MissingConstraints" />
 
@@ -147,7 +147,7 @@
                 android:id="@+id/view_vertical_line"
                 android:layout_width="1dp"
                 android:layout_height="50dp"
-                android:background="@color/color_ABABAB" />
+                android:background="@color/library_color_ABABAB" />
 
             <TextView
                 android:id="@+id/tev_ok"
@@ -156,8 +156,8 @@
                 android:layout_weight="130"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="@string/ok"
-                android:textColor="@color/color_0000FF"
+                android:text="@string/library_ok"
+                android:textColor="@color/library_color_0000FF"
                 android:textSize="15sp"
                 tools:ignore="MissingConstraints" />
 

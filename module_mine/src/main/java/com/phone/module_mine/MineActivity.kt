@@ -67,7 +67,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
         refreshLayout = findViewById(R.id.refresh_layout)
         rcvData = findViewById(R.id.rcv_data)
 
-        setToolbar(false, R.color.color_FF198CFF)
+        setToolbar(false, R.color.library_color_FF198CFF)
 
         tevTitle?.setOnClickListener(object : View.OnClickListener {
 
@@ -177,8 +177,8 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
                 18,
-                ResourcesManager.getColor(R.color.white),
-                ResourcesManager.getColor(R.color.color_FFE066FF),
+                ResourcesManager.getColor(R.color.library_white),
+                ResourcesManager.getColor(R.color.library_color_FFE066FF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
                 error,
@@ -203,7 +203,7 @@ class MineActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), IMine
             mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
             presenter.mineData2(mRxAppCompatActivity, mBodyParams)
         } else {
-            mineDataError(ResourcesManager.getString(R.string.please_check_the_network_connection))
+            mineDataError(ResourcesManager.getString(R.string.library_please_check_the_network_connection))
         }
     }
 

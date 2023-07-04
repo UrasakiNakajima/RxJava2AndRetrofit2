@@ -67,7 +67,7 @@ class LaunchActivity : BaseRxAppActivity() {
         val tevAndroid = findViewById<View>(R.id.tev_android) as TextView
         val tevAppName = findViewById<View>(R.id.tev_app_name) as TextView
         val tevKotlin = findViewById<View>(R.id.tev_kotlin) as TextView
-        setToolbar(true, R.color.color_FFFFC73B)
+        setToolbar(true, R.color.library_color_FFFFC73B)
 
         ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000) {
             LogManager.i(

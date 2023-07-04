@@ -23,8 +23,8 @@ class EventScheduleActivity : BaseBindingRxAppActivity<ProjectActivityEventSched
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.color_FF198CFF)
-        mDatabind.imvBack.setColorFilter(ContextCompat.getColor(this, R.color.white))
+        setToolbar(false, R.color.library_color_FF198CFF)
+        mDatabind.imvBack.setColorFilter(ContextCompat.getColor(this, R.color.library_white))
         mDatabind.layoutBack.setOnClickListener {
             finish()
         }

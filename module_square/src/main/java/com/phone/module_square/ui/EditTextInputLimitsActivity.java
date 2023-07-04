@@ -61,8 +61,8 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
         tevTitle = (TextView) findViewById(R.id.tev_title);
         tevShowInput = (TextView) findViewById(R.id.tev_show_input);
         tevStartInput = (TextView) findViewById(R.id.tev_start_input);
-        setToolbar(false, R.color.color_FF198CFF);
-        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
+        setToolbar(false, R.color.library_color_FF198CFF);
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_white));
         layoutBack.setOnClickListener(v -> {
             finish();
         });
@@ -99,7 +99,7 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
         edtInput.addTextChangedListener(new DecimalTextWatcher(edtInput, afterDecimalNum));
 
         @SuppressLint("RestrictedApi")
-        AlertDialog alertDialog = new AlertDialog.Builder(this, R.style.standard_dialog_style2)
+        AlertDialog alertDialog = new AlertDialog.Builder(this, R.style.library_standard_dialog_style2)
                 .setView(view)
                 .show();
 

@@ -39,7 +39,7 @@ class SubResourceViewModelImpl() : BaseViewModel(), ISubResourceViewModel {
                     } else {
                         dataxRxFragment.value = State.ErrorState(
                             BaseApplication.instance().resources.getString(
-                                R.string.no_data_available
+                                R.string.library_no_data_available
                             )
                         )
                     }

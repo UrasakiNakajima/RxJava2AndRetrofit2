@@ -98,8 +98,8 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
         tevStartThreadPool2 = (TextView) findViewById(R.id.tev_start_thread_pool2);
         tevStopThreadPool2 = (TextView) findViewById(R.id.tev_stop_thread_pool2);
 
-        setToolbar(false, R.color.color_FF198CFF);
-        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
+        setToolbar(false, R.color.library_color_FF198CFF);
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_white));
         layoutBack.setOnClickListener(v -> {
             finish();
         });

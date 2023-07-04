@@ -292,7 +292,7 @@ class VideoViewActivity : BaseRxAppActivity() {
      * 重置
      */
     fun resetPlay() {
-        tevCurrentTime.text = resources?.getString(R.string.start_time)
+        tevCurrentTime.text = resources?.getString(R.string.library_start_time)
         mseekBar.progress = 0
         mcurrentProgressBar.progress = 0
         pausePlay()

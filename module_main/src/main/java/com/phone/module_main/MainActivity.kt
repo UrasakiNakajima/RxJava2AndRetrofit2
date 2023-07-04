@@ -132,41 +132,41 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
 
     private fun resetTabData(position: Int) {
         mineViewPager?.currentItem = position
-        tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
-        tevProject?.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
-        tevSquare?.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
-        tevResourceCenter?.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
-        tevMine?.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
-        setToolbar(false, R.color.color_FF198CFF)
+        tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
+        tevProject?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
+        tevSquare?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
+        tevResourceCenter?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
+        tevMine?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
+        setToolbar(false, R.color.library_color_FF198CFF)
         when (position) {
             0 -> {
-                tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
-                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.black))
+                tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
+                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_black))
             }
 
             1 -> {
-                tevProject?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
-                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.white))
+                tevProject?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
+                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_white))
             }
 
             2 -> {
-                tevSquare?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
-                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.white))
+                tevSquare?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
+                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_white))
             }
 
             3 -> {
-                tevResourceCenter?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
-                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.white))
+                tevResourceCenter?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
+                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_white))
             }
 
             4 -> {
-                tevMine?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
-                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.black))
+                tevMine?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
+                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_black))
             }
 
             else -> {
-                tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
-                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.black))
+                tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
+                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_black))
             }
         }
     }
@@ -176,12 +176,12 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
             tevPleaseAddComponents?.visibility = View.GONE
             layoutMain?.visibility = View.VISIBLE
             mineViewPager?.currentItem = 0
-            tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.color_FFE066FF))
-            tevProject?.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
-            tevSquare?.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
-            tevResourceCenter?.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
-            tevMine?.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
-            setToolbar(false, R.color.color_FF198CFF)
+            tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
+            tevProject?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
+            tevSquare?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
+            tevResourceCenter?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
+            tevMine?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
+            setToolbar(false, R.color.library_color_FF198CFF)
         } else {
             tevPleaseAddComponents?.visibility = View.VISIBLE
             layoutMain?.visibility = View.GONE

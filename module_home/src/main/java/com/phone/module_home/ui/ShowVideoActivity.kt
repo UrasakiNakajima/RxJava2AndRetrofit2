@@ -65,9 +65,9 @@
 //    }
 //
 //    private fun initViews() {
-//        tev_title.setText(resources.getString(R.string.video_play))
-//        imv_share.setColorFilter(ContextCompat.getColor(this, R.color.color_000000))
-//        setToolbar(true, R.color.white)
+//        tev_title.setText(resources.getString(R.string.library_video_play))
+//        imv_share.setColorFilter(ContextCompat.getColor(this, R.color.library_color_000000))
+//        setToolbar(true, R.color.library_white)
 //
 //        dialog = ShowDownloadDialogFragment.newInstance()
 //        initVideo(url!!)
@@ -89,7 +89,7 @@
 //                                    override fun onDownloadSuccess() {
 //                                        Toast.makeText(
 //                                            this@ShowVideoActivity,
-//                                            resources.getString(R.string.saved_successfully),
+//                                            resources.getString(R.string.library_saved_successfully),
 //                                            Toast.LENGTH_LONG
 //                                        )
 //                                        progress_bar.visibility = View.GONE
@@ -104,7 +104,7 @@
 //                                    override fun onDownloadError() {
 //                                        Toast.makeText(
 //                                            this@ShowVideoActivity,
-//                                            resources.getString(R.string.failed_to_save_please_try_again),
+//                                            resources.getString(R.string.library_failed_to_save_please_try_again),
 //                                            Toast.LENGTH_LONG
 //                                        )
 //                                        progress_bar.visibility = View.GONE

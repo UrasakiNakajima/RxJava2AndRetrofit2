@@ -19,7 +19,7 @@
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/library_white"
             app:srlAccentColor="@android:color/white"
             app:srlEnablePreviewInEditMode="true"
             app:srlPrimaryColor="#444444">
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:color="@color/color_FF999999"
+            android:color="@color/library_color_FF999999"
             android:visibility="gone"
             app:qmui_loading_view_size="@dimen/dp_33" />
 

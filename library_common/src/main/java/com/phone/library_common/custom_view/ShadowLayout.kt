@@ -688,30 +688,30 @@ class ShadowLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context
     }
 
     private fun initAttributes(attrs: AttributeSet?) {
-        val attr = context.obtainStyledAttributes(attrs, R.styleable.ShadowLayout)
+        val attr = context.obtainStyledAttributes(attrs, R.styleable.library_ShadowLayout)
             ?: return
         try {
             //默认是显示
-            isShowShadow = !attr.getBoolean(R.styleable.ShadowLayout_hl_shadowHidden, false)
-            leftShow = !attr.getBoolean(R.styleable.ShadowLayout_hl_shadowHiddenLeft, false)
-            rightShow = !attr.getBoolean(R.styleable.ShadowLayout_hl_shadowHiddenRight, false)
-            bottomShow = !attr.getBoolean(R.styleable.ShadowLayout_hl_shadowHiddenBottom, false)
-            topShow = !attr.getBoolean(R.styleable.ShadowLayout_hl_shadowHiddenTop, false)
+            isShowShadow = !attr.getBoolean(R.styleable.library_ShadowLayout_library_hl_shadowHidden, false)
+            leftShow = !attr.getBoolean(R.styleable.library_ShadowLayout_library_hl_shadowHiddenLeft, false)
+            rightShow = !attr.getBoolean(R.styleable.library_ShadowLayout_library_hl_shadowHiddenRight, false)
+            bottomShow = !attr.getBoolean(R.styleable.library_ShadowLayout_library_hl_shadowHiddenBottom, false)
+            topShow = !attr.getBoolean(R.styleable.library_ShadowLayout_library_hl_shadowHiddenTop, false)
             mCornerRadius = attr.getDimension(
-                R.styleable.ShadowLayout_hl_cornerRadius,
+                R.styleable.library_ShadowLayout_library_hl_cornerRadius,
                 resources.getDimension(R.dimen.dp_0)
             )
             mCornerRadius_leftTop =
-                attr.getDimension(R.styleable.ShadowLayout_hl_cornerRadius_leftTop, -1f)
+                attr.getDimension(R.styleable.library_ShadowLayout_library_hl_cornerRadius_leftTop, -1f)
             mCornerRadius_leftBottom =
-                attr.getDimension(R.styleable.ShadowLayout_hl_cornerRadius_leftBottom, -1f)
+                attr.getDimension(R.styleable.library_ShadowLayout_library_hl_cornerRadius_leftBottom, -1f)
             mCornerRadius_rightTop =
-                attr.getDimension(R.styleable.ShadowLayout_hl_cornerRadius_rightTop, -1f)
+                attr.getDimension(R.styleable.library_ShadowLayout_library_hl_cornerRadius_rightTop, -1f)
             mCornerRadius_rightBottom =
-                attr.getDimension(R.styleable.ShadowLayout_hl_cornerRadius_rightBottom, -1f)
+                attr.getDimension(R.styleable.library_ShadowLayout_library_hl_cornerRadius_rightBottom, -1f)
 
             //默认扩散区域宽度
-            mShadowLimit = attr.getDimension(R.styleable.ShadowLayout_hl_shadowLimit, 0f)
+            mShadowLimit = attr.getDimension(R.styleable.library_ShadowLayout_library_hl_shadowLimit, 0f)
             if (mShadowLimit == 0f) {
                 //如果阴影没有设置阴影扩散区域，那么默认隐藏阴影
                 isShowShadow = false
@@ -723,19 +723,19 @@ class ShadowLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context
             }
 
             //x轴偏移量
-            mDx = attr.getDimension(R.styleable.ShadowLayout_hl_shadowOffsetX, 0f)
+            mDx = attr.getDimension(R.styleable.library_ShadowLayout_library_hl_shadowOffsetX, 0f)
             //y轴偏移量
-            mDy = attr.getDimension(R.styleable.ShadowLayout_hl_shadowOffsetY, 0f)
+            mDy = attr.getDimension(R.styleable.library_ShadowLayout_library_hl_shadowOffsetY, 0f)
             mShadowColor = attr.getColor(
-                R.styleable.ShadowLayout_hl_shadowColor,
-                resources.getColor(R.color.default_shadow_color)
+                R.styleable.library_ShadowLayout_library_hl_shadowColor,
+                resources.getColor(R.color.library_default_shadow_color)
             )
-            selectorType = attr.getInt(R.styleable.ShadowLayout_hl_shapeMode, 1)
-            isSym = attr.getBoolean(R.styleable.ShadowLayout_hl_shadowSymmetry, true)
+            selectorType = attr.getInt(R.styleable.library_ShadowLayout_library_hl_shapeMode, 1)
+            isSym = attr.getBoolean(R.styleable.library_ShadowLayout_library_hl_shadowSymmetry, true)
 
             //背景颜色的点击(默认颜色为白色)
-            mBackGroundColor = resources.getColor(R.color.default_shadowback_color)
-            val background = attr.getDrawable(R.styleable.ShadowLayout_hl_layoutBackground)
+            mBackGroundColor = resources.getColor(R.color.library_default_shadowback_color)
+            val background = attr.getDrawable(R.styleable.library_ShadowLayout_library_hl_layoutBackground)
             if (background != null) {
                 if (background is ColorDrawable) {
                     mBackGroundColor = background.color
@@ -743,7 +743,7 @@ class ShadowLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context
                     layoutBackground = background
                 }
             }
-            val trueBackground = attr.getDrawable(R.styleable.ShadowLayout_hl_layoutBackground_true)
+            val trueBackground = attr.getDrawable(R.styleable.library_ShadowLayout_library_hl_layoutBackground_true)
             if (trueBackground != null) {
                 if (trueBackground is ColorDrawable) {
                     mBackGroundColor_true = trueBackground.color
@@ -752,26 +752,26 @@ class ShadowLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context
                 }
             }
             if (mBackGroundColor_true != -101 && layoutBackground != null) {
-                throw UnsupportedOperationException("使用了ShadowLayout_hl_layoutBackground_true属性，必须先设置ShadowLayout_hl_layoutBackground属性。且设置颜色时，必须保持都为颜色")
+                throw UnsupportedOperationException("使用了library_ShadowLayout_library_hl_layoutBackground_true属性，必须先设置library_ShadowLayout_library_hl_layoutBackground属性。且设置颜色时，必须保持都为颜色")
             }
             if (layoutBackground == null && layoutBackground_true != null) {
-                throw UnsupportedOperationException("使用了ShadowLayout_hl_layoutBackground_true属性，必须先设置ShadowLayout_hl_layoutBackground属性。且设置图片时，必须保持都为图片")
+                throw UnsupportedOperationException("使用了library_ShadowLayout_library_hl_layoutBackground_true属性，必须先设置library_ShadowLayout_library_hl_layoutBackground属性。且设置图片时，必须保持都为图片")
             }
 
             //边框颜色的点击
-            stroke_color = attr.getColor(R.styleable.ShadowLayout_hl_strokeColor, -101)
-            stroke_color_true = attr.getColor(R.styleable.ShadowLayout_hl_strokeColor_true, -101)
+            stroke_color = attr.getColor(R.styleable.library_ShadowLayout_library_hl_strokeColor, -101)
+            stroke_color_true = attr.getColor(R.styleable.library_ShadowLayout_library_hl_strokeColor_true, -101)
             if (stroke_color == -101 && stroke_color_true != -101) {
-                throw UnsupportedOperationException("使用了ShadowLayout_hl_strokeColor_true属性，必须先设置ShadowLayout_hl_strokeColor属性")
+                throw UnsupportedOperationException("使用了library_ShadowLayout_library_hl_strokeColor_true属性，必须先设置library_ShadowLayout_library_hl_strokeColor属性")
             }
             stroke_with =
-                attr.getDimension(R.styleable.ShadowLayout_hl_strokeWith, dip2px(1f).toFloat())
+                attr.getDimension(R.styleable.library_ShadowLayout_library_hl_strokeWith, dip2px(1f).toFloat())
             //规定边框长度最大不错过7dp
             if (stroke_with > dip2px(7f)) {
                 stroke_with = dip2px(5f).toFloat()
             }
             val clickAbleFalseBackground =
-                attr.getDrawable(R.styleable.ShadowLayout_hl_layoutBackground_clickFalse)
+                attr.getDrawable(R.styleable.library_ShadowLayout_library_hl_layoutBackground_clickFalse)
             if (clickAbleFalseBackground != null) {
                 if (clickAbleFalseBackground is ColorDrawable) {
                     clickAbleFalseColor = clickAbleFalseBackground.color
@@ -779,21 +779,21 @@ class ShadowLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context
                     clickAbleFalseDrawable = clickAbleFalseBackground
                 }
             }
-            startColor = attr.getColor(R.styleable.ShadowLayout_hl_startColor, -101)
-            centerColor = attr.getColor(R.styleable.ShadowLayout_hl_centerColor, -101)
-            endColor = attr.getColor(R.styleable.ShadowLayout_hl_endColor, -101)
+            startColor = attr.getColor(R.styleable.library_ShadowLayout_library_hl_startColor, -101)
+            centerColor = attr.getColor(R.styleable.library_ShadowLayout_library_hl_centerColor, -101)
+            endColor = attr.getColor(R.styleable.library_ShadowLayout_library_hl_endColor, -101)
             if (startColor != -101) {
                 //说明设置了渐变色的起始色
                 if (endColor == -101) {
-                    throw UnsupportedOperationException("使用了ShadowLayout_hl_startColor渐变起始色，必须搭配终止色ShadowLayout_hl_endColor")
+                    throw UnsupportedOperationException("使用了library_ShadowLayout_library_hl_startColor渐变起始色，必须搭配终止色library_ShadowLayout_library_hl_endColor")
                 }
             }
-            angle = attr.getInt(R.styleable.ShadowLayout_hl_angle, 0)
+            angle = attr.getInt(R.styleable.library_ShadowLayout_library_hl_angle, 0)
             require(angle % 45 == 0) { "Linear gradient requires 'angle' attribute to be a multiple of 45" }
             if (selectorType == 3) {
                 //如果是ripple的话
                 if (mBackGroundColor == -101 || mBackGroundColor_true == -101) {
-                    throw NullPointerException("使用了ShadowLayout的水波纹，必须设置使用了ShadowLayout_hl_layoutBackground和使用了ShadowLayout_hl_layoutBackground_true属性，且为颜色值")
+                    throw NullPointerException("使用了library_ShadowLayout_library的水波纹，必须设置使用了library_ShadowLayout_library_hl_layoutBackground和使用了library_ShadowLayout_library_hl_layoutBackground_true属性，且为颜色值")
                 }
 
                 //如果是设置了图片的话，那么也不支持水波纹
@@ -801,12 +801,12 @@ class ShadowLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context
                     selectorType = 1
                 }
             }
-            mTextViewResId = attr.getResourceId(R.styleable.ShadowLayout_hl_bindTextView, -1)
-            textColor = attr.getColor(R.styleable.ShadowLayout_hl_textColor, -101)
-            textColor_true = attr.getColor(R.styleable.ShadowLayout_hl_textColor_true, -101)
-            text = attr.getString(R.styleable.ShadowLayout_hl_text)
-            text_true = attr.getString(R.styleable.ShadowLayout_hl_text_true)
-            isMClickable = attr.getBoolean(R.styleable.ShadowLayout_clickable, true)
+            mTextViewResId = attr.getResourceId(R.styleable.library_ShadowLayout_library_hl_bindTextView, -1)
+            textColor = attr.getColor(R.styleable.library_ShadowLayout_library_hl_textColor, -101)
+            textColor_true = attr.getColor(R.styleable.library_ShadowLayout_library_hl_textColor_true, -101)
+            text = attr.getString(R.styleable.library_ShadowLayout_library_hl_text)
+            text_true = attr.getString(R.styleable.library_ShadowLayout_library_hl_text_true)
+            isMClickable = attr.getBoolean(R.styleable.library_ShadowLayout_library_clickable, true)
             setClickable(isMClickable)
         } finally {
             attr.recycle()

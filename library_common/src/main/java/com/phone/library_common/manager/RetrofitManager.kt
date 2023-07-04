@@ -329,7 +329,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 
@@ -376,7 +376,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 
@@ -405,12 +405,12 @@ class RetrofitManager private constructor() {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class)
 //                                       } catch (Exception e) {
 //                                           //如果不是标准json字符串，就返回错误提示
-//                                           onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
+//                                           onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.library_server_sneak_off))
 //                                           return
 //                                       }
 //                                       onCommonSingleParamCallback.onSuccess(responseString)
 //                                   } else {
-//                                       onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
+//                                       onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.library_server_sneak_off))
 //                                   }
 
 
@@ -436,7 +436,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 
@@ -466,7 +466,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 
@@ -495,12 +495,12 @@ class RetrofitManager private constructor() {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class)
 //                                       } catch (Exception e) {
 //                                           //如果不是标准json字符串，就返回错误提示
-//                                           onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
+//                                           onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.library_server_sneak_off))
 //                                           return
 //                                       }
 //                                       onCommonSingleParamCallback.onSuccess(responseString)
 //                                   } else {
-//                                       onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
+//                                       onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.library_server_sneak_off))
 //                                   }
 
 
@@ -526,7 +526,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 
@@ -555,12 +555,12 @@ class RetrofitManager private constructor() {
 //                                           baseResponse = JSON.parseObject(responseString, BaseResponse.class)
 //                                       } catch (Exception e) {
 //                                           //如果不是标准json字符串，就返回错误提示
-//                                           onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
+//                                           onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.library_server_sneak_off))
 //                                           return
 //                                       }
 //                                       onCommonSingleParamCallback.onSuccess(responseString)
 //                                   } else {
-//                                       onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.server_sneak_off))
+//                                       onCommonSingleParamCallback.onError(BaseApplication.instance().getResources().getString(R.string.library_server_sneak_off))
 //                                   }
 
 
@@ -586,7 +586,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 

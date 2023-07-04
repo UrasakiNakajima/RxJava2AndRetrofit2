@@ -35,8 +35,8 @@ class AndroidAndJsActivity : BaseBindingRxAppActivity<JsActivityAndroidAndJsBind
     @SuppressLint("SetJavaScriptEnabled")
     override fun initViews() {
         mDatabind.apply {
-            imvBack.setColorFilter(ResourcesManager.getColor(R.color.white))
-            setToolbar(false, R.color.color_FF198CFF)
+            imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_white))
+            setToolbar(false, R.color.library_color_FF198CFF)
 
             layoutBack.setOnClickListener {
                 finish()
@@ -89,7 +89,7 @@ class AndroidAndJsActivity : BaseBindingRxAppActivity<JsActivityAndroidAndJsBind
                 //				AlertDialog.Builder builder = new AlertDialog.Builder(rxAppCompatActivity)
                 //				builder.setTitle("Alert")
                 //				builder.setMessage(message)
-                //				builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                //				builder.setPositiveButton(android.R.string.library_ok, new DialogInterface.OnClickListener() {
                 //					@Override
                 //					public void onClick(DialogInterface dialog, int which) {
                 //						result.confirm()
@@ -118,7 +118,7 @@ class AndroidAndJsActivity : BaseBindingRxAppActivity<JsActivityAndroidAndJsBind
                 //				AlertDialog.Builder builder = new AlertDialog.Builder(rxAppCompatActivity)
                 //				builder.setTitle("Alert")
                 //				builder.setMessage(message)
-                //				builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                //				builder.setPositiveButton(android.R.string.library_ok, new DialogInterface.OnClickListener() {
                 //					@Override
                 //					public void onClick(DialogInterface dialog, int which) {
                 //						result.confirm()

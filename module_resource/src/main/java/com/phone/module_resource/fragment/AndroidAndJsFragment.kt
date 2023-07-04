@@ -66,7 +66,7 @@ class AndroidAndJsFragment : BaseBindingRxFragment<ResourceFragmentAndroidAndJsB
                 //				AlertDialog.Builder builder = new AlertDialog.Builder(appCompatActivity)
                 //				builder.setTitle("Alert")
                 //				builder.setMessage(message)
-                //				builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                //				builder.setPositiveButton(android.R.string.library_ok, new DialogInterface.OnClickListener() {
                 //					@Override
                 //					public void onClick(DialogInterface dialog, int which) {
                 //						result.confirm()

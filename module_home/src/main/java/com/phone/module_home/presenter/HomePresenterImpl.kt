@@ -84,14 +84,14 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
                         } else {
                             homePageView.homePageDataError(
                                 ResourcesManager.getString(
-                                    R.string.no_data_available
+                                    R.string.library_no_data_available
                                 )
                             )
                         }
                     } else {
                         homePageView.homePageDataError(
                             apiResponse.reason ?: ResourcesManager.getString(
-                                R.string.loading_failed
+                                R.string.library_loading_failed
                             )
                         )
                     }
@@ -126,14 +126,14 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
                                 } else {
                                     homePageView.homePageDataError(
                                         response.reason ?: ResourcesManager.getString(
-                                            R.string.loading_failed
+                                            R.string.library_loading_failed
                                         )
                                     )
                                 }
                             } else {
                                 homePageView.homePageDataError(
                                     ResourcesManager.getString(
-                                        R.string.loading_failed
+                                        R.string.library_loading_failed
                                     )
                                 )
                             }
@@ -160,7 +160,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
                 ////                                    FirstPageResponse homePageResponse = JSON.parse(responseString, FirstPageResponse.class);
                 //                                    homePageView.homePageDataSuccess(baseResponse.getMessage());
                 //                                } else {
-                //                                    homePageView.homePageDataError(BaseApplication.instance().getResources().getString(R.string.data_in_wrong_format));
+                //                                    homePageView.homePageDataError(BaseApplication.instance().getResources().getString(R.string.library_data_in_wrong_format));
                 //                                }
                 //                                homePageView.hideLoading();
                 //                            }
@@ -169,7 +169,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
                 //                            public void accept(Throwable throwable) throws Exception {
                 //                                LogManager.i(TAG, "throwable*****" + throwable.getMessage());
                 //                                // 异常处理
-                //                                homePageView.homePageDataError(BaseApplication.instance().getResources().getString(R.string.request_was_aborted));
+                //                                homePageView.homePageDataError(BaseApplication.instance().getResources().getString(R.string.library_request_was_aborted));
                 //                                homePageView.hideLoading();
                 //                            }
                 //                        });

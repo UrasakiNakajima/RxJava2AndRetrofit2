@@ -20,7 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_73"
-            android:background="@color/color_FFFFFFFF"
+            android:background="@color/library_color_FFFFFFFF"
             app:contentInsetStart="0dp">
 
             <LinearLayout
@@ -60,8 +60,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@string/jsbridge"
-                        android:textColor="@color/color_80000000"
+                        android:text="@string/library_jsbridge"
+                        android:textColor="@color/library_color_80000000"
                         android:textSize="@dimen/sp_18" />
 
                 </FrameLayout>
@@ -79,25 +79,25 @@
                 android:id="@+id/tev_function_to_js"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/color_FFD0D6EC"
+                android:background="@color/library_color_FFD0D6EC"
                 android:padding="@dimen/dp_10"
-                android:text="@string/function_to_js"
-                android:textColor="@color/color_FF198CFF"
+                android:text="@string/library_function_to_js"
+                android:textColor="@color/library_color_FF198CFF"
                 android:textSize="@dimen/sp_16" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
-                android:background="@color/color_80000000" />
+                android:background="@color/library_color_80000000" />
 
             <TextView
                 android:id="@+id/tev_function_to_js2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/color_FFD0D6EC"
+                android:background="@color/library_color_FFD0D6EC"
                 android:padding="@dimen/dp_10"
-                android:text="@string/function_to_js2"
-                android:textColor="@color/color_FF198CFF"
+                android:text="@string/library_function_to_js2"
+                android:textColor="@color/library_color_FF198CFF"
                 android:textSize="@dimen/sp_16" />
 
         </LinearLayout>
@@ -105,7 +105,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_1"
-            android:background="@color/color_80000000" />
+            android:background="@color/library_color_80000000" />
 
         <com.github.lzyzsd.jsbridge.BridgeWebView
             android:id="@+id/web_view"

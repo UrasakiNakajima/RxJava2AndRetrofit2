@@ -58,8 +58,8 @@ class DecimalOperationActivity : BaseRxAppActivity() {
             findViewById<View>(R.id.tev_decimal_operation_rounding) as TextView
         tevDecimalOperationRejection =
             findViewById<View>(R.id.tev_decimal_operation_rejection) as TextView
-        setToolbar(false, R.color.color_FF198CFF)
-        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.white))
+        setToolbar(false, R.color.library_color_FF198CFF)
+        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.library_white))
         layoutBack?.setOnClickListener { view: View -> finish() }
         tevDecimalOperationRounding?.setOnClickListener { v: View ->
             val m1 = 986790.278576897

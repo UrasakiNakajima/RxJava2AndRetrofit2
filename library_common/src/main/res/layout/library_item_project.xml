@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            style="@style/text_1"
+            style="@style/library_text_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
@@ -45,7 +45,7 @@
 
         <TextView
             android:id="@+id/tvDes"
-            style="@style/text_2"
+            style="@style/library_text_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
@@ -59,7 +59,7 @@
 
         <TextView
             android:id="@+id/tvNameData"
-            style="@style/text_3"
+            style="@style/library_text_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{dataBean.date}"
@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginTop="@dimen/dp_16"
-            android:background="?attr/division_line"
+            android:background="?attr/library_division_line"
             app:layout_constraintTop_toBottomOf="@+id/ivTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

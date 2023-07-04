@@ -67,7 +67,7 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                         dataxRxFragment.value = State.SuccessState(responseData)
                     } else {
                         dataxRxFragment.value =
-                            State.ErrorState(ResourcesManager.getString(R.string.no_data_available))
+                            State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
                     }
                 } else {
                     dataxRxFragment.value = State.ErrorState(apiResponse.errorMsg)
@@ -91,11 +91,11 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                                 State.SuccessState<List<SubDataSquare>>(responseData)
                         } else {
                             dataxRxActivity.value =
-                                State.ErrorState(ResourcesManager.getString(R.string.no_data_available))
+                                State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
                         }
                     } else {
                         dataxRxActivity.value =
-                            State.ErrorState(ResourcesManager.getString(R.string.loading_failed))
+                            State.ErrorState(ResourcesManager.getString(R.string.library_loading_failed))
                     }
                 }
 

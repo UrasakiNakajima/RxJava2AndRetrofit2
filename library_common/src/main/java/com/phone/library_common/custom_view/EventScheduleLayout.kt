@@ -151,7 +151,7 @@ class EventScheduleLayout(
                                     //时间
                                     val tevTime = TextView(mContext)
                                     tevTime.setText("$startHourInt + $j + :00")
-                                    tevTime.setTextColor(ResourcesManager.getColor(R.color.color_FF333333))
+                                    tevTime.setTextColor(ResourcesManager.getColor(R.color.library_color_FF333333))
                                     tevTime.textSize = 12f
                                     outerLayout.addView(tevTime, tevTimeParams)
                                     var lineViewParams2 = FrameLayout.LayoutParams(
@@ -224,7 +224,7 @@ class EventScheduleLayout(
                                     //时间
                                     val tevTime = TextView(mContext)
                                     tevTime.setText("$startHourInt + $j + 00")
-                                    tevTime.setTextColor(ResourcesManager.getColor(R.color.color_FF333333))
+                                    tevTime.setTextColor(ResourcesManager.getColor(R.color.library_color_FF333333))
                                     tevTime.textSize = 12f
                                     tevTime.includeFontPadding = false
                                     outerLayout.addView(tevTime, tevTimeParams)
@@ -343,7 +343,7 @@ class EventScheduleLayout(
                             resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
                         val tevTime = TextView(mContext)
                         tevTime.text = mRowsDTO?.activeTime
-                        tevTime.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
+                        tevTime.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
                         tevTime.textSize = 12f
                         tevTime.includeFontPadding = false
                         val tevTimeParams = FrameLayout.LayoutParams(
@@ -360,7 +360,7 @@ class EventScheduleLayout(
                         mFrameLayout.addView(tevTime)
                         val tevContent = TextView(mContext)
                         tevContent.text = mRowsDTO?.activeTitle
-                        tevContent.setTextColor(ResourcesManager.getColor(R.color.color_FF333333))
+                        tevContent.setTextColor(ResourcesManager.getColor(R.color.library_color_FF333333))
                         tevContent.textSize = 13f
                         tevContent.includeFontPadding = false
                         tevContent.setLines(2)
@@ -380,17 +380,17 @@ class EventScheduleLayout(
                         mFrameLayout.addView(tevContent)
                         val tevStatus = TextView(mContext)
                         //						tevStatus.setText(mRowsDTO.getAuditStatusName());
-                        tevStatus.setTextColor(ResourcesManager.getColor(R.color.color_FF3258F7))
+                        tevStatus.setTextColor(ResourcesManager.getColor(R.color.library_color_FF3258F7))
                         tevStatus.textSize = 12f
                         tevStatus.includeFontPadding = false
                         if (mRowsDTO?.auditStatus == 0) {
                             mFrameLayout.background =
                                 resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
-                            tevStatus.setText(ResourcesManager.getString(R.string.check_pending))
+                            tevStatus.setText(ResourcesManager.getString(R.string.library_check_pending))
                         } else if (mRowsDTO?.auditStatus == 2) {
                             mFrameLayout.background =
                                 resources.getDrawable(R.drawable.corners_7_color_ffcfe9ff)
-                            tevStatus.setText(ResourcesManager.getString(R.string.checked))
+                            tevStatus.setText(ResourcesManager.getString(R.string.library_checked))
                         }
                         val tevStatusParams = FrameLayout.LayoutParams(
                             FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -430,7 +430,7 @@ class EventScheduleLayout(
                         layoutEnd.addView(mFrameLayout, mFrameLayoutParams)
                         if (timeNumberNext > 0) {
                             val mEmptyLayout = FrameLayout(mContext)
-                            //						mEmptyLayout.setBackgroundColor(ResourcesManager.getColor(R.color.color_FF9FACFF));
+                            //						mEmptyLayout.setBackgroundColor(ResourcesManager.getColor(R.color.library_color_FF9FACFF));
                             val mEmptyLayoutParams = LinearLayout.LayoutParams(
                                 FrameLayout.LayoutParams.MATCH_PARENT,
                                 ScreenManager.dpToPx((65.0 * timeNumberNext / 60.0).toFloat())
@@ -454,7 +454,7 @@ class EventScheduleLayout(
                         //						float mTimeQuantumFloat = mTimeQuantum;
                         //						float hourNumber = mTimeQuantumFloat / 1000 / 60 / 60;
                         val mFrameLayout = FrameLayout(mContext)
-                        //						mFrameLayout.setBackgroundColor(ResourcesManager.getColor(R.color.color_FFFF0000));
+                        //						mFrameLayout.setBackgroundColor(ResourcesManager.getColor(R.color.library_color_FFFF0000));
                         mFrameLayout.background =
                             resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
                         val mFrameLayoutParams = LinearLayout.LayoutParams(
@@ -470,7 +470,7 @@ class EventScheduleLayout(
                         )
                         val tevTime = TextView(mContext)
                         tevTime.text = mRowsDTO?.activeTime
-                        tevTime.setTextColor(ResourcesManager.getColor(R.color.color_FF999999))
+                        tevTime.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
                         tevTime.textSize = 12f
                         tevTime.includeFontPadding = false
                         tevTimeParams.setMargins(
@@ -485,7 +485,7 @@ class EventScheduleLayout(
                         )
                         val tevContent = TextView(mContext)
                         tevContent.text = mRowsDTO?.activeTitle
-                        tevContent.setTextColor(ResourcesManager.getColor(R.color.color_FF333333))
+                        tevContent.setTextColor(ResourcesManager.getColor(R.color.library_color_FF333333))
                         tevContent.textSize = 13f
                         tevContent.includeFontPadding = false
                         tevContent.setLines(2)
@@ -503,17 +503,17 @@ class EventScheduleLayout(
                         )
                         val tevStatus = TextView(mContext)
                         tevStatus.text = mRowsDTO?.auditStatusName
-                        tevStatus.setTextColor(ResourcesManager.getColor(R.color.color_FF3258F7))
+                        tevStatus.setTextColor(ResourcesManager.getColor(R.color.library_color_FF3258F7))
                         tevStatus.textSize = 12f
                         tevStatus.includeFontPadding = false
                         if (mRowsDTO?.auditStatus == 0) {
                             mFrameLayout.background =
                                 resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
-                            tevStatus.setText(ResourcesManager.getString(R.string.check_pending))
+                            tevStatus.setText(ResourcesManager.getString(R.string.library_check_pending))
                         } else if (mRowsDTO?.auditStatus == 2) {
                             mFrameLayout.background =
                                 resources.getDrawable(R.drawable.corners_7_color_ffcfe9ff)
-                            tevStatus.setText(ResourcesManager.getString(R.string.checked))
+                            tevStatus.setText(ResourcesManager.getString(R.string.library_checked))
                         }
                         tevStatusParams.setMargins(
                             0, ScreenManager.dpToPx(10f),
@@ -566,7 +566,7 @@ class EventScheduleLayout(
                     //时间
                     val tevTime = TextView(mContext)
                     tevTime.setText("$startHourInt + $j + 00")
-                    tevTime.setTextColor(ResourcesManager.getColor(R.color.color_FF333333))
+                    tevTime.setTextColor(ResourcesManager.getColor(R.color.library_color_FF333333))
                     tevTime.textSize = 12f
                     outerLayout.addView(tevTime, tevTimeParams)
                     var lineViewParams2 = FrameLayout.LayoutParams(
@@ -639,7 +639,7 @@ class EventScheduleLayout(
                     //时间
                     val tevTime = TextView(mContext)
                     tevTime.setText("$startHourInt + $j + 00")
-                    tevTime.setTextColor(ResourcesManager.getColor(R.color.color_FF333333))
+                    tevTime.setTextColor(ResourcesManager.getColor(R.color.library_color_FF333333))
                     tevTime.textSize = 12f
                     tevTime.includeFontPadding = false
                     outerLayout.addView(tevTime, tevTimeParams)

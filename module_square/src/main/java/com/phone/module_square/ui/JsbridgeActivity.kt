@@ -47,7 +47,7 @@ class JsbridgeActivity : BaseBindingRxAppActivity<SquareActivityJsbridgeBinding>
 
     override fun initViews() {
         setToolbar(true)
-        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.color_80000000))
+        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_color_80000000))
         mDatabind.layoutBack.setOnClickListener { v -> finish() }
 
         mDatabind.tevFunctionToJs.setOnClickListener {

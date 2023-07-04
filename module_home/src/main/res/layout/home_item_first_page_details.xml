@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black"
+    android:background="@color/library_black"
     android:orientation="vertical">
 
     <TextView
@@ -12,8 +12,8 @@
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
-        android:text="@string/app_name"
-        android:textColor="@color/color_FFE066FF"
+        android:text="@string/library_app_name"
+        android:textColor="@color/library_color_FFE066FF"
         android:textSize="@dimen/sp_15" />
 
     <TextView
@@ -23,8 +23,8 @@
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
-        android:text="@string/app_name"
-        android:textColor="@color/color_FFE066FF"
+        android:text="@string/library_app_name"
+        android:textColor="@color/library_color_FFE066FF"
         android:textSize="@dimen/sp_15" />
 
 </LinearLayout>

@@ -811,7 +811,7 @@ object PictureManager {
             view.measuredWidth,
             view.measuredHeight, Bitmap.Config.ARGB_8888
         )
-        setBitmapBGColor(bitmap, ResourcesManager.getColor(R.color.color_FFFFFF))
+        setBitmapBGColor(bitmap, ResourcesManager.getColor(R.color.library_color_FFFFFF))
         val c = Canvas(bitmap)
         //        view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getBottom())
         view.draw(c)

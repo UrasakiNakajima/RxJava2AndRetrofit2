@@ -488,9 +488,9 @@ class SurfaceViewActivity : BaseRxAppActivity() {
             pausePlay()
             seekTo(0f)
             if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
-                tevCurrentTime?.text = ResourcesManager.getString(R.string.start_time)
+                tevCurrentTime?.text = ResourcesManager.getString(R.string.library_start_time)
             } else {
-                tevCurrentTime?.text = ResourcesManager.getString(R.string.start_time2)
+                tevCurrentTime?.text = ResourcesManager.getString(R.string.library_start_time2)
             }
             startPlay()
         }
@@ -505,9 +505,9 @@ class SurfaceViewActivity : BaseRxAppActivity() {
         pausePlay()
         seekTo(0f)
         if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
-            tevCurrentTime?.text = ResourcesManager.getString(R.string.start_time)
+            tevCurrentTime?.text = ResourcesManager.getString(R.string.library_start_time)
         } else {
-            tevCurrentTime?.text = ResourcesManager.getString(R.string.start_time2)
+            tevCurrentTime?.text = ResourcesManager.getString(R.string.library_start_time2)
         }
         progressCircular?.visibility = View.GONE
     }
@@ -568,9 +568,9 @@ class SurfaceViewActivity : BaseRxAppActivity() {
     fun durationTime(): String? {
         if (mediaPlayer !== null) {
             if (mediaPlayer!!.duration / 1000 / 60 / 60 >= 1) {
-                tevCurrentTime?.setText(getString(R.string.start_time))
+                tevCurrentTime?.setText(getString(R.string.library_start_time))
             } else {
-                tevCurrentTime?.setText(getString(R.string.start_time2))
+                tevCurrentTime?.setText(getString(R.string.library_start_time2))
             }
             return stringForTime(mediaPlayer!!.duration)
         } else {

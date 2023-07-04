@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_73"
-            android:background="@color/color_FF198CFF"
+            android:background="@color/library_color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
             app:contentInsetStart="0dp">
@@ -27,8 +27,8 @@
                 android:layout_height="@dimen/dp_48"
                 android:layout_marginTop="@dimen/dp_25"
                 android:gravity="center"
-                android:text="@string/mine"
-                android:textColor="@color/white"
+                android:text="@string/library_mine"
+                android:textColor="@color/library_white"
                 android:textSize="@dimen/sp_20" />
 
         </androidx.appcompat.widget.Toolbar>
@@ -48,11 +48,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
                     android:layout_gravity="center"
-                    android:background="@color/color_FF333333"
+                    android:background="@color/library_color_FF333333"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="logout"
-                    android:textColor="@color/color_80FFFFFF"
+                    android:textColor="@color/library_color_80FFFFFF"
                     android:textSize="@dimen/sp_16" />
 
                 <TextView
@@ -60,11 +60,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
                     android:layout_gravity="center"
-                    android:background="@color/color_FFFFC73B"
+                    android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="thread pool"
-                    android:textColor="@color/color_FFFFFFFF"
+                    android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
                 <TextView
@@ -72,18 +72,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
                     android:layout_gravity="center"
-                    android:background="@color/color_FFFFC73B"
+                    android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/params_transfer_change_problem"
-                    android:textColor="@color/color_FFFFFFFF"
+                    android:text="@string/library_params_transfer_change_problem"
+                    android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
                 <com.scwang.smart.refresh.layout.SmartRefreshLayout
                     android:id="@+id/refresh_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/black"
+                    android:background="@color/library_black"
                     app:srlAccentColor="@android:color/white"
                     app:srlEnablePreviewInEditMode="true"
                     app:srlPrimaryColor="#444444">

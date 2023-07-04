@@ -21,19 +21,19 @@
             android:gravity="center"
             android:paddingStart="@dimen/dp_20"
             android:paddingEnd="@dimen/dp_20"
-            android:text="@string/save_to_phone"
-            android:textColor="@color/color_FF333333"
+            android:text="@string/library_save_to_phone"
+            android:textColor="@color/library_color_FF333333"
             android:textSize="@dimen/sp_16" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_1"
-            android:background="@color/color_FF999999" />
+            android:background="@color/library_color_FF999999" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_4"
-            android:background="@color/color_FF999999" />
+            android:background="@color/library_color_FF999999" />
 
         <TextView
             android:id="@+id/tev_cancel"
@@ -41,8 +41,8 @@
             android:layout_height="@dimen/dp_45"
             android:background="@drawable/corners_bottom_3_color_ffffffff"
             android:gravity="center"
-            android:text="@string/cancel"
-            android:textColor="@color/color_FF333333"
+            android:text="@string/library_cancel"
+            android:textColor="@color/library_color_FF333333"
             android:textSize="@dimen/sp_16" />
 
     </LinearLayout>

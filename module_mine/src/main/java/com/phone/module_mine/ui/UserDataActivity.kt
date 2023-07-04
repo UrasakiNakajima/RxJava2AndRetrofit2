@@ -38,8 +38,8 @@ class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), I
         imvBack = findViewById(R.id.imv_back)
         tevTitle = findViewById(R.id.tev_title)
 
-        setToolbar(false, R.color.color_FF198CFF)
-        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.color_FF198CFF))
+        setToolbar(false, R.color.library_color_FF198CFF)
+        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.library_color_FF198CFF))
         layoutBack?.setOnClickListener {
             finish()
         }
@@ -83,7 +83,7 @@ class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), I
             presenter.userData(this, mBodyParams)
 //        presenter.userData(this, baseApplication.accessToken, mBodyParams)
         } else {
-            userDataError(ResourcesManager.getString(R.string.please_check_the_network_connection))
+            userDataError(ResourcesManager.getString(R.string.library_please_check_the_network_connection))
         }
     }
 

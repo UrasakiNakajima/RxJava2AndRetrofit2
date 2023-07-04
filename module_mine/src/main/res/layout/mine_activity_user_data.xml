@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_73"
-        android:background="@color/color_FF198CFF"
+        android:background="@color/library_color_FF198CFF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
         app:contentInsetStart="0dp">
@@ -44,8 +44,8 @@
                 android:layout_height="@dimen/dp_48"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/user_details"
-                android:textColor="@color/white"
+                android:text="@string/library_user_details"
+                android:textColor="@color/library_white"
                 android:textSize="@dimen/sp_20" />
 
         </FrameLayout>

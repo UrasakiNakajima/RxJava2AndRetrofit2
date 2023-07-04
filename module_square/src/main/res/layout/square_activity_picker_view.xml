@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_73"
-            android:background="@color/color_FF198CFF"
+            android:background="@color/library_color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
             app:contentInsetStart="0dp">
@@ -58,8 +58,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="@string/three_level_linkage_list"
-                        android:textColor="@color/color_FFFFFFFF"
+                        android:text="@string/library_three_level_linkage_list"
+                        android:textColor="@color/library_color_FFFFFFFF"
                         android:textSize="@dimen/sp_20" />
 
                 </FrameLayout>
@@ -81,8 +81,8 @@
             android:gravity="center"
             android:paddingStart="@dimen/dp_20"
             android:paddingEnd="@dimen/dp_20"
-            android:text="@string/show_data"
-            android:textColor="@color/white"
+            android:text="@string/library_show_data"
+            android:textColor="@color/library_white"
             android:textSize="@dimen/sp_18" />
 
     </LinearLayout>

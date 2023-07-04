@@ -2,10 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/news_summary_card_view"
-    app:cardBackgroundColor="@color/white"
+    style="@style/library_news_summary_card_view"
+    app:cardBackgroundColor="@color/library_white"
     app:cardElevation="@dimen/dp_2"
-    app:dayNightBackgroundAttr="dayNightBackground">
+    app:library_dayNightBackgroundAttr="dayNightBackground">
 
     <LinearLayout
         android:id="@+id/ll_root"
@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/item_margin"
             android:layout_marginRight="@dimen/item_margin"
             android:singleLine="true"
-            android:textColor="@color/color_FF333333"
+            android:textColor="@color/library_color_FF333333"
             android:textSize="@dimen/sp_14"
             tools:text="爽肤水的肤色我热热饭是电风扇的" />
 
@@ -35,19 +35,19 @@
 
             <ImageView
                 android:id="@+id/news_summary_photo_iv_left"
-                style="@style/news_summary_photo_iv"
+                style="@style/library_news_summary_photo_iv"
                 tools:ignore="ContentDescription"
                 tools:src="@mipmap/ic_launcher" />
 
             <ImageView
                 android:id="@+id/news_summary_photo_iv_middle"
-                style="@style/news_summary_photo_iv"
+                style="@style/library_news_summary_photo_iv"
                 tools:ignore="ContentDescription"
                 tools:src="@mipmap/ic_launcher" />
 
             <ImageView
                 android:id="@+id/news_summary_photo_iv_right"
-                style="@style/news_summary_photo_iv"
+                style="@style/library_news_summary_photo_iv"
                 tools:ignore="ContentDescription"
                 tools:src="@mipmap/ic_launcher" />
         </LinearLayout>
@@ -65,7 +65,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/item_margin"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/library_light_gray"
                 android:textSize="@dimen/sp_15"
                 tools:text="作者名" />
 
@@ -76,7 +76,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/item_margin"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/library_light_gray"
                 android:textSize="@dimen/sp_15"
                 tools:ignore="RelativeOverlap"
                 tools:text="2018-08-01" />

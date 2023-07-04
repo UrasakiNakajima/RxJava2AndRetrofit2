@@ -47,8 +47,8 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
         edtPassword = findViewById<View>(R.id.edt_password) as EditText
         edtConfirmPassword = findViewById<View>(R.id.edt_confirm_password) as EditText
         tevRegister = findViewById<View>(R.id.tev_register) as TextView
-        setToolbar(true, R.color.color_FFFFFFFF)
-        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.color_000000))
+        setToolbar(true, R.color.library_color_FFFFFFFF)
+        imvBack?.setColorFilter(ResourcesManager.getColor(R.color.library_color_000000))
         layoutBack?.setOnClickListener { finish() }
         imvHeadPortrait?.let {
             ImageLoaderManager.displayRound(mRxAppCompatActivity, it, R.mipmap.ic_launcher_round)
@@ -110,14 +110,14 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
                 presenter.register(this, mBodyParams)
             } else {
                 showToast(
-                    ResourcesManager.getString(R.string.the_passwords_entered_twice_are_inconsistent),
+                    ResourcesManager.getString(R.string.library_the_passwords_entered_twice_are_inconsistent),
                     true
                 )
                 hideLoading()
             }
         } else {
             showToast(
-                ResourcesManager.getString(R.string.please_check_the_network_connection),
+                ResourcesManager.getString(R.string.library_please_check_the_network_connection),
                 true
             )
             hideLoading()

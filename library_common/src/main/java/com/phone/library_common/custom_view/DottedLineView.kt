@@ -28,7 +28,7 @@ class DottedLineView(context: Context, attrs: AttributeSet?) : View(context, att
         val width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, metrics)
         val dashGap = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, metrics)
         val dashWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, metrics)
-        mDashPaint.color = ContextCompat.getColor(context, R.color.color_FF3258F7)
+        mDashPaint.color = ContextCompat.getColor(context, R.color.library_color_FF3258F7)
         mDashPaint.style = Paint.Style.STROKE
         mDashPaint.strokeWidth = width
         mDashPaint.isAntiAlias = true
@@ -51,7 +51,7 @@ class DottedLineView(context: Context, attrs: AttributeSet?) : View(context, att
         val width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, metrics)
         val dashGap = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, metrics)
         val dashWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, metrics)
-        mDashPaint.color = ContextCompat.getColor(context, R.color.color_FF3258F7)
+        mDashPaint.color = ContextCompat.getColor(context, R.color.library_color_FF3258F7)
         mDashPaint.style = Paint.Style.STROKE
         mDashPaint.strokeWidth = width
         mDashPaint.isAntiAlias = true

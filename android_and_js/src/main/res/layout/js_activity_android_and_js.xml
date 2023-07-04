@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_73"
-            android:background="@color/color_FF198CFF"
+            android:background="@color/library_color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
             app:contentInsetStart="0dp">
@@ -59,8 +59,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_48"
                         android:gravity="center"
-                        android:text="@string/android_and_js"
-                        android:textColor="@color/white"
+                        android:text="@string/library_android_and_js"
+                        android:textColor="@color/library_white"
                         android:textSize="@dimen/sp_20" />
 
                 </FrameLayout>
@@ -77,7 +77,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_10"
-            android:background="@color/color_4876FF" />
+            android:background="@color/library_color_4876FF" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -86,8 +86,8 @@
             android:gravity="center"
             android:paddingStart="@dimen/dp_25"
             android:paddingEnd="@dimen/dp_25"
-            android:text="@string/this_is_the_h5_page"
-            android:textColor="@color/black" />
+            android:text="@string/library_this_is_the_h5_page"
+            android:textColor="@color/library_black" />
 
         <View
             android:layout_width="match_parent"
@@ -102,8 +102,8 @@
             android:gravity="center"
             android:paddingStart="@dimen/dp_25"
             android:paddingEnd="@dimen/dp_25"
-            android:text="@string/android_to_js"
-            android:textColor="@color/white" />
+            android:text="@string/library_android_to_js"
+            android:textColor="@color/library_white" />
 
         <View
             android:layout_width="match_parent"
@@ -118,8 +118,8 @@
             android:gravity="center"
             android:paddingStart="@dimen/dp_25"
             android:paddingEnd="@dimen/dp_25"
-            android:text="@string/android_to_js2"
-            android:textColor="@color/white" />
+            android:text="@string/library_android_to_js2"
+            android:textColor="@color/library_white" />
 
         <View
             android:layout_width="match_parent"
@@ -134,8 +134,8 @@
             android:gravity="center"
             android:paddingStart="@dimen/dp_25"
             android:paddingEnd="@dimen/dp_25"
-            android:text="@string/android_to_js3"
-            android:textColor="@color/white" />
+            android:text="@string/library_android_to_js3"
+            android:textColor="@color/library_white" />
 
     </LinearLayout>
 

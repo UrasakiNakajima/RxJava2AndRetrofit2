@@ -26,7 +26,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
-                android:background="@color/color_FF198CFF"
+                android:background="@color/library_color_FF198CFF"
                 android:minHeight="?attr/actionBarSize"
                 android:orientation="vertical"
                 app:contentInsetStart="0dp">
@@ -36,8 +36,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_48"
                     android:gravity="center"
-                    android:text="@string/project"
-                    android:textColor="@color/color_FFFFFFFF"
+                    android:text="@string/library_project"
+                    android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/sp_20" />
 
             </androidx.appcompat.widget.Toolbar>
@@ -45,7 +45,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_54"
-                android:background="?attr/main_bg_1"
+                android:background="?attr/library_main_bg_1"
                 android:elevation="6dp">
 
                 <net.lucode.hackware.magicindicator.MagicIndicator
@@ -59,13 +59,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
-                android:background="@color/color_FF999999" />
+                android:background="@color/library_color_FF999999" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/mine_view_pager2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white" />
+                android:background="@color/library_white" />
 
         </LinearLayout>
 
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:color="@color/color_FF999999"
+            android:color="@color/library_color_FF999999"
             android:visibility="gone"
             app:qmui_loading_view_size="@dimen/dp_33" />
 

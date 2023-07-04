@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
-            android:background="@color/color_FF198CFF"
+            android:background="@color/library_color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
             app:contentInsetStart="0dp">
@@ -27,8 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
                 android:gravity="center"
-                android:text="@string/home"
-                android:textColor="@color/color_FFFFFFFF"
+                android:text="@string/library_home"
+                android:textColor="@color/library_color_FFFFFFFF"
                 android:textSize="@dimen/sp_20" />
 
         </androidx.appcompat.widget.Toolbar>
@@ -48,18 +48,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
                     android:layout_gravity="center"
-                    android:background="@color/color_FFFFC73B"
+                    android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/request_permission_and_start_locating"
-                    android:textColor="@color/color_FFFFFFFF"
+                    android:text="@string/library_request_permission_and_start_locating"
+                    android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
                 <com.scwang.smart.refresh.layout.SmartRefreshLayout
                     android:id="@+id/refresh_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/color_FF000000"
+                    android:background="@color/library_color_FF000000"
                     app:srlAccentColor="@android:color/white"
                     app:srlEnablePreviewInEditMode="true"
                     app:srlPrimaryColor="#444444">
@@ -89,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:color="@color/color_FF999999"
+        android:color="@color/library_color_FF999999"
         android:visibility="gone"
         app:qmui_loading_view_size="@dimen/dp_33" />
 

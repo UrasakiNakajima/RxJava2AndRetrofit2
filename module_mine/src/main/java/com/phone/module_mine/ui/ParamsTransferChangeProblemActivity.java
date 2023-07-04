@@ -86,8 +86,8 @@ public class ParamsTransferChangeProblemActivity extends BaseRxAppActivity {
         tevStringListAfterChange = (TextView) findViewById(R.id.tev_stringList_after_change);
         tevUserAfterChange2 = (TextView) findViewById(R.id.tev_user_after_change2);
         tevStringListAfterChange2 = (TextView) findViewById(R.id.tev_stringList_after_change2);
-        setToolbar(false, R.color.color_FF198CFF);
-        imvBack.setColorFilter(ResourcesManager.getColor(R.color.white));
+        setToolbar(false, R.color.library_color_FF198CFF);
+        imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_white));
         layoutBack.setOnClickListener(v -> {
             finish();
         });

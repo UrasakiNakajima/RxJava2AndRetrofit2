@@ -43,7 +43,7 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                     } else {
                         tabRxFragment.value = State.ErrorState(
                             BaseApplication.instance().resources.getString(
-                                R.string.no_data_available
+                                R.string.library_no_data_available
                             )
                         )
                     }
@@ -74,7 +74,7 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                             tabRxActivity.value =
                                 State.ErrorState(
                                     BaseApplication.instance().resources.getString(
-                                        R.string.no_data_available
+                                        R.string.library_no_data_available
                                     )
                                 )
                         }
@@ -82,7 +82,7 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                         tabRxActivity.value =
                             State.ErrorState(
                                 BaseApplication.instance().resources.getString(
-                                    R.string.loading_failed
+                                    R.string.library_loading_failed
                                 )
                             )
                     }

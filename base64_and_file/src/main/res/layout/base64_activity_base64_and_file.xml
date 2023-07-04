@@ -26,7 +26,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_73"
-                    android:background="@color/color_FF198CFF"
+                    android:background="@color/library_color_FF198CFF"
                     android:minHeight="?attr/actionBarSize"
                     android:orientation="vertical"
                     app:contentInsetStart="0dp">
@@ -56,7 +56,7 @@
                         android:layout_marginTop="@dimen/dp_25"
                         android:gravity="center"
                         android:text="@string/base64_and_file_title"
-                        android:textColor="@color/white"
+                        android:textColor="@color/library_white"
                         android:textSize="@dimen/sp_20" />
 
                 </androidx.appcompat.widget.Toolbar>
@@ -66,11 +66,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
                     android:layout_gravity="center"
-                    android:background="@color/color_FFFFC73B"
+                    android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/request_permissions"
-                    android:textColor="@color/color_FFFFFFFF"
+                    android:text="@string/library_request_permissions"
+                    android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
                 <FrameLayout
@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@string/compress_pictures"
+                        android:text="@string/library_compress_pictures"
                         android:textSize="@dimen/sp_20" />
 
                     <ImageView
@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/colorBlack666"
+                        android:background="@color/library_colorBlack666"
                         android:visibility="gone"
                         tools:ignore="ContentDescription" />
 
@@ -99,7 +99,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_1"
-                    android:background="@color/light_gray" />
+                    android:background="@color/library_light_gray" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -110,7 +110,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@string/picture_to_base64"
+                        android:text="@string/library_picture_to_base64"
                         android:textSize="@dimen/sp_20" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -124,7 +124,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_1"
-                    android:background="@color/light_gray" />
+                    android:background="@color/library_light_gray" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -135,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@string/base64_to_picture"
+                        android:text="@string/library_base64_to_picture"
                         android:textSize="@dimen/sp_20" />
 
                     <ImageView
@@ -143,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/colorBlack666"
+                        android:background="@color/library_colorBlack666"
                         android:visibility="gone"
                         tools:ignore="ContentDescription" />
 
@@ -152,18 +152,18 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_1"
-                    android:background="@color/light_gray" />
+                    android:background="@color/library_light_gray" />
 
                 <TextView
                     android:id="@+id/tev_reset_data"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_50"
                     android:layout_gravity="center"
-                    android:background="@color/color_FFFFC73B"
+                    android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/reset_data"
-                    android:textColor="@color/color_FFFFFFFF"
+                    android:text="@string/library_reset_data"
+                    android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/sp_16" />
 
             </LinearLayout>

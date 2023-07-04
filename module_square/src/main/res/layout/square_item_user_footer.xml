@@ -34,19 +34,19 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
-                        android:background="@color/color_FFFFC73B"
+                        android:background="@color/library_color_FFFFC73B"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_10"
-                        android:text="@string/user_id"
-                        android:textColor="@color/color_FFFFFF"
+                        android:text="@string/library_user_id"
+                        android:textColor="@color/library_color_FFFFFF"
                         android:textSize="@dimen/sp_14" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/color_FFFFFF" />
+                        android:background="@color/library_color_FFFFFF" />
 
                     <TextView
                         android:id="@+id/tev_birthday"
@@ -54,19 +54,19 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
-                        android:background="@color/color_FFFFC73B"
+                        android:background="@color/library_color_FFFFC73B"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_10"
-                        android:text="@string/birthday"
-                        android:textColor="@color/color_FFFFFF"
+                        android:text="@string/library_birthday"
+                        android:textColor="@color/library_color_FFFFFF"
                         android:textSize="@dimen/sp_14" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/color_FFFFFF" />
+                        android:background="@color/library_color_FFFFFF" />
 
                     <TextView
                         android:id="@+id/tev_update"
@@ -74,13 +74,13 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:background="@color/color_4876FF"
+                        android:background="@color/library_color_4876FF"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_10"
-                        android:text="@string/update"
-                        android:textColor="@color/color_FFFFFF"
+                        android:text="@string/library_update"
+                        android:textColor="@color/library_color_FFFFFF"
                         android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>
@@ -88,7 +88,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/color_FFFFFF" />
+                    android:background="@color/library_color_FFFFFF" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -102,19 +102,19 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
-                        android:background="@color/color_FFFFC73B"
+                        android:background="@color/library_color_FFFFC73B"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_10"
-                        android:text="@string/salary"
-                        android:textColor="@color/color_FFFFFF"
+                        android:text="@string/library_salary"
+                        android:textColor="@color/library_color_FFFFFF"
                         android:textSize="@dimen/sp_14" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/color_FFFFFF" />
+                        android:background="@color/library_color_FFFFFF" />
 
                     <TextView
                         android:id="@+id/tev_address"
@@ -122,19 +122,19 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
-                        android:background="@color/color_FFFFC73B"
+                        android:background="@color/library_color_FFFFC73B"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_10"
-                        android:text="@string/address"
-                        android:textColor="@color/color_FFFFFF"
+                        android:text="@string/library_address"
+                        android:textColor="@color/library_color_FFFFFF"
                         android:textSize="@dimen/sp_14" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:background="@color/color_FFFFFF" />
+                        android:background="@color/library_color_FFFFFF" />
 
                     <TextView
                         android:id="@+id/tev_delete"
@@ -142,13 +142,13 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:background="@color/color_4876FF"
+                        android:background="@color/library_color_4876FF"
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:paddingStart="@dimen/dp_10"
                         android:paddingEnd="@dimen/dp_10"
-                        android:text="@string/delete"
-                        android:textColor="@color/color_FFFFFF"
+                        android:text="@string/library_delete"
+                        android:textColor="@color/library_color_FFFFFF"
                         android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>

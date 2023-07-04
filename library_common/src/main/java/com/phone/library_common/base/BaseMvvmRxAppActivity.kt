@@ -80,14 +80,14 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         if (isDarkFont) {
             ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                 .statusBarDarkFont(isDarkFont)
-                .statusBarColor(R.color.color_FFFFFFFF)     //状态栏颜色，不写默认透明色
+                .statusBarColor(R.color.library_color_FFFFFFFF)     //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .keyboardEnable(true)
                 .init()
         } else {
             ImmersionBar.with(this)
                 .statusBarDarkFont(isDarkFont)
-                .statusBarColor(R.color.color_FF198CFF)     //状态栏颜色，不写默认透明色
+                .statusBarColor(R.color.library_color_FF198CFF)     //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .keyboardEnable(true)
                 .init()
@@ -100,14 +100,14 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         if (isDarkFont) {
             ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                 .statusBarDarkFont(isDarkFont)
-                .statusBarColor(R.color.color_FFFFFFFF)     //状态栏颜色，不写默认透明色
+                .statusBarColor(R.color.library_color_FFFFFFFF)     //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .keyboardEnable(true)
                 .init()
         } else {
             ImmersionBar.with(this)
                 .statusBarDarkFont(isDarkFont)
-                .statusBarColor(R.color.color_FF198CFF)     //状态栏颜色，不写默认透明色
+                .statusBarColor(R.color.library_color_FF198CFF)     //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .keyboardEnable(true)
                 .init()
@@ -183,11 +183,11 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         textView.layoutParams = layoutParams1
         textView.setPadding(ScreenManager.dpToPx(20f), 0, ScreenManager.dpToPx(20f), 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.toFloat())
-        textView.setTextColor(ResourcesManager.getColor(R.color.white))
+        textView.setTextColor(ResourcesManager.getColor(R.color.library_white))
         textView.gravity = Gravity.CENTER
         textView.includeFontPadding = false
         val gradientDrawable = GradientDrawable()//创建drawable
-        gradientDrawable.setColor(ResourcesManager.getColor(R.color.color_989898))
+        gradientDrawable.setColor(ResourcesManager.getColor(R.color.library_color_989898))
         gradientDrawable.cornerRadius = ScreenManager.dpToPx(20f).toFloat()
         textView.background = gradientDrawable
         textView.text = message

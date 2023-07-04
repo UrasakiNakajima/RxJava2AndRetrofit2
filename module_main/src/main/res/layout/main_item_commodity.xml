@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/dp_20"
-            android:text="@string/mounting"
+            android:text="@string/library_mounting"
             android:textSize="@dimen/sp_16"
             android:textStyle="bold"
             tools:ignore="SpUsage" />
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/dp_20"
-            android:text="@string/mounting"
+            android:text="@string/library_mounting"
             android:textSize="@dimen/sp_18"
             tools:ignore="SpUsage" />
 
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/dp_20"
-            android:text="@string/mounting"
+            android:text="@string/library_mounting"
             android:textSize="@dimen/sp_14"
             tools:ignore="SpUsage" />
 
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_10"
-        android:text="@string/mounting"
+        android:text="@string/library_mounting"
         android:textSize="@dimen/sp_14"
         tools:ignore="SpUsage" />
 
