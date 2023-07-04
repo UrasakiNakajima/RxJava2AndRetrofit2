@@ -38,8 +38,8 @@ class ProjectActivity :
             LogManager.i(TAG, "onChanged*****dataxRxActivity")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.list != null && it.list.size > 0) {
-                        projectTabDataSuccess(it.list)
+                    if (it.success != null && it.success.size > 0) {
+                        projectTabDataSuccess(it.success)
                     } else {
                         projectTabDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
                     }

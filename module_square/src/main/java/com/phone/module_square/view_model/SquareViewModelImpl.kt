@@ -38,8 +38,15 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         LogManager.i(TAG, "squareData thread name*****${Thread.currentThread().name}")
 
         mJob?.cancel()
+
+        //使用GlobalScope 单例对象直接调用launch/async开启协程
+        //在应用范围内启动一个新协程，协程的生命周期与应用程序一致。
+        //由于这样启动的协程存在启动协程的组件已被销毁但协程还存在的情况，极限情况下可能导致资源耗尽，
+        //所以Activity 销毁的时候记得要取消掉，避免内存泄漏
+        //不建议使用，尤其是在客户端这种需要频繁创建销毁组件的场景。
+        //开启GlobalScope.launch{} 或GlobalScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是子线程）。
         mJob =
-            GlobalScope.launch(Dispatchers.Main) { //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了（根据指定的线程来）
+            GlobalScope.launch(Dispatchers.Main) {
 
 //            //协程内部只开启多个async是并行的
 //            async {

@@ -61,9 +61,9 @@ class SubResourceFragment :
 //            LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.list != null && it.list.size > 0) {
+                    if (it.success != null && it.success.size > 0) {
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
-                        subResourceDataSuccess(it.list)
+                        subResourceDataSuccess(it.success)
                     } else {
                         subResourceDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
                     }

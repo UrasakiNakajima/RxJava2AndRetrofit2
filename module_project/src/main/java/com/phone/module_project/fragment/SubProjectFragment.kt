@@ -64,8 +64,8 @@ class SubProjectFragment :
 //            LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.list != null && it.list.size > 0) {
-                        subProjectDataSuccess(it.list)
+                    if (it.success != null && it.success.size > 0) {
+                        subProjectDataSuccess(it.success)
                     } else {
                         subProjectDataError(ResourcesManager.getString(R.string.no_data_available))
                     }

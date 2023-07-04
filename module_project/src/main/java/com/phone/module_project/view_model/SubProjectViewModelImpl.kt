@@ -36,6 +36,9 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
     override fun subProjectData(
         pageNum: Int, tabId: Int
     ) {
+        //在Android MVVM架构的viewModel中启动一个新协程（推荐使用），该协程默认运行在UI线程，协程和该组件生命周期绑定，
+        //组件销毁时，协程一并销毁，从而实现安全可靠地协程调用。
+        //调用viewModelScope.launch {} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是UI线程）。
         viewModelScope.launch { //开启viewModelScope.launch这种协程之后依然是在当前线程
             val apiResponse = executeRequest { model.subProjectData(pageNum, tabId) }
 

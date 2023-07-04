@@ -15,12 +15,11 @@ import com.phone.module_home.model.IHomeModel
 import com.phone.module_home.view.IHomePageView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * author    : Urasaki
@@ -37,7 +36,11 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
 
     //    private IFirstPageView homePageView;//P需要与V 交互，所以需要持有V的引用
     private var model: IHomeModel
-    private val mainScope = MainScope()
+
+    //方法三：创建一个CoroutineScope 对象，创建的时候可以指定运行线程（默认运行在子线程）
+    //Activity 销毁的时候记得要取消掉，避免内存泄漏
+    //开启mCoroutineScope?.launch{} 或mCoroutineScope?.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
+    var mCoroutineScope = CoroutineScope(Dispatchers.Main)
 
     init {
         attachView(baseView)
@@ -50,7 +53,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
             if (baseView is IHomePageView) {
                 val homePageView = baseView
 
-                mainScope.launch {//开启MainScope这种协程之后就是在MAIN线程执行了
+                mCoroutineScope.launch {
 
 //                    //协程内部只开启多个launch是并行的
 //                    launch {
@@ -175,7 +178,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
     }
 
     override fun detachView() {
-        mainScope.cancel()
+        mCoroutineScope.cancel()
         super.detachView()
     }
 

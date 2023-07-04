@@ -49,8 +49,8 @@ class ResourceFragment :
 //            LogManager.i(TAG, "onChanged*****tabRxFragment")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.list != null && it.list.size > 0) {
-                        resourceTabDataSuccess(it.list)
+                    if (it.success != null && it.success.size > 0) {
+                        resourceTabDataSuccess(it.success)
                     } else {
                         resourceTabDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
                     }

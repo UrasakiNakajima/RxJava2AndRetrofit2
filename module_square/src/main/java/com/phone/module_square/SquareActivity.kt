@@ -65,8 +65,8 @@ class SquareActivity :
             LogManager.i(TAG, "onChanged*****dataxRxActivity")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.list != null && it.list.size > 0) {
-                        squareDataSuccess(it.list)
+                    if (it.success != null && it.success.size > 0) {
+                        squareDataSuccess(it.success)
                     } else {
                         squareDataError(BaseApplication.instance().resources.getString(R.string.no_data_available))
                     }

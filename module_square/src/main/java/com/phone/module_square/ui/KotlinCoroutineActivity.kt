@@ -1,14 +1,19 @@
 package com.phone.module_square.ui
 
+import android.text.TextUtils
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.base.BaseBindingRxAppActivity
+import com.phone.library_common.BaseApplication
+import com.phone.library_common.base.BaseMvvmAppRxActivity
+import com.phone.library_common.base.State
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareActivityKotlinCoroutineBinding
+import com.phone.module_square.view_model.CoroutineViewModel
 import kotlinx.coroutines.*
 
 /**
@@ -19,7 +24,7 @@ import kotlinx.coroutines.*
  */
 
 @Route(path = ConstantData.Route.ROUTE_KOTLIN_COROUTINE)
-class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCoroutineBinding>() {
+class KotlinCoroutineActivity : BaseMvvmAppRxActivity<CoroutineViewModel, SquareActivityKotlinCoroutineBinding>() {
 
     companion object {
         private val TAG = KotlinCoroutineActivity::class.java.simpleName
@@ -30,9 +35,30 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
     var mMainScope: CoroutineScope? = null
 
     override fun initLayoutId() = R.layout.square_activity_kotlin_coroutine
+    override fun initViewModel() =
+        ViewModelProvider(mRxAppCompatActivity).get(CoroutineViewModel::class.java)
 
     override fun initData() {
 
+    }
+
+    override fun initObservers() {
+        viewModel.executeSuccess.observe(this, {
+            LogManager.i(TAG, "onChanged*****tabRxActivity")
+            when (it) {
+                is State.SuccessState -> {
+                    if ("success".equals(it.success)) {
+                        hideLoading()
+                    } else {
+                        hideLoading()
+                    }
+                }
+
+                is State.ErrorState -> {
+                    hideLoading()
+                }
+            }
+        })
     }
 
     override fun initViews() {
@@ -52,6 +78,9 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
         mDatabind.tevStartMainScope.setOnClickListener {
             startMainScope()
         }
+        mDatabind.tevStartViewModelScope.setOnClickListener {
+            startViewModelScope()
+        }
         mDatabind.tevStartLifecycleScope.setOnClickListener {
             startLifecycleScope()
         }
@@ -61,7 +90,7 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
         //方法一：使用 runBlocking 顶层函数
         //启动一个新协程，并阻塞当前线程，直到其内部所有逻辑及子协程逻辑全部执行完成。
         //不建议使用
-        //开启GlobalScope.launch这种协程之后就是在MAIN线程执行了
+        //开启startRunBlocking{} 这种协程之后就是在MAIN线程执行了
         runBlocking {
             LogManager.i(TAG, "runBlocking thread name*****${Thread.currentThread().name}")
 
@@ -76,7 +105,7 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
         //由于这样启动的协程存在启动协程的组件已被销毁但协程还存在的情况，极限情况下可能导致资源耗尽，
         //所以Activity 销毁的时候记得要取消掉，避免内存泄漏
         //不建议使用，尤其是在客户端这种需要频繁创建销毁组件的场景。
-        //开启GlobalScope.launch{} 或GlobalScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是子线程）。
+        //开启GlobalScope.launch{} 或 GlobalScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是子线程）。
         mJob?.cancel()
         mJob = GlobalScope.launch(Dispatchers.Main) {
             LogManager.i(TAG, "GlobalScope thread name*****${Thread.currentThread().name}")
@@ -105,7 +134,7 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
     private fun startCoroutineScope() {
         //方法三：创建一个CoroutineScope 对象，创建的时候可以指定运行线程（默认运行在子线程）
         //Activity 销毁的时候记得要取消掉，避免内存泄漏
-        //开启mCoroutineScope?.launch{} 或mCoroutineScope?.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
+        //开启mCoroutineScope?.launch{} 或 mCoroutineScope?.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
         mCoroutineScope = CoroutineScope(Dispatchers.Main)
         mCoroutineScope?.launch {
             LogManager.i(TAG, "mCoroutineScope thread name*****${Thread.currentThread().name}")
@@ -128,7 +157,7 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
     private fun startMainScope() {
         //方法四：创建一个MainScope 对象，默认运行在UI线程
         //Activity 销毁的时候记得要取消掉，避免内存泄漏
-        //开启GlobalScope.launch{} 或GlobalScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
+        //开启GlobalScope.launch{} 或 GlobalScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
         mMainScope = MainScope()
         mMainScope?.launch {//开启MainScope这种协程之后就是在MAIN线程执行了
             LogManager.i(TAG, "mainScope launch thread name*****${Thread.currentThread().name}")
@@ -153,11 +182,22 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
 //        }
     }
 
+    private fun startViewModelScope() {
+        //方法五：在Android MVVM架构的viewModel中启动一个新协程（推荐使用），该协程默认运行在UI线程，
+        //协程和该组件生命周期绑定，组件销毁时，协程一并销毁，从而实现安全可靠地协程调用。
+        //调用viewModelScope.launch{} 或 viewModelScope.launch{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是UI线程）。
+        showLoading()
+        viewModel.startViewModelScope()
+    }
+
     private fun startLifecycleScope() {
-        //方法五：此种创建方式只能在Activity/Fragment内部创建，默认运行在UI线程，它自动绑定Activity生命周期，不用处理内容泄漏问题
-        //开启lifecycleScope.launch{}或lifecycleScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
+        //方法六：此种创建方式只能在Activity/Fragment内部创建，默认运行在UI线程，它自动绑定Activity生命周期，不用处理内容泄漏问题
+        //开启lifecycleScope.launch{} 或 lifecycleScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
         lifecycleScope.launch {
-            LogManager.i(TAG, "lifecycleScope launch thread name*****${Thread.currentThread().name}")
+            LogManager.i(
+                TAG,
+                "lifecycleScope launch thread name*****${Thread.currentThread().name}"
+            )
 
             showLoading()
             //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
@@ -184,16 +224,16 @@ class KotlinCoroutineActivity : BaseBindingRxAppActivity<SquareActivityKotlinCor
     }
 
     override fun showLoading() {
-        if (!mLoadView.isShown) {
-            mLoadView.visibility = View.VISIBLE
-            mLoadView.start()
+        if (!mDatabind.loadView.isShown) {
+            mDatabind.loadView.visibility = View.VISIBLE
+            mDatabind.loadView.start()
         }
     }
 
     override fun hideLoading() {
-        if (mLoadView.isShown) {
-            mLoadView.stop()
-            mLoadView.visibility = View.GONE
+        if (mDatabind.loadView.isShown) {
+            mDatabind.loadView.stop()
+            mDatabind.loadView.visibility = View.GONE
         }
     }
 

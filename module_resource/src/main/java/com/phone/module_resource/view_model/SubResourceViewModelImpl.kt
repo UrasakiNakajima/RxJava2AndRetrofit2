@@ -26,6 +26,9 @@ class SubResourceViewModelImpl() : BaseViewModel(), ISubResourceViewModel {
         tabId: Int,
         pageNum: Int
     ) {
+        //在Android MVVM架构的viewModel中启动一个新协程（推荐使用），该协程默认运行在UI线程，协程和该组件生命周期绑定，
+        //组件销毁时，协程一并销毁，从而实现安全可靠地协程调用。
+        //调用viewModelScope.launch {} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是UI线程）。
         viewModelScope.launch {
             val apiResponse = executeRequest { model.subResourceData(tabId, pageNum) }
             if (apiResponse.data != null && apiResponse.errorCode == 0) {

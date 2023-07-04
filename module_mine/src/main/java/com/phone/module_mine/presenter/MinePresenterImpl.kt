@@ -33,7 +33,11 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
     }
 
     //    private IResourceChildView feedbackView;//P需要与V 交互，所以需要持有V的引用
-    private var model = MineModelImpl();
+    private var model = MineModelImpl()
+
+    //创建一个MainScope 对象，默认运行在UI线程
+    //Activity 销毁的时候记得要取消掉，避免内存泄漏
+    //开启GlobalScope.launch{} 或GlobalScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
     private val mainScope = MainScope()
 
     init {
