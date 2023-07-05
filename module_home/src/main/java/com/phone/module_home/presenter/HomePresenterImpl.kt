@@ -37,8 +37,8 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
     //    private IFirstPageView homePageView;//P需要与V 交互，所以需要持有V的引用
     private var model: IHomeModel
 
-    //方法三：创建一个CoroutineScope 对象，创建的时候可以指定运行线程（默认运行在子线程）
-    //Activity 销毁的时候记得要取消掉，避免内存泄漏
+    //创建一个CoroutineScope 对象，创建的时候可以指定运行线程（默认运行在子线程）
+    //即使Activity/Fragment已经被销毁，协程仍然在执行，所以需要绑定生命周期（就是在Activity/Fragment 销毁的时候取消这个协程），避免内存泄漏。
     //开启mCoroutineScope?.launch{} 或mCoroutineScope?.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
     var mCoroutineScope = CoroutineScope(Dispatchers.Main)
 

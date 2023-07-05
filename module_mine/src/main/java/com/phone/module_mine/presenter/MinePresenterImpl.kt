@@ -36,8 +36,8 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
     private var model = MineModelImpl()
 
     //创建一个MainScope 对象，默认运行在UI线程
-    //Activity 销毁的时候记得要取消掉，避免内存泄漏
-    //开启GlobalScope.launch{} 或GlobalScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
+    //即使Activity/Fragment已经被销毁，协程仍然在执行，所以需要绑定生命周期（就是在Activity/Fragment 销毁的时候取消这个协程），避免内存泄漏。
+    //开启mMainScope?.launch{} 或 mMainScope?.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定是创建的时候的线程）。
     private val mainScope = MainScope()
 
     init {

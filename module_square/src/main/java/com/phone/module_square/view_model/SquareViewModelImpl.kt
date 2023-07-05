@@ -48,15 +48,17 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
         mJob =
             GlobalScope.launch(Dispatchers.Main) {
 
-//            //协程内部只开启多个async是并行的
-//            async {
-//                delay(2000)
-//                LogManager.i(TAG, "async delay(2000)")
-//            }
-//            async {
-//                delay(1000)
-//                LogManager.i(TAG, "async delay(1000)")
-//            }
+//                //协程内部只开启多个async是并行的
+//                async {
+//                    delay(2000)
+//                    LogManager.i(TAG, "async delay(2000)")
+//                    LogManager.i(TAG, "async thread name*****" + Thread.currentThread().name)
+//                }
+//                async {
+//                    delay(1000)
+//                    LogManager.i(TAG, "async delay(1000)")
+//                    LogManager.i(TAG, "async2 thread name*****" + Thread.currentThread().name)
+//                }
 
 
                 val apiResponse = executeRequest { mModel.squareData(currentPage) }
