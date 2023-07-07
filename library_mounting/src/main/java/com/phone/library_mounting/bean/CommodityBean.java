@@ -1,4 +1,4 @@
-package com.phone.module_main.mounting.bean;
+package com.phone.library_mounting.bean;
 
 public class CommodityBean {
 

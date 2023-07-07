@@ -53,7 +53,7 @@ dependencyResolutionManagement {
 rootProject.name = "RxJava2AndRetrofit2"
 include ':aidl_client'
 include ':aidl_server'
-include ':app', ':module_main', ':module_home', ':module_project', ':module_square', ':module_resource', ':module_mine', ':library_common', ':base64_and_file', ':android_and_js'
+include ':app', ':module_main', ':module_home', ':module_project', ':module_square', ':module_resource', ':module_mine', ':library_common', ':base64_and_file', ':android_and_js', ':library_mounting'
 include ':sts_server'
 include ':call_so'
 includeBuild("VersionPlugin")

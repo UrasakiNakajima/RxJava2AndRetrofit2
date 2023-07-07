@@ -7,6 +7,4 @@ interface ISquareViewModel {
 
     fun squareData(rxFragment: RxFragment, currentPage: String)
 
-    fun squareData2(rxAppCompatActivity: RxAppCompatActivity, currentPage: String)
-
 }

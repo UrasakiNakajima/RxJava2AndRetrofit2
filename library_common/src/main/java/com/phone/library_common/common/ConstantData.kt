@@ -31,7 +31,6 @@ object ConstantData {
 
     object Route {
         const val ROUTE_MAIN = "/module_main/main"
-        const val ROUTE_MOUNTING = "/module_main/mounting"
 
 
         const val ROUTE_HOME = "/module_home/home"
@@ -77,6 +76,8 @@ object ConstantData {
         const val ROUTE_REGISTER = "/library_common/ui/register"
         const val ROUTE_WEB_VIEW = "/library_common/ui/route_web_view"
 
+
+        const val ROUTE_MOUNTING = "/library_mounting/mounting"
     }
 
 

@@ -56,39 +56,4 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
         }
     }
 
-    override fun resourceTabData2() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val success =
-                    model.resourceTabData2().execute().body()?.string()
-                launch(Dispatchers.Main) {
-                    LogManager.i(TAG, "resourceTabData response*****$success")
-                    if (!TextUtils.isEmpty(success)) {
-                        val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
-                        val response: ApiResponse<MutableList<TabBean>> =
-                            GsonManager().fromJson(success ?: "", type2)
-                        if (response.data().size > 0) {
-                            tabRxActivity.value =
-                                State.SuccessState(response.data ?: mutableListOf())
-                        } else {
-                            tabRxActivity.value =
-                                State.ErrorState(
-                                    BaseApplication.instance().resources.getString(
-                                        R.string.library_no_data_available
-                                    )
-                                )
-                        }
-                    } else {
-                        tabRxActivity.value =
-                            State.ErrorState(
-                                BaseApplication.instance().resources.getString(
-                                    R.string.library_loading_failed
-                                )
-                            )
-                    }
-                }
-            }
-        }
-    }
-
 }

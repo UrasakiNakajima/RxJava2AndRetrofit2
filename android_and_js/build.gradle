@@ -25,6 +25,11 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     //android 模块下开启DataBinding

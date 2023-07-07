@@ -104,54 +104,6 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         }
     }
 
-    override fun mineData2(
-        rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>
-    ) {
-        val baseView = obtainView()
-        if (baseView != null) {
-            if (baseView is IMineView) {
-                RetrofitManager.instance().responseString5(rxAppCompatActivity,
-                    model.mineData2(bodyParams),
-                    object : OnCommonSingleParamCallback<String> {
-                        override fun onSuccess(success: String) {
-                            LogManager.i(TAG, "mineData success*****$success")
-                            if (!TextUtils.isEmpty(success)) {
-//                                    val response = JSONObject.parseObject(success, MineResponse::class.java)
-//                                    val gson = Gson()
-//                                    val response = gson.fromJson(success, MineResponse::class.java)
-                                val type2 =
-                                    object : TypeToken<ApiResponse3<MineResult>>() {}.type
-                                val response: ApiResponse3<MineResult> =
-                                    GsonManager().fromJson(success ?: "", type2)
-                                if (response.result != null && response.error_code == 0) {
-                                    val list = response.result?.data ?: mutableListOf()
-                                    baseView.mineDataSuccess(list)
-                                } else {
-                                    baseView.mineDataError(
-                                        response.reason
-                                            ?: BaseApplication.instance().resources.getString(
-                                                R.string.library_loading_failed
-                                            )
-                                    )
-                                }
-                            } else {
-                                baseView.mineDataError(
-                                    BaseApplication.instance().resources.getString(
-                                        R.string.library_loading_failed
-                                    )
-                                )
-                            }
-                        }
-
-                        override fun onError(error: String) {
-                            LogManager.i(TAG, "error*****$error")
-                            baseView.mineDataError(error)
-                        }
-                    })
-            }
-        }
-    }
-
     override fun userData(
         rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>
     ) {

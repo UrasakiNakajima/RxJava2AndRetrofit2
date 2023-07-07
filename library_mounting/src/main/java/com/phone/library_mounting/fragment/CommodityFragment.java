@@ -1,4 +1,4 @@
-package com.phone.module_main.mounting.fragment;
+package com.phone.library_mounting.fragment;
 
 import android.os.Bundle;
 
@@ -7,15 +7,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.library_common.base.BaseBindingRxFragment;
-import com.phone.module_main.R;
-import com.phone.module_main.databinding.MainFragmentCommodityBinding;
-import com.phone.module_main.mounting.adapter.CommodityAdapter;
-import com.phone.module_main.mounting.bean.CommodityBean;
+import com.phone.library_mounting.R;
+import com.phone.library_mounting.databinding.MountingFragmentCommodityBinding;
+import com.phone.library_mounting.adapter.CommodityAdapter;
+import com.phone.library_mounting.bean.CommodityBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommodityFragment extends BaseBindingRxFragment<MainFragmentCommodityBinding> {
+public class CommodityFragment extends BaseBindingRxFragment<MountingFragmentCommodityBinding> {
 
     private static final String TAG = CommodityFragment.class.getSimpleName();
     private String commodity;
@@ -35,7 +35,7 @@ public class CommodityFragment extends BaseBindingRxFragment<MainFragmentCommodi
 
     @Override
     protected int initLayoutId() {
-        return R.layout.main_fragment_commodity;
+        return R.layout.mounting_fragment_commodity;
     }
 
     @Override

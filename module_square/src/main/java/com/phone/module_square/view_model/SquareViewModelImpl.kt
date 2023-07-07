@@ -19,7 +19,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
+class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 
     companion object {
         private val TAG: String = SquareViewModelImpl::class.java.simpleName
@@ -30,9 +30,6 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
 
     //1.首先定义两个SingleLiveData的实例
     val dataxRxFragment = SingleLiveData<State<List<SubDataSquare>>>()
-
-    //1.首先定义两个SingleLiveData的实例
-    val dataxRxActivity = SingleLiveData<State<List<SubDataSquare>>>()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
         LogManager.i(TAG, "squareData thread name*****${Thread.currentThread().name}")
@@ -75,37 +72,6 @@ class SquareViewModelImpl() : BaseViewModel(), ISquareViewModel {
                     dataxRxFragment.value = State.ErrorState(apiResponse.errorMsg)
                 }
             }
-    }
-
-    override fun squareData2(
-        rxAppCompatActivity: RxAppCompatActivity, currentPage: String
-    ) {
-        RetrofitManager.instance().responseString5(rxAppCompatActivity,
-            mModel.squareData2(currentPage),
-            object : OnCommonSingleParamCallback<String> {
-                override fun onSuccess(success: String) {
-                    LogManager.i(TAG, "success*****$success")
-                    if (!TextUtils.isEmpty(success)) {
-                        val response = GsonManager().convert(success, SquareBean::class.java)
-                        val responseData = response.data?.datas ?: mutableListOf()
-                        if (responseData.size > 0) {
-                            dataxRxActivity.value =
-                                State.SuccessState<List<SubDataSquare>>(responseData)
-                        } else {
-                            dataxRxActivity.value =
-                                State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
-                        }
-                    } else {
-                        dataxRxActivity.value =
-                            State.ErrorState(ResourcesManager.getString(R.string.library_loading_failed))
-                    }
-                }
-
-                override fun onError(error: String) {
-                    LogManager.i(TAG, "error*****$error")
-                    dataxRxActivity.value = State.ErrorState(error)
-                }
-            })
     }
 
     override fun onCleared() {

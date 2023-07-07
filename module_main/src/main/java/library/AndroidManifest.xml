@@ -18,16 +18,7 @@
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
 
-    <application
-        android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/library_AppTheme"
-        android:usesCleartextTraffic="true"
-        tools:ignore="UnusedAttribute"
-        tools:replace="android:allowBackup">
+    <application>
         <!-- 沉浸式状态栏适配 -->
         <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
@@ -63,11 +54,6 @@
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".mounting.MountingActivity"
-            android:exported="true"
-            android:theme="@style/library_NoActionBarTheme" />
 
     </application>
 

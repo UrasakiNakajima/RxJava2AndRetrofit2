@@ -52,41 +52,4 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
         }
     }
 
-    override fun projectTabData2() {
-        //在Android MVVM架构的viewModel中启动一个新协程（推荐使用），该协程默认运行在UI线程，协程和该组件生命周期绑定，
-        //组件销毁时，协程一并销毁，从而实现安全可靠地协程调用。
-        //调用viewModelScope.launch {} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是UI线程）。
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val success = model.projectTabData2().execute().body()?.string()
-                launch(Dispatchers.Main) {
-                    LogManager.i(TAG, "projectTabData2 response*****$success")
-                    if (!TextUtils.isEmpty(success)) {
-                        val type2 = object : TypeToken<ApiResponse<MutableList<TabBean>>>() {}.type
-                        val response: ApiResponse<MutableList<TabBean>> =
-                            GsonManager().fromJson(success ?: "", type2)
-                        response.let {
-                            if (response.data().size > 0) {
-                                dataxRxActivity.value = State.SuccessState(response.data())
-                            } else {
-                                dataxRxActivity.value = State.ErrorState(
-                                    BaseApplication.instance().resources.getString(
-                                        R.string.library_no_data_available
-                                    )
-                                )
-
-                            }
-                        }
-                    } else {
-                        dataxRxActivity.value = State.ErrorState(
-                            BaseApplication.instance().resources.getString(
-                                R.string.library_loading_failed
-                            )
-                        )
-                    }
-                }
-            }
-        }
-    }
-
 }

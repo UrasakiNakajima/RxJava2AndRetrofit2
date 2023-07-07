@@ -19,6 +19,8 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="356a1587ceff55b9378d7ad70923b553" />
+        <!-- 高德地图 -->
+        <service android:name="com.amap.api.location.APSService" />
 
         <activity
             android:name=".ui.HomeActivity"
@@ -36,9 +38,6 @@
         <!--            android:exported="false"-->
         <!--            android:launchMode="singleTask"-->
         <!--            android:screenOrientation="portrait" />-->
-
-        <!-- 高德地图 -->
-        <service android:name="com.amap.api.location.APSService" />
 
     </application>
 

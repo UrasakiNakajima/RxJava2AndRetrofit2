@@ -1,4 +1,4 @@
-package com.phone.module_main.mounting;
+package com.phone.library_mounting;
 
 import android.graphics.Color;
 
@@ -11,10 +11,9 @@ import com.phone.library_common.common.ConstantData;
 import com.phone.library_common.manager.LogManager;
 import com.phone.library_common.manager.ResourcesManager;
 import com.phone.library_common.manager.ScreenManager;
-import com.phone.module_main.R;
-import com.phone.module_main.databinding.MainActivityMountingBinding;
-import com.phone.module_main.mounting.adapter.MineCommonNavigatorAdapter;
-import com.phone.module_main.mounting.fragment.CommodityFragment;
+import com.phone.library_mounting.databinding.MountingActivityMountingBinding;
+import com.phone.library_mounting.adapter.MineCommonNavigatorAdapter;
+import com.phone.library_mounting.fragment.CommodityFragment;
 
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Route(path = ConstantData.Route.ROUTE_MOUNTING)
-public class MountingActivity extends BaseBindingRxAppActivity<MainActivityMountingBinding> {
+public class MountingActivity extends BaseBindingRxAppActivity<MountingActivityMountingBinding> {
 
     private static final String TAG = MountingActivity.class.getSimpleName();
     private int imvBannerHeight;
@@ -31,7 +30,7 @@ public class MountingActivity extends BaseBindingRxAppActivity<MainActivityMount
 
     @Override
     protected int initLayoutId() {
-        return R.layout.main_activity_mounting;
+        return R.layout.mounting_activity_mounting;
     }
 
     @Override

@@ -14,6 +14,4 @@ interface IHomePresenter {
 
     fun homePage(rxFragment: RxFragment, bodyParams: Map<String, String>)
 
-    fun homePage2(rxAppCompatActivity: RxAppCompatActivity, bodyParams: Map<String, String>)
-
 }

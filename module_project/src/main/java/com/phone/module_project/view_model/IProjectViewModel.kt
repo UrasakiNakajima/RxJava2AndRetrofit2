@@ -4,6 +4,4 @@ interface IProjectViewModel {
 
     fun projectTabData()
 
-    fun projectTabData2()
-
 }

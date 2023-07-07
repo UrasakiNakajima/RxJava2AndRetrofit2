@@ -1,4 +1,4 @@
-package com.phone.module_main.mounting.adapter;
+package com.phone.library_mounting.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.phone.module_main.R;
-import com.phone.module_main.mounting.bean.CommodityBean;
+import com.phone.library_mounting.R;
+import com.phone.library_mounting.bean.CommodityBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class CommodityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.main_item_commodity, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.mounting_item_commodity, parent, false);
         return new BodyHolder(view);
     }
 

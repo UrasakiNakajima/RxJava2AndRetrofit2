@@ -4,6 +4,4 @@ interface IResourceViewModel {
 
     fun resourceTabData()
 
-    fun resourceTabData2()
-
 }

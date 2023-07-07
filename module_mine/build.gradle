@@ -39,6 +39,11 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     //android 模块下开启DataBinding
@@ -101,12 +106,6 @@ android {
     }
     //给Module 内的资源名增加前缀, 避免资源名冲突
     resourcePrefix "mine_"
-}
-
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
 }
 
 dependencies {

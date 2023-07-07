@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="base64_Theme.RxJava2AndRetrofit2" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/js_purple_200</item>
+        <item name="colorPrimaryVariant">@color/js_purple_700</item>
+        <item name="colorOnPrimary">@color/js_black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/js_teal_200</item>
+        <item name="colorSecondaryVariant">@color/js_teal_200</item>
+        <item name="colorOnSecondary">@color/js_black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

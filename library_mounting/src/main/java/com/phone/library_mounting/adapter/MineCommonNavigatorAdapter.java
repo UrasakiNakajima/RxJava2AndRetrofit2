@@ -1,11 +1,11 @@
-package com.phone.module_main.mounting.adapter;
+package com.phone.library_mounting.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 
 import com.phone.library_common.manager.ResourcesManager;
-import com.phone.module_main.R;
+import com.phone.library_mounting.R;
 
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;

@@ -50,6 +50,11 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -126,12 +131,6 @@ android {
 
     //给Module 内的资源名增加前缀, 避免资源名冲突
     resourcePrefix "library_"
-}
-
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
 }
 
 greendao {

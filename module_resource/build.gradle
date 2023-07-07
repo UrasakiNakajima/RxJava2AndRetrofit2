@@ -37,6 +37,11 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     //android 模块下开启DataBinding
@@ -109,15 +114,10 @@ android {
     resourcePrefix "resource_"
 }
 
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':android_and_js')
+    implementation project(path: ':library_common')
+
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     //kotlin databinding

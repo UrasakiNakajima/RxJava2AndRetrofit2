@@ -42,6 +42,11 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     //android 模块下开启DataBinding
@@ -106,15 +111,10 @@ android {
     resourcePrefix "square_"
 }
 
-kapt {
-    arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
-    }
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':base64_and_file')
+    implementation project(path: ':library_mounting')
 
     //Android路由（用于不同app之间的跳转）
 //    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"

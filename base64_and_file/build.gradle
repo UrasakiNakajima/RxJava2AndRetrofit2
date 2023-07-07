@@ -25,6 +25,11 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -58,7 +63,6 @@ android {
 }
 
 dependencies {
-    api project(path: ':library_common')
     api project(path: ':android_and_js')
     implementation "id.zelory:compressor:$BuildVersions.compressor_version"
     //阿里云Oss对象存储
