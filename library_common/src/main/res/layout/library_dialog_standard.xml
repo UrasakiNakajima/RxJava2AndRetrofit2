@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="301dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/corners_6_color_ffffff"
+        android:background="@drawable/library_corners_6_color_ffffff"
         tools:ignore="MissingConstraints">
 
         <TextView

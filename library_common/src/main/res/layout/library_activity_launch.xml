@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/library_color_FFFFC73B"
-    tools:context=".login.ui.LaunchActivity">
+    tools:context=".ui.LaunchActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/library_dp_458"
-            android:background="@drawable/picture_sasuke"
+            android:background="@drawable/library_picture_sasuke"
             android:orientation="vertical">
 
             <View
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/corners_25_color_000000"
+                android:background="@drawable/library_corners_25_color_000000"
                 android:paddingStart="@dimen/library_dp_20"
                 android:paddingTop="@dimen/library_dp_10"
                 android:paddingEnd="@dimen/library_dp_20"
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/corners_25_color_000000"
+                android:background="@drawable/library_corners_25_color_000000"
                 android:paddingStart="@dimen/library_dp_20"
                 android:paddingTop="@dimen/library_dp_10"
                 android:paddingEnd="@dimen/library_dp_20"
@@ -76,12 +76,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/library_dp_440"
-        android:background="@drawable/corners_25_color_000000"
+        android:background="@drawable/library_corners_25_color_000000"
         android:paddingStart="@dimen/library_dp_20"
         android:paddingTop="@dimen/library_dp_10"
         android:paddingEnd="@dimen/library_dp_20"
         android:paddingBottom="@dimen/library_dp_10"
-        android:text="@string/main_app_name2"
+        android:text="@string/library_app_name2"
         android:textColor="@color/library_white"
         android:textSize="@dimen/library_sp_15"
         tools:ignore="MissingConstraints" />

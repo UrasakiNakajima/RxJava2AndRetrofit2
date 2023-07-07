@@ -7,9 +7,11 @@ import android.provider.Settings
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.immersionbar.ImmersionBar
 import com.phone.library_common.BaseApplication
+import com.phone.library_common.base.BaseBindingRxAppActivity
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.BaseMvvmAppRxActivity
 import com.phone.library_common.base.State
@@ -28,57 +30,18 @@ import java.util.concurrent.atomic.AtomicBoolean
  * date      :
  * introduce :
  */
+@Route(path = ConstantData.Route.ROUTE_SQUARE)
 class SquareActivity :
-    BaseMvvmAppRxActivity<SquareViewModelImpl, SquareActivitySquareBinding>() {
+    BaseBindingRxAppActivity<SquareActivitySquareBinding>() {
 
     companion object {
         private val TAG: String = SquareActivity::class.java.simpleName
     }
 
-    private var currentPage = 1
-    private var subDataSquare = SubDataSquare()
-    private var atomicBoolean = AtomicBoolean(false)
-
-    private var mPermissionsDialog: AlertDialog? = null
-    private var number = 1
-
-    private var permissions = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_PHONE_STATE
-    )
-
     override fun initLayoutId() = R.layout.square_activity_square
 
-    override fun initViewModel() =
-        ViewModelProvider(mRxAppCompatActivity).get(SquareViewModelImpl::class.java)
-
     override fun initData() {
-        mDatabind.viewModel = viewModel
-        mDatabind.subDataSquare = subDataSquare
 
-        mDatabind.executePendingBindings()
-    }
-
-    override fun initObservers() {
-        viewModel.dataxRxActivity.observe(this, {
-            LogManager.i(TAG, "onChanged*****dataxRxActivity")
-            when (it) {
-                is State.SuccessState -> {
-                    if (it.success != null && it.success.size > 0) {
-                        squareDataSuccess(it.success)
-                    } else {
-                        squareDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
-                    }
-                }
-
-                is State.ErrorState -> {
-                    squareDataError(
-                        it.errorMsg
-                    )
-                }
-            }
-        })
     }
 
     override fun initViews() {
@@ -87,83 +50,10 @@ class SquareActivity :
             .statusBarDarkFont(false)
             .statusBarColor(R.color.library_color_FF198CFF)
             .navigationBarColor(R.color.library_color_FF198CFF).init()
-
-        mDatabind.apply {
-            tevKillApp.setOnClickListener {
-                LogManager.i(TAG, "tevKillApp")
-                number = 1
-                initRxPermissions(number)
-            }
-            tevCreateAnException.setOnClickListener {
-                number = 2
-                initRxPermissions(number)
-            }
-            tevCreateAnException.apply {
-                setOnClickListener {
-                    number = 2
-                    initRxPermissions(number)
-                }
-            }
-            tevCreateAnException2.setOnClickListener {
-                number = 3
-                initRxPermissions(number)
-            }
-            tevAndroidAndJs.setOnClickListener {
-                //Jump with parameters
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_ANDROID_AND_JS)
-                    .navigation()
-            }
-            tevEditTextInputLimits.run {
-                setOnClickListener {
-                    ARouter.getInstance()
-                        .build(ConstantData.Route.ROUTE_EDIT_TEXT_INPUT_LIMITS)
-                        .navigation()
-                }
-            }
-            tevDecimalOperation.setOnClickListener {
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_DECIMAL_OPERATION)
-                    .navigation()
-            }
-            tevCreateUser.setOnClickListener {
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_CREATE_USER)
-                    .navigation()
-            }
-            tevKotlinCoroutine.setOnClickListener {
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_KOTLIN_COROUTINE)
-                    .navigation()
-            }
-            tevMounting.setOnClickListener {
-                //Jump with parameters
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_MOUNTING)
-                    .navigation()
-            }
-            tevJsbridge.setOnClickListener {
-                //Jump with parameters
-                ARouter.getInstance()
-                    .build(ConstantData.Route.ROUTE_JSBRIDGE)
-                    .navigation()
-            }
-            tevThreeLevelLinkageList.setOnClickListener {
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
-            }
-        }
     }
 
     override fun initLoadData() {
-        initSquareData("$currentPage")
-        LogManager.i(TAG, "initLoadData")
 
-//        startAsyncTask()
-
-//        //製造一個类强制转换异常（java.lang.ClassCastException）
-//        val user: User = User2()
-//        val user3 = user as User3
-//        LogManager.i(TAG, user3.toString())
     }
 
 //    private fun startAsyncTask() {
@@ -181,143 +71,11 @@ class SquareActivity :
 //    }
 
     override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.visibility = View.VISIBLE
-            mDatabind.loadView.start()
-        }
+
     }
 
     override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
-            mDatabind.loadView.stop()
-            mDatabind.loadView.visibility = View.GONE
-        }
-    }
 
-    fun squareDataSuccess(success: List<SubDataSquare>) {
-        if (!mRxAppCompatActivity.isFinishing()) {
-            if (success.size > 0) {
-                subDataSquare.apply {
-                    title = success.get(1).title
-                    chapterName = success.get(1).chapterName
-                    link = success.get(1).link
-                    envelopePic = success.get(1).envelopePic
-                }
-                val ISquareService: ISquareService =
-                    ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_SERVICE)
-                        .navigation() as ISquareService
-                ISquareService.mSquareDataList = success
-            }
-            hideLoading()
-        }
-    }
-
-    fun squareDataError(error: String) {
-        if (!mRxAppCompatActivity.isFinishing()) {
-            showCustomToast(
-                ScreenManager.dpToPx(20f),
-                ScreenManager.dpToPx(20f),
-                18,
-                ResourcesManager.getColor(R.color.library_white),
-                ResourcesManager.getColor(R.color.library_color_FF198CFF),
-                ScreenManager.dpToPx(40f),
-                ScreenManager.dpToPx(20f),
-                error,
-                true
-            )
-            hideLoading()
-        }
-    }
-
-    /**
-     * 請求權限，RxFragment里需要的时候直接调用就行了
-     */
-    private fun initRxPermissions(number: Int) {
-        val rxPermissionsManager = RxPermissionsManager.instance()
-        rxPermissionsManager.initRxPermissions(
-            this,
-            permissions,
-            object : OnCommonRxPermissionsCallback {
-                override fun onRxPermissionsAllPass() {
-                    //所有的权限都授予
-                    if (number == 1) {
-                        val baseMvpRxAppActivity =
-                            mRxAppCompatActivity as BaseMvpRxAppActivity<*, *>
-                        baseMvpRxAppActivity.getActivityPageManager()?.exitApp()
-                    } else if (number == 2) {
-                        //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                        val userBean: UserBean =
-                            UserBean2()
-                        val user3 = userBean as UserBean3
-                        LogManager.i(TAG, user3.toString())
-                    } else if (number == 3) {
-                        try {
-                            //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                            val userBean: UserBean =
-                                UserBean2()
-                            val user3 = userBean as UserBean3
-                            LogManager.i(TAG, user3.toString())
-                        } catch (e: Exception) {
-                            ExceptionManager.instance().throwException(e)
-                        }
-                    }
-                }
-
-                override fun onNotCheckNoMorePromptError() {
-                    //至少一个权限未授予且未勾选不再提示
-                    showSystemSetupDialog()
-                }
-
-                override fun onCheckNoMorePromptError() {
-                    //至少一个权限未授予且勾选了不再提示
-                    showSystemSetupDialog()
-                }
-            })
-    }
-
-    private fun showSystemSetupDialog() {
-        cancelPermissionsDialog()
-        if (mPermissionsDialog == null) {
-            mPermissionsDialog = AlertDialog.Builder(mRxAppCompatActivity)
-                .setTitle("权限设置")
-                .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
-                .setPositiveButton("去授权") { dialog, which ->
-                    cancelPermissionsDialog()
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts(
-                        "package",
-                        mRxAppCompatActivity.applicationContext.packageName,
-                        null
-                    )
-                    intent.data = uri
-                    startActivityForResult(intent, 207)
-                }
-                .create()
-        }
-        mPermissionsDialog?.setCancelable(false)
-        mPermissionsDialog?.setCanceledOnTouchOutside(false)
-        mPermissionsDialog?.show()
-    }
-
-    /**
-     * 关闭对话框
-     */
-    private fun cancelPermissionsDialog() {
-        mPermissionsDialog?.cancel()
-        mPermissionsDialog = null
-    }
-
-    private fun initSquareData(currentPage: String) {
-        showLoading()
-        if (RetrofitManager.isNetworkAvailable()) {
-            viewModel.squareData2(this, currentPage)
-        } else {
-            squareDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
-        }
-
-        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())
-        atomicBoolean.compareAndSet(atomicBoolean.get(), true)
-        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get())
     }
 
 }

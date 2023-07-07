@@ -18,7 +18,7 @@
         <!-- 启动白屏解决方案，这三行是重点 -->
         <!--   设置背景，解决白屏的关键   -->
         <!-- 将splash图片设置在这，这样这张图片取代白屏 -->
-        <item name="android:windowBackground">@drawable/picture3</item>
+        <item name="android:windowBackground">@drawable/library_picture3</item>
         <!-- 设置状态栏为白色的，状态栏文字为黑的 -->
         <item name="android:statusBarColor">@color/library_white</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
@@ -43,7 +43,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@drawable/picture3</item>
+        <item name="android:windowBackground">@drawable/library_picture3</item>
     </style>
 
     <!-- 我的频道 -->
@@ -111,7 +111,7 @@
         <!-- 启动白屏解决方案，这三行是重点 -->
         <!--   设置背景，解决白屏的关键   -->
         <!-- 将splash图片设置在这，这样这张图片取代白屏 -->
-        <item name="android:windowBackground">@drawable/picture3</item>
+        <item name="android:windowBackground">@drawable/library_picture3</item>
         <!-- 设置状态栏为白色的，状态栏文字为黑的 -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/library_white</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>

@@ -16,12 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
+import com.phone.library_common.BuildConfig
 import com.phone.library_common.base.BaseMvpRxFragment
 import com.phone.library_common.base.IBaseView
 import com.phone.library_common.bean.ResultData
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.callback.OnCommonSingleParamCallback
 import com.phone.library_common.common.ConstantData
+import com.phone.library_common.custom_view.LoadingLayout
 import com.phone.library_common.manager.*
 import com.phone.library_common.service.IHomeService
 import com.phone.library_common.service.ISquareService
@@ -34,7 +36,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
-@Route(path = ConstantData.Route.ROUTE_HOME)
+@Route(path = ConstantData.Route.ROUTE_HOME_FRAGMENT)
 class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePageView {
 
     private val TAG = HomeFragment::class.java.simpleName
@@ -44,7 +46,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     private var tevRequestPermissionAndStartLocating: TextView? = null
     private var refreshLayout: SmartRefreshLayout? = null
     private var rcvData: RecyclerView? = null
-    private lateinit var loadView: QMUILoadingView
+    private lateinit var loadLayout: LoadingLayout
 
     private val homeAdapter by lazy { HomeAdapter(mRxAppCompatActivity) }
     private var isRefresh = false
@@ -87,7 +89,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
                 it.findViewById<View>(R.id.tev_request_permission_and_start_locating) as TextView
             refreshLayout = it.findViewById<View>(R.id.refresh_layout) as SmartRefreshLayout
             rcvData = it.findViewById<View>(R.id.rcv_data) as RecyclerView
-            loadView = it.findViewById<View>(R.id.load_view) as QMUILoadingView
+            loadLayout = it.findViewById<View>(R.id.load_layout) as LoadingLayout
         }
         tevRequestPermissionAndStartLocating?.setOnClickListener {
             val ISquareService =
@@ -207,16 +209,18 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     //	}
 
     override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing && !loadView.isShown()) {
-            loadView.visibility = View.VISIBLE
-            loadView.start()
+        if (!mRxAppCompatActivity.isFinishing && !loadLayout.isShown()) {
+            loadLayout.visibility = View.VISIBLE
+            loadLayout.loadingView.visibility = View.VISIBLE
+            loadLayout.loadingView.start()
         }
     }
 
     override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing && loadView.isShown()) {
-            loadView.stop()
-            loadView.setVisibility(View.GONE)
+        if (!mRxAppCompatActivity.isFinishing && loadLayout.isShown()) {
+            loadLayout.loadingView.stop()
+            loadLayout.loadingView.visibility = View.GONE
+            loadLayout.visibility = View.GONE
         }
     }
 
@@ -236,10 +240,11 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
                 TAG,
                 "firstPageAdapter.mJuheNewsBeanList*****" + homeAdapter.mJuheNewsBeanList.toString()
             )
-
-            val homeService = ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
-                .navigation() as IHomeService
-            homeService.mHomeDataList = homeAdapter.mJuheNewsBeanList
+            if (!BuildConfig.IS_MODULE) {
+                val homeService = ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
+                    .navigation() as IHomeService
+                homeService.mHomeDataList = homeAdapter.mJuheNewsBeanList
+            }
             hideLoading()
         }
     }
@@ -347,14 +352,16 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
 
     private fun initFirstPage() {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable()) {
-            mBodyParams.clear()
-            mBodyParams["type"] = "yule"
-            mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter?.homePage(this, mBodyParams)
-        } else {
-            homePageDataError(resources.getString(R.string.library_please_check_the_network_connection))
-        }
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                mBodyParams.clear()
+                mBodyParams["type"] = "yule"
+                mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
+                presenter?.homePage(this, mBodyParams)
+            } else {
+                homePageDataError(resources.getString(R.string.library_please_check_the_network_connection))
+            }
+        })
     }
 
     override fun onDestroyView() {

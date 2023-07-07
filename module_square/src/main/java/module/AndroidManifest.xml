@@ -5,25 +5,19 @@
 
     <application
         android:name="com.phone.library_common.BaseApplication"
-        android:allowBackup="false"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/square_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/library_AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:name">
+        tools:replace="android:allowBackup, android:label">
         <activity
             android:name=".SquareActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.KotlinCoroutineActivity"
@@ -52,11 +46,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.PickerViewActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.CreateUserActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

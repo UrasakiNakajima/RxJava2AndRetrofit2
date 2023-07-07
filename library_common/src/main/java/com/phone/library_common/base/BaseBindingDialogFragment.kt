@@ -56,7 +56,7 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
         // 如果不设置这句代码, 那么弹框就会与四边都有一定的距离
         //        window.setBackgroundDrawableResource(android.R.color.library_transparent);
         window?.let {
-            window.setBackgroundDrawableResource(R.drawable.corners_14_color_white)
+            window.setBackgroundDrawableResource(R.drawable.library_corners_14_color_white)
             // 设置动画
             //		window.setWindowAnimations(R.style.BottomDialogAnimation);
             val params = window.attributes

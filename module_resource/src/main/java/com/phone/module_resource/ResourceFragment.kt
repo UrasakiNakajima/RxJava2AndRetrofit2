@@ -27,7 +27,7 @@ import kotlinx.coroutines.withContext
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 
-@Route(path = ConstantData.Route.ROUTE_RESOURCE)
+@Route(path = ConstantData.Route.ROUTE_RESOURCE_FRAGMENT)
 class ResourceFragment :
     BaseMvvmRxFragment<ResourceViewModelImpl, ResourceFragmentResourceBinding>(), IResourceView {
 
@@ -134,16 +134,18 @@ class ResourceFragment :
     }
 
     override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.visibility = View.VISIBLE
-            mDatabind.loadView.start()
+        if (!mRxAppCompatActivity.isFinishing && !mDatabind.loadLayout.isShown()) {
+            mDatabind.loadLayout.visibility = View.VISIBLE
+            mDatabind.loadLayout.loadingView.visibility = View.VISIBLE
+            mDatabind.loadLayout.loadingView.start()
         }
     }
 
     override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
-            mDatabind.loadView.stop()
-            mDatabind.loadView.visibility = View.GONE
+        if (!mRxAppCompatActivity.isFinishing && mDatabind.loadLayout.isShown()) {
+            mDatabind.loadLayout.loadingView.stop()
+            mDatabind.loadLayout.loadingView.visibility = View.GONE
+            mDatabind.loadLayout.visibility = View.GONE
         }
     }
 
@@ -205,11 +207,13 @@ class ResourceFragment :
 
     private fun initResourceTabData() {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable()) {
-            viewModel.resourceTabData()
-        } else {
-            resourceTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
-        }
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                viewModel.resourceTabData()
+            } else {
+                resourceTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
+            }
+        })
     }
 
     /**

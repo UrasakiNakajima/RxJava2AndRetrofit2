@@ -13,7 +13,7 @@
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_bg"
+        android:background="@drawable/library_ripple_bg"
         android:paddingTop="@dimen/library_dp_16">
 
         <TextView

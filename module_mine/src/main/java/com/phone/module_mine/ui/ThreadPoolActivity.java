@@ -31,7 +31,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * author    : Urasaki
@@ -224,17 +223,17 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
             mOption.inPreferredConfig = Bitmap.Config.RGB_565;
             Bitmap mBitmap = null;
             if (i == 0) {
-                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture3, mOption);
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.library_picture3, mOption);
             } else if (i == 1) {
-                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture6, mOption);
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.library_picture6, mOption);
             } else if (i == 2) {
-                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture8, mOption);
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.library_picture8, mOption);
             } else if (i == 3) {
-                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture14, mOption);
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.library_picture14, mOption);
             } else if (i == 4) {
-                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture16, mOption);
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.library_picture16, mOption);
             } else {
-                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture18, mOption);
+                mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.library_picture18, mOption);
             }
             vector.add(mBitmap);
         }
@@ -247,7 +246,7 @@ public class ThreadPoolActivity extends BaseRxAppActivity {
                 LogManager.i(TAG, "startThreadPool currentThread2 name*****" + Thread.currentThread().getName());
                 BitmapFactory.Options mOption = new BitmapFactory.Options();
                 mOption.inPreferredConfig = Bitmap.Config.RGB_565;
-                Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.picture15, mOption);
+                Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.library_picture15, mOption);
                 vector.add(mBitmap);
                 LogManager.i(TAG, "startThreadPool vector size*****" + vector.size());
                 handler.removeCallbacksAndMessages(null);

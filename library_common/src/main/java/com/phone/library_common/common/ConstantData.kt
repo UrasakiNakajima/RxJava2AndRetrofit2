@@ -29,14 +29,19 @@ object ConstantData {
 
     object Route {
         const val ROUTE_HOME = "/module_home/home"
+        const val ROUTE_HOME_FRAGMENT = "/module_home_fragment/home"
 
         const val ROUTE_PROJECT = "/module_project/project"
+        const val ROUTE_PROJECT_FRAGMENT = "/module_project_fragment/project"
 
         const val ROUTE_SQUARE = "/module_square/square"
+        const val ROUTE_SQUARE_FRAGMENT = "/module_square_fragment/square"
 
         const val ROUTE_RESOURCE = "/module_resource/resource"
+        const val ROUTE_RESOURCE_FRAGMENT = "/module_resource_fragment/resource"
 
         const val ROUTE_MINE = "/module_mine/mine"
+        const val ROUTE_MINE_FRAGMENT = "/module_mine_fragment/mine"
 
         const val ROUTE_JSBRIDGE = "/module_square/jsbridge"
 
@@ -75,8 +80,9 @@ object ConstantData {
 
         const val ROUTE_HOME_SERVICE = "/module_home/HomeServiceImpl"
 
-        const val ROUTE_SQUARE_SERVICE = "/module_square/SquareServiceImpl"
+        const val ROUTE_TO_WHICH_PAGE = "/which_page/WhichPage"
 
+        const val ROUTE_SQUARE_SERVICE = "/module_square/SquareServiceImpl"
 
     }
 

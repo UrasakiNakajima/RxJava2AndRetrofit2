@@ -6,7 +6,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.phone.library_common.R
-import com.phone.library_common.manager.GlideRoundTransformManager
 import java.io.File
 
 /**
@@ -80,7 +79,7 @@ object ImageLoaderManager {
     fun displayRound(context: Context, imageView: ImageView, url: String) {
         Glide.with(context).load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .error(R.mipmap.toux2)
+            .error(R.mipmap.library_toux2)
             .centerCrop().transform(GlideRoundTransformManager()).into(imageView)
     }
 
@@ -88,7 +87,7 @@ object ImageLoaderManager {
     fun displayRound(context: Context, imageView: ImageView, resId: Int) {
         Glide.with(context).load(resId)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .error(R.mipmap.toux2)
+            .error(R.mipmap.library_toux2)
             .centerCrop().transform(GlideRoundTransformManager()).into(imageView)
     }
 

@@ -318,7 +318,7 @@
                     android:layout_height="@dimen/library_dp_640"
                     android:layout_gravity="center_horizontal"
                     android:scaleType="fitXY"
-                    android:src="@drawable/default_project_img"
+                    android:src="@drawable/library_default_project_img"
                     app:author="@{subDataSquare.author}"
                     app:chapterName="@{subDataSquare.chapterName}"
                     app:envelopePic="@{subDataSquare.envelopePic}"
@@ -328,14 +328,11 @@
 
         </ScrollView>
 
-        <com.qmuiteam.qmui.widget.QMUILoadingView
-            android:id="@+id/load_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:color="@color/library_color_FF999999"
-            android:visibility="gone"
-            app:qmui_loading_view_size="@dimen/library_dp_33" />
+        <com.phone.library_common.custom_view.LoadingLayout
+            android:id="@+id/load_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
     </FrameLayout>
 

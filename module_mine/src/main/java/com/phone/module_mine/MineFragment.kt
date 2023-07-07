@@ -14,6 +14,7 @@ import com.phone.library_common.base.IBaseView
 import com.phone.library_common.bean.Data
 import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.library_common.common.ConstantData
+import com.phone.library_common.custom_view.LoadingLayout
 import com.phone.library_common.manager.*
 import com.phone.module_mine.adapter.MineAdapter
 import com.phone.module_mine.presenter.MinePresenterImpl
@@ -30,7 +31,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
  * introduce :
  */
 
-@Route(path = ConstantData.Route.ROUTE_MINE)
+@Route(path = ConstantData.Route.ROUTE_MINE_FRAGMENT)
 class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineView {
 
     companion object {
@@ -45,7 +46,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     private var tevParamsTransferChangeProblem: TextView? = null
     private var refreshLayout: SmartRefreshLayout? = null
     private var rcvData: RecyclerView? = null
-    private lateinit var loadView: QMUILoadingView
+    private lateinit var loadLayout: LoadingLayout
 
     private val mineAdapter by lazy {
         MineAdapter(mRxAppCompatActivity)
@@ -68,7 +69,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                 it.findViewById(R.id.tev_params_transfer_change_problem)
             refreshLayout = it.findViewById(R.id.refresh_layout)
             rcvData = it.findViewById(R.id.rcv_data)
-            loadView = it.findViewById(R.id.load_view)
+            loadLayout = it.findViewById(R.id.load_layout)
 
             tevTitle?.setOnClickListener(object : View.OnClickListener {
 
@@ -144,16 +145,18 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     override fun attachPresenter() = MinePresenterImpl(this)
 
     override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing && !loadView.isShown()) {
-            loadView.visibility = View.VISIBLE
-            loadView.start()
+        if (!mRxAppCompatActivity.isFinishing && !loadLayout.isShown()) {
+            loadLayout.visibility = View.VISIBLE
+            loadLayout.loadingView.visibility = View.VISIBLE
+            loadLayout.loadingView.start()
         }
     }
 
     override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing && loadView.isShown()) {
-            loadView.stop()
-            loadView.setVisibility(View.GONE)
+        if (!mRxAppCompatActivity.isFinishing && loadLayout.isShown()) {
+            loadLayout.loadingView.stop()
+            loadLayout.loadingView.visibility = View.GONE
+            loadLayout.visibility = View.GONE
         }
     }
 
@@ -198,15 +201,17 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
     private fun initMine() {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable()) {
-            mBodyParams.clear()
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                mBodyParams.clear()
 
-            mBodyParams["type"] = "keji"
-            mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter?.mineData(rxFragment, mBodyParams)
-        } else {
-            mineDataError(resources.getString(R.string.library_please_check_the_network_connection))
-        }
+                mBodyParams["type"] = "keji"
+                mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
+                presenter?.mineData(rxFragment, mBodyParams)
+            } else {
+                mineDataError(resources.getString(R.string.library_please_check_the_network_connection))
+            }
+        })
     }
 
     override fun onDestroyView() {

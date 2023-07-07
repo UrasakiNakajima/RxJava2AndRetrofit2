@@ -340,7 +340,7 @@ class EventScheduleLayout(
                         }
                         val mFrameLayout = FrameLayout(mContext)
                         mFrameLayout.background =
-                            resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
+                            resources.getDrawable(R.drawable.library_corners_7_color_ffd0d6ec)
                         val tevTime = TextView(mContext)
                         tevTime.text = mRowsDTO?.activeTime
                         tevTime.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
@@ -385,11 +385,11 @@ class EventScheduleLayout(
                         tevStatus.includeFontPadding = false
                         if (mRowsDTO?.auditStatus == 0) {
                             mFrameLayout.background =
-                                resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
+                                resources.getDrawable(R.drawable.library_corners_7_color_ffd0d6ec)
                             tevStatus.setText(ResourcesManager.getString(R.string.library_check_pending))
                         } else if (mRowsDTO?.auditStatus == 2) {
                             mFrameLayout.background =
-                                resources.getDrawable(R.drawable.corners_7_color_ffcfe9ff)
+                                resources.getDrawable(R.drawable.library_corners_7_color_ffcfe9ff)
                             tevStatus.setText(ResourcesManager.getString(R.string.library_checked))
                         }
                         val tevStatusParams = FrameLayout.LayoutParams(
@@ -456,7 +456,7 @@ class EventScheduleLayout(
                         val mFrameLayout = FrameLayout(mContext)
                         //						mFrameLayout.setBackgroundColor(ResourcesManager.getColor(R.color.library_color_FFFF0000));
                         mFrameLayout.background =
-                            resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
+                            resources.getDrawable(R.drawable.library_corners_7_color_ffd0d6ec)
                         val mFrameLayoutParams = LinearLayout.LayoutParams(
                             FrameLayout.LayoutParams.MATCH_PARENT,
                             ScreenManager.dpToPx(
@@ -508,11 +508,11 @@ class EventScheduleLayout(
                         tevStatus.includeFontPadding = false
                         if (mRowsDTO?.auditStatus == 0) {
                             mFrameLayout.background =
-                                resources.getDrawable(R.drawable.corners_7_color_ffd0d6ec)
+                                resources.getDrawable(R.drawable.library_corners_7_color_ffd0d6ec)
                             tevStatus.setText(ResourcesManager.getString(R.string.library_check_pending))
                         } else if (mRowsDTO?.auditStatus == 2) {
                             mFrameLayout.background =
-                                resources.getDrawable(R.drawable.corners_7_color_ffcfe9ff)
+                                resources.getDrawable(R.drawable.library_corners_7_color_ffcfe9ff)
                             tevStatus.setText(ResourcesManager.getString(R.string.library_checked))
                         }
                         tevStatusParams.setMargins(

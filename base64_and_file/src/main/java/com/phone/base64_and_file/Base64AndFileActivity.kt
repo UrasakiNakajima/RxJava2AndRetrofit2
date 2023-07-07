@@ -120,11 +120,13 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.library_white))
         layoutBack?.setOnClickListener { v: View? -> finish() }
         tevRequestPermissions?.setOnClickListener {
-            val homeService = ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
-                .navigation() as IHomeService
-            LogManager.i(
-                TAG, "homeService.mHomeDataList******" + homeService.mHomeDataList.toString()
-            )
+            if (!BuildConfig.IS_MODULE) {
+                val homeService = ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
+                    .navigation() as IHomeService
+                LogManager.i(
+                    TAG, "homeService.mHomeDataList******" + homeService.mHomeDataList.toString()
+                )
+            }
 
             LogManager.i(TAG, "tevRequestPermissions")
             initRxPermissions()

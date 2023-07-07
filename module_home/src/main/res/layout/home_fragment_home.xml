@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_out_layer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,13 +83,10 @@
 
     </LinearLayout>
 
-    <com.qmuiteam.qmui.widget.QMUILoadingView
-        android:id="@+id/load_view"
+    <com.phone.library_common.custom_view.LoadingLayout
+        android:id="@+id/load_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:color="@color/library_color_FF999999"
-        android:visibility="gone"
-        app:qmui_loading_view_size="@dimen/library_dp_33" />
+        android:visibility="gone" />
 
 </FrameLayout>

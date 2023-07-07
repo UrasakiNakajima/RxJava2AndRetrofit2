@@ -3,82 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.phone.module_resource.view_model.ResourceViewModelImpl" />
-    </data>
-
-
     <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:ignore="UselessParent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_73"
-                android:background="@color/library_color_FF198CFF"
-                android:minHeight="?attr/actionBarSize"
-                android:orientation="vertical"
-                app:contentInsetStart="0dp">
-
-                <TextView
-                    android:id="@+id/tev_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/library_dp_48"
-                    android:layout_marginTop="@dimen/library_dp_25"
-                    android:gravity="center"
-                    android:text="@string/library_resource"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/library_sp_20" />
-
-            </androidx.appcompat.widget.Toolbar>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_54"
-                android:background="?attr/library_main_bg_1"
-                android:elevation="6dp">
-
-                <net.lucode.hackware.magicindicator.MagicIndicator
-                    android:id="@+id/tab_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="5dp" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_1"
-                android:background="@color/library_color_FF999999" />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/mine_view_pager2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/library_white" />
-
-        </LinearLayout>
-
-        <com.qmuiteam.qmui.widget.QMUILoadingView
-            android:id="@+id/load_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:color="@color/library_color_FF999999"
-            android:visibility="gone"
-            app:qmui_loading_view_size="@dimen/library_dp_33" />
-
-    </FrameLayout>
+        android:fitsSystemWindows="true" />
 
 </layout>

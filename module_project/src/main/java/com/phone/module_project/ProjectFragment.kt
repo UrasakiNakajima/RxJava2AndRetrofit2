@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
 
-@Route(path = ConstantData.Route.ROUTE_PROJECT)
+@Route(path = ConstantData.Route.ROUTE_PROJECT_FRAGMENT)
 class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragmentProjectBinding>(),
     IProjectView {
 
@@ -91,16 +91,18 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     }
 
     override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.visibility = View.VISIBLE
-            mDatabind.loadView.start()
+        if (!mRxAppCompatActivity.isFinishing && !mDatabind.loadLayout.isShown()) {
+            mDatabind.loadLayout.visibility = View.VISIBLE
+            mDatabind.loadLayout.loadingView.visibility = View.VISIBLE
+            mDatabind.loadLayout.loadingView.start()
         }
     }
 
     override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
-            mDatabind.loadView.stop()
-            mDatabind.loadView.setVisibility(View.GONE)
+        if (!mRxAppCompatActivity.isFinishing && mDatabind.loadLayout.isShown()) {
+            mDatabind.loadLayout.loadingView.stop()
+            mDatabind.loadLayout.loadingView.visibility = View.GONE
+            mDatabind.loadLayout.visibility = View.GONE
         }
     }
 
@@ -149,11 +151,13 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
 
     private fun initProjectTabData() {
         showLoading()
-        if (RetrofitManager.isNetworkAvailable()) {
-            viewModel.projectTabData()
-        } else {
-            projectTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
-        }
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                viewModel.projectTabData()
+            } else {
+                projectTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
+            }
+        })
     }
 
     /**

@@ -5,7 +5,7 @@
 
     <application
         android:name="com.phone.library_common.BaseApplication"
-        android:allowBackup="false"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/home_app_name"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/library_AppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
-        tools:replace="android:allowBackup">
+        tools:replace="android:allowBackup, android:label">
 
         <!-- 高德地图，这里的value是高德地图开放平台你的应用的Key -->
         <meta-data
@@ -24,13 +24,7 @@
             android:name=".HomeActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.VideoListActivity"
             android:exported="false"

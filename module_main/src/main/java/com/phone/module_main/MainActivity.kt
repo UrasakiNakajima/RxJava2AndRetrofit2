@@ -48,27 +48,27 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
         if (!BuildConfig.IS_MODULE) {
             //Jump with parameters
             val firstPageFragment = ARouter.getInstance()
-                .build(ConstantData.Route.ROUTE_HOME) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .build(ConstantData.Route.ROUTE_HOME_FRAGMENT) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation() as Fragment
             fragmentList.add(firstPageFragment)
             //Jump with parameters
             val projectFragment = ARouter.getInstance()
-                .build(ConstantData.Route.ROUTE_PROJECT) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .build(ConstantData.Route.ROUTE_PROJECT_FRAGMENT) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation() as Fragment
             fragmentList.add(projectFragment)
             //Jump with parameters
             val squareFragment = ARouter.getInstance()
-                .build(ConstantData.Route.ROUTE_SQUARE) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .build(ConstantData.Route.ROUTE_SQUARE_FRAGMENT) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation() as Fragment
             fragmentList.add(squareFragment)
             //Jump with parameters
             val resourceFragment = ARouter.getInstance()
-                .build(ConstantData.Route.ROUTE_RESOURCE) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .build(ConstantData.Route.ROUTE_RESOURCE_FRAGMENT) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation() as Fragment
             fragmentList.add(resourceFragment)
             //Jump with parameters
             val mineFragment = ARouter.getInstance()
-                .build(ConstantData.Route.ROUTE_MINE) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
+                .build(ConstantData.Route.ROUTE_MINE_FRAGMENT) //                .withString("max_behot_time", (System.currentTimeMillis() / 1000) + "")
                 .navigation() as Fragment
             fragmentList.add(mineFragment)
         }

@@ -1,4 +1,4 @@
-package com.phone.module_main.login.ui
+package com.phone.library_common.ui
 
 import android.Manifest
 import android.animation.Animator
@@ -18,13 +18,16 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
+import com.phone.library_common.BuildConfig
+import com.phone.library_common.R
 import com.phone.library_common.base.BaseRxAppActivity
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.LogManager
 import com.phone.library_common.manager.ScreenManager
 import com.phone.library_common.manager.SharedPreferencesManager
 import com.phone.library_common.manager.ThreadPoolManager
-import com.phone.module_main.R
+import com.phone.library_common.service.IHomeService
+import com.phone.library_common.service.IWhichPage
 
 
 @SuppressLint("CustomSplashScreen")
@@ -56,7 +59,7 @@ class LaunchActivity : BaseRxAppActivity() {
     val animatorSet3 = AnimatorSet()
 
     override fun initLayoutId(): Int {
-        return R.layout.main_activity_launch
+        return R.layout.library_activity_launch
     }
 
     override fun initData() {
@@ -80,7 +83,8 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevAndroid,
                 "translationY",
                 0f,
-                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_360).toFloat()).toFloat()
+                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_360).toFloat())
+                    .toFloat()
             )
 //            // 构造一个在透明度上变化的属性动画
 //            val anim2 = ObjectAnimator.ofFloat(tevAndroid, "alpha", 1f, 0.1f, 1f, 0.5f, 1f)
@@ -145,7 +149,8 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevKotlin,
                 "translationX",
                 0f,
-                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_100).toFloat()).toFloat()
+                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_100).toFloat())
+                    .toFloat()
             )
             // 构造一个在横轴上平移的属性动画
             val translationYAnimator3 = ObjectAnimator.ofFloat(
@@ -185,7 +190,7 @@ class LaunchActivity : BaseRxAppActivity() {
     override fun initLoadData() {
 //        initPermissions()
 
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(5000, {
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(3000, {
             LogManager.i(
                 TAG,
                 "LaunchActivity 7000 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
@@ -197,12 +202,43 @@ class LaunchActivity : BaseRxAppActivity() {
     }
 
     private fun customStartActivity() {
-        if (SharedPreferencesManager.get("isLogin", false) as Boolean) {
-            ARouter.getInstance().build(ConstantData.Route.ROUTE_MAIN)
-                .navigation()
+        if (!BuildConfig.IS_MODULE) {
+            if (SharedPreferencesManager.get("isLogin", false) as Boolean) {
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_MAIN)
+                    .navigation()
+            } else {
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_LOGIN)
+                    .navigation()
+            }
         } else {
-            ARouter.getInstance().build(ConstantData.Route.ROUTE_LOGIN)
-                .navigation()
+            val whichPage = ARouter.getInstance().build(ConstantData.Route.ROUTE_TO_WHICH_PAGE)
+                .navigation() as IWhichPage
+            when (whichPage.mWhichPage) {
+                "Home" -> {
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME)
+                        .navigation()
+                }
+
+                "Project" -> {
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_PROJECT)
+                        .navigation()
+                }
+
+                "Square" -> {
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE)
+                        .navigation()
+                }
+
+                "Resource" -> {
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_RESOURCE)
+                        .navigation()
+                }
+
+                "Mine" -> {
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_MINE)
+                        .navigation()
+                }
+            }
         }
         finish()
     }
