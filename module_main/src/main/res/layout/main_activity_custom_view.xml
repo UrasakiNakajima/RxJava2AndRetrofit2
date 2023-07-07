@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/library_color_FFFFFFFF"
     android:orientation="vertical"
-    tools:context=".main.CustomViewActivity">
+    tools:context=".ui.CustomViewActivity">
 
     <View
         android:layout_width="match_parent"

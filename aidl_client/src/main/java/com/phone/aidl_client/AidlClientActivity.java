@@ -9,6 +9,7 @@ import android.os.RemoteException;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,8 @@ import java.util.List;
 public class AidlClientActivity extends BaseRxAppActivity {
 
     private static final String TAG = AidlClientActivity.class.getSimpleName();
+    private Toolbar toolbar;
+    private TextView tevTitle;
     private TextView tevConnectServerService;
     private TextView tevAddBook;
     private RecyclerView rcvBook;
@@ -43,7 +46,7 @@ public class AidlClientActivity extends BaseRxAppActivity {
 
     @Override
     protected int initLayoutId() {
-        return R.layout.activity_aidl_client;
+        return R.layout.client_activity_aidl_client;
     }
 
     @Override
@@ -53,10 +56,12 @@ public class AidlClientActivity extends BaseRxAppActivity {
 
     @Override
     protected void initViews() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tevTitle = (TextView) findViewById(R.id.tev_title);
         tevConnectServerService = (TextView) findViewById(R.id.tev_connect_server_service);
         tevAddBook = (TextView) findViewById(R.id.tev_add_book);
         rcvBook = (RecyclerView) findViewById(R.id.rcv_book);
-
+        setToolbar(false, R.color.library_color_FF198CFF);
 
         tevConnectServerService.setOnClickListener(v -> {
             connectServerService();

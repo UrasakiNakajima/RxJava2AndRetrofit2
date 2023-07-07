@@ -2,7 +2,6 @@ package com.phone.library_common
 
 import android.app.ActivityManager
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.pm.Signature
 import android.graphics.Bitmap
@@ -52,6 +51,7 @@ open class BaseApplication : MultiDexApplication() {
 
     private var activityPageManager: ActivityPageManager? = null
     lateinit var webView: WebView
+    var mWhichPage: String? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -75,6 +75,7 @@ open class BaseApplication : MultiDexApplication() {
 
             }
         }
+
         initData()
     }
 

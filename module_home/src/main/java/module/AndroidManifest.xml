@@ -4,7 +4,7 @@
     package="com.phone.module_home">
 
     <application
-        android:name="com.phone.library_common.BaseApplication"
+        android:name=".HomeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/home_app_name"
@@ -21,7 +21,7 @@
             android:value="356a1587ceff55b9378d7ad70923b553" />
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.HomeActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

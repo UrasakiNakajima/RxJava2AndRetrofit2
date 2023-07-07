@@ -3,13 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.phone.module_square">
 
-    <application
-        android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/library_AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+    <application>
         <activity
             android:name=".ui.JsbridgeActivity"
             android:exported="false"

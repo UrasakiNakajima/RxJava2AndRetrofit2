@@ -25,7 +25,6 @@ import com.alibaba.sdk.android.oss.*
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
 import com.alibaba.sdk.android.oss.common.OSSLog
-import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
@@ -44,7 +43,7 @@ import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
 import com.phone.library_common.manager.SystemManager.getSystemId
-import com.phone.library_common.service.IHomeService
+import com.phone.library_common.service.IHomeProvider
 import com.trello.rxlifecycle3.android.ActivityEvent
 import io.reactivex.*
 import io.reactivex.Observable
@@ -122,7 +121,7 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
         tevRequestPermissions?.setOnClickListener {
             if (!BuildConfig.IS_MODULE) {
                 val homeService = ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
-                    .navigation() as IHomeService
+                    .navigation() as IHomeProvider
                 LogManager.i(
                     TAG, "homeService.mHomeDataList******" + homeService.mHomeDataList.toString()
                 )

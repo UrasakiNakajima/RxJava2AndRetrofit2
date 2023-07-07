@@ -7,14 +7,15 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.phone.library_common.BuildConfig
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_common.base.BaseMvpRxAppActivity
 import com.phone.library_common.base.IBaseView
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.custom_view.MineLazyViewPager
 import com.phone.library_common.manager.ResourcesManager
-import com.phone.module_main.main.presenter.MainPresenterImpl
-import com.phone.module_main.main.view.IMainView
+import com.phone.module_main.presenter.MainPresenterImpl
+import com.phone.module_main.view.IMainView
 
 
 /**
@@ -27,7 +28,11 @@ import com.phone.module_main.main.view.IMainView
 @Route(path = ConstantData.Route.ROUTE_MAIN)
 class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMainView {
 
-    private val TAG = MainActivity::class.java.simpleName
+    companion object {
+        private val TAG = MainActivity::class.java.simpleName
+    }
+
+    private var layoutPleaseAddComponents: LinearLayout? = null
     private var tevPleaseAddComponents: TextView? = null
     private var layoutMain: LinearLayout? = null
     private var mineViewPager: MineLazyViewPager? = null
@@ -38,7 +43,7 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
     private var tevResourceCenter: TextView? = null
     private var tevMine: TextView? = null
 
-    private val fragmentList: MutableList<Fragment> = ArrayList()
+    private val fragmentList = mutableListOf<Fragment>()
 
     override fun initLayoutId(): Int {
         return R.layout.main_activity_main
@@ -76,6 +81,7 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
     }
 
     override fun initViews() {
+        layoutPleaseAddComponents = findViewById<View>(R.id.layout_please_add_components) as LinearLayout
         tevPleaseAddComponents = findViewById<View>(R.id.tev_please_add_components) as TextView
         layoutMain = findViewById<View>(R.id.layout_main) as LinearLayout
         mineViewPager = findViewById<View>(R.id.mine_view_pager) as MineLazyViewPager
@@ -173,7 +179,8 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
 
     override fun initLoadData() {
         if (!BuildConfig.IS_MODULE) {
-            tevPleaseAddComponents?.visibility = View.GONE
+            setToolbar(false, R.color.library_color_FF198CFF)
+            layoutPleaseAddComponents?.visibility = View.GONE
             layoutMain?.visibility = View.VISIBLE
             mineViewPager?.currentItem = 0
             tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
@@ -181,9 +188,9 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
             tevSquare?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
             tevResourceCenter?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
             tevMine?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
-            setToolbar(false, R.color.library_color_FF198CFF)
         } else {
-            tevPleaseAddComponents?.visibility = View.VISIBLE
+            setToolbar(false, R.color.library_color_FF198CFF)
+            layoutPleaseAddComponents?.visibility = View.VISIBLE
             layoutMain?.visibility = View.GONE
         }
     }

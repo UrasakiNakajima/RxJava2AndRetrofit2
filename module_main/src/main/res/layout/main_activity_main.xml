@@ -4,22 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/library_color_FF000000"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tev_please_add_components"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/library_dp_20"
-        android:layout_marginEnd="@dimen/library_dp_20"
-        android:text="@string/library_please_add_components"
-        android:textColor="@color/library_color_FF198CFF"
-        android:textSize="@dimen/library_sp_18"
-        android:textStyle="bold"
-        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/layout_please_add_components"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/library_dp_48"
+            android:background="@color/library_color_FF198CFF"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="vertical"
+            app:contentInsetStart="0dp">
+
+            <TextView
+                android:id="@+id/tev_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/library_dp_48"
+                android:gravity="center"
+                android:text="@string/library_main"
+                android:textColor="@color/library_color_FFFFFFFF"
+                android:textSize="@dimen/library_sp_20" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/tev_please_add_components"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/library_dp_20"
+            android:layout_marginEnd="@dimen/library_dp_20"
+            android:gravity="center"
+            android:text="@string/library_please_add_components"
+            android:textColor="@color/library_color_FF198CFF"
+            android:textSize="@dimen/library_sp_18"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_main"

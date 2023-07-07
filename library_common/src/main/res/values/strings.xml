@@ -2,6 +2,7 @@
     <string name="library_app_name">common_library</string>
     <string name="library_app_name2">RxJava2AndRetrofit2</string>
 
+    <string name="library_main">主页</string>
     <string name="library_home">首頁</string>
     <string name="library_project">項目</string>
     <string name="library_square">MVVM</string>

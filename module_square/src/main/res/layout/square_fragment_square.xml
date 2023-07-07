@@ -94,57 +94,6 @@
                     android:textSize="@dimen/library_sp_16" />
 
                 <TextView
-                    android:id="@+id/tev_kill_app"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/library_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/library_kill_app"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/library_sp_16" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/library_dp_1"
-                    android:background="@color/library_color_555555" />
-
-                <TextView
-                    android:id="@+id/tev_create_an_exception"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/library_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/library_create_an_exception"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/library_sp_16" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/library_dp_1"
-                    android:background="@color/library_color_555555" />
-
-                <TextView
-                    android:id="@+id/tev_create_an_exception2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/library_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/library_create_an_exception2"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/library_sp_16" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/library_dp_1"
-                    android:background="@color/library_color_555555" />
-
-                <TextView
                     android:id="@+id/tev_android_and_js"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/library_dp_45"
@@ -195,6 +144,57 @@
                     android:paddingEnd="@dimen/library_dp_15"
                     android:paddingBottom="@dimen/library_dp_10"
                     android:text="@string/library_decimal_operation"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/library_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/library_dp_1"
+                    android:background="@color/library_color_555555" />
+
+                <TextView
+                    android:id="@+id/tev_kill_app"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/library_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/library_kill_app"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/library_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/library_dp_1"
+                    android:background="@color/library_color_555555" />
+
+                <TextView
+                    android:id="@+id/tev_create_an_exception"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/library_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/library_create_an_exception"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/library_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/library_dp_1"
+                    android:background="@color/library_color_555555" />
+
+                <TextView
+                    android:id="@+id/tev_create_an_exception2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/library_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/library_create_an_exception2"
                     android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/library_sp_16" />
 

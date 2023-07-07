@@ -54,17 +54,7 @@
         </provider> <!-- Launch页 -->
 
         <activity
-            android:name=".login.ui.LoginActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".login.ui.RegisterActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".main.CustomViewActivity"
+            android:name=".ui.CustomViewActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>

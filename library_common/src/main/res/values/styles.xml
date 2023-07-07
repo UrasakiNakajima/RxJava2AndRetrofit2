@@ -18,7 +18,36 @@
         <!-- 启动白屏解决方案，这三行是重点 -->
         <!--   设置背景，解决白屏的关键   -->
         <!-- 将splash图片设置在这，这样这张图片取代白屏 -->
-        <item name="android:windowBackground">@drawable/library_picture3</item>
+        <item name="android:windowBackground">@mipmap/library_picture33</item>
+        <!-- 设置状态栏为白色的，状态栏文字为黑的 -->
+        <item name="android:statusBarColor">@color/library_white</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+
+        <item name="library_main_bg_1">#2C2C2C</item>
+        <item name="library_main_bg_2">#FA3C3C3C</item>
+        <item name="library_main_bg_3">#5E5E5E</item>
+
+        <item name="library_theme_color_1">#BDBDBD</item>
+        <item name="library_theme_color_2">#939393</item>
+        <item name="library_theme_color_3">#737272</item>
+
+        <item name="library_ripple_gray">#808080</item>
+        <item name="library_float_bg">#D64C4C4C</item>
+        <item name="library_division_line">#424242</item>
+        <item name="android:navigationBarColor">#2C2C2C</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="library_AppTheme2" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/library_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/library_colorPrimaryDark</item>
+        <item name="colorAccent">@color/library_colorAccent</item>
+
+        <!-- 启动白屏解决方案，这三行是重点 -->
+        <!--   设置背景，解决白屏的关键   -->
+        <!-- 将splash图片设置在这，这样这张图片取代白屏 -->
+        <item name="android:windowBackground">@color/library_color_transparent</item>
         <!-- 设置状态栏为白色的，状态栏文字为黑的 -->
         <item name="android:statusBarColor">@color/library_white</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>

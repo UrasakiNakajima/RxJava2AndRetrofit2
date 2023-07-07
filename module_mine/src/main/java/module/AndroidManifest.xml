@@ -4,7 +4,7 @@
     package="com.phone.module_mine">
 
     <application
-        android:name="com.phone.library_common.BaseApplication"
+        android:name=".MineApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/mine_app_name"
@@ -25,7 +25,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MineActivity"
+            android:name=".ui.MineActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

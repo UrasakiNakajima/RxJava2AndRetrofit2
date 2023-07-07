@@ -11,7 +11,7 @@
 
         <fragment
             android:id="@+id/fragment1"
-            android:name="com.phone.module_square.SquareFragment"
+            android:name="com.phone.module_square.fragment.SquareFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

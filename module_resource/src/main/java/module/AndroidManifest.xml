@@ -4,7 +4,7 @@
     package="com.phone.module_resource">
 
     <application
-        android:name="com.phone.library_common.BaseApplication"
+        android:name=".ResourceApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/resource_app_name"
@@ -13,7 +13,7 @@
         android:theme="@style/library_AppTheme"
         tools:replace="android:allowBackup, android:label">
         <activity
-            android:name=".ResourceActivity"
+            android:name=".ui.ResourceActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

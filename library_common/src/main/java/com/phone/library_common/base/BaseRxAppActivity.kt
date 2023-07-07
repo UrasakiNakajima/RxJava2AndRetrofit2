@@ -31,7 +31,7 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
     //	protected QMUILoadingView          loadView;
     //	protected FrameLayout.LayoutParams layoutParams;
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
-    protected lateinit var baseApplication: BaseApplication
+    protected lateinit var mBaseApplication: BaseApplication
     private var mActivityPageManager: ActivityPageManager? = null
     protected var loadView: QMUILoadingView? = null
     protected var layoutParams: FrameLayout.LayoutParams? = null
@@ -39,7 +39,7 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mRxAppCompatActivity = this
-        baseApplication = application as BaseApplication
+        mBaseApplication = application as BaseApplication
         mActivityPageManager = ActivityPageManager.instance()
         mActivityPageManager?.addActivity(mRxAppCompatActivity)
         setContentView(initLayoutId())
@@ -274,7 +274,7 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
 
     private fun killAppProcess() {
         i(TAG, "killAppProcess")
-        val manager = baseApplication.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val manager = mBaseApplication.getSystemService(ACTIVITY_SERVICE) as ActivityManager
         val processInfos = manager.runningAppProcesses
         // 先杀掉相关进程，最后再杀掉主进程
         for (runningAppProcessInfo in processInfos) {

@@ -6,11 +6,12 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/library_color_FF000000"
         android:fitsSystemWindows="true">
 
         <fragment
             android:id="@+id/fragment1"
-            android:name="com.phone.module_project.ProjectFragment"
+            android:name="com.phone.module_project.fragment.ProjectFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

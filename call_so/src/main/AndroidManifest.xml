@@ -10,9 +10,7 @@
         android:theme="@style/call_so_Theme.RxJava2AndRetrofit2">
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/call_so_app_name"
-            android:theme="@style/call_so_Theme.RxJava2AndRetrofit2">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

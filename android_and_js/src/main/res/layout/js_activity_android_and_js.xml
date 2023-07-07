@@ -76,8 +76,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_10"
-            android:background="@color/library_color_4876FF" />
+            android:layout_height="@dimen/library_dp_10" />
 
         <TextView
             android:layout_width="wrap_content"

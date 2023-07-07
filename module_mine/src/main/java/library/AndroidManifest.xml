@@ -3,14 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.phone.module_mine">
 
-    <application
-        android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/library_AppTheme"
-        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
+    <application>
         <activity
             android:name=".ui.ParamsTransferChangeProblemActivity"
             android:exported="false"
