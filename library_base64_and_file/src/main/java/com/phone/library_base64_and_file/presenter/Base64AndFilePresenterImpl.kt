@@ -6,8 +6,9 @@ import com.phone.library_base64_and_file.model.Base64AndFileModelImpl
 import com.phone.library_base64_and_file.view.IBase64AndFileView
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.callback.OnCommonSingleParamCallback
+import com.phone.library_mvp.BasePresenter
 
-class Base64AndFilePresenterImpl(baseView: IBaseView) : com.phone.library_mvp.BasePresenter<IBaseView>(),
+class Base64AndFilePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(),
     IBase64AndFilePresenter {
 
     private val TAG = Base64AndFilePresenterImpl::class.java.simpleName

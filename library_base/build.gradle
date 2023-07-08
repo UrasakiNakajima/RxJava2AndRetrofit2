@@ -119,6 +119,11 @@ dependencies {
 //    // DEPRECATED: Use rxlifecycle-android-lifecycle instead. This will be removed in a future release.
 //    api "com.trello.rxlifecycle3:rxlifecycle-navi:$BuildVersions.rxlifecycle_version"
 
+    //谷歌官方Json解析框架导入
+    api "com.google.code.gson:gson:$BuildVersions.gson_version"
+    //fastjson(阿里云json解析框架导入)
+    api "com.alibaba:fastjson:$BuildVersions.fastjson_version"
+//    api "com.alibaba:fastjson:$BuildVersions.fastjson_version.android"
 
     //android函数分包框架导入
     api "androidx.multidex:multidex:$BuildVersions.multidex_version"

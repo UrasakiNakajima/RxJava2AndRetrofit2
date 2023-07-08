@@ -126,10 +126,6 @@ dependencies {
     //2.AutoDispose解决rxjava导致的内存泄漏的框架
     api "com.uber.autodispose:autodispose-android-archcomponents:$BuildVersions.autodispose_version"
 
-    //fastjson(阿里云json解析框架导入)
-    api "com.alibaba:fastjson:$BuildVersions.fastjson_version"
-//    api "com.alibaba:fastjson:$BuildVersions.fastjson_version.android"
-
     //图片和视频选择框架导入（这个框架的手机拍照功能有bug，不要使用）
     // PictureSelector basic (Necessary)
     api "io.github.lucksiege:pictureselector:$BuildVersions.picture_selector_version"
@@ -167,8 +163,6 @@ dependencies {
     //日志打印框架
     api "com.orhanobut:logger:$BuildVersions.logger_version"
 
-    //jackson
-    api "com.fasterxml.jackson.core:jackson-databind:$BuildVersions.jackson_databind_version"
     compileOnly "org.projectlombok:lombok:$BuildVersions.lombok_version"
     kapt "org.projectlombok:lombok:$BuildVersions.lombok_version"
     api "com.github.hackware1993:MagicIndicator:$BuildVersions.magic_indicator_version"

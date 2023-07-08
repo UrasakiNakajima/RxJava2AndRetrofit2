@@ -100,4 +100,6 @@ dependencies {
     implementation project(path: ':library_common')
     //GreenDao apply plugin
     implementation "org.greenrobot:greendao:$BuildVersions.greendao_version"
+    //jackson
+    implementation "com.fasterxml.jackson.core:jackson-databind:$BuildVersions.jackson_databind_version"
 }

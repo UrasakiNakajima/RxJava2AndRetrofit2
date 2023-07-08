@@ -1,5 +1,6 @@
 package com.phone.library_greendao
 
+import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.LogManager
 import com.phone.library_greendao.bean.UserBean
 import com.phone.library_greendao.greendao.DaoMaster
@@ -16,7 +17,7 @@ class UserBeanDaoManager {
     private var daoSession: DaoSession? = null
 
     init {
-        mDevOpenHelper = DevOpenHelper(com.phone.library_base.BaseApplication.instance(), DB_NAME, null)
+        mDevOpenHelper = DevOpenHelper(BaseApplication.instance(), DB_NAME, null)
         val daoMaster =
             DaoMaster(mDevOpenHelper?.writableDatabase)
         daoSession = daoMaster.newSession()

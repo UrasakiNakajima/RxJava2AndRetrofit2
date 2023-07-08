@@ -74,9 +74,6 @@ android {
 dependencies {
     implementation project(path: ':library_common')
 
-    //谷歌官方Json解析框架导入
-    implementation "com.google.code.gson:gson:$BuildVersions.gson_version"
-
     //okhttp3框架導入
     implementation "com.squareup.okhttp3:okhttp:$BuildVersions.okhttp3_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$BuildVersions.okhttp3_version"
