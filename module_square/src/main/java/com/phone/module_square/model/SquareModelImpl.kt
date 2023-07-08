@@ -1,8 +1,8 @@
 package com.phone.module_square.model
 
-import com.phone.library_common.bean.ApiResponse
+import com.phone.library_network.bean.ApiResponse
 import com.phone.library_common.bean.DataSquare
-import com.phone.library_common.manager.RetrofitManager
+import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_square.request.SquareRequest
 import io.reactivex.Observable
 import okhttp3.ResponseBody

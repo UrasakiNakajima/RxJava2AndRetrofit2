@@ -1,6 +1,6 @@
 package com.phone.module_square.request
 
-import com.phone.library_common.bean.ApiResponse
+import com.phone.library_network.bean.ApiResponse
 import com.phone.library_common.bean.DataSquare
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.common.ConstantUrl

@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.fastjson.JSONObject
-import com.phone.library_common.base.BaseMvpRxAppActivity
-import com.phone.library_common.base.IBaseView
-import com.phone.library_common.manager.LogManager.i
-import com.phone.library_common.manager.ResourcesManager
+import com.phone.library_mvp.BaseMvpRxAppActivity
+import com.phone.library_base.base.IBaseView
+import com.phone.library_base.manager.LogManager.i
+import com.phone.library_base.manager.ResourcesManager
 import com.phone.module_home.R
 import com.phone.module_home.adapter.LargeImageListBean
 import com.phone.module_home.adapter.VideoListAdapter

@@ -1,9 +1,9 @@
 package com.phone.library_common.manager
 
 import android.os.Environment
-import com.phone.library_common.BaseApplication
-import com.phone.library_common.callback.OnCommonSingleParamCallback
-import com.phone.library_common.manager.LogManager.i
+import com.phone.library_base.BaseApplication
+import com.phone.library_base.callback.OnCommonSingleParamCallback
+import com.phone.library_base.manager.LogManager.i
 import com.trello.rxlifecycle3.android.ActivityEvent
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import io.reactivex.Observable

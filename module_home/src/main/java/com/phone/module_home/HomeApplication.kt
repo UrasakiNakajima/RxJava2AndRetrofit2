@@ -1,6 +1,6 @@
 package com.phone.module_home
 
-import com.phone.library_common.BaseApplication
+import com.phone.library_base.BaseApplication
 
 class HomeApplication : BaseApplication() {
 

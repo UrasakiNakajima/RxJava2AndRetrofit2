@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Paint.FontMetricsInt
 import android.text.TextPaint
-import com.phone.library_common.manager.LogManager
+import com.phone.library_base.manager.LogManager
 import com.phone.library_common.manager.ScreenManager.spToPx
 
 class VerticalAlignTextSpan(fontSizeSp: Float) {

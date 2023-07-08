@@ -6,11 +6,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.base.BaseMvpRxAppActivity
-import com.phone.library_common.base.IBaseView
+import com.phone.library_mvp.BaseMvpRxAppActivity
+import com.phone.library_base.base.IBaseView
+import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_common.common.ConstantData
-import com.phone.library_common.manager.ResourcesManager
-import com.phone.library_common.manager.RetrofitManager
+import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_mine.R
 import com.phone.module_mine.presenter.MinePresenterImpl
 import com.phone.module_mine.view.IUserDataView

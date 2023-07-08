@@ -31,7 +31,7 @@
             android:name="notch.config"
             android:value="portrait|landscape" />
         <meta-data
-            android:name="com.phone.library_common.okhttp3_app_glide_module.Okhttp3AppGlideModule"
+            android:name="com.phone.library_glide.okhttp3_app_glide_module.Okhttp3AppGlideModule"
             android:value="AppGlideModule" />
 
         <provider

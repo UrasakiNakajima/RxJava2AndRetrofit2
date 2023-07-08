@@ -1,30 +1,21 @@
 package com.phone.module_mine.presenter
 
 import android.text.TextUtils
-import com.google.gson.reflect.TypeToken
-import com.phone.library_common.BaseApplication
-import com.phone.library_common.base.BasePresenter
-import com.phone.library_common.base.IBaseView
-import com.phone.library_common.bean.ApiResponse3
-import com.phone.library_common.bean.MineResult
-import com.phone.library_common.callback.OnCommonSingleParamCallback
-import com.phone.library_common.manager.GsonManager
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.ResourcesManager
-import com.phone.library_common.manager.RetrofitManager
+import com.phone.library_mvp.BasePresenter
+import com.phone.library_base.base.IBaseView
+import com.phone.library_base.callback.OnCommonSingleParamCallback
+import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_mine.R
 import com.phone.module_mine.model.MineModelImpl
 import com.phone.module_mine.view.IMineView
 import com.phone.module_mine.view.IUserDataView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMinePresenter {
 
@@ -94,7 +85,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                         }
                     } else {
                         baseView.mineDataError(
-                            apiResponse.reason ?: BaseApplication.instance().resources.getString(
+                            apiResponse.reason ?: com.phone.library_base.BaseApplication.instance().resources.getString(
                                 R.string.library_loading_failed
                             )
                         )
@@ -112,7 +103,8 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             if (baseView is IUserDataView) {
                 RetrofitManager.instance().responseString5(rxAppCompatActivity,
                     model.userData(bodyParams),
-                    object : OnCommonSingleParamCallback<String> {
+                    object :
+                        OnCommonSingleParamCallback<String> {
                         override fun onSuccess(success: String) {
                             LogManager.i(TAG, "userData success*****$success")
                             if (!TextUtils.isEmpty(success)) {
@@ -128,7 +120,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    }
                             } else {
                                 baseView.userDataError(
-                                    BaseApplication.instance().resources.getString(
+                                    com.phone.library_base.BaseApplication.instance().resources.getString(
                                         R.string.library_loading_failed
                                     )
                                 )
@@ -154,7 +146,8 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
             if (baseView is IUserDataView) {
                 RetrofitManager.instance().responseString5(rxAppCompatActivity,
                     model.userData(accessToken, bodyParams),
-                    object : OnCommonSingleParamCallback<String> {
+                    object :
+                        OnCommonSingleParamCallback<String> {
                         override fun onSuccess(success: String) {
                             LogManager.i(TAG, "userData success*****$success")
                             if (!TextUtils.isEmpty(success)) {
@@ -170,7 +163,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    }
                             } else {
                                 baseView.userDataError(
-                                    BaseApplication.instance().resources.getString(
+                                    com.phone.library_base.BaseApplication.instance().resources.getString(
                                         R.string.library_loading_failed
                                     )
                                 )

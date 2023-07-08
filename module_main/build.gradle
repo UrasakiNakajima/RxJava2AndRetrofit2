@@ -78,6 +78,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(path: ':library_common')
+    api project(path: ':library_network')
+    implementation project(path: ':library_login')
+    implementation project(path: ':library_mvp')
+    implementation project(path: ':library_custom_view')
+
     implementation "androidx.appcompat:appcompat:$BuildVersions.appcompat_version"
 
     //Android路由（用于不同app之间的跳转）

@@ -113,8 +113,18 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':base64_and_file')
+    implementation project(path: ':library_common')
+    implementation project(path: ':library_network')
+    implementation project(path: ':library_login')
+    implementation project(path: ':library_room')
+    implementation project(path: ':library_greendao')
+    implementation project(path: ':library_mvvm')
+    implementation project(path: ':library_mvp')
+
+    implementation project(path: ':library_base64_and_file')
+    implementation project(path: ':library_android_and_js')
     implementation project(path: ':library_mounting')
+    implementation project(path: ':library_custom_view')
 
     //Android路由（用于不同app之间的跳转）
 //    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"

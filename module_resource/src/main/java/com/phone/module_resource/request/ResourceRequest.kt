@@ -1,7 +1,7 @@
 package com.phone.module_resource.request
 
-import com.phone.library_common.bean.ApiResponse
-import com.phone.library_common.bean.ArticleBean
+import com.phone.library_network.bean.ApiResponse
+import com.phone.library_custom_view.bean.ArticleBean
 import com.phone.library_common.bean.TabBean
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.common.ConstantUrl

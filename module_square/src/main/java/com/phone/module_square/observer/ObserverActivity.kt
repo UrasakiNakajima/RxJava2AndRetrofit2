@@ -1,7 +1,7 @@
 package com.phone.module_square.observer
 
-import com.phone.library_common.base.BaseRxAppActivity
-import com.phone.library_common.manager.LogManager
+import com.phone.library_base.base.BaseRxAppActivity
+import com.phone.library_base.manager.LogManager
 import com.phone.module_square.R
 
 class ObserverActivity : BaseRxAppActivity() {

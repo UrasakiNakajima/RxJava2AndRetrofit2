@@ -1,6 +1,6 @@
 package com.phone.module_mine.task;
 
-import com.phone.library_common.manager.LogManager;
+import com.phone.library_base.manager.LogManager;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

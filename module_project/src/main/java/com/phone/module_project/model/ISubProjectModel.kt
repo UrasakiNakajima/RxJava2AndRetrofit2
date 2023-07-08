@@ -1,7 +1,7 @@
 package com.phone.module_project.model
 
-import com.phone.library_common.bean.ApiResponse
-import com.phone.library_common.bean.ArticleBean
+import com.phone.library_network.bean.ApiResponse
+import com.phone.library_custom_view.bean.ArticleBean
 import okhttp3.ResponseBody
 import retrofit2.Call
 

@@ -5,12 +5,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.base.BaseBindingRxAppActivity
-import com.phone.library_common.bean.UserBean
+import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_mvvm.BaseBindingRxAppActivity
+import com.phone.library_greendao.bean.UserBean
 import com.phone.library_common.common.ConstantData
-import com.phone.library_common.dialog.StandardDialog
-import com.phone.library_common.dialog.StandardUserDialog
+import com.phone.library_custom_view.dialog.StandardDialog
+import com.phone.library_custom_view.dialog.StandardUserDialog
 import com.phone.library_common.manager.*
+import com.phone.library_base.manager.MainThreadManager
+import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_square.R
 import com.phone.module_square.adapter.UserBeanAdapter
 import com.phone.module_square.databinding.SquareActivityCreateUserBinding
@@ -20,7 +24,7 @@ import java.util.*
 class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBinding>() {
 
     private val TAG = CreateUserActivity::class.java.simpleName
-    private var userBeanDaoManager: UserBeanDaoManager? = null
+    private var userBeanDaoManager: com.phone.library_greendao.UserBeanDaoManager? = null
     private var userBeanAdapter: UserBeanAdapter? = null
 
     private var createUserDialog //创建用户Dialog
@@ -36,7 +40,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
     override fun initLayoutId() = R.layout.square_activity_create_user
 
     override fun initData() {
-        userBeanDaoManager = UserBeanDaoManager()
+        userBeanDaoManager = com.phone.library_greendao.UserBeanDaoManager()
     }
 
     override fun initViews() {

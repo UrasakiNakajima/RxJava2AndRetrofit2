@@ -1,8 +1,8 @@
 package com.phone.module_resource.model
 
-import com.phone.library_common.bean.ApiResponse
+import com.phone.library_network.bean.ApiResponse
 import com.phone.library_common.bean.TabBean
-import com.phone.library_common.manager.RetrofitManager
+import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_resource.request.ResourceRequest
 import okhttp3.ResponseBody
 import retrofit2.Call

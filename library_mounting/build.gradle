@@ -37,21 +37,21 @@ android {
         enabled = true
     }
 
-    buildTypes {
-        release {
-            //java代码中引用的定义形式
-            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
-            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            //java代码中引用的定义形式
-            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
-            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+//    buildTypes {
+//        release {
+//            //java代码中引用的定义形式
+//            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+//            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+//        debug {
+//            //java代码中引用的定义形式
+//            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+//            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+//    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -73,6 +73,7 @@ android {
 
 dependencies {
     implementation project(path: ':library_common')
+    implementation project(path: ':library_mvvm')
     //Android路由（用于不同app之间的跳转）
 //    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
     kapt "com.alibaba:arouter-compiler:$BuildVersions.arouter_compiler_version"

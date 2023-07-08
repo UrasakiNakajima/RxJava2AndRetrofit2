@@ -9,17 +9,23 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.library_common.BaseApplication
-import com.phone.library_common.base.BaseMvpRxAppActivity
-import com.phone.library_common.base.BaseMvvmRxFragment
-import com.phone.library_common.base.State
+import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_common.BuildConfig
+import com.phone.library_mvp.BaseMvpRxAppActivity
+import com.phone.library_mvvm.BaseMvvmRxFragment
+import com.phone.library_network.bean.State
 import com.phone.library_common.bean.*
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
-import com.phone.library_common.room.AppRoomDataBase
-import com.phone.library_common.service.ISquareProvider
-import com.phone.module_square.BuildConfig
+import com.phone.library_room.AppRoomDataBase
+import com.phone.library_common.iprovider.ISquareProvider
+import com.phone.library_greendao.bean.UserBean
+import com.phone.library_greendao.bean.UserBean2
+import com.phone.library_greendao.bean.UserBean3
+import com.phone.library_network.manager.RetrofitManager
+import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareFragmentSquareBinding
 import com.phone.module_square.view_model.SquareViewModelImpl
@@ -95,7 +101,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                     if (it.success != null && it.success.size > 0) {
                         squareDataSuccess(it.success)
                     } else {
-                        squareDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
+                        squareDataError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_no_data_available))
                     }
                 }
 
@@ -261,13 +267,15 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                         baseMvpRxAppActivity.getActivityPageManager()?.exitApp()
                     } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                        val userBean: UserBean = UserBean2()
+                        val userBean: UserBean =
+                            UserBean2()
                         val user3 = userBean as UserBean3
                         LogManager.i(TAG, user3.toString())
                     } else if (number == 3) {
                         try {
                             //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                            val userBean: UserBean = UserBean2()
+                            val userBean: UserBean =
+                                UserBean2()
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } catch (e: Exception) {
@@ -322,7 +330,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
             if (RetrofitManager.isNetworkAvailable()) {
                 viewModel.squareData(this, currentPage)
             } else {
-                squareDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
+                squareDataError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
             }
 
             LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())

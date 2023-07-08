@@ -117,6 +117,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':library_common')
+    implementation project(path: ':library_network')
+    implementation project(path: ':library_login')
+    implementation project(path: ':library_mvvm')
+    implementation project(path: ':library_custom_view')
 
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 

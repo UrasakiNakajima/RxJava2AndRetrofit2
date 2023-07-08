@@ -1,9 +1,9 @@
 package com.phone.module_main.presenter;
 
-import com.phone.library_common.base.BasePresenter;
-import com.phone.library_common.base.IBaseView;
-import com.phone.library_common.callback.OnCommonSingleParamCallback;
-import com.phone.library_common.manager.RetrofitManager;
+import com.phone.library_base.base.IBaseView;
+import com.phone.library_base.callback.OnCommonSingleParamCallback;
+import com.phone.library_mvp.BasePresenter;
+import com.phone.library_network.manager.RetrofitManager;
 import com.phone.module_main.model.IMainModel;
 import com.phone.module_main.model.MainModelImpl;
 import com.phone.module_main.view.IMainView;

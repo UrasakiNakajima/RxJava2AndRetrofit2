@@ -113,6 +113,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':library_common')
+    implementation project(path: ':library_network')
+    implementation project(path: ':library_glide')
+    implementation project(path: ':library_custom_view')
+    implementation project(path: ':library_login')
+    implementation project(path: ':library_mvp')
+    implementation project(path: ':library_mvvm')
+
     // room
     implementation "androidx.room:room-runtime:$BuildVersions.room_version"
     annotationProcessor "androidx.room:room-compiler:$BuildVersions.room_version"

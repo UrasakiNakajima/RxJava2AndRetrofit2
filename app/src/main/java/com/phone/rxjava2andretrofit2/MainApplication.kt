@@ -2,12 +2,11 @@ package com.phone.rxjava2andretrofit2
 
 import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
-import com.phone.library_common.BaseApplication
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.SharedPreferencesManager
-import com.phone.library_common.manager.ThreadPoolManager
+import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.SharedPreferencesManager
+import com.phone.library_base.manager.ThreadPoolManager
 
-class MainApplication : BaseApplication() {
+class MainApplication : com.phone.library_base.BaseApplication() {
 
     companion object {
         @JvmStatic

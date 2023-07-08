@@ -16,7 +16,6 @@ if (isModule.toBoolean()) {
 
 android {
     compileSdk BuildVersions.compileSdk
-//    buildToolsVersion "31.0.3"
 
     defaultConfig {
         if (isModule.toBoolean()) {
@@ -117,6 +116,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':library_common')
+    implementation project(path: ':library_network')
+    implementation project(path: ':library_login')
+    implementation project(path: ':library_mvvm')
+    implementation project(path: ':library_custom_view')
 
     //kotlin databinding
     kapt "com.android.databinding:compiler:$BuildVersions.databinding_version"

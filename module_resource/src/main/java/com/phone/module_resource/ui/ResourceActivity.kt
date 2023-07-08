@@ -1,7 +1,7 @@
 package com.phone.module_resource.ui
 
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.base.BaseBindingRxAppActivity
+import com.phone.library_mvvm.BaseBindingRxAppActivity
 import com.phone.library_common.common.ConstantData
 import com.phone.module_resource.R
 import com.phone.module_resource.fragment.ResourceFragment

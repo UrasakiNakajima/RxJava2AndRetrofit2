@@ -1,12 +1,11 @@
 package com.phone.module_home.request
 
-import com.phone.library_common.bean.ApiResponse2
+import com.phone.library_network.bean.ApiResponse2
 import com.phone.library_common.bean.ResultData
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.common.ConstantUrl
 import io.reactivex.Observable
 import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.QueryMap

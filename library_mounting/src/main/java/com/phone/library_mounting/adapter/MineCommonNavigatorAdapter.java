@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 
-import com.phone.library_common.manager.ResourcesManager;
+import com.phone.library_base.manager.ResourcesManager;
 import com.phone.library_mounting.R;
 
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;

@@ -8,7 +8,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.util.TypedValue
 import android.view.View
-import com.phone.library_common.manager.ResourcesManager
+import com.phone.library_base.manager.ResourcesManager
 import com.phone.module_main.R
 
 class DottedLineView(context: Context) : View(context) {

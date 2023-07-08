@@ -5,14 +5,16 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.BaseApplication
+import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_common.adapter.TabNavigatorAdapter
-import com.phone.library_common.base.BaseMvvmRxFragment
-import com.phone.library_common.base.State
+import com.phone.library_mvvm.BaseMvvmRxFragment
+import com.phone.library_network.bean.State
 import com.phone.library_common.bean.TabBean
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.*
+import com.phone.library_network.manager.RetrofitManager
+import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_project.R
 import com.phone.module_project.databinding.ProjectFragmentProjectBinding
 import com.phone.module_project.view.IProjectView
@@ -45,7 +47,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
                     if (it.success != null && it.success.size > 0) {
                         projectTabDataSuccess(it.success)
                     } else {
-                        projectTabDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
+                        projectTabDataError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_no_data_available))
                     }
                 }
 

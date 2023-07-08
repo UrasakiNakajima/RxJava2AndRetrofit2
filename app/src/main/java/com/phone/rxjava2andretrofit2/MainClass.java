@@ -1,6 +1,6 @@
 package com.phone.rxjava2andretrofit2;
 
-import com.phone.library_common.manager.LogManager;
+import com.phone.library_base.manager.LogManager;
 
 public class MainClass {
 

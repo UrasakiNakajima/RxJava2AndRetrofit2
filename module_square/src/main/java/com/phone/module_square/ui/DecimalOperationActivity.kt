@@ -6,7 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.base.BaseRxAppActivity
+import com.phone.library_base.base.BaseRxAppActivity
+import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.manager.BigDecimalManager.additionDouble
 import com.phone.library_common.manager.BigDecimalManager.additionDoubleCompatible
@@ -22,8 +24,6 @@ import com.phone.library_common.manager.BigDecimalManager.multiplicationDoubleCo
 import com.phone.library_common.manager.BigDecimalManager.multiplicationDoubleToStr
 import com.phone.library_common.manager.BigDecimalManager.subtractionDouble
 import com.phone.library_common.manager.BigDecimalManager.subtractionDoubleCompatible
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.ResourcesManager
 import com.phone.module_square.R
 
 /**

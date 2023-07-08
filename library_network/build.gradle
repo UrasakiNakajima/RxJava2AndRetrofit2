@@ -1,0 +1,88 @@
+import com.phone.versionplugin.BuildVersions
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    //ARouter需要用到
+    id 'kotlin-kapt'
+    id 'com.phone.versionplugin'
+}
+
+android {
+    compileSdk BuildVersions.compileSdk
+
+    defaultConfig {
+        minSdk BuildVersions.minSdk
+        targetSdk BuildVersions.targetSdk
+        versionCode BuildVersions.versionCode
+        versionName BuildVersions.versionName
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+    }
+
+    //android 模块下开启DataBinding
+    dataBinding {
+        enabled = true
+    }
+
+//    buildTypes {
+//        release {
+//            //java代码中引用的定义形式
+//            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+//            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+//        debug {
+//            //java代码中引用的定义形式
+//            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+//            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
+//    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
+        }
+    }
+
+    //给Module 内的资源名增加前缀, 避免资源名冲突
+    resourcePrefix "network_"
+}
+
+dependencies {
+    implementation project(path: ':library_common')
+
+    //谷歌官方Json解析框架导入
+    implementation "com.google.code.gson:gson:$BuildVersions.gson_version"
+
+    //okhttp3框架導入
+    implementation "com.squareup.okhttp3:okhttp:$BuildVersions.okhttp3_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$BuildVersions.okhttp3_version"
+    //retrofit2框架導入
+    api "com.squareup.retrofit2:retrofit:$BuildVersions.retrofit2_version"
+    api "com.squareup.retrofit2:converter-gson:$BuildVersions.retrofit2_version"
+    api "com.squareup.retrofit2:adapter-rxjava2:$BuildVersions.retrofit2_version"
+
+}

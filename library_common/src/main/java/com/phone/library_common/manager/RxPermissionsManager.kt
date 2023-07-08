@@ -1,7 +1,7 @@
 package com.phone.library_common.manager
 
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
-import com.phone.library_common.manager.LogManager.i
+import com.phone.library_base.manager.LogManager.i
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.trello.rxlifecycle3.android.ActivityEvent
 import com.trello.rxlifecycle3.android.FragmentEvent

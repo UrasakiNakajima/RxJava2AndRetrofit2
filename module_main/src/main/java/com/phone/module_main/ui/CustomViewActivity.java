@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.phone.library_common.bean.EventScheduleListBean;
-import com.phone.library_common.custom_view.EventScheduleLayout;
+import com.phone.library_custom_view.bean.EventScheduleListBean;
+import com.phone.library_custom_view.custom_view.EventScheduleLayout;
 import com.phone.module_main.R;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 

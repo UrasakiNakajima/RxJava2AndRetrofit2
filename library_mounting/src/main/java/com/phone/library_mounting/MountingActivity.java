@@ -5,15 +5,15 @@ import android.graphics.Color;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.phone.library_base.manager.LogManager;
+import com.phone.library_base.manager.ResourcesManager;
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter;
-import com.phone.library_common.base.BaseBindingRxAppActivity;
 import com.phone.library_common.common.ConstantData;
-import com.phone.library_common.manager.LogManager;
-import com.phone.library_common.manager.ResourcesManager;
 import com.phone.library_common.manager.ScreenManager;
 import com.phone.library_mounting.databinding.MountingActivityMountingBinding;
 import com.phone.library_mounting.adapter.MineCommonNavigatorAdapter;
 import com.phone.library_mounting.fragment.CommodityFragment;
+import com.phone.library_mvvm.BaseBindingRxAppActivity;
 
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;

@@ -1,6 +1,6 @@
 package com.phone.library_common.manager
 
-import com.phone.library_common.BaseApplication
+import com.phone.library_base.BaseApplication
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader

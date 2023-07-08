@@ -1,6 +1,6 @@
 package com.phone.module_mine.request
 
-import com.phone.library_common.bean.ApiResponse3
+import com.phone.library_network.bean.ApiResponse3
 import com.phone.library_common.bean.MineResult
 import com.phone.library_common.common.ConstantData
 import com.phone.library_common.common.ConstantUrl

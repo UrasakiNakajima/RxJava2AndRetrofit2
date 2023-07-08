@@ -1,5 +1,7 @@
 package com.phone.library_common.manager
 
+import com.phone.library_base.manager.CrashHandlerManager
+
 /**
  * 不會造成App崩潰的異常（被try(){}catch拋出來的異常）管理類
  */

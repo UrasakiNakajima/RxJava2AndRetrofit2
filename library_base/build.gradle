@@ -1,0 +1,136 @@
+import com.phone.versionplugin.BuildVersions
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    //ARouter需要用到
+    id 'kotlin-kapt'
+    id 'com.phone.versionplugin'
+}
+
+android {
+    compileSdk BuildVersions.compileSdk
+
+    defaultConfig {
+        minSdk BuildVersions.minSdk
+        targetSdk BuildVersions.targetSdk
+        versionCode BuildVersions.versionCode
+        versionName BuildVersions.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+//            abiFilters 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+    }
+
+    //android 模块下开启DataBinding
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            manifest.srcFile 'src/main/java/library/AndroidManifest.xml'
+        }
+    }
+
+    ndkVersion '16.1.4479499'
+
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.10.2'
+        }
+    }
+
+    //给Module 内的资源名增加前缀, 避免资源名冲突
+    resourcePrefix "base_"
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api "org.jetbrains.kotlin:kotlin-stdlib:$BuildVersions.kotlin_stdlib_version"
+    api "androidx.appcompat:appcompat:$BuildVersions.appcompat_version"
+    api "androidx.constraintlayout:constraintlayout:$BuildVersions.constraintlayout_version"
+    androidTestApi "androidx.test:runner:$BuildVersions.runner_version"
+    androidTestApi "androidx.test.espresso:espresso-core:$BuildVersions.espresso_core_version"
+    api "androidx.core:core:$BuildVersions.core_version"
+    api "androidx.core:core-ktx:$BuildVersions.core_ktx_version"
+    testApi "junit:junit:$BuildVersions.junit_version"
+    api "com.google.android.material:material:$BuildVersions.material_version"
+    api files('libs/BASE64Decoder.jar')
+
+    //rxjava2框架導入
+    api "io.reactivex.rxjava2:rxjava:$BuildVersions.rxjava_version"
+    api "io.reactivex.rxjava2:rxandroid:$BuildVersions.rxandroid_version"
+    //1.解决rxjava导致的内存泄漏的框架導入
+    api "com.trello.rxlifecycle3:rxlifecycle:$BuildVersions.rxlifecycle_version"
+    // If you want to bind to Android-specific lifecycles
+    api "com.trello.rxlifecycle3:rxlifecycle-android:$BuildVersions.rxlifecycle_version"
+    // If you want pre-written Activities and Fragments you can subclass as providers
+    api "com.trello.rxlifecycle3:rxlifecycle-components:$BuildVersions.rxlifecycle_version"
+    // If you want pre-written support preference Fragments you can subclass as providers
+    api "com.trello.rxlifecycle3:rxlifecycle-components-preference:$BuildVersions.rxlifecycle_version"
+    // If you want to use Android Lifecycle for providers
+    api "com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:$BuildVersions.rxlifecycle_version"
+    // If you want to use Kotlin syntax
+    api "com.trello.rxlifecycle3:rxlifecycle-kotlin:$BuildVersions.rxlifecycle_version"
+    // If you want to use Kotlin syntax with Android Lifecycle
+    api "com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:$BuildVersions.rxlifecycle_version"
+//    // If you want to use Navi for providers
+//    // DEPRECATED: Use rxlifecycle-android-lifecycle instead. This will be removed in a future release.
+//    api "com.trello.rxlifecycle3:rxlifecycle-navi:$BuildVersions.rxlifecycle_version"
+
+
+    //android函数分包框架导入
+    api "androidx.multidex:multidex:$BuildVersions.multidex_version"
+
+    //沉浸式状态栏框架导入
+    // 基础依赖包，必须要依赖
+    api "com.geyifeng.immersionbar:immersionbar:$BuildVersions.immersionbar_version"
+    // kotlin扩展（可选）
+    api "com.geyifeng.immersionbar:immersionbar-ktx:$BuildVersions.immersionbar_version"
+    api "com.qmuiteam:qmui:$BuildVersions.qmui_version"
+
+    //Android路由（用于不同app之间的跳转）
+    api "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
+    kapt "com.alibaba:arouter-compiler:$BuildVersions.arouter_compiler_version"
+}

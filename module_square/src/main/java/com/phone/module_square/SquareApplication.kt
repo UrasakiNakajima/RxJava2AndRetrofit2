@@ -1,6 +1,6 @@
 package com.phone.module_square
 
-import com.phone.library_common.BaseApplication
+import com.phone.library_base.BaseApplication
 
 class SquareApplication: BaseApplication() {
 

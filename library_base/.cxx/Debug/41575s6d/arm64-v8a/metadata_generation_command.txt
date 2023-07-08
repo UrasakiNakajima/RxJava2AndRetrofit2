@@ -1,0 +1,18 @@
+                    -H/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp
+-DCMAKE_SYSTEM_NAME=Android
+-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+-DCMAKE_SYSTEM_VERSION=21
+-DANDROID_PLATFORM=android-21
+-DANDROID_ABI=arm64-v8a
+-DCMAKE_ANDROID_ARCH_ABI=arm64-v8a
+-DANDROID_NDK=/Users/erwinnakashima/Library/Android/sdk/ndk/16.1.4479499
+-DCMAKE_ANDROID_NDK=/Users/erwinnakashima/Library/Android/sdk/ndk/16.1.4479499
+-DCMAKE_TOOLCHAIN_FILE=/Users/erwinnakashima/Library/Android/sdk/ndk/16.1.4479499/build/cmake/android.toolchain.cmake
+-DCMAKE_MAKE_PROGRAM=/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/build/intermediates/cxx/Debug/41575s6d/obj/arm64-v8a
+-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/build/intermediates/cxx/Debug/41575s6d/obj/arm64-v8a
+-DCMAKE_BUILD_TYPE=Debug
+-B/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/.cxx/Debug/41575s6d/arm64-v8a
+-GNinja
+                    Build command args: []
+                    Version: 2

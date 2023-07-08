@@ -9,9 +9,9 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
 import android.widget.*
-import com.phone.library_common.base.BaseRxAppActivity
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.ResourcesManager
+import com.phone.library_base.base.BaseRxAppActivity
+import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ResourcesManager
 import com.phone.module_project.R
 import com.phone.rxjava2andretrofit2.manager.VideoImageManager
 import io.reactivex.BackpressureStrategy

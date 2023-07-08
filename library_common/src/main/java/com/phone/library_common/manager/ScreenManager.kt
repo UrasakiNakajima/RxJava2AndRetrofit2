@@ -11,8 +11,7 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import com.phone.library_common.BaseApplication
-import com.phone.library_common.manager.LogManager.i
+import com.phone.library_base.manager.LogManager.i
 
 /**
  * author    : Urasaki
@@ -31,7 +30,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun dpToPx(dpValue: Float): Int {
-        val scale = BaseApplication.instance().resources.displayMetrics.density
+        val scale = com.phone.library_base.BaseApplication.instance().resources.displayMetrics.density
         return (dpValue * scale + 0.5f).toInt()
     }
 
@@ -40,7 +39,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun pxToDp(pxValue: Float): Int {
-        val scale = BaseApplication.instance().resources.displayMetrics.density
+        val scale = com.phone.library_base.BaseApplication.instance().resources.displayMetrics.density
         return (pxValue / scale + 0.5f).toInt()
     }
 
@@ -49,7 +48,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun pxToSp(pxValue: Float): Int {
-        val fontScale = BaseApplication.instance().resources.displayMetrics.scaledDensity
+        val fontScale = com.phone.library_base.BaseApplication.instance().resources.displayMetrics.scaledDensity
         return (pxValue / fontScale + 0.5f).toInt()
     }
 
@@ -58,7 +57,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun spToPx(spValue: Float): Int {
-        val fontScale = BaseApplication.instance().resources.displayMetrics.scaledDensity
+        val fontScale = com.phone.library_base.BaseApplication.instance().resources.displayMetrics.scaledDensity
         return (spValue * fontScale + 0.5f).toInt()
     }
 
@@ -67,7 +66,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun getDimenDp(dpValue: Int): Int {
-        return pxToDp(BaseApplication.instance().resources.getDimension(dpValue))
+        return pxToDp(com.phone.library_base.BaseApplication.instance().resources.getDimension(dpValue))
     }
 
     /**
@@ -75,7 +74,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun getDimenPx(dpValue: Int): Int {
-        return BaseApplication.instance().resources.getDimension(dpValue).toInt()
+        return com.phone.library_base.BaseApplication.instance().resources.getDimension(dpValue).toInt()
     }
 
     /**
@@ -83,7 +82,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun getDimenSp(spValue: Int): Int {
-        return pxToSp(BaseApplication.instance().resources.getDimension(spValue))
+        return pxToSp(com.phone.library_base.BaseApplication.instance().resources.getDimension(spValue))
     }
 
     /**
@@ -91,7 +90,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun getScreenHeight(): Int {
-        return BaseApplication.instance().resources.displayMetrics.heightPixels
+        return com.phone.library_base.BaseApplication.instance().resources.displayMetrics.heightPixels
     }
 
     /**
@@ -99,7 +98,7 @@ object ScreenManager {
      */
     @JvmStatic
     fun getScreenWidth(): Int {
-        return BaseApplication.instance().resources.displayMetrics.widthPixels
+        return com.phone.library_base.BaseApplication.instance().resources.displayMetrics.widthPixels
     }
 
     /**
@@ -176,12 +175,12 @@ object ScreenManager {
     private fun getInternalDimensionSize(key: String): Int {
         var result = 0
         try {
-            val resourceId = BaseApplication.instance().resources.getIdentifier(key, "dimen", "android")
+            val resourceId = com.phone.library_base.BaseApplication.instance().resources.getIdentifier(key, "dimen", "android")
             if (resourceId > 0) {
                 result = Math.round(
-                    BaseApplication.instance().resources.getDimensionPixelSize(resourceId) *
+                    com.phone.library_base.BaseApplication.instance().resources.getDimensionPixelSize(resourceId) *
                             Resources.getSystem().displayMetrics.density /
-                            BaseApplication.instance().resources.displayMetrics.density
+                            com.phone.library_base.BaseApplication.instance().resources.displayMetrics.density
                 )
             }
         } catch (ignored: NotFoundException) {

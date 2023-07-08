@@ -1,23 +1,18 @@
 package com.phone.module_square.view_model
 
-import android.text.TextUtils
-import com.phone.library_common.base.BaseViewModel
-import com.phone.library_common.base.State
+import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_mvvm.BaseViewModel
+import com.phone.library_network.bean.State
 import com.phone.library_common.bean.SubDataSquare
-import com.phone.library_common.bean.SquareBean
-import com.phone.library_common.callback.OnCommonSingleParamCallback
-import com.phone.library_common.manager.*
+import com.phone.library_network.SingleLiveData
 import com.phone.module_square.model.SquareModelImpl
 import com.phone.module_square.R
-import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 

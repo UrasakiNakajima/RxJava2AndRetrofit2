@@ -1,0 +1,55 @@
+{
+  "stringTable": {},
+  "buildFiles": [
+    "/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+      "-C",
+      "/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/.cxx/RelWithDebInfo/6u1u3jo3/arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+    "-C",
+    "/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/.cxx/RelWithDebInfo/6u1u3jo3/arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "return-data-RelWithDebInfo-arm64-v8a": {
+      "buildCommandComponents": [
+        "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+        "-C",
+        "/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/.cxx/RelWithDebInfo/6u1u3jo3/arm64-v8a",
+        "return-data"
+      ],
+      "buildType": "release",
+      "abi": "arm64-v8a",
+      "artifactName": "return-data",
+      "output": "/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libreturn-data.so",
+      "runtimeFiles": []
+    },
+    "native-lib-RelWithDebInfo-arm64-v8a": {
+      "buildCommandComponents": [
+        "/Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja",
+        "-C",
+        "/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/.cxx/RelWithDebInfo/6u1u3jo3/arm64-v8a",
+        "native-lib"
+      ],
+      "buildType": "release",
+      "abi": "arm64-v8a",
+      "artifactName": "native-lib",
+      "output": "/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libnative-lib.so",
+      "runtimeFiles": [
+        "/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libreturn-data.so"
+      ]
+    }
+  },
+  "toolchains": {},
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

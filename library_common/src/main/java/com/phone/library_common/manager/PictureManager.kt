@@ -8,9 +8,9 @@ import android.graphics.Canvas
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
-import com.phone.library_common.BaseApplication
+import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_common.R
-import com.phone.library_common.callback.OnCommonSingleParamCallback
+import com.phone.library_base.manager.ResourcesManager
 import okhttp3.ResponseBody
 import java.io.*
 
@@ -32,7 +32,7 @@ object PictureManager {
         fileName: String
     ): Boolean {
         var newFileName = fileName
-        val path = BaseApplication.instance().externalCacheDir
+        val path = com.phone.library_base.BaseApplication.instance().externalCacheDir
             .toString() + File.separator + "Pictures"
         val appDir = File(path)
         if (!appDir.exists()) {
@@ -55,7 +55,7 @@ object PictureManager {
 
             //保存图片后发送广播通知更新数据库
             val uri = Uri.fromFile(file)
-            BaseApplication.instance()
+            com.phone.library_base.BaseApplication.instance()
                 .sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
             return isSuccess
         } catch (e: IOException) {
@@ -237,7 +237,7 @@ object PictureManager {
         onCommonSingleParamCallback: OnCommonSingleParamCallback<Int?>?
     ): Boolean {
         var newFileName = fileName
-        val path = BaseApplication.instance().externalCacheDir
+        val path = com.phone.library_base.BaseApplication.instance().externalCacheDir
             .toString() + File.separator + "Pictures"
         //首先创建路径（有则不创建，没有则创建）
         val appDir = File(path)
@@ -264,7 +264,7 @@ object PictureManager {
                 bufferedOutputStream.close()
                 //保存图片后发送广播通知更新数据库
                 val uri = Uri.fromFile(file)
-                BaseApplication.instance()
+                com.phone.library_base.BaseApplication.instance()
                     .sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
                 return isSuccess
             } catch (ioException: IOException) {

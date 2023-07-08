@@ -9,11 +9,11 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.BuildConfig
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
-import com.phone.library_common.base.BaseMvpRxAppActivity
-import com.phone.library_common.base.IBaseView
+import com.phone.library_mvp.BaseMvpRxAppActivity
+import com.phone.library_base.base.IBaseView
+import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_common.common.ConstantData
-import com.phone.library_common.custom_view.MineLazyViewPager
-import com.phone.library_common.manager.ResourcesManager
+import com.phone.library_custom_view.custom_view.MineLazyViewPager
 import com.phone.module_main.presenter.MainPresenterImpl
 import com.phone.module_main.view.IMainView
 

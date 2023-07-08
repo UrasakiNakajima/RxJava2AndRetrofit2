@@ -1,6 +1,6 @@
 package com.phone.module_home.dialog_fragment
 
-import com.phone.library_common.base.BaseBindingDialogFragment
+import com.phone.library_mvvm.BaseBindingDialogFragment
 import com.phone.module_home.R
 import com.phone.module_home.databinding.HomeDialogFragmentShowDownloadBinding
 

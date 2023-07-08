@@ -1,11 +1,10 @@
 package com.phone.module_square.view_model
 
 import androidx.lifecycle.viewModelScope
-import com.phone.library_common.base.BaseViewModel
-import com.phone.library_common.base.State
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.SingleLiveData
-import kotlinx.coroutines.async
+import com.phone.library_mvvm.BaseViewModel
+import com.phone.library_network.bean.State
+import com.phone.library_base.manager.LogManager
+import com.phone.library_network.SingleLiveData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

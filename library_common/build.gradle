@@ -5,8 +5,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     //ARouter需要用到
     id 'kotlin-kapt'
-    //GreenDao apply plugin
-    id 'org.greenrobot.greendao'
     //id 'newlens'
     id 'com.phone.versionplugin'
 }
@@ -20,8 +18,6 @@ tasks.withType(JavaCompile) {
 
 android {
     compileSdk BuildVersions.compileSdk
-//    buildToolsVersion "31.0.3"
-
 
     defaultConfig {
         minSdk BuildVersions.minSdk
@@ -56,21 +52,6 @@ android {
             }
         }
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += [
-                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
-                        "room.incremental"     : "true",
-                        "room.expandProjection": "true"]
-            }
-        }
-
-        ndk {
-            //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-//            abiFilters 'armeabi-v7a', 'arm64-v8a'
-            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
-        }
     }
 
     packagingOptions {
@@ -120,51 +101,16 @@ android {
         }
     }
 
-    ndkVersion '16.1.4479499'
-
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.10.2'
-        }
-    }
-
     //给Module 内的资源名增加前缀, 避免资源名冲突
     resourcePrefix "library_"
 }
 
-greendao {
-    //数据库版本号
-    schemaVersion BuildVersions.schemaVersion
-    // 设置DaoMaster、DaoSession、Dao 包名
-    daoPackage 'com.phone.library_common.greendao'
-    //设置DaoMaster、DaoSession、Dao目录,请注意，这里路径用/不要用.
-    targetGenDir 'src/main/java'
-    //设置为true以自动生成单元测试。
-    generateTests false
-    //应存储生成的单元测试的基本目录。默认为 src / androidTest / java。
-    //targetGenDirTests 'src/androidTest/java'
-}
-
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api "org.jetbrains.kotlin:kotlin-stdlib:$BuildVersions.kotlin_stdlib_version"
-    api "androidx.appcompat:appcompat:$BuildVersions.appcompat_version"
-    api "androidx.constraintlayout:constraintlayout:$BuildVersions.constraintlayout_version"
-    implementation files('libs/BASE64Decoder.jar')
-    androidTestApi "androidx.test:runner:$BuildVersions.runner_version"
-    androidTestApi "androidx.test.espresso:espresso-core:$BuildVersions.espresso_core_version"
-    api "androidx.core:core:$BuildVersions.core_version"
-    api "androidx.core:core-ktx:$BuildVersions.core_ktx_version"
-    //android函数分包框架导入
-    api "androidx.multidex:multidex:$BuildVersions.multidex_version"
+    api project(path: ':library_base')
     //cardview导入
     api "androidx.cardview:cardview:$BuildVersions.cardview_version"
-    //Mvvm模式框架导入
-    api "androidx.lifecycle:lifecycle-livedata-ktx:$BuildVersions.lifecycle_version"
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$BuildVersions.lifecycle_version"
-    testApi "junit:junit:$BuildVersions.junit_version"
-    api "com.google.android.material:material:$BuildVersions.material_version"
+
 
     //apache StringUtils导入
     api "org.apache.commons:commons-lang3:$BuildVersions.commons_lang_version"
@@ -173,54 +119,12 @@ dependencies {
     //kotlin databinding
     kapt "com.android.databinding:compiler:$BuildVersions.databinding_version"
 
-    //谷歌官方Json解析框架导入
-    api "com.google.code.gson:gson:$BuildVersions.gson_version"
 
-    //okhttp3框架導入
-    api "com.squareup.okhttp3:okhttp:$BuildVersions.okhttp3_version"
-    api "com.squareup.okhttp3:logging-interceptor:$BuildVersions.okhttp3_version"
-    //retrofit2框架導入
-    api "com.squareup.retrofit2:retrofit:$BuildVersions.retrofit2_version"
-    api "com.squareup.retrofit2:converter-gson:$BuildVersions.retrofit2_version"
-    api "com.squareup.retrofit2:adapter-rxjava2:$BuildVersions.retrofit2_version"
-    //rxjava2框架導入
-    api "io.reactivex.rxjava2:rxjava:$BuildVersions.rxjava_version"
-    api "io.reactivex.rxjava2:rxandroid:$BuildVersions.rxandroid_version"
     //rxpermissions框架導入
     api "com.github.tbruyelle:rxpermissions:$BuildVersions.rxpermissions_version"
-    //1.解决rxjava导致的内存泄漏的框架導入
-    api "com.trello.rxlifecycle3:rxlifecycle:$BuildVersions.rxlifecycle_version"
-    // If you want to bind to Android-specific lifecycles
-    api "com.trello.rxlifecycle3:rxlifecycle-android:$BuildVersions.rxlifecycle_version"
-    // If you want pre-written Activities and Fragments you can subclass as providers
-    api "com.trello.rxlifecycle3:rxlifecycle-components:$BuildVersions.rxlifecycle_version"
-    // If you want pre-written support preference Fragments you can subclass as providers
-    api "com.trello.rxlifecycle3:rxlifecycle-components-preference:$BuildVersions.rxlifecycle_version"
-    // If you want to use Android Lifecycle for providers
-    api "com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:$BuildVersions.rxlifecycle_version"
-    // If you want to use Kotlin syntax
-    api "com.trello.rxlifecycle3:rxlifecycle-kotlin:$BuildVersions.rxlifecycle_version"
-    // If you want to use Kotlin syntax with Android Lifecycle
-    api "com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:$BuildVersions.rxlifecycle_version"
-//    // If you want to use Navi for providers
-//    // DEPRECATED: Use rxlifecycle-android-lifecycle instead. This will be removed in a future release.
-//    api "com.trello.rxlifecycle3:rxlifecycle-navi:$BuildVersions.rxlifecycle_version"
 
     //2.AutoDispose解决rxjava导致的内存泄漏的框架
     api "com.uber.autodispose:autodispose-android-archcomponents:$BuildVersions.autodispose_version"
-
-    //glide框架導入
-    api "com.github.bumptech.glide:glide:$BuildVersions.glide_version"
-    kapt "com.github.bumptech.glide:compiler:$BuildVersions.glide_version"
-    //https图片处理
-    api "com.github.bumptech.glide:okhttp3-integration:$BuildVersions.glide_version"
-
-    //沉浸式状态栏框架导入
-    // 基础依赖包，必须要依赖
-    api "com.geyifeng.immersionbar:immersionbar:$BuildVersions.immersionbar_version"
-    // kotlin扩展（可选）
-    api "com.geyifeng.immersionbar:immersionbar-ktx:$BuildVersions.immersionbar_version"
-    api "com.qmuiteam:qmui:$BuildVersions.qmui_version"
 
     //fastjson(阿里云json解析框架导入)
     api "com.alibaba:fastjson:$BuildVersions.fastjson_version"
@@ -251,7 +155,7 @@ dependencies {
     //选择时间和省市县三级联动框架
     api "com.contrarywind:Android-PickerView:$BuildVersions.picker_view_version"
     //Android路由（用于不同app之间的跳转）
-    api "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
+//    api "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
     kapt "com.alibaba:arouter-compiler:$BuildVersions.arouter_compiler_version"
 
 //    //leakcanary导入（检测内存泄漏框架，直接導入框架就可以了，2.7版本的不用配置）
@@ -263,20 +167,12 @@ dependencies {
     //日志打印框架
     api "com.orhanobut:logger:$BuildVersions.logger_version"
 
-    //GreenDao apply plugin
-    api "org.greenrobot:greendao:$BuildVersions.greendao_version"
     //jackson
     api "com.fasterxml.jackson.core:jackson-databind:$BuildVersions.jackson_databind_version"
     compileOnly "org.projectlombok:lombok:$BuildVersions.lombok_version"
     kapt "org.projectlombok:lombok:$BuildVersions.lombok_version"
     api "com.github.hackware1993:MagicIndicator:$BuildVersions.magic_indicator_version"
 
-    api "androidx.room:room-runtime:$BuildVersions.room_version"
-    kapt "androidx.room:room-compiler:$BuildVersions.room_version"
-    // 可选 - Kotlin扩展和协程支持
-    api "androidx.room:room-ktx:$BuildVersions.room_version"
-
-    implementation "net.zetetic:android-database-sqlcipher:$BuildVersions.sqlcipher_version"
     api "com.github.lzyzsd:jsbridge:$BuildVersions.jsbridge_version"
 
 

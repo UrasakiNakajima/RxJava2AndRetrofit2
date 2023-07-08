@@ -1,6 +1,6 @@
 package com.phone.module_home.model
 
-import com.phone.library_common.bean.ApiResponse2
+import com.phone.library_network.bean.ApiResponse2
 import com.phone.library_common.bean.ResultData
 import io.reactivex.Observable
 import okhttp3.ResponseBody

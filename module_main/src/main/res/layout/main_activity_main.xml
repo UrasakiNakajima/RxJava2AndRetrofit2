@@ -57,7 +57,7 @@
         android:visibility="visible"
         tools:ignore="UselessParent">
 
-        <com.phone.library_common.custom_view.MineLazyViewPager
+        <com.phone.library_custom_view.custom_view.MineLazyViewPager
             android:id="@+id/mine_view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"

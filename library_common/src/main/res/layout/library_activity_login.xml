@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:background="@color/library_color_FFFFFFFF"
     android:orientation="vertical"
-    tools:context=".login.ui.LoginActivity">
+    tools:context="com.phone.library_login.ui.LoginActivity">
 
-    <com.phone.library_common.custom_view.ImmerseGroup
+    <com.phone.library_custom_view.custom_view.ImmerseGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
@@ -55,7 +55,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-    </com.phone.library_common.custom_view.ImmerseGroup>
+    </com.phone.library_custom_view.custom_view.ImmerseGroup>
 
     <View
         android:layout_width="match_parent"

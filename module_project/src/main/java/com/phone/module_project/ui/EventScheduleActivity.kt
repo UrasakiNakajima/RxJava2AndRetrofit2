@@ -3,10 +3,10 @@ package com.phone.module_project.ui
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.base.BaseBindingRxAppActivity
+import com.phone.library_mvvm.BaseBindingRxAppActivity
 import com.phone.library_common.callback.OnDialogCallback
 import com.phone.library_common.common.ConstantData
-import com.phone.library_common.fragment.EventScheduleDialogFragment
+import com.phone.library_custom_view.fragment.EventScheduleDialogFragment
 import com.phone.module_project.R
 import com.phone.module_project.databinding.ProjectActivityEventScheduleBinding
 

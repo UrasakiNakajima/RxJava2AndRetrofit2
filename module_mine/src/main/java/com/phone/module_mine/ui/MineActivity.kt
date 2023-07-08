@@ -1,7 +1,7 @@
 package com.phone.module_mine.ui
 
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.base.BaseBindingRxAppActivity
+import com.phone.library_mvvm.BaseBindingRxAppActivity
 import com.phone.library_common.common.ConstantData
 import com.phone.module_mine.R
 import com.phone.module_mine.databinding.MineActivityMineBinding

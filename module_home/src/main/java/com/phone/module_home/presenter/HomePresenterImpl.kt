@@ -1,24 +1,17 @@
 package com.phone.module_home.presenter
 
-import android.text.TextUtils
-import com.phone.library_common.base.BasePresenter
-import com.phone.library_common.base.IBaseView
-import com.phone.library_common.callback.OnCommonSingleParamCallback
-import com.phone.library_common.manager.GsonManager
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.ResourcesManager
-import com.phone.library_common.manager.RetrofitManager
+import com.phone.library_mvp.BasePresenter
+import com.phone.library_base.base.IBaseView
+import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ResourcesManager
 import com.phone.module_home.R
-import com.phone.module_home.bean.HomePageResponse
 import com.phone.module_home.model.HomeModelImpl
 import com.phone.module_home.model.IHomeModel
 import com.phone.module_home.view.IHomePageView
-import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**

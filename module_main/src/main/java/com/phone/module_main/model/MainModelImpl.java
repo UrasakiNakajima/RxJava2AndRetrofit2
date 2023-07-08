@@ -1,6 +1,6 @@
 package com.phone.module_main.model;
 
-import com.phone.library_common.manager.RetrofitManager;
+import com.phone.library_network.manager.RetrofitManager;
 import com.phone.module_main.request.MainRequest;
 
 import java.util.Map;

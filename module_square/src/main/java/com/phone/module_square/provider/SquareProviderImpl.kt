@@ -4,7 +4,7 @@ import android.content.Context
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_common.bean.SubDataSquare
 import com.phone.library_common.common.ConstantData
-import com.phone.library_common.service.ISquareProvider
+import com.phone.library_common.iprovider.ISquareProvider
 
 @Route(path = ConstantData.Route.ROUTE_SQUARE_SERVICE)
 class SquareProviderImpl : ISquareProvider {

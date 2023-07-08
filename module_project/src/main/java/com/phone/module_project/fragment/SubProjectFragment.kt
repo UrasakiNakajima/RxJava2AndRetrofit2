@@ -6,15 +6,14 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.library_common.BaseApplication
-import com.phone.library_common.adapter.ProjectAndResourceAdapter
-import com.phone.library_common.base.BaseMvvmRxFragment
-import com.phone.library_common.base.State
-import com.phone.library_common.bean.ArticleListBean
+import com.phone.library_custom_view.adapter.ProjectAndResourceAdapter
+import com.phone.library_mvvm.BaseMvvmRxFragment
+import com.phone.library_network.bean.State
+import com.phone.library_custom_view.bean.ArticleListBean
 import com.phone.library_common.common.ConstantData
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.ResourcesManager
-import com.phone.library_common.manager.RetrofitManager
+import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_common.manager.ScreenManager
 import com.phone.module_project.R
 import com.phone.module_project.databinding.ProjectFragmentProjectSubBinding
@@ -144,7 +143,7 @@ class SubProjectFragment :
         if (RetrofitManager.isNetworkAvailable()) {
             initSubProject(pageNum, tabId)
         } else {
-            subProjectDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
+            subProjectDataError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
         }
     }
 
@@ -210,7 +209,7 @@ class SubProjectFragment :
         if (RetrofitManager.isNetworkAvailable()) {
             viewModel.subProjectData(pageNum, tabId)
         } else {
-            subProjectDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection));
+            subProjectDataError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection));
         }
     }
 

@@ -7,7 +7,7 @@
 
         <variable
             name="dataBean"
-            type="com.phone.library_common.bean.ArticleListBean" />
+            type="com.phone.library_custom_view.bean.ArticleListBean" />
     </data>
 
     <RelativeLayout

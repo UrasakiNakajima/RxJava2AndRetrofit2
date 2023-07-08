@@ -1,8 +1,0 @@
-Executable : /Users/erwinnakashima/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja
-arguments : 
--C
-/Users/erwinnakashima/AndroidStudioProjects_primary/RxJava2AndRetrofit2/library_common/.cxx/Debug/3j3j6r6n/armeabi-v7a
-native-lib
-return-data
-jvmArgs : 
-

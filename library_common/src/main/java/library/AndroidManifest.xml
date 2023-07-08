@@ -48,30 +48,7 @@
 
     <application>
         <activity
-            android:name=".ui.WebViewActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".login.ui.LaunchActivity"
-            android:exported="true"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/library_SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".login.ui.LoginActivity"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".login.ui.RegisterActivity"
+            android:name="com.phone.library_custom_view.ui.WebViewActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

@@ -1,16 +1,14 @@
 package com.phone.module_square.ui
 
-import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.BaseApplication
-import com.phone.library_common.base.BaseMvvmAppRxActivity
-import com.phone.library_common.base.State
+import com.phone.library_mvvm.BaseMvvmAppRxActivity
+import com.phone.library_network.bean.State
 import com.phone.library_common.common.ConstantData
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.ResourcesManager
+import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ResourcesManager
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareActivityKotlinCoroutineBinding
 import com.phone.module_square.view_model.CoroutineViewModel

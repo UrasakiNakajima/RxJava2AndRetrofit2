@@ -1,23 +1,14 @@
 package com.phone.module_project.view_model
 
-import android.text.TextUtils
 import androidx.lifecycle.viewModelScope
-import com.google.gson.reflect.TypeToken
-import com.phone.library_common.BaseApplication
-import com.phone.library_common.base.BaseViewModel
-import com.phone.library_common.base.State
-import com.phone.library_common.bean.ApiResponse
-import com.phone.library_common.bean.ArticleListBean
+import com.phone.library_mvvm.BaseViewModel
+import com.phone.library_network.bean.State
 import com.phone.library_common.bean.TabBean
-import com.phone.library_common.manager.GsonManager
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.ResourcesManager
-import com.phone.library_common.manager.SingleLiveData
+import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_network.SingleLiveData
 import com.phone.module_project.R
 import com.phone.module_project.model.ProjectModelImpl
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
 

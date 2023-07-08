@@ -3,15 +3,14 @@ package com.phone.module_project.view_model
 import android.text.TextUtils
 import androidx.lifecycle.viewModelScope
 import com.google.gson.reflect.TypeToken
-import com.phone.library_common.BaseApplication
-import com.phone.library_common.base.BaseViewModel
-import com.phone.library_common.base.State
-import com.phone.library_common.bean.ApiResponse
-import com.phone.library_common.bean.ArticleBean
-import com.phone.library_common.bean.ArticleListBean
-import com.phone.library_common.manager.GsonManager
-import com.phone.library_common.manager.LogManager
-import com.phone.library_common.manager.SingleLiveData
+import com.phone.library_mvvm.BaseViewModel
+import com.phone.library_network.bean.State
+import com.phone.library_network.bean.ApiResponse
+import com.phone.library_custom_view.bean.ArticleBean
+import com.phone.library_custom_view.bean.ArticleListBean
+import com.phone.library_network.manager.GsonManager
+import com.phone.library_base.manager.LogManager
+import com.phone.library_network.SingleLiveData
 import com.phone.module_project.R
 import com.phone.module_project.model.SubProjectModelImpl
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +49,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                         dataxRxFragment.value = State.SuccessState(list)
                     } else {
                         dataxRxFragment.value = State.ErrorState(
-                            BaseApplication.instance().resources.getString(
+                            com.phone.library_base.BaseApplication.instance().resources.getString(
                                 R.string.library_no_data_available
                             )
                         )
@@ -82,7 +81,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                             } else {
                                 dataxRxActivity.value =
                                     State.ErrorState(
-                                        BaseApplication.instance().resources.getString(
+                                        com.phone.library_base.BaseApplication.instance().resources.getString(
                                             R.string.library_no_data_available
                                         )
                                     )
@@ -90,7 +89,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                         }
                     } else {
                         dataxRxFragment.value = State.ErrorState(
-                            BaseApplication.instance().resources.getString(
+                            com.phone.library_base.BaseApplication.instance().resources.getString(
                                 R.string.library_loading_failed
                             )
                         )
