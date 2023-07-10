@@ -1,6 +1,7 @@
 package com.phone.library_base64_and_file.thread_pool
 
 import android.content.Context
+import com.phone.library_base.BaseApplication
 import com.phone.library_base64_and_file.bean.Base64AndFileBean
 import com.phone.library_base64_and_file.manager.BitmapManager
 import com.phone.library_base.callback.OnCommonSingleParamCallback
@@ -41,7 +42,7 @@ class CompressedPictureThreadPool(
             base64AndFileBean.file = file
 
             //再压缩本地图片
-            BitmapManager.initCompressorIO(com.phone.library_base.BaseApplication.instance(), file, {
+            BitmapManager.initCompressorIO(BaseApplication.instance(), file, {
                 LogManager.i(
                     TAG,
                     "initCompressorIO it*****${it.name}"

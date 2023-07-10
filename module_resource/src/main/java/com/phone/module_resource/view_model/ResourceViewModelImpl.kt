@@ -1,9 +1,10 @@
 package com.phone.module_resource.view_model
 
 import androidx.lifecycle.viewModelScope
+import com.phone.library_base.BaseApplication
 import com.phone.library_mvvm.BaseViewModel
 import com.phone.library_network.bean.State
-import com.phone.library_common.bean.TabBean
+import com.phone.call_third_party_so.bean.TabBean
 import com.phone.library_network.SingleLiveData
 import com.phone.module_resource.R
 import com.phone.module_resource.model.ResourceModelImpl
@@ -34,7 +35,7 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                         tabRxFragment.value = State.SuccessState(list)
                     } else {
                         tabRxFragment.value = State.ErrorState(
-                            com.phone.library_base.BaseApplication.instance().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.library_no_data_available
                             )
                         )

@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_73"
+        android:layout_height="@dimen/base_dp_73"
         android:background="@color/library_color_FF198CFF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
@@ -19,18 +19,18 @@
 
         <FrameLayout
             android:id="@+id/layout_back"
-            android:layout_width="@dimen/library_dp_36"
-            android:layout_height="@dimen/library_dp_48"
-            android:layout_marginTop="@dimen/library_dp_25"
+            android:layout_width="@dimen/base_dp_36"
+            android:layout_height="@dimen/base_dp_48"
+            android:layout_marginTop="@dimen/base_dp_25"
             android:gravity="start"
             tools:ignore="UselessParent">
 
             <ImageView
                 android:id="@+id/imv_back"
-                android:layout_width="@dimen/library_dp_9"
-                android:layout_height="@dimen/library_dp_16"
+                android:layout_width="@dimen/base_dp_9"
+                android:layout_height="@dimen/base_dp_16"
                 android:layout_gravity="center"
-                android:src="@mipmap/icon_arrowhead_left"
+                android:src="@mipmap/home_icon_arrowhead_left"
                 tools:ignore="ContentDescription" />
 
         </FrameLayout>
@@ -38,13 +38,13 @@
         <TextView
             android:id="@+id/tev_title"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/library_dp_48"
+            android:layout_height="@dimen/base_dp_48"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/library_dp_25"
+            android:layout_marginTop="@dimen/base_dp_25"
             android:gravity="center"
             android:text="@string/library_thread_pool"
             android:textColor="@color/library_white"
-            android:textSize="@dimen/library_sp_20" />
+            android:textSize="@dimen/base_sp_20" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -62,153 +62,153 @@
             <TextView
                 android:id="@+id/tev_start_single_thread_executor"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_45"
+                android:layout_height="@dimen/base_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/library_dp_20"
+                android:layout_marginTop="@dimen/base_dp_20"
                 android:background="@drawable/library_corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/library_dp_15"
-                android:paddingEnd="@dimen/library_dp_15"
+                android:paddingStart="@dimen/base_dp_15"
+                android:paddingEnd="@dimen/base_dp_15"
                 android:text="startSingleThreadExecutor"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/library_sp_15" />
+                android:textSize="@dimen/base_sp_15" />
 
             <TextView
                 android:id="@+id/tev_start_fixed_thread_pool"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_45"
+                android:layout_height="@dimen/base_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/library_dp_10"
+                android:layout_marginTop="@dimen/base_dp_10"
                 android:background="@drawable/library_corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/library_dp_15"
-                android:paddingEnd="@dimen/library_dp_15"
+                android:paddingStart="@dimen/base_dp_15"
+                android:paddingEnd="@dimen/base_dp_15"
                 android:text="startFixedThreadPool"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/library_sp_15" />
+                android:textSize="@dimen/base_sp_15" />
 
             <TextView
                 android:id="@+id/tev_start_cached_thread_pool"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_45"
+                android:layout_height="@dimen/base_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/library_dp_10"
+                android:layout_marginTop="@dimen/base_dp_10"
                 android:background="@drawable/library_corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/library_dp_15"
-                android:paddingEnd="@dimen/library_dp_15"
+                android:paddingStart="@dimen/base_dp_15"
+                android:paddingEnd="@dimen/base_dp_15"
                 android:text="startCachedThreadPool"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/library_sp_15" />
+                android:textSize="@dimen/base_sp_15" />
 
             <TextView
                 android:id="@+id/tev_start_scheduled_thread_pool"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_45"
+                android:layout_height="@dimen/base_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/library_dp_10"
+                android:layout_marginTop="@dimen/base_dp_10"
                 android:background="@drawable/library_corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/library_dp_15"
-                android:paddingEnd="@dimen/library_dp_15"
+                android:paddingStart="@dimen/base_dp_15"
+                android:paddingEnd="@dimen/base_dp_15"
                 android:text="startScheduledThreadPool"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/library_sp_15" />
+                android:textSize="@dimen/base_sp_15" />
 
             <TextView
                 android:id="@+id/tev_start_custom_thread_pool"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_45"
+                android:layout_height="@dimen/base_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/library_dp_10"
+                android:layout_marginTop="@dimen/base_dp_10"
                 android:background="@drawable/library_corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/library_dp_15"
-                android:paddingEnd="@dimen/library_dp_15"
+                android:paddingStart="@dimen/base_dp_15"
+                android:paddingEnd="@dimen/base_dp_15"
                 android:text="startCustomThreadPool"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/library_sp_15" />
+                android:textSize="@dimen/base_sp_15" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_20" />
+                android:layout_height="@dimen/base_dp_20" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_1"
+                android:layout_height="@dimen/base_dp_1"
                 android:background="@color/library_color_FF198CFF" />
 
             <TextView
                 android:id="@+id/tev_start_thread_pool"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_45"
+                android:layout_height="@dimen/base_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/library_dp_20"
+                android:layout_marginTop="@dimen/base_dp_20"
                 android:background="@drawable/library_corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/library_dp_15"
-                android:paddingEnd="@dimen/library_dp_15"
+                android:paddingStart="@dimen/base_dp_15"
+                android:paddingEnd="@dimen/base_dp_15"
                 android:text="開始線程池"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/library_sp_15" />
+                android:textSize="@dimen/base_sp_15" />
 
             <TextView
                 android:id="@+id/tev_stop_thread_pool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="@dimen/library_dp_10"
-                android:layout_marginTop="@dimen/library_dp_10"
-                android:layout_marginEnd="@dimen/library_dp_10"
+                android:layout_marginStart="@dimen/base_dp_10"
+                android:layout_marginTop="@dimen/base_dp_10"
+                android:layout_marginEnd="@dimen/base_dp_10"
                 android:background="@drawable/library_corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:padding="@dimen/library_dp_15"
+                android:padding="@dimen/base_dp_15"
                 android:text="停止線程池（尝试中断线程池中所有的线程，正在执行的任务也可能被终止，因为如果正常执行的任务如果不响应中断，那么就不会被终止，直到任务执行完毕）"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/library_sp_15" />
+                android:textSize="@dimen/base_sp_15" />
 
             <TextView
                 android:id="@+id/tev_start_thread_pool2"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_45"
+                android:layout_height="@dimen/base_dp_45"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/library_dp_10"
+                android:layout_marginTop="@dimen/base_dp_10"
                 android:background="@drawable/library_corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/library_dp_15"
-                android:paddingEnd="@dimen/library_dp_15"
+                android:paddingStart="@dimen/base_dp_15"
+                android:paddingEnd="@dimen/base_dp_15"
                 android:text="開始線程池2"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/library_sp_15" />
+                android:textSize="@dimen/base_sp_15" />
 
             <TextView
                 android:id="@+id/tev_stop_thread_pool2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="@dimen/library_dp_10"
-                android:layout_marginTop="@dimen/library_dp_10"
-                android:layout_marginEnd="@dimen/library_dp_10"
+                android:layout_marginStart="@dimen/base_dp_10"
+                android:layout_marginTop="@dimen/base_dp_10"
+                android:layout_marginEnd="@dimen/base_dp_10"
                 android:background="@drawable/library_corners_10_color_ffffc73b"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:padding="@dimen/library_dp_15"
+                android:padding="@dimen/base_dp_15"
                 android:text="停止線程池（等待所有已添加到线程池中的任务执行完在关闭）"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/library_sp_15" />
+                android:textSize="@dimen/base_sp_15" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_100"
-                android:layout_marginTop="@dimen/library_dp_10" />
+                android:layout_height="@dimen/base_dp_100"
+                android:layout_marginTop="@dimen/base_dp_10" />
 
         </LinearLayout>
 

@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.databinding.DataBindingUtil
-import com.phone.library_common.callback.OnItemViewClickListener
-import com.phone.library_common.common.Constants
+import com.phone.call_third_party_so.callback.OnItemViewClickListener
+import com.phone.library_base.common.Constants
 import com.phone.library_custom_view.bean.ArticleListBean
 import com.phone.library_custom_view.R
 import com.phone.library_custom_view.databinding.CustomViewItemProjectBinding

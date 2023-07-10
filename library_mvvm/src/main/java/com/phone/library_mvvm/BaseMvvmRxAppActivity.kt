@@ -21,8 +21,8 @@ import com.phone.library_base.manager.ActivityPageManager
 import com.phone.library_base.manager.CrashHandlerManager
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_base.manager.ScreenManager
 import com.phone.library_base.manager.ToolbarManager
-import com.phone.library_common.manager.*
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
 abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :

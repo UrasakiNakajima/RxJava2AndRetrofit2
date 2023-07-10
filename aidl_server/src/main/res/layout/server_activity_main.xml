@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_48"
+        android:layout_height="@dimen/base_dp_48"
         android:background="@color/library_color_FF198CFF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
@@ -20,11 +20,11 @@
         <TextView
             android:id="@+id/tev_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_48"
+            android:layout_height="@dimen/base_dp_48"
             android:gravity="center"
             android:text="@string/server_app_name"
             android:textColor="@color/library_color_FFFFFFFF"
-            android:textSize="@dimen/library_sp_20" />
+            android:textSize="@dimen/base_sp_20" />
 
     </androidx.appcompat.widget.Toolbar>
 

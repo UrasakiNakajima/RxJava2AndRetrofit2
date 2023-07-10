@@ -10,7 +10,7 @@ import com.phone.library_mounting.R;
 import com.phone.library_mounting.databinding.MountingFragmentCommodityBinding;
 import com.phone.library_mounting.adapter.CommodityAdapter;
 import com.phone.library_mounting.bean.CommodityBean;
-import com.phone.library_mvvm.BaseBindingRxFragment;
+import com.phone.library_binding.BaseBindingRxFragment;
 
 import java.util.ArrayList;
 import java.util.List;

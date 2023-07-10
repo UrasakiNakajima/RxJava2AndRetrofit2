@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.phone.library_base.callback.OnCommonSuccessCallback
-import com.phone.library_common.callback.OnItemViewClickListener
+import com.phone.call_third_party_so.callback.OnItemViewClickListener
 import com.phone.library_custom_view.R
 
 class StandardDialog(val context: Context) {

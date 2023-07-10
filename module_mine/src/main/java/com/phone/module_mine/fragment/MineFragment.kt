@@ -13,12 +13,12 @@ import com.phone.library_mvp.BaseMvpRxFragment
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_base.manager.ScreenManager
 import com.phone.library_base.manager.SharedPreferencesManager
-import com.phone.library_common.bean.Data
-import com.phone.library_common.callback.OnItemViewClickListener
-import com.phone.library_common.common.ConstantData
+import com.phone.call_third_party_so.bean.Data
+import com.phone.call_third_party_so.callback.OnItemViewClickListener
+import com.phone.library_base.common.ConstantData
 import com.phone.library_custom_view.custom_view.LoadingLayout
-import com.phone.library_common.manager.*
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_mine.R

@@ -18,15 +18,15 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_73"
+            android:layout_height="@dimen/base_dp_73"
             android:background="@color/library_color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             app:contentInsetStart="0dp">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_48"
-                android:layout_marginTop="@dimen/library_dp_25"
+                android:layout_height="@dimen/base_dp_48"
+                android:layout_marginTop="@dimen/base_dp_25"
                 android:orientation="horizontal">
 
                 <FrameLayout
@@ -36,12 +36,12 @@
 
                     <ImageView
                         android:id="@+id/imv_back"
-                        android:layout_width="@dimen/library_dp_9"
-                        android:layout_height="@dimen/library_dp_16"
+                        android:layout_width="@dimen/base_dp_9"
+                        android:layout_height="@dimen/base_dp_16"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/library_dp_12"
-                        android:layout_marginEnd="@dimen/library_dp_12"
-                        android:src="@mipmap/icon_arrowhead_left"
+                        android:layout_marginStart="@dimen/base_dp_12"
+                        android:layout_marginEnd="@dimen/base_dp_12"
+                        android:src="@mipmap/home_icon_arrowhead_left"
                         android:visibility="visible"
                         tools:ignore="ContentDescription" />
 
@@ -58,7 +58,7 @@
                     android:maxLines="1"
                     android:text="@string/library_information_details"
                     android:textColor="@color/library_white"
-                    android:textSize="@dimen/library_sp_17"
+                    android:textSize="@dimen/base_sp_17"
                     android:textStyle="bold"
                     android:visibility="visible" />
 
@@ -68,7 +68,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_1"
+            android:layout_height="@dimen/base_dp_1"
             android:background="@color/library_color_FF999999" />
 
         <FrameLayout

@@ -9,7 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_mvp.BaseMvpRxAppActivity
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.manager.ResourcesManager
-import com.phone.library_common.common.ConstantData
+import com.phone.library_base.common.ConstantData
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_mine.R
 import com.phone.module_mine.presenter.MinePresenterImpl

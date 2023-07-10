@@ -2,9 +2,8 @@ package com.phone.library_custom_view.fragment
 
 import android.view.View
 import android.widget.LinearLayout
-import com.phone.library_mvvm.BaseBindingDialogFragment
+import com.phone.library_binding.BaseBindingDialogFragment
 import com.phone.library_custom_view.bean.EventScheduleListBean
-import com.phone.library_common.callback.OnDialogCallback
 import com.phone.library_custom_view.R
 import com.phone.library_custom_view.custom_view.EventScheduleLayout
 import com.phone.library_custom_view.databinding.CustomViewDialogFragmentEventScheduleBinding
@@ -90,13 +89,5 @@ class EventScheduleDialogFragment :
 
     override fun initLoadData() {
     }
-
-    private var onDialogCallback: OnDialogCallback<Int>? = null
-
-    override fun setOnDialogCallback(onDialogCallback: OnDialogCallback<Int>?) {
-        this.onDialogCallback = onDialogCallback
-    }
-
-    override fun getOnDialogCallback() = onDialogCallback
 
 }

@@ -8,69 +8,69 @@
     <SurfaceView
         android:id="@+id/surfaceview"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_200" />
+        android:layout_height="@dimen/base_dp_200" />
 
     <SeekBar
         android:id="@+id/play_seekbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_50"
+        android:layout_height="@dimen/base_dp_50"
         android:background="@android:color/transparent" />
 
     <TextView
         android:id="@+id/tv_video_time"
-        android:layout_width="@dimen/library_dp_120"
-        android:layout_height="@dimen/library_dp_50"
+        android:layout_width="@dimen/base_dp_120"
+        android:layout_height="@dimen/base_dp_50"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="@dimen/library_dp_20"
-        android:layout_marginEnd="@dimen/library_dp_20"
+        android:layout_marginStart="@dimen/base_dp_20"
+        android:layout_marginEnd="@dimen/base_dp_20"
         android:text="@string/library_time" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_20" />
+        android:layout_height="@dimen/base_dp_20" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_50">
+        android:layout_height="@dimen/base_dp_50">
 
         <View
-            android:layout_width="@dimen/library_dp_10"
+            android:layout_width="@dimen/base_dp_10"
             android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/btn_play"
-            android:layout_width="@dimen/library_dp_100"
-            android:layout_height="@dimen/library_dp_50"
+            android:layout_width="@dimen/base_dp_100"
+            android:layout_height="@dimen/base_dp_50"
             android:background="@color/library_color_FFE066FF"
             android:gravity="center"
             android:text="@string/library_play" />
 
         <View
-            android:layout_width="@dimen/library_dp_10"
+            android:layout_width="@dimen/base_dp_10"
             android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/btn_pause"
-            android:layout_width="@dimen/library_dp_100"
-            android:layout_height="@dimen/library_dp_50"
+            android:layout_width="@dimen/base_dp_100"
+            android:layout_height="@dimen/base_dp_50"
             android:background="@color/library_color_FFE066FF"
             android:gravity="center"
             android:text="@string/library_pause" />
 
         <View
-            android:layout_width="@dimen/library_dp_10"
+            android:layout_width="@dimen/base_dp_10"
             android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/btn_stop"
-            android:layout_width="@dimen/library_dp_100"
-            android:layout_height="@dimen/library_dp_50"
+            android:layout_width="@dimen/base_dp_100"
+            android:layout_height="@dimen/base_dp_50"
             android:background="@color/library_color_FFE066FF"
             android:gravity="center"
             android:text="@string/library_stop" />
 
         <View
-            android:layout_width="@dimen/library_dp_10"
+            android:layout_width="@dimen/base_dp_10"
             android:layout_height="match_parent" />
 
     </LinearLayout>
@@ -78,7 +78,7 @@
     <LinearLayout
         android:id="@+id/rela_video"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_50"
+        android:layout_height="@dimen/base_dp_50"
         android:orientation="vertical">
 
     </LinearLayout>
@@ -86,20 +86,20 @@
     <LinearLayout
         android:id="@+id/ll_video_loading"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_50"
+        android:layout_height="@dimen/base_dp_50"
         android:orientation="vertical">
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_20" />
+        android:layout_height="@dimen/base_dp_20" />
 
     <ImageView
         android:id="@+id/iv_videoplayer_cover"
-        android:layout_width="@dimen/library_dp_100"
-        android:layout_height="@dimen/library_dp_50"
-        android:src="@mipmap/error_image"
+        android:layout_width="@dimen/base_dp_100"
+        android:layout_height="@dimen/base_dp_50"
+        android:src="@mipmap/project_error_image"
         tools:ignore="ContentDescription" />
 
 </LinearLayout>

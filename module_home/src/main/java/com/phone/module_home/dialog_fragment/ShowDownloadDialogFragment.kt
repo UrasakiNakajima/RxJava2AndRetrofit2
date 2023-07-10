@@ -1,6 +1,6 @@
 package com.phone.module_home.dialog_fragment
 
-import com.phone.library_mvvm.BaseBindingDialogFragment
+import com.phone.library_binding.BaseBindingDialogFragment
 import com.phone.module_home.R
 import com.phone.module_home.databinding.HomeDialogFragmentShowDownloadBinding
 
@@ -31,11 +31,11 @@ class ShowDownloadDialogFragment : BaseBindingDialogFragment<HomeDialogFragmentS
     override fun initViews() {
         mDatabind.let {
             it.tevSaveToPhone.setOnClickListener {
-                getOnDialogCallback()?.onDialogClick(it, 1)
+                onDialogCallback?.onDialogClick(it, 1)
                 dismiss()
             }
             it.tevCancel.setOnClickListener {
-                getOnDialogCallback()?.onDialogClick(it, 0)
+                onDialogCallback?.onDialogClick(it, 0)
                 dismiss()
             }
         }

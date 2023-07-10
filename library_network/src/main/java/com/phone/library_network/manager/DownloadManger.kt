@@ -2,7 +2,7 @@ package com.phone.library_network.manager
 
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.MainThreadManager
-import com.phone.library_common.callback.OnDownloadListener
+import com.phone.call_third_party_so.callback.OnDownloadListener
 import okhttp3.*
 import java.io.*
 import java.net.Proxy

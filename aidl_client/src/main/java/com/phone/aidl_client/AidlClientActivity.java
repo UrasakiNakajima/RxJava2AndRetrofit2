@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.aidl_client.adapter.BookAdapter;
-import com.phone.library_common.base.BaseRxAppActivity;
-import com.phone.library_common.manager.LogManager;
+import com.phone.library_base.base.BaseRxAppActivity;
+import com.phone.library_base.manager.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;

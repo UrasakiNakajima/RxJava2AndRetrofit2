@@ -9,18 +9,20 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
-import com.phone.library_common.BuildConfig
+import com.phone.library_base.manager.ScreenManager
+import com.phone.call_third_party_so.BuildConfig
 import com.phone.library_mvp.BaseMvpRxAppActivity
 import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
-import com.phone.library_common.bean.*
-import com.phone.library_common.callback.OnCommonRxPermissionsCallback
-import com.phone.library_common.common.ConstantData
-import com.phone.library_common.manager.*
+import com.phone.call_third_party_so.bean.*
+import com.phone.call_third_party_so.callback.OnCommonRxPermissionsCallback
+import com.phone.library_base.common.ConstantData
+import com.phone.call_third_party_so.manager.*
 import com.phone.library_room.AppRoomDataBase
-import com.phone.library_common.iprovider.ISquareProvider
+import com.phone.call_third_party_so.iprovider.ISquareProvider
 import com.phone.library_greendao.bean.UserBean
 import com.phone.library_greendao.bean.UserBean2
 import com.phone.library_greendao.bean.UserBean3
@@ -101,7 +103,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                     if (it.success != null && it.success.size > 0) {
                         squareDataSuccess(it.success)
                     } else {
-                        squareDataError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_no_data_available))
+                        squareDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
                     }
                 }
 
@@ -330,7 +332,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
             if (RetrofitManager.isNetworkAvailable()) {
                 viewModel.squareData(this, currentPage)
             } else {
-                squareDataError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
+                squareDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
             }
 
             LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())

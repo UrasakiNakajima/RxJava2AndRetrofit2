@@ -3,6 +3,7 @@ package com.phone.module_project.view_model
 import android.text.TextUtils
 import androidx.lifecycle.viewModelScope
 import com.google.gson.reflect.TypeToken
+import com.phone.library_base.BaseApplication
 import com.phone.library_mvvm.BaseViewModel
 import com.phone.library_network.bean.State
 import com.phone.library_network.bean.ApiResponse
@@ -49,7 +50,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                         dataxRxFragment.value = State.SuccessState(list)
                     } else {
                         dataxRxFragment.value = State.ErrorState(
-                            com.phone.library_base.BaseApplication.instance().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.library_no_data_available
                             )
                         )
@@ -81,7 +82,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                             } else {
                                 dataxRxActivity.value =
                                     State.ErrorState(
-                                        com.phone.library_base.BaseApplication.instance().resources.getString(
+                                        BaseApplication.instance().resources.getString(
                                             R.string.library_no_data_available
                                         )
                                     )
@@ -89,7 +90,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                         }
                     } else {
                         dataxRxFragment.value = State.ErrorState(
-                            com.phone.library_base.BaseApplication.instance().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.library_loading_failed
                             )
                         )

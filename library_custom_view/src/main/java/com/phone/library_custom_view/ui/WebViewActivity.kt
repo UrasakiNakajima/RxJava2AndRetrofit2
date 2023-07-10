@@ -4,8 +4,8 @@ import android.text.Html
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_base.callback.OnCommonSingleParamCallback
-import com.phone.library_mvvm.BaseBindingRxAppActivity
-import com.phone.library_common.common.ConstantData
+import com.phone.library_binding.BaseBindingRxAppActivity
+import com.phone.library_base.common.ConstantData
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_custom_view.R

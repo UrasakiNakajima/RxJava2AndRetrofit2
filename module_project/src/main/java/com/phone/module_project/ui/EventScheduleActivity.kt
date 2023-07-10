@@ -3,9 +3,9 @@ package com.phone.module_project.ui
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_mvvm.BaseBindingRxAppActivity
-import com.phone.library_common.callback.OnDialogCallback
-import com.phone.library_common.common.ConstantData
+import com.phone.library_binding.BaseBindingRxAppActivity
+import com.phone.library_base.callback.OnDialogCallback
+import com.phone.library_base.common.ConstantData
 import com.phone.library_custom_view.fragment.EventScheduleDialogFragment
 import com.phone.module_project.R
 import com.phone.module_project.databinding.ProjectActivityEventScheduleBinding
@@ -30,7 +30,7 @@ class EventScheduleActivity : BaseBindingRxAppActivity<ProjectActivityEventSched
         }
         mDatabind.tevEventSchedule.setOnClickListener {
             val eventScheduleDialogFragment = EventScheduleDialogFragment()
-            eventScheduleDialogFragment.setOnDialogCallback(object : OnDialogCallback<Int> {
+            eventScheduleDialogFragment.onDialogCallback = (object : OnDialogCallback<Int> {
                 override fun onDialogClick(view: View?, success: Int?) {
                     if (success == 0) {
 

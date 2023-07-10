@@ -11,7 +11,6 @@ plugins {
 
 android {
     compileSdk BuildVersions.compileSdk
-//    buildToolsVersion "31.0.3"
 
     defaultConfig {
         minSdk BuildVersions.minSdk
@@ -78,7 +77,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(path: ':library_common')
-    api project(path: ':library_network')
+    implementation project(path: ':library_network')
     implementation project(path: ':library_login')
     implementation project(path: ':library_mvp')
     implementation project(path: ':library_custom_view')

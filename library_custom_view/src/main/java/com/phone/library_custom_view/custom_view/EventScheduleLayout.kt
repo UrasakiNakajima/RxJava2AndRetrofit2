@@ -9,10 +9,10 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.phone.library_common.R
+import com.phone.call_third_party_so.R
 import com.phone.library_custom_view.bean.EventScheduleListBean
 import com.phone.library_base.manager.ResourcesManager
-import com.phone.library_common.manager.ScreenManager
+import com.phone.library_base.manager.ScreenManager
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,7 +61,7 @@ class EventScheduleLayout(
             ScreenManager.dpToPx(75f), LinearLayout.LayoutParams.MATCH_PARENT
         )
         //		LayoutParams layoutParamsStart = new LayoutParams(
-        //			ScreenManager.ScreenManager.dpToPx(getResources().getDimension((int) (R.dimen.library_dp_75))), LayoutParams.MATCH_PARENT);
+        //			ScreenManager.ScreenManager.dpToPx(getResources().getDimension((int) (R.dimen.base_dp_75))), LayoutParams.MATCH_PARENT);
         val layoutParamsEnd = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT
         )

@@ -1,83 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/library_dp_300"
-    android:layout_height="@dimen/library_dp_240"
-    android:background="@drawable/library_corners_14_color_white"
+    android:layout_width="@dimen/base_dp_300"
+    android:layout_height="@dimen/base_dp_240"
+    android:background="@drawable/base_corners_14_color_white"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="@dimen/library_dp_300"
-        android:layout_height="@dimen/library_dp_240"
+        android:layout_width="@dimen/base_dp_300"
+        android:layout_height="@dimen/base_dp_240"
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_20" />
+            android:layout_height="@dimen/base_dp_20" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_40"
+            android:layout_height="@dimen/base_dp_40"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:paddingStart="@dimen/library_dp_10"
-            android:paddingEnd="@dimen/library_dp_10"
+            android:paddingStart="@dimen/base_dp_10"
+            android:paddingEnd="@dimen/base_dp_10"
             android:text="@string/library_decimal_en"
             android:textColor="@color/library_blue"
-            android:textSize="@dimen/library_sp_16" />
+            android:textSize="@dimen/base_sp_16" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_20" />
+            android:layout_height="@dimen/base_dp_20" />
 
         <EditText
             android:id="@+id/edt_input"
-            android:layout_width="@dimen/library_dp_240"
-            android:layout_height="@dimen/library_dp_40"
+            android:layout_width="@dimen/base_dp_240"
+            android:layout_height="@dimen/base_dp_40"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/library_corners_14_color_white_stroke_1_color_80000000"
             android:gravity="center_vertical"
-            android:paddingStart="@dimen/library_dp_15"
-            android:paddingEnd="@dimen/library_dp_15"
+            android:paddingStart="@dimen/base_dp_15"
+            android:paddingEnd="@dimen/base_dp_15"
             android:textColor="@color/library_colorBlack333"
-            android:textSize="@dimen/library_sp_16"
+            android:textSize="@dimen/base_sp_16"
             tools:ignore="Autofill,LabelFor,TextFields" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_20" />
+            android:layout_height="@dimen/base_dp_20" />
 
         <FrameLayout
-            android:layout_width="@dimen/library_dp_200"
-            android:layout_height="@dimen/library_dp_40"
+            android:layout_width="@dimen/base_dp_200"
+            android:layout_height="@dimen/base_dp_40"
             android:layout_gravity="center_horizontal">
 
             <TextView
                 android:id="@+id/tev_cancel"
-                android:layout_width="@dimen/library_dp_80"
-                android:layout_height="@dimen/library_dp_40"
+                android:layout_width="@dimen/base_dp_80"
+                android:layout_height="@dimen/base_dp_40"
                 android:layout_gravity="start"
                 android:background="@drawable/library_corners_14_color_white_stroke_1_color_80000000"
                 android:gravity="center"
-                android:paddingStart="@dimen/library_dp_10"
-                android:paddingEnd="@dimen/library_dp_10"
+                android:paddingStart="@dimen/base_dp_10"
+                android:paddingEnd="@dimen/base_dp_10"
                 android:text="@string/library_cancel_en"
                 android:textColor="@color/library_color_80000000"
-                android:textSize="@dimen/library_sp_16" />
+                android:textSize="@dimen/base_sp_16" />
 
             <TextView
                 android:id="@+id/tev_confirm"
-                android:layout_width="@dimen/library_dp_80"
-                android:layout_height="@dimen/library_dp_40"
+                android:layout_width="@dimen/base_dp_80"
+                android:layout_height="@dimen/base_dp_40"
                 android:layout_gravity="end"
                 android:background="@drawable/library_corners_14_color_white_stroke_1_color_blue"
                 android:gravity="center"
-                android:paddingStart="@dimen/library_dp_10"
-                android:paddingEnd="@dimen/library_dp_10"
+                android:paddingStart="@dimen/base_dp_10"
+                android:paddingEnd="@dimen/base_dp_10"
                 android:text="@string/library_confirm_en"
                 android:textColor="@color/library_blue"
-                android:textSize="@dimen/library_sp_16" />
+                android:textSize="@dimen/base_sp_16" />
 
         </FrameLayout>
     </LinearLayout>

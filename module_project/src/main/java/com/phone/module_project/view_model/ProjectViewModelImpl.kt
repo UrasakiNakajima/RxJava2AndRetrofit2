@@ -3,7 +3,7 @@ package com.phone.module_project.view_model
 import androidx.lifecycle.viewModelScope
 import com.phone.library_mvvm.BaseViewModel
 import com.phone.library_network.bean.State
-import com.phone.library_common.bean.TabBean
+import com.phone.call_third_party_so.bean.TabBean
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_network.SingleLiveData
 import com.phone.module_project.R

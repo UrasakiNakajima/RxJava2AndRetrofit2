@@ -10,10 +10,10 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.library_common.BuildConfig
-import com.phone.library_common.R
+import com.phone.call_third_party_so.BuildConfig
+import com.phone.call_third_party_so.R
 import com.phone.library_mvp.BaseMvpRxAppActivity
-import com.phone.library_common.common.ConstantData
+import com.phone.library_base.common.ConstantData
 import com.phone.library_login.bean.DataGetVerification
 import com.phone.library_login.bean.DataLogin
 import com.phone.library_base.manager.SystemManager.getSystemId

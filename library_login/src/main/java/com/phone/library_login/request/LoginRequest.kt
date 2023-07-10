@@ -1,6 +1,6 @@
 package com.phone.library_login.request
 
-import com.phone.library_common.common.ConstantUrl
+import com.phone.library_base.common.ConstantUrl
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody

@@ -15,12 +15,12 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.gyf.immersionbar.ImmersionBar
+import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.ActivityPageManager
 import com.phone.library_base.manager.CrashHandlerManager
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ToolbarManager
-import com.phone.library_common.R
 import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
@@ -34,13 +34,13 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : RxAppCompatActivi
     protected var url: String? = null
     protected var mBodyParams = ArrayMap<String, String>()
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
-    protected lateinit var mBaseApplication: com.phone.library_base.BaseApplication
+    protected lateinit var mBaseApplication: BaseApplication
     private var mActivityPageManager: ActivityPageManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mRxAppCompatActivity = this
-        mBaseApplication = application as com.phone.library_base.BaseApplication
+        mBaseApplication = application as BaseApplication
         mActivityPageManager = ActivityPageManager.instance()
         mActivityPageManager?.addActivity(this)
         setContentView(initLayoutId())

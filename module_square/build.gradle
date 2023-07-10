@@ -20,8 +20,6 @@ tasks.withType(JavaCompile) {
 
 android {
     compileSdk BuildVersions.compileSdk
-//    buildToolsVersion "31.0.3"
-
 
     defaultConfig {
         if (isModule.toBoolean()) {

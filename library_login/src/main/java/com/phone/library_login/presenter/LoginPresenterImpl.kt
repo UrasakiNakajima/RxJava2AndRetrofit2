@@ -2,7 +2,8 @@ package com.phone.library_login.presenter
 
 import android.text.TextUtils
 import com.alibaba.fastjson.JSON
-import com.phone.library_common.R
+import com.phone.library_base.BaseApplication
+import com.phone.call_third_party_so.R
 import com.phone.library_mvp.BasePresenter
 import com.phone.library_network.bean.BaseResponse
 import com.phone.library_base.base.IBaseView
@@ -70,7 +71,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                                     loginView.getAuthCodeSuccess(getVerificationCode.data)
                                 } else {
                                     loginView.getAuthCodeError(
-                                        com.phone.library_base.BaseApplication.instance().resources.getString(
+                                        BaseApplication.instance().resources.getString(
                                             R.string.library_data_in_wrong_format
                                         )
                                     )
@@ -82,7 +83,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                                 i(TAG, "error*****$error")
                                 // 异常处理
                                 loginView.getAuthCodeError(
-                                    com.phone.library_base.BaseApplication.instance().resources.getString(
+                                    BaseApplication.instance().resources.getString(
                                         R.string.library_request_was_aborted
                                     )
                                 )
@@ -160,7 +161,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                                     loginView.loginWithAuthCodeSuccess(loginResponse.data)
                                 } else {
                                     loginView.loginWithAuthCodeError(
-                                        com.phone.library_base.BaseApplication.instance().resources.getString(
+                                        BaseApplication.instance().resources.getString(
                                             R.string.library_data_in_wrong_format
                                         )
                                     )
@@ -172,7 +173,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
                                 i(TAG, "error*****$error")
                                 // 异常处理
                                 loginView.loginWithAuthCodeError(
-                                    com.phone.library_base.BaseApplication.instance().resources.getString(
+                                    BaseApplication.instance().resources.getString(
                                         R.string.library_request_was_aborted
                                     )
                                 )

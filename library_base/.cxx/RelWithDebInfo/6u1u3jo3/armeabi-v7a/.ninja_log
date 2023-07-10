@@ -1,0 +1,5 @@
+# ninja log v5
+0	149	1688982815	CMakeFiles/return-data.dir/return-data.cpp.o	f592d3dc3856a303
+1	180	1688982815	CMakeFiles/native-lib.dir/native-lib.cpp.o	1cdc6ca5c34f7425
+149	202	1688982815	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/armeabi-v7a/libreturn-data.so	cd1aa67d2270de5f
+202	280	1688982815	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/armeabi-v7a/libnative-lib.so	3b502b62e1b30689

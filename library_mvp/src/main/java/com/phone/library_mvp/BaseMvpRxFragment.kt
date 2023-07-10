@@ -25,7 +25,7 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
     protected var url: String? = null
     protected var mBodyParams = ArrayMap<String, String>()
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
-    protected lateinit var mBaseApplication: com.phone.library_base.BaseApplication
+    protected lateinit var mBaseApplication: BaseApplication
 
     protected var rootView: View? = null
     protected lateinit var rxFragment: RxFragment
@@ -53,7 +53,7 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mRxAppCompatActivity = activity as RxAppCompatActivity
-        mBaseApplication = mRxAppCompatActivity.application as com.phone.library_base.BaseApplication
+        mBaseApplication = mRxAppCompatActivity.application as BaseApplication
         initData()
         presenter = attachPresenter()
         initViews()

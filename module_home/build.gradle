@@ -17,8 +17,6 @@ if (isModule.toBoolean()) {
 
 android {
     compileSdk BuildVersions.compileSdk
-//    buildToolsVersion "31.0.3"
-
 
     defaultConfig {
         if (isModule.toBoolean()) {
@@ -118,7 +116,7 @@ dependencies {
     implementation project(path: ':library_custom_view')
     implementation project(path: ':library_login')
     implementation project(path: ':library_mvp')
-    implementation project(path: ':library_mvvm')
+    implementation project(path: ':library_binding')
 
     // room
     implementation "androidx.room:room-runtime:$BuildVersions.room_version"

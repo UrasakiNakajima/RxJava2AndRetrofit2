@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <corners android:radius="@dimen/library_dp_7" />
+    <corners android:radius="@dimen/base_dp_7" />
     <solid android:color="@color/library_color_FFD0D6EC" />
 </shape>

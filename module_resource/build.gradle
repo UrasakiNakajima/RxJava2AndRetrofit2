@@ -16,7 +16,6 @@ if (isModule.toBoolean()) {
 
 android {
     compileSdk BuildVersions.compileSdk
-//    buildToolsVersion "31.0.3"
 
     defaultConfig {
         if (isModule.toBoolean()) {

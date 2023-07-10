@@ -4,7 +4,7 @@ import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_mvvm.BaseViewModel
 import com.phone.library_network.bean.State
-import com.phone.library_common.bean.SubDataSquare
+import com.phone.call_third_party_so.bean.SubDataSquare
 import com.phone.library_network.SingleLiveData
 import com.phone.module_square.model.SquareModelImpl
 import com.phone.module_square.R

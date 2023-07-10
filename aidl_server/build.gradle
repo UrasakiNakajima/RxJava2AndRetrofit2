@@ -7,8 +7,6 @@ plugins {
 
 android {
     compileSdk BuildVersions.compileSdk
-//    buildToolsVersion "31.0.3"
-
 
     defaultConfig {
         applicationId "com.phone.aidl_server"

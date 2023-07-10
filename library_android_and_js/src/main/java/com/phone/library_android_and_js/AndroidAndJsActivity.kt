@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.webkit.*
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_android_and_js.databinding.JsActivityAndroidAndJsBinding
-import com.phone.library_mvvm.BaseBindingRxAppActivity
-import com.phone.library_common.common.ConstantData
+import com.phone.library_binding.BaseBindingRxAppActivity
+import com.phone.library_base.common.ConstantData
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 

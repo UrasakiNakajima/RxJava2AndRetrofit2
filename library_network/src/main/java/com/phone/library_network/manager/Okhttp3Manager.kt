@@ -9,9 +9,9 @@ import com.phone.library_base.BaseApplication
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.MainThreadManager
-import com.phone.library_common.R
+import com.phone.call_third_party_so.R
 import com.phone.library_network.bean.BaseResponse
-import com.phone.library_common.manager.MapManager
+import com.phone.call_third_party_so.manager.MapManager
 import okhttp3.*
 import okio.BufferedSink
 import org.json.JSONObject
@@ -1778,7 +1778,7 @@ class Okhttp3Manager private constructor() {
      * @return
      */
     fun isNetworkAvailable(): Boolean {
-        val connectivityManager = com.phone.library_base.BaseApplication.instance()
+        val connectivityManager = BaseApplication.instance()
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         //如果仅仅是用来判断网络连接
         //connectivityManager.getActiveNetworkInfo().isAvailable()

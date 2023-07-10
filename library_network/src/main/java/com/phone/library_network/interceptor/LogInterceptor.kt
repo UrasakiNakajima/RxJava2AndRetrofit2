@@ -1,6 +1,7 @@
 package com.phone.library_network.interceptor
 
 import android.webkit.WebSettings
+import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.LogManager
 import okhttp3.FormBody
 import okhttp3.Interceptor
@@ -44,7 +45,7 @@ class LogInterceptor : Interceptor {
         builder.removeHeader("User-Agent") //移除旧的
             .addHeader(
                 "User-Agent",
-                WebSettings.getDefaultUserAgent(com.phone.library_base.BaseApplication.instance())
+                WebSettings.getDefaultUserAgent(BaseApplication.instance())
             ) //添加真正的头部
         return builder
             .body(ResponseBody.create(mediaType, content))

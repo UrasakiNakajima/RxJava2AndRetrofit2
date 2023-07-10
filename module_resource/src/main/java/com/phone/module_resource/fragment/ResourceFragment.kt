@@ -5,14 +5,16 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.ResourcesManager
-import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
-import com.phone.library_common.adapter.TabNavigatorAdapter
+import com.phone.library_base.manager.ScreenManager
+import com.phone.call_third_party_so.adapter.TabFragmentStatePagerAdapter
+import com.phone.call_third_party_so.adapter.TabNavigatorAdapter
 import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
-import com.phone.library_common.bean.TabBean
-import com.phone.library_common.common.ConstantData
-import com.phone.library_common.manager.*
+import com.phone.call_third_party_so.bean.TabBean
+import com.phone.library_base.common.ConstantData
+import com.phone.call_third_party_so.manager.*
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_resource.R
@@ -47,7 +49,7 @@ class ResourceFragment :
                     if (it.success != null && it.success.size > 0) {
                         resourceTabDataSuccess(it.success)
                     } else {
-                        resourceTabDataError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_no_data_available))
+                        resourceTabDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
                     }
                 }
 

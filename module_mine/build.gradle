@@ -16,8 +16,6 @@ if (isModule.toBoolean()) {
 
 android {
     compileSdk BuildVersions.compileSdk
-//    buildToolsVersion "31.0.3"
-
 
     defaultConfig {
         if (isModule.toBoolean()) {
@@ -116,7 +114,7 @@ dependencies {
     implementation project(path: ':library_glide')
     implementation project(path: ':library_custom_view')
     implementation project(path: ':library_mvp')
-    implementation project(path: ':library_mvvm')
+    implementation project(path: ':library_binding')
 
     //Android路由（用于不同app之间的跳转）
 //    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"

@@ -1,7 +1,7 @@
 package com.phone.module_square.model
 
 import com.phone.library_network.bean.ApiResponse
-import com.phone.library_common.bean.DataSquare
+import com.phone.call_third_party_so.bean.DataSquare
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_square.request.SquareRequest
 import io.reactivex.Observable

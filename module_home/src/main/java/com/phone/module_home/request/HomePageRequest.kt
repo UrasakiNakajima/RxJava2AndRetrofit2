@@ -1,9 +1,9 @@
 package com.phone.module_home.request
 
 import com.phone.library_network.bean.ApiResponse2
-import com.phone.library_common.bean.ResultData
-import com.phone.library_common.common.ConstantData
-import com.phone.library_common.common.ConstantUrl
+import com.phone.call_third_party_so.bean.ResultData
+import com.phone.library_base.common.ConstantData
+import com.phone.library_base.common.ConstantUrl
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.http.GET

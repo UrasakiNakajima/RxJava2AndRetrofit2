@@ -37,21 +37,21 @@ android {
         enabled = true
     }
 
-//    buildTypes {
-//        release {
-//            //java代码中引用的定义形式
-//            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
-//            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//        }
-//        debug {
-//            //java代码中引用的定义形式
-//            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
-//            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//        }
-//    }
+    buildTypes {
+        release {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            //java代码中引用的定义形式
+            buildConfigField "Boolean", "IS_MODULE", "${isModule}"
+            buildConfigField "Boolean", "IS_RELEASE", "${isRelease}"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -72,7 +72,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':library_common')
+    implementation project(path: ':library_base')
     api "androidx.room:room-runtime:$BuildVersions.room_version"
     kapt "androidx.room:room-compiler:$BuildVersions.room_version"
     // 可选 - Kotlin扩展和协程支持

@@ -18,7 +18,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_48"
+            android:layout_height="@dimen/base_dp_48"
             android:background="@color/library_color_FF198CFF"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
@@ -27,11 +27,11 @@
             <TextView
                 android:id="@+id/tev_title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_48"
+                android:layout_height="@dimen/base_dp_48"
                 android:gravity="center"
                 android:text="@string/library_main"
                 android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/library_sp_20" />
+                android:textSize="@dimen/base_sp_20" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -39,12 +39,12 @@
             android:id="@+id/tev_please_add_components"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/library_dp_20"
-            android:layout_marginEnd="@dimen/library_dp_20"
+            android:layout_marginStart="@dimen/base_dp_20"
+            android:layout_marginEnd="@dimen/base_dp_20"
             android:gravity="center"
             android:text="@string/library_please_add_components"
             android:textColor="@color/library_color_FF198CFF"
-            android:textSize="@dimen/library_sp_18"
+            android:textSize="@dimen/base_sp_18"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -65,13 +65,13 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_1"
+            android:layout_height="@dimen/base_dp_1"
             android:background="@color/library_color_FF999999" />
 
         <LinearLayout
             android:id="@+id/layout_bottom"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_50"
+            android:layout_height="@dimen/base_dp_50"
             android:background="@color/library_white"
             android:orientation="horizontal"
             tools:ignore="UselessLeaf">
@@ -84,7 +84,7 @@
                 android:gravity="center"
                 android:text="@string/library_home"
                 android:textColor="@color/library_color_FFE066FF"
-                android:textSize="@dimen/library_sp_17" />
+                android:textSize="@dimen/base_sp_17" />
 
             <TextView
                 android:id="@+id/tev_project"
@@ -94,7 +94,7 @@
                 android:gravity="center"
                 android:text="@string/library_project"
                 android:textColor="@color/library_color_FF999999"
-                android:textSize="@dimen/library_sp_17" />
+                android:textSize="@dimen/base_sp_17" />
 
             <TextView
                 android:id="@+id/tev_square"
@@ -104,7 +104,7 @@
                 android:gravity="center"
                 android:text="@string/library_square"
                 android:textColor="@color/library_color_FF999999"
-                android:textSize="@dimen/library_sp_17" />
+                android:textSize="@dimen/base_sp_17" />
 
             <TextView
                 android:id="@+id/tev_resource_center"
@@ -114,7 +114,7 @@
                 android:gravity="center"
                 android:text="@string/library_resource"
                 android:textColor="@color/library_color_FF999999"
-                android:textSize="@dimen/library_sp_17" />
+                android:textSize="@dimen/base_sp_17" />
 
             <TextView
                 android:id="@+id/tev_mine"
@@ -124,7 +124,7 @@
                 android:gravity="center"
                 android:text="@string/library_mine"
                 android:textColor="@color/library_color_FF999999"
-                android:textSize="@dimen/library_sp_17" />
+                android:textSize="@dimen/base_sp_17" />
         </LinearLayout>
 
     </LinearLayout>

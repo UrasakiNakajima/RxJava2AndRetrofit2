@@ -1,6 +1,7 @@
 package com.phone.module_square.view_model
 
 import androidx.lifecycle.viewModelScope
+import com.phone.library_base.BaseApplication
 import com.phone.library_mvvm.BaseViewModel
 import com.phone.library_network.bean.State
 import com.phone.library_custom_view.bean.ArticleListBean
@@ -37,7 +38,7 @@ class SubResourceViewModelImpl() : BaseViewModel(), ISubResourceViewModel {
                         dataxRxFragment.value = State.SuccessState(list)
                     } else {
                         dataxRxFragment.value = State.ErrorState(
-                            com.phone.library_base.BaseApplication.instance().resources.getString(
+                            BaseApplication.instance().resources.getString(
                                 R.string.library_no_data_available
                             )
                         )

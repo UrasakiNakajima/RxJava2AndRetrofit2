@@ -72,7 +72,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':library_common')
+    implementation project(path: ':library_base')
     implementation project(path: ':library_network')
 
 }

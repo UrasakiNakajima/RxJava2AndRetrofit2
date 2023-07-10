@@ -15,7 +15,7 @@
         android:id="@+id/mcurrent_progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_3"
+        android:layout_height="@dimen/base_dp_3"
         android:layout_gravity="bottom"
         android:max="100" />
 
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher_round"
+        android:src="@mipmap/project_ic_launcher_round"
         android:visibility="gone"
         tools:ignore="ContentDescription" />
 
@@ -45,21 +45,21 @@
     <LinearLayout
         android:id="@+id/layout_play_control"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_40"
+        android:layout_height="@dimen/base_dp_40"
         android:layout_gravity="bottom"
         android:background="@color/library_color_54E066FF"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/library_dp_10"
-        android:paddingEnd="@dimen/library_dp_10"
+        android:paddingStart="@dimen/base_dp_10"
+        android:paddingEnd="@dimen/base_dp_10"
         android:visibility="gone">
 
         <TextView
             android:id="@+id/tev_current_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/library_dp_10"
-            android:layout_marginEnd="@dimen/library_dp_10"
+            android:layout_marginStart="@dimen/base_dp_10"
+            android:layout_marginEnd="@dimen/base_dp_10"
             android:text="@string/library_start_time"
             android:textColor="@color/library_colorAccent" />
 
@@ -74,8 +74,8 @@
             android:id="@+id/tev_total_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/library_dp_10"
-            android:layout_marginEnd="@dimen/library_dp_10"
+            android:layout_marginStart="@dimen/base_dp_10"
+            android:layout_marginEnd="@dimen/base_dp_10"
             android:text="@string/library_start_time"
             android:textColor="@color/library_colorAccent" />
 

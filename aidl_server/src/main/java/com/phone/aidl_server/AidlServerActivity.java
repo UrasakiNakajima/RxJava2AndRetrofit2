@@ -5,7 +5,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.phone.aidl_server.bean.ConnectBean;
-import com.phone.library_common.base.BaseRxAppActivity;
+import com.phone.library_base.base.BaseRxAppActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_75"
+        android:layout_height="@dimen/base_dp_75"
         android:background="@color/library_color_FF198CFF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
@@ -19,30 +19,30 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_73"
+            android:layout_height="@dimen/base_dp_73"
             android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_25" />
+                android:layout_height="@dimen/base_dp_25" />
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_48">
+                android:layout_height="@dimen/base_dp_48">
 
                 <FrameLayout
                     android:id="@+id/layout_back"
-                    android:layout_width="@dimen/library_dp_36"
+                    android:layout_width="@dimen/base_dp_36"
                     android:layout_height="match_parent"
                     android:gravity="start"
                     tools:ignore="UselessParent">
 
                     <ImageView
                         android:id="@+id/imv_back"
-                        android:layout_width="@dimen/library_dp_9"
-                        android:layout_height="@dimen/library_dp_16"
+                        android:layout_width="@dimen/base_dp_9"
+                        android:layout_height="@dimen/base_dp_16"
                         android:layout_gravity="center"
-                        android:src="@mipmap/icon_arrowhead_left"
+                        android:src="@mipmap/home_icon_arrowhead_left"
                         tools:ignore="ContentDescription" />
 
                 </FrameLayout>
@@ -50,11 +50,11 @@
                 <TextView
                     android:id="@+id/tev_title"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/library_dp_48"
+                    android:layout_height="@dimen/base_dp_48"
                     android:gravity="center"
                     android:text="@string/library_edit_text_input_limits"
                     android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/library_sp_20" />
+                    android:textSize="@dimen/base_sp_20" />
 
             </FrameLayout>
 
@@ -64,51 +64,51 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_50" />
+        android:layout_height="@dimen/base_dp_50" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:paddingStart="@dimen/library_dp_10"
-        android:paddingEnd="@dimen/library_dp_10"
+        android:paddingStart="@dimen/base_dp_10"
+        android:paddingEnd="@dimen/base_dp_10"
         android:text="@string/library_android_edit_text_limits_the_input_of_integers_and_decimals_and_the_total_number_length_is_less_than_or_equal_to_eleven_digits_customizable_five_digits_of_integers_customizable_and_five_digits_of_decimals_customizable"
         android:textColor="@color/library_black"
-        android:textSize="@dimen/library_sp_16" />
+        android:textSize="@dimen/base_sp_16" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_50" />
+        android:layout_height="@dimen/base_dp_50" />
 
     <TextView
         android:id="@+id/tev_show_input"
-        android:layout_width="@dimen/library_dp_280"
-        android:layout_height="@dimen/library_dp_40"
+        android:layout_width="@dimen/base_dp_280"
+        android:layout_height="@dimen/base_dp_40"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/library_corners_14_color_white_stroke_1_color_80000000"
         android:gravity="center"
         android:textColor="@color/library_colorBlack333"
-        android:textSize="@dimen/library_sp_16"
+        android:textSize="@dimen/base_sp_16"
         android:visibility="invisible"
         tools:ignore="Autofill,LabelFor,TextFields" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_50" />
+        android:layout_height="@dimen/base_dp_50" />
 
     <TextView
         android:id="@+id/tev_start_input"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/library_dp_40"
+        android:layout_height="@dimen/base_dp_40"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/library_corners_14_color_white_stroke_1_color_80000000"
         android:gravity="center"
-        android:paddingStart="@dimen/library_dp_10"
-        android:paddingEnd="@dimen/library_dp_10"
+        android:paddingStart="@dimen/base_dp_10"
+        android:paddingEnd="@dimen/base_dp_10"
         android:text="@string/library_start_input_en"
         android:textColor="@color/library_black"
-        android:textSize="@dimen/library_sp_16" />
+        android:textSize="@dimen/base_sp_16" />
 
 
 </LinearLayout>

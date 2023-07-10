@@ -7,10 +7,11 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.phone.library_base.BaseApplication
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.manager.LogManager
-import com.phone.library_common.R
-import com.phone.library_common.common.ConstantUrl
+import com.phone.call_third_party_so.R
+import com.phone.library_base.common.ConstantUrl
 import com.trello.rxlifecycle3.android.ActivityEvent
 import com.trello.rxlifecycle3.android.FragmentEvent
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
@@ -45,7 +46,7 @@ class RetrofitManager private constructor() {
      */
     init {
         //缓存
-        val cacheFile = File(com.phone.library_base.BaseApplication.instance().externalCacheDir, "cache")
+        val cacheFile = File(BaseApplication.instance().externalCacheDir, "cache")
         val cache = Cache(cacheFile, 1024 * 1024 * 10) //10Mb
         val rewriteCacheControlInterceptor =
             com.phone.library_network.interceptor.RewriteCacheControlInterceptor()
@@ -162,7 +163,7 @@ class RetrofitManager private constructor() {
          */
         fun isNetworkAvailable(): Boolean {
             val connectivityManager =
-                com.phone.library_base.BaseApplication.instance().applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                BaseApplication.instance().applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             //如果仅仅是用来判断网络连接
             //connectivityManager.getActiveNetworkInfo().isAvailable()
             val info = connectivityManager.allNetworkInfo
@@ -329,7 +330,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 
@@ -376,7 +377,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 
@@ -436,7 +437,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 
@@ -466,7 +467,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 
@@ -526,7 +527,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 
@@ -586,7 +587,7 @@ class RetrofitManager private constructor() {
                     TAG, "throwable message*****" + throwable.message
                 )
                 // 异常处理
-                onCommonSingleParamCallback.onError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
 

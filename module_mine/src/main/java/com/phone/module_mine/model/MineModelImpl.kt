@@ -1,7 +1,7 @@
 package com.phone.module_mine.model
 
 import com.phone.library_network.bean.ApiResponse3
-import com.phone.library_common.bean.MineResult
+import com.phone.call_third_party_so.bean.MineResult
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_mine.request.MineRequest
 import io.reactivex.Observable

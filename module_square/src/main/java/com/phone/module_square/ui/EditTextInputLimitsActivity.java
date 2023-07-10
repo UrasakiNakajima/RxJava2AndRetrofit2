@@ -19,10 +19,10 @@ import androidx.appcompat.widget.Toolbar;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.library_base.base.BaseRxAppActivity;
 import com.phone.library_base.manager.ResourcesManager;
-import com.phone.library_common.common.ConstantData;
-import com.phone.library_common.common.DecimalInputFilter;
-import com.phone.library_common.common.DecimalTextWatcher;
-import com.phone.library_common.manager.SoftKeyboardManager;
+import com.phone.library_base.common.ConstantData;
+import com.phone.library_base.common.DecimalInputFilter;
+import com.phone.library_base.common.DecimalTextWatcher;
+import com.phone.call_third_party_so.manager.SoftKeyboardManager;
 import com.phone.module_square.R;
 
 /**

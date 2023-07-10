@@ -46,7 +46,7 @@
             android:layout_gravity="center"
             android:color="@color/library_color_FF999999"
             android:visibility="gone"
-            app:qmui_loading_view_size="@dimen/library_dp_33" />
+            app:qmui_loading_view_size="@dimen/base_dp_33" />
 
     </FrameLayout>
 

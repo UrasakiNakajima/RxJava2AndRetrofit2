@@ -18,14 +18,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.library_common.BuildConfig
-import com.phone.library_common.R
+import com.phone.call_third_party_so.BuildConfig
+import com.phone.call_third_party_so.R
 import com.phone.library_base.base.BaseRxAppActivity
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.SharedPreferencesManager
 import com.phone.library_base.manager.ThreadPoolManager
-import com.phone.library_common.common.ConstantData
-import com.phone.library_common.manager.ScreenManager
+import com.phone.library_base.common.ConstantData
+import com.phone.library_base.manager.ScreenManager
 
 
 @SuppressLint("CustomSplashScreen")
@@ -81,7 +81,7 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevAndroid,
                 "translationY",
                 0f,
-                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_360).toFloat())
+                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.base_dp_360).toFloat())
                     .toFloat()
             )
 //            // 构造一个在透明度上变化的属性动画
@@ -114,7 +114,7 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevAppName,
                 "translationY",
                 0f,
-                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_409).toFloat())
+                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.base_dp_409).toFloat())
                     .toFloat())
             )
 //            // 构造一个在透明度上变化的属性动画
@@ -147,7 +147,7 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevKotlin,
                 "translationX",
                 0f,
-                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_100).toFloat())
+                ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.base_dp_100).toFloat())
                     .toFloat()
             )
             // 构造一个在横轴上平移的属性动画
@@ -155,7 +155,7 @@ class LaunchActivity : BaseRxAppActivity() {
                 tevKotlin,
                 "translationY",
                 0f,
-                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.library_dp_390).toFloat())
+                -(ScreenManager.dpToPx(ScreenManager.getDimenDp(R.dimen.base_dp_390).toFloat())
                     .toFloat())
             )
 //            // 构造一个在透明度上变化的属性动画

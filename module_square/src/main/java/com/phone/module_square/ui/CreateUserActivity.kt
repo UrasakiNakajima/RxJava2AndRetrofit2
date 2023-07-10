@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
-import com.phone.library_mvvm.BaseBindingRxAppActivity
+import com.phone.library_binding.BaseBindingRxAppActivity
 import com.phone.library_greendao.bean.UserBean
-import com.phone.library_common.common.ConstantData
+import com.phone.library_base.common.ConstantData
 import com.phone.library_custom_view.dialog.StandardDialog
 import com.phone.library_custom_view.dialog.StandardUserDialog
-import com.phone.library_common.manager.*
+import com.phone.call_third_party_so.manager.*
 import com.phone.library_base.manager.MainThreadManager
 import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_square.R

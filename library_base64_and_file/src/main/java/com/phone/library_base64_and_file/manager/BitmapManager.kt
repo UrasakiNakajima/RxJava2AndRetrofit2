@@ -6,7 +6,7 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
-import com.phone.library_common.callback.OnCommonSuccess2Callback
+import com.phone.call_third_party_so.callback.OnCommonSuccess2Callback
 import com.phone.library_base.manager.LogManager
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format

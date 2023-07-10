@@ -13,7 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import com.phone.library_greendao.bean.AddressBean
 import com.phone.library_greendao.bean.UserBean
 import com.phone.library_base.callback.OnCommonSuccessCallback
-import com.phone.library_common.callback.OnItemViewClick2Listener
+import com.phone.call_third_party_so.callback.OnItemViewClick2Listener
 import com.phone.library_custom_view.R
 
 class StandardUserDialog(val context: Context) {

@@ -5,7 +5,7 @@ import com.phone.library_base64_and_file.bean.Base64AndFileBean
 import com.phone.library_base64_and_file.manager.Base64AndFileManager
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.manager.LogManager
-import com.phone.library_common.manager.MediaFileManager
+import com.phone.call_third_party_so.manager.MediaFileManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

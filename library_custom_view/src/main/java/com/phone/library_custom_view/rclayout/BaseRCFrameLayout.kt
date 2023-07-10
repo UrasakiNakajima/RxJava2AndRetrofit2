@@ -1,4 +1,4 @@
-package com.phone.library_common.custom_view.rclayout.helper
+package com.phone.call_third_party_so.custom_view.rclayout.helper
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
@@ -7,7 +7,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
-import android.widget.Toast
 
 abstract class BaseRCFrameLayout(context: Context, attrs: AttributeSet?) :
     RCFrameLayout(context, attrs) {

@@ -11,9 +11,9 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.google.gson.Gson
-import com.phone.library_mvvm.BaseBindingRxAppActivity
-import com.phone.library_common.common.ConstantData
-import com.phone.library_common.manager.GetJsonDataManager
+import com.phone.library_binding.BaseBindingRxAppActivity
+import com.phone.library_base.common.ConstantData
+import com.phone.call_third_party_so.manager.GetJsonDataManager
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.module_square.R

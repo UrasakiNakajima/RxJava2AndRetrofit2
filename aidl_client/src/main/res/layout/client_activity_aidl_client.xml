@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_48"
+        android:layout_height="@dimen/base_dp_48"
         android:background="@color/library_color_FF198CFF"
         android:minHeight="?attr/actionBarSize"
         android:orientation="vertical"
@@ -20,51 +20,51 @@
         <TextView
             android:id="@+id/tev_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/library_dp_48"
+            android:layout_height="@dimen/base_dp_48"
             android:gravity="center"
             android:text="@string/client_app_name"
             android:textColor="@color/library_color_FFFFFFFF"
-            android:textSize="@dimen/library_sp_20" />
+            android:textSize="@dimen/base_sp_20" />
 
     </androidx.appcompat.widget.Toolbar>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_20" />
+        android:layout_height="@dimen/base_dp_20" />
 
     <TextView
         android:id="@+id/tev_connect_server_service"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/library_dp_48"
+        android:layout_height="@dimen/base_dp_48"
         android:layout_gravity="center_horizontal"
         android:background="@color/library_color_54E066FF"
         android:gravity="center"
-        android:paddingStart="@dimen/library_dp_10"
-        android:paddingEnd="@dimen/library_dp_10"
+        android:paddingStart="@dimen/base_dp_10"
+        android:paddingEnd="@dimen/base_dp_10"
         android:text="@string/client_connect_server_service"
         android:textColor="@color/library_color_FF198CFF"
-        android:textSize="@dimen/library_sp_20" />
+        android:textSize="@dimen/base_sp_20" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_20" />
+        android:layout_height="@dimen/base_dp_20" />
 
     <TextView
         android:id="@+id/tev_add_book"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/library_dp_48"
+        android:layout_height="@dimen/base_dp_48"
         android:layout_gravity="center_horizontal"
         android:background="@color/library_color_54E066FF"
         android:gravity="center"
-        android:paddingStart="@dimen/library_dp_10"
-        android:paddingEnd="@dimen/library_dp_10"
+        android:paddingStart="@dimen/base_dp_10"
+        android:paddingEnd="@dimen/base_dp_10"
         android:text="@string/client_add_book"
         android:textColor="@color/library_color_FF198CFF"
-        android:textSize="@dimen/library_sp_20" />
+        android:textSize="@dimen/base_sp_20" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/library_dp_20" />
+        android:layout_height="@dimen/base_dp_20" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_book"

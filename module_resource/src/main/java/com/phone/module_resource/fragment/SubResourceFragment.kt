@@ -6,15 +6,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
+import com.phone.library_base.BaseApplication
 import com.phone.library_custom_view.adapter.ProjectAndResourceAdapter
 import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
 import com.phone.library_custom_view.bean.ArticleListBean
-import com.phone.library_common.common.ConstantData
+import com.phone.library_base.common.ConstantData
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_network.manager.RetrofitManager
-import com.phone.library_common.manager.ScreenManager
+import com.phone.library_base.manager.ScreenManager
 import com.phone.module_resource.R
 import com.phone.module_resource.databinding.ResourceFragmentResourceSubBinding
 import com.phone.module_resource.view.ISubResourceView
@@ -64,7 +65,7 @@ class SubResourceFragment :
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                         subResourceDataSuccess(it.success)
                     } else {
-                        subResourceDataError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_no_data_available))
+                        subResourceDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
                     }
                 }
 
@@ -141,7 +142,7 @@ class SubResourceFragment :
         if (RetrofitManager.isNetworkAvailable()) {
             initSubResource(tabId, pageNum)
         } else {
-            subResourceDataError(com.phone.library_base.BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
+            subResourceDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
         }
     }
 

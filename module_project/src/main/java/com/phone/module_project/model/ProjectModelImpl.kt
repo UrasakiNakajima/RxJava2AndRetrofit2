@@ -1,7 +1,7 @@
 package com.phone.module_project.model
 
 import com.phone.library_network.bean.ApiResponse
-import com.phone.library_common.bean.TabBean
+import com.phone.call_third_party_so.bean.TabBean
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_project.request.ProjectRequest
 import okhttp3.ResponseBody

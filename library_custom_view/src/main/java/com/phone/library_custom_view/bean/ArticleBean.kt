@@ -1,6 +1,6 @@
 package com.phone.library_custom_view.bean
 
-import com.phone.library_common.common.Constants
+import com.phone.library_base.common.Constants
 
 class ArticleBean {
 

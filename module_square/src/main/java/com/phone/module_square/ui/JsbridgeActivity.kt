@@ -10,9 +10,9 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.github.lzyzsd.jsbridge.DefaultHandler
 import com.google.gson.Gson
-import com.phone.library_mvvm.BaseBindingRxAppActivity
+import com.phone.library_binding.BaseBindingRxAppActivity
 import com.phone.library_greendao.bean.UserBean
-import com.phone.library_common.common.ConstantData
+import com.phone.library_base.common.ConstantData
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.module_square.R

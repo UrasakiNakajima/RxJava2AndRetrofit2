@@ -7,7 +7,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Checkable
-import com.phone.library_common.R
+import com.phone.call_third_party_so.R
 
 class RCHelper(val context: Context, val attrs: AttributeSet?) {
 

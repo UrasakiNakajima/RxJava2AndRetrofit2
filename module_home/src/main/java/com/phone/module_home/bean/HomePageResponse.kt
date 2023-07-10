@@ -1,6 +1,6 @@
 package com.phone.module_home.bean
 
-import com.phone.library_common.bean.ResultData
+import com.phone.call_third_party_so.bean.ResultData
 
 class HomePageResponse() {
 

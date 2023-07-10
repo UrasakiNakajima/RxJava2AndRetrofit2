@@ -2,9 +2,9 @@ package com.phone.module_home.provider
 
 import android.content.Context
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_common.bean.ResultData
-import com.phone.library_common.common.ConstantData
-import com.phone.library_common.iprovider.IHomeProvider
+import com.phone.call_third_party_so.bean.ResultData
+import com.phone.library_base.common.ConstantData
+import com.phone.call_third_party_so.iprovider.IHomeProvider
 
 @Route(path = ConstantData.Route.ROUTE_HOME_SERVICE)
 class HomeProviderImpl : IHomeProvider {

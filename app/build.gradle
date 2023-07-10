@@ -16,9 +16,7 @@ tasks.withType(JavaCompile) {
 }
 
 android {
-
     compileSdk BuildVersions.compileSdk
-//    buildToolsVersion "31.0.3"
 
     defaultConfig {
         applicationId "com.phone.rxjava2andretrofit2"

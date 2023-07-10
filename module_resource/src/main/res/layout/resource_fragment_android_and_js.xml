@@ -19,7 +19,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_48"
+                android:layout_height="@dimen/base_dp_48"
                 android:background="@color/library_color_FF198CFF"
                 android:minHeight="?attr/actionBarSize"
                 android:orientation="vertical"
@@ -27,16 +27,16 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/library_dp_48">
+                    android:layout_height="@dimen/base_dp_48">
 
                     <TextView
                         android:id="@+id/tev_title"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/library_dp_48"
+                        android:layout_height="@dimen/base_dp_48"
                         android:gravity="center"
                         android:text="@string/library_android_and_js_interactive"
                         android:textColor="@color/library_color_FFFFFFFF"
-                        android:textSize="@dimen/library_sp_20" />
+                        android:textSize="@dimen/base_sp_20" />
 
                 </FrameLayout>
 
@@ -45,74 +45,74 @@
             <WebView
                 android:id="@+id/web_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_230" />
+                android:layout_height="@dimen/base_dp_230" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_10"
+                android:layout_height="@dimen/base_dp_10"
                 android:background="@color/library_color_4876FF" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_50"
-                android:layout_marginStart="@dimen/library_dp_50"
+                android:layout_height="@dimen/base_dp_50"
+                android:layout_marginStart="@dimen/base_dp_50"
                 android:gravity="center"
-                android:paddingStart="@dimen/library_dp_25"
-                android:paddingEnd="@dimen/library_dp_25"
+                android:paddingStart="@dimen/base_dp_25"
+                android:paddingEnd="@dimen/base_dp_25"
                 android:text="@string/library_this_is_the_h5_page"
                 android:textColor="@color/library_black" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_20" />
+                android:layout_height="@dimen/base_dp_20" />
 
             <TextView
                 android:id="@+id/tev_android_to_js"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_50"
-                android:layout_marginStart="@dimen/library_dp_50"
+                android:layout_height="@dimen/base_dp_50"
+                android:layout_marginStart="@dimen/base_dp_50"
                 android:background="@drawable/library_corners_25_color_ff198cff"
                 android:gravity="center"
-                android:paddingStart="@dimen/library_dp_25"
-                android:paddingEnd="@dimen/library_dp_25"
+                android:paddingStart="@dimen/base_dp_25"
+                android:paddingEnd="@dimen/base_dp_25"
                 android:text="@string/library_android_to_js"
                 android:textColor="@color/library_white" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_20" />
+                android:layout_height="@dimen/base_dp_20" />
 
             <TextView
                 android:id="@+id/tev_android_to_js2"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_50"
-                android:layout_marginStart="@dimen/library_dp_50"
+                android:layout_height="@dimen/base_dp_50"
+                android:layout_marginStart="@dimen/base_dp_50"
                 android:background="@drawable/library_corners_25_color_ff198cff"
                 android:gravity="center"
-                android:paddingStart="@dimen/library_dp_25"
-                android:paddingEnd="@dimen/library_dp_25"
+                android:paddingStart="@dimen/base_dp_25"
+                android:paddingEnd="@dimen/base_dp_25"
                 android:text="@string/library_android_to_js2"
                 android:textColor="@color/library_white" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_20" />
+                android:layout_height="@dimen/base_dp_20" />
 
             <TextView
                 android:id="@+id/tev_android_to_js3"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/library_dp_50"
-                android:layout_marginStart="@dimen/library_dp_50"
+                android:layout_height="@dimen/base_dp_50"
+                android:layout_marginStart="@dimen/base_dp_50"
                 android:background="@drawable/library_corners_25_color_ff198cff"
                 android:gravity="center"
-                android:paddingStart="@dimen/library_dp_25"
-                android:paddingEnd="@dimen/library_dp_25"
+                android:paddingStart="@dimen/base_dp_25"
+                android:paddingEnd="@dimen/base_dp_25"
                 android:text="@string/library_android_to_js3"
                 android:textColor="@color/library_white" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/library_dp_20" />
+                android:layout_height="@dimen/base_dp_20" />
 
         </LinearLayout>
 

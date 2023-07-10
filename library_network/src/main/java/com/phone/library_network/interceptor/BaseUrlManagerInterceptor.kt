@@ -1,7 +1,7 @@
 package com.phone.library_network.interceptor
 
 import com.phone.library_base.manager.LogManager
-import com.phone.library_common.common.ConstantData
+import com.phone.library_base.common.ConstantData
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response

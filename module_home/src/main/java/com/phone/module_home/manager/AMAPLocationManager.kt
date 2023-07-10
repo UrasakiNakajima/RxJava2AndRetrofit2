@@ -4,8 +4,9 @@ import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
+import com.phone.library_base.BaseApplication
 import com.phone.library_base.callback.OnCommonSingleParamCallback
-import com.phone.library_common.manager.ExceptionManager
+import com.phone.call_third_party_so.manager.ExceptionManager
 import com.phone.library_base.manager.LogManager
 
 class AMAPLocationManager {
@@ -66,11 +67,11 @@ class AMAPLocationManager {
                 }
             }
         }
-        AMapLocationClient.updatePrivacyShow(com.phone.library_base.BaseApplication.instance(), true, true)
-        AMapLocationClient.updatePrivacyAgree(com.phone.library_base.BaseApplication.instance(), true)
+        AMapLocationClient.updatePrivacyShow(BaseApplication.instance(), true, true)
+        AMapLocationClient.updatePrivacyAgree(BaseApplication.instance(), true)
         //初始化定位
         try {
-            mLocationClient = AMapLocationClient(com.phone.library_base.BaseApplication.instance())
+            mLocationClient = AMapLocationClient(BaseApplication.instance())
         } catch (e: Exception) {
             e.printStackTrace()
             ExceptionManager.instance().throwException(e)

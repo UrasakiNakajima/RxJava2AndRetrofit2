@@ -41,11 +41,11 @@
                         android:background="@color/library_color_FFFFC73B"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:paddingStart="@dimen/library_dp_10"
-                        android:paddingEnd="@dimen/library_dp_10"
+                        android:paddingStart="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_10"
                         android:text="@string/library_user_id"
                         android:textColor="@color/library_color_FFFFFF"
-                        android:textSize="@dimen/library_sp_14" />
+                        android:textSize="@dimen/base_sp_14" />
 
                     <View
                         android:layout_width="1dp"
@@ -61,11 +61,11 @@
                         android:background="@color/library_color_FFFFC73B"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:paddingStart="@dimen/library_dp_10"
-                        android:paddingEnd="@dimen/library_dp_10"
+                        android:paddingStart="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_10"
                         android:text="@string/library_birthday"
                         android:textColor="@color/library_color_FFFFFF"
-                        android:textSize="@dimen/library_sp_14" />
+                        android:textSize="@dimen/base_sp_14" />
 
                     <View
                         android:layout_width="1dp"
@@ -81,11 +81,11 @@
                         android:background="@color/library_color_4876FF"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:paddingStart="@dimen/library_dp_10"
-                        android:paddingEnd="@dimen/library_dp_10"
+                        android:paddingStart="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_10"
                         android:text="@string/library_update"
                         android:textColor="@color/library_color_FFFFFF"
-                        android:textSize="@dimen/library_sp_14" />
+                        android:textSize="@dimen/base_sp_14" />
 
                 </LinearLayout>
 
@@ -109,11 +109,11 @@
                         android:background="@color/library_color_FFFFC73B"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:paddingStart="@dimen/library_dp_10"
-                        android:paddingEnd="@dimen/library_dp_10"
+                        android:paddingStart="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_10"
                         android:text="@string/library_salary"
                         android:textColor="@color/library_color_FFFFFF"
-                        android:textSize="@dimen/library_sp_14" />
+                        android:textSize="@dimen/base_sp_14" />
 
                     <View
                         android:layout_width="1dp"
@@ -129,11 +129,11 @@
                         android:background="@color/library_color_FFFFC73B"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:paddingStart="@dimen/library_dp_10"
-                        android:paddingEnd="@dimen/library_dp_10"
+                        android:paddingStart="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_10"
                         android:text="@string/library_address"
                         android:textColor="@color/library_color_FFFFFF"
-                        android:textSize="@dimen/library_sp_14" />
+                        android:textSize="@dimen/base_sp_14" />
 
                     <View
                         android:layout_width="1dp"
@@ -149,11 +149,11 @@
                         android:background="@color/library_color_4876FF"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:paddingStart="@dimen/library_dp_10"
-                        android:paddingEnd="@dimen/library_dp_10"
+                        android:paddingStart="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_10"
                         android:text="@string/library_delete"
                         android:textColor="@color/library_color_FFFFFF"
-                        android:textSize="@dimen/library_sp_14" />
+                        android:textSize="@dimen/base_sp_14" />
 
                 </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.phone.module_mine.presenter
 
 import android.text.TextUtils
+import com.phone.library_base.BaseApplication
 import com.phone.library_mvp.BasePresenter
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.callback.OnCommonSingleParamCallback
@@ -85,7 +86,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
                         }
                     } else {
                         baseView.mineDataError(
-                            apiResponse.reason ?: com.phone.library_base.BaseApplication.instance().resources.getString(
+                            apiResponse.reason ?: BaseApplication.instance().resources.getString(
                                 R.string.library_loading_failed
                             )
                         )
@@ -120,7 +121,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    }
                             } else {
                                 baseView.userDataError(
-                                    com.phone.library_base.BaseApplication.instance().resources.getString(
+                                    BaseApplication.instance().resources.getString(
                                         R.string.library_loading_failed
                                     )
                                 )
@@ -163,7 +164,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
 //                                    }
                             } else {
                                 baseView.userDataError(
-                                    com.phone.library_base.BaseApplication.instance().resources.getString(
+                                    BaseApplication.instance().resources.getString(
                                         R.string.library_loading_failed
                                     )
                                 )
