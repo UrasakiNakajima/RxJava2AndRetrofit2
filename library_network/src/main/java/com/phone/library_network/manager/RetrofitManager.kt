@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.manager.LogManager
-import com.phone.call_third_party_so.R
+import com.phone.library_common.R
 import com.phone.library_base.common.ConstantUrl
 import com.trello.rxlifecycle3.android.ActivityEvent
 import com.trello.rxlifecycle3.android.FragmentEvent

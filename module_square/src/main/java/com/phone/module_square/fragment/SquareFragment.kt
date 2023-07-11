@@ -10,19 +10,20 @@ import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_base.BaseApplication
+import com.phone.library_base.base.BaseRxAppActivity
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ScreenManager
-import com.phone.call_third_party_so.BuildConfig
+import com.phone.library_common.BuildConfig
 import com.phone.library_mvp.BaseMvpRxAppActivity
 import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
-import com.phone.call_third_party_so.bean.*
-import com.phone.call_third_party_so.callback.OnCommonRxPermissionsCallback
+import com.phone.library_common.bean.*
+import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_base.common.ConstantData
-import com.phone.call_third_party_so.manager.*
+import com.phone.library_common.manager.*
 import com.phone.library_room.AppRoomDataBase
-import com.phone.call_third_party_so.iprovider.ISquareProvider
+import com.phone.library_common.iprovider.ISquareProvider
 import com.phone.library_greendao.bean.UserBean
 import com.phone.library_greendao.bean.UserBean2
 import com.phone.library_greendao.bean.UserBean3
@@ -264,9 +265,9 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                 override fun onRxPermissionsAllPass() {
                     //所有的权限都授予
                     if (number == 1) {
-                        val baseMvpRxAppActivity =
-                            mRxAppCompatActivity as BaseMvpRxAppActivity<*, *>
-                        baseMvpRxAppActivity.getActivityPageManager()?.exitApp()
+                        val baseRxAppActivity =
+                            mRxAppCompatActivity as BaseRxAppActivity
+                        baseRxAppActivity.mActivityPageManager?.exitApp()
                     } else if (number == 2) {
                         //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                         val userBean: UserBean =

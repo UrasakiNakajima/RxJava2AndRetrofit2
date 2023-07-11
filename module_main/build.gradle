@@ -30,6 +30,7 @@ android {
                 arg("AROUTER_MODULE_NAME", project.getName())
             }
         }
+
     }
 
     //android 模块下开启DataBinding
@@ -90,5 +91,12 @@ dependencies {
 
 //    implementation "com.networkbench.newlens.agent.android:nbs.newlens.agent:$tingyun_sdk_version"
 //    implementation "com.networkbench.newlens.agent.android2:nbs.newlens.nativecrash:$tingyun_ndk_version"//采集native carsh 需集成此包
+
+    //极光推送JPush
+    api "cn.jiguang.sdk:jpush:$BuildVersions.jpush_version"
+    //极光推送JCore
+    api "cn.jiguang.sdk:jcore:$BuildVersions.jcore_version"
+//    // 接入小米厂商
+//    api "cn.jiguang.sdk.plugin:xiaomi:4.0.0"
 
 }

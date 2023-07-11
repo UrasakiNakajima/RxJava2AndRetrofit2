@@ -9,7 +9,8 @@ plugins {
     id 'com.phone.versionplugin'
 }
 //apply plugin: 'com.google.gms.google-services'
-//apply plugin: 'com.huawei.agconnect'
+//apply plugin: 'com.huawei.agconnect'Xz&150120
+
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -39,6 +40,7 @@ android {
 //            abiFilters 'armeabi-v7a', 'arm64-v8a'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
+
         manifestPlaceholders = [
                 JPUSH_PKGNAME: "com.phone.rxjava2andretrofit2",
                 JPUSH_APPKEY : "8e2573e36e6e9c4d624d29d4", //JPush 上注册的包名对应的 Appkey.
@@ -123,12 +125,5 @@ dependencies {
         implementation project(path: ':module_resource')
         implementation project(path: ':module_mine')
     }
-
-    //极光推送JPush
-    implementation "cn.jiguang.sdk:jpush:$BuildVersions.jpush_version"
-    //极光推送JCore
-    implementation "cn.jiguang.sdk:jcore:$BuildVersions.jcore_version"
-//    // 接入小米厂商
-//    implementation "cn.jiguang.sdk.plugin:xiaomi:4.0.0"
 
 }

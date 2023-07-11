@@ -9,7 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.phone.call_third_party_so.R
+import com.phone.library_common.R
 import com.phone.library_custom_view.bean.EventScheduleListBean
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ScreenManager

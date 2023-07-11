@@ -15,8 +15,8 @@ import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ScreenManager
 import com.phone.library_base.manager.SharedPreferencesManager
-import com.phone.call_third_party_so.bean.Data
-import com.phone.call_third_party_so.callback.OnItemViewClickListener
+import com.phone.library_common.bean.Data
+import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.library_base.common.ConstantData
 import com.phone.library_custom_view.custom_view.LoadingLayout
 import com.phone.library_network.manager.RetrofitManager
@@ -212,7 +212,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
                 mBodyParams["type"] = "keji"
                 mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-                presenter?.mineData(rxFragment, mBodyParams)
+                presenter?.mineData(mRxFragment, mBodyParams)
             } else {
                 mineDataError(resources.getString(R.string.library_please_check_the_network_connection))
             }

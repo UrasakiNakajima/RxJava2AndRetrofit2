@@ -8,13 +8,13 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ScreenManager
-import com.phone.call_third_party_so.adapter.TabFragmentStatePagerAdapter
-import com.phone.call_third_party_so.adapter.TabNavigatorAdapter
+import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
+import com.phone.library_common.adapter.TabNavigatorAdapter
 import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
-import com.phone.call_third_party_so.bean.TabBean
+import com.phone.library_common.bean.TabBean
 import com.phone.library_base.common.ConstantData
-import com.phone.call_third_party_so.manager.*
+import com.phone.library_common.manager.*
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_resource.R

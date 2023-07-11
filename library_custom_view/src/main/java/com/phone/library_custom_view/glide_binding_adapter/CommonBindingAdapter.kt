@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.call_third_party_so.R
+import com.phone.library_common.R
 import com.phone.library_base.common.ConstantData
 import com.phone.library_base.manager.LogManager
 

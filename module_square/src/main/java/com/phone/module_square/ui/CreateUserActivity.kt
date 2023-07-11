@@ -12,7 +12,7 @@ import com.phone.library_greendao.bean.UserBean
 import com.phone.library_base.common.ConstantData
 import com.phone.library_custom_view.dialog.StandardDialog
 import com.phone.library_custom_view.dialog.StandardUserDialog
-import com.phone.call_third_party_so.manager.*
+import com.phone.library_common.manager.*
 import com.phone.library_base.manager.MainThreadManager
 import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_square.R

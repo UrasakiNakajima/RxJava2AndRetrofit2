@@ -1,7 +1,7 @@
 package com.phone.module_resource.view
 
 import com.phone.library_base.base.IBaseView
-import com.phone.call_third_party_so.bean.TabBean
+import com.phone.library_common.bean.TabBean
 
 interface IResourceView : IBaseView {
 

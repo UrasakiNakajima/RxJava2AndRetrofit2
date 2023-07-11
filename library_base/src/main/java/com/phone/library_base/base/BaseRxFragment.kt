@@ -18,8 +18,9 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 abstract class BaseRxFragment : RxFragment() {
 
     private val TAG = BaseRxFragment::class.java.simpleName
-    protected var mRxAppCompatActivity: RxAppCompatActivity? = null
-    protected var mBaseApplication: BaseApplication? = null
+    protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
+    protected lateinit var mRxFragment: RxFragment
+    protected lateinit var mBaseApplication: BaseApplication
 
     protected var rootView: View? = null
 
@@ -28,16 +29,24 @@ abstract class BaseRxFragment : RxFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //        if (rootView == null) {
+        //            rootView = inflater.inflate(initLayoutId(), container, false);
+        //        } else {
+        //            ViewGroup viewGroup = (ViewGroup) rootView.getParent();
+        //            if (viewGroup != null) {
+        //                viewGroup.removeView(rootView);
+        //            }
+        //        }
+
+        mRxFragment = this
         rootView = inflater.inflate(initLayoutId(), container, false)
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mRxAppCompatActivity = activity as RxAppCompatActivity?
-        if (mRxAppCompatActivity != null) {
-            mBaseApplication = mRxAppCompatActivity?.application as BaseApplication
-        }
+        mRxAppCompatActivity = activity as RxAppCompatActivity
+        mBaseApplication = mRxAppCompatActivity.application as BaseApplication
         initData()
         initViews()
         initLoadData()
@@ -53,7 +62,7 @@ abstract class BaseRxFragment : RxFragment() {
 
     protected fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        mRxAppCompatActivity?.let {
+        mRxAppCompatActivity.let {
             if (!it.isFinishing) {
                 val toast: Toast
                 val duration: Int
@@ -75,7 +84,7 @@ abstract class BaseRxFragment : RxFragment() {
         bgColor: Int, height: Int,
         roundRadius: Int, message: String?
     ) {
-        mRxAppCompatActivity?.let {
+        mRxAppCompatActivity.let {
             val frameLayout = FrameLayout(it)
             val layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -151,12 +160,6 @@ abstract class BaseRxFragment : RxFragment() {
     }
 
     override fun onDestroyView() {
-        if (mRxAppCompatActivity != null) {
-            mRxAppCompatActivity = null
-        }
-        if (mBaseApplication != null) {
-            mBaseApplication = null
-        }
         if (rootView != null) {
             rootView = null
         }

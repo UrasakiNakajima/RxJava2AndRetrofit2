@@ -28,13 +28,11 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
 
     private val TAG = BaseRxAppActivity::class.java.simpleName
 
-    //	protected QMUILoadingView          loadView;
-    //	protected FrameLayout.LayoutParams layoutParams;
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected lateinit var mBaseApplication: BaseApplication
-    private var mActivityPageManager: ActivityPageManager? = null
-    protected var loadView: QMUILoadingView? = null
-    protected var layoutParams: FrameLayout.LayoutParams? = null
+    var mActivityPageManager: ActivityPageManager? = null
+    protected lateinit var mLoadView: QMUILoadingView
+    protected lateinit var layoutParams: FrameLayout.LayoutParams
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,15 +43,15 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
         setContentView(initLayoutId())
         initData()
         initViews()
-        loadView = QMUILoadingView(mRxAppCompatActivity)
-        loadView?.visibility = View.GONE
-        loadView?.setSize(100)
-        loadView?.setColor(ResourcesManager.getColor(R.color.base_color_333333))
+        mLoadView = QMUILoadingView(mRxAppCompatActivity)
+        mLoadView.visibility = View.GONE
+        mLoadView.setSize(100)
+        mLoadView.setColor(ResourcesManager.getColor(R.color.base_color_333333))
         layoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
         )
-        layoutParams?.gravity = Gravity.CENTER
-        addContentView(loadView, layoutParams)
+        layoutParams.gravity = Gravity.CENTER
+        addContentView(mLoadView, layoutParams)
         initLoadData()
     }
 
@@ -208,12 +206,12 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
         toast.show()
     }
 
-    fun isOnMainThread(): Boolean {
+    protected fun isOnMainThread(): Boolean {
         return Looper.getMainLooper().thread.id == Thread.currentThread().id
     }
 
     override fun showLoading() {
-        loadView?.let {
+        mLoadView.let {
             if (!it.isShown) {
                 it.visibility = View.VISIBLE
                 it.start()
@@ -222,7 +220,7 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
     }
 
     override fun hideLoading() {
-        loadView?.let {
+        mLoadView.let {
             if (it.isShown) {
                 it.stop()
                 it.visibility = View.GONE
@@ -304,4 +302,5 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
         }
         super.onDestroy()
     }
+
 }

@@ -1,0 +1,4 @@
+/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/library_base/.cxx/Debug/5ou6n15w/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/library_base/.cxx/Debug/5ou6n15w/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/library_base/.cxx/Debug/5ou6n15w/armeabi-v7a/CMakeFiles/return-data.dir
+/Users/erwinnakashima/AndroidStudioProjects_mine/RxJava2AndRetrofit2/library_base/.cxx/Debug/5ou6n15w/armeabi-v7a/CMakeFiles/native-lib.dir

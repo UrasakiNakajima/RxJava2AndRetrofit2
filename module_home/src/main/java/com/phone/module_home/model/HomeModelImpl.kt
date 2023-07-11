@@ -1,7 +1,7 @@
 package com.phone.module_home.model
 
 import com.phone.library_network.bean.ApiResponse2
-import com.phone.call_third_party_so.bean.ResultData
+import com.phone.library_common.bean.ResultData
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_home.request.HomePageRequest
 import io.reactivex.Observable

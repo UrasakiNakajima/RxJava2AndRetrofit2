@@ -9,9 +9,9 @@ import com.phone.library_base.BaseApplication
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.MainThreadManager
-import com.phone.call_third_party_so.R
+import com.phone.library_common.R
 import com.phone.library_network.bean.BaseResponse
-import com.phone.call_third_party_so.manager.MapManager
+import com.phone.library_common.manager.MapManager
 import okhttp3.*
 import okio.BufferedSink
 import org.json.JSONObject

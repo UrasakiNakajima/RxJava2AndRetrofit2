@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.phone.library_base.manager.LogManager;
 import com.phone.library_base.manager.ResourcesManager;
-import com.phone.call_third_party_so.adapter.TabFragmentStatePagerAdapter;
+import com.phone.library_common.adapter.TabFragmentStatePagerAdapter;
 import com.phone.library_base.common.ConstantData;
 import com.phone.library_base.manager.ScreenManager;
 import com.phone.library_mounting.databinding.MountingActivityMountingBinding;

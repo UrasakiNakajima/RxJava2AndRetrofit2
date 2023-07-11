@@ -38,15 +38,15 @@ import com.phone.library_base64_and_file.manager.FileManager
 import com.phone.library_base64_and_file.presenter.Base64AndFilePresenterImpl
 import com.phone.library_base64_and_file.view.IBase64AndFileView
 import com.phone.library_mvp.BaseMvpRxAppActivity
-import com.phone.call_third_party_so.callback.OnCommonRxPermissionsCallback
+import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_base.common.ConstantData
-import com.phone.call_third_party_so.manager.*
+import com.phone.library_common.manager.*
 import com.phone.library_base.manager.SystemManager.getSystemId
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.SharedPreferencesManager
-import com.phone.call_third_party_so.iprovider.IHomeProvider
+import com.phone.library_common.iprovider.IHomeProvider
 import com.trello.rxlifecycle3.android.ActivityEvent
 import io.reactivex.*
 import io.reactivex.Observable
@@ -56,7 +56,7 @@ import io.reactivex.schedulers.Schedulers
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
-import com.phone.call_third_party_so.BuildConfig
+import com.phone.library_common.BuildConfig
 
 @Route(path = ConstantData.Route.ROUTE_BASE64_AND_FILE)
 class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePresenterImpl>(),

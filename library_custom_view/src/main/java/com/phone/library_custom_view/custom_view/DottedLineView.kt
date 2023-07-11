@@ -10,7 +10,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.phone.call_third_party_so.R
+import com.phone.library_common.R
 
 class DottedLineView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 

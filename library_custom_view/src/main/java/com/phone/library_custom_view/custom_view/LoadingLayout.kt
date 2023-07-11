@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.FrameLayout
-import com.phone.call_third_party_so.R
+import com.phone.library_common.R
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ScreenManager
 import com.qmuiteam.qmui.widget.QMUILoadingView

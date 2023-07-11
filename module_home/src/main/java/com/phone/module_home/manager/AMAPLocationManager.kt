@@ -6,7 +6,7 @@ import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.callback.OnCommonSingleParamCallback
-import com.phone.call_third_party_so.manager.ExceptionManager
+import com.phone.library_common.manager.ExceptionManager
 import com.phone.library_base.manager.LogManager
 
 class AMAPLocationManager {
@@ -62,7 +62,7 @@ class AMAPLocationManager {
                     val errorMessage = ("location Error, ErrCode:"
                             + aMapLocation.getErrorCode() + ", errInfo:"
                             + aMapLocation.getErrorInfo())
-                    LogManager.i(TAG, "errorMessage$errorMessage")
+                    LogManager.i(TAG, "errorMessage*****$errorMessage")
                     onCommonSingleParamCallback?.onError(errorMessage)
                 }
             }

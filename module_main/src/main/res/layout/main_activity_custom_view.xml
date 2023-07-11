@@ -50,7 +50,7 @@
                             android:layout_width="@dimen/base_dp_10"
                             android:layout_height="9dp"
                             android:layout_marginStart="@dimen/base_dp_53"
-                            android:src="@mipmap/icon_time_line_triangle"
+                            android:src="@mipmap/main_icon_time_line_triangle"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -74,7 +74,7 @@
                             android:layout_height="10dp"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="24dp"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -93,7 +93,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="5dp"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -116,7 +116,7 @@
                             android:layout_height="10dp"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="30dp"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -135,7 +135,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -158,7 +158,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -177,7 +177,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -200,7 +200,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -219,7 +219,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -242,7 +242,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -261,7 +261,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -284,7 +284,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -303,7 +303,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -326,7 +326,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -345,7 +345,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -368,7 +368,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -387,7 +387,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -410,7 +410,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -429,7 +429,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -452,7 +452,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -471,7 +471,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -494,7 +494,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -513,7 +513,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -536,7 +536,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -555,7 +555,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -578,7 +578,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -597,7 +597,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -620,7 +620,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -639,7 +639,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -662,7 +662,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -681,7 +681,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -704,7 +704,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -723,7 +723,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -746,7 +746,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -765,7 +765,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -788,7 +788,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -807,7 +807,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -830,7 +830,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -849,7 +849,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -872,7 +872,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -891,7 +891,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -914,7 +914,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -933,7 +933,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -956,7 +956,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -975,7 +975,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -998,7 +998,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -1017,7 +1017,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -1040,7 +1040,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -1059,7 +1059,7 @@
                             android:layout_width="@dimen/base_dp_5"
                             android:layout_height="@dimen/base_dp_5"
                             android:layout_marginStart="@dimen/base_dp_56"
-                            android:src="@mipmap/icon_small_time_node"
+                            android:src="@mipmap/main_icon_small_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView
@@ -1082,7 +1082,7 @@
                             android:layout_height="@dimen/base_dp_10"
                             android:layout_marginStart="@dimen/base_dp_53"
                             android:layout_marginTop="@dimen/base_dp_30"
-                            android:src="@mipmap/icon_major_time_node"
+                            android:src="@mipmap/main_icon_major_time_node"
                             tools:ignore="ContentDescription" />
 
                         <com.phone.library_custom_view.custom_view.DottedLineView

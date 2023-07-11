@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.phone.call_third_party_so.callback.OnItemViewClickListener
+import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.library_base.manager.LogManager.i
 import com.phone.module_home.R
 

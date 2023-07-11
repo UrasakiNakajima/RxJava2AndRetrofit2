@@ -14,10 +14,11 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.phone.library_base.BaseApplication
+import com.phone.library_base.base.BaseRxFragment
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 
-abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : RxFragment() {
+abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseRxFragment() {
 
     companion object {
         private val TAG = BaseMvvmRxFragment::class.java.simpleName
@@ -26,8 +27,6 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
     protected lateinit var viewModel: VM
-    protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
-    protected lateinit var baseApplication: BaseApplication
 //    private var isFirstLoad = true
 
     override fun onCreateView(
@@ -41,29 +40,14 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        mRxAppCompatActivity = activity as RxAppCompatActivity
-        baseApplication = mRxAppCompatActivity.application as BaseApplication
         viewModel = initViewModel()
-        initData()
         initObservers()
-        initViews()
-        mDatabind.root
-        initLoadData()
+        super.onViewCreated(view, savedInstanceState)
     }
-
-    protected abstract fun initLayoutId(): Int
 
     protected abstract fun initViewModel(): VM
 
-    protected abstract fun initData()
-
     protected abstract fun initObservers()
-
-    protected abstract fun initViews()
-
-    protected abstract fun initLoadData()
 
     protected abstract fun showLoading()
 
@@ -73,7 +57,9 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         left: Int, right: Int,
         textSize: Int, textColor: Int,
         bgColor: Int, height: Int,
-        roundRadius: Int, message: String, b: Boolean
+        roundRadius: Int,
+        message: String,
+        b: Boolean
     ) {
         val frameLayout = FrameLayout(mRxAppCompatActivity)
         val layoutParams = FrameLayout.LayoutParams(
@@ -101,50 +87,6 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         toast.duration = Toast.LENGTH_LONG
         toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
-    }
-
-    protected fun startActivity(cls: Class<*>) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        startActivity(intent)
-    }
-
-    protected fun startActivityCarryParams(cls: Class<*>, params: Map<String, String>?) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        val bundle = Bundle()
-
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) {//如果参数不是null，才把参数传给后台
-                    bundle.putString(key, params[key])
-                }
-            }
-            intent.putExtras(bundle)
-        }
-        startActivity(intent)
-    }
-
-    protected fun startActivityForResult(cls: Class<*>, requestCode: Int) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        startActivityForResult(intent, requestCode)
-    }
-
-    protected fun startActivityForResultCarryParams(
-        cls: Class<*>,
-        params: Map<String, String>?,
-        requestCode: Int
-    ) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        val bundle = Bundle()
-
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) {//如果参数不是null，才把参数传给后台
-                    bundle.putString(key, params[key])
-                }
-            }
-            intent.putExtras(bundle)
-        }
-        startActivityForResult(intent, requestCode)
     }
 
 }

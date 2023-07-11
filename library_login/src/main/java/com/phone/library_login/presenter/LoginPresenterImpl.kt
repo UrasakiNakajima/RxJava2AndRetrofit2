@@ -3,7 +3,7 @@ package com.phone.library_login.presenter
 import android.text.TextUtils
 import com.alibaba.fastjson.JSON
 import com.phone.library_base.BaseApplication
-import com.phone.call_third_party_so.R
+import com.phone.library_common.R
 import com.phone.library_mvp.BasePresenter
 import com.phone.library_network.bean.BaseResponse
 import com.phone.library_base.base.IBaseView

@@ -13,7 +13,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.phone.call_third_party_so.R
+import com.phone.library_common.R
 import com.phone.library_glide.manager.GlideRoundManager
 
 class ShadowLinearLayout(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {

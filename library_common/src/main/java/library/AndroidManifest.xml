@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.phone.call_third_party_so">
+    package="com.phone.library_common">
 
     <!-- 允许访问网络的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -47,7 +47,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
     <application>
-        <service android:name="com.phone.call_third_party_so.service.SuspensionWindowService" />
+        <service android:name="com.phone.library_common.service.SuspensionWindowService" />
     </application>
 
 </manifest>

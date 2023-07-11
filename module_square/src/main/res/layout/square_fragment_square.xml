@@ -12,7 +12,7 @@
 
         <variable
             name="subDataSquare"
-            type="com.phone.call_third_party_so.bean.SubDataSquare" />
+            type="com.phone.library_common.bean.SubDataSquare" />
 
         <import type="android.view.View" />
 

@@ -5,7 +5,7 @@ import com.phone.library_base.BaseApplication
 class HomeApplication : BaseApplication() {
 
     companion object {
-        private val TAG = "HomeApplication"
+        private val TAG = HomeApplication::class.java.simpleName
     }
 
     override fun onCreate() {

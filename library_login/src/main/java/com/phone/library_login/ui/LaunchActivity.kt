@@ -18,8 +18,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.call_third_party_so.BuildConfig
-import com.phone.call_third_party_so.R
+import com.phone.library_common.BuildConfig
+import com.phone.library_common.R
 import com.phone.library_base.base.BaseRxAppActivity
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.SharedPreferencesManager

@@ -14,50 +14,21 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.phone.library_base.BaseApplication
+import com.phone.library_base.base.BaseRxFragment
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 
-abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
+abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : BaseRxFragment() {
 
     private val TAG = BaseMvpRxFragment::class.java.simpleName
     protected var presenter: T? = null
 
     protected var url: String? = null
     protected var mBodyParams = ArrayMap<String, String>()
-    protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
-    protected lateinit var mBaseApplication: BaseApplication
-
-    protected var rootView: View? = null
-    protected lateinit var rxFragment: RxFragment
-//    private boolean isFirstLoad = true;
-
-    //    private boolean isFirstLoad = true;
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        //        if (rootView == null) {
-        //            rootView = inflater.inflate(initLayoutId(), container, false);
-        //        } else {
-        //            ViewGroup viewGroup = (ViewGroup) rootView.getParent();
-        //            if (viewGroup != null) {
-        //                viewGroup.removeView(rootView);
-        //            }
-        //        }
-        rxFragment = this
-        rootView = inflater.inflate(initLayoutId(), container, false)
-        return rootView
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mRxAppCompatActivity = activity as RxAppCompatActivity
-        mBaseApplication = mRxAppCompatActivity.application as BaseApplication
-        initData()
         presenter = attachPresenter()
-        initViews()
-        initLoadData()
+        super.onViewCreated(view, savedInstanceState)
 
 //        RxPermissionsManager rxPermissionsManager = RxPermissionsManager.getInstance(this);
 //        rxPermissionsManager.initRxPermissionsRxFragment(new OnCommonRxPermissionsCallback() {
@@ -80,36 +51,12 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
 //        });
     }
 
-    protected abstract fun initLayoutId(): Int
-
-    protected abstract fun initData()
-
-    protected abstract fun initViews()
-
-    protected abstract fun initLoadData()
-
     /**
      * 适配为不同的view 装载不同的presenter
      *
      * @return
      */
     protected abstract fun attachPresenter(): T
-
-    protected fun showToast(message: String?, isLongToast: Boolean) {
-        //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        if (!mRxAppCompatActivity.isFinishing) {
-            val toast: Toast
-            val duration: Int
-            duration = if (isLongToast) {
-                Toast.LENGTH_LONG
-            } else {
-                Toast.LENGTH_SHORT
-            }
-            toast = Toast.makeText(mRxAppCompatActivity, message, duration)
-            toast.setGravity(Gravity.CENTER, 0, 0)
-            toast.show()
-        }
-    }
 
     protected fun showCustomToast(
         left: Int, right: Int,
@@ -148,52 +95,6 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : RxFragment() {
         }
         toast.setGravity(Gravity.CENTER, 0, 0)
         toast.show()
-    }
-
-    fun isOnMainThread(): Boolean {
-        return Looper.getMainLooper().thread.id == Thread.currentThread().id
-    }
-
-    protected fun startActivity(cls: Class<*>?) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        startActivity(intent)
-    }
-
-    protected fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        val bundle = Bundle()
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) { //如果参数不是null，才把参数传给后台
-                    bundle.putString(key, params[key])
-                }
-            }
-            intent.putExtras(bundle)
-        }
-        startActivity(intent)
-    }
-
-    protected fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        startActivityForResult(intent, requestCode)
-    }
-
-    protected fun startActivityForResultCarryParams(
-        cls: Class<*>?,
-        params: Map<String?, String?>?,
-        requestCode: Int
-    ) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        val bundle = Bundle()
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) { //如果参数不是null，才把参数传给后台
-                    bundle.putString(key, params[key])
-                }
-            }
-            intent.putExtras(bundle)
-        }
-        startActivityForResult(intent, requestCode)
     }
 
     protected fun detachPresenter() {

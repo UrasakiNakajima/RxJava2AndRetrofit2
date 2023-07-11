@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.call_third_party_so.BuildConfig
-import com.phone.call_third_party_so.adapter.TabFragmentStatePagerAdapter
+import com.phone.library_common.BuildConfig
+import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_mvp.BaseMvpRxAppActivity
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.manager.ResourcesManager

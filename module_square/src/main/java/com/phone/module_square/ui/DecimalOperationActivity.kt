@@ -10,20 +10,20 @@ import com.phone.library_base.base.BaseRxAppActivity
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.common.ConstantData
-import com.phone.call_third_party_so.manager.BigDecimalManager.additionDouble
-import com.phone.call_third_party_so.manager.BigDecimalManager.additionDoubleCompatible
-import com.phone.call_third_party_so.manager.BigDecimalManager.divisionDouble
-import com.phone.call_third_party_so.manager.BigDecimalManager.divisionDoubleCompatible
-import com.phone.call_third_party_so.manager.BigDecimalManager.getDoubleKeepDecimals
-import com.phone.call_third_party_so.manager.BigDecimalManager.getDoubleKeepDecimalsCompatible
-import com.phone.call_third_party_so.manager.BigDecimalManager.getDoubleKeepDecimalsCompatibleToStr
-import com.phone.call_third_party_so.manager.BigDecimalManager.getDoubleKeepDecimalsToStr
-import com.phone.call_third_party_so.manager.BigDecimalManager.multiplicationDouble
-import com.phone.call_third_party_so.manager.BigDecimalManager.multiplicationDoubleCompatible
-import com.phone.call_third_party_so.manager.BigDecimalManager.multiplicationDoubleCompatibleToStr
-import com.phone.call_third_party_so.manager.BigDecimalManager.multiplicationDoubleToStr
-import com.phone.call_third_party_so.manager.BigDecimalManager.subtractionDouble
-import com.phone.call_third_party_so.manager.BigDecimalManager.subtractionDoubleCompatible
+import com.phone.library_common.manager.BigDecimalManager.additionDouble
+import com.phone.library_common.manager.BigDecimalManager.additionDoubleCompatible
+import com.phone.library_common.manager.BigDecimalManager.divisionDouble
+import com.phone.library_common.manager.BigDecimalManager.divisionDoubleCompatible
+import com.phone.library_common.manager.BigDecimalManager.getDoubleKeepDecimals
+import com.phone.library_common.manager.BigDecimalManager.getDoubleKeepDecimalsCompatible
+import com.phone.library_common.manager.BigDecimalManager.getDoubleKeepDecimalsCompatibleToStr
+import com.phone.library_common.manager.BigDecimalManager.getDoubleKeepDecimalsToStr
+import com.phone.library_common.manager.BigDecimalManager.multiplicationDouble
+import com.phone.library_common.manager.BigDecimalManager.multiplicationDoubleCompatible
+import com.phone.library_common.manager.BigDecimalManager.multiplicationDoubleCompatibleToStr
+import com.phone.library_common.manager.BigDecimalManager.multiplicationDoubleToStr
+import com.phone.library_common.manager.BigDecimalManager.subtractionDouble
+import com.phone.library_common.manager.BigDecimalManager.subtractionDoubleCompatible
 import com.phone.module_square.R
 
 /**

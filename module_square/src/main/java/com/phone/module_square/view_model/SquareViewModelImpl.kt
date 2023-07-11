@@ -1,10 +1,11 @@
 package com.phone.module_square.view_model
 
+import androidx.lifecycle.MutableLiveData
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_mvvm.BaseViewModel
 import com.phone.library_network.bean.State
-import com.phone.call_third_party_so.bean.SubDataSquare
+import com.phone.library_common.bean.SubDataSquare
 import com.phone.library_network.SingleLiveData
 import com.phone.module_square.model.SquareModelImpl
 import com.phone.module_square.R
@@ -24,7 +25,7 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
     private var mJob: Job? = null
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragment = SingleLiveData<State<List<SubDataSquare>>>()
+    val dataxRxFragment = MutableLiveData<State<List<SubDataSquare>>>()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
         LogManager.i(TAG, "squareData thread name*****${Thread.currentThread().name}")

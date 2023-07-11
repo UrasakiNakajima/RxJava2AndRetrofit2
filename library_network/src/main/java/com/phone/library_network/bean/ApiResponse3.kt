@@ -1,6 +1,6 @@
 package com.phone.library_network.bean
 
-import com.phone.call_third_party_so.bean.MineResult
+import com.phone.library_common.bean.MineResult
 import java.io.Serializable
 
 class ApiResponse3<T> : Serializable {

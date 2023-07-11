@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.phone.library_greendao.bean.UserBean
-import com.phone.call_third_party_so.callback.OnItemViewClickListener
+import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.library_base.manager.ResourcesManager.getString
 import com.phone.module_square.R
 
