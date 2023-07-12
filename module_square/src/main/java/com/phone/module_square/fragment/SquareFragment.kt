@@ -104,7 +104,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
             LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.success != null && it.success.size > 0) {
+                    if (it.success.size > 0) {
                         squareDataSuccess(it.success)
                     } else {
                         squareDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
@@ -346,18 +346,18 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
     }
 
     private fun initSquareData(currentPage: String) {
-//        showLoading()
-//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
-        if (RetrofitManager.isNetworkAvailable()) {
-            mViewModel.squareData(this, currentPage)
-        } else {
-            squareDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
-        }
+        showLoading()
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                mViewModel.squareData(this, currentPage)
+            } else {
+                squareDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
+            }
 
-        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())
-        atomicBoolean.compareAndSet(atomicBoolean.get(), true)
-        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get())
-//        })
+            LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())
+            atomicBoolean.compareAndSet(atomicBoolean.get(), true)
+            LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get())
+        })
     }
 
     override fun onDestroy() {

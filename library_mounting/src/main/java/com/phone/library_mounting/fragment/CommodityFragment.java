@@ -18,12 +18,8 @@ import java.util.List;
 public class CommodityFragment extends BaseBindingRxFragment<MountingFragmentCommodityBinding> {
 
     private static final String TAG = CommodityFragment.class.getSimpleName();
-    private String commodity;
 
-    private LinearLayoutManager linearLayoutManager;
-    private CommodityAdapter commodityAdapter;
-
-    private List<CommodityBean> commodityBeanList = new ArrayList<>();
+    private final List<CommodityBean> commodityBeanList = new ArrayList<>();
 
     public static CommodityFragment get(String commodity) {
         CommodityFragment commodityFragment = new CommodityFragment();
@@ -40,7 +36,7 @@ public class CommodityFragment extends BaseBindingRxFragment<MountingFragmentCom
 
     @Override
     protected void initData() {
-        commodity = getArguments().getString("commodity");
+        String commodity = getArguments().getString("commodity");
         commodityBeanList.add(new CommodityBean(0, commodity + "11", "精心设计，"
                 + "处处带来改变。循环利用，" +
                 "打开新思路。力保个人信息安全，" +
@@ -105,12 +101,12 @@ public class CommodityFragment extends BaseBindingRxFragment<MountingFragmentCom
     }
 
     private void initAdapter() {
-        linearLayoutManager = new LinearLayoutManager(mRxAppCompatActivity);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mRxAppCompatActivity);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         mDatabind.rcvCommodity.setLayoutManager(linearLayoutManager);
         mDatabind.rcvCommodity.setItemAnimator(new DefaultItemAnimator());
 
-        commodityAdapter = new CommodityAdapter(mRxAppCompatActivity);
+        CommodityAdapter commodityAdapter = new CommodityAdapter(mRxAppCompatActivity);
         mDatabind.rcvCommodity.setAdapter(commodityAdapter);
         commodityAdapter.addData(commodityBeanList);
     }

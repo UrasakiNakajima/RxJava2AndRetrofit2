@@ -15,6 +15,7 @@ import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ScreenManager
+import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_project.R
 import com.phone.module_project.databinding.ProjectFragmentProjectSubBinding
 import com.phone.module_project.view.ISubProjectView
@@ -63,7 +64,7 @@ class SubProjectFragment :
 //            LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.success != null && it.success.size > 0) {
+                    if (it.success.size > 0) {
                         subProjectDataSuccess(it.success)
                     } else {
                         subProjectDataError(ResourcesManager.getString(R.string.library_no_data_available))
@@ -185,14 +186,14 @@ class SubProjectFragment :
     }
 
     private fun initSubProject(pageNum: Int, tabId: Int) {
-//        showLoading()
-//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
-        if (RetrofitManager.isNetworkAvailable()) {
-            mViewModel.subProjectData(pageNum, tabId)
-        } else {
-            subProjectDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection));
-        }
-//        })
+        showLoading()
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                mViewModel.subProjectData(pageNum, tabId)
+            } else {
+                subProjectDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection));
+            }
+        })
     }
 
 }

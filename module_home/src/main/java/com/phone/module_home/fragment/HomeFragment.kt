@@ -148,7 +148,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
             //				}
             if (view.id == R.id.ll_root) {
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW)
-                    .withString("loadUrl", homeAdapter?.mJuheNewsBeanList?.get(position)?.url)
+                    .withString("loadUrl", homeAdapter.mJuheNewsBeanList.get(position).url)
                     .navigation()
             }
         }
@@ -222,6 +222,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     //	}
 
     override fun homePageDataSuccess(success: List<ResultData.JuheNewsBean>) {
+        LogManager.i(TAG, "homePageDataSuccess*****")
         if (!mRxAppCompatActivity.isFinishing) {
             if (isRefresh) {
                 homeAdapter.also {
@@ -233,10 +234,6 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
                 homeAdapter.addData(success)
                 refreshLayout?.finishLoadMore()
             }
-            LogManager.i(
-                TAG,
-                "firstPageAdapter.mJuheNewsBeanList*****" + homeAdapter.mJuheNewsBeanList.toString()
-            )
             if (!BuildConfig.IS_MODULE) {
                 val homeService = ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
                     .navigation() as IHomeProvider
@@ -247,6 +244,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     }
 
     override fun homePageDataError(error: String) {
+        LogManager.i(TAG, "homePageDataError*****")
         if (!mRxAppCompatActivity.isFinishing) {
 //            showToast(error, true)
             showCustomToast(
@@ -347,17 +345,17 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     }
 
     private fun initFirstPage() {
-//        showLoading()
-//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
-        if (RetrofitManager.isNetworkAvailable()) {
-            mBodyParams.clear()
-            mBodyParams["type"] = "yule"
-            mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter?.homePage(this, mBodyParams)
-        } else {
-            homePageDataError(resources.getString(R.string.library_please_check_the_network_connection))
-        }
-//        })
+        showLoading()
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                mBodyParams.clear()
+                mBodyParams["type"] = "yule"
+                mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
+                presenter?.homePage(this, mBodyParams)
+            } else {
+                homePageDataError(resources.getString(R.string.library_please_check_the_network_connection))
+            }
+        })
     }
 
     override fun onDestroyView() {

@@ -187,18 +187,18 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     private fun initMine() {
-//        showLoading()
-//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
-        if (RetrofitManager.isNetworkAvailable()) {
-            mBodyParams.clear()
+        showLoading()
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                mBodyParams.clear()
 
-            mBodyParams["type"] = "keji"
-            mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-            presenter?.mineData(mRxFragment, mBodyParams)
-        } else {
-            mineDataError(resources.getString(R.string.library_please_check_the_network_connection))
-        }
-//        })
+                mBodyParams["type"] = "keji"
+                mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
+                presenter?.mineData(mRxFragment, mBodyParams)
+            } else {
+                mineDataError(resources.getString(R.string.library_please_check_the_network_connection))
+            }
+        })
     }
 
     override fun onDestroyView() {

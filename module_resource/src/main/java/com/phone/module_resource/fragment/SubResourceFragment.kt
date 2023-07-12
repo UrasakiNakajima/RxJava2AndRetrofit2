@@ -61,7 +61,7 @@ class SubResourceFragment :
 //            LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.success != null && it.success.size > 0) {
+                    if (it.success.size > 0) {
 //                    LogManager.i(TAG, "onChanged*****${t.toString()}")
                         subResourceDataSuccess(it.success)
                     } else {
@@ -184,14 +184,14 @@ class SubResourceFragment :
     }
 
     private fun initSubResource(tabId: Int, pageNum: Int) {
-//        showLoading()
-//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
-        if (RetrofitManager.isNetworkAvailable()) {
-            mViewModel.subResourceData(tabId, pageNum)
-        } else {
-            subResourceDataError(resources.getString(R.string.library_please_check_the_network_connection))
-        }
-//        })
+        showLoading()
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                mViewModel.subResourceData(tabId, pageNum)
+            } else {
+                subResourceDataError(resources.getString(R.string.library_please_check_the_network_connection))
+            }
+        })
     }
 
 

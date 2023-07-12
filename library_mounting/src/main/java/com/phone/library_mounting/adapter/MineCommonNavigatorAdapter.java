@@ -36,8 +36,8 @@ public class MineCommonNavigatorAdapter extends CommonNavigatorAdapter {
     public IPagerTitleView getTitleView(Context context, int index) {
         // ColorTransitionPagerTitleView 设置两种颜色过渡的指示器
         ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
-        colorTransitionPagerTitleView.setNormalColor(Color.parseColor("#aaffffff"));//普通状态
-        colorTransitionPagerTitleView.setSelectedColor(Color.parseColor("#ffffff"));//选中时状态
+        colorTransitionPagerTitleView.setNormalColor(ResourcesManager.getColor(R.color.library_color_333333));//普通状态
+        colorTransitionPagerTitleView.setSelectedColor(ResourcesManager.getColor(R.color.library_color_FFFFFF));//选中时状态
         colorTransitionPagerTitleView.setTextSize(18);
         colorTransitionPagerTitleView.setText(titleList.get(index));
         colorTransitionPagerTitleView.setTextColor(ResourcesManager.getColor(R.color.library_color_FF333333));

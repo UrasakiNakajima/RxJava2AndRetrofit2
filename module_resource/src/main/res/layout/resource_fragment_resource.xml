@@ -61,7 +61,7 @@
                 android:layout_height="@dimen/base_dp_1"
                 android:background="@color/library_color_FF999999" />
 
-            <androidx.viewpager.widget.ViewPager
+            <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/mine_view_pager2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

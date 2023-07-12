@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.ResourcesManager
@@ -17,6 +18,7 @@ import com.phone.library_base.common.ConstantData
 import com.phone.library_common.manager.*
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ThreadPoolManager
+import com.phone.library_common.adapter.ViewPager2Adapter
 import com.phone.module_resource.R
 import com.phone.module_resource.databinding.ResourceFragmentResourceBinding
 import com.phone.module_resource.view.IResourceView
@@ -29,7 +31,6 @@ class ResourceFragment :
     BaseMvvmRxFragment<ResourceViewModelImpl, ResourceFragmentResourceBinding>(), IResourceView {
 
     private val TAG = ResourceFragment::class.java.simpleName
-    private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
     override fun initLayoutId() = R.layout.resource_fragment_resource
 
@@ -46,7 +47,7 @@ class ResourceFragment :
 //            LogManager.i(TAG, "onChanged*****tabRxFragment")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.success != null && it.success.size > 0) {
+                    if (it.success.size > 0) {
                         resourceTabDataSuccess(it.success)
                     } else {
                         resourceTabDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
@@ -156,15 +157,20 @@ class ResourceFragment :
                 }
             }
 
-            fragmentStatePagerAdapter = TabFragmentStatePagerAdapter(
-                childFragmentManager, fragmentList
-            )
-            mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
+            // ORIENTATION_HORIZONTAL：水平滑动（默认），ORIENTATION_VERTICAL：竖直滑动
+            mDatabind.mineViewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL)
+            // 适配
+            mDatabind.mineViewPager2.adapter =
+                ViewPager2Adapter(
+                    fragmentList,
+                    mRxAppCompatActivity.getSupportFragmentManager(),
+                    getLifecycle()
+                )
             //下划线绑定
             val commonNavigator = CommonNavigator(mRxAppCompatActivity)
             commonNavigator.adapter = getCommonNavigatorAdapter(dataList)
             mDatabind.tabLayout.navigator = commonNavigator
-            MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
+            MagicIndicatorManager.bindForViewPager2(mDatabind.mineViewPager2, mDatabind.tabLayout)
             hideLoading()
         }
     }
@@ -186,14 +192,14 @@ class ResourceFragment :
     }
 
     private fun initResourceTabData() {
-//        showLoading()
-//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
-        if (RetrofitManager.isNetworkAvailable()) {
-            mViewModel.resourceTabData()
-        } else {
-            resourceTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
-        }
-//        })
+        showLoading()
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                mViewModel.resourceTabData()
+            } else {
+                resourceTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
+            }
+        })
     }
 
     /**

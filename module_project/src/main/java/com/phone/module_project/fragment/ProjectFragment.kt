@@ -1,14 +1,13 @@
 package com.phone.module_project.fragment
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ScreenManager
-import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_common.adapter.TabNavigatorAdapter
 import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
@@ -18,6 +17,7 @@ import com.phone.library_base.manager.LogManager
 import com.phone.library_common.manager.*
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ThreadPoolManager
+import com.phone.library_common.adapter.ViewPager2Adapter
 import com.phone.module_project.R
 import com.phone.module_project.databinding.ProjectFragmentProjectBinding
 import com.phone.module_project.view.IProjectView
@@ -30,7 +30,6 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     IProjectView {
 
     private val TAG = ProjectFragment::class.java.simpleName
-    private var fragmentStatePagerAdapter: TabFragmentStatePagerAdapter? = null
 
     override fun initLayoutId() = R.layout.project_fragment_project
 
@@ -44,10 +43,10 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
 
     override fun initObservers() {
         mViewModel.dataxRxFragment.observe(this, {
-            LogManager.i(TAG, "onChanged*****dataxRxFragment")
+            LogManager.i(TAG, "ProjectFragment onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.success != null && it.success.size > 0) {
+                    if (it.success.size > 0) {
                         projectTabDataSuccess(it.success)
                     } else {
                         projectTabDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
@@ -104,15 +103,20 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
                     arguments = bundle
                 })
             }
-            fragmentStatePagerAdapter = TabFragmentStatePagerAdapter(
-                childFragmentManager, fragmentList
-            )
-            mDatabind.mineViewPager2.setAdapter(fragmentStatePagerAdapter)
+            // ORIENTATION_HORIZONTAL：水平滑动（默认），ORIENTATION_VERTICAL：竖直滑动
+            mDatabind.mineViewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL)
+            // 适配
+            mDatabind.mineViewPager2.adapter =
+                ViewPager2Adapter(
+                    fragmentList,
+                    mRxAppCompatActivity.getSupportFragmentManager(),
+                    getLifecycle()
+                )
             //下划线绑定
             val commonNavigator = CommonNavigator(mRxAppCompatActivity)
             commonNavigator.adapter = getCommonNavigatorAdapter(success)
             mDatabind.tabLayout.navigator = commonNavigator
-            MagicIndicatorManager.bindForViewPager(mDatabind.mineViewPager2, mDatabind.tabLayout)
+            MagicIndicatorManager.bindForViewPager2(mDatabind.mineViewPager2, mDatabind.tabLayout)
             hideLoading()
         }
     }
@@ -134,14 +138,14 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     }
 
     private fun initProjectTabData() {
-//        showLoading()
-//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
-        if (RetrofitManager.isNetworkAvailable()) {
-            mViewModel.projectTabData()
-        } else {
-            projectTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
-        }
-//        })
+        showLoading()
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                mViewModel.projectTabData()
+            } else {
+                projectTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
+            }
+        })
     }
 
     /**

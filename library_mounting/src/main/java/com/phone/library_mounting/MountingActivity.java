@@ -3,13 +3,17 @@ package com.phone.library_mounting;
 import android.graphics.Color;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.phone.library_base.callback.OnCommonSuccessCallback;
 import com.phone.library_base.manager.LogManager;
 import com.phone.library_base.manager.ResourcesManager;
+import com.phone.library_base.manager.ThreadPoolManager;
 import com.phone.library_common.adapter.TabFragmentStatePagerAdapter;
 import com.phone.library_base.common.ConstantData;
 import com.phone.library_base.manager.ScreenManager;
+import com.phone.library_common.adapter.ViewPager2Adapter;
 import com.phone.library_mounting.databinding.MountingActivityMountingBinding;
 import com.phone.library_mounting.adapter.MineCommonNavigatorAdapter;
 import com.phone.library_mounting.fragment.CommodityFragment;
@@ -48,10 +52,11 @@ public class MountingActivity extends BaseBindingRxAppActivity<MountingActivityM
             finish();
         });
         mDatabind.refreshLayout.setOnRefreshListener(refreshLayout -> {
-            setData();
+            initLoadData();
             mDatabind.refreshLayout.finishRefresh(1000);
         });
-        setData();
+        mDatabind.magicIndicator.setBackgroundColor(ResourcesManager.getColor(R.color.base_color_transparent));
+        mDatabind.viewPager2.setBackgroundColor(ResourcesManager.getColor(R.color.base_color_transparent));
     }
 
     private void setMounting() {
@@ -97,32 +102,47 @@ public class MountingActivity extends BaseBindingRxAppActivity<MountingActivityM
         commonNavigator.setAdjustMode(true);//自我调节位置，实现自我平分
         commonNavigator.setAdapter(mineCommonNavigatorAdapter);
         mineCommonNavigatorAdapter.setOnIndicatorTapClickListener(position -> {
-            mDatabind.viewPager.setCurrentItem(position);
+            mDatabind.viewPager2.setCurrentItem(position);
         });
         mDatabind.magicIndicator.setNavigator(commonNavigator);
         List<Fragment> fragmentList = new ArrayList<>();
         for (int i = 0; i < titleList.size(); i++) {
             fragmentList.add(CommodityFragment.get(titleList.get(i)));
         }
-        TabFragmentStatePagerAdapter tabFragmentStatePagerAdapter =
-                new TabFragmentStatePagerAdapter(getSupportFragmentManager(), fragmentList);
-        mDatabind.viewPager.setAdapter(tabFragmentStatePagerAdapter);
-        ViewPagerHelper.bind(mDatabind.magicIndicator, mDatabind.viewPager);
+
+        // ORIENTATION_HORIZONTAL：水平滑动（默认），ORIENTATION_VERTICAL：竖直滑动
+        mDatabind.viewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        // 适配
+        mDatabind.viewPager2.setAdapter(new ViewPager2Adapter(fragmentList, getSupportFragmentManager(), getLifecycle()));
+        mDatabind.viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                mDatabind.magicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mDatabind.magicIndicator.onPageSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+                mDatabind.magicIndicator.onPageScrollStateChanged(state);
+            }
+        });
+//        ViewPagerHelper.bind(mDatabind.magicIndicator, mDatabind.viewPager2);
     }
 
     @Override
     protected void initLoadData() {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
+        showLoading();
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, () -> {
+            setData();
+            hideLoading();
+        });
     }
 
 

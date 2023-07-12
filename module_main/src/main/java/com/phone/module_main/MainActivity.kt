@@ -4,16 +4,15 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.library_common.BuildConfig
-import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
-import com.phone.library_mvp.BaseMvpRxAppActivity
 import com.phone.library_base.base.IBaseView
-import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.common.ConstantData
-import com.phone.library_custom_view.custom_view.MineLazyViewPager
+import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_common.BuildConfig
+import com.phone.library_mvp.BaseMvpRxAppActivity
+import com.phone.library_common.adapter.ViewPager2Adapter
 import com.phone.module_main.presenter.MainPresenterImpl
 import com.phone.module_main.view.IMainView
 
@@ -35,7 +34,7 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
     private var layoutPleaseAddComponents: LinearLayout? = null
     private var tevPleaseAddComponents: TextView? = null
     private var layoutMain: LinearLayout? = null
-    private var mineViewPager: MineLazyViewPager? = null
+    private var mineViewPager2: ViewPager2? = null
     private var layoutBottom: LinearLayout? = null
     private var tevFirstPage: TextView? = null
     private var tevProject: TextView? = null
@@ -85,30 +84,24 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
             findViewById<View>(R.id.layout_please_add_components) as LinearLayout
         tevPleaseAddComponents = findViewById<View>(R.id.tev_please_add_components) as TextView
         layoutMain = findViewById<View>(R.id.layout_main) as LinearLayout
-        mineViewPager = findViewById<View>(R.id.mine_view_pager) as MineLazyViewPager
+        mineViewPager2 = findViewById<View>(R.id.mine_view_pager2) as ViewPager2
         layoutBottom = findViewById<View>(R.id.layout_bottom) as LinearLayout
         tevFirstPage = findViewById<View>(R.id.tev_first_page) as TextView
         tevProject = findViewById<View>(R.id.tev_project) as TextView
         tevSquare = findViewById<View>(R.id.tev_square) as TextView
         tevResourceCenter = findViewById<View>(R.id.tev_resource_center) as TextView
         tevMine = findViewById<View>(R.id.tev_mine) as TextView
-        val fragmentStatePagerAdapter = TabFragmentStatePagerAdapter(
-            supportFragmentManager, fragmentList
-        )
-        mineViewPager?.adapter = fragmentStatePagerAdapter
-        mineViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
+
+        // ORIENTATION_HORIZONTAL：水平滑动（默认），ORIENTATION_VERTICAL：竖直滑动
+        mineViewPager2?.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL)
+        // 适配
+        mineViewPager2?.adapter =
+            ViewPager2Adapter(fragmentList, getSupportFragmentManager(), getLifecycle())
+        mineViewPager2?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 
             override fun onPageSelected(position: Int) {
                 resetTabData(position)
             }
-
-            override fun onPageScrollStateChanged(state: Int) {}
         })
         tevFirstPage?.setOnClickListener { v: View? ->
             resetTabData(
@@ -138,7 +131,7 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
     }
 
     private fun resetTabData(position: Int) {
-        mineViewPager?.currentItem = position
+        mineViewPager2?.currentItem = position
         tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
         tevProject?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
         tevSquare?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
@@ -183,7 +176,7 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
             setToolbar(false, R.color.library_color_FF198CFF)
             layoutPleaseAddComponents?.visibility = View.GONE
             layoutMain?.visibility = View.VISIBLE
-            mineViewPager?.currentItem = 0
+            mineViewPager2?.currentItem = 0
             tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
             tevProject?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
             tevSquare?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
