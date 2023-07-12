@@ -9,9 +9,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.callback.OnCommonSingleParamCallback
+import com.phone.library_base.common.ConstantUrl
 import com.phone.library_base.manager.LogManager
 import com.phone.library_common.R
-import com.phone.library_base.common.ConstantUrl
+import com.phone.library_network.DownloadProgressHandler
+import com.phone.library_network.OnDownloadCallBack
+import com.phone.library_network.bean.DownloadInfo
+import com.phone.library_network.interceptor.AddAccessTokenInterceptor
+import com.phone.library_network.interceptor.BaseUrlManagerInterceptor
+import com.phone.library_network.interceptor.CacheControlInterceptor
+import com.phone.library_network.interceptor.ReceivedAccessTokenInterceptor
+import com.phone.library_network.interceptor.RewriteCacheControlInterceptor
 import com.trello.rxlifecycle3.android.ActivityEvent
 import com.trello.rxlifecycle3.android.FragmentEvent
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
@@ -19,14 +27,22 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 import com.uber.autodispose.AutoDispose
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import io.reactivex.Observable
+import io.reactivex.ObservableSource
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.BufferedInputStream
+import java.io.BufferedOutputStream
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -34,9 +50,11 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.experimental.and
 
+
 class RetrofitManager private constructor() {
 
     private val TAG = RetrofitManager::class.java.simpleName
+
     @JvmField
     val mRetrofit: Retrofit
 
@@ -48,8 +66,7 @@ class RetrofitManager private constructor() {
         //缓存
         val cacheFile = File(BaseApplication.instance().externalCacheDir, "cache")
         val cache = Cache(cacheFile, 1024 * 1024 * 10) //10Mb
-        val rewriteCacheControlInterceptor =
-            com.phone.library_network.interceptor.RewriteCacheControlInterceptor()
+        val rewriteCacheControlInterceptor = RewriteCacheControlInterceptor()
         val loggingInterceptor = HttpLoggingInterceptor()
         // 包含header、body数据
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -60,15 +77,15 @@ class RetrofitManager private constructor() {
             .connectTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //连接超时
             .readTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //读取超时
             .writeTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //写入超时
-            .addInterceptor(com.phone.library_network.interceptor.CacheControlInterceptor())
-            .addInterceptor(com.phone.library_network.interceptor.AddAccessTokenInterceptor()) //拦截器用于设置header
-            .addInterceptor(com.phone.library_network.interceptor.ReceivedAccessTokenInterceptor()) //拦截器用于接收并持久化cookie
-            .addInterceptor(com.phone.library_network.interceptor.BaseUrlManagerInterceptor())
+            .addInterceptor(CacheControlInterceptor())
+            .addInterceptor(AddAccessTokenInterceptor()) //拦截器用于设置header
+            .addInterceptor(ReceivedAccessTokenInterceptor()) //拦截器用于接收并持久化cookie
+            .addInterceptor(BaseUrlManagerInterceptor())
             .addInterceptor(rewriteCacheControlInterceptor) //                .addNetworkInterceptor(rewriteCacheControlInterceptor)
             //                .addInterceptor(headerInterceptor)
-            .addInterceptor(loggingInterceptor) //                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
-            .cache(cache)
-            .sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置
+//            .addInterceptor(loggingInterceptor)
+            //                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
+            .cache(cache).sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置
             .hostnameVerifier(SSLSocketManager.hostnameVerifier()) //配置
             //                .proxy(Proxy.NO_PROXY)
             .build()
@@ -590,5 +607,315 @@ class RetrofitManager private constructor() {
                 onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
             }
     }
+
+    /**
+     * 下载文件法1(使用Handler更新UI)
+     *
+     * @param observable      下载被观察者
+     * @param destDir         下载目录
+     * @param fileName        文件名
+     * @param progressHandler 进度handler
+     */
+    fun downloadFile(
+        rxFragment: RxFragment,
+        observable: Observable<ResponseBody>,
+        destDir: String,
+        fileName: String,
+        progressHandler: DownloadProgressHandler
+    ) {
+        val downloadInfo = DownloadInfo(null, null, null, null, null, null, null)
+        observable.subscribeOn(Schedulers.io())
+            //解决RxJava2导致的内存泄漏问题
+            .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY)).observeOn(Schedulers.io())
+            .subscribe({
+                var inputStream: InputStream? = null
+                var bis: BufferedInputStream? = null
+                var total: Long = 0
+                val responseLength: Long
+                var fos: FileOutputStream? = null
+                var bos: BufferedOutputStream? = null
+                try {
+                    val buf = ByteArray(1024 * 8)
+                    var len: Int
+                    responseLength = it.contentLength()
+                    inputStream = it.byteStream()
+                    bis = BufferedInputStream(inputStream)
+
+                    val dir = File(destDir)
+                    if (!dir.exists()) {
+                        dir.mkdirs()
+                    }
+                    val file = File(dir, fileName)
+                    if (!file.exists()) {
+                        file.createNewFile()
+                    }
+                    downloadInfo.file = file
+                    downloadInfo.fileSize = responseLength
+
+                    fos = FileOutputStream(file)
+                    bos = BufferedOutputStream(fos)
+                    var progress = 0
+                    var lastProgress = -1
+                    val startTime = System.currentTimeMillis() // 开始下载时获取开始时间
+                    while (bis.read(buf).also { len = it } != -1) {
+                        bos.write(buf, 0, len)
+                        total += len.toLong()
+                        progress = (total * 100 / responseLength).toInt()
+                        val curTime = System.currentTimeMillis()
+                        var usedTime = (curTime - startTime) / 1000
+                        if (usedTime == 0L) {
+                            usedTime = 1
+                        }
+                        val speed = total / usedTime // 平均每秒下载速度
+                        // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
+                        if (progress != lastProgress) {
+                            downloadInfo.speed = speed
+                            downloadInfo.progress = progress
+                            downloadInfo.currentSize = total
+                            progressHandler.sendMessage(
+                                DownloadProgressHandler.DOWNLOAD_PROGRESS, downloadInfo
+                            )
+                        }
+//                            LogManager.i(TAG, "downloadInfo total******${total}")
+//                            LogManager.i(TAG, "downloadInfo progress******${progress}")
+                        lastProgress = progress
+                    }
+                    bos.flush()
+                    downloadInfo.file = file
+                    progressHandler.sendMessage(
+                        DownloadProgressHandler.DOWNLOAD_SUCCESS, downloadInfo
+                    )
+                } catch (e: java.lang.Exception) {
+                    downloadInfo.error = e
+                    progressHandler.sendMessage(
+                        DownloadProgressHandler.DOWNLOAD_FAIL, downloadInfo
+                    )
+                } finally {
+                    try {
+                        bis?.close()
+                        bos?.close()
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }, {
+                downloadInfo.error = it
+                progressHandler.sendMessage(DownloadProgressHandler.DOWNLOAD_FAIL, downloadInfo)
+            })
+//            .subscribe(object : Observer<ResponseBody> {
+//                override fun onSubscribe(d: Disposable) {
+//                }
+//
+//                override fun onNext(responseBody: ResponseBody) { // Consumer<ResponseBody>
+//                    var inputStream: InputStream? = null
+//                    var bis: BufferedInputStream? = null
+//                    var total: Long = 0
+//                    val responseLength: Long
+//                    var fos: FileOutputStream? = null
+//                    var bos: BufferedOutputStream? = null
+//                    try {
+//                        val buf = ByteArray(1024 * 8)
+//                        var len: Int
+//                        responseLength = responseBody.contentLength()
+//                        inputStream = responseBody.byteStream()
+//                        bis = BufferedInputStream(inputStream)
+//
+//                        val dir = File(destDir)
+//                        if (!dir.exists()) {
+//                            dir.mkdirs()
+//                        }
+//                        val file = File(dir, fileName)
+//                        if (!file.exists()) {
+//                            file.createNewFile()
+//                        }
+//                        downloadInfo.file = file
+//                        downloadInfo.fileSize = responseLength
+//
+//                        fos = FileOutputStream(file)
+//                        bos = BufferedOutputStream(fos)
+//                        var progress = 0
+//                        var lastProgress = -1
+//                        val startTime = System.currentTimeMillis() // 开始下载时获取开始时间
+//                        while (bis.read(buf).also { len = it } != -1) {
+//                            bos.write(buf, 0, len)
+//                            total += len.toLong()
+//                            progress = (total * 100 / responseLength).toInt()
+//                            val curTime = System.currentTimeMillis()
+//                            var usedTime = (curTime - startTime) / 1000
+//                            if (usedTime == 0L) {
+//                                usedTime = 1
+//                            }
+//                            val speed = total / usedTime // 平均每秒下载速度
+//                            // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
+//                            if (progress != lastProgress) {
+//                                downloadInfo.speed = speed
+//                                downloadInfo.progress = progress
+//                                downloadInfo.currentSize = total
+//                                progressHandler.sendMessage(
+//                                    DownloadProgressHandler.DOWNLOAD_PROGRESS, downloadInfo
+//                                )
+//                            }
+////                            LogManager.i(TAG, "downloadInfo total******${total}")
+////                            LogManager.i(TAG, "downloadInfo progress******${progress}")
+//                            lastProgress = progress
+//                        }
+//                        bos.flush()
+//                        downloadInfo.file = file
+//                        progressHandler.sendMessage(
+//                            DownloadProgressHandler.DOWNLOAD_SUCCESS, downloadInfo
+//                        )
+//                    } catch (e: java.lang.Exception) {
+//                        downloadInfo.error = e
+//                        progressHandler.sendMessage(
+//                            DownloadProgressHandler.DOWNLOAD_FAIL, downloadInfo
+//                        )
+//                    } finally {
+//                        try {
+//                            bis?.close()
+//                            bos?.close()
+//                        } catch (e: java.lang.Exception) {
+//                            e.printStackTrace()
+//                        }
+//                    }
+//                }
+//
+//                override fun onError(e: Throwable) { // Consumer<Throwable>
+//                    downloadInfo.error = e
+//                    progressHandler.sendMessage(DownloadProgressHandler.DOWNLOAD_FAIL, downloadInfo)
+//                }
+//
+//                override fun onComplete() { // Action()
+//                }
+//            })
+    }
+
+    /**
+     * 下载文件法2(使用RXJava更新UI)
+     *
+     * @param observable
+     * @param destDir
+     * @param fileName
+     * @param progressHandler
+     */
+    fun downloadFile2(
+        rxFragment: RxFragment,
+        observable: Observable<ResponseBody>,
+        destDir: String,
+        fileName: String,
+        onDownloadCallBack: OnDownloadCallBack
+    ) {
+        val downloadInfo = DownloadInfo(null, null, null, null, null, null, null)
+        observable.subscribeOn(Schedulers.io())
+            //解决RxJava2导致的内存泄漏问题
+            .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY))
+            .flatMap(object : Function<ResponseBody, ObservableSource<DownloadInfo?>> {
+                @Throws(Exception::class)
+                override fun apply(responseBody: ResponseBody): ObservableSource<DownloadInfo?> {
+                    return Observable.create({ emitter ->
+                        var inputStream: InputStream? = null
+                        var bis: BufferedInputStream? = null
+                        var total: Long = 0
+                        var responseLength: Long = 0L
+                        var fos: FileOutputStream? = null
+                        var bos: BufferedOutputStream? = null
+                        try {
+                            val buf = ByteArray(1024 * 8)
+                            var len = 0
+                            responseLength = responseBody.contentLength()
+                            inputStream = responseBody.byteStream()
+                            bis = BufferedInputStream(inputStream)
+                            val dir = File(destDir)
+                            if (!dir.exists()) {
+                                dir.mkdirs()
+                            }
+                            val file = File(dir, fileName)
+                            if (!dir.exists()) {
+                                dir.createNewFile()
+                            }
+                            downloadInfo.file = file
+                            downloadInfo.fileSize = responseLength
+
+                            fos = FileOutputStream(file)
+                            bos = BufferedOutputStream(fos)
+                            var progress = 0
+                            var lastProgress = -1
+                            val startTime = System.currentTimeMillis() // 开始下载时获取开始时间
+                            while (bis.read(buf).also { len = it } != -1) {
+                                bos.write(buf, 0, len)
+                                total += len.toLong()
+
+                                progress = (total * 100 / responseLength).toInt()
+                                val curTime = System.currentTimeMillis()
+                                var usedTime = (curTime - startTime) / 1000
+                                if (usedTime == 0L) {
+                                    usedTime = 1
+                                }
+                                val speed = total / usedTime // 平均每秒下载速度
+                                // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
+                                if (progress != lastProgress) {
+                                    downloadInfo.speed = speed
+                                    downloadInfo.progress = progress
+                                    downloadInfo.currentSize = total
+                                    emitter.onNext(downloadInfo)
+                                    LogManager.i(
+                                        TAG,
+                                        "emitter.onNext downloadInfo******${downloadInfo.progress}"
+                                    )
+                                }
+//                                LogManager.i(TAG, "downloadInfo total******${total}")
+//                                LogManager.i(TAG, "downloadInfo progress******${progress}")
+                                lastProgress = progress
+                            }
+                            bos.flush()
+                            downloadInfo.file = file
+                            emitter.onComplete()
+                        } catch (e: Exception) {
+                            downloadInfo.error = e
+                            emitter.onError(e)
+                        } finally {
+                            try {
+                                bis?.close()
+                                bos?.close()
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                        }
+                    })
+                }
+            }).observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                LogManager.i(TAG, "onNext downloadInfo******${downloadInfo.progress}")
+                onDownloadCallBack.onProgress(
+                    downloadInfo.progress!!, downloadInfo.fileSize!!, downloadInfo.speed!!
+                )
+            }, {
+                onDownloadCallBack.onError(it)
+            }, {
+                LogManager.i(TAG, "下载完成")
+                onDownloadCallBack.onCompleted(downloadInfo.file)
+            })
+//            .subscribe(object : Observer<DownloadInfo?> { // Consumer<DownloadInfo?>
+//
+//                override fun onSubscribe(d: Disposable) {
+//                }
+//
+//                override fun onNext(downloadInfo: DownloadInfo) {
+//                    LogManager.i(TAG, "onNext downloadInfo******${downloadInfo.progress}")
+//                    onDownloadCallBack.onProgress(
+//                        downloadInfo.progress!!, downloadInfo.fileSize!!, downloadInfo.speed!!
+//                    )
+//                }
+//
+//                override fun onError(e: Throwable) { // Consumer<Throwable>
+//                    onDownloadCallBack.onError(e)
+//                }
+//
+//                override fun onComplete() {// Action<DownloadInfo?>
+//                    LogManager.i(TAG, "下载完成")
+//                    onDownloadCallBack.onCompleted(downloadInfo.file)
+//                }
+//            })
+    }
+
 
 }

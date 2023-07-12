@@ -1,9 +1,9 @@
 package com.phone.module_home.presenter
 
-import com.phone.library_mvp.BasePresenter
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_mvp.BasePresenter
 import com.phone.module_home.R
 import com.phone.module_home.model.HomeModelImpl
 import com.phone.module_home.model.IHomeModel
@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+
 
 /**
  * author    : Urasaki
@@ -28,7 +29,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
     }
 
     //    private IFirstPageView homePageView;//P需要与V 交互，所以需要持有V的引用
-    private var model: IHomeModel
+    private var mModel: IHomeModel
 
     //创建一个CoroutineScope 对象，创建的时候可以指定运行线程（默认运行在子线程）
     //即使Activity/Fragment已经被销毁，协程仍然在执行，所以需要绑定生命周期（就是在Activity/Fragment 销毁的时候取消这个协程），避免内存泄漏。
@@ -37,7 +38,7 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
 
     init {
         attachView(baseView)
-        model = HomeModelImpl()
+        mModel = HomeModelImpl()
     }
 
     override fun homePage(rxFragment: RxFragment, bodyParams: Map<String, String>) {
@@ -60,13 +61,11 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
 
 
                     LogManager.i(
-                        TAG,
-                        "homePage launch thread name*****" + Thread.currentThread().name
+                        TAG, "homePage launch thread name*****" + Thread.currentThread().name
                     )
-                    val apiResponse = executeRequest { model.homePage(bodyParams) }
+                    val apiResponse = executeRequest { mModel.homePage(bodyParams) }
                     LogManager.i(
-                        TAG,
-                        "homePage launch2 thread name*****" + Thread.currentThread().name
+                        TAG, "homePage launch2 thread name*****" + Thread.currentThread().name
                     )
                     if (apiResponse.result != null && apiResponse.error_code == 0) {
                         val list = apiResponse.result?.data ?: mutableListOf()

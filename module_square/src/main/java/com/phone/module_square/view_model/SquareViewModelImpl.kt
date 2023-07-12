@@ -1,12 +1,19 @@
 package com.phone.module_square.view_model
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_mvvm.BaseViewModel
 import com.phone.library_network.bean.State
 import com.phone.library_common.bean.SubDataSquare
+import com.phone.library_common.callback.OnDownloadListener
+import com.phone.library_network.DownloadProgressHandler
+import com.phone.library_network.OnDownloadCallBack
 import com.phone.library_network.SingleLiveData
+import com.phone.library_network.bean.DownloadState
+import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_square.model.SquareModelImpl
 import com.phone.module_square.R
 import com.trello.rxlifecycle3.components.support.RxFragment
@@ -14,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.File
 
 class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 
@@ -26,6 +34,9 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 
     //1.首先定义两个SingleLiveData的实例
     val dataxRxFragment = MutableLiveData<State<List<SubDataSquare>>>()
+
+    //1.首先定义两个SingleLiveData的实例
+    val downloadData = SingleLiveData<DownloadState<Int>>()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
         LogManager.i(TAG, "squareData thread name*****${Thread.currentThread().name}")
@@ -68,6 +79,54 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
                     dataxRxFragment.value = State.ErrorState(apiResponse.errorMsg)
                 }
             }
+    }
+
+    override fun downloadFile(rxFragment: RxFragment) {
+        RetrofitManager.instance().downloadFile(rxFragment,
+            mModel.downloadFile(),
+            BaseApplication.instance().externalCacheDir!!.absolutePath,
+            "artist_kirara_asuka.mov",
+            object : DownloadProgressHandler() {
+                override fun onProgress(progress: Int, total: Long, speed: Long) {
+                    LogManager.i(TAG, "progress:$progress, speed:$speed")
+                    downloadData.value = DownloadState.ProgressState(progress, total, speed)
+                }
+
+                override fun onCompleted(file: File?) {
+                    LogManager.i(TAG, "下载文件成功")
+                    downloadData.value = DownloadState.CompletedState(file!!)
+                }
+
+                override fun onError(e: Throwable?) {
+                    LogManager.i(TAG, "下载文件异常", e)
+                    downloadData.value =
+                        DownloadState.ErrorState("下载文件异常*****${e.toString()}")
+                }
+            }
+        )
+
+
+//        RetrofitManager.instance().downloadFile2(rxFragment,
+//            mModel.downloadFile(),
+//            BaseApplication.instance().externalCacheDir!!.absolutePath,
+//            "artist_kirara_asuka.mov",
+//            object : OnDownloadCallBack {
+//                override fun onProgress(progress: Int, total: Long, speed: Long) {
+//                    LogManager.i(TAG, "progress:$progress, speed:$speed")
+//                    downloadData.value = DownloadState.ProgressState(progress, total, speed)
+//                }
+//
+//                override fun onCompleted(file: File?) {
+//                    LogManager.i(TAG, "下载文件成功")
+//                    downloadData.value = DownloadState.CompletedState(file!!)
+//                }
+//
+//                override fun onError(e: Throwable?) {
+//                    LogManager.i(TAG, "下载文件异常", e)
+//                    downloadData.value =
+//                        DownloadState.ErrorState("下载文件异常*****${e.toString()}")
+//                }
+//            })
     }
 
     override fun onCleared() {

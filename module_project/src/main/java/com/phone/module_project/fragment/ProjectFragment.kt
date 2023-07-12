@@ -42,7 +42,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     }
 
     override fun initObservers() {
-        viewModel.dataxRxFragment.observe(this, {
+        mViewModel.dataxRxFragment.observe(this, {
 //            LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
@@ -153,7 +153,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
         showLoading()
         ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
             if (RetrofitManager.isNetworkAvailable()) {
-                viewModel.projectTabData()
+                mViewModel.projectTabData()
             } else {
                 projectTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
             }

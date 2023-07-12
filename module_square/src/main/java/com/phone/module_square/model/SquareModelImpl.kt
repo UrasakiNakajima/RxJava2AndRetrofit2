@@ -21,5 +21,11 @@ class SquareModelImpl() : ISquareModel {
             .getSquareData2(currentPage)
     }
 
+    override fun downloadFile(): Observable<ResponseBody> {
+        return RetrofitManager.instance().mRetrofit
+            .create(SquareRequest::class.java)
+            .downloadFile()
+    }
+
 
 }

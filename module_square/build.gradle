@@ -117,7 +117,6 @@ dependencies {
     implementation project(path: ':library_room')
     implementation project(path: ':library_greendao')
     implementation project(path: ':library_mvvm')
-    implementation project(path: ':library_mvp')
 
     implementation project(path: ':library_base64_and_file')
     implementation project(path: ':library_android_and_js')

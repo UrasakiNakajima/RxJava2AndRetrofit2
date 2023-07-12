@@ -1,4 +1,4 @@
-package com.phone.module_main.receiver
+package com.phone.rxjava2andretrofit2.receiver
 
 import android.content.Context
 import cn.jpush.android.api.CustomMessage

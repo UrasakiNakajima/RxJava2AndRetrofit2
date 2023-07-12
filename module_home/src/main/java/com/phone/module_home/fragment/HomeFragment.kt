@@ -16,23 +16,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
-import com.phone.library_common.BuildConfig
-import com.phone.library_mvp.BaseMvpRxFragment
-import com.phone.library_common.bean.ResultData
-import com.phone.library_common.callback.OnCommonRxPermissionsCallback
-import com.phone.library_base.manager.SystemManager
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.callback.OnCommonSingleParamCallback
+import com.phone.library_base.common.ConstantData
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ScreenManager
 import com.phone.library_base.manager.SharedPreferencesManager
-import com.phone.library_base.common.ConstantData
-import com.phone.library_custom_view.custom_view.LoadingLayout
-import com.phone.library_common.manager.*
+import com.phone.library_base.manager.SystemManager
+import com.phone.library_base.manager.ThreadPoolManager
+import com.phone.library_common.BuildConfig
+import com.phone.library_common.bean.ResultData
+import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_common.iprovider.IHomeProvider
 import com.phone.library_common.iprovider.ISquareProvider
+import com.phone.library_common.manager.*
+import com.phone.library_custom_view.custom_view.LoadingLayout
+import com.phone.library_mvp.BaseMvpRxFragment
 import com.phone.library_network.manager.RetrofitManager
-import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_home.R
 import com.phone.module_home.adapter.HomeAdapter
 import com.phone.module_home.manager.AMAPLocationManager
@@ -41,6 +41,8 @@ import com.phone.module_home.view.IHomePageView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import java.io.File
+
 
 @Route(path = ConstantData.Route.ROUTE_HOME_FRAGMENT)
 class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePageView {
@@ -98,16 +100,18 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
             loadLayout = it.findViewById<View>(R.id.load_layout) as LoadingLayout
         }
         tevRequestPermissionAndStartLocating?.setOnClickListener {
-            if (!BuildConfig.IS_MODULE){
+            if (!BuildConfig.IS_MODULE) {
                 val ISquareProvider =
                     ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_SERVICE)
                         .navigation() as ISquareProvider
-                LogManager.i(TAG,
-                    "squareService.getSquareDataList()******" + ISquareProvider.mSquareDataList.toString())
+                LogManager.i(
+                    TAG,
+                    "squareService.getSquareDataList()******" + ISquareProvider.mSquareDataList.toString()
+                )
 
                 LogManager.i(TAG, "tevRequestPermissions")
                 initRxPermissionsRxFragment()
-            } else{
+            } else {
                 showToast("单独组件不能开启定位，需使用整个项目才能开启定位", true)
             }
         }

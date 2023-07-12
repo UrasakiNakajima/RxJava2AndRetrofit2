@@ -4,6 +4,8 @@ object ConstantData {
 
     const val TO_FIRST_PAGR_FLAG = "FIRST_PAGR_FLAG"
 
+    const val TO_DOWNLOAD_FILE_FLAG = "DOWNLOAD_FILE_FLAG"
+
     const val TO_PROJECT_FLAG = "PROJECT_FLAG"
 
     const val TO_RESOURCE_FLAG = "RESOURCE_FLAG"
@@ -14,6 +16,9 @@ object ConstantData {
 
     @JvmStatic
     val TO_FIRST_PAGR_URL = ConstantUrl.BASE_URL
+
+    @JvmStatic
+    val TO_DOWNLOAD_FILE_URL = ConstantUrl.BASE_DOWNLOAD_FILE_URL
 
     @JvmStatic
     val TO_PROJECT_URL = ConstantUrl.BASE_URL3

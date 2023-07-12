@@ -6,6 +6,7 @@ import android.net.Uri
 import android.provider.Settings
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.adapters.TextViewBindingAdapter.setText
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -15,7 +16,6 @@ import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ScreenManager
 import com.phone.library_common.BuildConfig
-import com.phone.library_mvp.BaseMvpRxAppActivity
 import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
 import com.phone.library_common.bean.*
@@ -29,9 +29,11 @@ import com.phone.library_greendao.bean.UserBean2
 import com.phone.library_greendao.bean.UserBean3
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ThreadPoolManager
+import com.phone.library_network.bean.DownloadState
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareFragmentSquareBinding
 import com.phone.module_square.view_model.SquareViewModelImpl
+import java.nio.file.Files.exists
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -41,7 +43,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * introduce :
  */
 @Route(path = ConstantData.Route.ROUTE_SQUARE_FRAGMENT)
-class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSquareBinding>() {
+class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSquareBinding>() {
 
     companion object {
         private val TAG: String = SquareFragment::class.java.simpleName
@@ -53,6 +55,8 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
 
     private var mPermissionsDialog: AlertDialog? = null
     private var number = 1
+    private var isDownloadFile = false
+    private var isFirstProgress = false
 
     private var permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -68,7 +72,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
     override fun initViewModel() = ViewModelProvider(this).get(SquareViewModelImpl::class.java)
 
     override fun initData() {
-        mDatabind.viewModel = viewModel
+        mDatabind.viewModel = mViewModel
         mDatabind.subDataSquare = subDataSquare
         mDatabind.executePendingBindings()
 
@@ -97,7 +101,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
     }
 
     override fun initObservers() {
-        viewModel.dataxRxFragment.observe(this, {
+        mViewModel.dataxRxFragment.observe(this, {
             LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
@@ -115,10 +119,36 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
                 }
             }
         })
+
+        mViewModel.downloadData.observe(this, {
+            LogManager.i(TAG, "onChanged*****downloadData")
+            when (it) {
+                is DownloadState.ProgressState -> {
+                    onProgress(it.progress, it.total, it.speed)
+                }
+
+                is DownloadState.CompletedState -> {
+                    if (it.completed != null && it.completed.exists()) {
+                        showToast("下载文件成功", true)
+                        hideLoading()
+                        isDownloadFile = false
+                    }
+                }
+
+                is DownloadState.ErrorState -> {
+                    showToast(it.errorMsg, true)
+                    hideLoading()
+                    isDownloadFile = false
+                }
+            }
+        })
     }
 
     override fun initViews() {
         mDatabind.apply {
+            //设置文字样式  百分之样式 如 10%
+            mProgressBar.setQMUIProgressBarTextGenerator({ progressBar, value, maxValue -> (100 * value / maxValue).toString() + "%" })
+
             tevAndroidAndJs.setOnClickListener {
                 //Jump with parameters
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_ANDROID_AND_JS).navigation()
@@ -168,6 +198,11 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
             tevThreeLevelLinkageList.setOnClickListener {
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
             }
+            tevDownloadFile.setOnClickListener {
+                isDownloadFile = true
+                showLoading()
+                mViewModel.downloadFile(this@SquareFragment)
+            }
         }
 
     }
@@ -198,19 +233,40 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
 //        Toast.makeText(mRxAppCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
 //    }
 
+    fun onProgress(progress: Int, total: Long, speed: Long) {
+        if (!mRxAppCompatActivity.isFinishing && mDatabind.progressLayout.isShown()) {
+            mDatabind.mProgressBar.progress = progress
+//            mDatabind.progressLayout.mProgressBar.setText("$progress%")
+        }
+    }
+
     override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing && !mDatabind.loadLayout.isShown()) {
-            mDatabind.loadLayout.visibility = View.VISIBLE
-            mDatabind.loadLayout.loadingView.visibility = View.VISIBLE
-            mDatabind.loadLayout.loadingView.start()
+        if (!isDownloadFile) {
+            if (!mRxAppCompatActivity.isFinishing && !mDatabind.loadLayout.isShown()) {
+                mDatabind.loadLayout.visibility = View.VISIBLE
+                mDatabind.loadLayout.loadingView.visibility = View.VISIBLE
+                mDatabind.loadLayout.loadingView.start()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing && !mDatabind.progressLayout.isShown()) {
+                mDatabind.progressLayout.visibility = View.VISIBLE
+                mDatabind.mProgressBar.visibility = View.VISIBLE
+            }
         }
     }
 
     override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing && mDatabind.loadLayout.isShown()) {
-            mDatabind.loadLayout.loadingView.stop()
-            mDatabind.loadLayout.loadingView.visibility = View.GONE
-            mDatabind.loadLayout.visibility = View.GONE
+        if (!isDownloadFile) {
+            if (!mRxAppCompatActivity.isFinishing && mDatabind.loadLayout.isShown()) {
+                mDatabind.loadLayout.loadingView.stop()
+                mDatabind.loadLayout.loadingView.visibility = View.GONE
+                mDatabind.loadLayout.visibility = View.GONE
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing && mDatabind.progressLayout.isShown()) {
+                mDatabind.mProgressBar.visibility = View.GONE
+                mDatabind.progressLayout.visibility = View.GONE
+            }
         }
     }
 
@@ -331,7 +387,7 @@ class SquareFragment() : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentS
         showLoading()
         ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
             if (RetrofitManager.isNetworkAvailable()) {
-                viewModel.squareData(this, currentPage)
+                mViewModel.squareData(this, currentPage)
             } else {
                 squareDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
             }

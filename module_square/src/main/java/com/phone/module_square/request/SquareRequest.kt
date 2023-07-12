@@ -9,6 +9,7 @@ import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
+import retrofit2.http.Streaming
 
 interface SquareRequest {
 
@@ -25,5 +26,15 @@ interface SquareRequest {
     fun getSquareData2(
         @Path("currentPage") currentPage: String
     ): Observable<ResponseBody>
+
+    /**
+     * 下载文件
+     *
+     */
+    @Headers("urlname:" + ConstantData.TO_DOWNLOAD_FILE_FLAG)
+    @Streaming
+    @GET(ConstantUrl.DOWNLOAD_FILE_URL)
+    fun downloadFile(): Observable<ResponseBody>
+
 
 }

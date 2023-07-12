@@ -16,31 +16,12 @@ import okhttp3.ResponseBody
 
 class HomeModelImpl : IHomeModel {
 
-    private val TAG = "HomeModelImpl"
+    private val TAG = HomeModelImpl::class.java.simpleName
 
     override suspend fun homePage(bodyParams: Map<String, String>): ApiResponse2<ResultData> {
         return RetrofitManager.instance().mRetrofit
             .create(HomePageRequest::class.java)
             .getHomePage(bodyParams)
     }
-
-    override fun homePage2(bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
-            .create(HomePageRequest::class.java)
-            .getHomePage2(bodyParams)
-    }
-
-    override fun homePageDetails(bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
-            .create(HomePageRequest::class.java)
-            .getHomePageDetails(bodyParams)
-    }
-
-    //    @Override
-    //    public Observable<HomePageResponse.QuestionBean> homePageData(Map<String, String> bodyParams) {
-    //        return RetrofitManager.instance().mRetrofit
-    //                .create(HomePageRequest.class)
-    //                .getHomePageData(bodyParams);
-    //    }
 
 }

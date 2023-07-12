@@ -48,6 +48,7 @@ class MainApplication : BaseApplication() {
             JPushInterface.setDebugMode(true)
             JPushInterface.init(this)
             var registrationId = SharedPreferencesManager.get("registrationId", "") as String
+            LogManager.i(TAG, "initData2 registrationId*****$registrationId")
             if (TextUtils.isEmpty(registrationId)) {
                 //获取RegistrationID唯一标识
                 registrationId = JPushInterface.getRegistrationID(this@MainApplication)

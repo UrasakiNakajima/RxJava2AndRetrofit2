@@ -42,7 +42,10 @@ class BaseUrlManagerInterceptor : Interceptor {
                     ConstantData.TO_MINE_FLAG -> baseURL = HttpUrl.parse(ConstantData.TO_MINE_URL)
                     ConstantData.TO_USER_DATA_FLAG -> baseURL =
                         HttpUrl.parse(ConstantData.TO_USER_DATA_URL)
-                    else -> {}
+                    ConstantData.TO_DOWNLOAD_FILE_FLAG -> baseURL =
+                        HttpUrl.parse(ConstantData.TO_DOWNLOAD_FILE_URL)
+                    else -> {
+                    }
                 }
                 //				if ("jeapp".equals(urlname)) {
                 //					baseURL = HttpUrl.parse(ConstantData.PRE_URL);

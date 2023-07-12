@@ -4,6 +4,8 @@ import com.phone.library_network.bean.ApiResponse2
 import com.phone.library_common.bean.ResultData
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import retrofit2.http.GET
+import retrofit2.http.Streaming
 
 /**
  * author    : Urasaki
@@ -15,9 +17,5 @@ import okhttp3.ResponseBody
 interface IHomeModel {
 
     suspend fun homePage(bodyParams: Map<String, String>): ApiResponse2<ResultData>
-
-    fun homePage2(bodyParams: Map<String, String>): Observable<ResponseBody>
-
-    fun homePageDetails(bodyParams: Map<String, String>): Observable<ResponseBody>
 
 }

@@ -11,4 +11,6 @@ interface ISquareModel {
 
     fun squareData2(currentPage: String): Observable<ResponseBody>
 
+    fun downloadFile(): Observable<ResponseBody>
+
 }

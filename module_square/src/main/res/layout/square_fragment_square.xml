@@ -308,6 +308,27 @@
                     android:layout_height="@dimen/base_dp_1"
                     android:background="@color/library_color_555555" />
 
+                <TextView
+                    android:id="@+id/tev_download_file"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_download_file"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/base_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_1"
+                    android:background="@color/library_color_555555" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_10" />
@@ -333,6 +354,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
+
+        <!--        <com.phone.library_custom_view.custom_view.ProgressLayout-->
+        <!--            android:id="@+id/progress_layout"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:visibility="gone" />-->
+
+        <FrameLayout
+            android:id="@+id/progress_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <com.qmuiteam.qmui.widget.QMUIProgressBar
+                android:id="@+id/m_progress_bar"
+                android:layout_width="@dimen/base_dp_150"
+                android:layout_height="@dimen/base_dp_150"
+                android:layout_gravity="center"
+                android:textColor="@color/library_color_FFFFFFFF"
+                android:textSize="@dimen/base_sp_22"
+                app:qmui_background_color="@color/library_color_FF999999"
+                app:qmui_progress_color="@color/library_color_FF198CFF"
+                app:qmui_stroke_width="@dimen/base_dp_18"
+                app:qmui_type="type_circle" />
+
+        </FrameLayout>
 
     </FrameLayout>
 

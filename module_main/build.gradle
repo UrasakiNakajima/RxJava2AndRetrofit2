@@ -79,7 +79,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(path: ':library_common')
     implementation project(path: ':library_network')
-    implementation project(path: ':library_login')
+    api project(path: ':library_login')
     implementation project(path: ':library_mvp')
     implementation project(path: ':library_custom_view')
 

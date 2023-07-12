@@ -57,7 +57,7 @@ class SubResourceFragment :
     }
 
     override fun initObservers() {
-        viewModel.dataxRxFragment.observe(this, {
+        mViewModel.dataxRxFragment.observe(this, {
 //            LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
@@ -124,9 +124,9 @@ class SubResourceFragment :
 //                        this@ResourceChildFragment.subResourceAdapter.list[i].apply {
 //                            //已收藏取消收藏
 //                            if (collect) {
-//                                viewModel.unCollect(id)
+//                                mViewModel.unCollect(id)
 //                            } else {
-//                                viewModel.collect(id)
+//                                mViewModel.collect(id)
 //                            }
 //                        }
                         }
@@ -206,7 +206,7 @@ class SubResourceFragment :
     private fun initSubResource(tabId: Int, pageNum: Int) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable()) {
-            viewModel.subResourceData(tabId, pageNum)
+            mViewModel.subResourceData(tabId, pageNum)
         } else {
             subResourceDataError(resources.getString(R.string.library_please_check_the_network_connection))
         }

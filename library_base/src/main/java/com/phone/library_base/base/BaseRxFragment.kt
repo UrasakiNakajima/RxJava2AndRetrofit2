@@ -62,8 +62,8 @@ abstract class BaseRxFragment : RxFragment() {
 
     protected fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        mRxAppCompatActivity.let {
-            if (!it.isFinishing) {
+        message?.let {
+            if (!mRxAppCompatActivity.isFinishing) {
                 val toast: Toast
                 val duration: Int
                 duration = if (isLongToast) {
@@ -84,14 +84,14 @@ abstract class BaseRxFragment : RxFragment() {
         bgColor: Int, height: Int,
         roundRadius: Int, message: String?
     ) {
-        mRxAppCompatActivity.let {
-            val frameLayout = FrameLayout(it)
+        message?.let {
+            val frameLayout = FrameLayout(mRxAppCompatActivity)
             val layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
             )
             frameLayout.layoutParams = layoutParams
-            val textView = TextView(it)
+            val textView = TextView(mRxAppCompatActivity)
             val layoutParams1 =
                 FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
             textView.layoutParams = layoutParams1
@@ -106,7 +106,7 @@ abstract class BaseRxFragment : RxFragment() {
             textView.background = gradientDrawable
             textView.text = message
             frameLayout.addView(textView)
-            val toast = Toast(it)
+            val toast = Toast(mRxAppCompatActivity)
             toast.view = frameLayout
             toast.duration = Toast.LENGTH_LONG
             toast.show()

@@ -66,6 +66,8 @@
     <string name="library_loading_failed">加载失败</string>
     <string name="library_no_data_available">暂无数据</string>
     <string name="library_three_level_linkage_list">三级联动列表</string>
+    <string name="library_download_file">下载文件</string>
+
 
     <string name="library_all_resource">全部资源</string>
     <string name="library_all">全部</string>

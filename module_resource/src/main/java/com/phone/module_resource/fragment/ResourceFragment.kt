@@ -42,7 +42,7 @@ class ResourceFragment :
     }
 
     override fun initObservers() {
-        viewModel.tabRxFragment.observe(this, {
+        mViewModel.tabRxFragment.observe(this, {
 //            LogManager.i(TAG, "onChanged*****tabRxFragment")
             when (it) {
                 is State.SuccessState -> {
@@ -206,7 +206,7 @@ class ResourceFragment :
         showLoading()
         ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
             if (RetrofitManager.isNetworkAvailable()) {
-                viewModel.resourceTabData()
+                mViewModel.resourceTabData()
             } else {
                 resourceTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
             }

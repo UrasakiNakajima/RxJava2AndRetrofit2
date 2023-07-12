@@ -26,7 +26,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Ba
 
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
-    protected lateinit var viewModel: VM
+    protected lateinit var mViewModel: VM
 //    private var isFirstLoad = true
 
     override fun onCreateView(
@@ -40,7 +40,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Ba
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel = initViewModel()
+        mViewModel = initViewModel()
         initObservers()
         super.onViewCreated(view, savedInstanceState)
     }

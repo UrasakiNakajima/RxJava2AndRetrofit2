@@ -60,7 +60,7 @@ class SubProjectFragment :
     }
 
     override fun initObservers() {
-        viewModel.dataxRxFragment.observe(this, {
+        mViewModel.dataxRxFragment.observe(this, {
 //            LogManager.i(TAG, "onChanged*****tabRxFragmentSuccess")
             when (it) {
                 is State.SuccessState -> {
@@ -126,9 +126,9 @@ class SubProjectFragment :
 //                        this@ResourceChildFragment.subProjectAdapter.list[i].apply {
 //                            //已收藏取消收藏
 //                            if (collect) {
-//                                viewModel.unCollect(id)
+//                                mViewModel.unCollect(id)
 //                            } else {
-//                                viewModel.collect(id)
+//                                mViewModel.collect(id)
 //                            }
 //                        }
                         }
@@ -208,7 +208,7 @@ class SubProjectFragment :
     private fun initSubProject(pageNum: Int, tabId: Int) {
         showLoading()
         if (RetrofitManager.isNetworkAvailable()) {
-            viewModel.subProjectData(pageNum, tabId)
+            mViewModel.subProjectData(pageNum, tabId)
         } else {
             subProjectDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection));
         }
