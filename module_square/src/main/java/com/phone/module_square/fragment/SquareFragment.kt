@@ -10,6 +10,7 @@ import androidx.databinding.adapters.TextViewBindingAdapter.setText
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.luck.picture.lib.utils.ToastUtils.showToast
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.base.BaseRxAppActivity
 import com.phone.library_base.manager.LogManager
@@ -55,8 +56,6 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
 
     private var mPermissionsDialog: AlertDialog? = null
     private var number = 1
-    private var isDownloadFile = false
-    private var isFirstProgress = false
 
     private var permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -128,17 +127,15 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                 }
 
                 is DownloadState.CompletedState -> {
-                    if (it.completed != null && it.completed.exists()) {
-                        showToast("下载文件成功", true)
-                        hideLoading()
-                        isDownloadFile = false
-                    }
+                    showToast("下载文件成功", true)
+                    hideLoading()
+                    mIsLoadView = true
                 }
 
                 is DownloadState.ErrorState -> {
                     showToast(it.errorMsg, true)
                     hideLoading()
-                    isDownloadFile = false
+                    mIsLoadView = true
                 }
             }
         })
@@ -146,9 +143,6 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
 
     override fun initViews() {
         mDatabind.apply {
-            //设置文字样式  百分之样式 如 10%
-            mProgressBar.setQMUIProgressBarTextGenerator({ progressBar, value, maxValue -> (100 * value / maxValue).toString() + "%" })
-
             tevAndroidAndJs.setOnClickListener {
                 //Jump with parameters
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_ANDROID_AND_JS).navigation()
@@ -199,7 +193,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
             }
             tevDownloadFile.setOnClickListener {
-                isDownloadFile = true
+                mIsLoadView = false
                 showLoading()
                 mViewModel.downloadFile(this@SquareFragment)
             }
@@ -234,39 +228,8 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
 //    }
 
     fun onProgress(progress: Int, total: Long, speed: Long) {
-        if (!mRxAppCompatActivity.isFinishing && mDatabind.progressLayout.isShown()) {
-            mDatabind.mProgressBar.progress = progress
-//            mDatabind.progressLayout.mProgressBar.setText("$progress%")
-        }
-    }
-
-    override fun showLoading() {
-        if (!isDownloadFile) {
-            if (!mRxAppCompatActivity.isFinishing && !mDatabind.loadLayout.isShown()) {
-                mDatabind.loadLayout.visibility = View.VISIBLE
-                mDatabind.loadLayout.loadingView.visibility = View.VISIBLE
-                mDatabind.loadLayout.loadingView.start()
-            }
-        } else {
-            if (!mRxAppCompatActivity.isFinishing && !mDatabind.progressLayout.isShown()) {
-                mDatabind.progressLayout.visibility = View.VISIBLE
-                mDatabind.mProgressBar.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    override fun hideLoading() {
-        if (!isDownloadFile) {
-            if (!mRxAppCompatActivity.isFinishing && mDatabind.loadLayout.isShown()) {
-                mDatabind.loadLayout.loadingView.stop()
-                mDatabind.loadLayout.loadingView.visibility = View.GONE
-                mDatabind.loadLayout.visibility = View.GONE
-            }
-        } else {
-            if (!mRxAppCompatActivity.isFinishing && mDatabind.progressLayout.isShown()) {
-                mDatabind.mProgressBar.visibility = View.GONE
-                mDatabind.progressLayout.visibility = View.GONE
-            }
+        if (!mRxAppCompatActivity.isFinishing) {
+            mDialogManager.onProgress(progress)
         }
     }
 
@@ -303,8 +266,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                 ResourcesManager.getColor(R.color.library_color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
-                error,
-                true
+                error
             )
             hideLoading()
         }
@@ -384,18 +346,22 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
     }
 
     private fun initSquareData(currentPage: String) {
-        showLoading()
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
-            if (RetrofitManager.isNetworkAvailable()) {
-                mViewModel.squareData(this, currentPage)
-            } else {
-                squareDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
-            }
+//        showLoading()
+//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+        if (RetrofitManager.isNetworkAvailable()) {
+            mViewModel.squareData(this, currentPage)
+        } else {
+            squareDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
+        }
 
-            LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())
-            atomicBoolean.compareAndSet(atomicBoolean.get(), true)
-            LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get())
-        })
+        LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())
+        atomicBoolean.compareAndSet(atomicBoolean.get(), true)
+        LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get())
+//        })
     }
 
+    override fun onDestroy() {
+        ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
+        super.onDestroy()
+    }
 }

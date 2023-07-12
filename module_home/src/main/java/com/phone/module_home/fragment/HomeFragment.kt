@@ -19,6 +19,7 @@ import com.amap.api.location.AMapLocation
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.common.ConstantData
+import com.phone.library_base.manager.DialogManager
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ScreenManager
 import com.phone.library_base.manager.SharedPreferencesManager
@@ -89,7 +90,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     }
 
     override fun initViews() {
-        rootView?.let {
+        mRootView?.let {
             layoutOutLayer = it.findViewById<View>(R.id.layout_out_layer) as FrameLayout
             toolbar = it.findViewById<View>(R.id.toolbar) as Toolbar
             tevTitle = it.findViewById<View>(R.id.tev_title) as TextView
@@ -220,22 +221,6 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     //		Toast.makeText(getRxAppCompatActivity(), "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
     //	}
 
-    override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing && !loadLayout.isShown()) {
-            loadLayout.visibility = View.VISIBLE
-            loadLayout.loadingView.visibility = View.VISIBLE
-            loadLayout.loadingView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing && loadLayout.isShown()) {
-            loadLayout.loadingView.stop()
-            loadLayout.loadingView.visibility = View.GONE
-            loadLayout.visibility = View.GONE
-        }
-    }
-
     override fun homePageDataSuccess(success: List<ResultData.JuheNewsBean>) {
         if (!mRxAppCompatActivity.isFinishing) {
             if (isRefresh) {
@@ -272,8 +257,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
                 resources.getColor(R.color.library_color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
-                error,
-                true
+                error
             )
             if (isRefresh) {
                 refreshLayout?.finishRefresh(false)
@@ -363,17 +347,17 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     }
 
     private fun initFirstPage() {
-        showLoading()
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
-            if (RetrofitManager.isNetworkAvailable()) {
-                mBodyParams.clear()
-                mBodyParams["type"] = "yule"
-                mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-                presenter?.homePage(this, mBodyParams)
-            } else {
-                homePageDataError(resources.getString(R.string.library_please_check_the_network_connection))
-            }
-        })
+//        showLoading()
+//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+        if (RetrofitManager.isNetworkAvailable()) {
+            mBodyParams.clear()
+            mBodyParams["type"] = "yule"
+            mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
+            presenter?.homePage(this, mBodyParams)
+        } else {
+            homePageDataError(resources.getString(R.string.library_please_check_the_network_connection))
+        }
+//        })
     }
 
     override fun onDestroyView() {
@@ -382,6 +366,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
         if (amapLocationManager != null) {
             amapLocationManager?.destoryLocation()
         }
+        ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
         super.onDestroyView()
     }
 

@@ -7,6 +7,7 @@ class ThreadPoolManager {
 
     private var syncThreadPool: ExecutorService? = null
     private var scheduledThreadPool: ScheduledExecutorService? = null
+    private var scheduledThreadPool2: ScheduledExecutorService? = null
 
     /**
      * 保证只有一个实例
@@ -101,6 +102,28 @@ class ThreadPoolManager {
         scheduledThreadPool?.schedule(runnable, delay, TimeUnit.MILLISECONDS)
     }
 
+    /**
+     * 延迟执行的线程池
+     *
+     * @param delay
+     * @param onCommonSuccessCallback
+     */
+    fun createScheduledThreadPoolToUIThread2(
+        delay: Long,
+        onCommonSuccessCallback: OnCommonSuccessCallback
+    ) {
+        if (scheduledThreadPool2 == null) {
+            scheduledThreadPool2 = Executors.newScheduledThreadPool(5)
+        }
+        //创建任务
+        val runnable = Runnable {
+            MainThreadManager {
+                onCommonSuccessCallback.onSuccess()
+            }
+        }
+        scheduledThreadPool2?.schedule(runnable, delay, TimeUnit.MILLISECONDS)
+    }
+
     fun shutdownScheduledThreadPool() {
         scheduledThreadPool?.shutdown()
         scheduledThreadPool = null
@@ -109,6 +132,16 @@ class ThreadPoolManager {
     fun shutdownNowScheduledThreadPool() {
         scheduledThreadPool?.shutdownNow()
         scheduledThreadPool = null
+    }
+
+    fun shutdownScheduledThreadPool2() {
+        scheduledThreadPool2?.shutdown()
+        scheduledThreadPool2 = null
+    }
+
+    fun shutdownNowScheduledThreadPool2() {
+        scheduledThreadPool2?.shutdownNow()
+        scheduledThreadPool2 = null
     }
 
     fun shutdownSyncThreadPool() {

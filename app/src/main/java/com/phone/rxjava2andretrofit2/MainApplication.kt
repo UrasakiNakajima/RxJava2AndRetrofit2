@@ -5,7 +5,6 @@ import cn.jpush.android.api.JPushInterface
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.SharedPreferencesManager
-import com.phone.library_base.manager.ThreadPoolManager
 
 class MainApplication : BaseApplication() {
 
@@ -25,36 +24,26 @@ class MainApplication : BaseApplication() {
     override fun onCreate() {
         mWhichPage = "Main"
         super.onCreate()
-
-
-        val processName = getProcessName(this)
-        if (processName != null) {
-            LogManager.i(TAG, "processName*****$processName")
-            if (processName == packageName) {
-                //当进程是当前App 的主进程时，才初始化数据
-                //初始化com.phone.rxjava2andretrofit2以包名为进程名，项目默认的进程
-                initData2()
-            }
-        }
     }
 
-    private fun initData2() {
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(800, {
-            SharedPreferencesManager.put("date", "date")
-            val date = SharedPreferencesManager.get("date", "") as String
-            LogManager.i(TAG, "date*****$date")
+    override fun initData() {
+        //这里不再延迟加载了，因为主入口第一个页面（LaunchActivity）有三个控件的动画（每个控件有4个动画，总计12个动画），
+        //这么多动画同时运行比较消耗性能，如果加载动画的时候，这些数据还未初始化，他们将一起初始化，这样比较消耗性能
+        SharedPreferencesManager.put("date", "date")
+        val date = SharedPreferencesManager.get("date", "") as String
+        LogManager.i(TAG, "date*****$date")
 
-            //极光推送初始化
-            JPushInterface.setDebugMode(true)
-            JPushInterface.init(this)
-            var registrationId = SharedPreferencesManager.get("registrationId", "") as String
-            LogManager.i(TAG, "initData2 registrationId*****$registrationId")
-            if (TextUtils.isEmpty(registrationId)) {
-                //获取RegistrationID唯一标识
-                registrationId = JPushInterface.getRegistrationID(this@MainApplication)
-                SharedPreferencesManager.put("registrationId", registrationId)
-            }
-        })
+        //极光推送初始化
+        JPushInterface.setDebugMode(true)
+        JPushInterface.init(this)
+        var registrationId = SharedPreferencesManager.get("registrationId", "") as String
+        LogManager.i(TAG, "initData2 registrationId*****$registrationId")
+        if (TextUtils.isEmpty(registrationId)) {
+            //获取RegistrationID唯一标识
+            registrationId = JPushInterface.getRegistrationID(this@MainApplication)
+            SharedPreferencesManager.put("registrationId", registrationId)
+        }
+        super.initData()
     }
 
 //    fun getUserName(): String? {

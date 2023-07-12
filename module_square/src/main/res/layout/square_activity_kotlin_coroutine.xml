@@ -15,7 +15,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -169,16 +170,6 @@
                 android:layout_marginTop="@dimen/base_dp_10" />
 
         </LinearLayout>
-
-
-        <com.qmuiteam.qmui.widget.QMUILoadingView
-            android:id="@+id/load_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:color="@color/library_color_FF999999"
-            android:visibility="gone"
-            app:qmui_loading_view_size="@dimen/base_dp_33" />
 
     </FrameLayout>
 

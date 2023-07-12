@@ -59,7 +59,7 @@ abstract class DownloadProgressHandler : OnDownloadCallBack {
         val progressBean = message.obj as DownloadInfo
         when (message.what) {
             DOWNLOAD_SUCCESS -> {
-                onCompleted(progressBean.file)
+                onCompleted(progressBean.file!!)
                 removeMessage()
             }
 

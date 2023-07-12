@@ -59,13 +59,9 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
 //                        LogManager.i(TAG, "launch delay(1000)")
 //                    }
 
-
-                    LogManager.i(
-                        TAG, "homePage launch thread name*****" + Thread.currentThread().name
-                    )
                     val apiResponse = executeRequest { mModel.homePage(bodyParams) }
                     LogManager.i(
-                        TAG, "homePage launch2 thread name*****" + Thread.currentThread().name
+                        TAG, "homePage"
                     )
                     if (apiResponse.result != null && apiResponse.error_code == 0) {
                         val list = apiResponse.result?.data ?: mutableListOf()

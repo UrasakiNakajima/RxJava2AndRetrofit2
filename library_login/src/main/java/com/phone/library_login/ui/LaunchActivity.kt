@@ -25,6 +25,7 @@ import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.SharedPreferencesManager
 import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.library_base.common.ConstantData
+import com.phone.library_base.common.Constants
 import com.phone.library_base.manager.ScreenManager
 
 
@@ -188,8 +189,11 @@ class LaunchActivity : BaseRxAppActivity() {
     override fun initLoadData() {
 //        initPermissions()
 
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(3500, {
-            LogManager.i(TAG, "LaunchActivity 3500 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}")
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(Constants.DELAY_TIME, {
+            LogManager.i(
+                TAG,
+                "LaunchActivity 5000 createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
+            )
 
             //Activity 跳转一律放在UI线程去执行
             customStartActivity()

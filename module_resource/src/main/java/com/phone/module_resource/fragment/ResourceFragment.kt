@@ -130,22 +130,6 @@ class ResourceFragment :
         initResourceTabData()
     }
 
-    override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing && !mDatabind.loadLayout.isShown()) {
-            mDatabind.loadLayout.visibility = View.VISIBLE
-            mDatabind.loadLayout.loadingView.visibility = View.VISIBLE
-            mDatabind.loadLayout.loadingView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing && mDatabind.loadLayout.isShown()) {
-            mDatabind.loadLayout.loadingView.stop()
-            mDatabind.loadLayout.loadingView.visibility = View.GONE
-            mDatabind.loadLayout.visibility = View.GONE
-        }
-    }
-
     override fun resourceTabDataSuccess(success: MutableList<TabBean>) {
         if (!mRxAppCompatActivity.isFinishing) {
             val fragmentList = mutableListOf<Fragment>()
@@ -195,22 +179,21 @@ class ResourceFragment :
                 ResourcesManager.getColor(R.color.library_color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
-                error,
-                true
+                error
             )
             hideLoading()
         }
     }
 
     private fun initResourceTabData() {
-        showLoading()
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
-            if (RetrofitManager.isNetworkAvailable()) {
-                mViewModel.resourceTabData()
-            } else {
-                resourceTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
-            }
-        })
+//        showLoading()
+//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+        if (RetrofitManager.isNetworkAvailable()) {
+            mViewModel.resourceTabData()
+        } else {
+            resourceTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
+        }
+//        })
     }
 
     /**
@@ -227,4 +210,8 @@ class ResourceFragment :
         }
     }
 
+    override fun onDestroy() {
+        ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
+        super.onDestroy()
+    }
 }

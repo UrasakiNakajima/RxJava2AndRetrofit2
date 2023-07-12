@@ -14,19 +14,22 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.phone.library_base.BaseApplication
+import com.phone.library_base.base.IBaseView
+import com.phone.library_base.manager.DialogManager
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 
-abstract class BaseBindingRxFragment<DB : ViewDataBinding>() : RxFragment() {
+abstract class BaseBindingRxFragment<DB : ViewDataBinding>() : RxFragment(), IBaseView {
 
     private val TAG = BaseBindingRxFragment::class.java.simpleName
 
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
-    protected var baseApplication: BaseApplication? = null
-
-    protected var rootView: View? = null
+    protected var mBaseApplication: BaseApplication? = null
+    protected var mRootView: View? = null
+    private val mDialogManager = DialogManager()
+    protected var mIsLoadView = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +44,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding>() : RxFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mRxAppCompatActivity = activity as RxAppCompatActivity
-        baseApplication = mRxAppCompatActivity.application as BaseApplication
+        mBaseApplication = mRxAppCompatActivity.application as BaseApplication
         initData()
         initViews()
         initLoadData()
@@ -54,6 +57,30 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding>() : RxFragment() {
     protected abstract fun initViews()
 
     protected abstract fun initLoadData()
+
+    override fun showLoading() {
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.showProgressBarDialog(mRxAppCompatActivity)
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.showLoadingDialog(mRxAppCompatActivity)
+            }
+        }
+    }
+
+    override fun hideLoading() {
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
+    }
 
     protected fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
@@ -107,36 +134,12 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding>() : RxFragment() {
         return Looper.getMainLooper().thread.id == Thread.currentThread().id
     }
 
-    protected fun startActivity(cls: Class<*>?) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        startActivity(intent)
-    }
-
-    protected fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        val bundle = Bundle()
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) { //如果参数不是null，才把参数传给后台
-                    bundle.putString(key, params[key])
-                }
-            }
-            bundle.let {
-                intent.putExtras(it)
-            }
-        }
-        startActivity(intent)
-    }
-
-    protected fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        startActivityForResult(intent, requestCode)
-    }
-
-    override fun onDestroyView() {
-        baseApplication = null
-        rootView = null
-        super.onDestroyView()
+    override fun onDestroy() {
+        mDatabind.unbind()
+        viewModelStore.clear()
+        mBaseApplication = null
+        mRootView = null
+        super.onDestroy()
     }
 
 }

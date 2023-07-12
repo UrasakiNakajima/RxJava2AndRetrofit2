@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_common.R
@@ -66,24 +67,12 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
         return LoginPresenterImpl(this)
     }
 
-    override fun showLoading() {
-        if (!mLoadView.isShown) {
-            mLoadView.visibility = View.VISIBLE
-            mLoadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (mLoadView.isShown) {
-            mLoadView.stop()
-            mLoadView.visibility = View.GONE
-        }
-    }
-
     override fun registerSuccess(success: String) {
         if (!mRxAppCompatActivity.isFinishing) {
             hideLoading()
-            startActivity(LoginActivity::class.java)
+            ARouter.getInstance().build(ConstantData.Route.ROUTE_LOGIN)
+                .navigation()
+            finish()
         }
     }
 

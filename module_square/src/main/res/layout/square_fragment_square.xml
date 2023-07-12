@@ -349,38 +349,6 @@
 
         </ScrollView>
 
-        <com.phone.library_custom_view.custom_view.LoadingLayout
-            android:id="@+id/load_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
-        <!--        <com.phone.library_custom_view.custom_view.ProgressLayout-->
-        <!--            android:id="@+id/progress_layout"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:visibility="gone" />-->
-
-        <FrameLayout
-            android:id="@+id/progress_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <com.qmuiteam.qmui.widget.QMUIProgressBar
-                android:id="@+id/m_progress_bar"
-                android:layout_width="@dimen/base_dp_150"
-                android:layout_height="@dimen/base_dp_150"
-                android:layout_gravity="center"
-                android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/base_sp_22"
-                app:qmui_background_color="@color/library_color_FF999999"
-                app:qmui_progress_color="@color/library_color_FF198CFF"
-                app:qmui_stroke_width="@dimen/base_dp_18"
-                app:qmui_type="type_circle" />
-
-        </FrameLayout>
-
     </FrameLayout>
 
 </layout>

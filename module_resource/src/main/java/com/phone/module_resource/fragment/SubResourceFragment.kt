@@ -1,6 +1,5 @@
 package com.phone.module_resource.fragment
 
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +15,7 @@ import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ScreenManager
+import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.module_resource.R
 import com.phone.module_resource.databinding.ResourceFragmentResourceSubBinding
 import com.phone.module_resource.view.ISubResourceView
@@ -138,26 +138,7 @@ class SubResourceFragment :
     }
 
     override fun initLoadData() {
-        showLoading()
-        if (RetrofitManager.isNetworkAvailable()) {
-            initSubResource(tabId, pageNum)
-        } else {
-            subResourceDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
-        }
-    }
-
-    override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.visibility = View.VISIBLE
-            mDatabind.loadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
-            mDatabind.loadView.stop()
-            mDatabind.loadView.visibility = View.GONE
-        }
+        initSubResource(tabId, pageNum)
     }
 
     override fun subResourceDataSuccess(success: MutableList<ArticleListBean>) {
@@ -190,8 +171,7 @@ class SubResourceFragment :
                 ResourcesManager.getColor(R.color.library_color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
-                error,
-                true
+                error
             )
 
             if (isRefresh) {
@@ -204,12 +184,14 @@ class SubResourceFragment :
     }
 
     private fun initSubResource(tabId: Int, pageNum: Int) {
-        showLoading()
+//        showLoading()
+//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
         if (RetrofitManager.isNetworkAvailable()) {
             mViewModel.subResourceData(tabId, pageNum)
         } else {
             subResourceDataError(resources.getString(R.string.library_please_check_the_network_connection))
         }
+//        })
     }
 
 

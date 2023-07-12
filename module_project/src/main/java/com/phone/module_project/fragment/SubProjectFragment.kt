@@ -1,6 +1,5 @@
 package com.phone.module_project.fragment
 
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -140,26 +139,7 @@ class SubProjectFragment :
     }
 
     override fun initLoadData() {
-        showLoading()
-        if (RetrofitManager.isNetworkAvailable()) {
-            initSubProject(pageNum, tabId)
-        } else {
-            subProjectDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
-        }
-    }
-
-    override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && !mDatabind.loadView.isShown()) {
-            mDatabind.loadView.visibility = View.VISIBLE
-            mDatabind.loadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing() && mDatabind.loadView.isShown()) {
-            mDatabind.loadView.stop()
-            mDatabind.loadView.visibility = View.GONE
-        }
+        initSubProject(pageNum, tabId)
     }
 
     override fun subProjectDataSuccess(success: MutableList<ArticleListBean>) {
@@ -192,8 +172,7 @@ class SubProjectFragment :
                 ResourcesManager.getColor(R.color.library_color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
-                error,
-                true
+                error
             )
 
             if (isRefresh) {
@@ -206,12 +185,14 @@ class SubProjectFragment :
     }
 
     private fun initSubProject(pageNum: Int, tabId: Int) {
-        showLoading()
+//        showLoading()
+//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
         if (RetrofitManager.isNetworkAvailable()) {
             mViewModel.subProjectData(pageNum, tabId)
         } else {
             subProjectDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection));
         }
+//        })
     }
 
 }

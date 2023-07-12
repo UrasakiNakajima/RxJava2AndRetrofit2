@@ -27,7 +27,7 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
     protected var mRxAppCompatActivity: RxAppCompatActivity? = null
     protected var mBaseApplication: BaseApplication? = null
 
-    protected var rootView: View? = null
+    protected var mRootView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -157,11 +157,13 @@ abstract class BaseBindingDialogFragment<DB : ViewDataBinding> : DialogFragment(
         startActivityForResult(intent, requestCode)
     }
 
-    override fun onDestroyView() {
+    override fun onDestroy() {
+        mDatabind.unbind()
+        viewModelStore.clear()
         mRxAppCompatActivity = null
         mBaseApplication = null
-        rootView = null
-        super.onDestroyView()
+        mRootView = null
+        super.onDestroy()
     }
 
     var onDialogCallback: OnDialogCallback<Int>? = null

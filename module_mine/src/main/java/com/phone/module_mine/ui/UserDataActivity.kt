@@ -51,27 +51,11 @@ class UserDataActivity : BaseMvpRxAppActivity<IBaseView, MinePresenterImpl>(), I
 
     override fun attachPresenter() = MinePresenterImpl(this)
 
-    override fun showLoading() {
-        if (!mLoadView.isShown) {
-            mLoadView.visibility = View.VISIBLE
-            mLoadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (mLoadView.isShown) {
-            mLoadView.stop()
-            mLoadView.visibility = View.GONE
-        }
-    }
-
     override fun userDataSuccess(success: String) {
-
         hideLoading()
     }
 
     override fun userDataError(error: String) {
-
         hideLoading()
     }
 

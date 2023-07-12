@@ -93,20 +93,6 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         return LoginPresenterImpl(this)
     }
 
-    override fun showLoading() {
-        if (!mLoadView.isShown) {
-            mLoadView.visibility = View.VISIBLE
-            mLoadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (mLoadView.isShown) {
-            mLoadView.stop()
-            mLoadView.visibility = View.GONE
-        }
-    }
-
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         LogManager.i(TAG, "onNewIntent")

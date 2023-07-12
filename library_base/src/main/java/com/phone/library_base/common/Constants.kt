@@ -91,4 +91,7 @@ object Constants {
      */
     const val SP_THEME_KEY = "sp_theme_key"
 
+    const val DELAY_TIME = 5000L
+
+
 }

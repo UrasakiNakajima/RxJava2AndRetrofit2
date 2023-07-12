@@ -64,7 +64,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     override fun initViews() {
-        rootView?.let {
+        mRootView?.let {
             layoutOutLayer = it.findViewById(R.id.layout_out_layer)
             toolbar = it.findViewById(R.id.toolbar)
             tevTitle = it.findViewById(R.id.tev_title)
@@ -79,7 +79,6 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
             tevTitle?.setOnClickListener(object : View.OnClickListener {
 
                 override fun onClick(v: View?) {
-//                initMine()
                     ARouter.getInstance().build(ConstantData.Route.ROUTE_USER_DATA).navigation()
                 }
             })
@@ -149,22 +148,6 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
     override fun attachPresenter() = MinePresenterImpl(this)
 
-    override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing && !loadLayout.isShown()) {
-            loadLayout.visibility = View.VISIBLE
-            loadLayout.loadingView.visibility = View.VISIBLE
-            loadLayout.loadingView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing && loadLayout.isShown()) {
-            loadLayout.loadingView.stop()
-            loadLayout.loadingView.visibility = View.GONE
-            loadLayout.visibility = View.GONE
-        }
-    }
-
     override fun mineDataSuccess(success: MutableList<Data>) {
         if (!mRxAppCompatActivity.isFinishing) {
             if (isRefresh) {
@@ -191,8 +174,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                 ResourcesManager.getColor(R.color.library_color_FFE066FF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
-                error,
-                true
+                error
             )
 
             if (isRefresh) {
@@ -205,23 +187,24 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     private fun initMine() {
-        showLoading()
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
-            if (RetrofitManager.isNetworkAvailable()) {
-                mBodyParams.clear()
+//        showLoading()
+//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+        if (RetrofitManager.isNetworkAvailable()) {
+            mBodyParams.clear()
 
-                mBodyParams["type"] = "keji"
-                mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
-                presenter?.mineData(mRxFragment, mBodyParams)
-            } else {
-                mineDataError(resources.getString(R.string.library_please_check_the_network_connection))
-            }
-        })
+            mBodyParams["type"] = "keji"
+            mBodyParams["key"] = "d5cc661633a28f3cf4b1eccff3ee7bae"
+            presenter?.mineData(mRxFragment, mBodyParams)
+        } else {
+            mineDataError(resources.getString(R.string.library_please_check_the_network_connection))
+        }
+//        })
     }
 
     override fun onDestroyView() {
         layoutOutLayer?.removeAllViews()
-        rootView = null
+        mRootView = null
+        ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
         super.onDestroyView()
     }
 

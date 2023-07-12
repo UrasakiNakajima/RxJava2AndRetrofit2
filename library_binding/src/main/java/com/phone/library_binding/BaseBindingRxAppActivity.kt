@@ -22,6 +22,7 @@ import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.ActivityPageManager
 import com.phone.library_base.manager.CrashHandlerManager
 import com.phone.library_base.base.IBaseView
+import com.phone.library_base.manager.DialogManager
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ToolbarManager
@@ -29,18 +30,18 @@ import com.phone.library_base.manager.ToolbarManager.Companion.assistActivity
 import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
-abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActivity(),
-    IBaseView {
+abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActivity(), IBaseView {
 
     private val TAG = BaseBindingRxAppActivity::class.java.simpleName
     protected lateinit var mLoadView: QMUILoadingView
-    protected lateinit var layoutParams: FrameLayout.LayoutParams
 
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected lateinit var mBaseApplication: BaseApplication
     private var mActivityPageManager: ActivityPageManager? = null
+    private val mDialogManager = DialogManager()
+    protected var mIsLoadView = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,11 +60,6 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
             it.setSize(100)
             it.setColor(ResourcesManager.getColor(R.color.base_color_333333))
         }
-        layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
-        )
-        layoutParams.gravity = Gravity.CENTER
-        addContentView(mLoadView, layoutParams)
         initLoadData()
     }
 
@@ -242,6 +238,30 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
 
     protected abstract fun initLoadData()
 
+    override fun showLoading() {
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.showProgressBarDialog(mRxAppCompatActivity)
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.showLoadingDialog(mRxAppCompatActivity)
+            }
+        }
+    }
+
+    override fun hideLoading() {
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
+    }
+
     protected open fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         if (!mRxAppCompatActivity.isFinishing) {
@@ -338,6 +358,8 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     }
 
     override fun onDestroy() {
+        mDatabind.unbind()
+        viewModelStore.clear()
         if (mActivityPageManager?.mIsLastAliveActivity?.get() == true) {
             killAppProcess()
         }

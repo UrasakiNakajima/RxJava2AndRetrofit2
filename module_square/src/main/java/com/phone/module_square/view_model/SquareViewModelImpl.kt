@@ -82,43 +82,19 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
     }
 
     override fun downloadFile(rxFragment: RxFragment) {
-        RetrofitManager.instance().downloadFile(rxFragment,
-            mModel.downloadFile(),
-            BaseApplication.instance().externalCacheDir!!.absolutePath,
-            "artist_kirara_asuka.mov",
-            object : DownloadProgressHandler() {
-                override fun onProgress(progress: Int, total: Long, speed: Long) {
-                    LogManager.i(TAG, "progress:$progress, speed:$speed")
-                    downloadData.value = DownloadState.ProgressState(progress, total, speed)
-                }
-
-                override fun onCompleted(file: File?) {
-                    LogManager.i(TAG, "下载文件成功")
-                    downloadData.value = DownloadState.CompletedState(file!!)
-                }
-
-                override fun onError(e: Throwable?) {
-                    LogManager.i(TAG, "下载文件异常", e)
-                    downloadData.value =
-                        DownloadState.ErrorState("下载文件异常*****${e.toString()}")
-                }
-            }
-        )
-
-
-//        RetrofitManager.instance().downloadFile2(rxFragment,
+//        RetrofitManager.instance().downloadFile(rxFragment,
 //            mModel.downloadFile(),
 //            BaseApplication.instance().externalCacheDir!!.absolutePath,
 //            "artist_kirara_asuka.mov",
-//            object : OnDownloadCallBack {
+//            object : DownloadProgressHandler() {
 //                override fun onProgress(progress: Int, total: Long, speed: Long) {
 //                    LogManager.i(TAG, "progress:$progress, speed:$speed")
 //                    downloadData.value = DownloadState.ProgressState(progress, total, speed)
 //                }
 //
-//                override fun onCompleted(file: File?) {
+//                override fun onCompleted(file: File) {
 //                    LogManager.i(TAG, "下载文件成功")
-//                    downloadData.value = DownloadState.CompletedState(file!!)
+//                    downloadData.value = DownloadState.CompletedState(file)
 //                }
 //
 //                override fun onError(e: Throwable?) {
@@ -126,7 +102,31 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 //                    downloadData.value =
 //                        DownloadState.ErrorState("下载文件异常*****${e.toString()}")
 //                }
-//            })
+//            }
+//        )
+
+
+        RetrofitManager.instance().downloadFile2(rxFragment,
+            mModel.downloadFile(),
+            BaseApplication.instance().externalCacheDir!!.absolutePath,
+            "artist_kirara_asuka.mov",
+            object : OnDownloadCallBack {
+                override fun onProgress(progress: Int, total: Long, speed: Long) {
+                    LogManager.i(TAG, "progress:$progress, speed:$speed")
+                    downloadData.value = DownloadState.ProgressState(progress, total, speed)
+                }
+
+                override fun onCompleted(file: File) {
+                    LogManager.i(TAG, "下载文件成功")
+                    downloadData.value = DownloadState.CompletedState(file)
+                }
+
+                override fun onError(e: Throwable?) {
+                    LogManager.i(TAG, "下载文件异常", e)
+                    downloadData.value =
+                        DownloadState.ErrorState("下载文件异常*****${e.toString()}")
+                }
+            })
     }
 
     override fun onCleared() {

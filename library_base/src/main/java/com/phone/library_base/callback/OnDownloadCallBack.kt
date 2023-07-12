@@ -19,7 +19,7 @@ interface OnDownloadCallBack {
      *
      * @param file
      */
-    fun onCompleted(file: File?)
+    fun onCompleted(file: File)
 
     /**
      * 运行在主线程

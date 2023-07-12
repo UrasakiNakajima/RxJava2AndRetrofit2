@@ -15,6 +15,7 @@ import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_base.callback.OnCommonSingleParamCallback
+import com.phone.library_base.common.Constants
 import com.phone.library_base.manager.ActivityPageManager
 import com.phone.library_base.manager.AesManager
 import com.phone.library_base.manager.CrashHandlerManager
@@ -86,8 +87,30 @@ open class BaseApplication : MultiDexApplication() {
         initData()
     }
 
-    private fun initData() {
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(500, {
+
+    protected open fun initData() {
+        //这里不再延迟加载了，因为主入口第一个页面（LaunchActivity）有三个控件的动画（每个控件有4个动画，总计12个动画），
+        //这么多动画同时运行比较消耗性能，如果加载动画的时候，这些数据还未初始化，他们将一起初始化，这样比较消耗性能
+        //            //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
+//            sp = getSharedPreferences("app", MODE)
+//            editor = sp.edit()
+        val address = SharedPreferencesManager.get("address", "")
+        LogManager.i(TAG, "address*****$address")
+//            AppRoomDataBase.instance()
+//            CountingAlgorithm.countingAlgorithm()
+        if (true) {
+            ARouter.openLog()
+            ARouter.openDebug()
+        }
+        ARouter.init(this)
+        LogManager.i(
+            TAG,
+            "BaseApplication createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
+        )
+
+
+        //这里的数据需要延迟加载
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(Constants.DELAY_TIME, {
             getSignInfo()
             //获取so 文件的密钥
             val data = JavaGetData.nativeAesKey(this@BaseApplication, BuildConfig.IS_RELEASE)
@@ -97,32 +120,14 @@ open class BaseApplication : MultiDexApplication() {
             LogManager.i(TAG, "onCreate encryptStr*****$encryptStr")
             val decryptStr = AesManager.decrypt(encryptStr, data)
             LogManager.i(TAG, "onCreate decryptStr*****$decryptStr")
-
             val data2 = JavaGetData.nativeGetString(this@BaseApplication, BuildConfig.IS_RELEASE)
             LogManager.i(TAG, "onCreate data2*****$data2")
 
-//            //文件为mySp  存放在/data/data/<packagename>/shared_prefs/目录下的
-//            sp = getSharedPreferences("app", MODE)
-//            editor = sp.edit()
-            val address = SharedPreferencesManager.get("address", "")
-            LogManager.i(TAG, "address*****$address")
 
-//            AppRoomDataBase.instance()
-//            CountingAlgorithm.countingAlgorithm()
-
-
-            if (true) {
-                ARouter.openLog()
-                ARouter.openDebug()
-            }
-            ARouter.init(this)
-            LogManager.i(
-                TAG,
-                "BaseApplication createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
-            )
             val crashHandlerManager = CrashHandlerManager.instance()
             crashHandlerManager?.sendPreviousReportsToServer()
             initWebView()
+            ThreadPoolManager.instance().shutdownScheduledThreadPool2()
         })
     }
 

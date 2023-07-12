@@ -1,6 +1,7 @@
 package com.phone.module_project.view_model
 
 import androidx.lifecycle.viewModelScope
+import com.phone.library_base.manager.LogManager
 import com.phone.library_mvvm.BaseViewModel
 import com.phone.library_network.bean.State
 import com.phone.library_common.bean.TabBean
@@ -19,15 +20,14 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
     //1.首先定义两个SingleLiveData的实例
     val dataxRxFragment = SingleLiveData<State<MutableList<TabBean>>>()
 
-    //1.首先定义两个SingleLiveData的实例
-    val dataxRxActivity = SingleLiveData<State<MutableList<TabBean>>>()
-
     override fun projectTabData() {
         //在Android MVVM架构的ViewModel中启动一个新协程（如果你的项目架构是MVVM架构，则推荐在ViewModel中使用），
         //该协程默认运行在UI线程，协程和ViewModel的生命周期绑定，组件销毁时，协程一并销毁，从而实现安全可靠地协程调用。
         //调用viewModelScope.launch{} 或 viewModelScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是UI线程）。
         viewModelScope.launch {
             val apiResponse = executeRequest { model.projectTabData() }
+
+            LogManager.i(TAG, "projectTabData")
             if (apiResponse.errorCode == 0) {
                 val responseData = apiResponse.data ?: mutableListOf()
                 if (responseData.size > 0) {

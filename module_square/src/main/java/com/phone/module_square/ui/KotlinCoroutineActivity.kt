@@ -42,7 +42,7 @@ class KotlinCoroutineActivity :
     }
 
     override fun initObservers() {
-        viewModel.executeSuccess.observe(this, {
+        mViewModel.executeSuccess.observe(this, {
             LogManager.i(TAG, "onChanged*****tabRxActivity")
             when (it) {
                 is State.SuccessState -> {
@@ -184,7 +184,7 @@ class KotlinCoroutineActivity :
         //该协程默认运行在UI线程，协程和ViewModel的生命周期绑定，组件销毁时，协程一并销毁，从而实现安全可靠地协程调用。
         //调用viewModelScope.launch{} 或 viewModelScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是UI线程）。
         showLoading()
-        viewModel.startViewModelScope()
+        mViewModel.startViewModelScope()
     }
 
     private fun startLifecycleScope() {
@@ -192,7 +192,10 @@ class KotlinCoroutineActivity :
         //协程和该组件生命周期绑定，Activity/Fragment销毁时，协程一并销毁，从而实现安全可靠地协程调用。
         //调用lifecycleScope.launch{} 或 lifecycleScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是UI线程）。
         lifecycleScope.launch {
-            LogManager.i(TAG, "lifecycleScope launch thread name*****${Thread.currentThread().name}")
+            LogManager.i(
+                TAG,
+                "lifecycleScope launch thread name*****${Thread.currentThread().name}"
+            )
 
             showLoading()
             //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
@@ -216,20 +219,6 @@ class KotlinCoroutineActivity :
 
     override fun initLoadData() {
 
-    }
-
-    override fun showLoading() {
-        if (!mDatabind.loadView.isShown) {
-            mDatabind.loadView.visibility = View.VISIBLE
-            mDatabind.loadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (mDatabind.loadView.isShown) {
-            mDatabind.loadView.stop()
-            mDatabind.loadView.visibility = View.GONE
-        }
     }
 
     /**

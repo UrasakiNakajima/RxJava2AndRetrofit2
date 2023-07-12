@@ -130,18 +130,5 @@ class VideoListActivity : BaseMvpRxAppActivity<IBaseView, HomePresenterImpl>(),
 
     override fun videoListError(error: String) {}
 
-    override fun showLoading() {
-        if (!mLoadView.isShown) {
-            mLoadView.visibility = View.VISIBLE
-            mLoadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (mLoadView.isShown) {
-            mLoadView.stop()
-            mLoadView.visibility = View.GONE
-        }
-    }
 
 }

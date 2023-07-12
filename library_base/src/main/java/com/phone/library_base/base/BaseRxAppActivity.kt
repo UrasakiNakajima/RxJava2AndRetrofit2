@@ -19,6 +19,7 @@ import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.CrashHandlerManager
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.R
+import com.phone.library_base.manager.DialogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ToolbarManager
 import com.qmuiteam.qmui.widget.QMUILoadingView
@@ -31,8 +32,8 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected lateinit var mBaseApplication: BaseApplication
     var mActivityPageManager: ActivityPageManager? = null
-    protected lateinit var mLoadView: QMUILoadingView
-    protected lateinit var layoutParams: FrameLayout.LayoutParams
+    private val mDialogManager = DialogManager()
+    protected var mIsLoadView = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,15 +44,6 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
         setContentView(initLayoutId())
         initData()
         initViews()
-        mLoadView = QMUILoadingView(mRxAppCompatActivity)
-        mLoadView.visibility = View.GONE
-        mLoadView.setSize(100)
-        mLoadView.setColor(ResourcesManager.getColor(R.color.base_color_333333))
-        layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
-        )
-        layoutParams.gravity = Gravity.CENTER
-        addContentView(mLoadView, layoutParams)
         initLoadData()
     }
 
@@ -158,6 +150,30 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
 
     protected abstract fun initLoadData()
 
+    override fun showLoading() {
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.showProgressBarDialog(mRxAppCompatActivity)
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.showLoadingDialog(mRxAppCompatActivity)
+            }
+        }
+    }
+
+    override fun hideLoading() {
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
+    }
+
     protected fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(mRxAppCompatActivity, message, Toast.LENGTH_LONG).show();
         if (!mRxAppCompatActivity.isFinishing) {
@@ -208,66 +224,6 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
 
     protected fun isOnMainThread(): Boolean {
         return Looper.getMainLooper().thread.id == Thread.currentThread().id
-    }
-
-    override fun showLoading() {
-        mLoadView.let {
-            if (!it.isShown) {
-                it.visibility = View.VISIBLE
-                it.start()
-            }
-        }
-    }
-
-    override fun hideLoading() {
-        mLoadView.let {
-            if (it.isShown) {
-                it.stop()
-                it.visibility = View.GONE
-            }
-        }
-    }
-
-    protected fun startActivity(cls: Class<*>?) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        startActivity(intent)
-    }
-
-    protected fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        val bundle = Bundle()
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) { //如果参数不是null，才把参数传给后台
-                    bundle.putString(key, params[key])
-                }
-            }
-            intent.putExtras(bundle)
-        }
-        startActivity(intent)
-    }
-
-    protected fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        startActivityForResult(intent, requestCode)
-    }
-
-    protected fun startActivityForResultCarryParams(
-        cls: Class<*>?,
-        params: Map<String?, String?>?,
-        requestCode: Int
-    ) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        val bundle = Bundle()
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) { //如果参数不是null，才把参数传给后台
-                    bundle.putString(key, params[key])
-                }
-            }
-            intent.putExtras(bundle)
-        }
-        startActivityForResult(intent, requestCode)
     }
 
     private fun killAppProcess() {

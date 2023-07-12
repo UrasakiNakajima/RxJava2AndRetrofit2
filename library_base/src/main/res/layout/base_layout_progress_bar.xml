@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/base_color_transparent">
+
+    <com.qmuiteam.qmui.widget.QMUIProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="@dimen/base_dp_150"
+        android:layout_height="@dimen/base_dp_150"
+        android:layout_gravity="center"
+        android:textColor="@color/base_color_FFFFFFFF"
+        android:textSize="@dimen/base_sp_22"
+        app:qmui_background_color="@color/base_color_FF999999"
+        app:qmui_progress_color="@color/base_color_FF198CFF"
+        app:qmui_stroke_width="@dimen/base_dp_18"
+        app:qmui_type="type_circle" />
+
+</FrameLayout>

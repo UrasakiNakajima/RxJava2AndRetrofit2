@@ -42,6 +42,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
         viewModelScope.launch {
             val apiResponse = executeRequest { model.subProjectData(pageNum, tabId) }
 
+            LogManager.i(TAG, "subProjectData")
             //viewModelScope.launch开启协程之后，是在当前线程，然后上面那个IO线程执行完了，就会切换回当前线程
             if (apiResponse.data != null && apiResponse.errorCode == 0) {
                 apiResponse.data.let {

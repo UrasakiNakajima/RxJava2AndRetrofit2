@@ -892,7 +892,7 @@ class RetrofitManager private constructor() {
                 onDownloadCallBack.onError(it)
             }, {
                 LogManager.i(TAG, "下载完成")
-                onDownloadCallBack.onCompleted(downloadInfo.file)
+                onDownloadCallBack.onCompleted(downloadInfo.file!!)
             })
 //            .subscribe(object : Observer<DownloadInfo?> { // Consumer<DownloadInfo?>
 //
@@ -912,7 +912,7 @@ class RetrofitManager private constructor() {
 //
 //                override fun onComplete() {// Action<DownloadInfo?>
 //                    LogManager.i(TAG, "下载完成")
-//                    onDownloadCallBack.onCompleted(downloadInfo.file)
+//                    onDownloadCallBack.onCompleted(downloadInfo.file!!)
 //                }
 //            })
     }

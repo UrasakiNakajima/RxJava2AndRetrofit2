@@ -81,7 +81,8 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
     }
 
     override fun initViews() {
-        layoutPleaseAddComponents = findViewById<View>(R.id.layout_please_add_components) as LinearLayout
+        layoutPleaseAddComponents =
+            findViewById<View>(R.id.layout_please_add_components) as LinearLayout
         tevPleaseAddComponents = findViewById<View>(R.id.tev_please_add_components) as TextView
         layoutMain = findViewById<View>(R.id.layout_main) as LinearLayout
         mineViewPager = findViewById<View>(R.id.mine_view_pager) as MineLazyViewPager
@@ -197,20 +198,6 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
 
     override fun attachPresenter(): MainPresenterImpl {
         return MainPresenterImpl(this)
-    }
-
-    override fun showLoading() {
-        if (!mLoadView.isShown) {
-            mLoadView.visibility = View.VISIBLE
-            mLoadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (mLoadView.isShown) {
-            mLoadView.stop()
-            mLoadView.visibility = View.GONE
-        }
     }
 
     override fun mainDataSuccess(success: String) {

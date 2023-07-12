@@ -1,6 +1,5 @@
 package com.phone.library_base.base
 
-import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Looper
@@ -12,35 +11,38 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.phone.library_base.BaseApplication
+import com.phone.library_base.manager.DialogManager
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 
-abstract class BaseRxFragment : RxFragment() {
+abstract class BaseRxFragment : RxFragment(), IBaseView {
 
     private val TAG = BaseRxFragment::class.java.simpleName
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected lateinit var mRxFragment: RxFragment
     protected lateinit var mBaseApplication: BaseApplication
+    protected var mRootView: View? = null
 
-    protected var rootView: View? = null
+    protected val mDialogManager = DialogManager()
+    protected var mIsLoadView = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //        if (rootView == null) {
-        //            rootView = inflater.inflate(initLayoutId(), container, false);
+        //        if (mRootView == null) {
+        //            mRootView = inflater.inflate(initLayoutId(), container, false);
         //        } else {
-        //            ViewGroup viewGroup = (ViewGroup) rootView.getParent();
+        //            ViewGroup viewGroup = (ViewGroup) mRootView.getParent();
         //            if (viewGroup != null) {
-        //                viewGroup.removeView(rootView);
+        //                viewGroup.removeView(mRootView);
         //            }
         //        }
 
         mRxFragment = this
-        rootView = inflater.inflate(initLayoutId(), container, false)
-        return rootView
+        mRootView = inflater.inflate(initLayoutId(), container, false)
+        return mRootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,6 +61,30 @@ abstract class BaseRxFragment : RxFragment() {
     protected abstract fun initViews()
 
     protected abstract fun initLoadData()
+
+    override fun showLoading() {
+        if (!mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.showProgressBarDialog(mRxAppCompatActivity)
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.showLoadingDialog(mRxAppCompatActivity)
+            }
+        }
+    }
+
+    override fun hideLoading() {
+        if (!mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
+    }
 
     protected fun showToast(message: String?, isLongToast: Boolean) {
         //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
@@ -109,6 +135,7 @@ abstract class BaseRxFragment : RxFragment() {
             val toast = Toast(mRxAppCompatActivity)
             toast.view = frameLayout
             toast.duration = Toast.LENGTH_LONG
+            toast.setGravity(Gravity.CENTER, 0, 0)
             toast.show()
         }
     }
@@ -117,51 +144,9 @@ abstract class BaseRxFragment : RxFragment() {
         return Looper.getMainLooper().thread.id == Thread.currentThread().id
     }
 
-    protected fun startActivity(cls: Class<*>?) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        startActivity(intent)
-    }
-
-    protected fun startActivityCarryParams(cls: Class<*>?, params: Map<String?, String?>?) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        val bundle = Bundle()
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) { //如果参数不是null，才把参数传给后台
-                    bundle.putString(key, params[key])
-                }
-            }
-            intent.putExtras(bundle)
-        }
-        startActivity(intent)
-    }
-
-    protected fun startActivityForResult(cls: Class<*>?, requestCode: Int) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        startActivityForResult(intent, requestCode)
-    }
-
-    protected fun startActivityForResultCarryParams(
-        cls: Class<*>?,
-        params: Map<String?, String?>?,
-        requestCode: Int
-    ) {
-        val intent = Intent(mRxAppCompatActivity, cls)
-        val bundle = Bundle()
-        if (params != null && params.size > 0) {
-            for (key in params.keys) {
-                if (params[key] != null) { //如果参数不是null，才把参数传给后台
-                    bundle.putString(key, params[key])
-                }
-            }
-            intent.putExtras(bundle)
-        }
-        startActivityForResult(intent, requestCode)
-    }
-
     override fun onDestroyView() {
-        if (rootView != null) {
-            rootView = null
+        if (mRootView != null) {
+            mRootView = null
         }
         super.onDestroyView()
     }

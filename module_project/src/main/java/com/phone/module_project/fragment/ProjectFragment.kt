@@ -14,6 +14,7 @@ import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
 import com.phone.library_common.bean.TabBean
 import com.phone.library_base.common.ConstantData
+import com.phone.library_base.manager.LogManager
 import com.phone.library_common.manager.*
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ThreadPoolManager
@@ -43,7 +44,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
 
     override fun initObservers() {
         mViewModel.dataxRxFragment.observe(this, {
-//            LogManager.i(TAG, "onChanged*****dataxRxFragment")
+            LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
                     if (it.success != null && it.success.size > 0) {
@@ -90,22 +91,6 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
         initProjectTabData()
     }
 
-    override fun showLoading() {
-        if (!mRxAppCompatActivity.isFinishing && !mDatabind.loadLayout.isShown()) {
-            mDatabind.loadLayout.visibility = View.VISIBLE
-            mDatabind.loadLayout.loadingView.visibility = View.VISIBLE
-            mDatabind.loadLayout.loadingView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (!mRxAppCompatActivity.isFinishing && mDatabind.loadLayout.isShown()) {
-            mDatabind.loadLayout.loadingView.stop()
-            mDatabind.loadLayout.loadingView.visibility = View.GONE
-            mDatabind.loadLayout.visibility = View.GONE
-        }
-    }
-
     override fun projectTabDataSuccess(success: MutableList<TabBean>) {
         if (!mRxAppCompatActivity.isFinishing) {
             val fragmentList = mutableListOf<Fragment>()
@@ -142,22 +127,21 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
                 ResourcesManager.getColor(R.color.library_color_FF198CFF),
                 ScreenManager.dpToPx(40f),
                 ScreenManager.dpToPx(20f),
-                error,
-                true
+                error
             )
             hideLoading()
         }
     }
 
     private fun initProjectTabData() {
-        showLoading()
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread(1000, {
-            if (RetrofitManager.isNetworkAvailable()) {
-                mViewModel.projectTabData()
-            } else {
-                projectTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
-            }
-        })
+//        showLoading()
+//        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+        if (RetrofitManager.isNetworkAvailable()) {
+            mViewModel.projectTabData()
+        } else {
+            projectTabDataError(resources.getString(R.string.library_please_check_the_network_connection))
+        }
+//        })
     }
 
     /**
@@ -174,4 +158,8 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
         }
     }
 
+    override fun onDestroy() {
+        ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
+        super.onDestroy()
+    }
 }

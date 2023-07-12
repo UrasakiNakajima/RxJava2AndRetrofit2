@@ -69,12 +69,6 @@
 
         </LinearLayout>
 
-        <com.phone.library_custom_view.custom_view.LoadingLayout
-            android:id="@+id/load_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
     </FrameLayout>
 
 </layout>
