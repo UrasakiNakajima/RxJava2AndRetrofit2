@@ -138,7 +138,11 @@ class SubResourceFragment :
     }
 
     override fun initLoadData() {
-        initSubResource(tabId, pageNum)
+        if (isFirstLoad) {
+            initSubResource(tabId, pageNum)
+            LogManager.i(TAG, "initLoadData*****$TAG")
+            isFirstLoad = false
+        }
     }
 
     override fun subResourceDataSuccess(success: MutableList<ArticleListBean>) {

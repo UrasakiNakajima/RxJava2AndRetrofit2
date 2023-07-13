@@ -51,7 +51,6 @@ abstract class BaseRxFragment : RxFragment(), IBaseView {
         mBaseApplication = mRxAppCompatActivity.application as BaseApplication
         initData()
         initViews()
-        initLoadData()
     }
 
     protected abstract fun initLayoutId(): Int
@@ -61,6 +60,11 @@ abstract class BaseRxFragment : RxFragment(), IBaseView {
     protected abstract fun initViews()
 
     protected abstract fun initLoadData()
+
+    override fun onResume() {
+        super.onResume()
+        initLoadData()
+    }
 
     override fun showLoading() {
         if (!mIsLoadView) {

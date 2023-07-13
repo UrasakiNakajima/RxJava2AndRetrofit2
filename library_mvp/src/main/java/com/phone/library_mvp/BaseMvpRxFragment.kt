@@ -12,6 +12,8 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : BaseRxFragment() {
 
     protected var url: String? = null
     protected var mBodyParams = ArrayMap<String, String>()
+    // 是否第一次加载
+    protected var isFirstLoad = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter = attachPresenter()

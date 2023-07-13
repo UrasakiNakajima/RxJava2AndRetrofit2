@@ -140,7 +140,11 @@ class SubProjectFragment :
     }
 
     override fun initLoadData() {
-        initSubProject(pageNum, tabId)
+        if (isFirstLoad) {
+            initSubProject(pageNum, tabId)
+            LogManager.i(TAG, "initLoadData*****$TAG")
+            isFirstLoad = false
+        }
     }
 
     override fun subProjectDataSuccess(success: MutableList<ArticleListBean>) {

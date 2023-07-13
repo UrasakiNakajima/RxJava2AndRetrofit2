@@ -56,7 +56,6 @@ open class BasePresenter<T> {
                 response = it
             }.onFailure {
                 it.printStackTrace()
-                response = ApiResponse2<T>()
                 val apiException = getApiException(it)
                 response.error_code = apiException.errorCode
                 response.reason = apiException.errorMessage
@@ -76,7 +75,6 @@ open class BasePresenter<T> {
                 response = it
             }.onFailure {
                 it.printStackTrace()
-                response = ApiResponse3<T>()
                 val apiException = getApiException(it)
                 response.error_code = apiException.errorCode
                 response.reason = apiException.errorMessage

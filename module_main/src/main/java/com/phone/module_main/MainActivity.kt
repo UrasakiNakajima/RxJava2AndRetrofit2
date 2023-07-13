@@ -11,8 +11,8 @@ import com.phone.library_base.base.IBaseView
 import com.phone.library_base.common.ConstantData
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_common.BuildConfig
-import com.phone.library_mvp.BaseMvpRxAppActivity
 import com.phone.library_common.adapter.ViewPager2Adapter
+import com.phone.library_mvp.BaseMvpRxAppActivity
 import com.phone.module_main.presenter.MainPresenterImpl
 import com.phone.module_main.view.IMainView
 
@@ -43,6 +43,13 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
     private var tevMine: TextView? = null
 
     private val fragmentList = mutableListOf<Fragment>()
+
+    private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+
+        override fun onPageSelected(position: Int) {
+            resetTabData(position)
+        }
+    }
 
     override fun initLayoutId(): Int {
         return R.layout.main_activity_main
@@ -93,16 +100,13 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
         tevMine = findViewById<View>(R.id.tev_mine) as TextView
 
         // ORIENTATION_HORIZONTAL：水平滑动（默认），ORIENTATION_VERTICAL：竖直滑动
-        mineViewPager2?.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL)
+        mineViewPager2?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        // 预加载所有的Fragment，但是只执行第一个Fragment onResmue 方法
+        mineViewPager2?.offscreenPageLimit = fragmentList.size
         // 适配
         mineViewPager2?.adapter =
             ViewPager2Adapter(fragmentList, getSupportFragmentManager(), getLifecycle())
-        mineViewPager2?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-
-            override fun onPageSelected(position: Int) {
-                resetTabData(position)
-            }
-        })
+        mineViewPager2?.registerOnPageChangeCallback(onPageChangeCallback)
         tevFirstPage?.setOnClickListener { v: View? ->
             resetTabData(
                 0
@@ -203,6 +207,11 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
         if (!mRxAppCompatActivity.isFinishing) {
             showToast(error, true)
         }
+    }
+
+    override fun onDestroy() {
+        mineViewPager2?.unregisterOnPageChangeCallback(onPageChangeCallback)
+        super.onDestroy()
     }
 
 }

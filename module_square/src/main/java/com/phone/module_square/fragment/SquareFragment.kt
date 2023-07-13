@@ -199,15 +199,19 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
     }
 
     override fun initLoadData() {
-        initSquareData("$currentPage")
-        LogManager.i(TAG, "SquareFragment initLoadData")
-
 //        startAsyncTask()
 
 //        //製造一個类强制转换异常（java.lang.ClassCastException）
 //        val user: User = User2()
 //        val user3 = user as User3
 //        LogManager.i(TAG, user3.toString())
+
+
+        if (isFirstLoad) {
+            initSquareData("$currentPage")
+            LogManager.i(TAG, "initLoadData*****$TAG")
+            isFirstLoad = false
+        }
     }
 
 //    private fun startAsyncTask() {

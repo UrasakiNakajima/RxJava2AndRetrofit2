@@ -19,7 +19,7 @@ class BaseUrlManagerInterceptor : Interceptor {
         val builder = originalRequest.newBuilder()
         //获取当前的url
         val oldUrl = originalRequest.url()
-        LogManager.i(TAG, "intercept:------------oldUrl---------->$oldUrl")
+//        LogManager.i(TAG, "intercept:------------oldUrl---------->$oldUrl")
 
         //获取头信息的集合如：jeapp ,njeapp ,mall
         val urlnameList = originalRequest.headers("urlname")
@@ -28,7 +28,7 @@ class BaseUrlManagerInterceptor : Interceptor {
             builder.removeHeader("urlname")
             //获取头信息中配置的value,如：manage或者mdffx
             val urlname = urlnameList[0]
-            LogManager.i(TAG, "intercept:-------urlname------$urlname")
+//            LogManager.i(TAG, "intercept:-------urlname------$urlname")
             var baseURL: HttpUrl? = null
             //根据头信息中配置的value,来匹配新的base_url地址
             urlname?.let {
@@ -54,7 +54,7 @@ class BaseUrlManagerInterceptor : Interceptor {
                 //				} else if ("mall".equals(urlname)) {
                 //					baseURL = HttpUrl.parse(ConstantData.MALL_URL);
                 //				}
-                LogManager.i(TAG, "intercept:-----oldUrl-----$oldUrl")
+//                LogManager.i(TAG, "intercept:-----oldUrl-----$oldUrl")
 
                 baseURL?.let {
                     //重建新的HttpUrl，需要重新设置的url部分
@@ -63,10 +63,10 @@ class BaseUrlManagerInterceptor : Interceptor {
                         .host(it.host()) //主机地址
                         .port(it.port()) //端口
                         .build()
-                    LogManager.i(TAG, "intercept:------scheme----" + it.scheme())
-                    LogManager.i(TAG, "intercept:-----host-----" + it.host())
-                    LogManager.i(TAG, "intercept:-----port-----" + it.port())
-                    LogManager.i(TAG, "intercept:-----newHttpUrl-----$newHttpUrl")
+//                    LogManager.i(TAG, "intercept:------scheme----" + it.scheme())
+//                    LogManager.i(TAG, "intercept:-----host-----" + it.host())
+//                    LogManager.i(TAG, "intercept:-----port-----" + it.port())
+//                    LogManager.i(TAG, "intercept:-----newHttpUrl-----$newHttpUrl")
 
                     //获取处理后的新newRequest
                     val newBuilder = builder.url(newHttpUrl)

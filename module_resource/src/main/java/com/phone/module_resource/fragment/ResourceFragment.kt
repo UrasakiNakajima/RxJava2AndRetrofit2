@@ -15,6 +15,7 @@ import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
 import com.phone.library_common.bean.TabBean
 import com.phone.library_base.common.ConstantData
+import com.phone.library_base.manager.LogManager
 import com.phone.library_common.manager.*
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ThreadPoolManager
@@ -128,7 +129,13 @@ class ResourceFragment :
 //        }
 
 //        LogManager.i(TAG, "ResourceFragment initLoadData")
-        initResourceTabData()
+
+
+        if (isFirstLoad) {
+            initResourceTabData()
+            LogManager.i(TAG, "initLoadData*****$TAG")
+            isFirstLoad = false
+        }
     }
 
     override fun resourceTabDataSuccess(success: MutableList<TabBean>) {
@@ -158,7 +165,9 @@ class ResourceFragment :
             }
 
             // ORIENTATION_HORIZONTAL：水平滑动（默认），ORIENTATION_VERTICAL：竖直滑动
-            mDatabind.mineViewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL)
+            mDatabind.mineViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            // 预加载所有的Fragment，但是只执行第一个Fragment onResmue 方法
+            mDatabind.mineViewPager2.offscreenPageLimit = fragmentList.size
             // 适配
             mDatabind.mineViewPager2.adapter =
                 ViewPager2Adapter(

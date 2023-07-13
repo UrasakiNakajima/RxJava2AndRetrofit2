@@ -2,7 +2,6 @@ package com.phone.library_mvvm
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +32,9 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
 
     protected val mDialogManager = DialogManager()
     protected var mIsLoadView = true
+    // 是否第一次加载
+    protected var isFirstLoad = true
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,8 +55,6 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         initData()
         initObservers()
         initViews()
-        mDatabind.root
-        initLoadData()
     }
 
     protected abstract fun initLayoutId(): Int
@@ -68,6 +68,11 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     protected abstract fun initViews()
 
     protected abstract fun initLoadData()
+
+    override fun onResume() {
+        super.onResume()
+        initLoadData()
+    }
 
     override fun showLoading() {
         if (!mIsLoadView) {

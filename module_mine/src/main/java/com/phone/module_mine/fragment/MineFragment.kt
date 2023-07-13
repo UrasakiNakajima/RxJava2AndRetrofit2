@@ -142,8 +142,11 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
 
     override fun initLoadData() {
-        initMine()
-        LogManager.i(TAG, "MineFragment initLoadData")
+        if (isFirstLoad) {
+            initMine()
+            LogManager.i(TAG, "initLoadData*****$TAG")
+            isFirstLoad = false
+        }
     }
 
     override fun attachPresenter() = MinePresenterImpl(this)

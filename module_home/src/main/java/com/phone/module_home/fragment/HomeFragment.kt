@@ -168,9 +168,6 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
     }
 
     override fun initLoadData() {
-        initFirstPage()
-        LogManager.i(TAG, "FirstPageFragment initLoadData")
-
         //		startAsyncTask()
 
 //        try {
@@ -181,6 +178,12 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
 //        } catch (Exception e) {
 //            ExceptionManager.getInstance().throwException(getRxAppCompatActivity(), e)
 //        }
+
+        if (isFirstLoad) {
+            initFirstPage()
+            LogManager.i(TAG, "initLoadData*****$TAG")
+            isFirstLoad = false
+        }
     }
 
     override fun attachPresenter(): HomePresenterImpl {

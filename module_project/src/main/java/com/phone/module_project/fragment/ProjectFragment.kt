@@ -87,7 +87,12 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
 //        }
 
 //        LogManager.i(TAG, "ProjectFragment initLoadData")
-        initProjectTabData()
+
+        if (isFirstLoad) {
+            initProjectTabData()
+            LogManager.i(TAG, "initLoadData*****$TAG")
+            isFirstLoad = false
+        }
     }
 
     override fun projectTabDataSuccess(success: MutableList<TabBean>) {
@@ -103,8 +108,11 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
                     arguments = bundle
                 })
             }
+
             // ORIENTATION_HORIZONTAL：水平滑动（默认），ORIENTATION_VERTICAL：竖直滑动
-            mDatabind.mineViewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL)
+            mDatabind.mineViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            // 预加载所有的Fragment，但是只执行第一个Fragment onResmue 方法
+            mDatabind.mineViewPager2.offscreenPageLimit = fragmentList.size
             // 适配
             mDatabind.mineViewPager2.adapter =
                 ViewPager2Adapter(
