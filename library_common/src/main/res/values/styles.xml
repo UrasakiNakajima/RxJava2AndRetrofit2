@@ -131,10 +131,10 @@
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="library_NoActionBarTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="library_NoActionBarTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/library_colorPrimary</item>
-        <item name="colorPrimaryDark">@color/library_colorPrimaryDark</item>
+        <item name="colorPrimary">@color/library_color_transparent</item>
+        <item name="colorPrimaryDark">@color/library_color_198CFF</item>
         <item name="colorAccent">@color/library_colorAccent</item>
 
         <!-- 启动白屏解决方案，这三行是重点 -->

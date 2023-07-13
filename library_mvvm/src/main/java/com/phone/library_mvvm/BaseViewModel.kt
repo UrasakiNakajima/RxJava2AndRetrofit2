@@ -42,7 +42,7 @@ open class BaseViewModel : ViewModel() {
 //                LogManager.i(TAG, "launch delay(1000)")
 //            }
 
-            var response: ApiResponse<T>
+            var response = ApiResponse<T>()
             runCatching {
                 block()
             }.onSuccess {
@@ -54,7 +54,7 @@ open class BaseViewModel : ViewModel() {
                 response.errorCode = apiException.errorCode
                 response.errorMsg = apiException.errorMessage
                 response.error = apiException
-            }.getOrDefault(ApiResponse<T>())
+            }.getOrDefault(response)
         }
 
     /**

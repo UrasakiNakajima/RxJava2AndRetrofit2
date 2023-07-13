@@ -20,9 +20,7 @@ import com.phone.library_base.manager.CrashHandlerManager
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.R
 import com.phone.library_base.manager.DialogManager
-import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ToolbarManager
-import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
 abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {

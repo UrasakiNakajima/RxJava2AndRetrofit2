@@ -1,31 +1,15 @@
 package com.phone.library_mvp
 
-import android.app.ActivityManager
-import android.content.Context.ACTIVITY_SERVICE
-import android.content.Intent
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.os.Looper
-import android.os.Process
 import android.util.ArrayMap
 import android.view.Gravity
-import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil.setContentView
 import com.gyf.immersionbar.ImmersionBar
-import com.phone.library_base.BaseApplication
 import com.phone.library_base.base.BaseRxAppActivity
-import com.phone.library_base.manager.ActivityPageManager
-import com.phone.library_base.manager.CrashHandlerManager
-import com.phone.library_base.manager.LogManager
-import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ToolbarManager
-import com.qmuiteam.qmui.widget.QMUILoadingView
-import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
 abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : BaseRxAppActivity() {
 

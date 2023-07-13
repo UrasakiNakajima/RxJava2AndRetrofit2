@@ -49,7 +49,7 @@ open class BasePresenter<T> {
      */
     protected suspend fun <T> executeRequest(block: suspend () -> ApiResponse2<T>): ApiResponse2<T> =
         withContext(Dispatchers.IO) {
-            var response: ApiResponse2<T>
+            var response = ApiResponse2<T>()
             runCatching {
                 block()
             }.onSuccess {
@@ -61,7 +61,7 @@ open class BasePresenter<T> {
                 response.error_code = apiException.errorCode
                 response.reason = apiException.errorMessage
                 response.error = apiException
-            }.getOrDefault(ApiResponse2<T>())
+            }.getOrDefault(response)
         }
 
     /**
@@ -69,7 +69,7 @@ open class BasePresenter<T> {
      */
     protected suspend fun <T> executeRequest2(block: suspend () -> ApiResponse3<T>): ApiResponse3<T> =
         withContext(Dispatchers.IO) {
-            var response: ApiResponse3<T>
+            var response = ApiResponse3<T>()
             runCatching {
                 block()
             }.onSuccess {
@@ -81,7 +81,7 @@ open class BasePresenter<T> {
                 response.error_code = apiException.errorCode
                 response.reason = apiException.errorMessage
                 response.error = apiException
-            }.getOrDefault(ApiResponse3<T>())
+            }.getOrDefault(response)
         }
 
     /**

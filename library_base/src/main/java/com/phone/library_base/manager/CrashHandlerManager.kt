@@ -20,7 +20,6 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
 
     //系统默认的UncaughtException处理类
     private var mDefaultHandler: Thread.UncaughtExceptionHandler? = null
-    private var instance: CrashHandlerManager? = null
 
     /*使用Properties 来保存设备的信息和错误堆栈信息*/
     private val mDeviceCrashInfo = Properties()

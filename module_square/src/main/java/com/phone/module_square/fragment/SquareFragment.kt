@@ -4,13 +4,10 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.luck.picture.lib.utils.ToastUtils.showToast
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.base.BaseRxAppActivity
 import com.phone.library_base.manager.LogManager
@@ -281,28 +278,31 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
             permissions,
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
-                    //所有的权限都授予
-                    if (number == 1) {
-                        val baseRxAppActivity =
-                            mRxAppCompatActivity as BaseRxAppActivity
-                        baseRxAppActivity.mActivityPageManager?.exitApp()
-                    } else if (number == 2) {
-                        //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                        val userBean: UserBean =
-                            UserBean2()
-                        val user3 = userBean as UserBean3
-                        LogManager.i(TAG, user3.toString())
-                    } else if (number == 3) {
-                        try {
-                            //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+                    ThreadPoolManager.instance().createSyncThreadPool({
+                        //所有的权限都授予
+                        if (number == 1) {
+                            val baseRxAppActivity =
+                                mRxAppCompatActivity as BaseRxAppActivity
+                            baseRxAppActivity.mActivityPageManager?.exitApp()
+                        } else if (number == 2) {
+                            LogManager.i(TAG, "thread name*****${Thread.currentThread().name}")
+                            //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
                             val userBean: UserBean =
                                 UserBean2()
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
-                        } catch (e: Exception) {
-                            ExceptionManager.instance().throwException(e)
+                        } else if (number == 3) {
+                            try {
+                                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+                                val userBean: UserBean =
+                                    UserBean2()
+                                val user3 = userBean as UserBean3
+                                LogManager.i(TAG, user3.toString())
+                            } catch (e: Exception) {
+                                ExceptionManager.instance().throwException(e)
+                            }
                         }
-                    }
+                    })
                 }
 
                 override fun onNotCheckNoMorePromptError() {

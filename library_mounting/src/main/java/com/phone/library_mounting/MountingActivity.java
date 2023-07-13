@@ -55,8 +55,8 @@ public class MountingActivity extends BaseBindingRxAppActivity<MountingActivityM
             initLoadData();
             mDatabind.refreshLayout.finishRefresh(1000);
         });
-        mDatabind.magicIndicator.setBackgroundColor(ResourcesManager.getColor(R.color.base_color_transparent));
-        mDatabind.viewPager2.setBackgroundColor(ResourcesManager.getColor(R.color.base_color_transparent));
+//        mDatabind.magicIndicator.setBackgroundColor(ResourcesManager.getColor(R.color.library_color_transparent));
+        mDatabind.viewPager2.setBackgroundColor(ResourcesManager.getColor(R.color.library_color_transparent));
     }
 
     private void setMounting() {
