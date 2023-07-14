@@ -30,6 +30,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     IProjectView {
 
     private val TAG = ProjectFragment::class.java.simpleName
+    private lateinit var onPageChangeCallback: ViewPager2.OnPageChangeCallback
 
     override fun initLayoutId() = R.layout.project_fragment_project
 
@@ -114,17 +115,34 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
             // 预加载所有的Fragment，但是只执行第一个Fragment onResmue 方法
             mDatabind.mineViewPager2.offscreenPageLimit = fragmentList.size
             // 适配
-            mDatabind.mineViewPager2.adapter =
-                ViewPager2Adapter(
-                    fragmentList,
-                    mRxAppCompatActivity.getSupportFragmentManager(),
-                    getLifecycle()
-                )
+            mDatabind.mineViewPager2.adapter = ViewPager2Adapter(
+                fragmentList, mRxAppCompatActivity.getSupportFragmentManager(), getLifecycle()
+            )
             //下划线绑定
             val commonNavigator = CommonNavigator(mRxAppCompatActivity)
             commonNavigator.adapter = getCommonNavigatorAdapter(success)
             mDatabind.tabLayout.navigator = commonNavigator
-            MagicIndicatorManager.bindForViewPager2(mDatabind.mineViewPager2, mDatabind.tabLayout)
+            onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    mDatabind.tabLayout.onPageScrollStateChanged(state)
+                }
+
+                override fun onPageScrolled(
+                    position: Int, positionOffset: Float, positionOffsetPixels: Int
+                ) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                    mDatabind.tabLayout.onPageScrolled(
+                        position, positionOffset, positionOffsetPixels
+                    )
+                }
+
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    mDatabind.tabLayout.onPageSelected(position)
+                }
+            }
+            MagicIndicatorManager.bindForViewPager2(mDatabind.mineViewPager2, onPageChangeCallback)
             hideLoading()
         }
     }
@@ -171,6 +189,9 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     }
 
     override fun onDestroy() {
+        MagicIndicatorManager.unBindForViewPager2(
+            mDatabind.mineViewPager2, onPageChangeCallback
+        )
         ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
         super.onDestroy()
     }

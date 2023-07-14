@@ -31,7 +31,6 @@ import com.phone.library_network.bean.DownloadState
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareFragmentSquareBinding
 import com.phone.module_square.view_model.SquareViewModelImpl
-import java.nio.file.Files.exists
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -278,28 +277,26 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
      */
     private fun initRxPermissions(number: Int) {
         val rxPermissionsManager = RxPermissionsManager.instance()
-        rxPermissionsManager.initRxPermissions2(this,
+        rxPermissionsManager.initRxPermissions2(
+            this,
             permissions,
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
                     ThreadPoolManager.instance().createSyncThreadPool({
                         //所有的权限都授予
                         if (number == 1) {
-                            val baseRxAppActivity =
-                                mRxAppCompatActivity as BaseRxAppActivity
+                            val baseRxAppActivity = mRxAppCompatActivity as BaseRxAppActivity
                             baseRxAppActivity.mActivityPageManager?.exitApp()
                         } else if (number == 2) {
                             LogManager.i(TAG, "thread name*****${Thread.currentThread().name}")
                             //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                            val userBean: UserBean =
-                                UserBean2()
+                            val userBean: UserBean = UserBean2()
                             val user3 = userBean as UserBean3
                             LogManager.i(TAG, user3.toString())
                         } else if (number == 3) {
                             try {
                                 //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
-                                val userBean: UserBean =
-                                    UserBean2()
+                                val userBean: UserBean = UserBean2()
                                 val user3 = userBean as UserBean3
                                 LogManager.i(TAG, user3.toString())
                             } catch (e: Exception) {

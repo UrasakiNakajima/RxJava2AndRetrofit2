@@ -1,7 +1,6 @@
 package com.phone.module_resource.fragment
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
@@ -9,7 +8,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ScreenManager
-import com.phone.library_common.adapter.TabFragmentStatePagerAdapter
 import com.phone.library_common.adapter.TabNavigatorAdapter
 import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
@@ -32,6 +30,7 @@ class ResourceFragment :
     BaseMvvmRxFragment<ResourceViewModelImpl, ResourceFragmentResourceBinding>(), IResourceView {
 
     private val TAG = ResourceFragment::class.java.simpleName
+    private lateinit var onPageChangeCallback: ViewPager2.OnPageChangeCallback
 
     override fun initLayoutId() = R.layout.resource_fragment_resource
 
@@ -169,17 +168,34 @@ class ResourceFragment :
             // 预加载所有的Fragment，但是只执行第一个Fragment onResmue 方法
             mDatabind.mineViewPager2.offscreenPageLimit = fragmentList.size
             // 适配
-            mDatabind.mineViewPager2.adapter =
-                ViewPager2Adapter(
-                    fragmentList,
-                    mRxAppCompatActivity.getSupportFragmentManager(),
-                    getLifecycle()
-                )
+            mDatabind.mineViewPager2.adapter = ViewPager2Adapter(
+                fragmentList, mRxAppCompatActivity.getSupportFragmentManager(), getLifecycle()
+            )
             //下划线绑定
             val commonNavigator = CommonNavigator(mRxAppCompatActivity)
             commonNavigator.adapter = getCommonNavigatorAdapter(dataList)
             mDatabind.tabLayout.navigator = commonNavigator
-            MagicIndicatorManager.bindForViewPager2(mDatabind.mineViewPager2, mDatabind.tabLayout)
+            onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    mDatabind.tabLayout.onPageScrollStateChanged(state)
+                }
+
+                override fun onPageScrolled(
+                    position: Int, positionOffset: Float, positionOffsetPixels: Int
+                ) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                    mDatabind.tabLayout.onPageScrolled(
+                        position, positionOffset, positionOffsetPixels
+                    )
+                }
+
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    mDatabind.tabLayout.onPageSelected(position)
+                }
+            }
+            MagicIndicatorManager.bindForViewPager2(mDatabind.mineViewPager2, onPageChangeCallback)
             hideLoading()
         }
     }
@@ -226,6 +242,7 @@ class ResourceFragment :
     }
 
     override fun onDestroy() {
+        MagicIndicatorManager.unBindForViewPager2(mDatabind.mineViewPager2, onPageChangeCallback)
         ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
         super.onDestroy()
     }

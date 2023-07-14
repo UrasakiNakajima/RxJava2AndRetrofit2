@@ -14,7 +14,7 @@ class SoftKeyboardManager(activity: Activity) {
     private val TAG = SoftKeyboardManager::class.java.simpleName
 
     //activity的根视图
-    private lateinit var rootView: View
+    private var rootView: View
 
     //纪录根视图的显示高度
     private var rootViewVisibleHeight = 0

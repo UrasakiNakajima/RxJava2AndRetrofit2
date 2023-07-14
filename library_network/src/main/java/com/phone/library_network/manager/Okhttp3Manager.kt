@@ -12,6 +12,8 @@ import com.phone.library_base.manager.MainThreadManager
 import com.phone.library_common.R
 import com.phone.library_network.bean.BaseResponse
 import com.phone.library_common.manager.MapManager
+import com.phone.library_network.interceptor.AddAccessTokenInterceptor
+import com.phone.library_network.interceptor.ReceivedAccessTokenInterceptor
 import okhttp3.*
 import okio.BufferedSink
 import org.json.JSONObject
@@ -37,8 +39,8 @@ class Okhttp3Manager private constructor() {
             .connectTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //连接超时
             .readTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //读取超时
             .writeTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //写入超时
-            .addInterceptor(com.phone.library_network.interceptor.AddAccessTokenInterceptor()) //拦截器用于设置header
-            .addInterceptor(com.phone.library_network.interceptor.ReceivedAccessTokenInterceptor()) //拦截器用于接收并持久化cookie
+            .addInterceptor(AddAccessTokenInterceptor()) //拦截器用于设置header
+            .addInterceptor(ReceivedAccessTokenInterceptor()) //拦截器用于接收并持久化cookie
             //                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
             .sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置（只有https请求需要配置）
             .hostnameVerifier(SSLSocketManager.hostnameVerifier()) //配置（只有https请求需要配置）
