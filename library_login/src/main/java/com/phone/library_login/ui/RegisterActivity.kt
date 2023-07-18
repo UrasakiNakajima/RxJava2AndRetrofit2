@@ -52,7 +52,7 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.library_color_000000))
         layoutBack?.setOnClickListener { finish() }
         imvHeadPortrait?.let {
-            ImageLoaderManager.displayRound(mRxAppCompatActivity, it, R.mipmap.login_ic_launcher_round)
+            ImageLoaderManager.displayRound(mRxAppCompatActivity, it, R.mipmap.library_picture37)
         }
         tevRegister?.setOnClickListener { initRegister() }
     }
