@@ -35,8 +35,12 @@
         <td><img src="/screenshot/screenshot_mine.jpg"></td>
     </tr>
 </table>
+<table>
+    <tr>
+        <td><img src="/screenshot/screenshot_thread_pool.jpg"></td>
+    </tr>
+</table>
 
-**1. ![Image](/screenshot/screenshot_thread_pool.jpg) **
 
 
 # RxJava2AndRetrofit2
@@ -115,9 +119,9 @@ Android App进行组件化改造的框架——支持模块间的路由、通信
 ARouter实现路由跳转集成请查看https://github.com/alibaba/ARouter
 
 ## 集成开发模式和组件开发模式转换
-**1. 首先打开Android项目的gradle.properties文件![Image](/screenshot/screenshot_gradle_properties_configuration.jpg) ，
-然后将isModule改为你需要的开发模式（true/false）， 然后点击Sync Project按钮同步项目；**
-**2. ![Image](/screenshot/screenshot_select_module.jpg) 在运行之前，请先按照图中选择一个能够运行的组件；**
+1. 首先打开Android项目的gradle.properties文件![Image](/screenshot/screenshot_gradle_properties_configuration.jpg) ，
+然后将isModule改为你需要的开发模式（true/false）， 然后点击Sync Project按钮同步项目；
+2. ![Image](/screenshot/screenshot_select_module.jpg) 在运行之前，请先按照图中选择一个能够运行的组件；
 
 ### app空壳工程下的组件化isModule配置
 <table>
