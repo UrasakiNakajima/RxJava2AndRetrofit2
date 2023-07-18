@@ -4,16 +4,12 @@
     <tr>
         <td><img src="/screenshot/screenshot_launch.jpg"></td>
         <td><img src="/screenshot/screenshot_login.jpg"></td>
-    </tr>
-</table>
-<table>
-    <tr>
         <td><img src="/screenshot/screenshot_register.jpg"></td>
-        <td><img src="/screenshot/screenshot_home.jpg"></td>
     </tr>
 </table>
 <table>
     <tr>
+        <td><img src="/screenshot/screenshot_home.jpg"></td>
         <td><img src="/screenshot/screenshot_project.jpg"></td>
         <td><img src="/screenshot/screenshot_square.jpg"></td>
     </tr>
@@ -22,16 +18,12 @@
     <tr>
         <td><img src="/screenshot/screenshot_android_and_js.jpg"></td>
         <td><img src="/screenshot/screenshot_edit_text_input_limits.jpg"></td>
-    </tr>
-</table>
-<table>
-    <tr>
         <td><img src="/screenshot/screenshot_edit_text_input_limits2.jpg"></td>
-        <td><img src="/screenshot/screenshot_bridge.jpg"></td>
     </tr>
 </table>
 <table>
     <tr>
+        <td><img src="/screenshot/screenshot_bridge.jpg"></td>
         <td><img src="/screenshot/screenshot_picker_view.jpg"></td>
         <td><img src="/screenshot/screenshot_kotlin_coroutine.jpg"></td>
     </tr>
@@ -40,11 +32,11 @@
     <tr>
         <td><img src="/screenshot/screenshot_base64_and_file.jpg"></td>
         <td><img src="/screenshot/screenshot_resource.jpg"></td>
+        <td><img src="/screenshot/screenshot_mine.jpg"></td>
     </tr>
 </table>
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_mine.jpg"></td>
         <td><img src="/screenshot/screenshot_thread_pool.jpg"></td>
     </tr>
 </table>
@@ -125,9 +117,9 @@ Android App进行组件化改造的框架——支持模块间的路由、通信
 ARouter实现路由跳转集成请查看https://github.com/alibaba/ARouter
 
 ## 集成开发模式和组件开发模式转换
-**1、首先打开Android项目的gradle.properties文件![Image](/screenshot/screenshot_gradle_properties_configuration.jpg) ，
-然后将isModule改为你需要的开发模式（true/false）， 然后点击Sync Project按钮同步项目；**
-**2、![Image](/screenshot/screenshot_select_module.jpg) 在运行之前，请先按照图中选择一个能够运行的组件；**
+1、首先打开Android项目的gradle.properties文件![Image](/screenshot/screenshot_gradle_properties_configuration.jpg) ，
+然后将isModule改为你需要的开发模式（true/false）， 然后点击Sync Project按钮同步项目；
+2、![Image](/screenshot/screenshot_select_module.jpg) 在运行之前，请先按照图中选择一个能够运行的组件；
 
 ### app空壳工程下的组件化isModule配置
 <table>
