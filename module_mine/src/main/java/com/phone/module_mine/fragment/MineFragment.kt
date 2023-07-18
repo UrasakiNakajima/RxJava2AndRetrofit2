@@ -76,12 +76,6 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
             rcvData = it.findViewById(R.id.rcv_data)
             loadLayout = it.findViewById(R.id.load_layout)
 
-            tevTitle?.setOnClickListener(object : View.OnClickListener {
-
-                override fun onClick(v: View?) {
-                    ARouter.getInstance().build(ConstantData.Route.ROUTE_USER_DATA).navigation()
-                }
-            })
             tevLogout?.setOnClickListener {
                 SharedPreferencesManager.put("isLogin", false)
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_LOGIN).navigation()

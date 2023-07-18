@@ -1,5 +1,6 @@
 
-# 应用截图
+# 应用截图（页面效果一般，不过看这个项目看的不是页面，主要学习的是Kotlin+RxJava2+Retrofit2+MVP架构+组件化
+# 和Kotlin+Retrofit2+协程+MVVM架构+组件化的封装）
 <table>
     <tr>
         <td><img src="/screenshot/screenshot_launch.jpg" />
@@ -114,11 +115,11 @@ library_mvvm组件是MVVM基础库等等；
 Application，会编译出错，需要解决冲突。可以使用tools:replace="android:name"解决，因为App编译最终只会允许声明一个Application。
 
 ### 组件化的核心就是解耦，所以组件间是不能有依赖的，那么如何实现组件间的页面跳转呢？
-例如 在首页模块 点击 购物车按钮 需要跳转到 购物车模块的购物车页面，两个模块之间没有依赖，也就说不能直接使用显示启动来打开购物车Activity，
+例如：在Square模块点击thread pool按钮需要跳转到mine模块的ThreadPoolActivity，两个模块之间没有依赖，也就说不能直接使用显示启动来打开ThreadPoolActivity，
 那么隐式启动呢？隐式启动是可以实现跳转的，但是隐式Intent需要通过AndroidManifest配置和管理，协作开发显得比较麻烦。 这里我们采用业界通用
-的方式—路由。比较著名的路由框架 有阿里的ARouter、美团的WMRouter，它们原理基本是一致的。这里我们采用使用更广泛的ARouter：“一个用于帮助
+的方式—路由。比较著名的路由框架有阿里的ARouter、美团的WMRouter，它们原理基本是一致的。这里我们采用使用更广泛的ARouter：“一个用于帮助
 Android App进行组件化改造的框架——支持模块间的路由、通信、解耦”。
-ARouter实现路由跳转集成请查看https://github.com/alibaba/ARouter
+ARouter实现路由跳转集成请查看https://github.com/alibaba/ARouter。
 
 ## 集成开发模式和组件开发模式转换
 1. 首先打开Android项目的gradle.properties文件![Image](/screenshot/screenshot_gradle_properties_configuration.jpg) ，
@@ -166,14 +167,13 @@ Model-View-ViewModel，View指绿色的Activity/Fragment，主要负责界面显
 的引用，更不会在ViewModel中通过UI控件的引用去做更新UI的事情。ViewModel就是专注于业务的逻辑处理，做的事情也都只是对数据的操作（这些数据绑定
 在相应的控件上会自动去更改UI）。同时DataBinding框架已经支持双向绑定，让我们可以通过双向绑定获取View层反馈给ViewModel层的数据，并对这些
 数据上进行操作。关于对UI控件事件的处理，我们也希望能把这些事件处理绑定到控件上，并把这些事件的处理统一化，为此我们通过BindingAdapter对一些
-常用的事件做了封装，把一个个事件封装成一个个Command，对于每个事件我们用一个ReplyCommand 去处理就行了，ReplyCommand 会把你可能需要的数据
+常用的事件做了封装，把一个个事件封装成一个个Command，对于每个事件我们用一个ReplyCommand去处理就行了，ReplyCommand会把你可能需要的数据
 带给你，这使得我们在ViewModel层处理事件的时候只需要关心处理数据就行了。再强调一遍： ViewModel不做和UI相关的事。
 
 ### Model
 * Model层最大的特点是被赋予了数据获取的职责，与我们平常Model层只定义实体对象的行为截然不同。实例中，数据的获取、存储、数据状态变化都是Model层
-的任务。Model包括实体模型（Bean）、Retrofit的Service ，获取网络数据接口，本地存储（增删改查）接口，数据变化监听等。Model提供数据获取接口
+的任务。Model包括实体模型（Bean）、Retrofit的Service，获取网络数据接口，本地存储（增删改查）接口，数据变化监听等。Model提供数据获取接口
 供ViewModel调用，经数据转换和操作并最终映射绑定到View层某个UI元素的属性上。
-* 
 
 
 

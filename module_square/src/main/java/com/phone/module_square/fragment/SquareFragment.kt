@@ -185,6 +185,10 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                 //Jump with parameters
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_JSBRIDGE).navigation()
             }
+            tevThreadPool.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL).navigation()
+            }
             tevThreeLevelLinkageList.setOnClickListener {
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
             }
