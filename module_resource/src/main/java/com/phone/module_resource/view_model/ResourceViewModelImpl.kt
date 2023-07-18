@@ -19,7 +19,6 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
     private val model = ResourceModelImpl()
 
     val tabRxFragment = SingleLiveData<State<MutableList<TabBean>>>()
-    val tabRxActivity = SingleLiveData<State<MutableList<TabBean>>>()
 
     override fun resourceTabData() {
         //在Android MVVM架构的ViewModel中启动一个新协程（如果你的项目架构是MVVM架构，则推荐在ViewModel中使用），

@@ -194,6 +194,7 @@ class VideoViewActivity : BaseRxAppActivity() {
             VIDEO_TYPE_FILE_PATH ->
                 /*设置播放源*/
                 mvideoView.setVideoPath(url)
+
             VIDEO_TYPE_URI ->
                 /*设置播放源*/
                 mvideoView.setVideoURI(Uri.parse(url))
@@ -335,7 +336,9 @@ class VideoViewActivity : BaseRxAppActivity() {
             bitmap = retriever.frameAtTime
 
             val finalBitmap = bitmap
-            Observable.empty<Any>().subscribeOn(AndroidSchedulers.mainThread())
+            Observable
+                .empty<Any>()
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .doOnComplete {
                     placeHolder.setImageBitmap(finalBitmap)
                     retriever.release()

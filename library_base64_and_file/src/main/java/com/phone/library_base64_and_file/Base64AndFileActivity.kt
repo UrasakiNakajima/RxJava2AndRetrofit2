@@ -286,7 +286,8 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
             LogManager.i(TAG, "threadName*****" + Thread.currentThread().name)
             showLoading()
             emitter.onNext(0)
-        }, BackpressureStrategy.BUFFER).subscribeOn(AndroidSchedulers.mainThread()) //给上面分配了UI线程
+        }, BackpressureStrategy.BUFFER)
+            .subscribeOn(AndroidSchedulers.mainThread()) //给上面分配了UI线程
             //                .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
             //                .doOnNext(new Consumer<Integer>() {
             //                    @Override
@@ -447,14 +448,17 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
             //                        return bitmapCompressedRecover;
             //                    }
             //                })
-            .observeOn(AndroidSchedulers.mainThread()).doOnNext { base64AndFileBean ->
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { base64AndFileBean ->
                 LogManager.i(TAG, "threadName11*****" + Thread.currentThread().name)
                 tevBase64ToPicture?.visibility = View.GONE
                 imvBase64ToPicture?.visibility = View.VISIBLE
                 imvBase64ToPicture?.setImageBitmap(base64AndFileBean.bitmapCompressedRecover)
-            }.observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
+            }
+            .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
             //解决RxJava2导致的内存泄漏问题
-            .compose(bindUntilEvent(ActivityEvent.DESTROY)).subscribe { base64AndFileBean ->
+            .compose(bindUntilEvent(ActivityEvent.DESTROY))
+            .subscribe { base64AndFileBean ->
                 ossPutSaveFile(base64AndFileBean.fileCompressedRecover)
             }
     }
@@ -523,7 +527,8 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
                     } //                        .subscribeOn(Schedulers.io()) //给上面分配了异步线程
                         .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
                         //解决RxJava2导致的内存泄漏问题
-                        .compose(bindUntilEvent(ActivityEvent.DESTROY)).subscribe {
+                        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                        .subscribe {
                             LogManager.i(
                                 TAG, "onSuccess threadName3*****" + Thread.currentThread().name
                             )
@@ -557,7 +562,8 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
                     } //                        .subscribeOn(Schedulers.io()) //给上面分配了异步线程
                         .observeOn(AndroidSchedulers.mainThread()) //给下面分配了UI线程
                         //解决RxJava2导致的内存泄漏问题
-                        .compose(bindUntilEvent(ActivityEvent.DESTROY)).subscribe {
+                        .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                        .subscribe {
                             LogManager.i(
                                 TAG, "onFailure threadName3*****" + Thread.currentThread().name
                             )

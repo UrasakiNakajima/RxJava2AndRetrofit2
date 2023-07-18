@@ -1,14 +1,16 @@
 package com.phone.module_square.ui
 
-import android.view.View
+import android.content.Context
+import android.os.Handler
+import android.os.Message
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.phone.library_mvvm.BaseMvvmAppRxActivity
-import com.phone.library_network.bean.State
 import com.phone.library_base.common.ConstantData
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_mvvm.BaseMvvmAppRxActivity
+import com.phone.library_network.bean.State
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareActivityKotlinCoroutineBinding
 import com.phone.module_square.view_model.CoroutineViewModel
@@ -27,6 +29,7 @@ class KotlinCoroutineActivity :
 
     companion object {
         private val TAG = KotlinCoroutineActivity::class.java.simpleName
+        private var mContext: Context? = null //静态变量会造成内存泄漏（测试内存泄漏）
     }
 
     var mJob: Job? = null
@@ -38,8 +41,18 @@ class KotlinCoroutineActivity :
         ViewModelProvider(mRxAppCompatActivity).get(CoroutineViewModel::class.java)
 
     override fun initData() {
-
+        mContext = this@KotlinCoroutineActivity
     }
+
+    /**
+     * 测试内存泄漏
+     */
+    private val mHandler: Handler = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            LogManager.i(TAG, "handleMessage*****${msg.obj}")
+        }
+    }
+
 
     override fun initObservers() {
         mViewModel.executeSuccess.observe(this, {
@@ -83,6 +96,17 @@ class KotlinCoroutineActivity :
         mDatabind.tevStartLifecycleScope.setOnClickListener {
             startLifecycleScope()
         }
+        mDatabind.tevStartProcessMessage.setOnClickListener {
+            LogManager.i(TAG, "tevStartProcessMessage")
+            processMessage()
+        }
+    }
+
+    private fun processMessage() {
+        val message = Message.obtain()
+        message.what = 10
+        message.obj = "object"
+        mHandler.sendMessageDelayed(message, 30 * 1000)
     }
 
     private fun startRunBlocking() {
@@ -288,6 +312,8 @@ class KotlinCoroutineActivity :
         mJob?.cancel()
         mCoroutineScope?.cancel()
         mMainScope?.cancel()
+//        mHandler.removeCallbacksAndMessages(null)
+//        mContext = null
         super.onDestroy()
     }
 

@@ -77,6 +77,7 @@ class RetrofitManager private constructor() {
             .connectTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //连接超时
             .readTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //读取超时
             .writeTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //写入超时
+            .cache(cache)
             .addInterceptor(CacheControlInterceptor())
             .addInterceptor(AddAccessTokenInterceptor()) //拦截器用于设置header
             .addInterceptor(ReceivedAccessTokenInterceptor()) //拦截器用于接收并持久化cookie
@@ -85,13 +86,15 @@ class RetrofitManager private constructor() {
             //                .addInterceptor(headerInterceptor)
 //            .addInterceptor(loggingInterceptor)
             //                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
-            .cache(cache).sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置
+            .sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置
             .hostnameVerifier(SSLSocketManager.hostnameVerifier()) //配置
             //                .proxy(Proxy.NO_PROXY)
             .build()
 
         // 初始化Retrofit
-        mRetrofit = Retrofit.Builder().client(client).baseUrl(ConstantUrl.BASE_URL)
+        mRetrofit = Retrofit.Builder()
+            .client(client)
+            .baseUrl(ConstantUrl.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     }
@@ -334,7 +337,9 @@ class RetrofitManager private constructor() {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach().subscribeOn(Schedulers.io())
+        observable
+            .onTerminateDetach()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //AutoDispose的关键语句
             .`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(appCompatActivity)))
             .subscribe({ responseBody ->
@@ -364,7 +369,9 @@ class RetrofitManager private constructor() {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach().subscribeOn(Schedulers.io())
+        observable
+            .onTerminateDetach()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //AutoDispose的关键语句（解决RxJava2导致的内存泄漏的）
             .`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(fragment)))
             .subscribe({ responseBody ->
@@ -411,7 +418,9 @@ class RetrofitManager private constructor() {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach().subscribeOn(Schedulers.io())
+        observable
+            .onTerminateDetach()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
             .compose(rxAppCompatActivity.bindToLifecycle()).subscribe({ responseBody ->
                 val responseString = responseBody.string()
@@ -471,7 +480,9 @@ class RetrofitManager private constructor() {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach().subscribeOn(Schedulers.io())
+        observable
+            .onTerminateDetach()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
             .compose(rxAppCompatActivity.bindUntilEvent(ActivityEvent.DESTROY))
             .subscribe({ responseBody ->
@@ -501,7 +512,9 @@ class RetrofitManager private constructor() {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach().subscribeOn(Schedulers.io())
+        observable
+            .onTerminateDetach()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
             .compose(rxFragment.bindToLifecycle()).subscribe({ responseBody ->
                 val responseString = responseBody.string()
@@ -561,7 +574,9 @@ class RetrofitManager private constructor() {
         observable: Observable<ResponseBody>,
         onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
     ) {
-        observable.onTerminateDetach().subscribeOn(Schedulers.io())
+        observable
+            .onTerminateDetach()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
             .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY)).subscribe({ responseBody ->
                 val responseString = responseBody.string()
@@ -624,9 +639,11 @@ class RetrofitManager private constructor() {
         progressHandler: DownloadProgressHandler
     ) {
         val downloadInfo = DownloadInfo(null, null, null, null, null, null, null)
-        observable.subscribeOn(Schedulers.io())
+        observable
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
             //解决RxJava2导致的内存泄漏问题
-            .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY)).observeOn(Schedulers.io())
+            .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY))
             .subscribe({
                 var inputStream: InputStream? = null
                 var bis: BufferedInputStream? = null
@@ -805,7 +822,9 @@ class RetrofitManager private constructor() {
         onDownloadCallBack: OnDownloadCallBack
     ) {
         val downloadInfo = DownloadInfo(null, null, null, null, null, null, null)
-        observable.subscribeOn(Schedulers.io())
+        observable
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             //解决RxJava2导致的内存泄漏问题
             .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY))
             .flatMap(object : Function<ResponseBody, ObservableSource<DownloadInfo?>> {
@@ -882,7 +901,7 @@ class RetrofitManager private constructor() {
                         }
                     })
                 }
-            }).observeOn(AndroidSchedulers.mainThread())
+            })
             .subscribe({
                 LogManager.i(TAG, "onNext downloadInfo******${downloadInfo.progress}")
                 onDownloadCallBack.onProgress(

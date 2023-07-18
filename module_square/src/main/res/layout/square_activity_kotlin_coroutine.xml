@@ -163,6 +163,21 @@
                 android:textColor="@color/library_color_FFFFFFFF"
                 android:textSize="@dimen/base_sp_15" />
 
+            <TextView
+                android:id="@+id/tev_start_process_message"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/base_dp_45"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/base_dp_10"
+                android:background="@drawable/library_corners_10_color_ffffc73b"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingStart="@dimen/base_dp_15"
+                android:paddingEnd="@dimen/base_dp_15"
+                android:text="startProcessMessage"
+                android:textColor="@color/library_color_FFFFFFFF"
+                android:textSize="@dimen/base_sp_15" />
+
 
             <View
                 android:layout_width="match_parent"

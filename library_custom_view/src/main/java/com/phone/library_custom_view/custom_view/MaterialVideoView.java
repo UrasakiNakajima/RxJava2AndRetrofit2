@@ -324,7 +324,9 @@ public class MaterialVideoView extends LinearLayout
                     bitmap = retriever.getFrameAtTime();
 
                     final Bitmap finalBitmap = bitmap;
-                    Observable.empty().subscribeOn(AndroidSchedulers.mainThread())
+                    Observable
+                            .empty()
+                            .subscribeOn(AndroidSchedulers.mainThread())
                             .doOnComplete(new Action() {
                                 @Override
                                 public void run() {

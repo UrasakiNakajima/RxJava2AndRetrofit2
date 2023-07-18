@@ -19,38 +19,40 @@
     </data>
 
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ScrollView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/base_dp_48"
+            android:background="@color/library_color_FF198CFF"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="vertical"
+            app:contentInsetStart="0dp">
+
+            <TextView
+                android:id="@+id/tev_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_dp_48"
+                android:gravity="center"
+                android:text="@string/library_square"
+                android:textColor="@color/library_color_FFFFFFFF"
+                android:textSize="@dimen/base_sp_20" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_48"
-                    android:background="@color/library_color_FF198CFF"
-                    android:minHeight="?attr/actionBarSize"
-                    android:orientation="vertical"
-                    app:contentInsetStart="0dp">
-
-                    <TextView
-                        android:id="@+id/tev_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/base_dp_48"
-                        android:gravity="center"
-                        android:text="@string/library_square"
-                        android:textColor="@color/library_color_FFFFFFFF"
-                        android:textSize="@dimen/base_sp_20" />
-
-                </androidx.appcompat.widget.Toolbar>
 
                 <View
                     android:layout_width="match_parent"
@@ -347,8 +349,8 @@
 
             </LinearLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-    </FrameLayout>
+    </LinearLayout>
 
 </layout>
