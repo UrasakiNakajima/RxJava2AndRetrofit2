@@ -4,18 +4,46 @@
     <tr>
         <td><img src="/screenshot/screenshot_launch.jpg"></td>
         <td><img src="/screenshot/screenshot_login.jpg"></td>
+    </tr>
+</table>
+<table>
+    <tr>
         <td><img src="/screenshot/screenshot_register.jpg"></td>
         <td><img src="/screenshot/screenshot_home.jpg"></td>
+    </tr>
+</table>
+<table>
+    <tr>
         <td><img src="/screenshot/screenshot_project.jpg"></td>
         <td><img src="/screenshot/screenshot_square.jpg"></td>
+    </tr>
+</table>
+<table>
+    <tr>
         <td><img src="/screenshot/screenshot_android_and_js.jpg"></td>
         <td><img src="/screenshot/screenshot_edit_text_input_limits.jpg"></td>
+    </tr>
+</table>
+<table>
+    <tr>
         <td><img src="/screenshot/screenshot_edit_text_input_limits2.jpg"></td>
         <td><img src="/screenshot/screenshot_bridge.jpg"></td>
+    </tr>
+</table>
+<table>
+    <tr>
         <td><img src="/screenshot/screenshot_picker_view.jpg"></td>
         <td><img src="/screenshot/screenshot_kotlin_coroutine.jpg"></td>
+    </tr>
+</table>
+<table>
+    <tr>
         <td><img src="/screenshot/screenshot_base64_and_file.jpg"></td>
         <td><img src="/screenshot/screenshot_resource.jpg"></td>
+    </tr>
+</table>
+<table>
+    <tr>
         <td><img src="/screenshot/screenshot_mine.jpg"></td>
         <td><img src="/screenshot/screenshot_thread_pool.jpg"></td>
     </tr>
@@ -96,7 +124,7 @@ Application，会编译出错，需要解决冲突。可以使用tools:replace="
 Android App进行组件化改造的框架——支持模块间的路由、通信、解耦”。
 ARouter实现路由跳转集成请查看https://github.com/alibaba/ARouter
 
-## 集成开发模式和组件开发模式转换``
+## 集成开发模式和组件开发模式转换
 **1、首先打开Android项目的gradle.properties文件![Image](/screenshot/screenshot_gradle_properties_configuration.jpg) ，
 然后将isModule改为你需要的开发模式（true/false）， 然后点击Sync Project按钮同步项目；**
 **2、![Image](/screenshot/screenshot_select_module.jpg) 在运行之前，请先按照图中选择一个能够运行的组件；**
@@ -104,15 +132,15 @@ ARouter实现路由跳转集成请查看https://github.com/alibaba/ARouter
 ### app空壳工程下的组件化isModule配置
 <table>
     <tr>
-        <td><img src="/screenshot/app_configuration.jpg"></td>
+        <td><img src="/screenshot/screenshot_app_configuration.jpg"></td>
     </tr>
 </table>
 
 ### module业务组件下的组件化isModule配置
 <table>
     <tr>
-        <td><img src="/screenshot/module_configuration1.jpg"></td>
-        <td><img src="/screenshot/module_configuration2.jpg"></td>
+        <td><img src="/screenshot/screenshot_module_configuration1.jpg"></td>
+        <td><img src="/screenshot/screenshot_module_configuration2.jpg"></td>
     </tr>
 </table>
 
@@ -154,26 +182,26 @@ Model-View-ViewModel，View指绿色的Activity/Fragment，主要负责界面显
 
 
 ## 除此以外，还有以下功能：
-1.Android 与JS 交互功能，博客地址https://blog.csdn.net/NakajimaFN/article/details/117927813?spm=1001.2014.3001.5502；  
-2.JSBridge 框架来实现Android 与H5 交互，博客地址https://blog.csdn.net/NakajimaFN/article/details/130908360?spm=1001.2014.3001.5502；  
-3.Room 数据库的使用与升级，博客地址https://blog.csdn.net/NakajimaFN/article/details/130901393?spm=1001.2014.3001.5502；  
-4.数据库加密（以Room 为例），博客地址https://blog.csdn.net/NakajimaFN/article/details/130912193?spm=1001.2014.3001.5502；  
-5.Android 进行NDK开发，实现JNI，以及编写C++与Java交互（Java调用本地函数）并编译出本地so动态库，博客地址https://blog.csdn.net/NakajimaFN/article/details/130894177?spm=1001.2014.3001.5502；  
-6.Android 项目调用第三方库so动态库，博客地址https://blog.csdn.net/NakajimaFN/article/details/130996742?spm=1001.2014.3001.5502；  
-7.Android CoordinatorLayout+AppBarLayout顶部栏吸顶效果的实现，博客地址https://blog.csdn.net/NakajimaFN/article/details/130892776?spm=1001.2014.3001.5502；  
-8.Android RxPermissions的使用，博客地址https://blog.csdn.net/NakajimaFN/article/details/124822900?spm=1001.2014.3001.5502；  
-9.Android Okhttp3.0及其以上版本忽略https证书，博客地址https://blog.csdn.net/NakajimaFN/article/details/124820012?spm=1001.2014.3001.5502；  
-10.Android 超清大尺寸图片压缩转Base64中卡顿/速度优化问题整理，博客地址https://blog.csdn.net/NakajimaFN/article/details/123952854?spm=1001.2014.3001.5502；  
-11.Android 屏幕适配，博客地址https://blog.csdn.net/NakajimaFN/article/details/117660342?spm=1001.2014.3001.5502；  
-12.Android Okhttp3的使用，博客地址https://blog.csdn.net/NakajimaFN/article/details/109074166?spm=1001.2014.3001.5502；  
-13.Android 实现沉浸式状态栏，博客地址https://blog.csdn.net/NakajimaFN/article/details/109119759?spm=1001.2014.3001.5502；  
-14.double 类型精度丢失问题以及解决方法，博客地址https://blog.csdn.net/NakajimaFN/article/details/125912091?spm=1001.2014.3001.5502；  
-15.double 精确的加减乘除运算，并保留5位小数，博客地址https://blog.csdn.net/NakajimaFN/article/details/126145751；  
-16.Android 捕获异常，并打印日志文件到本地，博客地址https://blog.csdn.net/NakajimaFN/article/details/125023500?spm=1001.2014.3001.5502；  
-17.RSA 加密的使用，博客地址https://blog.csdn.net/NakajimaFN/article/details/125913821?spm=1001.2014.3001.5502；  
-18.Mac 查看Android apk keystore文件签名信息，博客地址https://blog.csdn.net/NakajimaFN/article/details/125937113?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22125937113%22%2C%22source%22%3A%22NakajimaFN%22%7D；  
-19.Android 杀掉App所有相关的进程，并退出应用程序（彻底杀死App），博客地址https://blog.csdn.net/NakajimaFN/article/details/124820534?spm=1001.2014.3001.5502；  
-20.Android 获取手机系统版本号、获取手机型号、获取手机厂商、获取手机IMEI、获取手机CPU_ABI、获取手机唯一识别码，博客地址https://blog.csdn.net/NakajimaFN/article/details/125025659?spm=1001.2014.3001.5502；  
+1. Android与JS交互功能，博客地址https://blog.csdn.net/NakajimaFN/article/details/117927813?spm=1001.2014.3001.5502；  
+2. JSBridge框架来实现Android与H5交互，博客地址https://blog.csdn.net/NakajimaFN/article/details/130908360?spm=1001.2014.3001.5502；  
+3. Room数据库的使用与升级，博客地址https://blog.csdn.net/NakajimaFN/article/details/130901393?spm=1001.2014.3001.5502；  
+4. 数据库加密（以Room为例），博客地址https://blog.csdn.net/NakajimaFN/article/details/130912193?spm=1001.2014.3001.5502；  
+5. Android进行NDK开发，实现JNI，以及编写C++与Java交互（Java调用本地函数）并编译出本地so动态库，博客地址https://blog.csdn.net/NakajimaFN/article/details/130894177?spm=1001.2014.3001.5502；  
+6. Android项目调用第三方库so动态库，博客地址https://blog.csdn.net/NakajimaFN/article/details/130996742?spm=1001.2014.3001.5502；  
+7. Android CoordinatorLayout+AppBarLayout顶部栏吸顶效果的实现，博客地址https://blog.csdn.net/NakajimaFN/article/details/130892776?spm=1001.2014.3001.5502；  
+8. Android RxPermissions的使用，博客地址https://blog.csdn.net/NakajimaFN/article/details/124822900?spm=1001.2014.3001.5502；  
+9. Android Okhttp3.0及其以上版本忽略https证书，博客地址https://blog.csdn.net/NakajimaFN/article/details/124820012?spm=1001.2014.3001.5502；  
+10. Android超清大尺寸图片压缩转Base64中卡顿/速度优化问题整理，博客地址https://blog.csdn.net/NakajimaFN/article/details/123952854?spm=1001.2014.3001.5502；  
+11. Android屏幕适配，博客地址https://blog.csdn.net/NakajimaFN/article/details/117660342?spm=1001.2014.3001.5502；  
+12. AndroidOkhttp3的使用，博客地址https://blog.csdn.net/NakajimaFN/article/details/109074166?spm=1001.2014.3001.5502；  
+13. Android实现沉浸式状态栏，博客地址https://blog.csdn.net/NakajimaFN/article/details/109119759?spm=1001.2014.3001.5502；  
+14. double类型精度丢失问题以及解决方法，博客地址https://blog.csdn.net/NakajimaFN/article/details/125912091?spm=1001.2014.3001.5502；  
+15. double精确的加减乘除运算，并保留5位小数，博客地址https://blog.csdn.net/NakajimaFN/article/details/126145751；  
+16. Android捕获异常，并打印日志文件到本地，博客地址https://blog.csdn.net/NakajimaFN/article/details/125023500?spm=1001.2014.3001.5502；  
+17. RSA加密的使用，博客地址https://blog.csdn.net/NakajimaFN/article/details/125913821?spm=1001.2014.3001.5502；  
+18. Mac查看Android apk keystore文件签名信息，博客地址https://blog.csdn.net/NakajimaFN/article/details/125937113?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22125937113%22%2C%22source%22%3A%22NakajimaFN%22%7D；  
+19. Android杀掉App所有相关的进程，并退出应用程序（彻底杀死App），博客地址https://blog.csdn.net/NakajimaFN/article/details/124820534?spm=1001.2014.3001.5502；  
+20. Android获取手机系统版本号、获取手机型号、获取手机厂商、获取手机IMEI、获取手机CPU_ABI、获取手机唯一识别码，博客地址https://blog.csdn.net/NakajimaFN/article/details/125025659?spm=1001.2014.3001.5502；  
 
 项目地址：https://gitee.com/urasaki/RxJava2AndRetrofit2
 我的csdn博客地址https://blog.csdn.net/NakajimaFN?spm=1000.2115.3001.5343 
