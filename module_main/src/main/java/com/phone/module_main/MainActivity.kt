@@ -101,6 +101,7 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
 
         // ORIENTATION_HORIZONTAL：水平滑动（默认），ORIENTATION_VERTICAL：竖直滑动
         mineViewPager2?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        mineViewPager2?.isUserInputEnabled = false
         // 预加载所有的Fragment，但是只执行第一个Fragment onResmue 方法
         mineViewPager2?.offscreenPageLimit = fragmentList.size
         // 适配

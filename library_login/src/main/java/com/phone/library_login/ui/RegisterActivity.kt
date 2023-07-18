@@ -11,10 +11,10 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.manager.ResourcesManager
-import com.phone.library_common.R
 import com.phone.library_mvp.BaseMvpRxAppActivity
 import com.phone.library_base.common.ConstantData
 import com.phone.library_glide.manager.ImageLoaderManager
+import com.phone.library_login.R
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_login.presenter.LoginPresenterImpl
 import com.phone.library_login.view.IRegisterView
@@ -33,7 +33,7 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
     private var tevRegister: TextView? = null
 
     override fun initLayoutId(): Int {
-        return R.layout.library_activity_register
+        return R.layout.login_activity_register
     }
 
     override fun initData() {
@@ -52,7 +52,7 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.library_color_000000))
         layoutBack?.setOnClickListener { finish() }
         imvHeadPortrait?.let {
-            ImageLoaderManager.displayRound(mRxAppCompatActivity, it, R.mipmap.ic_launcher_round)
+            ImageLoaderManager.displayRound(mRxAppCompatActivity, it, R.mipmap.login_ic_launcher_round)
         }
         tevRegister?.setOnClickListener { initRegister() }
     }

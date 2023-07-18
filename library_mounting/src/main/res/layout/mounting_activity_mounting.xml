@@ -118,7 +118,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="@dimen/base_dp_12"
                             android:layout_marginEnd="@dimen/base_dp_12"
-                            android:src="@mipmap/home_icon_arrowhead_left"
+                            android:src="@mipmap/library_icon_arrowhead_left"
                             android:visibility="visible"
                             tools:ignore="ContentDescription" />
 

@@ -8,9 +8,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.phone.library_common.bean.Data
 import com.phone.library_common.callback.OnItemViewClickListener
+import com.phone.library_glide.manager.ImageLoaderManager
 import com.phone.module_mine.R
 
 class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -18,6 +18,7 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
     companion object {
         private val TAG = MineAdapter::class.java.simpleName
     }
+
     val mJuheNewsBeanList = mutableListOf<Data>()
 
     fun clearData() {
@@ -49,16 +50,9 @@ class MineAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
             holder.newsSummaryTitleTv.setText(title)
             holder.newsSummaryAuthor.setText(author)
             holder.newsSummaryTime.setText(time)
-            imgSrc?.let {
-                Glide.with(context).load(imgSrc).into(holder.newsSummaryPhotoIvLeft)
-            }
-            imgMid?.let {
-                Glide.with(context).load(imgMid).into(holder.newsSummaryPhotoIvMiddle)
-            }
-            imgRight?.let {
-                Glide.with(context).load(imgRight).into(holder.newsSummaryPhotoIvRight)
-            }
-
+            ImageLoaderManager.display(context, holder.newsSummaryPhotoIvLeft, imgSrc)
+            ImageLoaderManager.display(context, holder.newsSummaryPhotoIvMiddle, imgMid)
+            ImageLoaderManager.display(context, holder.newsSummaryPhotoIvRight, imgRight)
             holder.llRoot.setOnClickListener({ view: View? ->
                 onItemViewClickListener.onItemClickListener(
                     position,

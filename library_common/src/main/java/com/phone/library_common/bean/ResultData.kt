@@ -11,9 +11,9 @@ class ResultData {
         var category: String? = null
         var author_name: String? = null
         var url: String? = null
-        var thumbnail_pic_s: String? = null
-        var thumbnail_pic_s02: String? = null
-        var thumbnail_pic_s03: String? = null
+        var thumbnail_pic_s: String = ""
+        var thumbnail_pic_s02: String = ""
+        var thumbnail_pic_s03: String = ""
 
         override fun toString(): String {
             return "JuheNewsBean{" +

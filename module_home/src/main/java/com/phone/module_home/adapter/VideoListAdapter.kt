@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.phone.library_common.callback.OnItemViewClickListener
 import com.phone.library_base.manager.LogManager.i
+import com.phone.library_glide.manager.ImageLoaderManager
 import com.phone.module_home.R
 
 class VideoListAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -45,7 +46,7 @@ class VideoListAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView
             i(TAG, "onBindViewHolder data*****$data")
 
 //            ViewGroup.LayoutParams layoutParams=new ViewGroup.LayoutParams();
-            Glide.with(context).load(data).into(holder.imvData)
+            ImageLoaderManager.display(context, holder.imvData, data)
         }
     }
 

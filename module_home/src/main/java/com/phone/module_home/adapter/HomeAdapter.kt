@@ -8,9 +8,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.phone.library_common.bean.ResultData
 import com.phone.library_common.callback.OnItemViewClickListener
+import com.phone.library_glide.manager.ImageLoaderManager
 import com.phone.module_home.R
 
 class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -52,9 +52,9 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
             bodyHolder.newsSummaryTitleTv.text = title
             bodyHolder.newsSummaryAuthor.text = author
             bodyHolder.newsSummaryTime.text = time
-            Glide.with(context).load(imgSrc).into(bodyHolder.newsSummaryPhotoIvLeft)
-            Glide.with(context).load(imgMid).into(bodyHolder.newsSummaryPhotoIvMiddle)
-            Glide.with(context).load(imgRight).into(bodyHolder.newsSummaryPhotoIvRight)
+            ImageLoaderManager.display(context, bodyHolder.newsSummaryPhotoIvLeft, imgSrc)
+            ImageLoaderManager.display(context, bodyHolder.newsSummaryPhotoIvMiddle, imgMid)
+            ImageLoaderManager.display(context, bodyHolder.newsSummaryPhotoIvRight, imgRight)
             bodyHolder.llRoot.setOnClickListener { view: View? ->
                 onItemViewClickListener?.onItemClickListener(
                     position,

@@ -4,10 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class MineResult(
-    val `data`: MutableList<Data>,
-    val page: String,
-    val pageSize: String,
-    val stat: String
+    val `data`: MutableList<Data>, val page: String, val pageSize: String, val stat: String
 )
 
 data class Data(
@@ -32,7 +29,8 @@ data class Data(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
-        parcel.readString().toString()) {
+        parcel.readString().toString()
+    ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

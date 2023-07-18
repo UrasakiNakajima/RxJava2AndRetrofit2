@@ -123,7 +123,7 @@ class EventScheduleLayout(
                             )
                             imvHeaderParams.marginStart = ScreenManager.dpToPx(53f)
                             var imvHeader = ImageView(mContext)
-                            imvHeader.setImageResource(R.mipmap.icon_time_line_triangle)
+                            imvHeader.setImageResource(R.mipmap.library_icon_time_line_triangle)
                             layoutStart.addView(imvHeader, imvHeaderParams)
                             var lineViewParams = LinearLayout.LayoutParams(
                                 ScreenManager.dpToPx(4f),
@@ -171,7 +171,7 @@ class EventScheduleLayout(
                                     //										ScreenManager.ScreenManager.dpToPx(53),
                                     //										ScreenManager.ScreenManager.dpToPx(3), 0, 0);
                                     val imvMajorTimeNode = ImageView(mContext)
-                                    imvMajorTimeNode.setImageResource(R.mipmap.icon_major_time_node)
+                                    imvMajorTimeNode.setImageResource(R.mipmap.library_icon_major_time_node)
                                     outerLayout.addView(imvMajorTimeNode, imvMajorTimeNodeParams)
                                     lineViewParams2 = FrameLayout.LayoutParams(
                                         ScreenManager.dpToPx(4f),
@@ -197,7 +197,7 @@ class EventScheduleLayout(
                                     )
                                     imvHeaderParams.marginStart = ScreenManager.dpToPx(53f)
                                     imvHeader = ImageView(mContext)
-                                    imvHeader.setImageResource(R.mipmap.icon_time_line_triangle)
+                                    imvHeader.setImageResource(R.mipmap.library_icon_time_line_triangle)
                                     layoutStart.addView(imvHeader, imvHeaderParams)
 
                                     //构造ObjectAnimator对象的方法
@@ -245,7 +245,7 @@ class EventScheduleLayout(
                                     //										ScreenManager.ScreenManager.dpToPx(53),
                                     //										ScreenManager.ScreenManager.dpToPx(3), 0, 0);
                                     val imvMajorTimeNode = ImageView(mContext)
-                                    imvMajorTimeNode.setImageResource(R.mipmap.icon_major_time_node)
+                                    imvMajorTimeNode.setImageResource(R.mipmap.library_icon_major_time_node)
                                     outerLayout.addView(imvMajorTimeNode, imvMajorTimeNodeParams)
                                     lineViewParams2 = FrameLayout.LayoutParams(
                                         ScreenManager.dpToPx(4f),
@@ -271,7 +271,7 @@ class EventScheduleLayout(
                                     )
                                     imvSmallTimeNodeParams.marginStart = ScreenManager.dpToPx(55.5f)
                                     val imvSmallTimeNode = ImageView(mContext)
-                                    imvSmallTimeNode.setImageResource(R.mipmap.icon_small_time_node)
+                                    imvSmallTimeNode.setImageResource(R.mipmap.library_icon_small_time_node)
                                     layoutStart.addView(imvSmallTimeNode, imvSmallTimeNodeParams)
                                     val lineViewParams3 = LinearLayout.LayoutParams(
                                         ScreenManager.dpToPx(4f),
@@ -538,7 +538,7 @@ class EventScheduleLayout(
             )
             imvHeaderParams.marginStart = ScreenManager.dpToPx(53f)
             var imvHeader = ImageView(mContext)
-            imvHeader.setImageResource(R.mipmap.icon_time_line_triangle)
+            imvHeader.setImageResource(R.mipmap.library_icon_time_line_triangle)
             layoutStart.addView(imvHeader, imvHeaderParams)
             var lineViewParams = LinearLayout.LayoutParams(
                 ScreenManager.dpToPx(4f),
@@ -586,7 +586,7 @@ class EventScheduleLayout(
                     //										ScreenManager.ScreenManager.dpToPx(53),
                     //										ScreenManager.ScreenManager.dpToPx(3), 0, 0);
                     val imvMajorTimeNode = ImageView(mContext)
-                    imvMajorTimeNode.setImageResource(R.mipmap.icon_major_time_node)
+                    imvMajorTimeNode.setImageResource(R.mipmap.library_icon_major_time_node)
                     outerLayout.addView(imvMajorTimeNode, imvMajorTimeNodeParams)
                     lineViewParams2 = FrameLayout.LayoutParams(
                         ScreenManager.dpToPx(4f),
@@ -612,7 +612,7 @@ class EventScheduleLayout(
                     )
                     imvHeaderParams.marginStart = ScreenManager.dpToPx(53f)
                     imvHeader = ImageView(mContext)
-                    imvHeader.setImageResource(R.mipmap.icon_time_line_triangle)
+                    imvHeader.setImageResource(R.mipmap.library_icon_time_line_triangle)
                     layoutStart.addView(imvHeader, imvHeaderParams)
 
                     //构造ObjectAnimator对象的方法
@@ -660,7 +660,7 @@ class EventScheduleLayout(
                     //										ScreenManager.ScreenManager.dpToPx(53),
                     //										ScreenManager.ScreenManager.dpToPx(3), 0, 0);
                     val imvMajorTimeNode = ImageView(mContext)
-                    imvMajorTimeNode.setImageResource(R.mipmap.icon_major_time_node)
+                    imvMajorTimeNode.setImageResource(R.mipmap.library_icon_major_time_node)
                     outerLayout.addView(imvMajorTimeNode, imvMajorTimeNodeParams)
                     lineViewParams2 = FrameLayout.LayoutParams(
                         ScreenManager.dpToPx(4f),
@@ -686,7 +686,7 @@ class EventScheduleLayout(
                     )
                     imvSmallTimeNodeParams.marginStart = ScreenManager.dpToPx(55.5f)
                     val imvSmallTimeNode = ImageView(mContext)
-                    imvSmallTimeNode.setImageResource(R.mipmap.icon_small_time_node)
+                    imvSmallTimeNode.setImageResource(R.mipmap.library_icon_small_time_node)
                     layoutStart.addView(imvSmallTimeNode, imvSmallTimeNodeParams)
                     val lineViewParams3 = LinearLayout.LayoutParams(
                         ScreenManager.dpToPx(4f),

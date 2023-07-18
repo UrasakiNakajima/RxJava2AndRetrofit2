@@ -1,5 +1,5 @@
 <resources>
 
-    <string name="network_title">Base64AndFile</string>
+    <string name="login_network_title">Base64AndFile</string>
 
 </resources>

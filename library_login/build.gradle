@@ -73,6 +73,7 @@ dependencies {
     implementation project(path: ':library_greendao')
     implementation project(path: ':library_mvp')
     implementation project(path: ':library_glide')
+    implementation project(path: ':library_custom_view')
 
     //Android路由（用于不同app之间的跳转）
 //    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"

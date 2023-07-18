@@ -39,7 +39,7 @@
                     android:layout_height="@dimen/base_dp_23"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/base_dp_14"
-                    android:src="@mipmap/icon_close_broadcast_voice"
+                    android:src="@mipmap/library_icon_close_broadcast_voice"
                     tools:ignore="ContentDescription" />
 
             </FrameLayout>

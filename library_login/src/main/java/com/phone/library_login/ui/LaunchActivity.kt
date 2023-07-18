@@ -19,7 +19,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.BuildConfig
-import com.phone.library_common.R
 import com.phone.library_base.base.BaseRxAppActivity
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.SharedPreferencesManager
@@ -27,6 +26,7 @@ import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.library_base.common.ConstantData
 import com.phone.library_base.common.Constants
 import com.phone.library_base.manager.ScreenManager
+import com.phone.library_login.R
 
 
 @SuppressLint("CustomSplashScreen")
@@ -58,7 +58,7 @@ class LaunchActivity : BaseRxAppActivity() {
     val animatorSet3 = AnimatorSet()
 
     override fun initLayoutId(): Int {
-        return R.layout.library_activity_launch
+        return R.layout.login_activity_launch
     }
 
     override fun initData() {

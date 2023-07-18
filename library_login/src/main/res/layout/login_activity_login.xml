@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/library_color_FFFFFFFF"
+    android:orientation="vertical"
+    tools:context=".ui.LoginActivity">
+
+    <com.phone.library_custom_view.custom_view.ImmerseGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/library_color_FFFFFFFF"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="vertical"
+            app:contentInsetStart="0dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_dp_48">
+
+                <FrameLayout
+                    android:id="@+id/layout_back"
+                    android:layout_width="@dimen/base_dp_26"
+                    android:layout_height="@dimen/base_dp_35"
+                    android:layout_gravity="center_vertical"
+                    tools:ignore="UselessParent">
+
+                    <ImageView
+                        android:id="@+id/imv_back"
+                        android:layout_width="@dimen/base_dp_6"
+                        android:layout_height="@dimen/base_dp_11"
+                        android:layout_gravity="center_vertical|end"
+                        android:src="@mipmap/library_icon_arrowhead_left"
+                        tools:ignore="ContentDescription" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tev_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/library_login"
+                    android:textColor="@color/library_color_4876FF"
+                    android:textSize="@dimen/base_sp_18" />
+
+            </FrameLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.phone.library_custom_view.custom_view.ImmerseGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30" />
+
+    <ImageView
+        android:id="@+id/imv_head_portrait"
+        android:layout_width="@dimen/base_dp_70"
+        android:layout_height="@dimen/base_dp_70"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/library_picture35"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30" />
+
+    <EditText
+        android:id="@+id/edt_user_id"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_dp_50"
+        android:layout_marginStart="@dimen/base_dp_35"
+        android:layout_marginEnd="@dimen/base_dp_35"
+        android:background="@drawable/library_corners_14_color_white_stroke_1_color_blue"
+        android:hint="@string/library_user_name"
+        android:maxLength="11"
+        android:paddingStart="@dimen/base_dp_15"
+        android:paddingEnd="@dimen/base_dp_15"
+        android:textSize="@dimen/base_sp_16"
+        tools:ignore="Autofill,LabelFor,TextFields" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_dp_50"
+        android:layout_marginStart="@dimen/base_dp_35"
+        android:layout_marginEnd="@dimen/base_dp_35">
+
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_dp_50"
+            android:background="@drawable/library_corners_14_color_white_stroke_1_color_blue"
+            android:hint="@string/library_password"
+            android:paddingStart="@dimen/base_dp_15"
+            android:paddingEnd="@dimen/base_dp_15"
+            android:textSize="@dimen/base_sp_16"
+            android:visibility="visible"
+            tools:ignore="Autofill,LabelFor,TextFields" />
+
+        <FrameLayout
+            android:id="@+id/layout_verification_code"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_dp_50"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/edt_verification_code"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_dp_50"
+                android:background="@drawable/library_corners_14_color_white_stroke_1_color_blue"
+                android:hint="@string/library_verification_code"
+                android:paddingStart="@dimen/base_dp_15"
+                android:paddingEnd="@dimen/base_dp_15"
+                android:textSize="@dimen/base_sp_16"
+                tools:ignore="Autofill,LabelFor,TextFields" />
+
+            <TextView
+                android:id="@+id/tev_get_auth_code"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/base_dp_40"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/base_dp_15"
+                android:background="@drawable/library_corners_10_color_white_stroke_1_color_blue"
+                android:gravity="center"
+                android:paddingStart="@dimen/base_dp_15"
+                android:paddingEnd="@dimen/base_dp_15"
+                android:text="@string/library_get_auth_code"
+                android:textSize="@dimen/base_sp_16" />
+
+        </FrameLayout>
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="50" />
+
+    <TextView
+        android:id="@+id/tev_login"
+        android:layout_width="@dimen/base_dp_200"
+        android:layout_height="@dimen/base_dp_50"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/library_corners_14_color_white_stroke_1_color_blue"
+        android:gravity="center"
+        android:text="@string/library_login"
+        android:textColor="@color/library_color_4876FF"
+        android:textSize="@dimen/base_sp_16" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20" />
+
+    <TextView
+        android:id="@+id/tev_jump_to_register"
+        android:layout_width="@dimen/base_dp_100"
+        android:layout_height="@dimen/base_dp_30"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/library_jump_to_register"
+        android:textColor="@color/library_color_4876FF"
+        android:textSize="@dimen/base_sp_15" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="130" />
+
+</LinearLayout>

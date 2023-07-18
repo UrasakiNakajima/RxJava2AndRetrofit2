@@ -54,10 +54,10 @@
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/app_ic_launcher"
+        android:icon="@mipmap/library_app"
         android:label="@string/app_app_name"
         android:networkSecurityConfig="@xml/base_network_security_config"
-        android:roundIcon="@mipmap/app_ic_launcher_round"
+        android:roundIcon="@mipmap/library_app"
         android:supportsRtl="true"
         android:theme="@style/library_AppTheme"
         android:usesCleartextTraffic="true"

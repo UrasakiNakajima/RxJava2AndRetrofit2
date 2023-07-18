@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_common.BuildConfig
-import com.phone.library_common.R
 import com.phone.library_mvp.BaseMvpRxAppActivity
 import com.phone.library_base.common.ConstantData
 import com.phone.library_login.bean.DataGetVerification
@@ -23,6 +22,7 @@ import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.SharedPreferencesManager
 import com.phone.library_glide.manager.ImageLoaderManager
+import com.phone.library_login.R
 import com.phone.library_login.presenter.LoginPresenterImpl
 import com.phone.library_login.view.ILoginView
 import com.phone.library_network.manager.RetrofitManager
@@ -49,7 +49,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
     private var phoneDevice: String? = null
 
     override fun initLayoutId(): Int {
-        return R.layout.library_activity_login
+        return R.layout.login_activity_login
     }
 
     override fun initData() {
@@ -72,7 +72,7 @@ class LoginActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), ILo
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.library_color_000000))
         layoutBack?.setOnClickListener { finish() }
         imvHeadPortrait?.let {
-            ImageLoaderManager.displayRound(mRxAppCompatActivity, it, R.mipmap.ic_launcher_round)
+            ImageLoaderManager.displayRound(mRxAppCompatActivity, it, R.mipmap.login_ic_launcher_round)
         }
         tevGetAuthCode?.setOnClickListener { view: View? -> getAuthCode() }
         tevLogin?.setOnClickListener { //                initLoginWithAuthCode()

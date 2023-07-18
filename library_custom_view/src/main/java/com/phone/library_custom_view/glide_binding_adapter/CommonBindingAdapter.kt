@@ -102,9 +102,9 @@ object CommonBindingAdapter {
     @BindingAdapter("articleCollect")
     fun imgPlayBlur(view: ImageView, collect: Boolean) {
         if (collect) {
-            view.setImageResource(R.mipmap.collect)
+            view.setImageResource(R.mipmap.library_collect)
         } else {
-            view.setImageResource(R.mipmap.un_collect)
+            view.setImageResource(R.mipmap.library_un_collect)
         }
     }
 

@@ -12,7 +12,7 @@ import com.phone.library_glide.GlideRoundTransform
 object GlideRoundManager {
 
     @JvmStatic
-    fun setRoundCorner(view: View, resourceId: Drawable?, cornerDipValue: Float) {
+    fun setRoundCorner(view: View, drawable: Drawable?, cornerDipValue: Float) {
         if (cornerDipValue == 0f) {
             if (view.measuredWidth == 0 && view.measuredHeight == 0) {
                 view.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
@@ -28,39 +28,11 @@ object GlideRoundManager {
                         oldBottom: Int
                     ) {
                         view.removeOnLayoutChangeListener(this)
-                        Glide.with(view)
-                            .asDrawable()
-                            .load(resourceId)
-                            .transform(CenterCrop())
-                            .override(view.measuredWidth, view.measuredHeight)
-                            .into(object : CustomTarget<Drawable?>() {
-                                override fun onLoadCleared(placeholder: Drawable?) {}
-
-                                override fun onResourceReady(
-                                    resource: Drawable,
-                                    transition: Transition<in Drawable?>?
-                                ) {
-                                    view.background = resource
-                                }
-                            })
+                        ImageLoaderManager.displayAsDrawable(view, drawable)
                     }
                 })
             } else {
-                Glide.with(view)
-                    .asDrawable()
-                    .load(resourceId)
-                    .transform(CenterCrop())
-                    .override(view.measuredWidth, view.measuredHeight)
-                    .into(object : CustomTarget<Drawable?>() {
-                        override fun onLoadCleared(placeholder: Drawable?) {}
-
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable?>?
-                        ) {
-                            view.background = resource
-                        }
-                    })
+                ImageLoaderManager.displayAsDrawable(view, drawable)
             }
         } else {
             if (view.measuredWidth == 0 && view.measuredHeight == 0) {
@@ -77,37 +49,12 @@ object GlideRoundManager {
                         oldBottom: Int
                     ) {
                         view.removeOnLayoutChangeListener(this)
-                        Glide.with(view)
-                            .load(resourceId)
-                            .transform(CenterCrop(), RoundedCorners(cornerDipValue.toInt()))
-                            .override(view.measuredWidth, view.measuredHeight)
-                            .into(object : CustomTarget<Drawable?>() {
-                                override fun onLoadCleared(placeholder: Drawable?) {}
 
-                                override fun onResourceReady(
-                                    resource: Drawable,
-                                    transition: Transition<in Drawable?>?
-                                ) {
-                                    view.background = resource
-                                }
-                            })
+                        ImageLoaderManager.displayTransform(view, drawable, CenterCrop(), cornerDipValue)
                     }
                 })
             } else {
-                Glide.with(view)
-                    .load(resourceId)
-                    .transform(CenterCrop(), RoundedCorners(cornerDipValue.toInt()))
-                    .override(view.measuredWidth, view.measuredHeight)
-                    .into(object : CustomTarget<Drawable?>() {
-                        override fun onLoadCleared(placeholder: Drawable?) {}
-
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable?>?
-                        ) {
-                            view.background = resource
-                        }
-                    })
+                ImageLoaderManager.displayTransform(view, drawable, CenterCrop(), cornerDipValue)
             }
         }
     }
@@ -115,7 +62,7 @@ object GlideRoundManager {
     @JvmStatic
     fun setCorners(
         view: View,
-        resourceId: Drawable?,
+        drawable: Drawable?,
         leftTop_corner: Float,
         leftBottom_corner: Float,
         rightTop_corner: Float,
@@ -136,35 +83,11 @@ object GlideRoundManager {
                         oldBottom: Int
                     ) {
                         view.removeOnLayoutChangeListener(this)
-                        Glide.with(view)
-                            .load(resourceId)
-                            .override(view.measuredWidth, view.measuredHeight)
-                            .into(object : CustomTarget<Drawable?>() {
-                                override fun onLoadCleared(placeholder: Drawable?) {}
-
-                                override fun onResourceReady(
-                                    resource: Drawable,
-                                    transition: Transition<in Drawable?>?
-                                ) {
-                                    view.background = resource
-                                }
-                            })
+                        ImageLoaderManager.displayCorners(view, drawable)
                     }
                 })
             } else {
-                Glide.with(view)
-                    .load(resourceId)
-                    .override(view.measuredWidth, view.measuredHeight)
-                    .into(object : CustomTarget<Drawable?>() {
-                        override fun onLoadCleared(placeholder: Drawable?) {}
-
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable?>?
-                        ) {
-                            view.background = resource
-                        }
-                    })
+                ImageLoaderManager.displayCorners(view, drawable)
             }
         } else {
             if (view.measuredWidth == 0 && view.measuredHeight == 0) {
@@ -188,20 +111,7 @@ object GlideRoundManager {
                             rightTop_corner,
                             rightBottom_corner
                         )
-                        Glide.with(view)
-                            .load(resourceId)
-                            .transform(transform)
-                            .override(view.measuredWidth, view.measuredHeight)
-                            .into(object : CustomTarget<Drawable?>() {
-                                override fun onLoadCleared(placeholder: Drawable?) {}
-
-                                override fun onResourceReady(
-                                    resource: Drawable,
-                                    transition: Transition<in Drawable?>?
-                                ) {
-                                    view.background = resource
-                                }
-                            })
+                        ImageLoaderManager.displayTransform(view, drawable, transform)
                     }
                 })
             } else {
@@ -212,20 +122,7 @@ object GlideRoundManager {
                     rightTop_corner,
                     rightBottom_corner
                 )
-                Glide.with(view)
-                    .load(resourceId)
-                    .transform(transform)
-                    .override(view.measuredWidth, view.measuredHeight)
-                    .into(object : CustomTarget<Drawable?>() {
-                        override fun onLoadCleared(placeholder: Drawable?) {}
-
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable?>?
-                        ) {
-                            view.background = resource
-                        }
-                    })
+                ImageLoaderManager.displayTransform(view, drawable, transform)
             }
         }
     }
