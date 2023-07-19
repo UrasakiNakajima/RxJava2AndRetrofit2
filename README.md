@@ -27,7 +27,7 @@ Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token 功能，
 </table>
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_bridge.jpg" />
+        <td><img src="/screenshot/screenshot_jsbridge.jpg" />
         <td><img src="/screenshot/screenshot_picker_view.jpg" />
         <td><img src="/screenshot/screenshot_kotlin_coroutine.jpg" />
     </tr>
@@ -691,6 +691,7 @@ object CommonBindingAdapter {
     }
 
 }
+
 ```
 
 ###### 2.6.3 RecyclerView绑定，在ProjectAdapter中绑定
