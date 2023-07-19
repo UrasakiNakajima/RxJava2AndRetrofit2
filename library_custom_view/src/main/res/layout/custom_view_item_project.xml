@@ -22,7 +22,7 @@
             android:layout_width="@dimen/base_dp_95"
             android:layout_height="@dimen/base_dp_95"
             android:layout_marginStart="@dimen/base_dp_16"
-            android:scaleType="center"
+            android:scaleType="centerCrop"
             app:imageUrl="@{dataBean.picUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -69,9 +69,9 @@
 
         <ImageView
             android:id="@+id/ivCollect"
-            articleCollect="@{dataBean.collect}"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            app:articleCollect="@{dataBean.collect}"
+            android:layout_width="@dimen/base_dp_30"
+            android:layout_height="@dimen/base_dp_30"
             android:layout_marginEnd="@dimen/base_dp_16"
             android:paddingStart="@dimen/base_dp_10"
             android:paddingTop="@dimen/base_dp_10"
@@ -82,7 +82,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="@dimen/base_dp_2"
             android:layout_marginTop="@dimen/base_dp_16"
             android:background="?attr/library_division_line"
             app:layout_constraintTop_toBottomOf="@+id/ivTitle" />

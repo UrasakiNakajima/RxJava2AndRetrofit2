@@ -51,7 +51,7 @@
 Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token 功能，添加RxJava2 生命周期管理，集成极光推送、阿里云Oss对象存储和高德地图定位功能。
 
 
-## 我们先来说一下组件化，组件化图解说明
+# 我们先来说一下组件化，组件化图解说明
 <table>
     <tr>
         <td><img src="/screenshot/screenshot_component_description.jpg" />
@@ -121,7 +121,7 @@ Application，会编译出错，需要解决冲突。可以使用tools:replace="
 Android App进行组件化改造的框架——支持模块间的路由、通信、解耦”。
 ARouter实现路由跳转集成请查看https://github.com/alibaba/ARouter。
 
-## 集成开发模式和组件开发模式转换
+### 集成开发模式和组件开发模式转换
 1. 首先打开Android项目的gradle.properties文件![Image](/screenshot/screenshot_gradle_properties_configuration.jpg) ，
 然后将isModule改为你需要的开发模式（true/false）， 然后点击Sync Project按钮同步项目；
 2. ![Image](/screenshot/screenshot_select_module.jpg) 在运行之前，请先按照图中选择一个能够运行的组件；
@@ -141,17 +141,26 @@ ARouter实现路由跳转集成请查看https://github.com/alibaba/ARouter。
     </tr>
 </table>
 
+### 资源命名冲突
+* 在组件化方案中，资源命名冲突是一个比较严重的问题，由于在打包时会进行资源的合并，如果两个模块中有两个相同名字的文件，那么最后只会保留一份，
+如果不知道这个问题的小伙伴，在遇到这个问题时肯定是一脸懵逼的状态。问题既然已经出现，那我们就要去解决，解决办法就是每个组件都用固定的命名前缀，
+这样就不会出现两个相同的文件的现象了，我们可以在 build.gradle 配置文件中去配置前缀限定，如果不按该前缀进行命名，AS 就会进行警告提示，配置如下：
+```gradle
+android {
+    resourcePrefix "前缀_"
+}
+```
 
 
 
-## MVVM图解说明
+# MVVM图解说明
 <table>
     <tr>
         <td><img src="/screenshot/screenshot_mvvm.jpg" />
     </tr>
 </table>
 
-### MVVM介绍
+## 1.MVVM介绍
 Model-View-ViewModel，View指绿色的Activity/Fragment，主要负责界面显示，不负责任何业务逻辑和数据处理。 Model指的是Repository
 包含的部分，主要负责数据获取，来组本地数据库或者远程服务器。ViewModel 指的是图中蓝色部分，主要负责业务逻辑和数据处理，本身不持有View层
 引用，通过LiveData向View层发送数据。Repository统一了数据入口，不管来自数据库，还是服务器，统一打包给ViewModel。
@@ -175,10 +184,629 @@ Model-View-ViewModel，View指绿色的Activity/Fragment，主要负责界面显
 的任务。Model包括实体模型（Bean）、Retrofit的Service，获取网络数据接口，本地存储（增删改查）接口，数据变化监听等。Model提供数据获取接口
 供ViewModel调用，经数据转换和操作并最终映射绑定到View层某个UI元素的属性上。
 
+## 2.MVVM的使用
+### 2.1 启用databinding
+* 在主工程app的build.gradle的android {}中加入：
+```gradle
+dataBinding {
+    enabled true
+}
+```
+
+### 2.2 快速上手，以SquareFragment为例
+* 在square_fragment_square.xml中关联SquareViewModelImpl。
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <data>
+        <variable
+            name="viewModel"
+            type="com.phone.module_square.view_model.SquareViewModelImpl" />
+
+        <variable
+            name="subDataSquare"
+            type="com.phone.library_common.bean.SubDataSquare" />
+
+        <import type="android.view.View" />
+    </data>
+    
+    .....
+
+</layout>
+```
+> variable - type：类的全路径 <br>variable - name：变量名
+
+
+### 2.3 SquareFragment继承BaseMvvmRxFragment，继承基类传入相关泛型，第一个泛型为你创建的SquareViewModelImpl，第二个泛型为ViewDataBind，
+### 保存square_fragment_square.xml后databinding会生成一个SquareFragmentSquareBinding类。（如果没有生成，试着点击Build->Clean Project）
+**BaseMvvmRxFragment：**
+```kotlin
+abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : RxFragment(),
+    IBaseView {
+
+    companion object {
+        private val TAG = BaseMvvmRxFragment::class.java.simpleName
+    }
+
+    //该类绑定的ViewDataBinding
+    protected lateinit var mDatabind: DB
+    protected lateinit var mViewModel: VM
+    protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
+    protected lateinit var mBaseApplication: BaseApplication
+    // 是否第一次加载
+    protected var isFirstLoad = true
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
+        mDatabind.lifecycleOwner = viewLifecycleOwner
+        return mDatabind.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mRxAppCompatActivity = activity as RxAppCompatActivity
+        mBaseApplication = mRxAppCompatActivity.application as BaseApplication
+        mViewModel = initViewModel()
+        initData()
+        initObservers()
+        initViews()
+    }
+
+    protected abstract fun initLayoutId(): Int
+
+    protected abstract fun initViewModel(): VM
+
+    protected abstract fun initData()
+
+    protected abstract fun initObservers()
+
+    protected abstract fun initViews()
+
+    protected abstract fun initLoadData()
+
+    override fun onResume() {
+        super.onResume()
+        initLoadData()
+    }
+
+    override fun showLoading() {
+        ...
+    }
+
+    override fun hideLoading() {
+        ...
+    }
+
+    override fun onDestroy() {
+        mDatabind.unbind()
+        viewModelStore.clear()
+        super.onDestroy()
+    }
+}
+
+```
+
+**SquareFragment：**
+```kotlin
+class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSquareBinding>() {
+
+    companion object {
+        private val TAG: String = SquareFragment::class.java.simpleName
+    }
+
+    override fun initLayoutId() = R.layout.square_fragment_square
+
+    /**
+     * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
+     */
+    override fun initViewModel() = ViewModelProvider(this).get(SquareViewModelImpl::class.java)
+
+    override fun initData() {
+        ...
+    }
+
+    override fun initObservers() {
+        ...
+    }
+
+    override fun initViews() {
+        ...
+    }
+
+    override fun initLoadData() {
+        if (isFirstLoad) {
+            initSquareData("$currentPage")
+            isFirstLoad = false
+        }
+    }
+
+    fun squareDataSuccess(success: List<SubDataSquare>) {
+        ...
+    }
+
+    fun squareDataError(error: String) {
+        ...
+    }
+
+    private fun initSquareData(currentPage: String) {
+        ...
+    }
+
+}
+
+```
+
+### 2.4 SquareViewModelImpl继承BaseViewModel，在ViewModel中发起请求，所有请求都是在mJob上启动，请求会发生在IO线程，最终回调在主线程上，当页面销毁的时候，请求需要在onCleared方法取消，避免内存泄露的风险
+**BaseViewModel：**
+```kotlin
+open class BaseViewModel : ViewModel() {
+
+    companion object {
+        private val TAG: String = BaseViewModel::class.java.simpleName
+    }
+
+    /**
+     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
+     */
+    protected suspend fun <T> executeRequest(block: suspend () -> ApiResponse<T>): ApiResponse<T> =
+        withContext(Dispatchers.IO) {
+            var response = ApiResponse<T>()
+            runCatching {
+                block()
+            }.onSuccess {
+                response = it
+            }.onFailure {
+                it.printStackTrace()
+                val apiException = getApiException(it)
+                response.errorCode = apiException.errorCode
+                response.errorMsg = apiException.errorMessage
+                response.error = apiException
+            }.getOrDefault(response)
+        }
+
+    /**
+     * 捕获异常信息
+     */
+    private fun getApiException(e: Throwable): ApiException {
+        return when (e) {
+            is UnknownHostException -> {
+                ApiException("网络异常", -100)
+            }
+
+            is JSONException -> {//|| e is JsonParseException
+                ApiException("数据异常", -100)
+            }
+
+            is SocketTimeoutException -> {
+                ApiException("连接超时", -100)
+            }
+
+            is ConnectException -> {
+                ApiException("连接错误", -100)
+            }
+
+            is HttpException -> {
+                ApiException("http code ${e.code()}", -100)
+            }
+
+            is ApiException -> {
+                e
+            }
+            /**
+             * 如果协程还在运行，个别机型退出当前界面时，viewModel会通过抛出CancellationException，
+             * 强行结束协程，与java中InterruptException类似，所以不必理会,只需将toast隐藏即可
+             */
+            is CancellationException -> {
+                ApiException("取消请求异常", -10)
+            }
+
+            else -> {
+                ApiException("未知错误", -100)
+            }
+        }
+    }
+
+    override fun onCleared() {
+        LogManager.i(TAG, "onCleared")
+        super.onCleared()
+    }
+}
+
+```
+
+**SquareViewModelImpl：**
+```kotlin
+class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
+
+    companion object {
+        private val TAG: String = SquareViewModelImpl::class.java.simpleName
+    }
+
+    private var mModel = SquareModelImpl()
+    private var mJob: Job? = null
+
+    //1.首先定义两个SingleLiveData的实例
+    val dataxRxFragment = MutableLiveData<State<List<SubDataSquare>>>()
+
+    override fun squareData(rxFragment: RxFragment, currentPage: String) {
+        LogManager.i(TAG, "squareData thread name*****${Thread.currentThread().name}")
+
+        mJob?.cancel()
+        mJob =
+            GlobalScope.launch(Dispatchers.Main) {
+                val apiResponse = executeRequest { mModel.squareData(currentPage) }
+
+                if (apiResponse.data != null && apiResponse.errorCode == 0) {
+                    val responseData = apiResponse.data?.datas ?: mutableListOf()
+                    if (responseData.size > 0) {
+                        dataxRxFragment.value = State.SuccessState(responseData)
+                    } else {
+                        dataxRxFragment.value =
+                            State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
+                    }
+                } else {
+                    dataxRxFragment.value = State.ErrorState(apiResponse.errorMsg)
+                }
+            }
+    }
+
+    override fun onCleared() {
+        mJob?.cancel()
+        super.onCleared()
+    }
+}
+
+```
+
+### 2.5 SquareModelImpl
+**SquareViewModelImpl：**
+```kotlin
+class SquareModelImpl() : ISquareModel {
+
+    override suspend fun squareData(currentPage: String): ApiResponse<DataSquare> {
+        return RetrofitManager.instance().mRetrofit
+            .create(SquareRequest::class.java)
+            .getSquareData(currentPage)
+    }
+
+}
+
+```
+
+### 2.6 封装网络请求（Retrofit+协程）
+**SquareRequest：**
+```kotlin
+interface SquareRequest {
+
+    @Headers("urlname:${ConstantData.TO_PROJECT_FLAG}")
+    @GET(ConstantUrl.SQUARE_URL)
+    suspend fun getSquareData(
+        @Path("currentPage") currentPage: String
+    ): ApiResponse<DataSquare>
+
+}
+
+```
+
+**RetrofitManager：**
+```kotlin
+class RetrofitManager private constructor() {
+
+    private val TAG = RetrofitManager::class.java.simpleName
+
+    @JvmField
+    val mRetrofit: Retrofit
+
+    /**
+     * 私有构造器 无法外部创建
+     * 初始化必要对象和参数
+     */
+    init {
+        //缓存
+        val cacheFile = File(BaseApplication.instance().externalCacheDir, "cache")
+        val cache = Cache(cacheFile, 1024 * 1024 * 10) //10Mb
+        val rewriteCacheControlInterceptor = RewriteCacheControlInterceptor()
+        val loggingInterceptor = HttpLoggingInterceptor()
+        // 包含header、body数据
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        //        HeaderInterceptor headerInterceptor = new HeaderInterceptor()
+
+        // 初始化okhttp
+        val client = OkHttpClient.Builder()
+            .connectTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //连接超时
+            .readTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //读取超时
+            .writeTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //写入超时
+            .cache(cache)
+            .addInterceptor(CacheControlInterceptor())
+            .addInterceptor(AddAccessTokenInterceptor()) //拦截器用于设置header
+            .addInterceptor(ReceivedAccessTokenInterceptor()) //拦截器用于接收并持久化cookie
+            .addInterceptor(BaseUrlManagerInterceptor())
+            .addInterceptor(rewriteCacheControlInterceptor) //                .addNetworkInterceptor(rewriteCacheControlInterceptor)
+            //                .addInterceptor(headerInterceptor)
+//            .addInterceptor(loggingInterceptor)
+            //                .addInterceptor(new GzipRequestInterceptor()) //开启Gzip压缩
+            .sslSocketFactory(SSLSocketManager.sslSocketFactory()) //配置
+            .hostnameVerifier(SSLSocketManager.hostnameVerifier()) //配置
+            //                .proxy(Proxy.NO_PROXY)
+            .build()
+
+        // 初始化Retrofit
+        mRetrofit = Retrofit.Builder()
+            .client(client)
+            .baseUrl(ConstantUrl.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
+    }
+
+    /**
+     * 保证只有一个实例
+     *
+     * @return
+     */
+    companion object {
+        @Volatile
+        private var instance: RetrofitManager? = null
+            get() {
+                if (field == null) {
+                    field = RetrofitManager()
+                }
+                return field
+            }
+
+        //Synchronized添加后就是线程安全的的懒汉模式
+        @Synchronized
+        @JvmStatic
+        fun instance(): RetrofitManager {
+            return instance!!
+        }
+
+        /**
+         * 查询网络的Cache-Control设置，头部Cache-Control设为max-age=0
+         * (假如请求了服务器并在a时刻返回响应结果，则在max-age规定的秒数内，浏览器将不会发送对应的请求到服务器，数据由缓存直接返回)时则不会使用缓存而请求服务器
+         */
+        private const val CACHE_CONTROL_AGE = "max-age=0"
+
+        /**
+         * 设缓存有效期为两天
+         */
+        const val CACHE_STALE_SEC = (60 * 60 * 24 * 2).toLong()
+
+        /**
+         * 查询缓存的Cache-Control设置，为if-only-cache时只查询缓存而不会请求服务器，max-stale可以配合设置缓存失效时间
+         * max-stale 指示客户机可以接收超出超时期间的响应消息。如果指定max-stale消息的值，那么客户机可接收超出超时期指定值之内的响应消息。
+         */
+        private const val CACHE_CONTROL_CACHE = "only-if-cached, max-stale=$CACHE_STALE_SEC"
+
+        fun buildSign(secret: String, time: Long): String {
+            //        Map treeMap = new TreeMap(params)// treeMap默认会以key值升序排序
+            val stringBuilder = StringBuilder()
+            stringBuilder.append(secret)
+            stringBuilder.append(time)
+            stringBuilder.append("1.1.0")
+            stringBuilder.append("861875048330495")
+            stringBuilder.append("android")
+            Log.d("GlobalConfiguration", "sting:$stringBuilder")
+            val md5: MessageDigest
+            var bytes: ByteArray? = null
+            try {
+                md5 = MessageDigest.getInstance("MD5")
+                bytes = md5.digest(stringBuilder.toString().toByteArray(charset("utf-8"))) // md5加密
+            } catch (e: NoSuchAlgorithmException) {
+                e.printStackTrace()
+            } catch (e: UnsupportedEncodingException) {
+                e.printStackTrace()
+            }
+            // 将MD5输出的二进制结果转换为小写的十六进制
+            val sign = StringBuilder()
+            bytes?.let {
+                for (i in 0 until it.size) {
+                    val hex = Integer.toHexString((it[i] and 0xFF.toByte()).toInt())
+                    if (hex.length == 1) {
+                        sign.append("0")
+                    }
+                    sign.append(hex)
+                }
+            }
+            Log.d("GlobalConfiguration", "MD5:$sign")
+            return sign.toString()
+        }
+
+        fun getCacheControl(): String {
+            return if (isNetworkAvailable()) CACHE_CONTROL_AGE else CACHE_CONTROL_CACHE
+        }
+
+        /**
+         * 判断网络是否可用
+         *
+         * @return
+         */
+        fun isNetworkAvailable(): Boolean {
+            val connectivityManager =
+                BaseApplication.instance().applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            //如果仅仅是用来判断网络连接
+            //connectivityManager.getActiveNetworkInfo().isAvailable()
+            val info = connectivityManager.allNetworkInfo
+            //            LogManager.i(TAG, "isNetworkAvailable*****" + info.toString())
+            for (i in info.indices) {
+                if (info[i].state == NetworkInfo.State.CONNECTED) {
+                    return true
+                }
+            }
+            return false
+        }
+    }
+
+}
+
+```
+
+### 2.6 数据绑定，拥有databinding框架自带的双向绑定，也有扩展
+#### 2.6.1 传统绑定
+```xml
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:includeFontPadding="false"
+    android:text="@={subDataSquare.title}"
+    android:textColor="@color/library_color_FFE066FF"
+    android:textSize="@dimen/base_sp_18"
+    android:visibility="@{subDataSquare.collect? View.GONE:View.VISIBLE}" />
+
+```
+
+#### 2.6.2 自定义ImageView图片加载，url是图片路径，这样绑定后，这个ImageView就会去显示这张图片，不限网络图片还是本地图片。
+```xml
+<ImageView
+    android:layout_width="@dimen/base_dp_95"
+    android:layout_height="@dimen/base_dp_95"
+    android:layout_marginStart="@dimen/base_dp_16"
+    android:layout_gravity="center_horizontal"
+    android:scaleType="centerCrop"
+    app:imageUrl="@{dataBean.picUrl}"
+    tools:ignore="ContentDescription" />
+
+```
+
+* BindingAdapter中的实现
+```koltin
+object CommonBindingAdapter {
+
+    @JvmStatic
+    val TAG = CommonBindingAdapter::class.java.simpleName
+
+    /**
+     * 加载图片
+     */
+    @JvmStatic
+    @BindingAdapter("app:imageUrl")
+    fun bindImage(imageView: ImageView, url: String?) {
+        ImageLoaderManager.display(imageView.context, imageView, url)
+    }
+
+}
+```
+
+##### 2.6.3 RecyclerView绑定，在ProjectAdapter中绑定
+```kotlin
+class ProjectAdapter(val context: Context, val list: MutableList<ArticleListBean>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    companion object {
+        private val TAG = ProjectAdapter::class.java.simpleName
+    }
+
+    fun clearData() {
+        notifyItemRangeRemoved(0, this.list.size)
+        notifyItemRangeChanged(0, this.list.size)
+        this.list.clear()
+    }
+
+    fun addData(list: MutableList<ArticleListBean>) {
+        notifyItemRangeInserted(this.list.size, list.size)
+        this.list.addAll(list)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val binding: CustomViewItemProjectBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.custom_view_item_project,
+            parent,
+            false
+        )
+        return ArticlePicViewHolder(binding.root)
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder.itemView.findViewById<View>(R.id.root)?.clickNoRepeat {
+            onItemViewClickListener?.onItemClickListener(position, it)
+        }
+        //收藏
+        holder.itemView.findViewById<View>(R.id.ivCollect)?.clickNoRepeat {
+            onItemViewClickListener?.onItemClickListener(position, it)
+        }
+
+        val binding = DataBindingUtil.getBinding<CustomViewItemProjectBinding>(holder.itemView)?.apply {
+            dataBean = list[position]
+        }
+        binding?.executePendingBindings()
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    /**
+     * 防止重复点击
+     * @param interval 重复间隔
+     * @param onClick  事件响应
+     */
+    var lastTime = 0L
+    fun View.clickNoRepeat(interval: Long = 400, onClick: (View) -> Unit) {
+        setOnClickListener {
+            val currentTime = System.currentTimeMillis()
+            if (lastTime != 0L && (currentTime - lastTime < interval)) {
+                return@setOnClickListener
+            }
+            lastTime = currentTime
+            onClick(it)
+        }
+    }
+
+    /**
+     * 带图片viewHolder
+     */
+    class ArticlePicViewHolder constructor(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+
+    }
+
+    private var onItemViewClickListener: OnItemViewClickListener? = null
+
+    fun setOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {
+        this.onItemViewClickListener = onItemViewClickListener
+    }
+
+}
+
+```
+
+
+# 主要开源框架
+* RxJava
+* RxLifecycle
+* RxPermissions
+* Retrofit
+* BASE64Decoder
+* ImmersionBar
+* GreenDao
+* Room
+* Glide
+* ARouter
+* Jsbridge
+* SmartRefreshLayout
+* LeakCanary
+* PictureSelector
+* PickerView
+* MagicIndicator
 
 
 
-## 除此以外，还有以下功能：
+
+
+# 除此以外，还有以下功能：
 1. Android与JS交互功能，博客地址https://blog.csdn.net/NakajimaFN/article/details/117927813?spm=1001.2014.3001.5502；  
 2. JSBridge框架来实现Android与H5交互，博客地址https://blog.csdn.net/NakajimaFN/article/details/130908360?spm=1001.2014.3001.5502；  
 3. Room数据库的使用与升级，博客地址https://blog.csdn.net/NakajimaFN/article/details/130901393?spm=1001.2014.3001.5502；  

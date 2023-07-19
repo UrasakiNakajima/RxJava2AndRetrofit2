@@ -1,13 +1,13 @@
 package com.phone.library_glide.glide_binding_adapter
 
-import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.alibaba.android.arouter.launcher.ARouter
-import com.phone.library_common.R
 import com.phone.library_base.common.ConstantData
 import com.phone.library_base.manager.LogManager
+import com.phone.library_custom_view.R
+import com.phone.library_glide.manager.ImageLoaderManager
 
 
 object CommonBindingAdapter {
@@ -37,18 +37,12 @@ object CommonBindingAdapter {
 
 
     /**
-     * 加载图片,做高斯模糊处理
+     * 加载图片
      */
-
     @JvmStatic
-    @BindingAdapter("imageUrl")
+    @BindingAdapter("app:imageUrl")
     fun bindImage(imageView: ImageView, url: String?) {
-        if (!TextUtils.isEmpty(url)) {
-//            GlideApp.with(imageView.context)
-//                .load(url)
-//                .error(GlideApp.with(imageView.context).load(url))
-//                .into(imageView)
-        }
+        ImageLoaderManager.display(imageView.context, imageView, url)
 
 //        var numberOfTimes: Int = 0;
 //            GlideApp.with(imageView.context).load(url)
@@ -95,11 +89,10 @@ object CommonBindingAdapter {
 
 
     /**
-     * 加载图片,做高斯模糊处理
+     * 加载图片
      */
-
     @JvmStatic
-    @BindingAdapter("articleCollect")
+    @BindingAdapter("app:articleCollect")
     fun imgPlayBlur(view: ImageView, collect: Boolean) {
         if (collect) {
             view.setImageResource(R.mipmap.library_collect)

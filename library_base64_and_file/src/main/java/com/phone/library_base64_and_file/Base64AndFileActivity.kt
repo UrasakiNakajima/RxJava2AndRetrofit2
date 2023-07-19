@@ -496,7 +496,7 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
         conf.maxConcurrentRequest = 5 // 最大并发请求数，默认5个。
         conf.maxErrorRetry = 2 // 失败后最大重试次数，默认2次。
         conf.isHttpDnsEnable = true //默认为true，表示开启DNS配置。如需关闭请将其设置为false。
-        val oss: OSS = OSSClient(applicationContext, endpoint, credentialProvider)
+        val oss = OSSClient(applicationContext, endpoint, credentialProvider)
         // 调用此方法开启日志。
         OSSLog.enableLog()
         val mediaFileType = MediaFileManager.getFileType(file?.absolutePath)

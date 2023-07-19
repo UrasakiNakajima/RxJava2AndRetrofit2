@@ -24,12 +24,7 @@ import java.io.File
 object ImageLoaderManager {
 
     @JvmStatic
-    fun display(
-        context: Context,
-        imageView: ImageView,
-        url: String?,
-        placeholder: Int,
-        error: Int
+    fun display(context: Context, imageView: ImageView, url: String?, placeholder: Int, error: Int
     ) {
         url?.let {
             Glide.with(context).load(it).placeholder(placeholder)
