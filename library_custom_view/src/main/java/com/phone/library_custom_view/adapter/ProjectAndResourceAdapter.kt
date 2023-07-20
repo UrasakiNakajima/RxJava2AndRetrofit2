@@ -39,15 +39,7 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == Constants.ITEM_ARTICLE) {
-            val binding: CustomViewItemResourceBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(context),
-                R.layout.custom_view_item_resource,
-                parent,
-                false
-            )
-            ArticleViewHolder(binding.root)
-        } else {
+        return if (viewType == Constants.ITEM_ARTICLE_PIC) {
             val binding: CustomViewItemProjectBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(context),
                 R.layout.custom_view_item_project,
@@ -55,6 +47,14 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
                 false
             )
             ArticlePicViewHolder(binding.root)
+        } else {
+            val binding: CustomViewItemResourceBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(context),
+                R.layout.custom_view_item_resource,
+                parent,
+                false
+            )
+            ArticleViewHolder(binding.root)
         }
     }
 
@@ -81,12 +81,12 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (list[position].getItemType() == Constants.ITEM_ARTICLE) {
-            //普通类型
-            Constants.ITEM_ARTICLE
-        } else {
+        return if (list[position].getItemType() == Constants.ITEM_ARTICLE_PIC) {
             //带图片类型
             Constants.ITEM_ARTICLE_PIC
+        } else {
+            //普通类型
+            Constants.ITEM_ARTICLE
         }
     }
 

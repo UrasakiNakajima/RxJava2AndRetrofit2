@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/base_dp_16"
-            android:text="@{dataBean.topTitle}"
+            android:text="@={dataBean.topTitle}"
             android:textColor="@color/library_red"
             tools:text="置顶" />
 
@@ -33,8 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/tev_tag"
-            android:text="@{dataBean.author}"
-            tools:text="鸿洋" />
+            android:text="@={dataBean.author}"
+            tools:text="承香墨影" />
 
         <TextView
             android:id="@+id/tv_date"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/base_dp_16"
-            android:text="@{dataBean.date}"
+            android:text="@={dataBean.date}"
             tools:ignore="RelativeOverlap"
             tools:text="2020-03-08" />
 
@@ -57,7 +57,7 @@
             android:layout_marginTop="@dimen/base_dp_10"
             android:layout_marginRight="@dimen/base_dp_16"
             android:maxLines="3"
-            android:text="@{dataBean.title}"
+            android:text="@={dataBean.title}"
             tools:text="分布式协调工具之zookeeper使用篇-Zookeeper系统核心模型" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:layout_below="@+id/tev_title"
             android:layout_marginStart="@dimen/base_dp_16"
             android:layout_marginTop="@dimen/base_dp_10"
-            android:text="@{dataBean.articleTag}"
+            android:text="@={dataBean.articleTag}"
             tools:text="开发环境" />
 
         <ImageView

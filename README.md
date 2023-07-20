@@ -142,7 +142,7 @@ ARouter实现路由跳转集成请查看https://github.com/alibaba/ARouter。
     </tr>
 </table>
 
-### 5 资源命名冲突
+### 5. 资源命名冲突
 * 在组件化方案中，资源命名冲突是一个比较严重的问题，由于在打包时会进行res下的资源（包括drawable、layout、mipmap、raw、values下的资源文件。
 请注意：values下的资源文件名不要改动，只需要改动文件内部的内容前缀![Image](/screenshot/screenshot_resource_prefix_value.jpg)；
 drawable、layout、mipmap、raw下的资源文件都需要加前缀![Image](/screenshot/screenshot_resource_prefix_common.jpg)）合并，
@@ -713,7 +713,7 @@ object CommonBindingAdapter {
     style="@style/library_text_3"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@{dataBean.date}"
+    android:text="@={dataBean.date}"
     app:layout_constraintBottom_toBottomOf="@+id/imv_title"
     app:layout_constraintLeft_toLeftOf="@+id/tev_title"
     tools:text="2020-03-14 | zskingking" />
