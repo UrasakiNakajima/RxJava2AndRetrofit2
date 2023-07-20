@@ -5,3 +5,9 @@
 202	280	1688982815	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/armeabi-v7a/libnative-lib.so	3b502b62e1b30689
 1	11	0	clean	c6470991adac0db9
 0	10	0	clean	c6470991adac0db9
+2	166	1689776657	CMakeFiles/return-data.dir/return-data.cpp.o	f592d3dc3856a303
+3	182	1689776657	CMakeFiles/native-lib.dir/native-lib.cpp.o	1cdc6ca5c34f7425
+166	251	1689776657	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/armeabi-v7a/libreturn-data.so	cd1aa67d2270de5f
+251	333	1689776657	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/armeabi-v7a/libnative-lib.so	3b502b62e1b30689
+0	23	0	clean	c6470991adac0db9
+0	11	0	clean	c6470991adac0db9

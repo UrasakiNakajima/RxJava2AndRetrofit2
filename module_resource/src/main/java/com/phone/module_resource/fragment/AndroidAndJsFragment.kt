@@ -46,7 +46,7 @@ class AndroidAndJsFragment : BaseBindingRxFragment<ResourceFragmentAndroidAndJsB
 
             webView.apply {
                 //加载assets文件夹下的js_java_interaction.html页面
-                loadUrl("file:///android_asset/js_java_interaction.html")
+                loadUrl("file:///android_asset/library_js_java_interaction.html")
                 webSettings = getSettings()
                 webSettings?.javaScriptEnabled = true
                 setWebViewClient(WebViewClient())

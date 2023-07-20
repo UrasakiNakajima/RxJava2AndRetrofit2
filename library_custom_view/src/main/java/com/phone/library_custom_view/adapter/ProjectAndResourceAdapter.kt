@@ -19,6 +19,7 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
     companion object {
         private val TAG = ProjectAndResourceAdapter::class.java.simpleName
     }
+    var lastTime = 0L
 
     fun clearData() {
         notifyItemRangeRemoved(0, this.list.size)
@@ -62,7 +63,7 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
             onItemViewClickListener?.onItemClickListener(position, it)
         }
         //收藏
-        holder.itemView.findViewById<View>(R.id.ivCollect)?.clickNoRepeat {
+        holder.itemView.findViewById<View>(R.id.imv_collect)?.clickNoRepeat {
             onItemViewClickListener?.onItemClickListener(position, it)
         }
 
@@ -102,7 +103,6 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
      * @param interval 重复间隔
      * @param onClick  事件响应
      */
-    var lastTime = 0L
     fun View.clickNoRepeat(interval: Long = 400, onClick: (View) -> Unit) {
         setOnClickListener {
             val currentTime = System.currentTimeMillis()
@@ -118,17 +118,13 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
      * 默认viewHolder
      */
     class ArticleViewHolder constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-
-    }
+        RecyclerView.ViewHolder(itemView)
 
     /**
      * 带图片viewHolder
      */
     class ArticlePicViewHolder constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-
-    }
+        RecyclerView.ViewHolder(itemView)
 
     private var onItemViewClickListener: OnItemViewClickListener? = null
 

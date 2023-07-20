@@ -35,3 +35,14 @@
 1	313	1689676073	CMakeFiles/native-lib.dir/native-lib.cpp.o	c45779f63491ef11
 290	347	1689676073	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libreturn-data.so	a8e566036d492a08
 347	442	1689676073	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libnative-lib.so	20d4c331608172fc
+0	279	1689825274	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libnative-lib.so	20d4c331608172fc
+0	13	0	clean	c6470991adac0db9
+0	335	1689830945	CMakeFiles/return-data.dir/return-data.cpp.o	febdb5f7916428f5
+1	353	1689830945	CMakeFiles/native-lib.dir/native-lib.cpp.o	c45779f63491ef11
+336	408	1689830945	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libreturn-data.so	a8e566036d492a08
+408	513	1689830945	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libnative-lib.so	20d4c331608172fc
+0	11	0	clean	c6470991adac0db9
+0	234	1689831255	CMakeFiles/return-data.dir/return-data.cpp.o	febdb5f7916428f5
+1	241	1689831255	CMakeFiles/native-lib.dir/native-lib.cpp.o	c45779f63491ef11
+234	283	1689831255	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libreturn-data.so	a8e566036d492a08
+283	368	1689831255	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libnative-lib.so	20d4c331608172fc

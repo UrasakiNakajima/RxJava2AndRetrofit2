@@ -18,7 +18,7 @@
         android:paddingTop="@dimen/base_padding">
 
         <ImageView
-            android:id="@+id/ivTitle"
+            android:id="@+id/imv_title"
             android:layout_width="@dimen/base_dp_95"
             android:layout_height="@dimen/base_dp_95"
             android:layout_marginStart="@dimen/base_dp_16"
@@ -29,7 +29,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tev_title"
             style="@style/library_text_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -37,14 +37,14 @@
             android:layout_marginEnd="@dimen/base_dp_16"
             android:text="@{dataBean.title}"
             android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@+id/ivTitle"
+            app:layout_constraintLeft_toRightOf="@+id/imv_title"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_goneMarginLeft="@dimen/base_dp_16"
             tools:text="标题" />
 
         <TextView
-            android:id="@+id/tvDes"
+            android:id="@+id/tev_des"
             style="@style/library_text_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -52,31 +52,31 @@
             android:layout_marginEnd="@dimen/base_dp_16"
             android:maxLines="2"
             android:text="@{dataBean.desc}"
-            app:layout_constraintLeft_toLeftOf="@+id/tvTitle"
+            app:layout_constraintLeft_toLeftOf="@+id/tev_title"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tev_title"
             tools:text="描述" />
 
         <TextView
-            android:id="@+id/tvNameData"
+            android:id="@+id/tev_name_data"
             style="@style/library_text_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{dataBean.date}"
-            app:layout_constraintBottom_toBottomOf="@+id/ivTitle"
-            app:layout_constraintLeft_toLeftOf="@+id/tvTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/imv_title"
+            app:layout_constraintLeft_toLeftOf="@+id/tev_title"
             tools:text="2020-03-14 | zskingking" />
 
         <ImageView
-            android:id="@+id/ivCollect"
-            app:articleCollect="@{dataBean.collect}"
+            android:id="@+id/imv_collect"
             android:layout_width="@dimen/base_dp_30"
             android:layout_height="@dimen/base_dp_30"
             android:layout_marginEnd="@dimen/base_dp_16"
             android:paddingStart="@dimen/base_dp_10"
             android:paddingTop="@dimen/base_dp_10"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@id/ivTitle"
+            app:articleCollect="@{dataBean.collect}"
+            app:layout_constraintBottom_toBottomOf="@id/imv_title"
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="ContentDescription" />
 
@@ -85,7 +85,7 @@
             android:layout_height="@dimen/base_dp_2"
             android:layout_marginTop="@dimen/base_dp_16"
             android:background="?attr/library_division_line"
-            app:layout_constraintTop_toBottomOf="@+id/ivTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/imv_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -190,7 +190,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<SquareActivityPickerViewBind
          * 关键逻辑在于循环体
          *
          */
-        val JsonData = GetJsonDataManager.getJson("province.json") //获取assets目录下的json文件数据
+        val JsonData = GetJsonDataManager.getJson("library_province.json") //获取assets目录下的json文件数据
         val jsonBean = parseData(JsonData) //用Gson 转成实体
         /**
          * 添加省份数据

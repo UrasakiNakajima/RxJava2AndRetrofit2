@@ -147,79 +147,77 @@ class MainJpushReceiver : BroadcastReceiver() {
             val bodyParams: Map<String, String?> = jsonStrToMap(extras)
             if (bodyParams.size > 0) {
                 for (key in bodyParams.keys) {
-                    if (bodyParams[key] != null) { //如果参数不是null，才处理数据
-                        if ("Snow on the Broken Bridge" == bodyParams[key]) {
-                            val bitmap =
-                                BitmapFactory.decodeResource(
-                                    context.resources,
-                                    R.mipmap.main_ic_launcher_round
-                                )
-                            val notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID)
-                            LogManager.i(TAG, "ACTION_MESSAGE_RECEIVED的ID: $notifactionId")
-                            LogManager.i(TAG, "extras*****$extras")
-                            // 跳转到你所需要的Activity
-                            val mIntent =
-                                if (SharedPreferencesManager.get("isLogin", false) as Boolean) {
-                                    Intent(
-                                        context,
-                                        MainActivity::class.java
-                                    )
-                                } else {
-                                    Intent(
-                                        context,
-                                        LoginActivity::class.java
-                                    )
-                                }
-                            mIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            val pendingIntent = PendingIntent.getActivity(
-                                context,
-                                0,
-                                mIntent,
-                                PendingIntent.FLAG_IMMUTABLE
+                    if ("music".equals(key) && "Snow on the Broken Bridge".equals(bodyParams[key])) { //如果参数不是null，才处理数据
+                        val bitmap =
+                            BitmapFactory.decodeResource(
+                                context.resources,
+                                R.mipmap.snow_on_the_broken_bridge
                             )
-                            builder.setContentIntent(pendingIntent)
-                                .setAutoCancel(true)
-                                .setContentText(msg)
-                                .setContentTitle(if ((title == "")) "title" else title)
-                                .setSmallIcon(R.mipmap.main_ic_launcher_round)
-                                .setLargeIcon(bitmap)
-                                .setNumber(NOTIFICATION_SHOW_SHOW_AT_MOST)
-                            val manager: NotificationManager =
-                                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                val CHANNEL_ID = "MineJpushReceiverId"
-                                val CHANNEL_NAME = "MineJpushReceiverName"
-                                val CHANNEL_DESCRIPTION = "MineJpushReceiverDescription"
-                                if (manager.getNotificationChannel(CHANNEL_ID) != null) {
-                                    manager.deleteNotificationChannel(CHANNEL_ID)
-                                }
-
-                                //修改安卓8.1以上系统报错
-                                val notificationChannel = NotificationChannel(
-                                    CHANNEL_ID,
-                                    CHANNEL_NAME,
-                                    NotificationManager.IMPORTANCE_DEFAULT
+                        val notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID)
+                        LogManager.i(TAG, "ACTION_MESSAGE_RECEIVED的ID: $notifactionId")
+                        LogManager.i(TAG, "extras*****$extras")
+                        // 跳转到你所需要的Activity
+                        val mIntent =
+                            if (SharedPreferencesManager.get("isLogin", false) as Boolean) {
+                                Intent(
+                                    context,
+                                    MainActivity::class.java
                                 )
-                                notificationChannel.enableLights(true) //如果使用中的设备支持通知灯，则说明此通知通道是否应显示灯
-                                notificationChannel.setShowBadge(false) //是否显示角标
-                                notificationChannel.enableVibration(true)
-                                // 设置描述 最长30字符
-                                notificationChannel.description = CHANNEL_DESCRIPTION
-                                // 设置显示模式
-                                notificationChannel.lockscreenVisibility =
-                                    NotificationCompat.VISIBILITY_PUBLIC
-                                notificationChannel.setSound(
-                                    Uri.parse("android.resource://" + context.packageName + "/" + R.raw.notice_sound),
-                                    Notification.AUDIO_ATTRIBUTES_DEFAULT
-                                )
-                                manager.createNotificationChannel(notificationChannel)
-                                builder.setChannelId(CHANNEL_ID)
                             } else {
-                                builder.setSound(Uri.parse("android.resource://" + context.packageName + "/" + R.raw.notice_sound))
+                                Intent(
+                                    context,
+                                    LoginActivity::class.java
+                                )
                             }
-                            //id随意，正好使用定义的常量做id，0除外，0为默认的Notification
-                            manager.notify(NOTIFICATION_ID, builder.build())
+                        mIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        val pendingIntent = PendingIntent.getActivity(
+                            context,
+                            0,
+                            mIntent,
+                            PendingIntent.FLAG_IMMUTABLE
+                        )
+                        builder.setContentIntent(pendingIntent)
+                            .setAutoCancel(true)
+                            .setContentText(msg)
+                            .setContentTitle(if ((title == "")) "title" else title)
+                            .setSmallIcon(R.mipmap.library_app)
+                            .setLargeIcon(bitmap)
+                            .setNumber(NOTIFICATION_SHOW_SHOW_AT_MOST)
+                        val manager: NotificationManager =
+                            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            val CHANNEL_ID = "MineJpushReceiverId"
+                            val CHANNEL_NAME = "MineJpushReceiverName"
+                            val CHANNEL_DESCRIPTION = "MineJpushReceiverDescription"
+                            if (manager.getNotificationChannel(CHANNEL_ID) != null) {
+                                manager.deleteNotificationChannel(CHANNEL_ID)
+                            }
+
+                            //修改安卓8.1以上系统报错
+                            val notificationChannel = NotificationChannel(
+                                CHANNEL_ID,
+                                CHANNEL_NAME,
+                                NotificationManager.IMPORTANCE_DEFAULT
+                            )
+                            notificationChannel.enableLights(true) //如果使用中的设备支持通知灯，则说明此通知通道是否应显示灯
+                            notificationChannel.setShowBadge(false) //是否显示角标
+                            notificationChannel.enableVibration(true)
+                            // 设置描述 最长30字符
+                            notificationChannel.description = CHANNEL_DESCRIPTION
+                            // 设置显示模式
+                            notificationChannel.lockscreenVisibility =
+                                NotificationCompat.VISIBILITY_PUBLIC
+                            notificationChannel.setSound(
+                                Uri.parse("android.resource://" + context.packageName + "/" + R.raw.main_snow_on_the_broken_bridge),
+                                Notification.AUDIO_ATTRIBUTES_DEFAULT
+                            )
+                            manager.createNotificationChannel(notificationChannel)
+                            builder.setChannelId(CHANNEL_ID)
+                        } else {
+                            builder.setSound(Uri.parse("android.resource://" + context.packageName + "/" + R.raw.main_snow_on_the_broken_bridge))
                         }
+                        //id随意，正好使用定义的常量做id，0除外，0为默认的Notification
+                        manager.notify(NOTIFICATION_ID, builder.build())
                     }
                 }
             }
@@ -232,9 +230,9 @@ class MainJpushReceiver : BroadcastReceiver() {
 //                    String sound = extraJson . getString ("sound");
 //                    LogManager.i(TAG, "processCustomMessage sound***" + sound);
 //                    if ("sound".equals(sound)) {
-//                        notification.setSound(Uri.parse("android.resource://" + contextSub.getPackageName() + "/" + R.raw.notice_sound));
+//                        notification.setSound(Uri.parse("android.resource://" + contextSub.getPackageName() + "/" + R.raw.snow_on_the_broken_bridge));
 //                    } else {
-//                        notification.setSound(Uri.parse("android.resource://" + contextSub!!.packageName + "/" + R.raw.notice_sound))
+//                        notification.setSound(Uri.parse("android.resource://" + contextSub!!.packageName + "/" + R.raw.snow_on_the_broken_bridge))
 //                    }
 //                }
 //            } catch (JSONException e) {

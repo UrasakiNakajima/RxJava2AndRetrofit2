@@ -122,7 +122,7 @@ class SubProjectFragment :
                             }
                         }
                         //收藏
-                        R.id.ivCollect -> {
+                        R.id.imv_collect -> {
 //                        this@ResourceChildFragment.subProjectAdapter.list[i].apply {
 //                            //已收藏取消收藏
 //                            if (collect) {

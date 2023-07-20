@@ -128,7 +128,7 @@ class JsbridgeActivity : BaseBindingRxAppActivity<SquareActivityJsbridgeBinding>
                     return true
                 }
             }
-            loadUrl("file:///android_asset/jsbridge_js_java_interaction.html")
+            loadUrl("file:///android_asset/library_jsbridge_js_java_interaction.html")
 
 
             registerHandler(
