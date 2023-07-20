@@ -11,12 +11,12 @@
 
     <application>
         <activity
-            android:name="com.phone.library_base64_and_file.Base64AndFileActivity"
+            android:name=".Base64AndFileActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <service
-            android:name="com.phone.library_base64_and_file.service.Base64AndFileService"
+            android:name=".service.Base64AndFileService"
             android:exported="false" />
     </application>
 

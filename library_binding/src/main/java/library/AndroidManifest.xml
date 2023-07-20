@@ -3,8 +3,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.phone.library_binding">
 
-    <application>
-
-    </application>
-
 </manifest>

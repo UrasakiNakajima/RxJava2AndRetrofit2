@@ -1,6 +1,6 @@
 ## RxJava2AndRetrofit2
 项目功能介绍：原本是RxJava2和Retrofit2项目，现已更新使用Kotlin+RxJava2+Retrofit2+MVP架构+组件化和
-Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token 功能，添加RxJava2 生命周期管理，集成极光推送、阿里云Oss对象存储和高德地图定位功能。
+Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token功能，添加RxJava2生命周期管理，集成极光推送、阿里云Oss对象存储和高德地图定位功能。
 
 ## 应用截图（页面效果一般，不过看这个项目看的不是页面，主要学习的是Kotlin+RxJava2+Retrofit2+MVP架构+组件化
 ## 和Kotlin+Retrofit2+协程+MVVM架构+组件化的封装）
@@ -92,12 +92,11 @@ Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token 功能，
 
 ### 2. app空壳工程：
 1. 配置整个项目的Gradle脚本，例如混淆、签名等；
-2. app组件中可以初始化全局的库，例如JPushInterface.init(this)；
-3. 集成极光推送的JPushService和JPushReceiver（极光推送这里有包名限制，所以放在app空壳工程）；
-4. 业务组件管理（组装）；
+2. app组件的build.gradle中可以配置极光推送JPUSH_PKGNAME和JPUSH_APPKEY，以及它的权限；
+3. 业务组件管理（组装）；
 
 #### 2.1 业务组件：Main组件（module_main）：
-* 属于业务组件，指定APP启动页面、主界面 ；
+* 属于业务组件，指定APP启动页面、主界面；
 
 #### 2.2 业务组件: 根据公司具体业务而独立形成一个个的工程（module_home/module_project/module_square/module_resource/module_mine）：
 1. 这几个组件都是业务组件，根据产品的业务逻辑独立成一个组件；

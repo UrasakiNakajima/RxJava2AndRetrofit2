@@ -4,13 +4,11 @@
     package="com.phone.library_custom_view">
 
     <application>
-
         <activity
             android:name=".ui.WebViewActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
     </application>
 
 </manifest>

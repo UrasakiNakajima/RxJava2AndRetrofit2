@@ -7,7 +7,7 @@
 
     <application>
         <activity
-            android:name="com.phone.library_android_and_js.AndroidAndJsActivity"
+            android:name=".AndroidAndJsActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

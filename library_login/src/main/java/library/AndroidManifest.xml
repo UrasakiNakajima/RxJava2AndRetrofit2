@@ -26,7 +26,6 @@
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
     </application>
 
 </manifest>

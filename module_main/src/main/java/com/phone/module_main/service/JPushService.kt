@@ -1,4 +1,4 @@
-package com.phone.rxjava2andretrofit2.service
+package com.phone.module_main.service
 
 import cn.jpush.android.service.JCommonService
 

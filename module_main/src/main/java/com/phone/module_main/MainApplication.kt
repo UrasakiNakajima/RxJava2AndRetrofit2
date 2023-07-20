@@ -1,4 +1,4 @@
-package com.phone.rxjava2andretrofit2
+package com.phone.module_main
 
 import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
