@@ -67,28 +67,6 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     }
 
     override fun initLoadData() {
-//        lifecycleScope.launch {
-//            LogManager.i(TAG, "lifecycleScope.launch thread name*****" + Thread.currentThread().name)
-//            launch {
-//                delay(1000)
-//                LogManager.i(TAG, "launch delay(1000)")
-//            }
-//            async {
-//                delay(2000)
-//                LogManager.i(TAG, "async delay(2000)")
-//            }
-//            async {
-//                delay(1000)
-//                LogManager.i(TAG, "async delay(1000)")
-//            }
-//            launch {
-//                delay(2000)
-//                LogManager.i(TAG, "launch delay(2000)")
-//            }
-//        }
-
-//        LogManager.i(TAG, "ProjectFragment initLoadData")
-
         if (isFirstLoad) {
             initProjectTabData()
             LogManager.i(TAG, "initLoadData*****$TAG")

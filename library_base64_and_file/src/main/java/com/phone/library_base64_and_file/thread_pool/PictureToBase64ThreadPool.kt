@@ -5,21 +5,15 @@ import com.phone.library_base64_and_file.manager.Base64AndFileManager
 import com.phone.library_base64_and_file.manager.FileManager
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ThreadPoolManager
 import java.io.File
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 class PictureToBase64ThreadPool(var base64AndFileBean: Base64AndFileBean) {
 
     private val TAG = PictureToBase64ThreadPool::class.java.simpleName
-    private var pictureToBase64TaskExcutor: ExecutorService
 
-    init {
-        pictureToBase64TaskExcutor = Executors.newSingleThreadExecutor()
-    }
-
-    fun submit() {
-        pictureToBase64TaskExcutor.submit {
+    fun execute() {
+        ThreadPoolManager.instance().createSyncThreadPool({
             LogManager.i(
                 TAG,
                 "PictureToBase64TaskThread*******" + Thread.currentThread().name
@@ -60,7 +54,7 @@ class PictureToBase64ThreadPool(var base64AndFileBean: Base64AndFileBean) {
             } else {
                 onCommonSingleParamCallback?.onError("圖片不存在")
             }
-        }
+        })
     }
 
     private var onCommonSingleParamCallback: OnCommonSingleParamCallback<Base64AndFileBean?>? = null

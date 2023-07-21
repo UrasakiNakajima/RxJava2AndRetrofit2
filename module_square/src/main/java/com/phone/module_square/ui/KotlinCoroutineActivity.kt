@@ -132,9 +132,9 @@ class KotlinCoroutineActivity :
             LogManager.i(TAG, "GlobalScope thread name*****${Thread.currentThread().name}")
 
             showLoading()
-            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
             requestUserInfo()
-            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
             downloadFile()
             hideLoading()
         }
@@ -144,9 +144,9 @@ class KotlinCoroutineActivity :
 //            LogManager.i(TAG, "GlobalScope thread name*****${Thread.currentThread().name}")
 //
 //            showLoading()
-//            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+//            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
 //            requestUserInfo()
-//            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+//            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
 //            downloadFile()
 //            hideLoading()
 //        }
@@ -184,9 +184,9 @@ class KotlinCoroutineActivity :
             LogManager.i(TAG, "mainScope launch thread name*****${Thread.currentThread().name}")
 
             showLoading()
-            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
             requestUserInfo()
-            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
             videoDecoding()
             hideLoading()
         }
@@ -195,9 +195,9 @@ class KotlinCoroutineActivity :
 //            LogManager.i(TAG, "mainScope async thread name*****${Thread.currentThread().name}")
 //
 //            showLoading()
-//            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+//            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
 //            requestUserInfo()
-//            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+//            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
 //            videoDecoding()
 //            hideLoading()
 //        }
@@ -222,9 +222,9 @@ class KotlinCoroutineActivity :
             )
 
             showLoading()
-            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
             requestUserInfo()
-            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
             videoDecoding()
             hideLoading()
         }
@@ -233,9 +233,9 @@ class KotlinCoroutineActivity :
 //            LogManager.i(TAG, "lifecycleScope async thread name*****${Thread.currentThread().name}")
 //
 //            showLoading()
-//            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+//            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
 //            requestUserInfo()
-//            //进入挂起的函数后UI线程会进入阻塞状态，挂起函数执行完毕之后，UI线程再进入唤醒状态，然后往下执行
+//            //进入挂起的函数后（执行withContext函数的时候）UI线程会进入挂起状态，挂起函数执行完毕之后，UI线程再进入恢复状态，然后往下执行
 //            videoDecoding()
 //            hideLoading()
 //        }

@@ -39,7 +39,7 @@ class Base64AndFileModelImpl : IBase64AndFileModel {
                 handler.post { onCommonSingleParamCallback.onError(error) }
             }
         })
-        compressedPictureThreadPool.submit()
+        compressedPictureThreadPool.execute()
     }
 
     override fun showPictureToBase64(
@@ -58,7 +58,7 @@ class Base64AndFileModelImpl : IBase64AndFileModel {
                 handler.post { onCommonSingleParamCallback.onError(error) }
             }
         })
-        pictureToBase64ThreadPool.submit()
+        pictureToBase64ThreadPool.execute()
     }
 
     override fun showBase64ToPicture(
@@ -77,7 +77,7 @@ class Base64AndFileModelImpl : IBase64AndFileModel {
                 handler.post { onCommonSingleParamCallback.onError(error) }
             }
         })
-        base64ToPictureThreadPool.submit()
+        base64ToPictureThreadPool.execute()
     }
 
     override fun detachViewModel() {

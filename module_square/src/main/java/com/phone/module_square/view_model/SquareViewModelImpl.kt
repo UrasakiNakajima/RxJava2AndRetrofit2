@@ -86,45 +86,41 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 //            mModel.downloadFile(),
 //            BaseApplication.instance().externalCacheDir!!.absolutePath,
 //            "artist_kirara_asuka.mov",
-//            object : DownloadProgressHandler() {
+//            object : OnDownloadCallBack {
 //                override fun onProgress(progress: Int, total: Long, speed: Long) {
 //                    LogManager.i(TAG, "progress:$progress, speed:$speed")
-//                    downloadData.value = DownloadState.ProgressState(progress, total, speed)
+//                    downloadData.postValue(DownloadState.ProgressState(progress, total, speed))
 //                }
 //
 //                override fun onCompleted(file: File) {
 //                    LogManager.i(TAG, "下载文件成功")
-//                    downloadData.value = DownloadState.CompletedState(file)
+//                    downloadData.postValue(DownloadState.CompletedState(file))
 //                }
 //
 //                override fun onError(e: Throwable?) {
 //                    LogManager.i(TAG, "下载文件异常", e)
-//                    downloadData.value =
-//                        DownloadState.ErrorState("下载文件异常*****${e.toString()}")
+//                    downloadData.postValue(DownloadState.ErrorState("下载文件异常*****${e.toString()}"))
 //                }
-//            }
-//        )
+//            })
 
 
-        RetrofitManager.instance().downloadFile2(rxFragment,
-            mModel.downloadFile(),
+        RetrofitManager.instance().downloadFile2(mModel.downloadFile2(),
             BaseApplication.instance().externalCacheDir!!.absolutePath,
             "artist_kirara_asuka.mov",
             object : OnDownloadCallBack {
                 override fun onProgress(progress: Int, total: Long, speed: Long) {
                     LogManager.i(TAG, "progress:$progress, speed:$speed")
-                    downloadData.value = DownloadState.ProgressState(progress, total, speed)
+                    downloadData.postValue(DownloadState.ProgressState(progress, total, speed))
                 }
 
                 override fun onCompleted(file: File) {
                     LogManager.i(TAG, "下载文件成功")
-                    downloadData.value = DownloadState.CompletedState(file)
+                    downloadData.postValue(DownloadState.CompletedState(file))
                 }
 
                 override fun onError(e: Throwable?) {
                     LogManager.i(TAG, "下载文件异常", e)
-                    downloadData.value =
-                        DownloadState.ErrorState("下载文件异常*****${e.toString()}")
+                    downloadData.postValue(DownloadState.ErrorState("下载文件异常*****${e.toString()}"))
                 }
             })
     }

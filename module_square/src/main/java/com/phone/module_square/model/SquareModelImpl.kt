@@ -6,6 +6,7 @@ import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_square.request.SquareRequest
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import retrofit2.Call
 
 class SquareModelImpl() : ISquareModel {
 
@@ -25,6 +26,12 @@ class SquareModelImpl() : ISquareModel {
         return RetrofitManager.instance().mRetrofit
             .create(SquareRequest::class.java)
             .downloadFile()
+    }
+
+    override fun downloadFile2(): Call<ResponseBody> {
+        return RetrofitManager.instance().mRetrofit
+            .create(SquareRequest::class.java)
+            .downloadFile2()
     }
 
 

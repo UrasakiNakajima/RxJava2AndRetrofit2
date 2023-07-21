@@ -6,8 +6,7 @@ import com.phone.library_base64_and_file.bean.Base64AndFileBean
 import com.phone.library_base64_and_file.manager.BitmapManager
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.manager.LogManager
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+import com.phone.library_base.manager.ThreadPoolManager
 
 class CompressedPictureThreadPool(
     var context: Context,
@@ -15,14 +14,9 @@ class CompressedPictureThreadPool(
 ) {
 
     private val TAG = CompressedPictureThreadPool::class.java.simpleName
-    private var compressedPictureExcutor: ExecutorService
 
-    init {
-        compressedPictureExcutor = Executors.newSingleThreadExecutor()
-    }
-
-    fun submit() {
-        compressedPictureExcutor.submit {
+    fun execute() {
+        ThreadPoolManager.instance().createSyncThreadPool({
             LogManager.i(
                 TAG,
                 "CompressedPictureThreadPool*******" + Thread.currentThread().name
@@ -49,7 +43,13 @@ class CompressedPictureThreadPool(
                 )
                 LogManager.i(
                     TAG,
-                    "initCompressorIO result size*****${BitmapManager.getDataSize(BitmapManager.getFileSize(it))}"
+                    "initCompressorIO result size*****${
+                        BitmapManager.getDataSize(
+                            BitmapManager.getFileSize(
+                                it
+                            )
+                        )
+                    }"
                 )
             })
 
@@ -85,7 +85,7 @@ class CompressedPictureThreadPool(
             //                    bitmap = null;
             //                }
             onCommonSingleParamCallback?.onSuccess(base64AndFileBean)
-        }
+        })
     }
 
     private var onCommonSingleParamCallback: OnCommonSingleParamCallback<Base64AndFileBean?>? = null

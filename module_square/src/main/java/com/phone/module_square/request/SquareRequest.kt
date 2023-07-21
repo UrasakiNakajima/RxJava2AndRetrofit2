@@ -6,6 +6,7 @@ import com.phone.library_base.common.ConstantData
 import com.phone.library_base.common.ConstantUrl
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -35,6 +36,15 @@ interface SquareRequest {
     @Streaming
     @GET(ConstantUrl.DOWNLOAD_FILE_URL)
     fun downloadFile(): Observable<ResponseBody>
+
+    /**
+     * 下载文件
+     *
+     */
+    @Headers("urlname:" + ConstantData.TO_DOWNLOAD_FILE_FLAG)
+    @Streaming
+    @GET(ConstantUrl.DOWNLOAD_FILE_URL)
+    fun downloadFile2(): Call<ResponseBody>
 
 
 }

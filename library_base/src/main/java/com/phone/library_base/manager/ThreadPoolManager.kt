@@ -16,6 +16,7 @@ class ThreadPoolManager {
      */
     companion object {
         private val TAG = ThreadPoolManager::class.java.simpleName
+
         @Volatile
         private var instance: ThreadPoolManager? = null
             get() {
@@ -44,8 +45,8 @@ class ThreadPoolManager {
             syncThreadPool = ThreadPoolExecutor(
                 1,
                 1,
-                0L,
-                TimeUnit.MILLISECONDS,
+                60L,
+                TimeUnit.SECONDS,
                 LinkedBlockingDeque(100),
                 ThreadPoolExecutor.CallerRunsPolicy()
             )

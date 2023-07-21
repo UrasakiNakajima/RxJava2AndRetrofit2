@@ -27,14 +27,16 @@ import com.trello.rxlifecycle3.components.support.RxFragment
 import com.uber.autodispose.AutoDispose
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -57,6 +59,7 @@ class RetrofitManager private constructor() {
 
     @JvmField
     val mRetrofit: Retrofit
+    var mCoroutineScope: CoroutineScope? = null
 
     /**
      * 私有构造器 无法外部创建
@@ -636,7 +639,17 @@ class RetrofitManager private constructor() {
         observable: Observable<ResponseBody>,
         destDir: String,
         fileName: String,
-        progressHandler: DownloadProgressHandler
+        onDownloadCallBack: OnDownloadCallBack
+    ) {
+        executeDownloadFile(rxFragment, observable, destDir, fileName, onDownloadCallBack)
+    }
+
+    private fun executeDownloadFile(
+        rxFragment: RxFragment,
+        observable: Observable<ResponseBody>,
+        destDir: String,
+        fileName: String,
+        onDownloadCallBack: OnDownloadCallBack
     ) {
         val downloadInfo = DownloadInfo(null, null, null, null, null, null, null)
         observable
@@ -651,159 +664,64 @@ class RetrofitManager private constructor() {
                 val responseLength: Long
                 var fos: FileOutputStream? = null
                 var bos: BufferedOutputStream? = null
-                try {
-                    val buf = ByteArray(1024 * 8)
-                    var len: Int
-                    responseLength = it.contentLength()
-                    inputStream = it.byteStream()
-                    bis = BufferedInputStream(inputStream)
 
-                    val dir = File(destDir)
-                    if (!dir.exists()) {
-                        dir.mkdirs()
-                    }
-                    val file = File(dir, fileName)
-                    if (!file.exists()) {
-                        file.createNewFile()
-                    }
-                    downloadInfo.file = file
-                    downloadInfo.fileSize = responseLength
+                val buf = ByteArray(1024 * 8)
+                var len: Int
+                responseLength = it.contentLength()
+                inputStream = it.byteStream()
+                bis = BufferedInputStream(inputStream)
 
-                    fos = FileOutputStream(file)
-                    bos = BufferedOutputStream(fos)
-                    var progress = 0
-                    var lastProgress = -1
-                    val startTime = System.currentTimeMillis() // 开始下载时获取开始时间
-                    while (bis.read(buf).also { len = it } != -1) {
-                        bos.write(buf, 0, len)
-                        total += len.toLong()
-                        progress = (total * 100 / responseLength).toInt()
-                        val curTime = System.currentTimeMillis()
-                        var usedTime = (curTime - startTime) / 1000
-                        if (usedTime == 0L) {
-                            usedTime = 1
-                        }
-                        val speed = total / usedTime // 平均每秒下载速度
-                        // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
-                        if (progress != lastProgress) {
-                            downloadInfo.speed = speed
-                            downloadInfo.progress = progress
-                            downloadInfo.currentSize = total
-                            progressHandler.sendMessage(
-                                DownloadProgressHandler.DOWNLOAD_PROGRESS, downloadInfo
-                            )
-                        }
+                val dir = File(destDir)
+                if (!dir.exists()) {
+                    dir.mkdirs()
+                }
+                val file = File(dir, fileName)
+                if (!file.exists()) {
+                    file.createNewFile()
+                }
+                downloadInfo.file = file
+                downloadInfo.fileSize = responseLength
+
+                fos = FileOutputStream(file)
+                bos = BufferedOutputStream(fos)
+                var progress = 0
+                var lastProgress = -1
+                val startTime = System.currentTimeMillis() // 开始下载时获取开始时间
+                while (bis.read(buf).also { len = it } != -1) {
+                    bos.write(buf, 0, len)
+                    total += len.toLong()
+                    progress = (total * 100 / responseLength).toInt()
+                    val curTime = System.currentTimeMillis()
+                    var usedTime = (curTime - startTime) / 1000
+                    if (usedTime == 0L) {
+                        usedTime = 1
+                    }
+                    val speed = total / usedTime // 平均每秒下载速度
+                    // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
+                    if (progress != lastProgress) {
+                        downloadInfo.speed = speed
+                        downloadInfo.progress = progress
+                        downloadInfo.currentSize = total
+                        onDownloadCallBack.onProgress(
+                            downloadInfo.progress!!,
+                            downloadInfo.fileSize!!,
+                            downloadInfo.speed!!
+                        )
+                    }
 //                            LogManager.i(TAG, "downloadInfo total******${total}")
 //                            LogManager.i(TAG, "downloadInfo progress******${progress}")
-                        lastProgress = progress
-                    }
-                    bos.flush()
-                    downloadInfo.file = file
-                    progressHandler.sendMessage(
-                        DownloadProgressHandler.DOWNLOAD_SUCCESS, downloadInfo
-                    )
-                } catch (e: java.lang.Exception) {
-                    downloadInfo.error = e
-                    progressHandler.sendMessage(
-                        DownloadProgressHandler.DOWNLOAD_FAIL, downloadInfo
-                    )
-                } finally {
-                    try {
-                        bis?.close()
-                        bos?.close()
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
-                    }
+                    lastProgress = progress
                 }
+                bos.flush()
+                downloadInfo.file = file
+                onDownloadCallBack.onCompleted(downloadInfo.file!!)
+
+                bis?.close()
+                bos?.close()
             }, {
                 downloadInfo.error = it
-                progressHandler.sendMessage(DownloadProgressHandler.DOWNLOAD_FAIL, downloadInfo)
+                onDownloadCallBack.onError(downloadInfo.error)
             })
-//            .subscribe(object : Observer<ResponseBody> {
-//                override fun onSubscribe(d: Disposable) {
-//                }
-//
-//                override fun onNext(responseBody: ResponseBody) { // Consumer<ResponseBody>
-//                    var inputStream: InputStream? = null
-//                    var bis: BufferedInputStream? = null
-//                    var total: Long = 0
-//                    val responseLength: Long
-//                    var fos: FileOutputStream? = null
-//                    var bos: BufferedOutputStream? = null
-//                    try {
-//                        val buf = ByteArray(1024 * 8)
-//                        var len: Int
-//                        responseLength = responseBody.contentLength()
-//                        inputStream = responseBody.byteStream()
-//                        bis = BufferedInputStream(inputStream)
-//
-//                        val dir = File(destDir)
-//                        if (!dir.exists()) {
-//                            dir.mkdirs()
-//                        }
-//                        val file = File(dir, fileName)
-//                        if (!file.exists()) {
-//                            file.createNewFile()
-//                        }
-//                        downloadInfo.file = file
-//                        downloadInfo.fileSize = responseLength
-//
-//                        fos = FileOutputStream(file)
-//                        bos = BufferedOutputStream(fos)
-//                        var progress = 0
-//                        var lastProgress = -1
-//                        val startTime = System.currentTimeMillis() // 开始下载时获取开始时间
-//                        while (bis.read(buf).also { len = it } != -1) {
-//                            bos.write(buf, 0, len)
-//                            total += len.toLong()
-//                            progress = (total * 100 / responseLength).toInt()
-//                            val curTime = System.currentTimeMillis()
-//                            var usedTime = (curTime - startTime) / 1000
-//                            if (usedTime == 0L) {
-//                                usedTime = 1
-//                            }
-//                            val speed = total / usedTime // 平均每秒下载速度
-//                            // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
-//                            if (progress != lastProgress) {
-//                                downloadInfo.speed = speed
-//                                downloadInfo.progress = progress
-//                                downloadInfo.currentSize = total
-//                                progressHandler.sendMessage(
-//                                    DownloadProgressHandler.DOWNLOAD_PROGRESS, downloadInfo
-//                                )
-//                            }
-////                            LogManager.i(TAG, "downloadInfo total******${total}")
-////                            LogManager.i(TAG, "downloadInfo progress******${progress}")
-//                            lastProgress = progress
-//                        }
-//                        bos.flush()
-//                        downloadInfo.file = file
-//                        progressHandler.sendMessage(
-//                            DownloadProgressHandler.DOWNLOAD_SUCCESS, downloadInfo
-//                        )
-//                    } catch (e: java.lang.Exception) {
-//                        downloadInfo.error = e
-//                        progressHandler.sendMessage(
-//                            DownloadProgressHandler.DOWNLOAD_FAIL, downloadInfo
-//                        )
-//                    } finally {
-//                        try {
-//                            bis?.close()
-//                            bos?.close()
-//                        } catch (e: java.lang.Exception) {
-//                            e.printStackTrace()
-//                        }
-//                    }
-//                }
-//
-//                override fun onError(e: Throwable) { // Consumer<Throwable>
-//                    downloadInfo.error = e
-//                    progressHandler.sendMessage(DownloadProgressHandler.DOWNLOAD_FAIL, downloadInfo)
-//                }
-//
-//                override fun onComplete() { // Action()
-//                }
-//            })
     }
 
     /**
@@ -815,125 +733,114 @@ class RetrofitManager private constructor() {
      * @param progressHandler
      */
     fun downloadFile2(
-        rxFragment: RxFragment,
-        observable: Observable<ResponseBody>,
+        call: Call<ResponseBody>,
+        destDir: String,
+        fileName: String,
+        onDownloadCallBack: OnDownloadCallBack
+    ) {
+        mCoroutineScope?.cancel()
+        mCoroutineScope = MainScope()
+        mCoroutineScope?.launch(Dispatchers.IO) {
+            LogManager.i(TAG, "downloadFile2 launch thread name*****${Thread.currentThread().name}")
+            executeDownloadFile2(call, destDir, fileName, onDownloadCallBack)
+
+
+            launch(Dispatchers.Default) {
+                LogManager.i(
+                    TAG,
+                    "downloadFile2 launch2 thread name*****${Thread.currentThread().name}"
+                )
+                LogManager.i(TAG, "executeDownloadFile finish")
+            }
+            mCoroutineScope?.cancel()
+        }
+    }
+
+    private fun executeDownloadFile2(
+        call: Call<ResponseBody>,
         destDir: String,
         fileName: String,
         onDownloadCallBack: OnDownloadCallBack
     ) {
         val downloadInfo = DownloadInfo(null, null, null, null, null, null, null)
-        observable
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            //解决RxJava2导致的内存泄漏问题
-            .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY))
-            .flatMap(object : Function<ResponseBody, ObservableSource<DownloadInfo?>> {
-                @Throws(Exception::class)
-                override fun apply(responseBody: ResponseBody): ObservableSource<DownloadInfo?> {
-                    return Observable.create({ emitter ->
-                        var inputStream: InputStream? = null
-                        var bis: BufferedInputStream? = null
-                        var total: Long = 0
-                        var responseLength: Long = 0L
-                        var fos: FileOutputStream? = null
-                        var bos: BufferedOutputStream? = null
-                        try {
-                            val buf = ByteArray(1024 * 8)
-                            var len = 0
-                            responseLength = responseBody.contentLength()
-                            inputStream = responseBody.byteStream()
-                            bis = BufferedInputStream(inputStream)
-                            val dir = File(destDir)
-                            if (!dir.exists()) {
-                                dir.mkdirs()
-                            }
-                            val file = File(dir, fileName)
-                            if (!dir.exists()) {
-                                dir.createNewFile()
-                            }
-                            downloadInfo.file = file
-                            downloadInfo.fileSize = responseLength
+        var inputStream: InputStream? = null
+        var bis: BufferedInputStream? = null
+        var total: Long = 0
+        var responseLength: Long = 0L
+        var fos: FileOutputStream? = null
+        var bos: BufferedOutputStream? = null
+        try {
+            val response = call.execute()
+            val responseBody = response.body()!!
 
-                            fos = FileOutputStream(file)
-                            bos = BufferedOutputStream(fos)
-                            var progress = 0
-                            var lastProgress = -1
-                            val startTime = System.currentTimeMillis() // 开始下载时获取开始时间
-                            while (bis.read(buf).also { len = it } != -1) {
-                                bos.write(buf, 0, len)
-                                total += len.toLong()
+            val buf = ByteArray(1024 * 8)
+            var len = 0
+            responseLength = responseBody.contentLength()
+            inputStream = responseBody.byteStream()
+            bis = BufferedInputStream(inputStream)
+            val dir = File(destDir)
+            if (!dir.exists()) {
+                dir.mkdirs()
+            }
+            val file = File(dir, fileName)
+            if (!dir.exists()) {
+                dir.createNewFile()
+            }
+            downloadInfo.file = file
+            downloadInfo.fileSize = responseLength
 
-                                progress = (total * 100 / responseLength).toInt()
-                                val curTime = System.currentTimeMillis()
-                                var usedTime = (curTime - startTime) / 1000
-                                if (usedTime == 0L) {
-                                    usedTime = 1
-                                }
-                                val speed = total / usedTime // 平均每秒下载速度
-                                // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
-                                if (progress != lastProgress) {
-                                    downloadInfo.speed = speed
-                                    downloadInfo.progress = progress
-                                    downloadInfo.currentSize = total
-                                    emitter.onNext(downloadInfo)
-                                    LogManager.i(
-                                        TAG,
-                                        "emitter.onNext downloadInfo******${downloadInfo.progress}"
-                                    )
-                                }
+            fos = FileOutputStream(file)
+            bos = BufferedOutputStream(fos)
+            var progress = 0
+            var lastProgress = -1
+            val startTime = System.currentTimeMillis() // 开始下载时获取开始时间
+            while (bis.read(buf).also { len = it } != -1) {
+                bos.write(buf, 0, len)
+                total += len.toLong()
+
+                progress = (total * 100 / responseLength).toInt()
+                val curTime = System.currentTimeMillis()
+                var usedTime = (curTime - startTime) / 1000
+                if (usedTime == 0L) {
+                    usedTime = 1
+                }
+                val speed = total / usedTime // 平均每秒下载速度
+                // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
+                if (progress != lastProgress) {
+                    downloadInfo.speed = speed
+                    downloadInfo.progress = progress
+                    downloadInfo.currentSize = total
+
+                    LogManager.i(TAG, "onNext downloadInfo******${downloadInfo.progress}")
+                    onDownloadCallBack.onProgress(
+                        downloadInfo.progress!!,
+                        downloadInfo.fileSize!!,
+                        downloadInfo.speed!!
+                    )
+                    LogManager.i(
+                        TAG,
+                        "emitter.onNext downloadInfo******${downloadInfo.progress}"
+                    )
+                }
 //                                LogManager.i(TAG, "downloadInfo total******${total}")
 //                                LogManager.i(TAG, "downloadInfo progress******${progress}")
-                                lastProgress = progress
-                            }
-                            bos.flush()
-                            downloadInfo.file = file
-                            emitter.onComplete()
-                        } catch (e: Exception) {
-                            downloadInfo.error = e
-                            emitter.onError(e)
-                        } finally {
-                            try {
-                                bis?.close()
-                                bos?.close()
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-                    })
-                }
-            })
-            .subscribe({
-                LogManager.i(TAG, "onNext downloadInfo******${downloadInfo.progress}")
-                onDownloadCallBack.onProgress(
-                    downloadInfo.progress!!, downloadInfo.fileSize!!, downloadInfo.speed!!
-                )
-            }, {
-                onDownloadCallBack.onError(it)
-            }, {
-                LogManager.i(TAG, "下载完成")
-                onDownloadCallBack.onCompleted(downloadInfo.file!!)
-            })
-//            .subscribe(object : Observer<DownloadInfo?> { // Consumer<DownloadInfo?>
-//
-//                override fun onSubscribe(d: Disposable) {
-//                }
-//
-//                override fun onNext(downloadInfo: DownloadInfo) {
-//                    LogManager.i(TAG, "onNext downloadInfo******${downloadInfo.progress}")
-//                    onDownloadCallBack.onProgress(
-//                        downloadInfo.progress!!, downloadInfo.fileSize!!, downloadInfo.speed!!
-//                    )
-//                }
-//
-//                override fun onError(e: Throwable) { // Consumer<Throwable>
-//                    onDownloadCallBack.onError(e)
-//                }
-//
-//                override fun onComplete() {// Action<DownloadInfo?>
-//                    LogManager.i(TAG, "下载完成")
-//                    onDownloadCallBack.onCompleted(downloadInfo.file!!)
-//                }
-//            })
+                lastProgress = progress
+            }
+            bos.flush()
+            downloadInfo.file = file
+            LogManager.i(TAG, "下载完成")
+            onDownloadCallBack.onCompleted(downloadInfo.file!!)
+        } catch (e: Exception) {
+            downloadInfo.error = e
+            onDownloadCallBack.onError(e)
+        } finally {
+            try {
+                bis?.close()
+                bos?.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
 

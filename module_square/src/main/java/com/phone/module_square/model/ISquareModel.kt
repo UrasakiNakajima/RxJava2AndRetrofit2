@@ -4,6 +4,7 @@ import com.phone.library_network.bean.ApiResponse
 import com.phone.library_common.bean.DataSquare
 import io.reactivex.Observable
 import okhttp3.ResponseBody
+import retrofit2.Call
 
 interface ISquareModel {
 
@@ -12,5 +13,7 @@ interface ISquareModel {
     fun squareData2(currentPage: String): Observable<ResponseBody>
 
     fun downloadFile(): Observable<ResponseBody>
+
+    fun downloadFile2(): Call<ResponseBody>
 
 }

@@ -46,6 +46,7 @@ import com.phone.library_base.base.IBaseView
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.SharedPreferencesManager
+import com.phone.library_base.manager.ThreadPoolManager
 import com.phone.library_common.iprovider.IHomeProvider
 import com.trello.rxlifecycle3.android.ActivityEvent
 import io.reactivex.*
@@ -222,21 +223,21 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
                         LogManager.i(TAG, "systemId*****$systemId")
                     }
 
-//                    //第一种方法
-//                    if (presenter != null) {
-//                        showLoading();
-//                        val base64AndFileBean = Base64AndFileBean()
-//                        base64AndFileBean.dirsPath = dirsPath
-//                        base64AndFileBean.dirsPathCompressed = dirsPathCompressed
-//                        base64AndFileBean.dirsPathCompressedRecover = dirsPathCompressedRecover
-//                        presenter.showCompressedPicture(
-//                            mBaseApplication,
-//                            base64AndFileBean
-//                        )
-//                    }
+                    //第一种方法
+                    if (presenter != null) {
+                        showLoading();
+                        val base64AndFileBean = Base64AndFileBean()
+                        base64AndFileBean.dirsPath = dirsPath
+                        base64AndFileBean.dirsPathCompressed = dirsPathCompressed
+                        base64AndFileBean.dirsPathCompressedRecover = dirsPathCompressedRecover
+                        presenter.showCompressedPicture(
+                            mBaseApplication,
+                            base64AndFileBean
+                        )
+                    }
 
-                    //第二种方法
-                    initBase64AndFileTask()
+//                    //第二种方法
+//                    initBase64AndFileTask()
                 }
 
                 override fun onNotCheckNoMorePromptError() {
@@ -491,10 +492,10 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
 
         // 配置类如果不设置，会有默认配置。
         val conf = ClientConfiguration()
-        conf.connectionTimeout = 15 * 1000 // 连接超时，默认15秒。
-        conf.socketTimeout = 15 * 1000 // socket超时，默认15秒。
+        conf.connectionTimeout = 10 * 1000 // 连接超时，默认15秒。
+        conf.socketTimeout = 10 * 1000 // socket超时，默认15秒。
         conf.maxConcurrentRequest = 5 // 最大并发请求数，默认5个。
-        conf.maxErrorRetry = 2 // 失败后最大重试次数，默认2次。
+        conf.maxErrorRetry = 1 // 失败后最大重试次数，默认2次。
         conf.isHttpDnsEnable = true //默认为true，表示开启DNS配置。如需关闭请将其设置为false。
         val oss = OSSClient(applicationContext, endpoint, credentialProvider)
         // 调用此方法开启日志。
@@ -678,9 +679,9 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
         tevCompressedPicture?.visibility = View.GONE
         imvCompressedPicture?.visibility = View.VISIBLE
         imvCompressedPicture?.setImageBitmap(success.bitmapCompressed)
-        hideLoading()
+//        hideLoading()
         LogManager.i(TAG, "showCompressedPictureSuccess")
-        showLoading()
+//        showLoading()
         presenter.showPictureToBase64(success)
     }
 
@@ -693,9 +694,9 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
         tevPictureToBase64?.visibility = View.GONE
         rcvBase64Str?.visibility = View.VISIBLE
         base64StrAdapter?.addData(success.base64StrList)
-        hideLoading()
+//        hideLoading()
         startTimer()
-        showLoading()
+//        showLoading()
         presenter.showBase64ToPicture(success)
     }
 
@@ -710,7 +711,7 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
         imvBase64ToPicture?.setImageBitmap(success.bitmap)
 
         ossPutSaveFile(success.fileCompressedRecover)
-        hideLoading()
+//        hideLoading()
     }
 
     override fun showBase64ToPictureError(error: String) {
@@ -744,6 +745,7 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
 //            unbindService(connection);
 //            binder = null;
 //        }
+        ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
         super.onDestroy()
     }
 }
