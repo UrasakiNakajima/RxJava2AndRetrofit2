@@ -3,7 +3,7 @@
 Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token功能，添加RxJava2生命周期管理，集成极光推送、阿里云Oss对象存储和高德地图定位功能。
 
 ## 应用截图（页面效果一般，不过看这个项目看的不是页面，主要学习的是Kotlin+RxJava2+Retrofit2+MVP架构+组件化
-## 和Kotlin+Retrofit2+协程+MVVM架构+组件化的封装）
+## 和Kotlin+Retrofit2+协程+MVVM架构+组件化的设计）
 <table>
     <tr>
         <td><img src="/screenshot/screenshot_launch.jpg" />
