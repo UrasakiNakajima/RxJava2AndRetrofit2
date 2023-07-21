@@ -49,7 +49,7 @@ Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token功能，�
 
 
 
-## 我们先来说一下组件化，组件化图解说明
+## 我们先来看一下组件化架构设计，组件化架构图解说明
 <table>
     <tr>
         <td><img src="/screenshot/screenshot_component_description.jpg" />
@@ -156,7 +156,7 @@ android {
 ```
 
 
-## MVVM图解说明
+## 再来看一下MVVM架构设计，MVVM架构图解说明
 <table>
     <tr>
         <td><img src="/screenshot/screenshot_mvvm.jpg" />
