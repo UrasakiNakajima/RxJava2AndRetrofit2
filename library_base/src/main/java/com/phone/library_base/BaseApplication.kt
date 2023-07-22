@@ -98,7 +98,7 @@ open class BaseApplication : MultiDexApplication() {
         LogManager.i(TAG, "address*****$address")
 //            AppRoomDataBase.instance()
 //            CountingAlgorithm.countingAlgorithm()
-        if (true) {
+        if (!BuildConfig.IS_RELEASE) {
             ARouter.openLog()
             ARouter.openDebug()
         }

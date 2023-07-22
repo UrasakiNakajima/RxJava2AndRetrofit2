@@ -42,7 +42,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/base_dp_25"
             android:gravity="center"
-            android:text="@string/library_thread_pool"
+            android:text="@string/library_app_name"
             android:textColor="@color/library_white"
             android:textSize="@dimen/base_sp_20" />
 

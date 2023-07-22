@@ -19,6 +19,7 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
     companion object {
         private val TAG = ProjectAndResourceAdapter::class.java.simpleName
     }
+
     var lastTime = 0L
 
     fun clearData() {
@@ -117,14 +118,12 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
     /**
      * 默认viewHolder
      */
-    class ArticleViewHolder constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView)
+    class ArticleViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     /**
      * 带图片viewHolder
      */
-    class ArticlePicViewHolder constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView)
+    class ArticlePicViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private var onItemViewClickListener: OnItemViewClickListener? = null
 

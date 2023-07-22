@@ -90,20 +90,22 @@ Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token功能，�
 9. 做了个需求，但不知不觉导致其他模块出现bug？
 如果有这些烦恼，说明你的项目需要进行组件化了。
 
-### 2. app空壳工程：
+### 2. 组件化构成：主要由app空壳工程、业务组件和功能组件构成
+
+#### 2.1 app空壳工程：
 1. 配置整个项目的Gradle脚本，例如混淆、签名等；
 2. app组件的build.gradle中可以配置极光推送JPUSH_PKGNAME和JPUSH_APPKEY，以及它的权限；
 3. 业务组件管理（组装）；
 
-#### 2.1 业务组件：Main组件（module_main）：
+#### 2.2 业务组件：Main组件（module_main）：
 * 属于业务组件，指定APP启动页面、主界面；
 
-#### 2.2 业务组件: 根据公司具体业务而独立形成一个个的工程（module_home/module_project/module_square/module_resource/module_mine）：
+#### 2.3 业务组件: 根据公司具体业务而独立形成一个个的工程（module_home/module_project/module_square/module_resource/module_mine）：
 1. 这几个组件都是业务组件，根据产品的业务逻辑独立成一个组件；
 2. 每个组件都应该是可独立运行的，没有必要把model封装到基础层。如果需要共用同一个model，那要么划分组件就不合理，要么通过ARouter从别的组件获取fragment的方式解决。
 如果实在要把model封装到基础层，方便组件共享数据模型，那么必须新建一个库放在基础层（这里命名为library_login）不允许放library_common里，因为要保证基础层的库都服从单一职责。
 
-#### 2.3 library组件：就是功能组件（library_base/library_common/library_network/library_glide/library_room/library_mvp/library_mvvm......）：
+#### 2.4 library组件：就是功能组件（library_base/library_common/library_network/library_glide/library_room/library_mvp/library_mvvm......）：
 1. 基础层的设定就是为了让组件放心地依赖基础层，放心地复用基础层的代码，以达到高效开发的目的。所以，不要让基础层成为你的代码垃圾桶。对基础层的要求有两个，对内和对外。
 对外，命名要秒懂。这样在写组件的业务代码的时候，多想一下基础层里的代码，复用比造轮子更重要。
 对内，要分类清晰。还有，封装到基础层的代码，其他组件不一定想用，不是说不写，而是说少写，以及分类清晰地写，所以在封装到基础层之前，先经过code review。
@@ -111,16 +113,163 @@ Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token功能，�
 3. library_network组件是网络请求库、library_glide组件是图片加载库、library_room组件是数据库、library_mvp组件是MVP基础库，
 library_mvvm组件是MVVM基础库等等；
 
-#### 2.4 组件化Application
-* 如果功能module有Application，主module没有自定义Application，自然引用功能module的Application。如果功能module有两个自定义
-Application，会编译出错，需要解决冲突。可以使用tools:replace="android:name"解决，因为App编译最终只会允许声明一个Application。
+#### 2.5 组件化Application
+* 如果功能module有Application，主module没有自定义Application，自然引用功能module的Application。如果功能module有两个自定义Application，
+会编译出错，需要解决冲突。可以使用tools:replace="android:name"解决，因为App编译最终只会允许声明一个Application。
 
 ### 3. 组件化的核心就是解耦，所以组件间是不能有依赖的，那么如何实现组件间的页面跳转呢？
 例如：在Square模块点击thread pool按钮需要跳转到mine模块的ThreadPoolActivity，两个模块之间没有依赖，也就说不能直接使用显示启动来打开
 ThreadPoolActivity。 那么隐式启动呢？隐式启动是可以实现跳转的，但是隐式Intent需要通过AndroidManifest配置和管理，协作开发显得比较麻烦。
 这里我们采用业界通用的方式—路由，比较著名的路由框架有阿里的ARouter、美团的WMRouter，它们原理基本是一致的。这里我们采用使用更广泛的ARouter：
-“一个用于帮助Android App进行组件化改造的框架——支持模块间的路由、通信、解耦”。 
-ARouter实现路由跳转集成请查看https://github.com/alibaba/ARouter。
+“一个用于帮助Android App进行组件化改造的框架——支持模块间的路由、通信、解耦”。
+
+#### 3.1 ARouter的使用
+1. 添加依赖和配置
+```gradle
+android {
+    defaultConfig {
+        ...
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+}
+
+dependencies {
+    compile 'com.alibaba:arouter-api:1.5.2'
+    kapt 'com.alibaba:arouter-compiler:1.5.2'
+}
+```
+
+2. 初始化SDK
+```kotlin
+// 必须写在init之前，否则这些配置在init过程中将无效（推荐在Application中初始化）
+if (!BuildConfig.IS_RELEASE) {
+    // 打印日志
+    ARouter.openLog()
+    // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+    ARouter.openDebug()
+}
+ARouter.init(this)
+```
+
+3. 添加注解
+```kotlin
+// 在支持路由的页面上添加注解(必选)
+// 这里的路径需要注意的是至少需要有两级，/xx/xx
+@Route(path = ConstantData.Route.ROUTE_THREAD_POOL)
+class ThreadPoolActivity : BaseRxAppActivity() {
+    ...
+}
+```
+
+4. 发起路由操作
+```kotlin
+// 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
+ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL).navigation()
+// 2. 跳转并携带参数
+ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL)
+    .withString("title", "線程池")
+    .withParcelable("biographyData", BiographyData("book", "Rommel的传记", "Rommel的简介"))
+    .navigation()
+```
+
+5. 获取携带参数
+```kotlin
+//为每一个参数声明一个字段，并使用 @Autowired 标注
+@Autowired(name = "title")
+lateinit var mTitle: String
+//为每一个参数声明一个字段，并使用 @Autowired 标注，通过ARouter api可以传递Parcelable对象
+@Autowired(name = "biographyData")
+lateinit var mBiographyData: Parcelable
+
+
+//在使用的地方去设置参数
+tevTitle?.text = mTitle
+val biographyData = mBiographyData as BiographyData
+LogManager.i(TAG, "biographyData*****" + biographyData.toString())
+```
+
+6. 添加混淆规则(如果使用了Proguard)
+```
+-keep public class com.alibaba.android.arouter.routes.**{*;}
+-keep public class com.alibaba.android.arouter.facade.**{*;}
+-keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
+
+# 如果使用了 byType 的方式获取 Service，需添加下面规则，保护接口
+-keep interface * implements com.alibaba.android.arouter.facade.template.IProvider
+
+# 如果使用了 单类注入，即不定义接口实现 IProvider，需添加下面规则，保护实现
+# -keep class * implements com.alibaba.android.arouter.facade.template.IProvider
+```
+
+7. 使用 Gradle 插件实现路由表的自动加载 (可选)
+```gradle
+apply plugin: 'com.alibaba.arouter'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.alibaba:arouter-register:1.5.2"
+    }
+}
+```
+可选使用，通过 ARouter 提供的注册插件进行路由表的自动加载(power by [AutoRegister](https://github.com/luckybilly/AutoRegister))， 默认通过扫描 dex 的方式
+进行加载通过 gradle 插件进行自动注册可以缩短初始化时间解决应用加固导致无法直接访问
+dex 文件，初始化失败的问题，需要注意的是，该插件必须搭配 api 1.3.0 以上版本使用！
+
+8. 使用IDE插件导航到目标类 (可选)
+在Android Studio插件市场中搜索 `ARouter Helper`, 或者直接下载文档上方 `最新版本` 中列出的 `arouter-idea-plugin` zip 安装包手动安装，安装后
+插件无任何设置，可以在跳转代码的行首找到一个图标 (![navigation](https://raw.githubusercontent.com/alibaba/ARouter/develop/arouter-idea-plugin/src/main/resources/icon/outline_my_location_black_18dp.png))
+点击该图标，即可跳转到标识了代码中路径的目标类.
+
+9. 通过依赖注入解耦:暴露服务
+```kotlin
+// 声明接口，其他组件通过接口来调用服务
+interface IHomeProvider : IProvider {
+
+    var mHomeDataList: MutableList<ResultData.JuheNewsBean>
+}
+
+// 实现接口
+@Route(path = ConstantData.Route.ROUTE_HOME_SERVICE)
+class HomeProviderImpl : IHomeProvider {
+
+    private val TAG = HomeProviderImpl::class.java.simpleName
+
+    override var mHomeDataList: MutableList<ResultData.JuheNewsBean> = mutableListOf()
+        get() {
+            return field
+        }
+        set(value) {
+            field = value
+        }
+
+    override fun init(context: Context?) {
+    }
+}
+```
+
+
+10. 使用依赖注入的方式发现服务，通过注解标注字段，即可使用，无需主动获取
+```kotlin
+val homeService = ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
+                    .navigation() as IHomeProvider
+homeService.mHomeDataList = homeAdapter.mJuheNewsBeanList
+```
+
+11. 使用依赖查找的方式发现服务，主动去发现服务并使用
+```kotlin
+val homeService = ARouter.getInstance().build(ConstantData.Route.ROUTE_HOME_SERVICE)
+    .navigation() as IHomeProvider
+LogManager.i(TAG, "homeService.mHomeDataList******" + homeService.mHomeDataList.toString())
+```
+
 
 ### 4. 集成开发模式和组件开发模式转换
 * 首先打开Android项目的gradle.properties文件![Image](/screenshot/screenshot_gradle_properties_configuration.jpg) ，
@@ -803,11 +952,8 @@ class ProjectAdapter(val context: Context, val list: MutableList<ArticleListBean
     /**
      * 带图片viewHolder
      */
-    class ArticlePicViewHolder constructor(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-
-    }
-
+    class ArticlePicViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView)
+    
     private var onItemViewClickListener: OnItemViewClickListener? = null
 
     fun setOnItemViewClickListener(onItemViewClickListener: OnItemViewClickListener) {

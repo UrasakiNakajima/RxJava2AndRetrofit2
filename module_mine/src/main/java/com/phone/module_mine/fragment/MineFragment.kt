@@ -21,6 +21,7 @@ import com.phone.library_base.common.ConstantData
 import com.phone.library_custom_view.custom_view.LoadingLayout
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ThreadPoolManager
+import com.phone.library_common.bean.BiographyData
 import com.phone.module_mine.R
 import com.phone.module_mine.adapter.MineAdapter
 import com.phone.module_mine.presenter.MinePresenterImpl
@@ -81,7 +82,11 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_LOGIN).navigation()
             }
             tevThreadPool?.setOnClickListener {
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL).navigation()
+                //Jump with parameters
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL)
+                    .withString("title", "線程池")
+                    .withParcelable("biographyData", BiographyData("book", "Rommel的传记", "Rommel的简介"))
+                    .navigation()
             }
             tevParamsTransferChangeProblem?.setOnClickListener {
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_PARAMS_TRANSFER_CHANGE_PROBLEM)

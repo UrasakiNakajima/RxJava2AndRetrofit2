@@ -187,7 +187,10 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
             }
             tevThreadPool.setOnClickListener {
                 //Jump with parameters
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL).navigation()
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL)
+                    .withString("title", "線程池")
+                    .withParcelable("biographyData", BiographyData("book", "Rommel的传记", "Rommel的简介"))
+                    .navigation()
             }
             tevThreeLevelLinkageList.setOnClickListener {
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
