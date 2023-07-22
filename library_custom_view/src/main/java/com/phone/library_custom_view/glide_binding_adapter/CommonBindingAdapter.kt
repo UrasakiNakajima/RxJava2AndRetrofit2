@@ -1,4 +1,4 @@
-package com.phone.library_glide.glide_binding_adapter
+package com.phone.library_custom_view.glide_binding_adapter
 
 import android.view.View
 import android.widget.ImageView
@@ -6,7 +6,7 @@ import androidx.databinding.BindingAdapter
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_base.common.ConstantData
 import com.phone.library_base.manager.LogManager
-import com.phone.library_custom_view.R
+import com.phone.library_glide.R
 import com.phone.library_glide.manager.ImageLoaderManager
 
 

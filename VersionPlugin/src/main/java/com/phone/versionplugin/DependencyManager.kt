@@ -25,8 +25,8 @@ object BuildVersions {
     const val runner_version = "1.4.0"
     const val espresso_core_version = "3.4.0"
     const val recyclerview_version = "1.2.0"
-    const val kotlinx_coroutines_android_version = "1.3.9"
-    const val kotlinx_coroutines_core_version = "1.3.9"
+    const val kotlinx_coroutines_android_version = "1.6.0"
+    const val kotlinx_coroutines_core_version = "1.6.0"
 
     const val material_version = "1.4.0"
     const val junit_version = "4.12"

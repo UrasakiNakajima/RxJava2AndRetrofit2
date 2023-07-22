@@ -1,5 +1,7 @@
 <resources>
 
-    <string name="base_title">Base64AndFile</string>
+    <string name="base_title">Base</string>
+    <string name="base_cancel">cancel</string>
+    <string name="base_confirm">confirm</string>
 
 </resources>

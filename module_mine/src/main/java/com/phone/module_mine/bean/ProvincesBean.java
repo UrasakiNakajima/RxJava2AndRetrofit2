@@ -1,4 +1,4 @@
-package com.phone.module_square.bean;
+package com.phone.module_mine.bean;
 
 
 import com.contrarywind.interfaces.IPickerViewData;

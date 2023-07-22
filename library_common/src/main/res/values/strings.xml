@@ -11,7 +11,15 @@
     <string name="library_mine">我的</string>
 
 
+    <string name="library_login">login</string>
+    <string name="library_logout">退出登陸</string>
+    <string name="library_register_was_successful">注册成功</string>
     <string name="library_please_add_components">請添加組件（将gradle.properties文件的isModule的值改为true，并同步项目）</string>
+    <string name="library_password">密码</string>
+    <string name="library_verification_code">验证码</string>
+    <string name="library_confirm_password">确认密码</string>
+    <string name="library_please_check_the_network_connection">请检查网络连接</string>
+    <string name="library_jump_to_register">跳轉到註冊</string>
 
 
     <string name="library_compress_pictures">壓縮圖片</string>
@@ -28,8 +36,6 @@
 
     <string name="library_data_in_wrong_format">數據格式錯誤</string>
     <string name="library_request_was_aborted">请求失败</string>
-    <string name="library_login">login</string>
-    <string name="library_logout">退出登陸</string>
     <string name="library_network_sneak_off">網絡開小差了</string>
     <string name="library_server_sneak_off">服務器開小差了</string>
     <string name="library_the_passwords_entered_twice_are_inconsistent">两次输入密码不一致</string>
@@ -50,13 +56,6 @@
     <string name="library_this_user_cannot_be_found">找不到此用户</string>
     <string name="library_please_enter_the_correct_password">请输入正确密码</string>
 
-    <string name="library_password">密码</string>
-    <string name="library_verification_code">验证码</string>
-
-    <string name="library_confirm_password">确认密码</string>
-    <string name="library_please_check_the_network_connection">请检查网络连接</string>
-    <string name="library_jump_to_register">跳轉到註冊</string>
-
     <string name="library_first_page_details">首页详情</string>
     <string name="library_mine_details">我的详情</string>
     <string name="library_user_details">用户详情</string>
@@ -71,7 +70,6 @@
 
     <string name="library_all_resource">全部资源</string>
     <string name="library_all">全部</string>
-    <string name="library_beautiful_woman">福利</string>
     <string name="library_android">Android</string>
     <string name="library_ios">IOS</string>
     <string name="library_h5">H5</string>

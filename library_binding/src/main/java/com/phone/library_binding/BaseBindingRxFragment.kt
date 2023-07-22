@@ -28,7 +28,7 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding>() : RxFragment(), IBa
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected var mBaseApplication: BaseApplication? = null
     protected var mRootView: View? = null
-    private val mDialogManager = DialogManager()
+    protected val mDialogManager = DialogManager()
     protected var mIsLoadView = false
 
     override fun onCreateView(

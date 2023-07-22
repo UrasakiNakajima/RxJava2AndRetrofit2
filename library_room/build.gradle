@@ -72,7 +72,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':library_base')
+    api project(path: ':library_base')
     api "androidx.room:room-runtime:$BuildVersions.room_version"
     kapt "androidx.room:room-compiler:$BuildVersions.room_version"
     // 可选 - Kotlin扩展和协程支持
@@ -83,5 +83,4 @@ dependencies {
     //Android路由（用于不同app之间的跳转）
 //    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
     kapt "com.alibaba:arouter-compiler:$BuildVersions.arouter_compiler_version"
-
 }

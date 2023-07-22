@@ -81,5 +81,4 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:$BuildVersions.retrofit2_version"
     api "com.squareup.retrofit2:converter-gson:$BuildVersions.retrofit2_version"
     api "com.squareup.retrofit2:adapter-rxjava2:$BuildVersions.retrofit2_version"
-
 }

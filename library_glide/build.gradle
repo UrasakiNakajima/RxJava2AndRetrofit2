@@ -68,11 +68,17 @@ android {
 }
 
 dependencies {
+    api project(path: ':library_base')
+    implementation project(path: ':library_network')
+
     //glide框架導入
     api "com.github.bumptech.glide:glide:$BuildVersions.glide_version"
     kapt "com.github.bumptech.glide:compiler:$BuildVersions.glide_version"
     //https图片处理
     api "com.github.bumptech.glide:okhttp3-integration:$BuildVersions.glide_version"
 
-    implementation project(path: ':library_network')
+    //Android路由（用于不同app之间的跳转）
+//    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
+    kapt "com.alibaba:arouter-compiler:$BuildVersions.arouter_compiler_version"
+
 }

@@ -49,7 +49,6 @@ object ConstantData {
         const val ROUTE_SQUARE = "/module_square/ui/square"
         const val ROUTE_SQUARE_FRAGMENT = "/module_square/fragment/square_fragment"
         const val ROUTE_JSBRIDGE = "/module_square/ui/jsbridge"
-        const val ROUTE_PICKER_VIEW = "/module_square/ui/picker_view"
         const val ROUTE_CREATE_USER = "/module_square/ui/create_user"
         const val ROUTE_KOTLIN_COROUTINE = "/module_square/ui/kotlin_coroutine"
         const val ROUTE_DECIMAL_OPERATION = "/module_square/ui/decimal_operation"
@@ -65,6 +64,7 @@ object ConstantData {
         const val ROUTE_MINE_FRAGMENT = "/module_mine/fragment/mine_fragment"
         const val ROUTE_USER_DATA = "/module_mine/ui/user_data"
         const val ROUTE_THREAD_POOL = "/module_mine/ui/thread_pool"
+        const val ROUTE_PICKER_VIEW = "/module_mine/ui/picker_view"
         const val ROUTE_PARAMS_TRANSFER_CHANGE_PROBLEM =
             "/module_mine/ui/params_transfer_change_problem"
 

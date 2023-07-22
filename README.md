@@ -159,16 +159,16 @@ ARouter.init(this)
 ```kotlin
 // 在支持路由的页面上添加注解(必选)
 // 这里的路径需要注意的是至少需要有两级，/xx/xx
-@Route(path = ConstantData.Route.ROUTE_THREAD_POOL)
-class ThreadPoolActivity : BaseRxAppActivity() {
+@Route(path = ConstantData.Route.ROUTE_PICKER_VIEW)
+class PickerViewActivity : BaseBindingRxAppActivity<MineActivityPickerViewBinding>() {
     ...
 }
 ```
 
 4. 发起路由操作
 ```kotlin
-// 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
-ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL).navigation()
+// 1. 应用内简单的跳转
+ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
 // 2. 跳转并携带参数
 ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL)
     .withString("title", "線程池")
@@ -178,18 +178,34 @@ ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL)
 
 5. 获取携带参数
 ```kotlin
-//为每一个参数声明一个字段，并使用 @Autowired 标注
-@Autowired(name = "title")
-lateinit var mTitle: String
-//为每一个参数声明一个字段，并使用 @Autowired 标注，通过ARouter api可以传递Parcelable对象
-@Autowired(name = "biographyData")
-lateinit var mBiographyData: Parcelable
+@Route(path = ConstantData.Route.ROUTE_THREAD_POOL)
+class ThreadPoolActivity : BaseRxAppActivity() {
 
+    companion object {
+        private val TAG = ThreadPoolActivity::class.java.simpleName
+    }
 
-//在使用的地方去设置参数
-tevTitle?.text = mTitle
-val biographyData = mBiographyData as BiographyData
-LogManager.i(TAG, "biographyData*****" + biographyData.toString())
+    //为每一个参数声明一个字段，并使用 @Autowired 标注
+    @Autowired(name = "title")
+    lateinit var mTitle: String
+    //为每一个参数声明一个字段，并使用 @Autowired 标注，通过ARouter api可以传递Parcelable对象
+    @Autowired(name = "biographyData")
+    lateinit var mBiographyData: Parcelable
+
+    //initData函数需要放在Activity onCreate函数内
+    override fun initData() {
+        // 在对应的Activity注入
+        ARouter.getInstance().inject(this)
+    }
+
+    //initViews函数需要放在Activity onCreate函数内
+    override fun initViews() {
+        //在使用的地方去设置参数
+        tevTitle?.text = mTitle
+        val biographyData = mBiographyData as BiographyData
+        LogManager.i(TAG, "biographyData*****" + biographyData.toString())
+    }
+}
 ```
 
 6. 添加混淆规则(如果使用了Proguard)

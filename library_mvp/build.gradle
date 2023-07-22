@@ -74,5 +74,4 @@ android {
 dependencies {
     implementation project(path: ':library_base')
     implementation project(path: ':library_network')
-
 }

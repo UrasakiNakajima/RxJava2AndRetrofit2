@@ -311,7 +311,7 @@
                     android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_three_level_linkage_list"
+                    android:id="@+id/tev_picker_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_45"
                     android:layout_gravity="center"

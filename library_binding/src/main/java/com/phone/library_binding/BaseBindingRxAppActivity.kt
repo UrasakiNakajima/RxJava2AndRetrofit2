@@ -40,7 +40,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected lateinit var mBaseApplication: BaseApplication
     private var mActivityPageManager: ActivityPageManager? = null
-    private val mDialogManager = DialogManager()
+    protected val mDialogManager = DialogManager()
     protected var mIsLoadView = false
 
     override fun onCreate(savedInstanceState: Bundle?) {

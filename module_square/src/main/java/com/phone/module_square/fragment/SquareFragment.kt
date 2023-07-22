@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.base.BaseRxAppActivity
+import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ScreenManager
@@ -186,22 +187,45 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_JSBRIDGE).navigation()
             }
             tevThreadPool.setOnClickListener {
-                //Jump with parameters
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL)
-                    .withString("title", "線程池")
-                    .withParcelable("biographyData", BiographyData("book", "Rommel的传记", "Rommel的简介"))
-                    .navigation()
+                if (!BuildConfig.IS_MODULE) {
+                    //Jump with parameters
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL)
+                        .withString("title", "線程池")
+                        .withParcelable(
+                            "biographyData", BiographyData("book", "Rommel的传记", "Rommel的简介")
+                        ).navigation()
+                } else {
+                    showToast("单独组件不能进入線程池页面，需使用整个项目才能进入線程池页面", true)
+                }
             }
-            tevThreeLevelLinkageList.setOnClickListener {
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
+            tevPickerView.setOnClickListener {
+                if (!BuildConfig.IS_MODULE) {
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
+                } else {
+                    showToast(
+                        "单独组件不能进入三级联动列表，需使用整个项目才能进入三级联动列表", true
+                    )
+                }
             }
             tevDownloadFile.setOnClickListener {
-                mIsLoadView = false
-                showLoading()
-                mViewModel.downloadFile(this@SquareFragment)
+                mDialogManager.showCommonDialog(mRxAppCompatActivity,
+                    "是否下载视频文件",
+                    "这里有一个好可爱的日本女孩",
+                    object : OnCommonSingleParamCallback<String> {
+                        override fun onSuccess(success: String) {
+                            mDialogManager.dismissCommonDialog()
+
+                            mIsLoadView = false
+                            showLoading()
+                            mViewModel.downloadFile(this@SquareFragment)
+                        }
+
+                        override fun onError(error: String) {
+                            mDialogManager.dismissCommonDialog()
+                        }
+                    })
             }
         }
-
     }
 
     override fun initLoadData() {

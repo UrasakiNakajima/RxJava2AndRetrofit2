@@ -69,6 +69,10 @@ class RegisterActivity : BaseMvpRxAppActivity<IBaseView, LoginPresenterImpl>(), 
 
     override fun registerSuccess(success: String) {
         if (!mRxAppCompatActivity.isFinishing) {
+            showToast(
+                ResourcesManager.getString(R.string.library_register_was_successful),
+                true
+            )
             hideLoading()
             ARouter.getInstance().build(ConstantData.Route.ROUTE_LOGIN)
                 .navigation()

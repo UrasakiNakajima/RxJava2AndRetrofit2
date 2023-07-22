@@ -1,4 +1,4 @@
-package com.phone.module_square.ui
+package com.phone.module_mine.ui
 
 import android.Manifest
 import android.graphics.Color
@@ -16,15 +16,15 @@ import com.phone.library_base.common.ConstantData
 import com.phone.library_common.manager.GetJsonDataManager
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
-import com.phone.module_square.R
-import com.phone.module_square.bean.ProvincesBean
-import com.phone.module_square.databinding.SquareActivityPickerViewBinding
+import com.phone.module_mine.R
+import com.phone.module_mine.bean.ProvincesBean
+import com.phone.module_mine.databinding.MineActivityPickerViewBinding
 import com.tbruyelle.rxpermissions2.Permission
 import com.tbruyelle.rxpermissions2.RxPermissions
 import org.json.JSONArray
 
 @Route(path = ConstantData.Route.ROUTE_PICKER_VIEW)
-class PickerViewActivity : BaseBindingRxAppActivity<SquareActivityPickerViewBinding>() {
+class PickerViewActivity : BaseBindingRxAppActivity<MineActivityPickerViewBinding>() {
 
     companion object {
         @JvmStatic
@@ -42,7 +42,7 @@ class PickerViewActivity : BaseBindingRxAppActivity<SquareActivityPickerViewBind
     // where this is an Activity or Fragment instance
     private var rxPermissions: RxPermissions? = null
 
-    override fun initLayoutId() = R.layout.square_activity_picker_view
+    override fun initLayoutId() = R.layout.mine_activity_picker_view
 
     override fun initData() {
         bodyParams = HashMap()

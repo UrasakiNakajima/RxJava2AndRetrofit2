@@ -29,7 +29,7 @@ class KotlinCoroutineActivity :
 
     companion object {
         private val TAG = KotlinCoroutineActivity::class.java.simpleName
-        private var mContext: Context? = null //静态变量会造成内存泄漏（测试内存泄漏）
+//        private var mContext: Context? = null //静态变量会造成内存泄漏（测试内存泄漏）
     }
 
     var mJob: Job? = null
@@ -41,7 +41,7 @@ class KotlinCoroutineActivity :
         ViewModelProvider(mRxAppCompatActivity).get(CoroutineViewModel::class.java)
 
     override fun initData() {
-        mContext = this@KotlinCoroutineActivity
+//        mContext = this@KotlinCoroutineActivity
     }
 
     /**
