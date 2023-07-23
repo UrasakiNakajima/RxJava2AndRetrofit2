@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/library_color_FF000000"
+    android:background="@color/library_color_2C2C2C"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_dp_48"
-            android:background="@color/library_color_FF198CFF"
+            android:background="@color/library_color_FFFFC73B"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
             app:contentInsetStart="0dp">

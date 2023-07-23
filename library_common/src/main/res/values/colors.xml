@@ -8,15 +8,19 @@
     <color name="library_purple_700">#FF3700B3</color>
     <color name="library_teal_200">#FF03DAC5</color>
     <color name="library_teal_700">#FF018786</color>
+    <color name="library_white">#FFFFFFFF</color>
     <color name="library_black">#FF000000</color>
 
-    <color name="library_white">#FFFFFFFF</color>
     <color name="library_color_FFE066FF">#FFE066FF</color>
     <color name="library_color_54E066FF">#54E066FF</color>
     <color name="library_color_FF999999">#FF999999</color>
     <color name="library_color_999999">#999999</color>
     <color name="library_color_555555">#555555</color>
     <color name="library_color_000000">#000000</color>
+    <color name="library_color_2C2C2C">#2C2C2C</color>
+    <color name="library_color_FA3C3C3C">#FA3C3C3C</color>
+    <color name="library_color_5E5E5E">#5E5E5E</color>
+
 
     <color name="library_color_FF000000">#FF000000</color>
     <color name="library_color_80000000">#80000000</color>

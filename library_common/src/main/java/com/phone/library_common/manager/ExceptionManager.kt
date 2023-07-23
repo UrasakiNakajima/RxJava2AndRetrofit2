@@ -52,7 +52,7 @@ class ExceptionManager private constructor() {
 //        LogManager.i(TAG, "stackTrace", throwable)
         val crashHandlerManager = CrashHandlerManager.instance()
         //收集設備信息和保存異常日誌到文件
-        crashHandlerManager?.handleException(throwable)
+        crashHandlerManager.handleException(throwable)
     }
 
 

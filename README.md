@@ -1,6 +1,6 @@
 ## RxJava2AndRetrofit2
 项目功能介绍：原本是RxJava2和Retrofit2项目，现已更新使用Kotlin+RxJava2+Retrofit2+MVP架构+组件化和
-Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token功能，添加RxJava2生命周期管理，集成极光推送、阿里云Oss对象存储和高德地图定位功能。
+Kotlin+Retrofit2+协程+Jetpack MVVM架构+组件化，添加自动管理token功能，添加RxJava2生命周期管理，集成极光推送、阿里云Oss对象存储和高德地图定位功能。
 
 ## 应用截图（页面效果一般，不过看这个项目看的不是页面，主要学习的是Kotlin+RxJava2+Retrofit2+MVP架构+组件化
 ## 和Kotlin+Retrofit2+协程+MVVM架构+组件化的设计）
@@ -34,9 +34,16 @@ Kotlin+Retrofit2+协程+MVVM架构+组件化，添加自动管理token功能，�
 </table>
 <table>
     <tr>
+        <td><img src="/screenshot/screenshot_room_insert.jpg" />
+        <td><img src="/screenshot/screenshot_room_query.jpg" />
+        <td><img src="/screenshot/screenshot_greendao.jpg" />
+    </tr>
+</table>
+<table>
+    <tr>
         <td><img src="/screenshot/screenshot_base64_and_file.jpg" />
         <td><img src="/screenshot/screenshot_base64_and_file2.jpg" />
-        <td><img src="/screenshot/screenshot_android_and_js2.jpg" />
+        <td><img src="/screenshot/screenshot_mounting.jpg" />
     </tr>
 </table>
 <table>
@@ -138,8 +145,8 @@ android {
 }
 
 dependencies {
-    compile 'com.alibaba:arouter-api:1.5.2'
-    kapt 'com.alibaba:arouter-compiler:1.5.2'
+    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
+    kapt "com.alibaba:arouter-compiler:$BuildVersions.arouter_compiler_version"
 }
 ```
 
@@ -231,7 +238,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.alibaba:arouter-register:1.5.2"
+        classpath "com.alibaba:arouter-register:$BuildVersions.arouter_api_version"
     }
 }
 ```
@@ -321,17 +328,19 @@ android {
 ```
 
 
-## 再来看一下MVVM架构设计，MVVM架构图解说明
+## 再来看一下Jetpack MVVM架构设计，Jetpack MVVM架构图解说明
 <table>
     <tr>
         <td><img src="/screenshot/screenshot_mvvm.jpg" />
     </tr>
 </table>
 
-### 1. MVVM介绍
+### 1. Jetpack MVVM介绍（使用Jetpack组件dataBinding、viewModel、liveData、room、lifecycle；dataBinding进行数据的单向
+### 或者双向绑定；viewModel进行业务逻辑和数据处理，绑定view和数据；liveData进行数据的更新；room是数据库，进行数据存储；lifecycle进行生命周期管理。）
 * Model-View-ViewModel，View指绿色的Activity/Fragment，主要负责界面显示，不负责任何业务逻辑和数据处理。Model指的是Repository
-包含的部分，主要负责数据获取，来组本地数据库或者远程服务器。ViewModel指的是图中蓝色部分，主要负责业务逻辑和数据处理，本身不持有View层
-引用，通过LiveData向View层发送数据。Repository统一了数据入口，不管来自数据库，还是服务器，统一打包给ViewModel。
+包含的部分，主要负责数据获取，来组本地数据库或者远程服务器。ViewModel指的是图中蓝色部分，主要负责业务逻辑和数据处理，在里面开启协程，在协程
+里进行网络请求/下载文件/操作数据库，它本身不持有View层引用，通过LiveData向View层发送数据。Repository统一了数据入口，不管来自数据库，
+还是服务器，统一打包给ViewModel。
 
 #### 1.1 View
 * View层做的就是和UI相关的工作，我们只在XML、Activity和Fragment写View层的代码，View层不做和业务相关的事，也就是我们在Activity不写
@@ -352,12 +361,30 @@ android {
 的任务。Model包括实体模型（Bean）、Retrofit的Service，获取网络数据接口，本地存储（增删改查）接口，数据变化监听等。Model提供数据获取接口
 供ViewModel调用，经数据转换和操作并最终映射绑定到View层某个UI元素的属性上。
 
-### 2. MVVM的使用
-#### 2.1 启用databinding
-* 在主工程app的build.gradle的android {}中加入：
+### 2. Jetpack MVVM的使用
+#### 2.1 启用databinding，添加协程依赖
+1. 在主工程app的build.gradle的中加入：
 ```gradle
-dataBinding {
-    enabled true
+android {
+    dataBinding {
+        enabled true
+    }
+}
+
+dependencies {
+    //kotlin协程导入
+    kapt "org.jetbrains.kotlinx:kotlinx-coroutines-android:$BuildVersions.kotlinx_coroutines_android_version"
+    kapt "org.jetbrains.kotlinx:kotlinx-coroutines-core:$BuildVersions.kotlinx_coroutines_core_version"
+    
+    //room数据库导入
+    implementation "androidx.room:room-runtime:$BuildVersions.room_version"
+    kapt "androidx.room:room-compiler:$BuildVersions.room_version"
+    //可选 - Kotlin扩展和协程支持
+    implementation "androidx.room:room-ktx:$BuildVersions.room_version"
+    
+    //Mvvm模式系列组件导入
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$BuildVersions.lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$BuildVersions.lifecycle_version"
 }
 ```
 
@@ -389,7 +416,7 @@ dataBinding {
 
 
 #### 2.3 SquareFragment继承BaseMvvmRxFragment，继承基类传入相关泛型，第一个泛型为你创建的SquareViewModelImpl，第二个泛型为ViewDataBind，
-#### 保存square_fragment_square.xml后databinding会生成一个SquareFragmentSquareBinding类。（如果没有生成，试着点击Build->Clean Project）
+#### 保存square_fragment_square.xml后databinding会生成一个SquareFragmentSquareBinding类。（如果没有生成，试着点击Build->Rebuild Project）
 **BaseMvvmRxFragment：**
 ```kotlin
 abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : RxFragment(),
@@ -594,59 +621,167 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
         private val TAG: String = SquareViewModelImpl::class.java.simpleName
     }
 
-    private var mModel = SquareModelImpl()
-    //也可以是直接使用viewModelScope.launch{}启动一个协程
-    private var mJob: Job? = null 
+    private var mSquareModel = SquareModelImpl()
+//    private var mJob: Job? = null
 
-    //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragment = MutableLiveData<State<List<SubDataSquare>>>()
+    //1.首先定义一个SingleLiveData的实例
+    val liveData = SingleLiveData<State<List<SubDataSquare>>>()
+
+    //2.首先定义一个SingleLiveData的实例
+    val downloadData = SingleLiveData<DownloadState<Int>>()
+
+    //3.首先定义一个SingleLiveData的实例
+    val insertData = MutableLiveData<State<Book>>()
+
+    //4.首先定义一个SingleLiveData的实例
+    val queryData = MutableLiveData<State<List<Book>>>()
 
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
         LogManager.i(TAG, "squareData thread name*****${Thread.currentThread().name}")
 
-        mJob?.cancel()
-        mJob =
-            GlobalScope.launch(Dispatchers.Main) {
-                val apiResponse = executeRequest { mModel.squareData(currentPage) }
-
-                if (apiResponse.data != null && apiResponse.errorCode == 0) {
-                    val responseData = apiResponse.data?.datas ?: mutableListOf()
-                    if (responseData.size > 0) {
-                        dataxRxFragment.value = State.SuccessState(responseData)
-                    } else {
-                        dataxRxFragment.value =
-                            State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
-                    }
-                } else {
-                    dataxRxFragment.value = State.ErrorState(apiResponse.errorMsg)
-                }
-            }
-        
-//        //或者直接使用
-//        //在Android MVVM架构的ViewModel中启动一个新协程（如果你的项目架构是MVVM架构，则推荐在ViewModel中使用），
-//        //该协程默认运行在UI线程，协程和ViewModel的生命周期绑定，组件销毁时，协程一并销毁，从而实现安全可靠地协程调用。
-//        //调用viewModelScope.launch{} 或 viewModelScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是UI线程）。
-//        viewModelScope.launch {
-//            val apiResponse = executeRequest { mModel.squareData(currentPage) }
+//        mJob?.cancel()
+//        //使用GlobalScope 单例对象直接调用launch/async开启协程
+//        //在应用范围内启动一个新协程，协程的生命周期与应用程序一致。
+//        //由于这样启动的协程存在启动协程的组件已被销毁但协程还存在的情况，极限情况下可能导致资源耗尽，
+//        //所以Activity 销毁的时候记得要取消掉，避免内存泄漏
+//        //不建议使用，尤其是在客户端这种需要频繁创建销毁组件的场景。
+//        //开启GlobalScope.launch{} 或GlobalScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是子线程）。
+//        mJob =
+//            GlobalScope.launch(Dispatchers.Main) {
+//                val apiResponse = executeRequest { mSquareModel.squareData(currentPage) }
 //
-//            if (apiResponse.data != null && apiResponse.errorCode == 0) {
-//                val responseData = apiResponse.data?.datas ?: mutableListOf()
-//                if (responseData.size > 0) {
-//                    dataxRxFragment.value = State.SuccessState(responseData)
+//                if (apiResponse.data != null && apiResponse.errorCode == 0) {
+//                    val responseData = apiResponse.data?.datas ?: mutableListOf()
+//                    if (responseData.size > 0) {
+//                        liveData.value = State.SuccessState(responseData)
+//                    } else {
+//                        liveData.value =
+//                            State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
+//                    }
 //                } else {
-//                    dataxRxFragment.value =
-//                        State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
+//                    liveData.value = State.ErrorState(apiResponse.errorMsg)
 //                }
-//            } else {
-//                dataxRxFragment.value = State.ErrorState(apiResponse.errorMsg)
 //            }
-//        }
+
+        viewModelScope.launch {
+            val apiResponse = executeRequest { mSquareModel.squareData(currentPage) }
+
+            if (apiResponse.data != null && apiResponse.errorCode == 0) {
+                val responseData = apiResponse.data?.datas ?: mutableListOf()
+                if (responseData.size > 0) {
+                    liveData.value = State.SuccessState(responseData)
+                } else {
+                    liveData.value =
+                        State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
+                }
+            } else {
+                liveData.value = State.ErrorState(apiResponse.errorMsg)
+            }
+        }
     }
 
+    override fun downloadFile(rxFragment: RxFragment) {
+        rxFragment.lifecycleScope.launch(Dispatchers.IO) {
+            RetrofitManager.instance().downloadFile3(mSquareModel.downloadFile2(),
+                BaseApplication.instance().externalCacheDir!!.absolutePath,
+                "artist_kirara_asuka.mov",
+                object : OnDownloadCallBack {
+                    override fun onProgress(progress: Int, total: Long, speed: Long) {
+                        LogManager.i(TAG, "progress:$progress, speed:$speed")
+                        downloadData.postValue(DownloadState.ProgressState(progress, total, speed))
+                    }
+
+                    override fun onCompleted(file: File) {
+                        LogManager.i(TAG, "下载文件成功")
+                        downloadData.postValue(DownloadState.CompletedState(file))
+                    }
+
+                    override fun onError(e: Throwable?) {
+                        LogManager.i(TAG, "下载文件异常", e)
+                        downloadData.postValue(DownloadState.ErrorState("下载文件异常*****${e.toString()}"))
+                    }
+                })
+        }
+    }
+
+    override fun insertBook(rxFragment: RxFragment, success: String) {
+        rxFragment.lifecycleScope.launch {
+            val book = executeInsertBook {
+                val appRoomDataBase = AppRoomDataBase.instance()
+                val book = Book()
+                val strArr = success.split(".")
+                book.bookName = "書名：${strArr[0]}"
+                book.anchor = "作者：${strArr[1]}"
+                book.briefIntroduction = "簡介：${strArr[2]}"
+                appRoomDataBase.bookDao().insert(book)
+
+//                val book2 = Book()
+//                book2.bookName = "EnglishXC2"
+//                book2.anchor = "rommelXC2"
+//                appRoomDataBase.bookDao().insert(book2)
+//                val bookList = appRoomDataBase.bookDao().queryAll()
+//                for (i in 0..bookList.size - 1) {
+//                    LogManager.i(TAG, "book*****" + bookList.get(i).bookName)
+//                }
+//                AppRoomDataBase.decrypt(
+//                    AppRoomDataBase.DATABASE_DECRYPT_NAME,
+//                    AppRoomDataBase.DATABASE_ENCRYPT_NAME,
+//                    AppRoomDataBase.DATABASE_DECRYPT_KEY
+//                )
+                book
+            }
+
+            if (book.isSuccess) {
+                insertData.value = State.SuccessState(book)
+            } else {
+                insertData.value = State.ErrorState(book.message)
+            }
+        }
+    }
+
+    private suspend fun executeInsertBook(block: suspend () -> Book): Book =
+        withContext(Dispatchers.IO) {
+            var book = Book()
+            runCatching {
+                block.invoke()
+            }.onSuccess {
+                book = it
+                book.isSuccess = true
+                book.message = "插入數據庫成功"
+            }.onFailure {
+                it.printStackTrace()
+                book.isSuccess = false
+                book.message = "插入數據庫失敗"
+            }.getOrDefault(book)
+        }
+
+    override fun queryBook() {
+        viewModelScope.launch {
+            val bookList = executeQueryBook {
+                val appRoomDataBase = AppRoomDataBase.instance()
+                appRoomDataBase.bookDao().queryAll()
+            }
+            queryData.value = State.SuccessState(bookList)
+        }
+    }
+
+    private suspend fun executeQueryBook(block: () -> List<Book>): List<Book> =
+        withContext(Dispatchers.IO) {
+            var bookList = mutableListOf<Book>()
+            runCatching {
+                block.invoke()
+            }.onSuccess {
+                bookList = it as MutableList<Book>
+            }.onFailure {
+                it.printStackTrace()
+            }.getOrDefault(bookList)
+        }
+    
     override fun onCleared() {
-        mJob?.cancel()
+//        mJob?.cancel()
         super.onCleared()
     }
+
 }
 ```
 
@@ -980,10 +1115,12 @@ class ProjectAdapter(val context: Context, val list: MutableList<ArticleListBean
 
 
 ## 主要开源框架
-* RxJava
-* RxLifecycle
+* RxJava2
+* Rxlifecycle3
 * RxPermissions
-* Retrofit
+* Okhttp3
+* Retrofit2
+* Fastjson
 * BASE64Decoder
 * ImmersionBar
 * GreenDao

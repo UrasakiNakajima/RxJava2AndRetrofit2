@@ -116,8 +116,8 @@ dependencies {
     api "org.apache.commons:commons-lang3:$BuildVersions.commons_lang_version"
     //apache Base64导入
     api "commons-codec:commons-codec:$BuildVersions.commons_codec_version"
-    //kotlin databinding
-    kapt "com.android.databinding:compiler:$BuildVersions.databinding_version"
+//    //kotlin databinding
+//    kapt "com.android.databinding:compiler:$BuildVersions.databinding_version"
 
 
     //rxpermissions框架導入
@@ -152,8 +152,8 @@ dependencies {
 //    api "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
     kapt "com.alibaba:arouter-compiler:$BuildVersions.arouter_compiler_version"
 
-    //leakcanary导入（检测内存泄漏框架，直接導入框架就可以了，2.7版本的不用配置）
-    debugApi "com.squareup.leakcanary:leakcanary-android:$BuildVersions.leakcanary_version"
+//    //leakcanary导入（检测内存泄漏框架，直接導入框架就可以了，2.7版本的不用配置）
+//    debugApi "com.squareup.leakcanary:leakcanary-android:$BuildVersions.leakcanary_version"
 
 //    //工具库
 //    implementation "com.blankj:utilcodex:$BuildVersions.utilcodex_version"

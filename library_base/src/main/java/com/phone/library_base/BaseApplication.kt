@@ -96,7 +96,6 @@ open class BaseApplication : MultiDexApplication() {
 //            editor = sp.edit()
         val address = SharedPreferencesManager.get("address", "")
         LogManager.i(TAG, "address*****$address")
-//            AppRoomDataBase.instance()
 //            CountingAlgorithm.countingAlgorithm()
         if (!BuildConfig.IS_RELEASE) {
             ARouter.openLog()
@@ -110,7 +109,7 @@ open class BaseApplication : MultiDexApplication() {
 
 
         //这里的数据需要延迟加载
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(Constants.DELAY_TIME, {
+        ThreadPoolManager().createScheduledThreadPoolToUIThread2(Constants.DELAY_TIME, {
             getSignInfo()
             //获取so 文件的密钥
             val data = JavaGetData.nativeAesKey(this@BaseApplication, BuildConfig.IS_RELEASE)
@@ -125,7 +124,7 @@ open class BaseApplication : MultiDexApplication() {
 
 
             val crashHandlerManager = CrashHandlerManager.instance()
-            crashHandlerManager?.sendPreviousReportsToServer()
+            crashHandlerManager.sendPreviousReportsToServer()
             initWebView()
             ThreadPoolManager.instance().shutdownScheduledThreadPool2()
         })

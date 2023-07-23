@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/library_color_FFFFFFFF"
+    android:background="@color/library_black"
     android:orientation="vertical"
     tools:context=".ui.ParamsTransferChangeProblemActivity">
 
@@ -22,7 +22,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/base_dp_73"
-                android:background="@color/library_color_FF198CFF"
+                android:background="@color/library_black"
                 android:minHeight="?attr/actionBarSize"
                 android:orientation="vertical"
                 app:contentInsetStart="0dp">
@@ -63,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/base_dp_6"
                 android:background="@color/library_color_FFFFC73B"
                 android:gravity="start|center_vertical"
                 android:includeFontPadding="false"

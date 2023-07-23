@@ -11,4 +11,7 @@ interface ISquareViewModel {
 
     fun downloadFile(rxFragment: RxFragment)
 
+    fun insertBook(rxFragment: RxFragment, success: String)
+
+    fun queryBook()
 }

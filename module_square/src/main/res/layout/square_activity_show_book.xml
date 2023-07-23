@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.ShowBookActivity">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="UselessLeaf">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_dp_73"
+            android:background="@color/library_black"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="vertical"
+            app:contentInsetStart="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_dp_73"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_25" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_48">
+
+                    <FrameLayout
+                        android:id="@+id/layout_back"
+                        android:layout_width="@dimen/base_dp_36"
+                        android:layout_height="match_parent"
+                        android:gravity="start"
+                        tools:ignore="UselessParent">
+
+                        <ImageView
+                            android:id="@+id/imv_back"
+                            android:layout_width="@dimen/base_dp_9"
+                            android:layout_height="@dimen/base_dp_16"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/library_icon_arrowhead_left"
+                            tools:ignore="ContentDescription" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tev_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_48"
+                        android:gravity="center"
+                        android:text="@string/library_book_list"
+                        android:textColor="@color/library_white"
+                        android:textSize="@dimen/base_sp_17" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_book_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

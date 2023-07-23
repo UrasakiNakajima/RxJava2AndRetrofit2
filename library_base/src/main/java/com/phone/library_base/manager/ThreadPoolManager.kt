@@ -51,14 +51,12 @@ class ThreadPoolManager {
                 ThreadPoolExecutor.CallerRunsPolicy()
             )
         }
-        //        for (int i = 0 i < 1 i++) {
         //创建任务
         val runnable = Runnable {
             onCommonSuccessCallback.onSuccess()
         }
         // 将任务交给线程池管理
         syncThreadPool?.execute(runnable)
-//        }
     }
 
     /**

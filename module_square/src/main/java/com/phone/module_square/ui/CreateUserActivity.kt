@@ -15,6 +15,7 @@ import com.phone.library_custom_view.dialog.StandardUserDialog
 import com.phone.library_common.manager.*
 import com.phone.library_base.manager.MainThreadManager
 import com.phone.library_base.manager.ThreadPoolManager
+import com.phone.library_greendao.UserBeanDaoManager
 import com.phone.module_square.R
 import com.phone.module_square.adapter.UserBeanAdapter
 import com.phone.module_square.databinding.SquareActivityCreateUserBinding
@@ -24,8 +25,8 @@ import java.util.*
 class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBinding>() {
 
     private val TAG = CreateUserActivity::class.java.simpleName
-    private var userBeanDaoManager: com.phone.library_greendao.UserBeanDaoManager? = null
-    private var userBeanAdapter: UserBeanAdapter? = null
+    private var userBeanDaoManager = UserBeanDaoManager()
+    private val userBeanAdapter by lazy { UserBeanAdapter(mRxAppCompatActivity) }
 
     private var createUserDialog //创建用户Dialog
             : StandardUserDialog? = null
@@ -35,16 +36,15 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
             : StandardDialog? = null
     private var deleteAllUserDialog //删除全部用户Dialog
             : StandardDialog? = null
-    private var queryUserList: List<UserBean> = mutableListOf()
+    private var queryUserList = mutableListOf<UserBean>()
 
     override fun initLayoutId() = R.layout.square_activity_create_user
 
     override fun initData() {
-        userBeanDaoManager = com.phone.library_greendao.UserBeanDaoManager()
     }
 
     override fun initViews() {
-        setToolbar(false, R.color.library_color_FF198CFF)
+        setToolbar(false, R.color.library_black)
         mDatabind.apply {
             imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_white))
             layoutBack.setOnClickListener { v: View? -> finish() }
@@ -74,8 +74,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
         mDatabind.rcvUser.let {
             it.layoutManager = linearLayoutManager
             it.itemAnimator = DefaultItemAnimator()
-            userBeanAdapter = UserBeanAdapter(this)
-            userBeanAdapter?.setOnItemViewClickListener { position: Int, view: View ->
+            userBeanAdapter.setOnItemViewClickListener { position: Int, view: View ->
 //            switch (view.getId()){
 //                case R.id.tev_delete:
 //                    showDeleteUserDialog(position)
@@ -95,24 +94,11 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
         queryUserList()
     }
 
-    override fun showLoading() {
-        if (!mLoadView.isShown()) {
-            mLoadView.setVisibility(View.VISIBLE)
-            mLoadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (mLoadView.isShown()) {
-            mLoadView.stop()
-            mLoadView.setVisibility(View.GONE)
-        }
-    }
-
     private fun queryUserList() {
         showLoading()
         ThreadPoolManager.instance().createSyncThreadPool {
-            queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
+            queryUserList.clear()
+            queryUserList.addAll(userBeanDaoManager.queryAll())
             LogManager.i(TAG, "queryUserList*****${queryUserList.size}")
             MainThreadManager {
                 if (queryUserList.size > 0) {
@@ -145,7 +131,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
 //            String userResponseListJsonStr = JSONObject.toJSONString(userResponseListBean)
 //            LogManager.i(TAG, "userResponseListJsonStr******" + userResponseListJsonStr)
                     Collections.reverse(queryUserList)
-                    userBeanAdapter?.let {
+                    userBeanAdapter.let {
                         it.clearData()
                         it.addData(queryUserList)
                     }
@@ -202,7 +188,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                 createUserDialog?.hideStandardDialog()
                 createUserDialog = null
             }
-            createUserDialog?.setOnItemViewClick2Listener { position: Int, view: View?, success: UserBean? ->
+            createUserDialog?.setOnItemViewClick2Listener { position: Int, view: View, success: UserBean ->
                 createUserDialog?.hideStandardDialog()
                 createUserDialog = null
                 showLoading()
@@ -210,10 +196,10 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                     hideLoading()
                     return@setOnItemViewClick2Listener
                 }
-                success?.let {
+                success.let {
                     val userBeanList =
-                        userBeanDaoManager?.queryByQueryBuilder(success.userId!!)
-                    if (userBeanList != null && userBeanList.size > 0 && userBeanList[0]
+                        userBeanDaoManager.queryByQueryBuilder(success.userId!!)
+                    if (userBeanList.size > 0 && userBeanList[0]
                             .userId == success.userId
                     ) {
                         showToast(
@@ -233,16 +219,17 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                             //                                userBeanAddList.add(userBean)
 //                            }
 //                            userBeanDaoManager?.insertInTx(userBeanAddList)
-                            userBeanDaoManager?.insert(success)
+                            userBeanDaoManager.insert(success)
                         }
                     }
                     ThreadPoolManager.instance().createSyncThreadPool {
-                        queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
+                        queryUserList.clear()
+                        queryUserList.addAll(userBeanDaoManager.queryAll())
                         MainThreadManager {
                             if (queryUserList.size > 0) {
                                 Collections.reverse(queryUserList)
-                                userBeanAdapter?.clearData()
-                                userBeanAdapter?.addData(queryUserList)
+                                userBeanAdapter.clearData()
+                                userBeanAdapter.addData(queryUserList)
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
@@ -255,7 +242,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                     )
                                 }
                             } else {
-                                userBeanAdapter?.clearData()
+                                userBeanAdapter.clearData()
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
@@ -286,7 +273,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                 updateUserDialog?.hideStandardDialog()
                 updateUserDialog = null
             }
-            updateUserDialog?.setOnItemViewClick2Listener { position2: Int, view: View?, success: UserBean? ->
+            updateUserDialog?.setOnItemViewClick2Listener { position2: Int, view: View, success: UserBean ->
                 updateUserDialog?.hideStandardDialog()
                 updateUserDialog = null
                 showLoading()
@@ -294,15 +281,15 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                     hideLoading()
                     return@setOnItemViewClick2Listener
                 }
-                success?.let {
+                success.let {
                     val userBeanList =
-                        userBeanDaoManager?.queryByQueryBuilder(success.userId!!)
-                    if (userBeanList != null && userBeanList.size > 0 && userBeanList[0]
+                        userBeanDaoManager.queryByQueryBuilder(success.userId!!)
+                    if (userBeanList.size > 0 && userBeanList[0]
                             .userId == success.userId
                     ) {
                         success.id = userBeanList[0].id
                         ThreadPoolManager.instance().createSyncThreadPool {
-                            userBeanDaoManager?.update(success)
+                            userBeanDaoManager.update(success)
                             MainThreadManager {
                                 showToast(
                                     ResourcesManager.getString(R.string.library_this_user_has_modified),
@@ -318,12 +305,13 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                         )
                     }
                     ThreadPoolManager.instance().createSyncThreadPool {
-                        queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
+                        queryUserList.clear()
+                        queryUserList.addAll(userBeanDaoManager.queryAll())
                         MainThreadManager {
                             if (queryUserList.size > 0) {
                                 Collections.reverse(queryUserList)
-                                userBeanAdapter?.clearData()
-                                userBeanAdapter?.addData(queryUserList)
+                                userBeanAdapter.clearData()
+                                userBeanAdapter.addData(queryUserList)
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
@@ -336,7 +324,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                     )
                                 }
                             } else {
-                                userBeanAdapter?.clearData()
+                                userBeanAdapter.clearData()
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
@@ -375,15 +363,16 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                     deleteUserDialog = null
                     showLoading()
                     ThreadPoolManager.instance().createSyncThreadPool {
-                        userBeanDaoManager?.delete(
-                            userBeanAdapter?.userBeanList?.get(position) ?: UserBean()
+                        userBeanDaoManager.delete(
+                            userBeanAdapter.userBeanList.get(position)
                         )
-                        queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
+                        queryUserList.clear()
+                        queryUserList.addAll(userBeanDaoManager.queryAll())
                         MainThreadManager {
                             if (queryUserList.size > 0) {
                                 Collections.reverse(queryUserList)
-                                userBeanAdapter?.clearData()
-                                userBeanAdapter?.addData(queryUserList)
+                                userBeanAdapter.clearData()
+                                userBeanAdapter.addData(queryUserList)
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
@@ -396,7 +385,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                     )
                                 }
                             } else {
-                                userBeanAdapter?.clearData()
+                                userBeanAdapter.clearData()
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
@@ -435,14 +424,16 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                     deleteAllUserDialog = null
                     showLoading()
                     ThreadPoolManager.instance().createSyncThreadPool {
-                        queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
-                        userBeanDaoManager?.deleteInTx(queryUserList)
-                        queryUserList = userBeanDaoManager?.queryAll() ?: mutableListOf()
+                        queryUserList.clear()
+                        queryUserList.addAll(userBeanDaoManager.queryAll())
+                        userBeanDaoManager.deleteInTx(queryUserList)
+                        queryUserList.clear()
+                        queryUserList.addAll(userBeanDaoManager.queryAll())
                         MainThreadManager {
                             if (queryUserList.size > 0) {
                                 Collections.reverse(queryUserList)
-                                userBeanAdapter?.clearData()
-                                userBeanAdapter?.addData(queryUserList)
+                                userBeanAdapter.clearData()
+                                userBeanAdapter.addData(queryUserList)
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
@@ -455,7 +446,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
                                     )
                                 }
                             } else {
-                                userBeanAdapter?.clearData()
+                                userBeanAdapter.clearData()
                                 mDatabind.tevTitle.let {
                                     TextViewStyleManager.setTextViewStyleVerticalCenter(
                                         it,
@@ -477,7 +468,7 @@ class CreateUserActivity : BaseBindingRxAppActivity<SquareActivityCreateUserBind
     }
 
     override fun onDestroy() {
-        userBeanDaoManager?.closeConnection()
+        userBeanDaoManager.closeConnection()
         ThreadPoolManager.instance().shutdownNowSyncThreadPool()
         super.onDestroy()
     }

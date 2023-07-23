@@ -122,6 +122,9 @@ dependencies {
     implementation project(path: ':library_android_and_js')
     implementation project(path: ':library_mounting')
     implementation project(path: ':library_custom_view')
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
 
     //Android路由（用于不同app之间的跳转）
 //    implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
@@ -130,6 +133,8 @@ dependencies {
     kapt "org.jetbrains.kotlinx:kotlinx-coroutines-android:$BuildVersions.kotlinx_coroutines_android_version"
     kapt "org.jetbrains.kotlinx:kotlinx-coroutines-core:$BuildVersions.kotlinx_coroutines_core_version"
 
+//    api "androidx.room:room-runtime:$BuildVersions.room_version"
     kapt "androidx.room:room-compiler:$BuildVersions.room_version"
-
+//    // 可选 - Kotlin扩展和协程支持
+//    api "androidx.room:room-ktx:$BuildVersions.room_version"
 }

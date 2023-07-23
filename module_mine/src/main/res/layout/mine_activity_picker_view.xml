@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/base_dp_50"
             android:layout_marginStart="@dimen/base_dp_20"
-            android:background="@drawable/library_corners_25_color_ff198cff"
+            android:background="@drawable/library_corners_15_color_ff198cff"
             android:gravity="center"
             android:paddingStart="@dimen/base_dp_20"
             android:paddingEnd="@dimen/base_dp_20"

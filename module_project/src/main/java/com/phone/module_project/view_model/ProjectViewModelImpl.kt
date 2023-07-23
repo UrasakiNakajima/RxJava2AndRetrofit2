@@ -18,7 +18,7 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
     private val model = ProjectModelImpl()
 
     //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragment = SingleLiveData<State<MutableList<TabBean>>>()
+    val tabData = SingleLiveData<State<MutableList<TabBean>>>()
 
     override fun projectTabData() {
         //在Android MVVM架构的ViewModel中启动一个新协程（如果你的项目架构是MVVM架构，则推荐在ViewModel中使用），
@@ -31,13 +31,13 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
             if (apiResponse.errorCode == 0) {
                 val responseData = apiResponse.data ?: mutableListOf()
                 if (responseData.size > 0) {
-                    dataxRxFragment.value = State.SuccessState(responseData)
+                    tabData.value = State.SuccessState(responseData)
                 } else {
-                    dataxRxFragment.value =
+                    tabData.value =
                         State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
                 }
             } else {
-                dataxRxFragment.value =
+                tabData.value =
                     State.ErrorState(apiResponse.errorMsg)
             }
         }

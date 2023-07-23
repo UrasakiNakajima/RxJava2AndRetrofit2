@@ -4,7 +4,7 @@ import android.view.View
 
 interface OnDialogCallback<T> {
 
-    fun onDialogClick(view: View?, success: T?)
+    fun onDialogClick(view: View, success: T)
 
-    fun onDialogClick(view: View?, success: T?, params: Map<String?, String?>?)
+    fun onDialogClick(view: View, success: T, params: Map<String, String>)
 }

@@ -2,21 +2,21 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="102dp">
+    android:layout_height="@dimen/base_dp_102">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="102dp"
+        android:layout_height="@dimen/base_dp_102"
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="@dimen/base_dp_10" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="91dp"
+            android:layout_height="@dimen/base_dp_91"
             android:orientation="horizontal"
             tools:ignore="DisableBaselineAlignment">
 
@@ -28,14 +28,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="@dimen/base_dp_45"
                     android:orientation="horizontal"
                     tools:ignore="UselessParent">
 
                     <TextView
                         android:id="@+id/tev_user_id"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_height="@dimen/base_dp_45"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
                         android:background="@color/library_color_FFFFC73B"
@@ -55,7 +55,7 @@
                     <TextView
                         android:id="@+id/tev_birthday"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_height="@dimen/base_dp_45"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
                         android:background="@color/library_color_FFFFC73B"
@@ -75,7 +75,7 @@
                     <TextView
                         android:id="@+id/tev_update"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_height="@dimen/base_dp_45"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@color/library_color_4876FF"
@@ -96,14 +96,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="@dimen/base_dp_45"
                     android:orientation="horizontal"
                     tools:ignore="UselessParent">
 
                     <TextView
                         android:id="@+id/tev_salary"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_height="@dimen/base_dp_45"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
                         android:background="@color/library_color_FFFFC73B"
@@ -123,7 +123,7 @@
                     <TextView
                         android:id="@+id/tev_address"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_height="@dimen/base_dp_45"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
                         android:background="@color/library_color_FFFFC73B"
@@ -143,7 +143,7 @@
                     <TextView
                         android:id="@+id/tev_delete"
                         android:layout_width="0dp"
-                        android:layout_height="45dp"
+                        android:layout_height="@dimen/base_dp_45"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@color/library_color_4876FF"

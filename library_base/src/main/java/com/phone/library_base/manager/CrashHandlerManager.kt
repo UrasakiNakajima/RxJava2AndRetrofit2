@@ -33,6 +33,8 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
     init {
         //获得默认的handle
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+
+
         //重新设置handle  设置该CrashHandler为程序的默认处理器
         Thread.setDefaultUncaughtExceptionHandler(this)
     }
@@ -55,8 +57,8 @@ class CrashHandlerManager private constructor() : Thread.UncaughtExceptionHandle
         //Synchronized添加后就是线程安全的的懒汉模式
         @Synchronized
         @JvmStatic
-        fun instance(): CrashHandlerManager? {
-            return instance
+        fun instance(): CrashHandlerManager {
+            return instance!!
         }
     }
 

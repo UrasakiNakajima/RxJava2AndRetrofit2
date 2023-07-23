@@ -8,27 +8,30 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.alibaba.fastjson.JSONObject
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.base.BaseRxAppActivity
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ScreenManager
-import com.phone.library_common.BuildConfig
 import com.phone.library_mvvm.BaseMvvmRxFragment
 import com.phone.library_network.bean.State
 import com.phone.library_common.bean.*
 import com.phone.library_common.callback.OnCommonRxPermissionsCallback
 import com.phone.library_base.common.ConstantData
+import com.phone.library_base.manager.DialogManager
 import com.phone.library_common.manager.*
-import com.phone.library_room.AppRoomDataBase
 import com.phone.library_common.iprovider.ISquareProvider
 import com.phone.library_greendao.bean.UserBean
 import com.phone.library_greendao.bean.UserBean2
 import com.phone.library_greendao.bean.UserBean3
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_base.manager.ThreadPoolManager
+import com.phone.library_base.manager.ToastManager
 import com.phone.library_network.bean.DownloadState
+import com.phone.library_network.manager.GsonManager
+import com.phone.module_square.BuildConfig
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareFragmentSquareBinding
 import com.phone.module_square.view_model.SquareViewModelImpl
@@ -53,6 +56,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
 
     private var mPermissionsDialog: AlertDialog? = null
     private var number = 1
+    val dialogManager = DialogManager()
 
     private var permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -72,32 +76,10 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
         mDatabind.subDataSquare = subDataSquare
         mDatabind.executePendingBindings()
 
-
-        val appRoomDataBase = AppRoomDataBase.instance()
-//        val book = Book()
-//        book.bookName = "English A"
-//        book.anchor = "rommel A"
-////        book.briefIntroduction = "这是一本关于童话的书"
-//        appRoomDataBase.bookDao().insert(book)
-//        val book2 = Book()
-//        book2.bookName = "EnglishXC2"
-//        book2.anchor = "rommelXC2"
-//        appRoomDataBase.bookDao().insert(book2)
-        val bookList = appRoomDataBase.bookDao().queryAll()
-        for (i in 0..bookList.size - 1) {
-            LogManager.i(TAG, "book*****" + bookList.get(i).bookName)
-        }
-
-
-//        AppRoomDataBase.decrypt(
-//            AppRoomDataBase.DATABASE_DECRYPT_NAME,
-//            AppRoomDataBase.DATABASE_ENCRYPT_NAME,
-//            AppRoomDataBase.DATABASE_DECRYPT_KEY
-//        )
     }
 
     override fun initObservers() {
-        mViewModel.dataxRxFragment.observe(this, {
+        mViewModel.liveData.observe(this, {
             LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
@@ -133,6 +115,34 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                     showToast(it.errorMsg, true)
                     hideLoading()
                     mIsLoadView = true
+                }
+            }
+        })
+        mViewModel.insertData.observe(this, {
+            LogManager.i(TAG, "onChanged*****roomData")
+            when (it) {
+                is State.SuccessState -> {
+                    mDialogManager.dismissLoadingDialog()
+                    dialogManager.dismissBookDialog()
+                    ToastManager.toast(mRxAppCompatActivity, it.success.toString())
+                }
+
+                is State.ErrorState -> {
+                    mDialogManager.dismissLoadingDialog()
+                    dialogManager.dismissBookDialog()
+                    ToastManager.toast(mRxAppCompatActivity, it.errorMsg)
+                }
+            }
+        })
+        mViewModel.queryData.observe(this, {
+            LogManager.i(TAG, "onChanged*****roomData")
+            when (it) {
+                is State.SuccessState -> {
+                    hideLoading()
+                    val bookJsonStr = JSONObject.toJSONString(it.success)
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_SHOW_BOOK)
+                        .withString("bookJsonStr", bookJsonStr)
+                        .navigation()
                 }
             }
         })
@@ -177,6 +187,27 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
             }
             tevKotlinCoroutine.setOnClickListener {
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_KOTLIN_COROUTINE).navigation()
+            }
+            tevRoomInsertBook.setOnClickListener {
+                dialogManager.showBookDialog(mRxAppCompatActivity,
+                    object : OnCommonSingleParamCallback<String> {
+                        override fun onSuccess(success: String) {
+                            mDialogManager.showLoadingDialog(mRxAppCompatActivity)
+                            mViewModel.insertBook(this@SquareFragment, success)
+                        }
+
+                        override fun onError(error: String) {
+                            dialogManager.dismissBookDialog()
+                        }
+                    })
+            }
+            tevRoomQueryBook.setOnClickListener {
+                showLoading()
+                mViewModel.queryBook()
+            }
+            tevEventSchedule.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_EVENT_SCHEDULE).navigation()
             }
             tevMounting.setOnClickListener {
                 //Jump with parameters
@@ -227,6 +258,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
             }
         }
     }
+
 
     override fun initLoadData() {
 //        startAsyncTask()

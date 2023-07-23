@@ -142,7 +142,7 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
         tevSquare?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
         tevResourceCenter?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
         tevMine?.setTextColor(ResourcesManager.getColor(R.color.library_color_FF999999))
-        setToolbar(false, R.color.library_color_FF198CFF)
+        setToolbar(false, R.color.library_black)
         when (position) {
             0 -> {
                 tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
@@ -150,27 +150,23 @@ class MainActivity : BaseMvpRxAppActivity<IBaseView, MainPresenterImpl>(), IMain
             }
 
             1 -> {
+                setToolbar(false, R.color.library_color_FF198CFF)
                 tevProject?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
                 layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_white))
             }
 
             2 -> {
                 tevSquare?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
-                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_white))
+                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_black))
             }
 
             3 -> {
                 tevResourceCenter?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
-                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_white))
+                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_black))
             }
 
             4 -> {
                 tevMine?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
-                layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_black))
-            }
-
-            else -> {
-                tevFirstPage?.setTextColor(ResourcesManager.getColor(R.color.library_color_FFE066FF))
                 layoutBottom?.setBackgroundColor(ResourcesManager.getColor(R.color.library_black))
             }
         }

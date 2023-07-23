@@ -75,10 +75,10 @@ dependencies {
     implementation project(path: ':library_base')
     api project(path: ':library_binding')
     implementation project(path: ':library_network')
-    //kotlin databinding
-    kapt "com.android.databinding:compiler:$BuildVersions.databinding_version"
+//    //kotlin databinding
+//    kapt "com.android.databinding:compiler:$BuildVersions.databinding_version"
 
-    //Mvvm模式框架导入
+    //Mvvm模式系列组件导入
     api "androidx.lifecycle:lifecycle-livedata-ktx:$BuildVersions.lifecycle_version"
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$BuildVersions.lifecycle_version"
 }

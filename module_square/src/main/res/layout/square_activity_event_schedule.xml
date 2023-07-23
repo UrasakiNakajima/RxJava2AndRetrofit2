@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_dp_73"
-            android:background="@color/library_color_FF198CFF"
+            android:background="@color/library_black"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
             app:contentInsetStart="0dp">
@@ -71,14 +71,14 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/base_dp_30" />
+            android:layout_height="@dimen/base_dp_50" />
 
         <TextView
             android:id="@+id/tev_event_schedule"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/base_dp_50"
             android:layout_marginStart="@dimen/base_dp_50"
-            android:background="@drawable/library_corners_25_color_ff198cff"
+            android:background="@drawable/library_corners_15_color_ff198cff"
             android:gravity="center"
             android:includeFontPadding="false"
             android:paddingStart="@dimen/base_dp_20"

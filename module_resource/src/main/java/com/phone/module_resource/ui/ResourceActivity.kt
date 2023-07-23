@@ -31,12 +31,4 @@ class ResourceActivity :
 
     }
 
-    override fun showLoading() {
-
-    }
-
-    override fun hideLoading() {
-
-    }
-
 }

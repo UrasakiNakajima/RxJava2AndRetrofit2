@@ -144,20 +144,6 @@ class AndroidAndJsActivity : BaseBindingRxAppActivity<JsActivityAndroidAndJsBind
     override fun initLoadData() {
     }
 
-    override fun showLoading() {
-        if (!mLoadView.isShown()) {
-            mLoadView.setVisibility(View.VISIBLE)
-            mLoadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (mLoadView.isShown()) {
-            mLoadView.stop()
-            mLoadView.setVisibility(View.GONE)
-        }
-    }
-
     @SuppressLint("SetJavaScriptEnabled")
     override fun onResume() {
         super.onResume()

@@ -38,7 +38,8 @@ class StandardUserDialog(val context: Context) {
 
     init {
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.custom_view_dialog_standard_create_user, null, false)
+            LayoutInflater.from(context)
+                .inflate(R.layout.custom_view_dialog_standard_create_user, null, false)
         tevTitle = view.findViewById<View>(R.id.tev_title) as TextView
         edtUserId = view.findViewById<View>(R.id.edt_user_id) as EditText
         edtPassword = view.findViewById<View>(R.id.edt_password) as EditText
@@ -56,14 +57,10 @@ class StandardUserDialog(val context: Context) {
         alertDialog = AlertDialog.Builder(context, R.style.library_standard_dialog_style)
             .setView(view)
             .create()
-        tevCancel?.setOnClickListener { v: View? ->
-            onItemViewClick2Listener?.onItemClickListener(
-                0,
-                v,
-                null
-            )
+        tevCancel?.setOnClickListener { v: View ->
+            onCommonSuccessCallback?.onSuccess()
         }
-        tevOk?.setOnClickListener { v: View? ->
+        tevOk?.setOnClickListener { v: View ->
             userId = edtUserId?.text.toString()
             password = edtPassword?.text.toString()
             birthday = edtBirthday?.text.toString()
@@ -154,15 +151,13 @@ class StandardUserDialog(val context: Context) {
     }
 
     fun hideStandardDialog() {
-        if (alertDialog != null) {
-            alertDialog?.dismiss()
-            alertDialog = null
-        }
+        alertDialog?.dismiss()
+        alertDialog = null
     }
 
     private var onItemViewClick2Listener: OnItemViewClick2Listener<UserBean>? = null
 
-    fun setOnItemViewClick2Listener(onItemViewClick2Listener: OnItemViewClick2Listener<UserBean>?) {
+    fun setOnItemViewClick2Listener(onItemViewClick2Listener: OnItemViewClick2Listener<UserBean>) {
         this.onItemViewClick2Listener = onItemViewClick2Listener
     }
 

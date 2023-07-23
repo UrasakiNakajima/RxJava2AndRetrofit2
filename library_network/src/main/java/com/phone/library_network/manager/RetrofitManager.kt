@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.exoplayer2.C
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.common.ConstantUrl
@@ -346,7 +347,7 @@ class RetrofitManager private constructor() {
             .observeOn(AndroidSchedulers.mainThread()) //AutoDispose的关键语句
             .`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(appCompatActivity)))
             .subscribe({ responseBody ->
-                val responseString = responseBody?.string()
+                val responseString = responseBody.string()
                 LogManager.i(TAG, "responseString*****$responseString")
                 onCommonSingleParamCallback.onSuccess(responseString)
             }) { throwable ->
@@ -627,7 +628,7 @@ class RetrofitManager private constructor() {
     }
 
     /**
-     * 下载文件法1(使用Handler更新UI)
+     * 下载文件法1（使用Handler更新UI）
      *
      * @param observable      下载被观察者
      * @param destDir         下载目录
@@ -725,7 +726,7 @@ class RetrofitManager private constructor() {
     }
 
     /**
-     * 下载文件法2(使用RXJava更新UI)
+     * 下载文件法2
      *
      * @param observable
      * @param destDir
@@ -739,8 +740,8 @@ class RetrofitManager private constructor() {
         onDownloadCallBack: OnDownloadCallBack
     ) {
         mCoroutineScope?.cancel()
-        mCoroutineScope = MainScope()
-        mCoroutineScope?.launch(Dispatchers.IO) {
+        mCoroutineScope = CoroutineScope(Dispatchers.IO)
+        mCoroutineScope?.launch {
             LogManager.i(TAG, "downloadFile2 launch thread name*****${Thread.currentThread().name}")
             executeDownloadFile2(call, destDir, fileName, onDownloadCallBack)
 
@@ -841,6 +842,24 @@ class RetrofitManager private constructor() {
                 e.printStackTrace()
             }
         }
+    }
+
+    /**
+     * 下载文件法3
+     *
+     * @param observable
+     * @param destDir
+     * @param fileName
+     * @param progressHandler
+     */
+    fun downloadFile3(
+        call: Call<ResponseBody>,
+        destDir: String,
+        fileName: String,
+        onDownloadCallBack: OnDownloadCallBack
+    ) {
+        LogManager.i(TAG, "downloadFile2 launch thread name*****${Thread.currentThread().name}")
+        executeDownloadFile2(call, destDir, fileName, onDownloadCallBack)
     }
 
 

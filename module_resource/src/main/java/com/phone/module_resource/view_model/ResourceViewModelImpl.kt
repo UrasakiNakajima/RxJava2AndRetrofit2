@@ -18,7 +18,8 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
 
     private val model = ResourceModelImpl()
 
-    val tabRxFragment = SingleLiveData<State<MutableList<TabBean>>>()
+    //1.首先定义一个SingleLiveData的实例
+    val tabData = SingleLiveData<State<MutableList<TabBean>>>()
 
     override fun resourceTabData() {
         //在Android MVVM架构的ViewModel中启动一个新协程（如果你的项目架构是MVVM架构，则推荐在ViewModel中使用），
@@ -31,9 +32,9 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                 apiResponse.data.also {
                     val list = it ?: mutableListOf()
                     if (list.size > 0) {
-                        tabRxFragment.value = State.SuccessState(list)
+                        tabData.value = State.SuccessState(list)
                     } else {
-                        tabRxFragment.value = State.ErrorState(
+                        tabData.value = State.ErrorState(
                             BaseApplication.instance().resources.getString(
                                 R.string.library_no_data_available
                             )
@@ -41,7 +42,7 @@ class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
                     }
                 }
             } else {
-                tabRxFragment.value = State.ErrorState(
+                tabData.value = State.ErrorState(
                     apiResponse.errorMsg
                 )
             }

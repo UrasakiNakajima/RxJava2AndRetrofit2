@@ -24,16 +24,13 @@ import com.phone.library_base.manager.CrashHandlerManager
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.manager.DialogManager
 import com.phone.library_base.manager.LogManager
-import com.phone.library_base.manager.ResourcesManager
 import com.phone.library_base.manager.ToolbarManager
 import com.phone.library_base.manager.ToolbarManager.Companion.assistActivity
-import com.qmuiteam.qmui.widget.QMUILoadingView
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 
 abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActivity(), IBaseView {
 
     private val TAG = BaseBindingRxAppActivity::class.java.simpleName
-    protected lateinit var mLoadView: QMUILoadingView
 
     //该类绑定的ViewDataBinding
     protected lateinit var mDatabind: DB
@@ -54,12 +51,6 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
         mDatabind.lifecycleOwner = mRxAppCompatActivity
         initData()
         initViews()
-        mLoadView = QMUILoadingView(this)
-        mLoadView.also {
-            it.visibility = View.GONE
-            it.setSize(100)
-            it.setColor(ResourcesManager.getColor(R.color.base_color_333333))
-        }
         initLoadData()
     }
 
@@ -346,7 +337,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
         }
         LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
         val crashHandlerManager = CrashHandlerManager.instance()
-        crashHandlerManager?.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
+        crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
         try {
             Thread.sleep(1000)
         } catch (e: InterruptedException) {
@@ -360,6 +351,15 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     override fun onDestroy() {
         mDatabind.unbind()
         viewModelStore.clear()
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
         if (mActivityPageManager?.mIsLastAliveActivity?.get() == true) {
             killAppProcess()
         }

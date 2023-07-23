@@ -19,8 +19,8 @@ class SubResourceViewModelImpl() : BaseViewModel(), ISubResourceViewModel {
 
     private var model = SubResourceModelImpl()
 
-    //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragment = SingleLiveData<State<MutableList<ArticleListBean>>>()
+    //1.首先定义一个SingleLiveData的实例
+    val subResourceData = SingleLiveData<State<MutableList<ArticleListBean>>>()
 
     override fun subResourceData(
         tabId: Int,
@@ -35,9 +35,9 @@ class SubResourceViewModelImpl() : BaseViewModel(), ISubResourceViewModel {
                 apiResponse.also {
                     val list = ArticleListBean.trans(it.data?.datas ?: mutableListOf())
                     if (list.size > 0) {
-                        dataxRxFragment.value = State.SuccessState(list)
+                        subResourceData.value = State.SuccessState(list)
                     } else {
-                        dataxRxFragment.value = State.ErrorState(
+                        subResourceData.value = State.ErrorState(
                             BaseApplication.instance().resources.getString(
                                 R.string.library_no_data_available
                             )
@@ -45,7 +45,7 @@ class SubResourceViewModelImpl() : BaseViewModel(), ISubResourceViewModel {
                     }
                 }
             } else {
-                dataxRxFragment.value = State.ErrorState(
+                subResourceData.value = State.ErrorState(
                     apiResponse.errorMsg
                 )
             }

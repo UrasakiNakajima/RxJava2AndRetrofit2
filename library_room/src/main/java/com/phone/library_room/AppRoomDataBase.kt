@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.phone.library_base.BaseApplication
+import com.phone.library_base.JavaGetData
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.SharedPreferencesManager
 import net.sqlcipher.database.SQLiteDatabase
@@ -21,9 +22,10 @@ abstract class AppRoomDataBase : RoomDatabase() {
         private val TAG = AppRoomDataBase::class.java.simpleName
 
         val DATABASE_ENCRYPT_KEY =
-            com.phone.library_base.JavaGetData.nativeDatabaseEncryptKey(BaseApplication.instance(), BuildConfig.IS_RELEASE)
-        val DATABASE_DECRYPT_KEY =
-            com.phone.library_base.JavaGetData.nativeDatabaseEncryptKey(BaseApplication.instance(), BuildConfig.IS_RELEASE)
+            JavaGetData.nativeDatabaseEncryptKey(BaseApplication.instance(), BuildConfig.IS_RELEASE)
+
+        //        val DATABASE_DECRYPT_KEY =
+//            JavaGetData.nativeDatabaseEncryptKey(BaseApplication.instance(), BuildConfig.IS_RELEASE)
         val passphrase = SQLiteDatabase.getBytes(DATABASE_ENCRYPT_KEY.toCharArray())
         val factory = SupportFactory(passphrase, object : SQLiteDatabaseHook {
             override fun preKey(database: SQLiteDatabase?) {
@@ -36,12 +38,12 @@ abstract class AppRoomDataBase : RoomDatabase() {
 //                database?.execSQL("PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_SHA1")
             }
         }, true)
-        val MIGRATION_3_5 = object : Migration(3, 5) {
-            override fun migrate(database: SupportSQLiteDatabase) {
+//        val MIGRATION_5_6 = object : Migration(5, 6) {
+//            override fun migrate(database: SupportSQLiteDatabase) {
 //                //对Book表增加一个score字段
 //                database.execSQL("ALTER TABLE Book ADD COLUMN brief_introduction TEXT NOT NULL 	DEFAULT ''")
-            }
-        }
+//            }
+//        }
 
         const val DATABASE_NAME = "book_app.db"
         const val DATABASE_ENCRYPT_NAME = "book_encrypt_app.db"
@@ -55,35 +57,35 @@ abstract class AppRoomDataBase : RoomDatabase() {
         @JvmStatic
         fun instance(): AppRoomDataBase {
             if (instance == null) {
-//                databaseInstance = Room.databaseBuilder(
-//                    BaseApplication.instance(),
-//                    AppRoomDataBase::class.java,
-//                    DATABASE_NAME
-//                )
-//                    .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
-////                    .openHelperFactory(factory)
-//                    .build()
-
-
                 instance = Room.databaseBuilder(
                     BaseApplication.instance(),
                     AppRoomDataBase::class.java,
-                    DATABASE_ENCRYPT_NAME
+                    DATABASE_NAME
                 )
-                    .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
-                    .addMigrations(MIGRATION_3_5)
+//                    .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
                     .openHelperFactory(factory)
                     .build()
 
-                val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
-                if ("0".equals(dataEncryptTimes)) {
-                    encrypt(
-                        DATABASE_ENCRYPT_NAME,
-                        DATABASE_NAME,
-                        DATABASE_ENCRYPT_KEY
-                    )
-                    SharedPreferencesManager.put("dataEncryptTimes", "1")
-                }
+
+//                instance = Room.databaseBuilder(
+//                    BaseApplication.instance(),
+//                    AppRoomDataBase::class.java,
+//                    DATABASE_ENCRYPT_NAME
+//                )
+////                    .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
+//                    .addMigrations(MIGRATION_5_6)
+//                    .openHelperFactory(factory)
+//                    .build()
+//
+//                val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
+//                if ("0".equals(dataEncryptTimes)) {
+//                    encrypt(
+//                        DATABASE_ENCRYPT_NAME,
+//                        DATABASE_NAME,
+//                        DATABASE_ENCRYPT_KEY
+//                    )
+//                    SharedPreferencesManager.put("dataEncryptTimes", "1")
+//                }
             }
             return instance!!
         }

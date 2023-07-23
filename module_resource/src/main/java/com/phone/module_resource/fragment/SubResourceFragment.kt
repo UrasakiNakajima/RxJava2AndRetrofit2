@@ -29,8 +29,9 @@ class SubResourceFragment :
 
     private val TAG = SubResourceFragment::class.java.simpleName
 
-    private var subResourceAdapter: ProjectAndResourceAdapter? = null
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    private val list = mutableListOf<ArticleListBean>()
+    private val subResourceAdapter by lazy { ProjectAndResourceAdapter(mRxAppCompatActivity, list) }
+    private val linearLayoutManager by lazy { LinearLayoutManager(mRxAppCompatActivity) }
     private var isRefresh: Boolean = true
 
     /**
@@ -57,7 +58,7 @@ class SubResourceFragment :
     }
 
     override fun initObservers() {
-        mViewModel.dataxRxFragment.observe(this, {
+        mViewModel.subResourceData.observe(this, {
 //            LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
@@ -92,10 +93,11 @@ class SubResourceFragment :
                 initSubResource(tabId, pageNum)
             }
         })
+
+        initAdapter()
     }
 
-    private fun initAdapter(list: MutableList<ArticleListBean>) {
-        linearLayoutManager = LinearLayoutManager(mRxAppCompatActivity)
+    private fun initAdapter() {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
         mDatabind.rcvData.apply {
             layoutManager = linearLayoutManager
@@ -103,8 +105,7 @@ class SubResourceFragment :
 //            (itemAnimator as DefaultItemAnimator).changeDuration = 0
 //            (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
-            subResourceAdapter = ProjectAndResourceAdapter(mRxAppCompatActivity, list)
-            subResourceAdapter?.apply {
+            subResourceAdapter.apply {
                 //kotlin 使用这个方法需要初始化ProjectAndResourceAdapter 的时候把list 传进去，
                 //不然就会报VirtualLayout：Cannot change whether this adapter has stable IDs while the adapter has registered observers.
                 setHasStableIds(true)
@@ -112,7 +113,7 @@ class SubResourceFragment :
                     when (view.id) {
                         //子项
                         R.id.root -> {
-                            subResourceAdapter?.list?.get(i)?.let {
+                            subResourceAdapter.list.get(i).let {
                                 ARouter.getInstance().build(ConstantData.Route.ROUTE_WEB_VIEW)
                                     .withString("loadUrl", it.link).withString("title", it.title)
                                     .withString("author", it.author).withInt("id", it.id)
@@ -133,7 +134,7 @@ class SubResourceFragment :
                     }
                 }
             }
-            setAdapter(subResourceAdapter)
+            adapter = subResourceAdapter
         }
     }
 
@@ -148,17 +149,13 @@ class SubResourceFragment :
     override fun subResourceDataSuccess(success: MutableList<ArticleListBean>) {
         if (!mRxAppCompatActivity.isFinishing()) {
             if (isRefresh) {
-                if (subResourceAdapter == null) {
-                    initAdapter(success)
-                } else {
-                    subResourceAdapter?.let {
-                        it.clearData()
-                        it.addData(success)
-                    }
+                subResourceAdapter.let {
+                    it.clearData()
+                    it.addData(success)
                 }
                 mDatabind.refreshLayout.finishRefresh()
             } else {
-                subResourceAdapter?.addData(success)
+                subResourceAdapter.addData(success)
                 mDatabind.refreshLayout.finishLoadMore()
             }
             hideLoading()

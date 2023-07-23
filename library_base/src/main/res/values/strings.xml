@@ -4,4 +4,9 @@
     <string name="base_cancel">cancel</string>
     <string name="base_confirm">confirm</string>
 
+
+    <string name="base_book_name">書名</string>
+    <string name="base_anchor">作者</string>
+    <string name="base_brief_introduction">簡介</string>
+
 </resources>

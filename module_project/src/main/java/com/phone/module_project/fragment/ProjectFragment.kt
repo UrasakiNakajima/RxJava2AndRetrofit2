@@ -43,7 +43,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     }
 
     override fun initObservers() {
-        mViewModel.dataxRxFragment.observe(this, {
+        mViewModel.tabData.observe(this, {
             LogManager.i(TAG, "ProjectFragment onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {

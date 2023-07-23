@@ -18,7 +18,6 @@
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.JsbridgeActivity"
             android:exported="false"
@@ -45,6 +44,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".observer.ObserverActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.EventScheduleActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ShowBookActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />

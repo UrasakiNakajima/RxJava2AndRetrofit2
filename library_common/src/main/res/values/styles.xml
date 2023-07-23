@@ -23,9 +23,9 @@
         <item name="android:statusBarColor">@color/library_white</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
 
-        <item name="library_main_bg_1">#2C2C2C</item>
-        <item name="library_main_bg_2">#FA3C3C3C</item>
-        <item name="library_main_bg_3">#5E5E5E</item>
+        <item name="library_main_bg_1">@color/library_color_2C2C2C</item>
+        <item name="library_main_bg_2">@color/library_color_FA3C3C3C</item>
+        <item name="library_main_bg_3">@color/library_color_5E5E5E</item>
 
         <item name="library_theme_color_1">#BDBDBD</item>
         <item name="library_theme_color_2">#939393</item>

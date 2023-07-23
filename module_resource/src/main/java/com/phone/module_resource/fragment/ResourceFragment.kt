@@ -43,7 +43,7 @@ class ResourceFragment :
     }
 
     override fun initObservers() {
-        mViewModel.tabRxFragment.observe(this, {
+        mViewModel.tabData.observe(this, {
 //            LogManager.i(TAG, "onChanged*****tabRxFragment")
             when (it) {
                 is State.SuccessState -> {

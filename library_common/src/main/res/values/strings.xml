@@ -64,8 +64,6 @@
     <string name="library_resource_details">资源详情</string>
     <string name="library_loading_failed">加载失败</string>
     <string name="library_no_data_available">暂无数据</string>
-    <string name="library_three_level_linkage_list">三级联动列表</string>
-    <string name="library_download_file">下载文件</string>
 
 
     <string name="library_all_resource">全部资源</string>
@@ -94,8 +92,6 @@
     <string name="library_check_pending">待審核</string>
     <string name="library_checked">已審核</string>
 
-    <string name="library_event_schedule">活動日程</string>
-
     <string name="library_android_and_js">android和js</string>
     <string name="library_android_and_js_interactive">android和js交互</string>
     <string name="library_android_to_js">android调用js，有参数有返回值</string>
@@ -106,23 +102,29 @@
 
     <string name="library_information_details">資訊詳情</string>
     <string name="library_show_data">展示數據</string>
-    <string name="library_edit_text_input_limits">EditText输入限制</string>
-    <string name="library_decimal_operation">小数运算</string>
+    <string name="library_edit_text_input_limits">EditText輸入限制</string>
+    <string name="library_decimal_operation">小數運算</string>
     <string name="library_edit_text_input_limit_that_only_integers_and_decimals_can_be_entered_and_the_total_length_of_the_number_is_less_than_or_equal_to11_digits_customizable_integer5_digits_customizable_decimal5_digits_customizable">EditText输入限制只能整数和小数，且数字总长度小于等于11位（可自定义），整数5位（可自定义），小数5位（可自定义）</string>
-    <string name="library_create_user">创建用户</string>
+    <string name="library_create_user">創建用戶</string>
     <string name="library_kotlin_coroutine">kotlin coroutine</string>
+    <string name="library_room_insert_book">room insert book</string>
+    <string name="library_room_query_book">room query book</string>
+    <string name="library_event_schedule">event schedule</string>
+    <string name="library_book_list">book list</string>
     <string name="library_mounting">mounting</string>
     <string name="library_jsbridge">jsbridge</string>
+    <string name="library_three_level_linkage_list">三級連動列表</string>
+    <string name="library_download_file">下載文件</string>
     <string name="library_function_to_js">functionToJs</string>
     <string name="library_function_to_js2">functionToJs2</string>
 
 
-    <string name="library_created_b">创建了&#8194;</string>
-    <string name="library_users_b">&#8197;个用户</string>
-    <string name="library_user_b">&#8197;用户</string>
-    <string name="library_delete_user">删除用户</string>
-    <string name="library_delete_all_user">删除全部用户</string>
-    <string name="library_delete">删除</string>
+    <string name="library_created_b">創建了&#8194;</string>
+    <string name="library_users_b">&#8197;個用戶</string>
+    <string name="library_user_b">&#8197;用戶</string>
+    <string name="library_delete_user">刪除用戶</string>
+    <string name="library_delete_all_user">刪除全部用戶</string>
+    <string name="library_delete">刪除</string>
     <string name="library_update">修改</string>
     <string name="library_this_function_can_only_be_used_under_componentization">组件化下才能使用此功能</string>
 

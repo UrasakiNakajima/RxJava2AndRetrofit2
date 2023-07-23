@@ -39,12 +39,4 @@ class MineActivity : BaseBindingRxAppActivity<MineActivityMineBinding>() {
 
     }
 
-    override fun showLoading() {
-
-    }
-
-    override fun hideLoading() {
-
-    }
-
 }

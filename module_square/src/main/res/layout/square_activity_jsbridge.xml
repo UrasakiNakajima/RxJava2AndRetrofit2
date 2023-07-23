@@ -21,7 +21,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_dp_73"
-            android:background="@color/library_color_FFFFFFFF"
+            android:background="@color/library_black"
             app:contentInsetStart="0dp">
 
             <LinearLayout
@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/library_jsbridge"
-                        android:textColor="@color/library_color_80000000"
+                        android:textColor="@color/library_color_FFFFFFFF"
                         android:textSize="@dimen/base_sp_18" />
 
                 </FrameLayout>

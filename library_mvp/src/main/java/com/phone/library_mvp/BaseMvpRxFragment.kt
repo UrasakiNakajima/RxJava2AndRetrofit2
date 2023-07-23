@@ -54,6 +54,15 @@ abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : BaseRxFragment() {
     override fun onDestroyView() {
         detachPresenter()
         mBodyParams.clear()
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
         mRootView?.let {
             mRootView = null
         }

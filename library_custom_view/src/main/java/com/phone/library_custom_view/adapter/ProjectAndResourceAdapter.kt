@@ -68,8 +68,8 @@ class ProjectAndResourceAdapter(val context: Context, val list: MutableList<Arti
             onItemViewClickListener?.onItemClickListener(position, it)
         }
 
+        //获取ViewDataBinding
         val binding = if (holder is ArticleViewHolder) {
-            //获取ViewDataBinding
             DataBindingUtil.getBinding<CustomViewItemResourceBinding>(holder.itemView)?.apply {
                 dataBean = list[position]
             }

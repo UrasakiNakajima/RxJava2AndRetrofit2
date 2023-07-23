@@ -96,20 +96,6 @@ class WebViewActivity : BaseBindingRxAppActivity<CustomViewActivityWebViewBindin
         }
     }
 
-    override fun showLoading() {
-        if (!mLoadView.isShown()) {
-            mLoadView.setVisibility(View.VISIBLE)
-            mLoadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (mLoadView.isShown()) {
-            mLoadView.stop()
-            mLoadView.setVisibility(View.GONE)
-        }
-    }
-
     override fun onDestroy() {
         mBaseApplication.webView.apply {
             loadDataWithBaseURL(null, "", "text/html", "utf-8", null);

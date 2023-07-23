@@ -149,6 +149,15 @@ abstract class BaseRxFragment : RxFragment(), IBaseView {
     }
 
     override fun onDestroyView() {
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
         if (mRootView != null) {
             mRootView = null
         }

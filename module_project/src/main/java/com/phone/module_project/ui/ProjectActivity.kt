@@ -21,18 +21,9 @@ class ProjectActivity :
 
     override fun initViews() {
         setToolbar(false, R.color.library_color_FF198CFF)
-
     }
 
     override fun initLoadData() {
-
-    }
-
-    override fun showLoading() {
-
-    }
-
-    override fun hideLoading() {
 
     }
 

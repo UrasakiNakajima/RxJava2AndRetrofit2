@@ -120,7 +120,7 @@ class Base64AndFileActivity : BaseMvpRxAppActivity<IBaseView, Base64AndFilePrese
         imvBase64ToPicture = findViewById<View>(R.id.imv_base64_to_picture) as ImageView
         tevResetData = findViewById<View>(R.id.tev_reset_data) as TextView
 
-        setToolbar(false, R.color.library_color_FF198CFF)
+        setToolbar(false, R.color.library_black)
         imvBack?.setColorFilter(ResourcesManager.getColor(R.color.library_white))
         layoutBack?.setOnClickListener { v: View? -> finish() }
         tevRequestPermissions?.setOnClickListener {

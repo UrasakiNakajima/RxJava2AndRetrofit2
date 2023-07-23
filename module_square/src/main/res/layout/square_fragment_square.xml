@@ -28,7 +28,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_dp_48"
-            android:background="@color/library_color_FF198CFF"
+            android:background="@color/library_black"
             android:minHeight="?attr/actionBarSize"
             android:orientation="vertical"
             app:contentInsetStart="0dp">
@@ -248,6 +248,69 @@
                     android:background="@color/library_color_555555" />
 
                 <TextView
+                    android:id="@+id/tev_room_insert_book"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_room_insert_book"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/base_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_1"
+                    android:background="@color/library_color_555555" />
+
+                <TextView
+                    android:id="@+id/tev_room_query_book"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_room_query_book"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/base_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_1"
+                    android:background="@color/library_color_555555" />
+
+                <TextView
+                    android:id="@+id/tev_event_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_event_schedule"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/base_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_1"
+                    android:background="@color/library_color_555555" />
+
+                <TextView
                     android:id="@+id/tev_mounting"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_45"
@@ -301,7 +364,7 @@
                     android:paddingTop="@dimen/base_dp_10"
                     android:paddingEnd="@dimen/base_dp_15"
                     android:paddingBottom="@dimen/base_dp_10"
-                    android:text="thread pool"
+                    android:text="@string/library_thread_pool"
                     android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/base_sp_16" />
 
@@ -351,10 +414,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_1"
                     android:background="@color/library_color_555555" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_10" />
 
                 <ImageView
                     android:id="@+id/imv_picture"

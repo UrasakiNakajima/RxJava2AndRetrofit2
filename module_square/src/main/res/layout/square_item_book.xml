@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="dataBean"
+            type="com.phone.library_room.Book" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_dp_6"
+            android:background="@color/library_color_FFFFFFFF" />
+
+        <TextView
+            android:id="@+id/tev_book_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_dp_45"
+            android:background="@color/library_color_FFFFC73B"
+            android:gravity="center_vertical|start"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/base_dp_10"
+            android:paddingEnd="@dimen/base_dp_10"
+            android:text="@={dataBean.bookName}"
+            android:textColor="@color/library_color_FFFFFFFF"
+            android:textSize="@dimen/base_sp_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_dp_1"
+            android:background="@color/library_color_FFFFFFFF" />
+
+        <TextView
+            android:id="@+id/tev_anchor"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_dp_45"
+            android:background="@color/library_color_FFFFC73B"
+            android:gravity="center_vertical|start"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/base_dp_10"
+            android:paddingEnd="@dimen/base_dp_10"
+            android:text="@={dataBean.anchor}"
+            android:textColor="@color/library_color_FFFFFF"
+            android:textSize="@dimen/base_sp_14" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_dp_1"
+            android:background="@color/library_color_FFFFFF" />
+
+        <TextView
+            android:id="@+id/tev_brief_introduction"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_dp_45"
+            android:background="@color/library_color_4876FF"
+            android:gravity="center_vertical|start"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/base_dp_10"
+            android:paddingEnd="@dimen/base_dp_10"
+            android:text="@={dataBean.briefIntroduction}"
+            android:textColor="@color/library_color_FFFFFF"
+            android:textSize="@dimen/base_sp_14" />
+
+    </LinearLayout>
+
+</layout>

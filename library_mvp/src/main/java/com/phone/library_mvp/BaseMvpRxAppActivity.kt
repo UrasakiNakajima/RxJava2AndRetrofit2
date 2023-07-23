@@ -96,6 +96,15 @@ abstract class BaseMvpRxAppActivity<V, T : BasePresenter<V>> : BaseRxAppActivity
     override fun onDestroy() {
         detachPresenter()
         mBodyParams.clear()
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
         super.onDestroy()
     }
 }

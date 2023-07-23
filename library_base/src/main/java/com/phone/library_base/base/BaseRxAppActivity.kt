@@ -236,7 +236,7 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
         }
         LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
         val crashHandlerManager = CrashHandlerManager.instance()
-        crashHandlerManager?.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
+        crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
         try {
             Thread.sleep(1000)
         } catch (e: InterruptedException) {
@@ -248,12 +248,19 @@ abstract class BaseRxAppActivity : RxAppCompatActivity(), IBaseView {
     }
 
     override fun onDestroy() {
-        if (mActivityPageManager != null) {
-            if (mActivityPageManager?.mIsLastAliveActivity?.get() == true) {
-                killAppProcess()
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
             }
-            mActivityPageManager?.removeActivity(mRxAppCompatActivity)
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
         }
+        if (mActivityPageManager?.mIsLastAliveActivity?.get() == true) {
+            killAppProcess()
+        }
+        mActivityPageManager?.removeActivity(mRxAppCompatActivity)
         super.onDestroy()
     }
 

@@ -43,13 +43,14 @@ object ConstantData {
 
         const val ROUTE_PROJECT = "/module_project/ui/project"
         const val ROUTE_PROJECT_FRAGMENT = "/module_project/fragment/project_fragment"
-        const val ROUTE_EVENT_SCHEDULE = "/module_project/ui/event_schedule"
 
 
         const val ROUTE_SQUARE = "/module_square/ui/square"
         const val ROUTE_SQUARE_FRAGMENT = "/module_square/fragment/square_fragment"
         const val ROUTE_JSBRIDGE = "/module_square/ui/jsbridge"
         const val ROUTE_CREATE_USER = "/module_square/ui/create_user"
+        const val ROUTE_SHOW_BOOK = "/module_square/ui/show_book"
+        const val ROUTE_EVENT_SCHEDULE = "/module_square/ui/event_schedule"
         const val ROUTE_KOTLIN_COROUTINE = "/module_square/ui/kotlin_coroutine"
         const val ROUTE_DECIMAL_OPERATION = "/module_square/ui/decimal_operation"
         const val ROUTE_EDIT_TEXT_INPUT_LIMITS = "/module_square/ui/edit_text_input_limits"

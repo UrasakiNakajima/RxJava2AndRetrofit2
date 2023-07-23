@@ -27,11 +27,11 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
 
     private val model = SubProjectModelImpl()
 
-    //1.首先定义两个SingleLiveData的实例
-    val dataxRxFragment = SingleLiveData<State<MutableList<ArticleListBean>>>()
+    //1.首先定义一个SingleLiveData的实例
+    val subProjectData = SingleLiveData<State<MutableList<ArticleListBean>>>()
 
-    //1.首先定义两个SingleLiveData的实例
-    val dataxRxActivity = SingleLiveData<State<MutableList<ArticleListBean>>>()
+    //1.首先定义一个SingleLiveData的实例
+    val subProjectData2 = SingleLiveData<State<MutableList<ArticleListBean>>>()
 
     override fun subProjectData(
         pageNum: Int, tabId: Int
@@ -48,9 +48,9 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                 apiResponse.data.let {
                     val list = ArticleListBean.trans(it?.datas ?: mutableListOf())
                     if (list.size > 0) {
-                        dataxRxFragment.value = State.SuccessState(list)
+                        subProjectData.value = State.SuccessState(list)
                     } else {
-                        dataxRxFragment.value = State.ErrorState(
+                        subProjectData.value = State.ErrorState(
                             BaseApplication.instance().resources.getString(
                                 R.string.library_no_data_available
                             )
@@ -58,7 +58,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                     }
                 }
             } else {
-                dataxRxFragment.value =
+                subProjectData.value =
                     State.ErrorState(apiResponse.errorMsg)
             }
         }
@@ -79,9 +79,9 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                         response.data().let {
                             val list = ArticleListBean.trans(it.datas ?: mutableListOf())
                             if (list.size > 0) {
-                                dataxRxActivity.value = State.SuccessState(list)
+                                subProjectData2.value = State.SuccessState(list)
                             } else {
-                                dataxRxActivity.value =
+                                subProjectData2.value =
                                     State.ErrorState(
                                         BaseApplication.instance().resources.getString(
                                             R.string.library_no_data_available
@@ -90,7 +90,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
                             }
                         }
                     } else {
-                        dataxRxFragment.value = State.ErrorState(
+                        subProjectData.value = State.ErrorState(
                             BaseApplication.instance().resources.getString(
                                 R.string.library_loading_failed
                             )

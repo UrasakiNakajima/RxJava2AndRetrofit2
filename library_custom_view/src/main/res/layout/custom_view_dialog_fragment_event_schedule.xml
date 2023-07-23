@@ -14,14 +14,14 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/base_dp_56">
+            android:layout_height="@dimen/base_dp_50">
 
             <TextView
                 android:id="@+id/tev_event_schedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/base_dp_14"
-                android:layout_marginTop="@dimen/base_dp_19"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/base_dp_20"
                 android:includeFontPadding="false"
                 android:text="@string/library_event_schedule"
                 android:textColor="@color/library_color_FF333333"
@@ -30,15 +30,14 @@
 
             <FrameLayout
                 android:id="@+id/layout_close_dialog"
-                android:layout_width="@dimen/base_dp_43"
+                android:layout_width="@dimen/base_dp_50"
                 android:layout_height="match_parent"
                 android:layout_gravity="end">
 
                 <ImageView
-                    android:layout_width="@dimen/base_dp_23"
-                    android:layout_height="@dimen/base_dp_23"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/base_dp_14"
+                    android:layout_width="@dimen/base_dp_30"
+                    android:layout_height="@dimen/base_dp_30"
+                    android:layout_gravity="center_vertical"
                     android:src="@mipmap/library_icon_close_broadcast_voice"
                     tools:ignore="ContentDescription" />
 
@@ -48,18 +47,18 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/base_dp_520">
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nested_scroll_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/base_dp_520"
                 android:fillViewport="true">
 
                 <FrameLayout
                     android:id="@+id/layout_event_schedule"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/base_dp_520"
                     android:layout_marginBottom="@dimen/base_dp_25"
                     android:visibility="visible" />
 

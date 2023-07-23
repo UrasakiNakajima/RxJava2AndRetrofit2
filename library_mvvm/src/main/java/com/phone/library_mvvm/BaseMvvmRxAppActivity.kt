@@ -285,7 +285,7 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
 
             LogManager.i(TAG, "执行killAppProcess，應用開始自殺")
             val crashHandlerManager = CrashHandlerManager.instance()
-            crashHandlerManager?.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
+            crashHandlerManager.saveTrimMemoryInfoToFile("执行killAppProcess，應用開始自殺")
             try {
                 Thread.sleep(1000)
             } catch (e: InterruptedException) {
@@ -301,6 +301,15 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     override fun onDestroy() {
         mDatabind.unbind()
         viewModelStore.clear()
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
         if (mActivityPageManager?.mIsLastAliveActivity?.get() == true) {
             killAppProcess()
         }

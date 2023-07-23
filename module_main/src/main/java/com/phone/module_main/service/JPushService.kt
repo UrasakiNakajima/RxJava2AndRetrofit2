@@ -8,5 +8,4 @@ class JPushService : JCommonService() {
         @JvmStatic
         private val TAG = JPushService::class.java.simpleName
     }
-
 }

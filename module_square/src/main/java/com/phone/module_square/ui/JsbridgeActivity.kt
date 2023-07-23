@@ -46,8 +46,8 @@ class JsbridgeActivity : BaseBindingRxAppActivity<SquareActivityJsbridgeBinding>
     }
 
     override fun initViews() {
-        setToolbar(true)
-        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_color_80000000))
+        setToolbar(false, R.color.library_black)
+        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_color_FFFFFFFF))
         mDatabind.layoutBack.setOnClickListener { v -> finish() }
 
         mDatabind.tevFunctionToJs.setOnClickListener {
@@ -155,14 +155,6 @@ class JsbridgeActivity : BaseBindingRxAppActivity<SquareActivityJsbridgeBinding>
     }
 
     override fun initLoadData() {
-
-    }
-
-    override fun showLoading() {
-
-    }
-
-    override fun hideLoading() {
 
     }
 

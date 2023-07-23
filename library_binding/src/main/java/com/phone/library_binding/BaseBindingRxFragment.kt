@@ -137,6 +137,15 @@ abstract class BaseBindingRxFragment<DB : ViewDataBinding>() : RxFragment(), IBa
     override fun onDestroy() {
         mDatabind.unbind()
         viewModelStore.clear()
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
         mBaseApplication = null
         mRootView = null
         super.onDestroy()

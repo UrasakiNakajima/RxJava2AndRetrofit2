@@ -6,7 +6,7 @@ import android.os.Parcelable
 data class BiographyData(
     val name: String,
     val content: String,
-    val introduction: String,
+    val briefIntroduction: String,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -17,7 +17,7 @@ data class BiographyData(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeString(content)
-        parcel.writeString(introduction)
+        parcel.writeString(briefIntroduction)
     }
 
     override fun describeContents(): Int {

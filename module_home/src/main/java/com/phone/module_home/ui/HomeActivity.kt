@@ -34,12 +34,4 @@ class HomeActivity : BaseBindingRxAppActivity<HomeActivityHomeBinding>() {
 
     }
 
-    override fun showLoading() {
-
-    }
-
-    override fun hideLoading() {
-
-    }
-
 }

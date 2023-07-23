@@ -66,20 +66,6 @@ class PickerViewActivity : BaseBindingRxAppActivity<MineActivityPickerViewBindin
     override fun initLoadData() {
     }
 
-    override fun showLoading() {
-        if (!mLoadView.isShown()) {
-            mLoadView.setVisibility(View.VISIBLE)
-            mLoadView.start()
-        }
-    }
-
-    override fun hideLoading() {
-        if (mLoadView.isShown()) {
-            mLoadView.stop()
-            mLoadView.setVisibility(View.GONE)
-        }
-    }
-
     /**
      * 這個只是一個請求權限的框架，無論成功與失敗都不做任何處理
      */
