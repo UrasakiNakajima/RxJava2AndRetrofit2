@@ -22,7 +22,7 @@ import com.phone.library_base.manager.ResourcesManager;
 import com.phone.library_base.common.ConstantData;
 import com.phone.library_base.common.DecimalInputFilter;
 import com.phone.library_base.common.DecimalTextWatcher;
-import com.phone.library_common.manager.SoftKeyboardManager;
+import com.phone.library_base.manager.SoftKeyboardManager;
 import com.phone.module_square.R;
 
 /**
@@ -154,14 +154,9 @@ public class EditTextInputLimitsActivity extends BaseRxAppActivity {
         alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         edtInput.setFocusable(true);
         edtInput.setFocusableInTouchMode(true);
-        edtInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    SoftKeyboardManager.showInputMethod(EditTextInputLimitsActivity.this, edtInput);
-                } else {
-
-                }
+        edtInput.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                SoftKeyboardManager.showInputMethod(EditTextInputLimitsActivity.this, edtInput);
             }
         });
         edtInput.requestFocus();

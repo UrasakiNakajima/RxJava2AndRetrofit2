@@ -16,8 +16,8 @@ abstract class BookDao {
     @Update
     abstract fun update(book: Book)
 
-    @Query("select * from Book where id =:id")
-    abstract fun queryById(id: Int): Book
+    @Query("select * from Book where bId =:bId")
+    abstract fun queryById(bId: Int): Book
 
     @Query("select * from Book")
     abstract fun queryAll(): List<Book>

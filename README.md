@@ -6,51 +6,51 @@ Kotlin+Retrofit2+协程+Jetpack MVVM架构+组件化，添加自动管理token�
 ## 和Kotlin+Retrofit2+协程+MVVM架构+组件化的设计）
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_launch.jpg" />
-        <td><img src="/screenshot/screenshot_login.jpg" />
-        <td><img src="/screenshot/screenshot_register.jpg" />
+        <td><img src="/screenshots/screenshot_launch.jpg" />
+        <td><img src="/screenshots/screenshot_login.jpg" />
+        <td><img src="/screenshots/screenshot_register.jpg" />
     </tr>
 </table>
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_home.jpg" />
-        <td><img src="/screenshot/screenshot_project.jpg" />
-        <td><img src="/screenshot/screenshot_square.jpg" />
+        <td><img src="/screenshots/screenshot_home.jpg" />
+        <td><img src="/screenshots/screenshot_project.jpg" />
+        <td><img src="/screenshots/screenshot_square.jpg" />
     </tr>
 </table>
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_android_and_js.jpg" />
-        <td><img src="/screenshot/screenshot_edit_text_input_limits.jpg" />
-        <td><img src="/screenshot/screenshot_edit_text_input_limits2.jpg" />
+        <td><img src="/screenshots/screenshot_android_and_js.jpg" />
+        <td><img src="/screenshots/screenshot_edit_text_input_limits.jpg" />
+        <td><img src="/screenshots/screenshot_edit_text_input_limits2.jpg" />
     </tr>
 </table>
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_jsbridge.jpg" />
-        <td><img src="/screenshot/screenshot_picker_view.jpg" />
-        <td><img src="/screenshot/screenshot_kotlin_coroutine.jpg" />
+        <td><img src="/screenshots/screenshot_jsbridge.jpg" />
+        <td><img src="/screenshots/screenshot_picker_view.jpg" />
+        <td><img src="/screenshots/screenshot_kotlin_coroutine.jpg" />
     </tr>
 </table>
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_room_insert.jpg" />
-        <td><img src="/screenshot/screenshot_room_query.jpg" />
-        <td><img src="/screenshot/screenshot_greendao.jpg" />
+        <td><img src="/screenshots/screenshot_room_insert.jpg" />
+        <td><img src="/screenshots/screenshot_room_query.jpg" />
+        <td><img src="/screenshots/screenshot_greendao.jpg" />
     </tr>
 </table>
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_base64_and_file.jpg" />
-        <td><img src="/screenshot/screenshot_base64_and_file2.jpg" />
-        <td><img src="/screenshot/screenshot_mounting.jpg" />
+        <td><img src="/screenshots/screenshot_base64_and_file.jpg" />
+        <td><img src="/screenshots/screenshot_base64_and_file2.jpg" />
+        <td><img src="/screenshots/screenshot_mounting.jpg" />
     </tr>
 </table>
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_resource.jpg" />
-        <td><img src="/screenshot/screenshot_mine.jpg" />
-        <td><img src="/screenshot/screenshot_thread_pool.jpg" />
+        <td><img src="/screenshots/screenshot_resource.jpg" />
+        <td><img src="/screenshots/screenshot_mine.jpg" />
+        <td><img src="/screenshots/screenshot_thread_pool.jpg" />
     </tr>
 </table>
 
@@ -59,7 +59,7 @@ Kotlin+Retrofit2+协程+Jetpack MVVM架构+组件化，添加自动管理token�
 ## 我们先来看一下组件化架构设计，组件化架构图解说明
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_component_description.jpg" />
+        <td><img src="/screenshots/screenshot_component_description.jpg" />
     </tr>
 </table>
 
@@ -295,29 +295,29 @@ LogManager.i(TAG, "homeService.mHomeDataList******" + homeService.mHomeDataList.
 
 
 ### 4. 集成开发模式和组件开发模式转换
-* 首先打开Android项目的gradle.properties文件![Image](/screenshot/screenshot_gradle_properties_configuration.jpg) ，
+* 首先打开Android项目的gradle.properties文件![Image](/screenshots/screenshot_gradle_properties_configuration.jpg) ，
 然后将isModule改为你需要的开发模式（true/false），然后点击Sync Project按钮同步项目；
-* ![Image](/screenshot/screenshot_select_module.jpg) 在运行之前，请先按照图中选择一个能够运行的组件；
+* ![Image](/screenshots/screenshot_select_module.jpg) 在运行之前，请先按照图中选择一个能够运行的组件；
 
 #### 4.1 app空壳工程下的组件化isModule配置
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_app_configuration.jpg" />
+        <td><img src="/screenshots/screenshot_app_configuration.jpg" />
     </tr>
 </table>
 
 #### 4.2 module业务组件下的组件化isModule配置
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_module_configuration1.jpg" />
-        <td><img src="/screenshot/screenshot_module_configuration2.jpg" />
+        <td><img src="/screenshots/screenshot_module_configuration1.jpg" />
+        <td><img src="/screenshots/screenshot_module_configuration2.jpg" />
     </tr>
 </table>
 
 ### 5. 资源命名冲突
 * 在组件化方案中，资源命名冲突是一个比较严重的问题，由于在打包时会进行res下的资源（包括drawable、layout、mipmap、raw、values下的资源文件。
-请注意：values下的资源文件名不要改动，只需要改动文件内部的内容前缀![Image](/screenshot/screenshot_resource_prefix_value.jpg)；
-drawable、layout、mipmap、raw下的资源文件都需要加前缀![Image](/screenshot/screenshot_resource_prefix_common.jpg)）合并，
+请注意：values下的资源文件名不要改动，只需要改动文件内部的内容前缀![Image](/screenshots/screenshot_resource_prefix_value.jpg)；
+drawable、layout、mipmap、raw下的资源文件都需要加前缀![Image](/screenshots/screenshot_resource_prefix_common.jpg)）合并，
 如果两个模块中res下的资源有两个相同名字的文件，那么最后只会保留一份，如果不知道这个问题的小伙伴，在遇到这个问题时肯定是一脸懵逼的状态。问题既然已经出现，
 那我们就要去解决，解决办法就是每个组件res下的资源都用固定的命名前缀，这样就不会出现两个相同的文件的现象了，我们可以在build.gradle配置文件中去配置
 前缀限定，如果不按该前缀进行命名，AS就会进行红色警告提示，配置如下：
@@ -331,7 +331,7 @@ android {
 ## 再来看一下Jetpack MVVM架构设计，Jetpack MVVM架构图解说明
 <table>
     <tr>
-        <td><img src="/screenshot/screenshot_mvvm.jpg" />
+        <td><img src="/screenshots/screenshot_mvvm.jpg" />
     </tr>
 </table>
 

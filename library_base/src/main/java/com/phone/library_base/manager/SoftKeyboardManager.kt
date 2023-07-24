@@ -1,4 +1,4 @@
-package com.phone.library_common.manager
+package com.phone.library_base.manager
 
 import android.app.Activity
 import android.content.Context
@@ -61,15 +61,16 @@ class SoftKeyboardManager(activity: Activity) {
         this.onSoftKeyBoardChangeListener = onSoftKeyBoardChangeListener
     }
 
-    fun setListener(
-        activity: Activity,
-        onSoftKeyBoardChangeListener: OnSoftKeyBoardChangeListener
-    ) {
-        val softKeyBoardListener = SoftKeyboardManager(activity)
-        softKeyBoardListener.setOnSoftKeyBoardChangeListener(onSoftKeyBoardChangeListener)
-    }
-
     companion object {
+
+        @JvmStatic
+        fun setListener(
+            activity: Activity,
+            onSoftKeyBoardChangeListener: OnSoftKeyBoardChangeListener
+        ) {
+            val softKeyBoardListener = SoftKeyboardManager(activity)
+            softKeyBoardListener.setOnSoftKeyBoardChangeListener(onSoftKeyBoardChangeListener)
+        }
 
         /**
          * 显示软键盘（输入法）（可用于Activity，Fragment）

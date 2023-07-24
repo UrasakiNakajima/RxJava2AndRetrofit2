@@ -21,7 +21,6 @@
             android:background="@color/library_color_FFFFFFFF" />
 
         <TextView
-            android:id="@+id/tev_book_name"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_dp_45"
             android:background="@color/library_color_FFFFC73B"
@@ -39,7 +38,6 @@
             android:background="@color/library_color_FFFFFFFF" />
 
         <TextView
-            android:id="@+id/tev_anchor"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_dp_45"
             android:background="@color/library_color_FFFFC73B"
@@ -58,7 +56,6 @@
             android:background="@color/library_color_FFFFFF" />
 
         <TextView
-            android:id="@+id/tev_brief_introduction"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_dp_45"
             android:background="@color/library_color_4876FF"

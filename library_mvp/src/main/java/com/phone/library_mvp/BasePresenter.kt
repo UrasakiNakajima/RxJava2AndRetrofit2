@@ -54,6 +54,7 @@ open class BasePresenter<T> {
                 block()
             }.onSuccess {
                 response = it
+                response.error_code = 0
             }.onFailure {
                 it.printStackTrace()
                 val apiException = getApiException(it)
@@ -73,6 +74,7 @@ open class BasePresenter<T> {
                 block()
             }.onSuccess {
                 response = it
+                response.error_code = 0
             }.onFailure {
                 it.printStackTrace()
                 val apiException = getApiException(it)

@@ -13,7 +13,6 @@ import com.phone.library_network.OnDownloadCallBack
 import com.phone.library_network.SingleLiveData
 import com.phone.library_network.bean.DownloadState
 import com.phone.library_network.manager.RetrofitManager
-import com.phone.library_room.AppRoomDataBase
 import com.phone.library_room.Book
 import com.phone.module_square.model.SquareModelImpl
 import com.phone.module_square.R
@@ -39,7 +38,7 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
     val downloadData = SingleLiveData<DownloadState<Int>>()
 
     //3.首先定义一个SingleLiveData的实例
-    val insertData = MutableLiveData<State<Book>>()
+    val insertData = MutableLiveData<State<String>>()
 
     //4.首先定义一个SingleLiveData的实例
     val queryData = MutableLiveData<State<List<Book>>>()
@@ -136,76 +135,35 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 
     override fun insertBook(rxFragment: RxFragment, success: String) {
         rxFragment.lifecycleScope.launch {
-            val book = executeInsertBook {
-                val appRoomDataBase = AppRoomDataBase.instance()
-                val book = Book()
-                val strArr = success.split(".")
-                book.bookName = "書名：${strArr[0]}"
-                book.anchor = "作者：${strArr[1]}"
-                book.briefIntroduction = "簡介：${strArr[2]}"
-                appRoomDataBase.bookDao().insert(book)
-
-//                val book2 = Book()
-//                book2.bookName = "EnglishXC2"
-//                book2.anchor = "rommelXC2"
-//                appRoomDataBase.bookDao().insert(book2)
-//                val bookList = appRoomDataBase.bookDao().queryAll()
-//                for (i in 0..bookList.size - 1) {
-//                    LogManager.i(TAG, "book*****" + bookList.get(i).bookName)
-//                }
-//                AppRoomDataBase.decrypt(
-//                    AppRoomDataBase.DATABASE_DECRYPT_NAME,
-//                    AppRoomDataBase.DATABASE_ENCRYPT_NAME,
-//                    AppRoomDataBase.DATABASE_DECRYPT_KEY
-//                )
-                book
+            val apiResponse = executeRequest {
+                mSquareModel.insertBook(success)
             }
 
-            if (book.isSuccess) {
-                insertData.value = State.SuccessState(book)
+            if (apiResponse.data != null && apiResponse.errorCode == 0) {
+//                val book = apiResponse.data!!
+                insertData.value = State.SuccessState("插入數據庫成功")
             } else {
-                insertData.value = State.ErrorState(book.message)
+                insertData.value =
+                    State.ErrorState("插入數據庫失敗")
+//                insertData.value = State.ErrorState(apiResponse.errorMsg)
             }
         }
     }
-
-    private suspend fun executeInsertBook(block: suspend () -> Book): Book =
-        withContext(Dispatchers.IO) {
-            var book = Book()
-            runCatching {
-                block.invoke()
-            }.onSuccess {
-                book = it
-                book.isSuccess = true
-                book.message = "插入數據庫成功"
-            }.onFailure {
-                it.printStackTrace()
-                book.isSuccess = false
-                book.message = "插入數據庫失敗"
-            }.getOrDefault(book)
-        }
 
     override fun queryBook() {
         viewModelScope.launch {
-            val bookList = executeQueryBook {
-                val appRoomDataBase = AppRoomDataBase.instance()
-                appRoomDataBase.bookDao().queryAll()
+            val apiResponse = executeRequest {
+                mSquareModel.queryBook()
             }
-            queryData.value = State.SuccessState(bookList)
+
+            if (apiResponse.data != null && apiResponse.errorCode == 0) {
+                queryData.value = State.SuccessState(apiResponse.data!!)
+            } else {
+                queryData.value =
+                    State.ErrorState("查詢數據庫失敗")
+            }
         }
     }
-
-    private suspend fun executeQueryBook(block: () -> List<Book>): List<Book> =
-        withContext(Dispatchers.IO) {
-            var bookList = mutableListOf<Book>()
-            runCatching {
-                block.invoke()
-            }.onSuccess {
-                bookList = it as MutableList<Book>
-            }.onFailure {
-                it.printStackTrace()
-            }.getOrDefault(bookList)
-        }
 
     override fun onCleared() {
 //        mJob?.cancel()

@@ -30,7 +30,7 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     IProjectView {
 
     private val TAG = ProjectFragment::class.java.simpleName
-    private lateinit var onPageChangeCallback: ViewPager2.OnPageChangeCallback
+    private var onPageChangeCallback: ViewPager2.OnPageChangeCallback? = null
 
     override fun initLayoutId() = R.layout.project_fragment_project
 
@@ -120,7 +120,10 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
                     mDatabind.tabLayout.onPageSelected(position)
                 }
             }
-            MagicIndicatorManager.bindForViewPager2(mDatabind.mineViewPager2, onPageChangeCallback)
+            MagicIndicatorManager.bindForViewPager2(
+                mDatabind.mineViewPager2,
+                onPageChangeCallback!!
+            )
             hideLoading()
         }
     }
@@ -167,9 +170,11 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
     }
 
     override fun onDestroy() {
-        MagicIndicatorManager.unBindForViewPager2(
-            mDatabind.mineViewPager2, onPageChangeCallback
-        )
+        onPageChangeCallback?.let {
+            MagicIndicatorManager.unBindForViewPager2(
+                mDatabind.mineViewPager2, it
+            )
+        }
         ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
         super.onDestroy()
     }

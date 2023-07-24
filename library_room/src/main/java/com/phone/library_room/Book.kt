@@ -7,26 +7,20 @@ import androidx.room.*
 //@Entity(indices = [Index(value = ["bookName"], unique = true)])
 @Entity(tableName = "Book")
 class Book {
+
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    @ColumnInfo(name = "bId")
+    var bId: Long = 0
 
-    @ColumnInfo(name = "book_name")
-    var bookName: String? = null
+    @ColumnInfo(name = "bookName")
+    var bookName: String = ""
 
-    var anchor: String? = null
+    @ColumnInfo(name = "anchor")
+    var anchor: String = ""
 
-    @Ignore
+    @ColumnInfo(name = "price")
     var price: Int = 0
 
-    @ColumnInfo(name = "brief_introduction")
-    var briefIntroduction: String? = null
-
-    var isSuccess: Boolean = true
-
-    var message = ""
-
-    override fun toString(): String {
-        return "Book(id=$id, bookName=$bookName, anchor=$anchor, price=$price, briefIntroduction=$briefIntroduction, isSuccess=$isSuccess, message='$message')"
-    }
-
+    @ColumnInfo(name = "briefIntroduction")
+    var briefIntroduction: String = ""
 }

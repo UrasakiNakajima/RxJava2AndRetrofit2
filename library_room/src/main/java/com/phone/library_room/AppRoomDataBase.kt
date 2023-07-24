@@ -13,7 +13,7 @@ import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SQLiteDatabaseHook
 import net.sqlcipher.database.SupportFactory
 
-@Database(entities = [Book::class], version = 5)
+@Database(entities = [Book::class], version = 6)
 abstract class AppRoomDataBase : RoomDatabase() {
     //创建DAO的抽象类
     abstract fun bookDao(): BookDao
@@ -38,12 +38,30 @@ abstract class AppRoomDataBase : RoomDatabase() {
 //                database?.execSQL("PRAGMA cipher_kdf_algorithm = PBKDF2_HMAC_SHA1")
             }
         }, true)
-//        val MIGRATION_5_6 = object : Migration(5, 6) {
-//            override fun migrate(database: SupportSQLiteDatabase) {
-//                //对Book表增加一个score字段
-//                database.execSQL("ALTER TABLE Book ADD COLUMN brief_introduction TEXT NOT NULL 	DEFAULT ''")
-//            }
-//        }
+        val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //对Book表增加一个briefIntroduction字段
+                database.execSQL("ALTER TABLE Book ADD COLUMN briefIntroduction TEXT NOT NULL DEFAULT ''")
+
+//                // 创建临时表 Book2
+//                database.execSQL("CREATE TABLE Book2 (bId NUMERIC PRIMARY KEY NOT NULL, bookName TEXT NOT NULL DEFAULT '', anchor TEXT NOT NULL DEFAULT '', price INTEGER NOT NULL)")
+//
+//                // 将数据从 Book 表迁移到 Book2 表
+//                database.execSQL("INSERT INTO Book2 (bId, bookName, anchor, price) SELECT bId, bookName, anchor, price FROM Book")
+//
+//                // 删除旧表 Book
+//                database.execSQL("DROP TABLE Book")
+//
+//                // 创建新表 Book，price 字段为 NUMERIC 类型
+//                database.execSQL("CREATE TABLE Book (bId NUMERIC NOT NULL, bookName TEXT NOT NULL DEFAULT '', anchor TEXT NOT NULL DEFAULT '', price INTEGER NOT NULL)")
+//
+//                // 将数据从 Book2 表迁移到新表 Book
+//                database.execSQL("INSERT INTO Book (bId, bookName, anchor, price) SELECT bId, bookName, anchor, price FROM Book2")
+//
+//                // 删除临时表 Book2
+//                database.execSQL("DROP TABLE Book2")
+            }
+        }
 
         const val DATABASE_NAME = "book_app.db"
         const val DATABASE_ENCRYPT_NAME = "book_encrypt_app.db"
@@ -57,37 +75,70 @@ abstract class AppRoomDataBase : RoomDatabase() {
         @JvmStatic
         fun instance(): AppRoomDataBase {
             if (instance == null) {
-                instance = Room.databaseBuilder(
-                    BaseApplication.instance(),
-                    AppRoomDataBase::class.java,
-                    DATABASE_NAME
-                )
-//                    .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
-                    .openHelperFactory(factory)
-                    .build()
-
-
-//                instance = Room.databaseBuilder(
-//                    BaseApplication.instance(),
-//                    AppRoomDataBase::class.java,
-//                    DATABASE_ENCRYPT_NAME
-//                )
-////                    .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
-//                    .addMigrations(MIGRATION_5_6)
-//                    .openHelperFactory(factory)
-//                    .build()
-//
-//                val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
-//                if ("0".equals(dataEncryptTimes)) {
-//                    encrypt(
-//                        DATABASE_ENCRYPT_NAME,
-//                        DATABASE_NAME,
-//                        DATABASE_ENCRYPT_KEY
-//                    )
-//                    SharedPreferencesManager.put("dataEncryptTimes", "1")
-//                }
+                val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
+                if ("1".equals(dataEncryptTimes)) {
+                    initEncryptDatabase()
+                } else {
+                    initDatabase()
+                }
             }
             return instance!!
+        }
+
+        private fun initDatabase() {
+            instance = Room.databaseBuilder(
+                BaseApplication.instance(),
+                AppRoomDataBase::class.java,
+                DATABASE_NAME
+            )
+//                .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
+                .addMigrations(MIGRATION_5_6)
+//                .openHelperFactory(factory)
+                .build()
+        }
+
+        private fun initEncryptDatabase() {
+            LoadSoData.loadRoomLibs()
+            instance = Room.databaseBuilder(
+                BaseApplication.instance(),
+                AppRoomDataBase::class.java,
+                DATABASE_ENCRYPT_NAME
+            )
+//                    .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
+//                    .addMigrations(MIGRATION_5_6)
+                .openHelperFactory(factory)
+                .build()
+
+            encrypt(
+                DATABASE_ENCRYPT_NAME,
+                DATABASE_NAME,
+                DATABASE_ENCRYPT_KEY
+            )
+        }
+
+        @Synchronized
+        @JvmStatic
+        fun updateInstance() {
+            LoadSoData.loadRoomLibs()
+            val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
+            if ("0".equals(dataEncryptTimes)) {
+                encrypt(
+                    DATABASE_ENCRYPT_NAME,
+                    DATABASE_NAME,
+                    DATABASE_ENCRYPT_KEY
+                )
+                SharedPreferencesManager.put("dataEncryptTimes", "1")
+            }
+
+            instance = Room.databaseBuilder(
+                BaseApplication.instance(),
+                AppRoomDataBase::class.java,
+                DATABASE_ENCRYPT_NAME
+            )
+//                    .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
+//                    .addMigrations(MIGRATION_5_6)
+                .openHelperFactory(factory)
+                .build()
         }
 
 

@@ -144,6 +144,11 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                         .withString("bookJsonStr", bookJsonStr)
                         .navigation()
                 }
+
+                is State.ErrorState -> {
+                    hideLoading()
+                    ToastManager.toast(mRxAppCompatActivity, it.errorMsg)
+                }
             }
         })
     }

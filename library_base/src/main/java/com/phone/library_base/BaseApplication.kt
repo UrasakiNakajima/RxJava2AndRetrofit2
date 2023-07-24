@@ -16,6 +16,7 @@ import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.common.Constants
+import com.phone.library_base.load_data.LoadSoData
 import com.phone.library_base.manager.ActivityPageManager
 import com.phone.library_base.manager.AesManager
 import com.phone.library_base.manager.CrashHandlerManager
@@ -110,6 +111,7 @@ open class BaseApplication : MultiDexApplication() {
 
         //这里的数据需要延迟加载
         ThreadPoolManager().createScheduledThreadPoolToUIThread2(Constants.DELAY_TIME, {
+            LoadSoData.loadLibs()
             getSignInfo()
             //获取so 文件的密钥
             val data = JavaGetData.nativeAesKey(this@BaseApplication, BuildConfig.IS_RELEASE)
