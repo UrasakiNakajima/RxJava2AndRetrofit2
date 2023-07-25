@@ -1,10 +1,14 @@
 package com.phone.module_main
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.SharedPreferencesManager
+import com.phone.library_base.manager.ThreadPoolManager
+import com.phone.library_room.AppRoomDataBase
+import com.phone.library_room.Book
 
 class MainApplication : BaseApplication() {
 
@@ -43,6 +47,27 @@ class MainApplication : BaseApplication() {
             registrationId = JPushInterface.getRegistrationID(this@MainApplication)
             SharedPreferencesManager.put("registrationId", registrationId)
         }
+
+
+//        val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
+//        if ("0".equals(dataEncryptTimes)) {
+//            LogManager.i(TAG, "initData*****MainApplication")
+//            ThreadPoolManager.instance().createSyncThreadPool({
+//                val appRoomDataBase = AppRoomDataBase.instance()
+//                val book = Book()
+//                book.bookName = "-101書名：林"
+//                book.anchor = "作者：李"
+//                book.briefIntroduction = "簡介：林"
+//                appRoomDataBase.bookDao().insert(book)
+//                LogManager.i(TAG, "initData*****MainApplication insert")
+//
+//                appRoomDataBase.bookDao().deleteByBookName(book.bookName)
+//                LogManager.i(TAG, "initData*****MainApplication deleteByBookName")
+//            })
+//        } else {
+//            AppRoomDataBase.instance()
+//            LogManager.i(TAG, "initData*****MainApplication instance")
+//        }
         super.initData()
     }
 

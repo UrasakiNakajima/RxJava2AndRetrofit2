@@ -1,5 +1,6 @@
 package com.phone.library_room
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -7,13 +8,14 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.phone.library_base.BaseApplication
 import com.phone.library_base.JavaGetData
+import com.phone.library_base.manager.AesManager.encrypt
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.SharedPreferencesManager
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SQLiteDatabaseHook
 import net.sqlcipher.database.SupportFactory
 
-@Database(entities = [Book::class], version = 6)
+@Database(entities = [Book::class], version = 5)
 abstract class AppRoomDataBase : RoomDatabase() {
     //创建DAO的抽象类
     abstract fun bookDao(): BookDao
@@ -75,12 +77,15 @@ abstract class AppRoomDataBase : RoomDatabase() {
         @JvmStatic
         fun instance(): AppRoomDataBase {
             if (instance == null) {
-                val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
-                if ("1".equals(dataEncryptTimes)) {
-                    initEncryptDatabase()
-                } else {
+//                val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
+//                if ("1".equals(dataEncryptTimes)) {
+//                    LogManager.i(TAG, "instance*****${dataEncryptTimes}")
+//                    initEncryptDatabase()
+//                } else {
+//                    LogManager.i(TAG, "instance*****${dataEncryptTimes}")
                     initDatabase()
-                }
+//                    SharedPreferencesManager.put("dataEncryptTimes", "1")
+//                }
             }
             return instance!!
         }
@@ -92,7 +97,7 @@ abstract class AppRoomDataBase : RoomDatabase() {
                 DATABASE_NAME
             )
 //                .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
-                .addMigrations(MIGRATION_5_6)
+//                .addMigrations(MIGRATION_5_6)
 //                .openHelperFactory(factory)
                 .build()
         }
@@ -105,42 +110,19 @@ abstract class AppRoomDataBase : RoomDatabase() {
                 DATABASE_ENCRYPT_NAME
             )
 //                    .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
-//                    .addMigrations(MIGRATION_5_6)
                 .openHelperFactory(factory)
                 .build()
 
-            encrypt(
-                DATABASE_ENCRYPT_NAME,
-                DATABASE_NAME,
-                DATABASE_ENCRYPT_KEY
-            )
-        }
-
-        @Synchronized
-        @JvmStatic
-        fun updateInstance() {
-            LoadSoData.loadRoomLibs()
-            val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
-            if ("0".equals(dataEncryptTimes)) {
+            val upgradeNumber = SharedPreferencesManager.get("upgradeNumber", "5")
+            if ("5".equals(upgradeNumber)) {
                 encrypt(
                     DATABASE_ENCRYPT_NAME,
                     DATABASE_NAME,
                     DATABASE_ENCRYPT_KEY
                 )
-                SharedPreferencesManager.put("dataEncryptTimes", "1")
+                SharedPreferencesManager.put("upgradeNumber", "6")
             }
-
-            instance = Room.databaseBuilder(
-                BaseApplication.instance(),
-                AppRoomDataBase::class.java,
-                DATABASE_ENCRYPT_NAME
-            )
-//                    .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
-//                    .addMigrations(MIGRATION_5_6)
-                .openHelperFactory(factory)
-                .build()
         }
-
 
         /**
          * 加密数据库

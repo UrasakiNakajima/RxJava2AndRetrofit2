@@ -21,6 +21,7 @@ class Book {
     @ColumnInfo(name = "price")
     var price: Int = 0
 
-    @ColumnInfo(name = "briefIntroduction")
-    var briefIntroduction: String = ""
+//    @ColumnInfo(name = "briefIntroduction")
+//    var briefIntroduction: String = ""
+
 }

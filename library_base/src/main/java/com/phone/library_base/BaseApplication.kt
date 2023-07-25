@@ -79,13 +79,13 @@ open class BaseApplication : MultiDexApplication() {
         if (processName != null) {
             LogManager.i(TAG, "processName*****$processName")
             if (processName == packageName) {
+                LogManager.i(TAG, "onCreate packageName*****$processName")
                 //当进程是当前App 的主进程时，才初始化数据
                 //初始化com.phone.rxjava2andretrofit2以包名为进程名，项目默认的进程
 
+                initData()
             }
         }
-
-        initData()
     }
 
 
@@ -107,7 +107,6 @@ open class BaseApplication : MultiDexApplication() {
             TAG,
             "BaseApplication createScheduledThreadPoolToUIThread*****${Thread.currentThread().name}"
         )
-
 
         //这里的数据需要延迟加载
         ThreadPoolManager().createScheduledThreadPoolToUIThread2(Constants.DELAY_TIME, {

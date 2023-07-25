@@ -10,8 +10,14 @@ abstract class BookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(books: List<Book>)
 
-    @Delete
-    abstract fun delete(book: Book)
+//    @Delete
+//    abstract fun delete(book: Book)
+
+    /**
+     * 根据字段删除记录
+     */
+    @Query("delete from Book where bookName = :bookName")
+    abstract fun deleteByBookName(bookName: String)
 
     @Update
     abstract fun update(book: Book)

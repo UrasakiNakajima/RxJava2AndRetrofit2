@@ -11,7 +11,7 @@ import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Call
 
-class SquareModelImpl() : ISquareModel {
+class SquareModelImpl : ISquareModel {
 
     override suspend fun squareData(currentPage: String): ApiResponse<DataSquare> {
         return RetrofitManager.instance().mRetrofit
@@ -44,17 +44,14 @@ class SquareModelImpl() : ISquareModel {
         book.bookName = "書名：${strArr[0]}"
         book.anchor = "作者：${strArr[1]}"
         if (strArr.size > 2) {
-//            Book("書名：${strArr[0]}", "作者：${strArr[1]}", 100, "簡介：${strArr[2]}")
-            book.briefIntroduction = "簡介：${strArr[2]}"
-        } else {
-//            Book("書名：${strArr[0]}", "作者：${strArr[1]}", 100, "")
+//            book.briefIntroduction = "簡介：${strArr[2]}"
         }
         appRoomDataBase.bookDao().insert(book)
 
-        val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
-        if ("0".equals(dataEncryptTimes)) {
-            SharedPreferencesManager.put("dataEncryptTimes", "1")
-        }
+//        val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
+//        if ("0".equals(dataEncryptTimes)) {
+//            SharedPreferencesManager.put("dataEncryptTimes", "1")
+//        }
 
 //                val book2 = Book()
 //                book2.bookName = "EnglishXC2"

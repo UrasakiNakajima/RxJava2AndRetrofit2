@@ -82,6 +82,7 @@ dependencies {
     api project(path: ':library_login')
     implementation project(path: ':library_mvp')
     implementation project(path: ':library_custom_view')
+    implementation project(path: ':library_room')
 
     implementation "androidx.appcompat:appcompat:$BuildVersions.appcompat_version"
 

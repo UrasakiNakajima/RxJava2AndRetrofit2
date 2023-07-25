@@ -55,17 +55,17 @@
             android:layout_height="@dimen/base_dp_1"
             android:background="@color/library_color_FFFFFF" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/base_dp_45"
-            android:background="@color/library_color_4876FF"
-            android:gravity="center_vertical|start"
-            android:includeFontPadding="false"
-            android:paddingStart="@dimen/base_dp_10"
-            android:paddingEnd="@dimen/base_dp_10"
-            android:text="@={dataBean.briefIntroduction}"
-            android:textColor="@color/library_color_FFFFFF"
-            android:textSize="@dimen/base_sp_14" />
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/base_dp_45"-->
+<!--            android:background="@color/library_color_4876FF"-->
+<!--            android:gravity="center_vertical|start"-->
+<!--            android:includeFontPadding="false"-->
+<!--            android:paddingStart="@dimen/base_dp_10"-->
+<!--            android:paddingEnd="@dimen/base_dp_10"-->
+<!--            android:text="@={dataBean.briefIntroduction}"-->
+<!--            android:textColor="@color/library_color_FFFFFF"-->
+<!--            android:textSize="@dimen/base_sp_14" />-->
 
     </LinearLayout>
 
