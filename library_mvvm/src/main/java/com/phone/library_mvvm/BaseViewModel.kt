@@ -88,8 +88,4 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
-    override fun onCleared() {
-        LogManager.i(TAG, "onCleared")
-        super.onCleared()
-    }
 }

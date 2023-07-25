@@ -10,7 +10,7 @@ import com.phone.module_resource.R
 import com.phone.module_resource.model.ResourceModelImpl
 import kotlinx.coroutines.launch
 
-class ResourceViewModelImpl() : BaseViewModel(), IResourceViewModel {
+class ResourceViewModelImpl : BaseViewModel(), IResourceViewModel {
 
     companion object {
         private val TAG: String = ResourceViewModelImpl::class.java.simpleName

@@ -11,7 +11,7 @@ import com.phone.module_resource.model.SubResourceModelImpl
 import kotlinx.coroutines.launch
 
 
-class SubResourceViewModelImpl() : BaseViewModel(), ISubResourceViewModel {
+class SubResourceViewModelImpl : BaseViewModel(), ISubResourceViewModel {
 
     companion object {
         private val TAG: String = SubResourceViewModelImpl::class.java.simpleName

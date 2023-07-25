@@ -555,6 +555,7 @@ open class BaseViewModel : ViewModel() {
                 block()
             }.onSuccess {
                 response = it
+                response.errorCode = 0
             }.onFailure {
                 it.printStackTrace()
                 val apiException = getApiException(it)
@@ -605,11 +606,7 @@ open class BaseViewModel : ViewModel() {
             }
         }
     }
-
-    override fun onCleared() {
-        LogManager.i(TAG, "onCleared")
-        super.onCleared()
-    }
+    
 }
 ```
 
@@ -631,7 +628,7 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
     val downloadData = SingleLiveData<DownloadState<Int>>()
 
     //3.首先定义一个SingleLiveData的实例
-    val insertData = MutableLiveData<State<Book>>()
+    val insertData = MutableLiveData<State<String>>()
 
     //4.首先定义一个SingleLiveData的实例
     val queryData = MutableLiveData<State<List<Book>>>()
@@ -681,6 +678,28 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
     }
 
     override fun downloadFile(rxFragment: RxFragment) {
+//        RetrofitManager.instance().downloadFile(rxFragment,
+//            mSquareModel.downloadFile(),
+//            BaseApplication.instance().externalCacheDir!!.absolutePath,
+//            "artist_kirara_asuka.mov",
+//            object : OnDownloadCallBack {
+//                override fun onProgress(progress: Int, total: Long, speed: Long) {
+//                    LogManager.i(TAG, "progress:$progress, speed:$speed")
+//                    downloadData.postValue(DownloadState.ProgressState(progress, total, speed))
+//                }
+//
+//                override fun onCompleted(file: File) {
+//                    LogManager.i(TAG, "下载文件成功")
+//                    downloadData.postValue(DownloadState.CompletedState(file))
+//                }
+//
+//                override fun onError(e: Throwable?) {
+//                    LogManager.i(TAG, "下载文件异常", e)
+//                    downloadData.postValue(DownloadState.ErrorState("下载文件异常*****${e.toString()}"))
+//                }
+//            })
+
+
         rxFragment.lifecycleScope.launch(Dispatchers.IO) {
             RetrofitManager.instance().downloadFile3(mSquareModel.downloadFile2(),
                 BaseApplication.instance().externalCacheDir!!.absolutePath,
@@ -706,77 +725,36 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 
     override fun insertBook(rxFragment: RxFragment, success: String) {
         rxFragment.lifecycleScope.launch {
-            val book = executeInsertBook {
-                val appRoomDataBase = AppRoomDataBase.instance()
-                val book = Book()
-                val strArr = success.split(".")
-                book.bookName = "書名：${strArr[0]}"
-                book.anchor = "作者：${strArr[1]}"
-                book.briefIntroduction = "簡介：${strArr[2]}"
-                appRoomDataBase.bookDao().insert(book)
-
-//                val book2 = Book()
-//                book2.bookName = "EnglishXC2"
-//                book2.anchor = "rommelXC2"
-//                appRoomDataBase.bookDao().insert(book2)
-//                val bookList = appRoomDataBase.bookDao().queryAll()
-//                for (i in 0..bookList.size - 1) {
-//                    LogManager.i(TAG, "book*****" + bookList.get(i).bookName)
-//                }
-//                AppRoomDataBase.decrypt(
-//                    AppRoomDataBase.DATABASE_DECRYPT_NAME,
-//                    AppRoomDataBase.DATABASE_ENCRYPT_NAME,
-//                    AppRoomDataBase.DATABASE_DECRYPT_KEY
-//                )
-                book
+            val apiResponse = executeRequest {
+                mSquareModel.insertBook(success)
             }
 
-            if (book.isSuccess) {
-                insertData.value = State.SuccessState(book)
+            if (apiResponse.data != null && apiResponse.errorCode == 0) {
+//                val book = apiResponse.data!!
+                insertData.value = State.SuccessState("插入數據庫成功")
             } else {
-                insertData.value = State.ErrorState(book.message)
+                insertData.value =
+                    State.ErrorState("插入數據庫失敗")
+//                insertData.value = State.ErrorState(apiResponse.errorMsg)
             }
         }
     }
-
-    private suspend fun executeInsertBook(block: suspend () -> Book): Book =
-        withContext(Dispatchers.IO) {
-            var book = Book()
-            runCatching {
-                block.invoke()
-            }.onSuccess {
-                book = it
-                book.isSuccess = true
-                book.message = "插入數據庫成功"
-            }.onFailure {
-                it.printStackTrace()
-                book.isSuccess = false
-                book.message = "插入數據庫失敗"
-            }.getOrDefault(book)
-        }
 
     override fun queryBook() {
         viewModelScope.launch {
-            val bookList = executeQueryBook {
-                val appRoomDataBase = AppRoomDataBase.instance()
-                appRoomDataBase.bookDao().queryAll()
+            val apiResponse = executeRequest {
+                mSquareModel.queryBook()
             }
-            queryData.value = State.SuccessState(bookList)
+
+            if (apiResponse.data != null && apiResponse.errorCode == 0) {
+                queryData.value = State.SuccessState(apiResponse.data!!)
+            } else {
+                queryData.value =
+                    State.ErrorState("查詢數據庫失敗")
+            }
         }
     }
 
-    private suspend fun executeQueryBook(block: () -> List<Book>): List<Book> =
-        withContext(Dispatchers.IO) {
-            var bookList = mutableListOf<Book>()
-            runCatching {
-                block.invoke()
-            }.onSuccess {
-                bookList = it as MutableList<Book>
-            }.onFailure {
-                it.printStackTrace()
-            }.getOrDefault(bookList)
-        }
-    
     override fun onCleared() {
 //        mJob?.cancel()
         super.onCleared()
@@ -788,13 +766,55 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 #### 2.5 SquareModelImpl
 **SquareViewModelImpl：**
 ```kotlin
-class SquareModelImpl() : ISquareModel {
+class SquareModelImpl : ISquareModel {
+
+    companion object {
+        private val TAG = SquareModelImpl::class.java.simpleName
+    }
 
     override suspend fun squareData(currentPage: String): ApiResponse<DataSquare> {
         return RetrofitManager.instance().mRetrofit
             .create(SquareRequest::class.java)
             .getSquareData(currentPage)
     }
+
+    override fun downloadFile(): Observable<ResponseBody> {
+        return RetrofitManager.instance().mRetrofit
+            .create(SquareRequest::class.java)
+            .downloadFile()
+    }
+
+    override fun downloadFile2(): Call<ResponseBody> {
+        return RetrofitManager.instance().mRetrofit
+            .create(SquareRequest::class.java)
+            .downloadFile2()
+    }
+
+    override fun insertBook(success: String): ApiResponse<Book> {
+        val appRoomDataBase = AppRoomDataBase.instance()
+        val strArr = success.split(".")
+        val book = Book()
+        book.bookName = "書名：${strArr[0]}"
+        book.anchor = "作者：${strArr[1]}"
+        if (strArr.size > 2) {
+            book.briefIntroduction = "簡介：${strArr[2]}"
+        }
+        appRoomDataBase.bookDao().insert(book)
+
+        val apiResponse = ApiResponse<Book>()
+        apiResponse.data = book
+        return apiResponse
+    }
+
+    override fun queryBook(): ApiResponse<List<Book>> {
+        val appRoomDataBase = AppRoomDataBase.instance()
+        val apiResponse = ApiResponse<List<Book>>()
+        apiResponse.data = appRoomDataBase.bookDao().queryAll()
+        LogManager.i(TAG, "queryBook*****${apiResponse.data.toString()}")
+        return apiResponse
+    }
+
+
 }
 ```
 
@@ -804,10 +824,29 @@ class SquareModelImpl() : ISquareModel {
 interface SquareRequest {
 
     @Headers("urlname:${ConstantData.TO_PROJECT_FLAG}")
+//    @FormUrlEncoded
     @GET(ConstantUrl.SQUARE_URL)
     suspend fun getSquareData(
         @Path("currentPage") currentPage: String
     ): ApiResponse<DataSquare>
+
+    /**
+     * 下载文件
+     *
+     */
+    @Headers("urlname:" + ConstantData.TO_DOWNLOAD_FILE_FLAG)
+    @Streaming
+    @GET(ConstantUrl.DOWNLOAD_FILE_URL)
+    fun downloadFile(): Observable<ResponseBody>
+
+    /**
+     * 下载文件
+     *
+     */
+    @Headers("urlname:" + ConstantData.TO_DOWNLOAD_FILE_FLAG)
+    @Streaming
+    @GET(ConstantUrl.DOWNLOAD_FILE_URL)
+    fun downloadFile2(): Call<ResponseBody>
 }
 ```
 
