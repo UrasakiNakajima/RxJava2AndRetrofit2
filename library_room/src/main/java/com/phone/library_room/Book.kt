@@ -21,7 +21,10 @@ class Book {
     @ColumnInfo(name = "price")
     var price: Int = 0
 
-//    @ColumnInfo(name = "briefIntroduction")
-//    var briefIntroduction: String = ""
+    @ColumnInfo(name = "briefIntroduction")
+    var briefIntroduction: String = ""
+    override fun toString(): String {
+        return "Book(bId=$bId, bookName='$bookName', anchor='$anchor', price=$price, briefIntroduction='$briefIntroduction')"
+    }
 
 }

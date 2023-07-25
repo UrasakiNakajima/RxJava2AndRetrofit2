@@ -1,5 +1,6 @@
 package com.phone.module_square.model
 
+import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.SharedPreferencesManager
 import com.phone.library_network.bean.ApiResponse
 import com.phone.library_common.bean.DataSquare
@@ -12,6 +13,10 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 
 class SquareModelImpl : ISquareModel {
+
+    companion object {
+        private val TAG = SquareModelImpl::class.java.simpleName
+    }
 
     override suspend fun squareData(currentPage: String): ApiResponse<DataSquare> {
         return RetrofitManager.instance().mRetrofit
@@ -44,28 +49,10 @@ class SquareModelImpl : ISquareModel {
         book.bookName = "書名：${strArr[0]}"
         book.anchor = "作者：${strArr[1]}"
         if (strArr.size > 2) {
-//            book.briefIntroduction = "簡介：${strArr[2]}"
+            book.briefIntroduction = "簡介：${strArr[2]}"
         }
         appRoomDataBase.bookDao().insert(book)
 
-//        val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
-//        if ("0".equals(dataEncryptTimes)) {
-//            SharedPreferencesManager.put("dataEncryptTimes", "1")
-//        }
-
-//                val book2 = Book()
-//                book2.bookName = "EnglishXC2"
-//                book2.anchor = "rommelXC2"
-//                appRoomDataBase.bookDao().insert(book2)
-//                val bookList = appRoomDataBase.bookDao().queryAll()
-//                for (i in 0..bookList.size - 1) {
-//                    LogManager.i(TAG, "book*****" + bookList.get(i).bookName)
-//                }
-//                AppRoomDataBase.decrypt(
-//                    AppRoomDataBase.DATABASE_DECRYPT_NAME,
-//                    AppRoomDataBase.DATABASE_ENCRYPT_NAME,
-//                    AppRoomDataBase.DATABASE_DECRYPT_KEY
-//                )
         val apiResponse = ApiResponse<Book>()
         apiResponse.data = book
         return apiResponse
@@ -75,7 +62,7 @@ class SquareModelImpl : ISquareModel {
         val appRoomDataBase = AppRoomDataBase.instance()
         val apiResponse = ApiResponse<List<Book>>()
         apiResponse.data = appRoomDataBase.bookDao().queryAll()
-//        AppRoomDataBase.updateInstance()
+        LogManager.i(TAG, "queryBook*****${apiResponse.data.toString()}")
         return apiResponse
     }
 

@@ -49,25 +49,25 @@ class MainApplication : BaseApplication() {
         }
 
 
-//        val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
-//        if ("0".equals(dataEncryptTimes)) {
-//            LogManager.i(TAG, "initData*****MainApplication")
-//            ThreadPoolManager.instance().createSyncThreadPool({
-//                val appRoomDataBase = AppRoomDataBase.instance()
-//                val book = Book()
-//                book.bookName = "-101書名：林"
-//                book.anchor = "作者：李"
-//                book.briefIntroduction = "簡介：林"
-//                appRoomDataBase.bookDao().insert(book)
-//                LogManager.i(TAG, "initData*****MainApplication insert")
-//
-//                appRoomDataBase.bookDao().deleteByBookName(book.bookName)
-//                LogManager.i(TAG, "initData*****MainApplication deleteByBookName")
-//            })
-//        } else {
-//            AppRoomDataBase.instance()
-//            LogManager.i(TAG, "initData*****MainApplication instance")
-//        }
+        val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
+        if ("0".equals(dataEncryptTimes)) {
+            LogManager.i(TAG, "initData*****MainApplication")
+            ThreadPoolManager.instance().createSyncThreadPool({
+                val appRoomDataBase = AppRoomDataBase.instance()
+                val book = Book()
+                book.bookName = "-101書名：林"
+                book.anchor = "作者：李"
+                book.briefIntroduction = "簡介：林"
+                appRoomDataBase.bookDao().insert(book)
+                LogManager.i(TAG, "initData*****MainApplication insert")
+
+                appRoomDataBase.bookDao().deleteByBookName(book.bookName)
+                LogManager.i(TAG, "initData*****MainApplication deleteByBookName")
+            })
+        } else {
+            LogManager.i(TAG, "initData*****MainApplication instance")
+            AppRoomDataBase.instance()
+        }
         super.initData()
     }
 

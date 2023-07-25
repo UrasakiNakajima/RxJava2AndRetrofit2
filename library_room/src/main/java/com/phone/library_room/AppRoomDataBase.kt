@@ -15,7 +15,7 @@ import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SQLiteDatabaseHook
 import net.sqlcipher.database.SupportFactory
 
-@Database(entities = [Book::class], version = 5)
+@Database(entities = [Book::class], version = 6)
 abstract class AppRoomDataBase : RoomDatabase() {
     //创建DAO的抽象类
     abstract fun bookDao(): BookDao
@@ -77,15 +77,15 @@ abstract class AppRoomDataBase : RoomDatabase() {
         @JvmStatic
         fun instance(): AppRoomDataBase {
             if (instance == null) {
-//                val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
-//                if ("1".equals(dataEncryptTimes)) {
-//                    LogManager.i(TAG, "instance*****${dataEncryptTimes}")
-//                    initEncryptDatabase()
-//                } else {
-//                    LogManager.i(TAG, "instance*****${dataEncryptTimes}")
+                val dataEncryptTimes = SharedPreferencesManager.get("dataEncryptTimes", "0")
+                if ("1".equals(dataEncryptTimes)) {
+                    LogManager.i(TAG, "instance*****${dataEncryptTimes}")
+                    initEncryptDatabase()
+                } else {
+                    LogManager.i(TAG, "instance*****${dataEncryptTimes}")
                     initDatabase()
-//                    SharedPreferencesManager.put("dataEncryptTimes", "1")
-//                }
+                    SharedPreferencesManager.put("dataEncryptTimes", "1")
+                }
             }
             return instance!!
         }
@@ -97,7 +97,7 @@ abstract class AppRoomDataBase : RoomDatabase() {
                 DATABASE_NAME
             )
 //                .allowMainThreadQueries()//允许在主线程操作数据库，一般不推荐；设置这个后主线程调用增删改查不会报错，否则会报错
-//                .addMigrations(MIGRATION_5_6)
+                .addMigrations(MIGRATION_5_6)
 //                .openHelperFactory(factory)
                 .build()
         }
