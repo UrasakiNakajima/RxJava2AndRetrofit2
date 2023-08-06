@@ -3,7 +3,7 @@
 Kotlin+Retrofit2+协程+Jetpack MVVM架构+组件化，添加自动管理token功能，添加RxJava2生命周期管理，集成极光推送、阿里云Oss对象存储和高德地图定位功能。
 
 ## 应用截图（页面效果一般，不过看这个项目看的不是页面，主要学习的是Kotlin+RxJava2+Retrofit2+MVP架构+组件化
-## 和Kotlin+Retrofit2+协程+MVVM架构+组件化的设计）
+## 和Kotlin+Retrofit2+协程+Jetpack MVVM架构+组件化的设计）
 <table>
     <tr>
         <td><img src="/screenshots/screenshot_launch.jpg" />
@@ -118,7 +118,7 @@ Kotlin+Retrofit2+协程+Jetpack MVVM架构+组件化，添加自动管理token�
 对内，要分类清晰。还有，封装到基础层的代码，其他组件不一定想用，不是说不写，而是说少写，以及分类清晰地写，所以在封装到基础层之前，先经过code review。
 2. library_base和library_common组件是基础库；
 3. library_network组件是网络请求库、library_glide组件是图片加载库、library_room组件是数据库、library_mvp组件是MVP基础库，
-library_mvvm组件是MVVM基础库等等；
+library_mvvm组件是Jetpack MVVM基础库等等；
 
 #### 2.5 组件化Application
 * 如果功能module有Application，主module没有自定义Application，自然引用功能module的Application。如果功能module有两个自定义Application，

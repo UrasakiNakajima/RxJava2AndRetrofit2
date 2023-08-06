@@ -138,5 +138,10 @@ dependencies {
     implementation "cn.bingoogolapple:bga-progressbar:$BuildVersions.bga_progressbar_version"
 
     //定位功能
-    implementation 'com.amap.api:location:latest.integration'
+//    implementation 'com.amap.api:location:latest.integration'
+    //这个版本临时不能用了，报错Could not HEAD 'https://repo.maven.apache.org/maven2/com/amap/api/location/maven-metadata.xml'. Received status code 400 from server: Bad Request，
+    //以前也遇到过，可能是他的latest.integration服务器暂时不能用了，改成最新的数字版本就可以了。
+    implementation 'com.amap.api:location:6.3.0'
+
+
 }

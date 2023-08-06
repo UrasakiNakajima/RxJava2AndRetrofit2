@@ -1,3 +1,6 @@
+apply plugin: 'kotlin'
+apply plugin: 'java-gradle-plugin'
+
 buildscript {
     repositories {
         ext.kotlin_version = '1.6.21'
@@ -11,15 +14,13 @@ buildscript {
         mavenCentral()
         // 需要添加 jcenter 否则会提示找不到 gradlePlugin
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         // 因为使用的 Kotlin 需要需要添加 Kotlin 插件
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
     }
 }
-
-apply plugin: 'kotlin'
-apply plugin: 'java-gradle-plugin'
 
 repositories {
 //    maven { url 'https://maven.aliyun.com/repository/google' }
@@ -31,6 +32,7 @@ repositories {
     mavenCentral()
     // 需要添加 jcenter 否则会提示找不到 gradlePlugin
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
