@@ -53,20 +53,14 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.experimental.and
 
-
+/**
+ * 私有构造器 无法外部创建
+ */
 class RetrofitManager private constructor() {
 
     private val TAG = RetrofitManager::class.java.simpleName
 
-    @JvmField
-    val mRetrofit: Retrofit
-    var mCoroutineScope: CoroutineScope? = null
-
-    /**
-     * 私有构造器 无法外部创建
-     * 初始化必要对象和参数
-     */
-    init {
+    val mRetrofit by lazy {
         //缓存
         val cacheFile = File(BaseApplication.instance().externalCacheDir, "cache")
         val cache = Cache(cacheFile, 1024 * 1024 * 10) //10Mb
@@ -96,12 +90,14 @@ class RetrofitManager private constructor() {
             .build()
 
         // 初始化Retrofit
-        mRetrofit = Retrofit.Builder()
+        Retrofit.Builder()
             .client(client)
             .baseUrl(ConstantUrl.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     }
+
+    var mCoroutineScope: CoroutineScope? = null
 
     /**
      * 保证只有一个实例
@@ -109,21 +105,12 @@ class RetrofitManager private constructor() {
      * @return
      */
     companion object {
-        @Volatile
-        private var instance: RetrofitManager? = null
-            get() {
-                if (field == null) {
-                    field = RetrofitManager()
-                }
-                return field
-            }
 
-        //Synchronized添加后就是线程安全的的懒汉模式
-        @Synchronized
         @JvmStatic
-        fun instance(): RetrofitManager {
-            return instance!!
+        val instance by lazy {
+            RetrofitManager()
         }
+
 
         /**
          * 查询网络的Cache-Control设置，头部Cache-Control设为max-age=0

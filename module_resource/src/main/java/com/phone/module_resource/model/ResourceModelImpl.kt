@@ -12,13 +12,13 @@ class ResourceModelImpl : IResourceModel {
     private val TAG = ResourceModelImpl::class.java.simpleName
 
     override suspend fun resourceTabData(): ApiResponse<MutableList<TabBean>> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(ResourceRequest::class.java)
             .getResourceTabData()
     }
 
     override suspend fun resourceTabData2(): Call<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(ResourceRequest::class.java)
             .getResourceTabData2()
     }

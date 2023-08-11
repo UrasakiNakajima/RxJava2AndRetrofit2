@@ -50,7 +50,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
             if (baseView is ILoginView) {
                 val loginView = baseView
                 loginView.showLoading()
-                RetrofitManager.instance().responseString(rxAppCompatActivity,
+                RetrofitManager.instance.responseString(rxAppCompatActivity,
                     model.getAuthCode(bodyParams),
                     object : OnCommonSingleParamCallback<String> {
                         override fun onSuccess(success: String) {
@@ -95,7 +95,7 @@ class LoginPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), ILog
         if (baseView != null) {
             if (baseView is ILoginView) {
                 val loginView = baseView
-                Objects.requireNonNull(RetrofitManager.instance()).responseString(
+                Objects.requireNonNull(RetrofitManager.instance).responseString(
                     rxAppCompatActivity,
                     model.loginWithAuthCode(bodyParams),
                     object : OnCommonSingleParamCallback<String> {

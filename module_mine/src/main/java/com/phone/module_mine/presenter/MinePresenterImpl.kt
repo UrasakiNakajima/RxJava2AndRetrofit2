@@ -102,7 +102,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
-                RetrofitManager.instance().responseString5(rxAppCompatActivity,
+                RetrofitManager.instance.responseString5(rxAppCompatActivity,
                     model.userData(bodyParams),
                     object :
                         OnCommonSingleParamCallback<String> {
@@ -145,7 +145,7 @@ class MinePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMine
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IUserDataView) {
-                RetrofitManager.instance().responseString5(rxAppCompatActivity,
+                RetrofitManager.instance.responseString5(rxAppCompatActivity,
                     model.userData(accessToken, bodyParams),
                     object :
                         OnCommonSingleParamCallback<String> {

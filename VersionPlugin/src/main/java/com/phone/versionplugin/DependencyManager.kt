@@ -65,7 +65,6 @@ object BuildVersions {
     const val logger_version = "2.2.0"
     const val greendao_version = "3.3.0"
     const val jackson_databind_version = "2.11.1"
-    const val lombok_version = "1.18.24"
     const val magic_indicator_version = "1.7.0"
     const val jsbridge_version = "1.0.4"
 

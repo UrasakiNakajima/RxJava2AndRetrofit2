@@ -14,8 +14,7 @@ import kotlinx.coroutines.launch
 class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
 
     private val TAG = ProjectViewModelImpl::class.java.simpleName
-
-    private val model = ProjectModelImpl()
+    private val mModel by lazy { ProjectModelImpl() }
 
     //1.首先定义两个SingleLiveData的实例
     val tabData = SingleLiveData<State<MutableList<TabBean>>>()
@@ -25,7 +24,7 @@ class ProjectViewModelImpl : BaseViewModel(), IProjectViewModel {
         //该协程默认运行在UI线程，协程和ViewModel的生命周期绑定，组件销毁时，协程一并销毁，从而实现安全可靠地协程调用。
         //调用viewModelScope.launch{} 或 viewModelScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是UI线程）。
         viewModelScope.launch {
-            val apiResponse = executeRequest { model.projectTabData() }
+            val apiResponse = executeRequest { mModel.projectTabData() }
 
             LogManager.i(TAG, "projectTabData")
             if (apiResponse.errorCode == 0) {

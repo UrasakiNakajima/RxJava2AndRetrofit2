@@ -19,25 +19,25 @@ class SquareModelImpl : ISquareModel {
     }
 
     override suspend fun squareData(currentPage: String): ApiResponse<DataSquare> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(SquareRequest::class.java)
             .getSquareData(currentPage)
     }
 
     override fun squareData2(currentPage: String): Observable<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(SquareRequest::class.java)
             .getSquareData2(currentPage)
     }
 
     override fun downloadFile(): Observable<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(SquareRequest::class.java)
             .downloadFile()
     }
 
     override fun downloadFile2(): Call<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(SquareRequest::class.java)
             .downloadFile2()
     }

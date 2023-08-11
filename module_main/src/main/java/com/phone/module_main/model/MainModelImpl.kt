@@ -1,6 +1,6 @@
 package com.phone.module_main.model
 
-import com.phone.library_network.manager.RetrofitManager.Companion.instance
+import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_main.request.MainRequest
 import io.reactivex.Observable
 import okhttp3.ResponseBody
@@ -19,7 +19,7 @@ class MainModelImpl : IMainModel {
     }
 
     override fun mainData(bodyParams: Map<String, String>): Observable<ResponseBody> {
-        return instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(MainRequest::class.java)
             .getMainData(bodyParams)
     }

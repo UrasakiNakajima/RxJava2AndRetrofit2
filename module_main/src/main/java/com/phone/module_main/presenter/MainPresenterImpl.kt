@@ -36,7 +36,7 @@ class MainPresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IMain
             if (baseView is IMainView) {
                 val mainView = baseView
 
-//                RetrofitManager.instance()
+//                RetrofitManager.instance
 //                        .responseString3(rxAppCompatActivity, model.mainData(bodyParams), new OnCommonSingleParamCallback<String>() {
 //                            @Override
 //                            public void onSuccess(String success) {

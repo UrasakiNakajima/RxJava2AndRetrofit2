@@ -4,8 +4,6 @@ import com.phone.library_network.bean.ApiResponse2
 import com.phone.library_common.bean.ResultData
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.module_home.request.HomePageRequest
-import io.reactivex.Observable
-import okhttp3.ResponseBody
 
 /**
  * author    : Urasaki
@@ -19,7 +17,7 @@ class HomeModelImpl : IHomeModel {
     private val TAG = HomeModelImpl::class.java.simpleName
 
     override suspend fun homePage(bodyParams: Map<String, String>): ApiResponse2<ResultData> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(HomePageRequest::class.java)
             .getHomePage(bodyParams)
     }

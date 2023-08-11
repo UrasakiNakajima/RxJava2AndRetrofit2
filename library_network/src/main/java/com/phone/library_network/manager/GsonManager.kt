@@ -6,10 +6,8 @@ import java.lang.reflect.Type
 class GsonManager {
 
     val TAG = GsonManager::class.java.simpleName
-    private var gson: Gson
-
-    init {
-        gson = Gson()
+    private val gson by lazy {
+        Gson()
     }
 
 //    /**

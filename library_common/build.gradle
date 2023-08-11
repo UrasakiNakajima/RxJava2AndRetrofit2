@@ -161,10 +161,8 @@ dependencies {
     //日志打印框架
     api "com.orhanobut:logger:$BuildVersions.logger_version"
 
-    compileOnly "org.projectlombok:lombok:$BuildVersions.lombok_version"
-    kapt "org.projectlombok:lombok:$BuildVersions.lombok_version"
     api "com.github.hackware1993:MagicIndicator:$BuildVersions.magic_indicator_version"
-
+    //Android与JS交互框架
     api "com.github.lzyzsd:jsbridge:$BuildVersions.jsbridge_version"
 
 

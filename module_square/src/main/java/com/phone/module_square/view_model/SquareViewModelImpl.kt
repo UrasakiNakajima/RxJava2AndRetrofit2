@@ -28,7 +28,7 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
         private val TAG: String = SquareViewModelImpl::class.java.simpleName
     }
 
-    private var mSquareModel = SquareModelImpl()
+    private val mSquareModel by lazy { SquareModelImpl() }
 //    private var mJob: Job? = null
 
     //1.首先定义一个SingleLiveData的实例
@@ -88,7 +88,7 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
     }
 
     override fun downloadFile(rxFragment: RxFragment) {
-//        RetrofitManager.instance().downloadFile(rxFragment,
+//        RetrofitManager.instance.downloadFile(rxFragment,
 //            mSquareModel.downloadFile(),
 //            BaseApplication.instance().externalCacheDir!!.absolutePath,
 //            "artist_kirara_asuka.mov",
@@ -111,7 +111,7 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 
 
         rxFragment.lifecycleScope.launch(Dispatchers.IO) {
-            RetrofitManager.instance().downloadFile3(mSquareModel.downloadFile2(),
+            RetrofitManager.instance.downloadFile3(mSquareModel.downloadFile2(),
                 BaseApplication.instance().externalCacheDir!!.absolutePath,
                 "artist_kirara_asuka.mov",
                 object : OnDownloadCallBack {

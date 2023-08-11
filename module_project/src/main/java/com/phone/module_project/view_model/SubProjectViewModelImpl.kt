@@ -25,7 +25,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
         private val TAG: String = SubProjectViewModelImpl::class.java.simpleName
     }
 
-    private val model = SubProjectModelImpl()
+    private val mModel by lazy { SubProjectModelImpl() }
 
     //1.首先定义一个SingleLiveData的实例
     val subProjectData = SingleLiveData<State<MutableList<ArticleListBean>>>()
@@ -40,7 +40,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
         //该协程默认运行在UI线程，协程和ViewModel的生命周期绑定，组件销毁时，协程一并销毁，从而实现安全可靠地协程调用。
         //调用viewModelScope.launch{} 或 viewModelScope.async{} 方法的时候可以指定运行线程（根据指定的线程来，不指定默认是UI线程）。
         viewModelScope.launch {
-            val apiResponse = executeRequest { model.subProjectData(pageNum, tabId) }
+            val apiResponse = executeRequest { mModel.subProjectData(pageNum, tabId) }
 
             LogManager.i(TAG, "subProjectData")
             //viewModelScope.launch开启协程之后，是在当前线程，然后上面那个IO线程执行完了，就会切换回当前线程
@@ -69,7 +69,7 @@ class SubProjectViewModelImpl : BaseViewModel(), ISubProjectViewModel {
     ) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val success = model.subProjectData2(pageNum, tabId).execute().body()?.string()
+                val success = mModel.subProjectData2(pageNum, tabId).execute().body()?.string()
                 launch(Dispatchers.Main) {
                     LogManager.i(TAG, "subProjectData response pageNum$pageNum*****$success")
                     if (!TextUtils.isEmpty(success)) {

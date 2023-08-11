@@ -15,7 +15,7 @@ class SubResourceModelImpl : ISubResourceModel {
         tabId: Int,
         pageNum: Int
     ): ApiResponse<ArticleBean> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(ResourceRequest::class.java)
             .getSubResourceData(tabId, pageNum)
     }
@@ -24,7 +24,7 @@ class SubResourceModelImpl : ISubResourceModel {
         tabId: Int,
         pageNum: Int
     ): Observable<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(ResourceRequest::class.java)
             .getSubResourceData2(tabId, pageNum)
     }

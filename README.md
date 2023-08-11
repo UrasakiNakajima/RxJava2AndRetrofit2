@@ -678,7 +678,7 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
     }
 
     override fun downloadFile(rxFragment: RxFragment) {
-//        RetrofitManager.instance().downloadFile(rxFragment,
+//        RetrofitManager.instance.downloadFile(rxFragment,
 //            mSquareModel.downloadFile(),
 //            BaseApplication.instance().externalCacheDir!!.absolutePath,
 //            "artist_kirara_asuka.mov",
@@ -701,7 +701,7 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 
 
         rxFragment.lifecycleScope.launch(Dispatchers.IO) {
-            RetrofitManager.instance().downloadFile3(mSquareModel.downloadFile2(),
+            RetrofitManager.instance.downloadFile3(mSquareModel.downloadFile2(),
                 BaseApplication.instance().externalCacheDir!!.absolutePath,
                 "artist_kirara_asuka.mov",
                 object : OnDownloadCallBack {
@@ -773,19 +773,19 @@ class SquareModelImpl : ISquareModel {
     }
 
     override suspend fun squareData(currentPage: String): ApiResponse<DataSquare> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(SquareRequest::class.java)
             .getSquareData(currentPage)
     }
 
     override fun downloadFile(): Observable<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(SquareRequest::class.java)
             .downloadFile()
     }
 
     override fun downloadFile2(): Call<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(SquareRequest::class.java)
             .downloadFile2()
     }

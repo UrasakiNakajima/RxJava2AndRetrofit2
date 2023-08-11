@@ -18,10 +18,8 @@ import java.util.concurrent.TimeUnit
  */
 class DownloadManger private constructor() {
 
-    private var client: OkHttpClient
-
-    init {
-        client = OkHttpClient.Builder()
+    private val client by lazy {
+        OkHttpClient.Builder()
             .connectTimeout(5000, TimeUnit.MILLISECONDS) //连接超时
             .readTimeout(5000, TimeUnit.MILLISECONDS) //读取超时
             .writeTimeout(5000, TimeUnit.MILLISECONDS) //写入超时
@@ -31,6 +29,7 @@ class DownloadManger private constructor() {
 
     companion object {
         private val TAG = DownloadManger::class.java.simpleName
+
         @Volatile
         private var instance: DownloadManger? = null
             get() {

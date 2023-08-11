@@ -12,12 +12,12 @@ class ProjectModelImpl : IProjectModel {
     private val TAG = ProjectModelImpl::class.java.simpleName
 
     override suspend fun projectTabData(): ApiResponse<MutableList<TabBean>> {
-        return RetrofitManager.instance().mRetrofit.create(ProjectRequest::class.java)
+        return RetrofitManager.instance.mRetrofit.create(ProjectRequest::class.java)
             .getProjectTabData()
     }
 
     override fun projectTabData2(): Call<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit.create(ProjectRequest::class.java)
+        return RetrofitManager.instance.mRetrofit.create(ProjectRequest::class.java)
             .getProjectTabData2()
     }
 

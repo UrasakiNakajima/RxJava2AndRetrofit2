@@ -50,7 +50,7 @@ class JsbridgeActivity : BaseBindingRxAppActivity<SquareActivityJsbridgeBinding>
         mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_color_FFFFFFFF))
         mDatabind.layoutBack.setOnClickListener { v -> finish() }
 
-        mDatabind.tevFunctionToJs.setOnClickListener {
+        mDatabind.tevFunctionToJs.setOnClickListener { v ->
             val userBean = UserBean()
             userBean.id = 1
             userBean.userId = "100"

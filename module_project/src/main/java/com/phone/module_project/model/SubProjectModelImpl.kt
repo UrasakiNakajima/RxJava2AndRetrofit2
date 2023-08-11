@@ -17,7 +17,7 @@ class SubProjectModelImpl : ISubProjectModel {
         pageNum: Int,
         tabId: Int
     ): ApiResponse<ArticleBean> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(ProjectRequest::class.java)
             .getSubProjectData(pageNum, tabId)
     }
@@ -26,7 +26,7 @@ class SubProjectModelImpl : ISubProjectModel {
         pageNum: Int,
         tabId: Int
     ): Call<ResponseBody> {
-        return RetrofitManager.instance().mRetrofit
+        return RetrofitManager.instance.mRetrofit
             .create(ProjectRequest::class.java)
             .getSubProjectData2(pageNum, tabId)
     }

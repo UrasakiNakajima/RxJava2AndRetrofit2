@@ -17,7 +17,7 @@ buildscript {
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        // 因为使用的 Kotlin 需要需要添加 Kotlin 插件
+        // 因为使用的Kotlin需要需要添加Kotlin插件，需要和主工程对应，不然就出现两个版本了
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
     }
 }

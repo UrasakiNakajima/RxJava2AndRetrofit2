@@ -30,12 +30,9 @@ import java.util.concurrent.TimeUnit
 
 class Okhttp3Manager private constructor() {
 
-    var mClient: OkHttpClient
-    val UPDATA = 100
-
-    init {
+    val mClient by lazy {
         //创建OkHttpClient对象
-        mClient = OkHttpClient.Builder()
+        OkHttpClient.Builder()
             .connectTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //连接超时
             .readTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //读取超时
             .writeTimeout((15 * 1000).toLong(), TimeUnit.MILLISECONDS) //写入超时
@@ -48,6 +45,8 @@ class Okhttp3Manager private constructor() {
             .build()
     }
 
+    val UPDATA = 100
+
     /**
      * 保证只有一个实例
      *
@@ -55,6 +54,7 @@ class Okhttp3Manager private constructor() {
      */
     companion object {
         private val TAG = Okhttp3Manager::class.java.simpleName
+
         @Volatile
         private var instance: Okhttp3Manager? = null
             get() {
