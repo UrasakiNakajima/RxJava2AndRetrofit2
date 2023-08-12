@@ -2,8 +2,8 @@ apply plugin: 'kotlin'
 apply plugin: 'java-gradle-plugin'
 
 buildscript {
+    ext.kotlin_version = '1.6.21'
     repositories {
-        ext.kotlin_version = '1.6.21'
 
 //        maven { url 'https://maven.aliyun.com/repository/google' }
 //        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
@@ -18,7 +18,7 @@ buildscript {
     }
     dependencies {
         // 因为使用的Kotlin需要需要添加Kotlin插件，需要和主工程对应，不然就出现两个版本了
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
