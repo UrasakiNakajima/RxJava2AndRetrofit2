@@ -338,7 +338,7 @@ android {
 ### 1. Jetpack MVVM介绍（使用Jetpack组件dataBinding、viewModel、liveData、room、lifecycle；dataBinding进行数据的单向
 ### 或者双向绑定；viewModel进行业务逻辑和数据处理，绑定view和数据；liveData进行数据的更新；room是数据库，进行数据存储；lifecycle进行生命周期管理。）
 * Model-View-ViewModel，View指绿色的Activity/Fragment，主要负责界面显示，不负责任何业务逻辑和数据处理。Model指的是Repository
-包含的部分，主要负责数据获取，来组本地数据库或者远程服务器。ViewModel指的是图中蓝色部分，主要负责业务逻辑和数据处理，在里面开启协程，在协程
+包含的部分，主要负责数据获取（来自本地数据库或者远程服务器）。ViewModel指的是图中蓝色部分，主要负责业务逻辑和数据处理，在里面开启协程，在协程
 里进行网络请求/下载文件/操作数据库，它本身不持有View层引用，通过LiveData向View层发送数据。Repository统一了数据入口，不管来自数据库，
 还是服务器，统一打包给ViewModel。
 
