@@ -23,9 +23,7 @@ import com.phone.library_base.manager.CrashHandlerManager
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.SharedPreferencesManager
 import com.phone.library_base.manager.ThreadPoolManager
-
-//import com.phone.library_room.AppRoomDataBase
-//import com.phone.library_network.manager.ThreadPoolManager
+import kotlin.properties.Delegates
 
 
 /**
@@ -38,14 +36,13 @@ open class BaseApplication : MultiDexApplication() {
 
     companion object {
         private val TAG = BaseApplication::class.java.simpleName
-        private var instance: BaseApplication? = null
-            get() {
-                return field
-            }
+        //        private var instance: BaseApplication? = null
+//        private lateinit var instance: BaseApplication
+        private var instance: BaseApplication by Delegates.notNull()
 
         @JvmStatic
         fun instance(): BaseApplication {
-            return instance!!
+            return instance
         }
     }
 

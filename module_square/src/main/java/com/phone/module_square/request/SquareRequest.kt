@@ -46,5 +46,4 @@ interface SquareRequest {
     @GET(ConstantUrl.DOWNLOAD_FILE_URL)
     fun downloadFile2(): Call<ResponseBody>
 
-
 }

@@ -431,8 +431,12 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     protected lateinit var mViewModel: VM
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected lateinit var mBaseApplication: BaseApplication
+
+    protected val mDialogManager = DialogManager()
+    protected var mIsLoadView = true
     // 是否第一次加载
     protected var isFirstLoad = true
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -473,16 +477,95 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     }
 
     override fun showLoading() {
-        ...
+        if (!mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.showProgressBarDialog(mRxAppCompatActivity)
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.showLoadingDialog(mRxAppCompatActivity)
+            }
+        }
     }
 
     override fun hideLoading() {
-        ...
+        if (!mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
+    }
+
+    protected fun showToast(message: String?, isLongToast: Boolean) {
+        //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        message?.let {
+            if (!mRxAppCompatActivity.isFinishing) {
+                val toast: Toast
+                val duration: Int
+                duration = if (isLongToast) {
+                    Toast.LENGTH_LONG
+                } else {
+                    Toast.LENGTH_SHORT
+                }
+                toast = Toast.makeText(mRxAppCompatActivity, message, duration)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
+            }
+        }
+    }
+
+    protected fun showCustomToast(
+        left: Int, right: Int,
+        textSize: Int, textColor: Int,
+        bgColor: Int, height: Int,
+        roundRadius: Int, message: String?
+    ) {
+        message?.let {
+            val frameLayout = FrameLayout(mRxAppCompatActivity)
+            val layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
+            frameLayout.layoutParams = layoutParams
+            val textView = TextView(mRxAppCompatActivity)
+            val layoutParams1 =
+                FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, height)
+            textView.layoutParams = layoutParams1
+            textView.setPadding(left, 0, right, 0)
+            textView.textSize = textSize.toFloat()
+            textView.setTextColor(textColor)
+            textView.gravity = Gravity.CENTER
+            textView.includeFontPadding = false
+            val gradientDrawable = GradientDrawable() //创建drawable
+            gradientDrawable.setColor(bgColor)
+            gradientDrawable.cornerRadius = roundRadius.toFloat()
+            textView.background = gradientDrawable
+            textView.text = message
+            frameLayout.addView(textView)
+            val toast = Toast(mRxAppCompatActivity)
+            toast.view = frameLayout
+            toast.duration = Toast.LENGTH_LONG
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
+        }
     }
 
     override fun onDestroy() {
         mDatabind.unbind()
         viewModelStore.clear()
+        if (mIsLoadView) {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissProgressBarDialog()
+            }
+        } else {
+            if (!mRxAppCompatActivity.isFinishing) {
+                mDialogManager.dismissLoadingDialog()
+            }
+        }
         super.onDestroy()
     }
 }
@@ -490,11 +573,26 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
 
 **SquareFragment：**
 ```kotlin
+@Route(path = ConstantData.Route.ROUTE_SQUARE_FRAGMENT)
 class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSquareBinding>() {
 
     companion object {
         private val TAG: String = SquareFragment::class.java.simpleName
     }
+
+    private var currentPage = 1
+    private var subDataSquare = SubDataSquare()
+    private var atomicBoolean = AtomicBoolean(false)
+
+    private var mPermissionsDialog: AlertDialog? = null
+    private var number = 1
+    val dialogManager = DialogManager()
+
+    private var permissions = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_PHONE_STATE
+    )
 
     override fun initLayoutId() = R.layout.square_fragment_square
 
@@ -504,34 +602,352 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
     override fun initViewModel() = ViewModelProvider(this).get(SquareViewModelImpl::class.java)
 
     override fun initData() {
-        ...
+        mDatabind.viewModel = mViewModel
+        mDatabind.subDataSquare = subDataSquare
+        mDatabind.executePendingBindings()
+
     }
 
     override fun initObservers() {
-        ...
+        mViewModel.liveData.observe(this, {
+            LogManager.i(TAG, "onChanged*****dataxRxFragment")
+            when (it) {
+                is State.SuccessState -> {
+                    if (it.success.size > 0) {
+                        squareDataSuccess(it.success)
+                    } else {
+                        squareDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
+                    }
+                }
+
+                is State.ErrorState -> {
+                    squareDataError(
+                        it.errorMsg
+                    )
+                }
+            }
+        })
+
+        mViewModel.downloadData.observe(this, {
+            LogManager.i(TAG, "onChanged*****downloadData")
+            when (it) {
+                is DownloadState.ProgressState -> {
+                    onProgress(it.progress, it.total, it.speed)
+                }
+
+                is DownloadState.CompletedState -> {
+                    showToast("下载文件成功", true)
+                    hideLoading()
+                    mIsLoadView = true
+                }
+
+                is DownloadState.ErrorState -> {
+                    showToast(it.errorMsg, true)
+                    hideLoading()
+                    mIsLoadView = true
+                }
+            }
+        })
+        mViewModel.insertData.observe(this, {
+            LogManager.i(TAG, "onChanged*****roomData")
+            when (it) {
+                is State.SuccessState -> {
+                    mDialogManager.dismissLoadingDialog()
+                    dialogManager.dismissBookDialog()
+                    ToastManager.toast(mRxAppCompatActivity, it.success.toString())
+                }
+
+                is State.ErrorState -> {
+                    mDialogManager.dismissLoadingDialog()
+                    dialogManager.dismissBookDialog()
+                    ToastManager.toast(mRxAppCompatActivity, it.errorMsg)
+                }
+            }
+        })
+        mViewModel.queryData.observe(this, {
+            LogManager.i(TAG, "onChanged*****roomData")
+            when (it) {
+                is State.SuccessState -> {
+                    hideLoading()
+                    val bookJsonStr = JSONObject.toJSONString(it.success)
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_SHOW_BOOK)
+                        .withString("bookJsonStr", bookJsonStr)
+                        .navigation()
+                }
+
+                is State.ErrorState -> {
+                    hideLoading()
+                    ToastManager.toast(mRxAppCompatActivity, it.errorMsg)
+                }
+            }
+        })
     }
 
     override fun initViews() {
-        ...
+        mDatabind.apply {
+            tevAndroidAndJs.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_ANDROID_AND_JS).navigation()
+            }
+            tevEditTextInputLimits.run {
+                setOnClickListener {
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_EDIT_TEXT_INPUT_LIMITS)
+                        .navigation()
+                }
+            }
+            tevDecimalOperation.setOnClickListener {
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_DECIMAL_OPERATION).navigation()
+            }
+            tevKillApp.setOnClickListener {
+                LogManager.i(TAG, "tevKillApp")
+                number = 1
+                initRxPermissions(number)
+            }
+            tevCreateAnException.setOnClickListener {
+                number = 2
+                initRxPermissions(number)
+            }
+            tevCreateAnException.apply {
+                setOnClickListener {
+                    number = 2
+                    initRxPermissions(number)
+                }
+            }
+            tevCreateAnException2.setOnClickListener {
+                number = 3
+                initRxPermissions(number)
+            }
+            tevCreateUser.setOnClickListener {
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_CREATE_USER).navigation()
+            }
+            tevKotlinCoroutine.setOnClickListener {
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_KOTLIN_COROUTINE).navigation()
+            }
+            tevRoomInsertBook.setOnClickListener {
+                dialogManager.showBookDialog(mRxAppCompatActivity,
+                    object : OnCommonSingleParamCallback<String> {
+                        override fun onSuccess(success: String) {
+                            mDialogManager.showLoadingDialog(mRxAppCompatActivity)
+                            mViewModel.insertBook(this@SquareFragment, success)
+                        }
+
+                        override fun onError(error: String) {
+                            dialogManager.dismissBookDialog()
+                        }
+                    })
+            }
+            tevRoomQueryBook.setOnClickListener {
+                showLoading()
+                mViewModel.queryBook()
+            }
+            tevEventSchedule.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_EVENT_SCHEDULE).navigation()
+            }
+            tevMounting.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_MOUNTING).navigation()
+            }
+            tevJsbridge.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_JSBRIDGE).navigation()
+            }
+            tevThreadPool.setOnClickListener {
+                if (!BuildConfig.IS_MODULE) {
+                    //Jump with parameters
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL)
+                        .withString("title", "線程池")
+                        .withParcelable(
+                            "biographyData", BiographyData("book", "Rommel的传记", "Rommel的简介")
+                        ).navigation()
+                } else {
+                    showToast("单独组件不能进入線程池页面，需使用整个项目才能进入線程池页面", true)
+                }
+            }
+            tevPickerView.setOnClickListener {
+                if (!BuildConfig.IS_MODULE) {
+                    ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
+                } else {
+                    showToast(
+                        "单独组件不能进入三级联动列表，需使用整个项目才能进入三级联动列表", true
+                    )
+                }
+            }
+            tevDownloadFile.setOnClickListener {
+                mDialogManager.showCommonDialog(mRxAppCompatActivity,
+                    "是否下载视频文件",
+                    "这里有一个好可爱的日本女孩",
+                    object : OnCommonSingleParamCallback<String> {
+                        override fun onSuccess(success: String) {
+                            mDialogManager.dismissCommonDialog()
+
+                            mIsLoadView = false
+                            showLoading()
+                            mViewModel.downloadFile(this@SquareFragment)
+                        }
+
+                        override fun onError(error: String) {
+                            mDialogManager.dismissCommonDialog()
+                        }
+                    })
+            }
+        }
     }
 
+
     override fun initLoadData() {
+//        startAsyncTask()
+
+//        //製造一個类强制转换异常（java.lang.ClassCastException）
+//        val user: User = User2()
+//        val user3 = user as User3
+//        LogManager.i(TAG, user3.toString())
+
+
         if (isFirstLoad) {
             initSquareData("$currentPage")
+            LogManager.i(TAG, "initLoadData*****$TAG")
             isFirstLoad = false
         }
     }
 
+    fun onProgress(progress: Int, total: Long, speed: Long) {
+        if (!mRxAppCompatActivity.isFinishing) {
+            mDialogManager.onProgress(progress)
+        }
+    }
+
     fun squareDataSuccess(success: List<SubDataSquare>) {
-        ...
+        if (!mRxAppCompatActivity.isFinishing()) {
+            if (success.size > 0) {
+                subDataSquare.apply {
+                    title = success.get(1).title
+                    chapterName = success.get(1).chapterName
+                    link = success.get(1).link
+                    envelopePic = success.get(1).envelopePic
+                    desc = success.get(1).desc
+                    LogManager.i(TAG, "desc@*****${desc}")
+                }
+
+                if (!BuildConfig.IS_MODULE) {
+                    val ISquareProvider: ISquareProvider =
+                        ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_SERVICE)
+                            .navigation() as ISquareProvider
+                    ISquareProvider.mSquareDataList = success
+                }
+            }
+            hideLoading()
+        }
     }
 
     fun squareDataError(error: String) {
-        ...
+        if (!mRxAppCompatActivity.isFinishing()) {
+            showCustomToast(
+                ScreenManager.dpToPx(20f),
+                ScreenManager.dpToPx(20f),
+                18,
+                ResourcesManager.getColor(R.color.library_white),
+                ResourcesManager.getColor(R.color.library_color_FF198CFF),
+                ScreenManager.dpToPx(40f),
+                ScreenManager.dpToPx(20f),
+                error
+            )
+            hideLoading()
+        }
+    }
+
+    /**
+     * 請求權限，RxFragment里需要的时候直接调用就行了
+     */
+    private fun initRxPermissions(number: Int) {
+        val rxPermissionsManager = RxPermissionsManager.instance()
+        rxPermissionsManager.initRxPermissions2(
+            this,
+            permissions,
+            object : OnCommonRxPermissionsCallback {
+                override fun onRxPermissionsAllPass() {
+                    ThreadPoolManager.instance().createSyncThreadPool({
+                        //所有的权限都授予
+                        if (number == 1) {
+                            val baseRxAppActivity = mRxAppCompatActivity as BaseRxAppActivity
+                            baseRxAppActivity.mActivityPageManager?.exitApp()
+                        } else if (number == 2) {
+                            LogManager.i(TAG, "thread name*****${Thread.currentThread().name}")
+                            //製造一個造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+                            val userBean: UserBean = UserBean2()
+                            val user3 = userBean as UserBean3
+                            LogManager.i(TAG, user3.toString())
+                        } else if (number == 3) {
+                            try {
+                                //製造一個不會造成App崩潰的異常（类强制转换异常java.lang.ClassCastException）
+                                val userBean: UserBean = UserBean2()
+                                val user3 = userBean as UserBean3
+                                LogManager.i(TAG, user3.toString())
+                            } catch (e: Exception) {
+                                ExceptionManager.instance().throwException(e)
+                            }
+                        }
+                    })
+                }
+
+                override fun onNotCheckNoMorePromptError() {
+                    //至少一个权限未授予且未勾选不再提示
+                    showSystemSetupDialog()
+                }
+
+                override fun onCheckNoMorePromptError() {
+                    //至少一个权限未授予且勾选了不再提示
+                    showSystemSetupDialog()
+                }
+            })
+    }
+
+    private fun showSystemSetupDialog() {
+        cancelPermissionsDialog()
+        if (mPermissionsDialog == null) {
+            mPermissionsDialog = AlertDialog.Builder(mRxAppCompatActivity).setTitle("权限设置")
+                .setMessage("获取相关权限失败，将导致部分功能无法正常使用，请到设置页面手动授权")
+                .setPositiveButton("去授权") { dialog, which ->
+                    cancelPermissionsDialog()
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts(
+                        "package", mRxAppCompatActivity.applicationContext.packageName, null
+                    )
+                    intent.data = uri
+                    startActivityForResult(intent, 207)
+                }.create()
+        }
+        mPermissionsDialog?.setCancelable(false)
+        mPermissionsDialog?.setCanceledOnTouchOutside(false)
+        mPermissionsDialog?.show()
+    }
+
+    /**
+     * 关闭对话框
+     */
+    private fun cancelPermissionsDialog() {
+        mPermissionsDialog?.cancel()
+        mPermissionsDialog = null
     }
 
     private fun initSquareData(currentPage: String) {
-        ...
+        showLoading()
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+            if (RetrofitManager.isNetworkAvailable()) {
+                mViewModel.squareData(this, currentPage)
+            } else {
+                squareDataError(BaseApplication.instance().resources.getString(R.string.library_please_check_the_network_connection))
+            }
+
+            LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())
+            atomicBoolean.compareAndSet(atomicBoolean.get(), true)
+            LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get())
+        })
+    }
+
+    override fun onDestroy() {
+        ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
+        super.onDestroy()
     }
 }
 ```
@@ -606,7 +1022,7 @@ open class BaseViewModel : ViewModel() {
             }
         }
     }
-    
+
 }
 ```
 
@@ -618,7 +1034,7 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
         private val TAG: String = SquareViewModelImpl::class.java.simpleName
     }
 
-    private var mSquareModel = SquareModelImpl()
+    private val mSquareModel by lazy { SquareModelImpl() }
 //    private var mJob: Job? = null
 
     //1.首先定义一个SingleLiveData的实例
@@ -778,6 +1194,12 @@ class SquareModelImpl : ISquareModel {
             .getSquareData(currentPage)
     }
 
+    override fun squareData2(currentPage: String): Observable<ResponseBody> {
+        return RetrofitManager.instance.mRetrofit
+            .create(SquareRequest::class.java)
+            .getSquareData2(currentPage)
+    }
+
     override fun downloadFile(): Observable<ResponseBody> {
         return RetrofitManager.instance.mRetrofit
             .create(SquareRequest::class.java)
@@ -830,6 +1252,13 @@ interface SquareRequest {
         @Path("currentPage") currentPage: String
     ): ApiResponse<DataSquare>
 
+    @Headers("urlname:${ConstantData.TO_PROJECT_FLAG}")
+//    @FormUrlEncoded
+    @GET(ConstantUrl.SQUARE_URL)
+    fun getSquareData2(
+        @Path("currentPage") currentPage: String
+    ): Observable<ResponseBody>
+
     /**
      * 下载文件
      *
@@ -847,6 +1276,7 @@ interface SquareRequest {
     @Streaming
     @GET(ConstantUrl.DOWNLOAD_FILE_URL)
     fun downloadFile2(): Call<ResponseBody>
+    
 }
 ```
 
@@ -856,14 +1286,7 @@ class RetrofitManager private constructor() {
 
     private val TAG = RetrofitManager::class.java.simpleName
 
-    @JvmField
-    val mRetrofit: Retrofit
-
-    /**
-     * 私有构造器 无法外部创建
-     * 初始化必要对象和参数
-     */
-    init {
+    val mRetrofit by lazy {
         //缓存
         val cacheFile = File(BaseApplication.instance().externalCacheDir, "cache")
         val cache = Cache(cacheFile, 1024 * 1024 * 10) //10Mb
@@ -893,12 +1316,14 @@ class RetrofitManager private constructor() {
             .build()
 
         // 初始化Retrofit
-        mRetrofit = Retrofit.Builder()
+        Retrofit.Builder()
             .client(client)
             .baseUrl(ConstantUrl.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     }
+
+    var mCoroutineScope: CoroutineScope? = null
 
     /**
      * 保证只有一个实例
@@ -906,21 +1331,12 @@ class RetrofitManager private constructor() {
      * @return
      */
     companion object {
-        @Volatile
-        private var instance: RetrofitManager? = null
-            get() {
-                if (field == null) {
-                    field = RetrofitManager()
-                }
-                return field
-            }
 
-        //Synchronized添加后就是线程安全的的懒汉模式
-        @Synchronized
         @JvmStatic
-        fun instance(): RetrofitManager {
-            return instance!!
+        val instance by lazy {
+            RetrofitManager()
         }
+
 
         /**
          * 查询网络的Cache-Control设置，头部Cache-Control设为max-age=0
@@ -997,6 +1413,333 @@ class RetrofitManager private constructor() {
             return false
         }
     }
+
+    /**
+     * 返回上传jsonString的RequestBody
+     *
+     * @param requestData
+     * @return
+     */
+    fun jsonStringBody(requestData: String): RequestBody {
+        val mediaType = MediaType.parse("application/json charset=utf-8") //"类型,字节码"
+        //2.通过RequestBody.create 创建requestBody对象
+        return RequestBody.create(mediaType, requestData)
+    }
+
+    /**
+     * 返回上传文件一对一，并且携带参数的的RequestBody
+     *
+     * @param bodyParams
+     * @param fileMap
+     * @return
+     */
+    fun multipartBody(
+        bodyParams: Map<String, String>, fileMap: Map<String, File>
+    ): RequestBody {
+        val MEDIA_TYPE = MediaType.parse("image/*")
+        // form 表单形式上传
+        val multipartBodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
+        //1.添加请求参数
+        //遍历map中所有参数到builder
+        if (bodyParams.size > 0) {
+            for (key in bodyParams.keys) {
+                bodyParams[key]?.let {
+                    //如果参数不是null，才把参数传给后台
+                    multipartBodyBuilder.addFormDataPart(
+                        key, it
+                    )
+                }
+            }
+        }
+
+        //遍历fileMap中所有图片绝对路径到builder，并约定key如"upload[]"作为php服务器接受多张图片的key
+        if (fileMap.size > 0) {
+            for (key in fileMap.keys) {
+                val file = fileMap[key]
+                if (file != null && file.exists()) { //如果参数不是null，才把参数传给后台
+                    multipartBodyBuilder.addFormDataPart(
+                        key, file.name, RequestBody.create(MEDIA_TYPE, file)
+                    )
+                    LogManager.i(
+                        TAG, "file.getName()*****" + file.name
+                    )
+                }
+            }
+        }
+
+        //构建请求体
+        return multipartBodyBuilder.build()
+    }
+
+    /**
+     * 无返回值，接口回调返回字符串
+     *
+     * @param rxAppCompatActivity
+     * @param observable
+     * @param onCommonSingleParamCallback
+     * @return
+     */
+    fun responseString5(
+        rxAppCompatActivity: RxAppCompatActivity,
+        observable: Observable<ResponseBody>,
+        onCommonSingleParamCallback: OnCommonSingleParamCallback<String>
+    ) {
+        observable
+            .onTerminateDetach()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()) //解决RxJava2导致的内存泄漏问题
+            .compose(rxAppCompatActivity.bindUntilEvent(ActivityEvent.DESTROY))
+            .subscribe({ responseBody ->
+                val responseString = responseBody.string()
+                LogManager.i(TAG, "responseString*****$responseString")
+                onCommonSingleParamCallback.onSuccess(responseString)
+            }) { throwable ->
+                LogManager.i(TAG, "throwable*****$throwable")
+                LogManager.i(
+                    TAG, "throwable message*****" + throwable.message
+                )
+                // 异常处理
+                onCommonSingleParamCallback.onError(BaseApplication.instance().resources.getString(R.string.library_request_was_aborted))
+            }
+    }
+
+    /**
+     * 下载文件法1（使用Handler更新UI）
+     *
+     * @param observable      下载被观察者
+     * @param destDir         下载目录
+     * @param fileName        文件名
+     * @param progressHandler 进度handler
+     */
+    fun downloadFile(
+        rxFragment: RxFragment,
+        observable: Observable<ResponseBody>,
+        destDir: String,
+        fileName: String,
+        onDownloadCallBack: OnDownloadCallBack
+    ) {
+        executeDownloadFile(rxFragment, observable, destDir, fileName, onDownloadCallBack)
+    }
+
+    private fun executeDownloadFile(
+        rxFragment: RxFragment,
+        observable: Observable<ResponseBody>,
+        destDir: String,
+        fileName: String,
+        onDownloadCallBack: OnDownloadCallBack
+    ) {
+        val downloadInfo = DownloadInfo(null, null, null, null, null, null, null)
+        observable
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            //解决RxJava2导致的内存泄漏问题
+            .compose(rxFragment.bindUntilEvent(FragmentEvent.DESTROY))
+            .subscribe({
+                var inputStream: InputStream? = null
+                var bis: BufferedInputStream? = null
+                var total: Long = 0
+                val responseLength: Long
+                var fos: FileOutputStream? = null
+                var bos: BufferedOutputStream? = null
+
+                val buf = ByteArray(1024 * 8)
+                var len: Int
+                responseLength = it.contentLength()
+                inputStream = it.byteStream()
+                bis = BufferedInputStream(inputStream)
+
+                val dir = File(destDir)
+                if (!dir.exists()) {
+                    dir.mkdirs()
+                }
+                val file = File(dir, fileName)
+                if (!file.exists()) {
+                    file.createNewFile()
+                }
+                downloadInfo.file = file
+                downloadInfo.fileSize = responseLength
+
+                fos = FileOutputStream(file)
+                bos = BufferedOutputStream(fos)
+                var progress = 0
+                var lastProgress = -1
+                val startTime = System.currentTimeMillis() // 开始下载时获取开始时间
+                while (bis.read(buf).also { len = it } != -1) {
+                    bos.write(buf, 0, len)
+                    total += len.toLong()
+                    progress = (total * 100 / responseLength).toInt()
+                    val curTime = System.currentTimeMillis()
+                    var usedTime = (curTime - startTime) / 1000
+                    if (usedTime == 0L) {
+                        usedTime = 1
+                    }
+                    val speed = total / usedTime // 平均每秒下载速度
+                    // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
+                    if (progress != lastProgress) {
+                        downloadInfo.speed = speed
+                        downloadInfo.progress = progress
+                        downloadInfo.currentSize = total
+                        onDownloadCallBack.onProgress(
+                            downloadInfo.progress!!,
+                            downloadInfo.fileSize!!,
+                            downloadInfo.speed!!
+                        )
+                    }
+//                            LogManager.i(TAG, "downloadInfo total******${total}")
+//                            LogManager.i(TAG, "downloadInfo progress******${progress}")
+                    lastProgress = progress
+                }
+                bos.flush()
+                downloadInfo.file = file
+                onDownloadCallBack.onCompleted(downloadInfo.file!!)
+
+                bis?.close()
+                bos?.close()
+            }, {
+                downloadInfo.error = it
+                onDownloadCallBack.onError(downloadInfo.error)
+            })
+    }
+
+    /**
+     * 下载文件法2
+     *
+     * @param observable
+     * @param destDir
+     * @param fileName
+     * @param progressHandler
+     */
+    fun downloadFile2(
+        call: Call<ResponseBody>,
+        destDir: String,
+        fileName: String,
+        onDownloadCallBack: OnDownloadCallBack
+    ) {
+        mCoroutineScope?.cancel()
+        mCoroutineScope = CoroutineScope(Dispatchers.IO)
+        mCoroutineScope?.launch {
+            LogManager.i(TAG, "downloadFile2 launch thread name*****${Thread.currentThread().name}")
+            executeDownloadFile2(call, destDir, fileName, onDownloadCallBack)
+
+
+            launch(Dispatchers.Default) {
+                LogManager.i(
+                    TAG,
+                    "downloadFile2 launch2 thread name*****${Thread.currentThread().name}"
+                )
+                LogManager.i(TAG, "executeDownloadFile finish")
+            }
+            mCoroutineScope?.cancel()
+        }
+    }
+
+    private fun executeDownloadFile2(
+        call: Call<ResponseBody>,
+        destDir: String,
+        fileName: String,
+        onDownloadCallBack: OnDownloadCallBack
+    ) {
+        val downloadInfo = DownloadInfo(null, null, null, null, null, null, null)
+        var inputStream: InputStream? = null
+        var bis: BufferedInputStream? = null
+        var total: Long = 0
+        var responseLength: Long = 0L
+        var fos: FileOutputStream? = null
+        var bos: BufferedOutputStream? = null
+        try {
+            val response = call.execute()
+            val responseBody = response.body()!!
+
+            val buf = ByteArray(1024 * 8)
+            var len = 0
+            responseLength = responseBody.contentLength()
+            inputStream = responseBody.byteStream()
+            bis = BufferedInputStream(inputStream)
+            val dir = File(destDir)
+            if (!dir.exists()) {
+                dir.mkdirs()
+            }
+            val file = File(dir, fileName)
+            if (!dir.exists()) {
+                dir.createNewFile()
+            }
+            downloadInfo.file = file
+            downloadInfo.fileSize = responseLength
+
+            fos = FileOutputStream(file)
+            bos = BufferedOutputStream(fos)
+            var progress = 0
+            var lastProgress = -1
+            val startTime = System.currentTimeMillis() // 开始下载时获取开始时间
+            while (bis.read(buf).also { len = it } != -1) {
+                bos.write(buf, 0, len)
+                total += len.toLong()
+
+                progress = (total * 100 / responseLength).toInt()
+                val curTime = System.currentTimeMillis()
+                var usedTime = (curTime - startTime) / 1000
+                if (usedTime == 0L) {
+                    usedTime = 1
+                }
+                val speed = total / usedTime // 平均每秒下载速度
+                // 如果进度与之前进度相等，则不更新，如果更新太频繁，则会造成界面卡顿
+                if (progress != lastProgress) {
+                    downloadInfo.speed = speed
+                    downloadInfo.progress = progress
+                    downloadInfo.currentSize = total
+
+                    LogManager.i(TAG, "onNext downloadInfo******${downloadInfo.progress}")
+                    onDownloadCallBack.onProgress(
+                        downloadInfo.progress!!,
+                        downloadInfo.fileSize!!,
+                        downloadInfo.speed!!
+                    )
+                    LogManager.i(
+                        TAG,
+                        "emitter.onNext downloadInfo******${downloadInfo.progress}"
+                    )
+                }
+//                                LogManager.i(TAG, "downloadInfo total******${total}")
+//                                LogManager.i(TAG, "downloadInfo progress******${progress}")
+                lastProgress = progress
+            }
+            bos.flush()
+            downloadInfo.file = file
+            LogManager.i(TAG, "下载完成")
+            onDownloadCallBack.onCompleted(downloadInfo.file!!)
+        } catch (e: Exception) {
+            downloadInfo.error = e
+            onDownloadCallBack.onError(e)
+        } finally {
+            try {
+                bis?.close()
+                bos?.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    /**
+     * 下载文件法3
+     *
+     * @param observable
+     * @param destDir
+     * @param fileName
+     * @param progressHandler
+     */
+    fun downloadFile3(
+        call: Call<ResponseBody>,
+        destDir: String,
+        fileName: String,
+        onDownloadCallBack: OnDownloadCallBack
+    ) {
+        LogManager.i(TAG, "downloadFile2 launch thread name*****${Thread.currentThread().name}")
+        executeDownloadFile2(call, destDir, fileName, onDownloadCallBack)
+    }
+
+
+}
 }
 ```
 
@@ -1042,6 +1785,21 @@ object CommonBindingAdapter {
     fun bindImage(imageView: ImageView, url: String?) {
         ImageLoaderManager.display(imageView.context, imageView, url)
     }
+    
+    
+    /**
+     * 加载本地图片
+     */
+    @JvmStatic
+    @BindingAdapter("app:articleCollect")
+    fun imgPlayBlur(view: ImageView, collect: Boolean) {
+        if (collect) {
+            view.setImageResource(R.mipmap.library_collect)
+        } else {
+            view.setImageResource(R.mipmap.library_un_collect)
+        }
+    }
+
 }
 ```
 
