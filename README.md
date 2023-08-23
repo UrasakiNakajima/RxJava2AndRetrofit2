@@ -4,6 +4,7 @@ Kotlin+Retrofit2+协程+Jetpack MVVM架构+组件化，添加自动管理token�
 
 ## 应用截图（页面效果一般，不过看这个项目看的不是页面，主要学习的是Kotlin+RxJava2+Retrofit2+MVP架构+组件化
 ## 和Kotlin+Retrofit2+协程+Jetpack MVVM架构+组件化的设计）
+
 <table>
     <tr>
         <td><img src="/screenshots/screenshot_launch.jpg" />

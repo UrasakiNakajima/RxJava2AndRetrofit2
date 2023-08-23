@@ -36,7 +36,6 @@ open class BaseViewModel : ViewModel() {
                 block()
             }.onSuccess {
                 response = it
-                response.errorCode = 0
             }.onFailure {
                 it.printStackTrace()
                 val apiException = getApiException(it)
