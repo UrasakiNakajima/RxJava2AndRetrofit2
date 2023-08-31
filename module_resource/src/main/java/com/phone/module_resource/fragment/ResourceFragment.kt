@@ -59,6 +59,8 @@ class ResourceFragment :
                         it.errorMsg
                     )
                 }
+
+                else -> {}
             }
         })
     }

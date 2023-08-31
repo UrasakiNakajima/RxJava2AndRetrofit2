@@ -86,7 +86,7 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$BuildVersions.kotlin_stdlib_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib:$BuildVersions.kotlin_stdlib_version"
     api "androidx.appcompat:appcompat:$BuildVersions.appcompat_version"
     api "androidx.constraintlayout:constraintlayout:$BuildVersions.constraintlayout_version"
     androidTestApi "androidx.test:runner:$BuildVersions.runner_version"

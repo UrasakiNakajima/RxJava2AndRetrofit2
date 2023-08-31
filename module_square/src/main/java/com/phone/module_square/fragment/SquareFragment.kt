@@ -95,6 +95,8 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                         it.errorMsg
                     )
                 }
+
+                else -> {}
             }
         })
 
@@ -116,6 +118,8 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                     hideLoading()
                     mIsLoadView = true
                 }
+
+                else -> {}
             }
         })
         mViewModel.insertData.observe(this, {

@@ -10,9 +10,9 @@ pluginManagement {
 //        maven { url "https://kotlin.bintray.com/kotlinx/" }
         google()
         mavenCentral()
-        jcenter()
         maven { url 'https://jitpack.io' }
         gradlePluginPortal()
+        jcenter()
 //        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
 
 //        // fcm
@@ -37,9 +37,8 @@ dependencyResolutionManagement {
 //        maven { url "https://kotlin.bintray.com/kotlinx/" }
         google()
         mavenCentral()
-        jcenter()
         maven { url 'https://jitpack.io' }
-        gradlePluginPortal()
+        jcenter()
 //        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
 
 //        // fcm

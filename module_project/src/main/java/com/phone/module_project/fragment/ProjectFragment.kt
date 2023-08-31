@@ -59,6 +59,8 @@ class ProjectFragment : BaseMvvmRxFragment<ProjectViewModelImpl, ProjectFragment
                         it.errorMsg
                     )
                 }
+
+                else -> {}
             }
         })
     }

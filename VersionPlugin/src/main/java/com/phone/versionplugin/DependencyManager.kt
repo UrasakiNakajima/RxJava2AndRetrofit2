@@ -6,11 +6,11 @@ object BuildVersions {
     const val targetSdk = 31
     const val versionCode = 2
     const val versionName = "2.0"
-    const val schemaVersion = 12
+    const val schemaVersion = 15
 
-    const val kotlin_version = "1.6.21"
-    const val kotlin_stdlib_version = "1.6.21"
-    const val kotlin_gradle_plugin_version = "1.6.21"
+    const val kotlin_version = "1.7.20"
+    const val kotlin_stdlib_version = "1.7.20"
+    const val kotlin_gradle_plugin_version = "1.7.20"
 
     //AndroidX
     const val appcompat_version = "1.4.0"
@@ -72,7 +72,7 @@ object BuildVersions {
     const val compressor_version = "3.0.1"
     const val oss_android_sdk_version = "2.9.11"
     const val eventbus_version = "3.1.1"
-    const val room_version = "2.4.0-alpha03"
+    const val room_version = "2.4.0"
     const val sqlcipher_version = "4.4.3@aar"
 
 

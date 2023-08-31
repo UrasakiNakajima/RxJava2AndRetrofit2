@@ -73,6 +73,8 @@ class SubResourceFragment :
                 is State.ErrorState -> {
                     subResourceDataError(it.errorMsg)
                 }
+
+                else -> {}
             }
         })
     }

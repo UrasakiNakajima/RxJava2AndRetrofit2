@@ -23,6 +23,8 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
             }
         }
         kapt {

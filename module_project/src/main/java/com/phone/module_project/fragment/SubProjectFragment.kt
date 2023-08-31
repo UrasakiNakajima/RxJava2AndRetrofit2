@@ -75,6 +75,8 @@ class SubProjectFragment :
                 is State.ErrorState -> {
                     subProjectDataError(it.errorMsg)
                 }
+
+                else -> {}
             }
         })
     }
