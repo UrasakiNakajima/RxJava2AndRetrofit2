@@ -5,6 +5,10 @@ import com.phone.library_network.bean.ApiResponse3
 import com.phone.library_network.bean.ApiException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import org.json.JSONException
 import retrofit2.HttpException
@@ -66,6 +70,31 @@ open class BasePresenter<T> {
     /**
      * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
      */
+    protected suspend fun <T> executeFlowRequest(
+        reponseBlock: suspend () -> ApiResponse2<T>,
+        errorBlock: ((Int, String) -> Unit)? = null
+    ): ApiResponse2<T>? {
+        var response: ApiResponse2<T>? = null
+        flow {
+            emit(reponseBlock())
+        }.catch {
+            it.printStackTrace()
+            val apiException = getApiException(it)
+//            response?.error_code = apiException.errorCode
+//            response?.reason = apiException.errorMessage
+//            response?.error = apiException
+            errorBlock?.let {
+                it(apiException.errorCode, apiException.errorMessage)
+            }
+        }.flowOn(Dispatchers.IO).collect {
+            response = it
+        }
+        return response
+    }
+
+    /**
+     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
+     */
     protected suspend fun <T> executeRequest2(block: suspend () -> ApiResponse3<T>): ApiResponse3<T> =
         withContext(Dispatchers.IO) {
             var response = ApiResponse3<T>()
@@ -81,6 +110,30 @@ open class BasePresenter<T> {
                 response.error = apiException
             }.getOrDefault(response)
         }
+
+    /**
+     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
+     */
+    protected suspend fun <T> executeFlowRequest2(
+        reponseBlock: suspend () -> ApiResponse3<T>,
+        errorBlock: ((Int, String) -> Unit)? = null
+    ): ApiResponse3<T>? {
+        var response: ApiResponse3<T>? = null
+        flow {
+            emit(reponseBlock())
+        }.catch {
+            val apiException = getApiException(it)
+//            response.error_code = apiException.errorCode
+//            response.reason = apiException.errorMessage
+//            response.error = apiException
+            errorBlock?.let {
+                it(apiException.errorCode, apiException.errorMessage)
+            }
+        }.flowOn(Dispatchers.IO).collect {
+            response = it
+        }
+        return response
+    }
 
     /**
      * 捕获异常信息

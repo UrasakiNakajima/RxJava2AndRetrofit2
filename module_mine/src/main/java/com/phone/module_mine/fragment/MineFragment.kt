@@ -190,7 +190,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
 
     private fun initMine() {
         showLoading()
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000) {
             if (RetrofitManager.isNetworkAvailable()) {
                 mBodyParams.clear()
 
@@ -200,7 +200,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
             } else {
                 mineDataError(resources.getString(R.string.library_please_check_the_network_connection))
             }
-        })
+        }
     }
 
     override fun onDestroyView() {

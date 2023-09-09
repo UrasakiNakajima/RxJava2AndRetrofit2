@@ -3,9 +3,11 @@ package com.phone.library_mvvm
 import androidx.lifecycle.ViewModel
 import com.phone.library_network.bean.ApiResponse
 import com.phone.library_network.bean.ApiException
-import com.phone.library_base.manager.LogManager
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import org.json.JSONException
 import retrofit2.HttpException
@@ -44,6 +46,31 @@ open class BaseViewModel : ViewModel() {
                 response.error = apiException
             }.getOrDefault(response)
         }
+
+    /**
+     * 在协程或者挂起函数里调用，挂起函数里必须要切换到线程（这里切换到IO线程）
+     */
+    protected suspend fun <T> executeFlowRequest(
+        reponseBlock: suspend () -> ApiResponse<T>,
+        errorBlock: ((Int, String) -> Unit)? = null
+    ): ApiResponse<T>? {
+        var response: ApiResponse<T>? = null
+        flow {
+            emit(reponseBlock())
+        }.catch {
+            it.printStackTrace()
+            val apiException = getApiException(it)
+//            response?.errorCode = apiException.errorCode
+//            response?.errorMsg = apiException.errorMessage
+//            response?.error = apiException
+            errorBlock?.let {
+                it(apiException.errorCode, apiException.errorMessage)
+            }
+        }.flowOn(Dispatchers.IO).collect {
+            response = it
+        }
+        return response
+    }
 
     /**
      * 捕获异常信息

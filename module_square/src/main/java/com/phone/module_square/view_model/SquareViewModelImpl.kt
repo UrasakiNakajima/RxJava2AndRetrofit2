@@ -18,8 +18,8 @@ import com.phone.module_square.model.SquareModelImpl
 import com.phone.module_square.R
 import com.trello.rxlifecycle3.components.support.RxFragment
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 
 class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
@@ -70,19 +70,66 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
 //                }
 //            }
 
-        viewModelScope.launch {
-            val apiResponse = executeRequest { mSquareModel.squareData(currentPage) }
+        viewModelScope.launch(Dispatchers.IO) {
+            //开启多个协程的并发和并行（和线程的并发和并行是一样的），因为外层协程viewModelScope.launch(Dispatchers.IO)运行在IO类型的线程池中，
+            // 子协程（launch{}和async{}）内部执行的时候也没切换线程，所以是并发和并行可能同时执行的（这也取决于当前IO线程池和手机的cpu核心数，如果是单核cpu肯定是并发的，
+            // 如果是多核cpu，如果cpu核心数小于子协程数，那并发和并行是同时存在的，如果cpu核心数大于子协程数，那么就是并行执行的）
+            launch {
+                Thread.sleep(200)
+                LogManager.i(TAG, "launch io thread name*****${Thread.currentThread().name}")
+            }
+            launch {
+                LogManager.i(TAG, "launch2 io thread name*****${Thread.currentThread().name}")
+            }
+            async {
+                LogManager.i(TAG, "async io thread name*****${Thread.currentThread().name}")
+            }
+            launch {
+                Thread.sleep(500)
+                LogManager.i(TAG, "launch3 io thread name*****${Thread.currentThread().name}")
+            }
+            async {
+                Thread.sleep(500)
+                LogManager.i(TAG, "async2 io thread name*****${Thread.currentThread().name}")
+            }
+            launch {
+                Thread.sleep(100)
+                LogManager.i(TAG, "launch4 io thread name*****${Thread.currentThread().name}")
+            }
+            launch {
+                Thread.sleep(100)
+                LogManager.i(TAG, "launch5 io thread name*****${Thread.currentThread().name}")
+            }
+        }
 
-            if (apiResponse.data != null && apiResponse.errorCode == 0) {
-                val responseData = apiResponse.data?.datas ?: mutableListOf()
-                if (responseData.size > 0) {
+        viewModelScope.launch {
+//            val apiResponse = executeRequest { mSquareModel.squareData(currentPage) }
+//
+//            if (apiResponse.data != null && apiResponse.errorCode == 0) {
+//                val responseData = apiResponse.data?.datas ?: mutableListOf()
+//                if (responseData.isNotEmpty()) {
+//                    liveData.value = State.SuccessState(responseData)
+//                } else {
+//                    liveData.value =
+//                        State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
+//                }
+//            } else {
+//                liveData.value = State.ErrorState(apiResponse.errorMsg)
+//            }
+
+            val apiResponse =
+                executeFlowRequest(reponseBlock = { mSquareModel.squareData(currentPage) },
+                    errorBlock = { _, _2 ->
+                        liveData.value = State.ErrorState(_2)
+                    })
+            if (apiResponse?.errorCode == 0) {
+                val responseData = apiResponse.data?.datas
+                if (!responseData.isNullOrEmpty()) {
                     liveData.value = State.SuccessState(responseData)
                 } else {
                     liveData.value =
                         State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
                 }
-            } else {
-                liveData.value = State.ErrorState(apiResponse.errorMsg)
             }
         }
     }

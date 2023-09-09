@@ -349,7 +349,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
 
     private fun initFirstPage() {
         showLoading()
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000) {
             if (RetrofitManager.isNetworkAvailable()) {
                 mBodyParams.clear()
                 mBodyParams["type"] = "yule"
@@ -358,7 +358,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
             } else {
                 homePageDataError(resources.getString(R.string.library_please_check_the_network_connection))
             }
-        })
+        }
     }
 
     override fun onDestroyView() {

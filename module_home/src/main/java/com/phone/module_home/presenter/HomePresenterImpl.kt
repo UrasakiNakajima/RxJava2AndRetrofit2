@@ -11,6 +11,7 @@ import com.phone.module_home.view.IHomePageView
 import com.trello.rxlifecycle3.components.support.RxFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
@@ -45,43 +46,100 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
         val baseView = obtainView()
         if (baseView != null) {
             if (baseView is IHomePageView) {
-                val homePageView = baseView
-
                 mCoroutineScope.launch {
+                    //开启多个协程的串行执行，因为外层协程mCoroutineScope.launch运行在main线程中，子协程（launch{}和async{}）内部执行的时候也没切换线程，所以是串行执行的
+                    launch {
+                        Thread.sleep(200)
+                        LogManager.i(
+                            TAG,
+                            "launch main thread name*****${Thread.currentThread().name}"
+                        )
+                    }
+                    launch {
+                        LogManager.i(
+                            TAG,
+                            "launch2 main thread name*****${Thread.currentThread().name}"
+                        )
+                    }
+                    async {
+                        LogManager.i(
+                            TAG,
+                            "async main thread name*****${Thread.currentThread().name}"
+                        )
+                    }
+                    launch {
+                        Thread.sleep(500)
+                        LogManager.i(
+                            TAG,
+                            "launch3 main thread name*****${Thread.currentThread().name}"
+                        )
+                    }
+                    async {
+                        Thread.sleep(500)
+                        LogManager.i(
+                            TAG,
+                            "async2 main thread name*****${Thread.currentThread().name}"
+                        )
+                    }
+                    launch {
+                        Thread.sleep(100)
+                        LogManager.i(
+                            TAG,
+                            "launch4 main thread name*****${Thread.currentThread().name}"
+                        )
+                    }
+                    launch {
+                        Thread.sleep(100)
+                        LogManager.i(
+                            TAG,
+                            "launch5 main thread name*****${Thread.currentThread().name}"
+                        )
+                    }
 
-//                    //协程内部只开启多个launch是并行的
-//                    launch {
-//                        delay(2000)
-//                        LogManager.i(TAG, "launch delay(2000)")
-//                    }
-//                    launch {
-//                        delay(1000)
-//                        LogManager.i(TAG, "launch delay(1000)")
+//                    val apiResponse = executeRequest { mModel.homePage(bodyParams) }
+//                    if (apiResponse.result != null && apiResponse.error_code == 0) {
+//                        val list = apiResponse.result?.data ?: mutableListOf()
+//                        if (list.size > 0) {
+//                            homePageView.homePageDataSuccess(
+//                                list
+//                            )
+//                        } else {
+//                            homePageView.homePageDataError(
+//                                ResourcesManager.getString(
+//                                    R.string.library_no_data_available
+//                                )
+//                            )
+//                        }
+//                    } else {
+//                        homePageView.homePageDataError(
+//                            apiResponse.reason ?: ResourcesManager.getString(
+//                                R.string.library_loading_failed
+//                            )
+//                        )
 //                    }
 
-                    val apiResponse = executeRequest { mModel.homePage(bodyParams) }
-                    LogManager.i(
-                        TAG, "homePage"
-                    )
-                    if (apiResponse.result != null && apiResponse.error_code == 0) {
-                        val list = apiResponse.result?.data ?: mutableListOf()
-                        if (list.size > 0) {
-                            homePageView.homePageDataSuccess(
+
+                    val apiResponse =
+                        executeFlowRequest(reponseBlock = { mModel.homePage(bodyParams) },
+                            errorBlock = { _, _2 ->
+                                baseView.homePageDataError(
+                                    _2
+                                )
+                            })
+
+                    if (apiResponse?.error_code == 0) {
+                        val list = apiResponse.result?.data
+                        if (!list.isNullOrEmpty()) {
+                            baseView.homePageDataSuccess(
                                 list
                             )
                         } else {
-                            homePageView.homePageDataError(
+                            baseView.homePageDataError(
                                 ResourcesManager.getString(
                                     R.string.library_no_data_available
                                 )
                             )
                         }
-                    } else {
-                        homePageView.homePageDataError(
-                            apiResponse.reason ?: ResourcesManager.getString(
-                                R.string.library_loading_failed
-                            )
-                        )
                     }
                     LogManager.i(TAG, "homePage2 thread name*****${Thread.currentThread().name}")
                 }

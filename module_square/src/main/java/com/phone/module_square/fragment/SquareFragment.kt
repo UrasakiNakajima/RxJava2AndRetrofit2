@@ -79,11 +79,11 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
     }
 
     override fun initObservers() {
-        mViewModel.liveData.observe(this, {
+        mViewModel.liveData.observe(this) {
             LogManager.i(TAG, "onChanged*****dataxRxFragment")
             when (it) {
                 is State.SuccessState -> {
-                    if (it.success.size > 0) {
+                    if (it.success.isNotEmpty()) {
                         squareDataSuccess(it.success)
                     } else {
                         squareDataError(BaseApplication.instance().resources.getString(R.string.library_no_data_available))
@@ -98,9 +98,9 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
 
                 else -> {}
             }
-        })
+        }
 
-        mViewModel.downloadData.observe(this, {
+        mViewModel.downloadData.observe(this) {
             LogManager.i(TAG, "onChanged*****downloadData")
             when (it) {
                 is DownloadState.ProgressState -> {
@@ -121,8 +121,8 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
 
                 else -> {}
             }
-        })
-        mViewModel.insertData.observe(this, {
+        }
+        mViewModel.insertData.observe(this) {
             LogManager.i(TAG, "onChanged*****roomData")
             when (it) {
                 is State.SuccessState -> {
@@ -137,8 +137,8 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                     ToastManager.toast(mRxAppCompatActivity, it.errorMsg)
                 }
             }
-        })
-        mViewModel.queryData.observe(this, {
+        }
+        mViewModel.queryData.observe(this) {
             LogManager.i(TAG, "onChanged*****roomData")
             when (it) {
                 is State.SuccessState -> {
@@ -154,7 +154,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                     ToastManager.toast(mRxAppCompatActivity, it.errorMsg)
                 }
             }
-        })
+        }
     }
 
     override fun initViews() {
@@ -305,15 +305,15 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
         }
     }
 
-    fun squareDataSuccess(success: List<SubDataSquare>) {
-        if (!mRxAppCompatActivity.isFinishing()) {
-            if (success.size > 0) {
+    private fun squareDataSuccess(success: List<SubDataSquare>) {
+        if (!mRxAppCompatActivity.isFinishing) {
+            if (success.isNotEmpty()) {
                 subDataSquare.apply {
-                    title = success.get(1).title
-                    chapterName = success.get(1).chapterName
-                    link = success.get(1).link
+                    title = success[1].title
+                    chapterName = success[1].chapterName
+                    link = success[1].link
                     envelopePic = success.get(1).envelopePic
-                    desc = success.get(1).desc
+                    desc = success[1].desc
                     LogManager.i(TAG, "desc@*****${desc}")
                 }
 
@@ -328,8 +328,8 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
         }
     }
 
-    fun squareDataError(error: String) {
-        if (!mRxAppCompatActivity.isFinishing()) {
+    private fun squareDataError(error: String) {
+        if (!mRxAppCompatActivity.isFinishing) {
             showCustomToast(
                 ScreenManager.dpToPx(20f),
                 ScreenManager.dpToPx(20f),
@@ -354,7 +354,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
             permissions,
             object : OnCommonRxPermissionsCallback {
                 override fun onRxPermissionsAllPass() {
-                    ThreadPoolManager.instance().createSyncThreadPool({
+                    ThreadPoolManager.instance().createSyncThreadPool {
                         //所有的权限都授予
                         if (number == 1) {
                             val baseRxAppActivity = mRxAppCompatActivity as BaseRxAppActivity
@@ -375,7 +375,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                                 ExceptionManager.instance().throwException(e)
                             }
                         }
-                    })
+                    }
                 }
 
                 override fun onNotCheckNoMorePromptError() {
@@ -420,7 +420,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
 
     private fun initSquareData(currentPage: String) {
         showLoading()
-        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000, {
+        ThreadPoolManager.instance().createScheduledThreadPoolToUIThread2(1000) {
             if (RetrofitManager.isNetworkAvailable()) {
                 mViewModel.squareData(this, currentPage)
             } else {
@@ -430,7 +430,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
             LogManager.i(TAG, "atomicBoolean.get()1*****" + atomicBoolean.get())
             atomicBoolean.compareAndSet(atomicBoolean.get(), true)
             LogManager.i(TAG, "atomicBoolean.get()2*****" + atomicBoolean.get())
-        })
+        }
     }
 
     override fun onDestroy() {
