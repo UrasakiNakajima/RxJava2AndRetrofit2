@@ -27,12 +27,12 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 
 @Route(path = ConstantData.Route.ROUTE_RESOURCE_FRAGMENT)
 class ResourceFragment :
-    BaseMvvmRxFragment<ResourceViewModelImpl, ResourceFragmentResourceBinding>(), IResourceView {
+    BaseMvvmRxFragment<ResourceViewModelImpl, ResourceFragmentResourceBinding>(R.layout.resource_fragment_resource), IResourceView {
 
     private val TAG = ResourceFragment::class.java.simpleName
     private var onPageChangeCallback: ViewPager2.OnPageChangeCallback? = null
 
-    override fun initLayoutId() = R.layout.resource_fragment_resource
+//    override fun initLayoutId() = R.layout.resource_fragment_resource
 
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
@@ -103,39 +103,39 @@ class ResourceFragment :
             }
 
             // ORIENTATION_HORIZONTAL：水平滑动（默认），ORIENTATION_VERTICAL：竖直滑动
-            mDatabind.mineViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            mDatabind?.mineViewPager2?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             // 预加载所有的Fragment，但是只执行第一个Fragment onResmue 方法
-            mDatabind.mineViewPager2.offscreenPageLimit = fragmentList.size
+            mDatabind?.mineViewPager2?.offscreenPageLimit = fragmentList.size
             // 适配
-            mDatabind.mineViewPager2.adapter = ViewPager2Adapter(
+            mDatabind?.mineViewPager2?.adapter = ViewPager2Adapter(
                 fragmentList, mRxAppCompatActivity.getSupportFragmentManager(), getLifecycle()
             )
             //下划线绑定
             val commonNavigator = CommonNavigator(mRxAppCompatActivity)
             commonNavigator.adapter = getCommonNavigatorAdapter(dataList)
-            mDatabind.tabLayout.navigator = commonNavigator
+            mDatabind?.tabLayout?.navigator = commonNavigator
             onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrollStateChanged(state: Int) {
                     super.onPageScrollStateChanged(state)
-                    mDatabind.tabLayout.onPageScrollStateChanged(state)
+                    mDatabind?.tabLayout?.onPageScrollStateChanged(state)
                 }
 
                 override fun onPageScrolled(
                     position: Int, positionOffset: Float, positionOffsetPixels: Int
                 ) {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                    mDatabind.tabLayout.onPageScrolled(
+                    mDatabind?.tabLayout?.onPageScrolled(
                         position, positionOffset, positionOffsetPixels
                     )
                 }
 
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    mDatabind.tabLayout.onPageSelected(position)
+                    mDatabind?.tabLayout?.onPageSelected(position)
                 }
             }
             MagicIndicatorManager.bindForViewPager2(
-                mDatabind.mineViewPager2,
+                mDatabind?.mineViewPager2,
                 onPageChangeCallback!!
             )
             hideLoading()
@@ -179,13 +179,13 @@ class ResourceFragment :
                 it.name?.let { it1 -> add(it1) }
             }
         }) {
-            mDatabind.mineViewPager2.currentItem = it
+            mDatabind?.mineViewPager2?.currentItem = it
         }
     }
 
     override fun onDestroy() {
         onPageChangeCallback?.let {
-            MagicIndicatorManager.unBindForViewPager2(mDatabind.mineViewPager2, it)
+            MagicIndicatorManager.unBindForViewPager2(mDatabind?.mineViewPager2, it)
         }
         ThreadPoolManager.instance().shutdownNowScheduledThreadPool()
         super.onDestroy()

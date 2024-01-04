@@ -49,9 +49,9 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "RxJava2AndRetrofit2"
-include ':aidl_client'
-include ':aidl_server'
-include ':call_third_party_so'
+include ':app_aidl_client'
+include ':app_aidl_server'
+include ':app_call_third_party_so'
 
 include ':app', ':module_main', ':module_home', ':module_project', ':module_square', ':module_resource', ':module_mine'
 include ':library_base'

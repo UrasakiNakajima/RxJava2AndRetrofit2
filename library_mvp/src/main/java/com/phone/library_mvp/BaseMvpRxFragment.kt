@@ -5,7 +5,7 @@ import android.util.ArrayMap
 import android.view.View
 import com.phone.library_base.base.BaseRxFragment
 
-abstract class BaseMvpRxFragment<V, T : BasePresenter<V>> : BaseRxFragment() {
+abstract class BaseMvpRxFragment<V, T : BasePresenter<V>>(contentLayoutId: Int) : BaseRxFragment(contentLayoutId) {
 
     private val TAG = BaseMvpRxFragment::class.java.simpleName
     protected var presenter: T? = null

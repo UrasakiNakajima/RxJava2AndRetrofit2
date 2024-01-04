@@ -1,0 +1,46 @@
+import com.phone.versionplugin.BuildVersions
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.phone.versionplugin'
+}
+
+android {
+    namespace 'com.phone.aidl.app_aidl_client'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.phone.aidl.app_aidl_client"
+        minSdk 21
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':library_common')
+    implementation "androidx.recyclerview:recyclerview:$BuildVersions.recyclerview_version"
+}

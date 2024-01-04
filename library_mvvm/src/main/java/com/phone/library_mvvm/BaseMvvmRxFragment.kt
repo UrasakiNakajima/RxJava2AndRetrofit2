@@ -17,21 +17,23 @@ import com.phone.library_base.manager.DialogManager
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 
-abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : RxFragment(),
-    IBaseView {
+abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding>(
+    contentLayoutId: Int
+) : RxFragment(contentLayoutId), IBaseView {
 
     companion object {
         private val TAG = BaseMvvmRxFragment::class.java.simpleName
     }
 
     //该类绑定的ViewDataBinding
-    protected lateinit var mDatabind: DB
+    protected var mDatabind: DB? = null
     protected lateinit var mViewModel: VM
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
     protected lateinit var mBaseApplication: BaseApplication
 
     protected val mDialogManager = DialogManager()
     protected var mIsLoadView = true
+
     // 是否第一次加载
     protected var isFirstLoad = true
 
@@ -41,9 +43,11 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
-        mDatabind.lifecycleOwner = viewLifecycleOwner
-        return mDatabind.root
+//        mDatabind = DataBindingUtil.inflate(inflater, initLayoutId(), container, false)
+        mDatabind = super.onCreateView(inflater, container, savedInstanceState)
+            ?.let { DataBindingUtil.bind(it) }
+        mDatabind?.lifecycleOwner = viewLifecycleOwner
+        return mDatabind?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +61,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
         initViews()
     }
 
-    protected abstract fun initLayoutId(): Int
+//    protected abstract fun initLayoutId(): Int
 
     protected abstract fun initViewModel(): VM
 
@@ -153,7 +157,7 @@ abstract class BaseMvvmRxFragment<VM : BaseViewModel, DB : ViewDataBinding> : Rx
     }
 
     override fun onDestroy() {
-        mDatabind.unbind()
+        mDatabind?.unbind()
         viewModelStore.clear()
         if (mIsLoadView) {
             if (!mRxAppCompatActivity.isFinishing) {

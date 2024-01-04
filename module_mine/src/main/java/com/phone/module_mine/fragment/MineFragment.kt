@@ -38,7 +38,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
  */
 
 @Route(path = ConstantData.Route.ROUTE_MINE_FRAGMENT)
-class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineView {
+class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(R.layout.mine_fragment_mine), IMineView {
 
     companion object {
         private val TAG: String = MineFragment::class.java.name
@@ -59,7 +59,7 @@ class MineFragment : BaseMvpRxFragment<IBaseView, MinePresenterImpl>(), IMineVie
     }
     private var isRefresh: Boolean = true
 
-    override fun initLayoutId() = R.layout.mine_fragment_mine
+//    override fun initLayoutId() = R.layout.mine_fragment_mine
 
     override fun initData() {
     }

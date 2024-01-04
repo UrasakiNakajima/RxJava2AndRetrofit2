@@ -81,15 +81,12 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
                 .statusBarDarkFont(isDarkFont)
                 .statusBarColor(R.color.base_color_FFFFFFFF) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
-                .keyboardEnable(true)
-                .init()
+                .keyboardEnable(true).init()
         } else {
-            ImmersionBar.with(this)
-                .statusBarDarkFont(isDarkFont)
+            ImmersionBar.with(this).statusBarDarkFont(isDarkFont)
                 .statusBarColor(R.color.base_color_FF198CFF) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
-                .keyboardEnable(true)
-                .init()
+                .keyboardEnable(true).init()
         }
         ToolbarManager.assistActivity(findViewById(android.R.id.content))
     }
@@ -100,15 +97,12 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
                 .statusBarDarkFont(isDarkFont)
                 .statusBarColor(R.color.base_color_FFFFFFFF) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
-                .keyboardEnable(true)
-                .init()
+                .keyboardEnable(true).init()
         } else {
-            ImmersionBar.with(this)
-                .statusBarDarkFont(isDarkFont)
+            ImmersionBar.with(this).statusBarDarkFont(isDarkFont)
                 .statusBarColor(R.color.base_color_FF198CFF) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
-                .keyboardEnable(true)
-                .init()
+                .keyboardEnable(true).init()
         }
         if (isResizeChildOfContent) {
             ToolbarManager.assistActivity(findViewById(android.R.id.content))
@@ -118,13 +112,11 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     protected open fun setToolbar(isDarkFont: Boolean, color: Int) {
         if (isDarkFont) {
             ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                .statusBarDarkFont(isDarkFont)
-                .statusBarColor(color) //状态栏颜色，不写默认透明色
+                .statusBarDarkFont(isDarkFont).statusBarColor(color) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .init()
         } else {
-            ImmersionBar.with(this)
-                .statusBarDarkFont(isDarkFont)
+            ImmersionBar.with(this).statusBarDarkFont(isDarkFont)
                 .statusBarColor(color) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .init()
@@ -133,19 +125,15 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     }
 
     protected open fun setToolbar(
-        isDarkFont: Boolean,
-        color: Int,
-        isResizeChildOfContent: Boolean
+        isDarkFont: Boolean, color: Int, isResizeChildOfContent: Boolean
     ) {
         if (isDarkFont) {
             ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                .statusBarDarkFont(isDarkFont)
-                .statusBarColor(color) //状态栏颜色，不写默认透明色
+                .statusBarDarkFont(isDarkFont).statusBarColor(color) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .init()
         } else {
-            ImmersionBar.with(this)
-                .statusBarDarkFont(isDarkFont)
+            ImmersionBar.with(this).statusBarDarkFont(isDarkFont)
                 .statusBarColor(color) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
                 .init()
@@ -158,18 +146,14 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     protected open fun setToolbar2(isDarkFont: Boolean, statusBarColor: Int) {
         if (isDarkFont) {
             ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                .statusBarDarkFont(isDarkFont)
-                .statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
+                .statusBarDarkFont(isDarkFont).statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
-                .keyboardEnable(true)
-                .init()
+                .keyboardEnable(true).init()
         } else {
-            ImmersionBar.with(this)
-                .statusBarDarkFont(isDarkFont)
+            ImmersionBar.with(this).statusBarDarkFont(isDarkFont)
                 .statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
-                .keyboardEnable(true)
-                .init()
+                .keyboardEnable(true).init()
         }
     }
 
@@ -177,43 +161,33 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
      * 顶部栏吸顶专用
      */
     protected open fun setToolbar2(
-        isDarkFont: Boolean,
-        statusBarColor: Int,
-        isResizeChildOfContent: Boolean
+        isDarkFont: Boolean, statusBarColor: Int, isResizeChildOfContent: Boolean
     ) {
         if (isDarkFont) {
             val window = window
             window.clearFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                        or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
             )
-            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+            window.decorView.systemUiVisibility =
+                (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = Color.TRANSPARENT
             //        window.setNavigationBarColor(Color.TRANSPARENT);
             ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                .statusBarDarkFont(isDarkFont)
-                .statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
+                .statusBarDarkFont(isDarkFont).statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
-                .keyboardEnable(true)
-                .init()
+                .keyboardEnable(true).init()
         } else {
             ImmersionBar.with(this) //原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                .statusBarDarkFont(isDarkFont)
-                .statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
+                .statusBarDarkFont(isDarkFont).statusBarColor(statusBarColor) //状态栏颜色，不写默认透明色
                 //                    .autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
-                .keyboardEnable(true)
-                .init()
+                .keyboardEnable(true).init()
             val window = window
             window.clearFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                        or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
             )
-            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+            window.decorView.systemUiVisibility =
+                (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = Color.TRANSPARENT
             //        window.setNavigationBarColor(Color.TRANSPARENT);
@@ -270,16 +244,19 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
     }
 
     protected open fun showCustomToast(
-        left: Int, right: Int,
-        textSize: Int, textColor: Int,
-        bgColor: Int, height: Int,
-        roundRadius: Int, message: String?,
+        left: Int,
+        right: Int,
+        textSize: Int,
+        textColor: Int,
+        bgColor: Int,
+        height: Int,
+        roundRadius: Int,
+        message: String?,
         isLongToast: Boolean
     ) {
         val frameLayout = FrameLayout(this)
         val layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
+            FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT
         )
         frameLayout.layoutParams = layoutParams
         val textView = TextView(this)
@@ -326,8 +303,7 @@ abstract class BaseBindingRxAppActivity<DB : ViewDataBinding> : RxAppCompatActiv
 
     private fun killAppProcess() {
         LogManager.i(TAG, "killAppProcess")
-        val manager =
-            mBaseApplication.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val manager = mBaseApplication.getSystemService(ACTIVITY_SERVICE) as ActivityManager
         val processInfos = manager.runningAppProcesses
         // 先杀掉相关进程，最后再杀掉主进程
         for (runningAppProcessInfo in processInfos) {

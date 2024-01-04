@@ -15,7 +15,7 @@ import com.phone.library_base.manager.DialogManager
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle3.components.support.RxFragment
 
-abstract class BaseRxFragment : RxFragment(), IBaseView {
+abstract class BaseRxFragment(contentLayoutId: Int) : RxFragment(contentLayoutId), IBaseView {
 
     private val TAG = BaseRxFragment::class.java.simpleName
     protected lateinit var mRxAppCompatActivity: RxAppCompatActivity
@@ -41,7 +41,8 @@ abstract class BaseRxFragment : RxFragment(), IBaseView {
         //        }
 
         mRxFragment = this
-        mRootView = inflater.inflate(initLayoutId(), container, false)
+//        mRootView = inflater.inflate(initLayoutId(), container, false)
+        mRootView = super.onCreateView(inflater, container, savedInstanceState)
         return mRootView
     }
 
@@ -53,7 +54,7 @@ abstract class BaseRxFragment : RxFragment(), IBaseView {
         initViews()
     }
 
-    protected abstract fun initLayoutId(): Int
+//    protected abstract fun initLayoutId(): Int
 
     protected abstract fun initData()
 

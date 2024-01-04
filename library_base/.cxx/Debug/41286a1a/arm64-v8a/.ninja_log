@@ -1,0 +1,11 @@
+# ninja log v5
+1	398	1691305737	CMakeFiles/return-data.dir/return-data.cpp.o	ee5c1ef8352147c
+398	470	1691305737	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libreturn-data.so	60f8a5c3001080a0
+2	633	1691305737	CMakeFiles/native-lib.dir/native-lib.cpp.o	18a0e9e1b553a882
+633	733	1691305737	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libnative-lib.so	c9da8682e4107824
+5	426	1691328605	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libnative-lib.so	c9da8682e4107824
+0	28	0	clean	c6470991adac0db9
+0	212	1691328660	CMakeFiles/return-data.dir/return-data.cpp.o	ee5c1ef8352147c
+213	308	1691328660	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libreturn-data.so	60f8a5c3001080a0
+1	483	1691328660	CMakeFiles/native-lib.dir/native-lib.cpp.o	18a0e9e1b553a882
+483	567	1691328660	/Users/erwinnakashima/AndroidStudioProjects_pri/RxJava2AndRetrofit2/library_base/src/main/cpp/libs/arm64-v8a/libnative-lib.so	c9da8682e4107824

@@ -46,7 +46,7 @@ import java.io.File
 
 
 @Route(path = ConstantData.Route.ROUTE_HOME_FRAGMENT)
-class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePageView {
+class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(R.layout.home_fragment_home), IHomePageView {
 
     private val TAG = HomeFragment::class.java.simpleName
     private var layoutOutLayer: FrameLayout? = null
@@ -71,7 +71,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(), IHomePag
         Manifest.permission.ACCESS_FINE_LOCATION
     )
 
-    override fun initLayoutId() = R.layout.home_fragment_home
+//    override fun initLayoutId() = R.layout.home_fragment_home
 
     override fun initData() {
         isRefresh = true

@@ -24,7 +24,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 class SubResourceFragment :
-    BaseMvvmRxFragment<SubResourceViewModelImpl, ResourceFragmentResourceSubBinding>(),
+    BaseMvvmRxFragment<SubResourceViewModelImpl, ResourceFragmentResourceSubBinding>(R.layout.resource_fragment_resource_sub),
     ISubResourceView {
 
     private val TAG = SubResourceFragment::class.java.simpleName
@@ -45,7 +45,7 @@ class SubResourceFragment :
     private var tabId: Int = 0
     private var pageNum: Int = 1
 
-    override fun initLayoutId() = R.layout.resource_fragment_resource_sub
+//    override fun initLayoutId() = R.layout.resource_fragment_resource_sub
 
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
@@ -80,7 +80,7 @@ class SubResourceFragment :
     }
 
     override fun initViews() {
-        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+        mDatabind?.refreshLayout?.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
                 isRefresh = false
@@ -101,7 +101,7 @@ class SubResourceFragment :
 
     private fun initAdapter() {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
-        mDatabind.rcvData.apply {
+        mDatabind?.rcvData?.apply {
             layoutManager = linearLayoutManager
             itemAnimator = DefaultItemAnimator()
 //            (itemAnimator as DefaultItemAnimator).changeDuration = 0
@@ -155,10 +155,10 @@ class SubResourceFragment :
                     it.clearData()
                     it.addData(success)
                 }
-                mDatabind.refreshLayout.finishRefresh()
+                mDatabind?.refreshLayout?.finishRefresh()
             } else {
                 subResourceAdapter.addData(success)
-                mDatabind.refreshLayout.finishLoadMore()
+                mDatabind?.refreshLayout?.finishLoadMore()
             }
             hideLoading()
         }
@@ -178,9 +178,9 @@ class SubResourceFragment :
             )
 
             if (isRefresh) {
-                mDatabind.refreshLayout.finishRefresh(false)
+                mDatabind?.refreshLayout?.finishRefresh(false)
             } else {
-                mDatabind.refreshLayout.finishLoadMore(false)
+                mDatabind?.refreshLayout?.finishLoadMore(false)
             }
             hideLoading()
         }

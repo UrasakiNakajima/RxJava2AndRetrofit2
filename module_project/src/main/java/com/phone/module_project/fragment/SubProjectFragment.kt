@@ -24,7 +24,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 class SubProjectFragment :
-    BaseMvvmRxFragment<SubProjectViewModelImpl, ProjectFragmentProjectSubBinding>(),
+    BaseMvvmRxFragment<SubProjectViewModelImpl, ProjectFragmentProjectSubBinding>(R.layout.project_fragment_project_sub),
     ISubProjectView {
 
     companion object {
@@ -48,7 +48,7 @@ class SubProjectFragment :
     private var tabId: Int = 0
     private var pageNum: Int = 1
 
-    override fun initLayoutId() = R.layout.project_fragment_project_sub
+//    override fun initLayoutId() = R.layout.project_fragment_project_sub
 
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
@@ -82,7 +82,7 @@ class SubProjectFragment :
     }
 
     override fun initViews() {
-        mDatabind.refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+        mDatabind?.refreshLayout?.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
                 LogManager.i(TAG, "onLoadMore")
                 isRefresh = false
@@ -103,7 +103,7 @@ class SubProjectFragment :
 
     private fun initAdapter() {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL)
-        mDatabind.rcvData.apply {
+        mDatabind?.rcvData?.apply {
             layoutManager = linearLayoutManager
             itemAnimator = DefaultItemAnimator()
 //            (itemAnimator as DefaultItemAnimator).changeDuration = 0
@@ -157,10 +157,10 @@ class SubProjectFragment :
                     it.clearData()
                     it.addData(success)
                 }
-                mDatabind.refreshLayout.finishRefresh()
+                mDatabind?.refreshLayout?.finishRefresh()
             } else {
                 subProjectAdapter.addData(success)
-                mDatabind.refreshLayout.finishLoadMore()
+                mDatabind?.refreshLayout?.finishLoadMore()
             }
             hideLoading()
         }
@@ -180,9 +180,9 @@ class SubProjectFragment :
             )
 
             if (isRefresh) {
-                mDatabind.refreshLayout.finishRefresh(false)
+                mDatabind?.refreshLayout?.finishRefresh(false)
             } else {
-                mDatabind.refreshLayout.finishLoadMore(false)
+                mDatabind?.refreshLayout?.finishLoadMore(false)
             }
             hideLoading()
         }

@@ -44,7 +44,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * introduce :
  */
 @Route(path = ConstantData.Route.ROUTE_SQUARE_FRAGMENT)
-class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSquareBinding>() {
+class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSquareBinding>(R.layout.square_fragment_square) {
 
     companion object {
         private val TAG: String = SquareFragment::class.java.simpleName
@@ -64,7 +64,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
         Manifest.permission.READ_PHONE_STATE
     )
 
-    override fun initLayoutId() = R.layout.square_fragment_square
+//    override fun initLayoutId() = R.layout.square_fragment_square
 
     /**
      * 这里ViewModelProvider的参数要使用this，不要使用rxAppCompatActivity
@@ -72,10 +72,9 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
     override fun initViewModel() = ViewModelProvider(this).get(SquareViewModelImpl::class.java)
 
     override fun initData() {
-        mDatabind.viewModel = mViewModel
-        mDatabind.subDataSquare = subDataSquare
-        mDatabind.executePendingBindings()
-
+        mDatabind?.viewModel = mViewModel
+        mDatabind?.subDataSquare = subDataSquare
+        mDatabind?.executePendingBindings()
     }
 
     override fun initObservers() {
@@ -158,7 +157,7 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
     }
 
     override fun initViews() {
-        mDatabind.apply {
+        mDatabind?.apply {
             tevAndroidAndJs.setOnClickListener {
                 //Jump with parameters
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_ANDROID_AND_JS).navigation()

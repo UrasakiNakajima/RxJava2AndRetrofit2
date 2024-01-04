@@ -8,13 +8,13 @@ import net.lucode.hackware.magicindicator.MagicIndicator
 object MagicIndicatorManager {
 
     @JvmStatic
-    fun bindForViewPager2(vp: ViewPager2, onPageChangeCallback: OnPageChangeCallback) {
-        vp.registerOnPageChangeCallback(onPageChangeCallback)
+    fun bindForViewPager2(vp: ViewPager2?, onPageChangeCallback: OnPageChangeCallback) {
+        vp?.registerOnPageChangeCallback(onPageChangeCallback)
     }
 
     @JvmStatic
-    fun unBindForViewPager2(vp: ViewPager2, onPageChangeCallback: OnPageChangeCallback) {
-        vp.unregisterOnPageChangeCallback(onPageChangeCallback)
+    fun unBindForViewPager2(vp: ViewPager2?, onPageChangeCallback: OnPageChangeCallback) {
+        vp?.unregisterOnPageChangeCallback(onPageChangeCallback)
     }
 
     @JvmStatic

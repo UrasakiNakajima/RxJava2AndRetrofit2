@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_bind_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="bindService" />
+
+    <Button
+        android:id="@+id/btn_get_book_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="getBookList" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add" />
+
+    <Button
+        android:id="@+id/btn_get_book_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="getBookSize" />
+
+    <Button
+        android:id="@+id/btn_first_book_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="firstBookName" />
+
+</LinearLayout>
