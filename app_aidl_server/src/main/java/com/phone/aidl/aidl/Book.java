@@ -8,7 +8,6 @@ import android.os.Parcelable;
  *
  * @author Urasaki
  * @version 1.0
- * @copyright 亿帆
  * @date 2023-01-03$ 21:10:30$
  **/
 public class Book implements Parcelable {

@@ -44,7 +44,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  * introduce :
  */
 @Route(path = ConstantData.Route.ROUTE_SQUARE_FRAGMENT)
-class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSquareBinding>(R.layout.square_fragment_square) {
+class SquareFragment :
+    BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSquareBinding>(R.layout.square_fragment_square) {
 
     companion object {
         private val TAG: String = SquareFragment::class.java.simpleName
@@ -263,6 +264,11 @@ class SquareFragment : BaseMvvmRxFragment<SquareViewModelImpl, SquareFragmentSqu
                             mDialogManager.dismissCommonDialog()
                         }
                     })
+            }
+            tevCustomBanner.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_CUSTOM_BANNER)
+                    .navigation()
             }
         }
     }
