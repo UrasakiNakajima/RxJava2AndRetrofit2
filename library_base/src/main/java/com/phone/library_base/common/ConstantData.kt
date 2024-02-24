@@ -55,6 +55,7 @@ object ConstantData {
         const val ROUTE_KOTLIN_COROUTINE = "/module_square/ui/kotlin_coroutine"
         const val ROUTE_DECIMAL_OPERATION = "/module_square/ui/decimal_operation"
         const val ROUTE_EDIT_TEXT_INPUT_LIMITS = "/module_square/ui/edit_text_input_limits"
+        const val ROUTE_FUNCTION_MENU = "/module_square/ui/function_menu"
         const val ROUTE_SQUARE_SERVICE = "/module_square/provider/square_service_impl"
 
 

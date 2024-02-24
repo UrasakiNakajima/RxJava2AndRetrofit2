@@ -34,15 +34,6 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
     //1.首先定义一个SingleLiveData的实例
     val liveData = SingleLiveData<State<List<SubDataSquare>>>()
 
-    //2.首先定义一个SingleLiveData的实例
-    val downloadData = SingleLiveData<DownloadState<Int>>()
-
-    //3.首先定义一个SingleLiveData的实例
-    val insertData = MutableLiveData<State<String>>()
-
-    //4.首先定义一个SingleLiveData的实例
-    val queryData = MutableLiveData<State<List<Book>>>()
-
     override fun squareData(rxFragment: RxFragment, currentPage: String) {
         LogManager.i(TAG, "squareData thread name*****${Thread.currentThread().name}")
 
@@ -130,84 +121,11 @@ class SquareViewModelImpl : BaseViewModel(), ISquareViewModel {
                     liveData.value =
                         State.ErrorState(ResourcesManager.getString(R.string.library_no_data_available))
                 }
-            }
-        }
-    }
-
-    override fun downloadFile(rxFragment: RxFragment) {
-//        RetrofitManager.instance.downloadFile(rxFragment,
-//            mSquareModel.downloadFile(),
-//            BaseApplication.instance().externalCacheDir!!.absolutePath,
-//            "artist_kirara_asuka.mov",
-//            object : OnDownloadCallBack {
-//                override fun onProgress(progress: Int, total: Long, speed: Long) {
-//                    LogManager.i(TAG, "progress:$progress, speed:$speed")
-//                    downloadData.postValue(DownloadState.ProgressState(progress, total, speed))
-//                }
-//
-//                override fun onCompleted(file: File) {
-//                    LogManager.i(TAG, "下载文件成功")
-//                    downloadData.postValue(DownloadState.CompletedState(file))
-//                }
-//
-//                override fun onError(e: Throwable?) {
-//                    LogManager.i(TAG, "下载文件异常", e)
-//                    downloadData.postValue(DownloadState.ErrorState("下载文件异常*****${e.toString()}"))
-//                }
-//            })
-
-
-        rxFragment.lifecycleScope.launch(Dispatchers.IO) {
-            RetrofitManager.instance.downloadFile3(mSquareModel.downloadFile2(),
-                BaseApplication.instance().externalCacheDir!!.absolutePath,
-                "artist_kirara_asuka.mov",
-                object : OnDownloadCallBack {
-                    override fun onProgress(progress: Int, total: Long, speed: Long) {
-                        LogManager.i(TAG, "progress:$progress, speed:$speed")
-                        downloadData.postValue(DownloadState.ProgressState(progress, total, speed))
-                    }
-
-                    override fun onCompleted(file: File) {
-                        LogManager.i(TAG, "下载文件成功")
-                        downloadData.postValue(DownloadState.CompletedState(file))
-                    }
-
-                    override fun onError(e: Throwable?) {
-                        LogManager.i(TAG, "下载文件异常", e)
-                        downloadData.postValue(DownloadState.ErrorState("下载文件异常*****${e.toString()}"))
-                    }
-                })
-        }
-    }
-
-    override fun insertBook(rxFragment: RxFragment, success: String) {
-        rxFragment.lifecycleScope.launch {
-            val apiResponse = executeRequest {
-                mSquareModel.insertBook(success)
-            }
-
-            if (apiResponse.data != null && apiResponse.errorCode == 0) {
-//                val book = apiResponse.data!!
-                insertData.value = State.SuccessState("插入數據庫成功")
             } else {
-                insertData.value =
-                    State.ErrorState("插入數據庫失敗")
-//                insertData.value = State.ErrorState(apiResponse.errorMsg)
-            }
-        }
-    }
-
-    override fun queryBook() {
-        viewModelScope.launch {
-            val apiResponse = executeRequest {
-                mSquareModel.queryBook()
-            }
-
-            if (apiResponse.data != null && apiResponse.errorCode == 0) {
-                queryData.value = State.SuccessState(apiResponse.data!!)
-            } else {
-                queryData.value =
-                    State.ErrorState("查詢數據庫失敗")
+                apiResponse?.errorMsg?.let {
+                    liveData.value =
+                        State.ErrorState(it)
+                }
             }
         }
     }

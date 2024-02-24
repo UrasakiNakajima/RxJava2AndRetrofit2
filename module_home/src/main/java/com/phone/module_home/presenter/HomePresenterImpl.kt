@@ -1,5 +1,6 @@
 package com.phone.module_home.presenter
 
+import android.text.TextUtils
 import com.phone.library_base.base.IBaseView
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
@@ -139,6 +140,10 @@ class HomePresenterImpl(baseView: IBaseView) : BasePresenter<IBaseView>(), IHome
                                     R.string.library_no_data_available
                                 )
                             )
+                        }
+                    } else {
+                        apiResponse?.reason?.let {
+                            baseView.homePageDataError(it)
                         }
                     }
                     LogManager.i(TAG, "homePage2 thread name*****${Thread.currentThread().name}")

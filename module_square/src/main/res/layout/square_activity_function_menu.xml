@@ -3,16 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <data>
 
         <variable
             name="viewModel"
-            type="com.phone.module_square.view_model.SquareViewModelImpl" />
-
-        <variable
-            name="subDataSquare"
-            type="com.phone.library_common.bean.SubDataSquare" />
+            type="com.phone.module_square.view_model.FunctionMenuViewModelImpl" />
 
         <import type="android.view.View" />
 
@@ -44,6 +39,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,66 +50,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_10" />
-
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:includeFontPadding="false"
-                    android:text="@={subDataSquare.title}"
-                    android:textColor="@color/library_color_FFE066FF"
-                    android:textSize="@dimen/base_sp_18"
-                    android:visibility="@{subDataSquare.collect? View.GONE:View.VISIBLE}" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_10" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:includeFontPadding="false"
-                    android:text="@={subDataSquare.chapterName}"
-                    android:textColor="@color/library_colorBlack333"
-                    android:textSize="@dimen/base_sp_16"
-                    android:visibility="@{subDataSquare.collect? View.GONE:View.VISIBLE}" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_10" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:includeFontPadding="false"
-                    android:text="@={subDataSquare.link}"
-                    android:textColor="@color/library_colorBlack333"
-                    android:textSize="@dimen/base_sp_16" />
-
-                <TextView
-                    android:id="@+id/tev_android_and_js"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/library_android_and_js"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
-
-                <TextView
-                    android:id="@+id/tev_edit_text_input_limits"
+                    android:id="@+id/tev_create_user"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_45"
                     android:layout_gravity="center"
@@ -124,7 +62,7 @@
                     android:paddingTop="@dimen/base_dp_10"
                     android:paddingEnd="@dimen/base_dp_15"
                     android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_edit_text_input_limits"
+                    android:text="@string/library_create_user"
                     android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/base_sp_16" />
 
@@ -134,7 +72,7 @@
                     android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_decimal_operation"
+                    android:id="@+id/tev_kotlin_coroutine"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_45"
                     android:layout_gravity="center"
@@ -145,7 +83,7 @@
                     android:paddingTop="@dimen/base_dp_10"
                     android:paddingEnd="@dimen/base_dp_15"
                     android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_decimal_operation"
+                    android:text="@string/library_kotlin_coroutine"
                     android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/base_sp_16" />
 
@@ -155,14 +93,18 @@
                     android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_kill_app"
+                    android:id="@+id/tev_room_insert_book"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_45"
                     android:layout_gravity="center"
                     android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/library_kill_app"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_room_insert_book"
                     android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/base_sp_16" />
 
@@ -172,14 +114,18 @@
                     android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_create_an_exception"
+                    android:id="@+id/tev_room_query_book"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_45"
                     android:layout_gravity="center"
                     android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/library_create_an_exception"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_room_query_book"
                     android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/base_sp_16" />
 
@@ -189,14 +135,18 @@
                     android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_create_an_exception2"
+                    android:id="@+id/tev_event_schedule"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_45"
                     android:layout_gravity="center"
                     android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/library_create_an_exception2"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_event_schedule"
                     android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/base_sp_16" />
 
@@ -206,14 +156,18 @@
                     android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_function_menu"
+                    android:id="@+id/tev_mounting"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_45"
                     android:layout_gravity="center"
                     android:background="@color/library_color_FFFFC73B"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/library_function_menu"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_mounting"
                     android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/base_sp_16" />
 
@@ -222,22 +176,110 @@
                     android:layout_height="@dimen/base_dp_1"
                     android:background="@color/library_color_555555" />
 
-                <ImageView
-                    android:id="@+id/imv_picture"
+                <TextView
+                    android:id="@+id/tev_jsbridge"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_640"
-                    android:layout_gravity="center_horizontal"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/library_default_project_img"
-                    app:author="@{subDataSquare.author}"
-                    app:chapterName="@{subDataSquare.chapterName}"
-                    app:envelopePic="@{subDataSquare.envelopePic}"
-                    tools:ignore="ContentDescription" />
+                    android:layout_height="@dimen/base_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_jsbridge"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/base_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_1"
+                    android:background="@color/library_color_555555" />
+
+                <TextView
+                    android:id="@+id/tev_thread_pool"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_thread_pool"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/base_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_1"
+                    android:background="@color/library_color_555555" />
+
+                <TextView
+                    android:id="@+id/tev_picker_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_three_level_linkage_list"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/base_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_1"
+                    android:background="@color/library_color_555555" />
+
+                <TextView
+                    android:id="@+id/tev_download_file"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_download_file"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/base_sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_1"
+                    android:background="@color/library_color_555555" />
+
+                <TextView
+                    android:id="@+id/tev_custom_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_45"
+                    android:layout_gravity="center"
+                    android:background="@color/library_color_FFFFC73B"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/base_dp_15"
+                    android:paddingTop="@dimen/base_dp_10"
+                    android:paddingEnd="@dimen/base_dp_15"
+                    android:paddingBottom="@dimen/base_dp_10"
+                    android:text="@string/library_custom_banner"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/base_sp_16" />
 
             </LinearLayout>
-
         </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
+
 
 </layout>

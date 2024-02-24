@@ -99,62 +99,6 @@ class SquareFragment :
                 else -> {}
             }
         }
-
-        mViewModel.downloadData.observe(this) {
-            LogManager.i(TAG, "onChanged*****downloadData")
-            when (it) {
-                is DownloadState.ProgressState -> {
-                    onProgress(it.progress, it.total, it.speed)
-                }
-
-                is DownloadState.CompletedState -> {
-                    showToast("下载文件成功", true)
-                    hideLoading()
-                    mIsLoadView = true
-                }
-
-                is DownloadState.ErrorState -> {
-                    showToast(it.errorMsg, true)
-                    hideLoading()
-                    mIsLoadView = true
-                }
-
-                else -> {}
-            }
-        }
-        mViewModel.insertData.observe(this) {
-            LogManager.i(TAG, "onChanged*****roomData")
-            when (it) {
-                is State.SuccessState -> {
-                    mDialogManager.dismissLoadingDialog()
-                    dialogManager.dismissBookDialog()
-                    ToastManager.toast(mRxAppCompatActivity, it.success.toString())
-                }
-
-                is State.ErrorState -> {
-                    mDialogManager.dismissLoadingDialog()
-                    dialogManager.dismissBookDialog()
-                    ToastManager.toast(mRxAppCompatActivity, it.errorMsg)
-                }
-            }
-        }
-        mViewModel.queryData.observe(this) {
-            LogManager.i(TAG, "onChanged*****roomData")
-            when (it) {
-                is State.SuccessState -> {
-                    hideLoading()
-                    val bookJsonStr = JSONObject.toJSONString(it.success)
-                    ARouter.getInstance().build(ConstantData.Route.ROUTE_SHOW_BOOK)
-                        .withString("bookJsonStr", bookJsonStr)
-                        .navigation()
-                }
-
-                is State.ErrorState -> {
-                    hideLoading()
-                    ToastManager.toast(mRxAppCompatActivity, it.errorMsg)
-                }
-            }
-        }
     }
 
     override fun initViews() {
@@ -191,84 +135,8 @@ class SquareFragment :
                 number = 3
                 initRxPermissions(number)
             }
-            tevCreateUser.setOnClickListener {
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_CREATE_USER).navigation()
-            }
-            tevKotlinCoroutine.setOnClickListener {
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_KOTLIN_COROUTINE).navigation()
-            }
-            tevRoomInsertBook.setOnClickListener {
-                dialogManager.showBookDialog(mRxAppCompatActivity,
-                    object : OnCommonSingleParamCallback<String> {
-                        override fun onSuccess(success: String) {
-                            mDialogManager.showLoadingDialog(mRxAppCompatActivity)
-                            mViewModel.insertBook(this@SquareFragment, success)
-                        }
-
-                        override fun onError(error: String) {
-                            dialogManager.dismissBookDialog()
-                        }
-                    })
-            }
-            tevRoomQueryBook.setOnClickListener {
-                showLoading()
-                mViewModel.queryBook()
-            }
-            tevEventSchedule.setOnClickListener {
-                //Jump with parameters
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_EVENT_SCHEDULE).navigation()
-            }
-            tevMounting.setOnClickListener {
-                //Jump with parameters
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_MOUNTING).navigation()
-            }
-            tevJsbridge.setOnClickListener {
-                //Jump with parameters
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_JSBRIDGE).navigation()
-            }
-            tevThreadPool.setOnClickListener {
-                if (!BuildConfig.IS_MODULE) {
-                    //Jump with parameters
-                    ARouter.getInstance().build(ConstantData.Route.ROUTE_THREAD_POOL)
-                        .withString("title", "線程池")
-                        .withParcelable(
-                            "biographyData", BiographyData("book", "Rommel的传记", "Rommel的简介")
-                        ).navigation()
-                } else {
-                    showToast("单独组件不能进入線程池页面，需使用整个项目才能进入線程池页面", true)
-                }
-            }
-            tevPickerView.setOnClickListener {
-                if (!BuildConfig.IS_MODULE) {
-                    ARouter.getInstance().build(ConstantData.Route.ROUTE_PICKER_VIEW).navigation()
-                } else {
-                    showToast(
-                        "单独组件不能进入三级联动列表，需使用整个项目才能进入三级联动列表", true
-                    )
-                }
-            }
-            tevDownloadFile.setOnClickListener {
-                mDialogManager.showCommonDialog(mRxAppCompatActivity,
-                    "是否下载视频文件",
-                    "这里有一个好可爱的日本女孩",
-                    object : OnCommonSingleParamCallback<String> {
-                        override fun onSuccess(success: String) {
-                            mDialogManager.dismissCommonDialog()
-
-                            mIsLoadView = false
-                            showLoading()
-                            mViewModel.downloadFile(this@SquareFragment)
-                        }
-
-                        override fun onError(error: String) {
-                            mDialogManager.dismissCommonDialog()
-                        }
-                    })
-            }
-            tevCustomBanner.setOnClickListener {
-                //Jump with parameters
-                ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_CUSTOM_BANNER)
-                    .navigation()
+            tevFunctionMenu.setOnClickListener {
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_FUNCTION_MENU).navigation()
             }
         }
     }
@@ -303,12 +171,6 @@ class SquareFragment :
 //        }.execute()
 //        Toast.makeText(mRxAppCompatActivity, "请关闭这个A完成泄露", Toast.LENGTH_SHORT).show()
 //    }
-
-    fun onProgress(progress: Int, total: Long, speed: Long) {
-        if (!mRxAppCompatActivity.isFinishing) {
-            mDialogManager.onProgress(progress)
-        }
-    }
 
     private fun squareDataSuccess(success: List<SubDataSquare>) {
         if (!mRxAppCompatActivity.isFinishing) {

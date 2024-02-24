@@ -33,6 +33,7 @@
     <string name="library_request_permissions">請求權限</string>
     <string name="library_request_permission_and_start_locating">請求權限，并开始定位</string>
     <string name="library_kill_app">殺死App</string>
+    <string name="library_function_menu">功能菜單</string>
 
     <string name="library_data_in_wrong_format">數據格式錯誤</string>
     <string name="library_request_was_aborted">请求失败</string>

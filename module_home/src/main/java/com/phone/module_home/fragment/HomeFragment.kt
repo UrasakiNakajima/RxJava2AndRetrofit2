@@ -46,7 +46,8 @@ import java.io.File
 
 
 @Route(path = ConstantData.Route.ROUTE_HOME_FRAGMENT)
-class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(R.layout.home_fragment_home), IHomePageView {
+class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(R.layout.home_fragment_home),
+    IHomePageView {
 
     private val TAG = HomeFragment::class.java.simpleName
     private var layoutOutLayer: FrameLayout? = null
@@ -246,7 +247,7 @@ class HomeFragment : BaseMvpRxFragment<IBaseView, HomePresenterImpl>(R.layout.ho
         }
     }
 
-    override fun homePageDataError(error: String) {
+    override fun homePageDataError(error: String?) {
         LogManager.i(TAG, "homePageDataError*****")
         if (!mRxAppCompatActivity.isFinishing) {
 //            showToast(error, true)

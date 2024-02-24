@@ -14,6 +14,6 @@ interface IHomePageView : IBaseView {
 
     fun homePageDataSuccess(success: List<ResultData.JuheNewsBean>)
 
-    fun homePageDataError(error: String)
+    fun homePageDataError(error: String?)
 
 }

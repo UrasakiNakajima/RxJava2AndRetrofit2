@@ -186,6 +186,24 @@ abstract class BaseMvvmAppRxActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         }
     }
 
+    protected fun showToast(message: String?, isLongToast: Boolean) {
+        //        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        message?.let {
+            if (!mRxAppCompatActivity.isFinishing) {
+                val toast: Toast
+                val duration: Int
+                duration = if (isLongToast) {
+                    Toast.LENGTH_LONG
+                } else {
+                    Toast.LENGTH_SHORT
+                }
+                toast = Toast.makeText(mRxAppCompatActivity, message, duration)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
+            }
+        }
+    }
+
     protected fun showCustomToast(message: String, isLongToast: Boolean) {
         val frameLayout = FrameLayout(this)
         val layoutParams = FrameLayout.LayoutParams(

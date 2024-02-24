@@ -9,10 +9,4 @@ interface ISquareViewModel {
 
     fun squareData(rxFragment: RxFragment, currentPage: String)
 
-    fun downloadFile(rxFragment: RxFragment)
-
-    fun insertBook(rxFragment: RxFragment, success: String)
-
-    fun queryBook()
-
 }
