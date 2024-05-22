@@ -1,10 +1,9 @@
-package com.phone.module_square.view_model
+package com.phone.module_square.function_menu.view_model
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.phone.library_base.BaseApplication
-import com.phone.library_base.base.BaseRxAppActivity
 import com.phone.library_base.manager.LogManager
 import com.phone.library_mvvm.BaseViewModel
 import com.phone.library_network.OnDownloadCallBack
@@ -14,9 +13,7 @@ import com.phone.library_network.bean.State
 import com.phone.library_network.manager.RetrofitManager
 import com.phone.library_room.Book
 import com.phone.module_square.model.FunctionMenuModeImpl
-import com.phone.module_square.model.SquareModelImpl
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
-import com.trello.rxlifecycle3.components.support.RxFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File

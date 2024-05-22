@@ -1,4 +1,4 @@
-package com.phone.module_square.ui
+package com.phone.module_square.function_menu.ui
 
 import android.net.Uri
 import android.os.Build

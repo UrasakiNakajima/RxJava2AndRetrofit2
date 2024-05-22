@@ -1,4 +1,4 @@
-package com.phone.module_square.view_model
+package com.phone.module_square.function_menu.view_model
 
 import androidx.lifecycle.viewModelScope
 import com.phone.library_mvvm.BaseViewModel

@@ -1,4 +1,4 @@
-package com.phone.module_square.ui
+package com.phone.module_square.function_menu.ui
 
 import android.view.View
 import androidx.core.content.ContextCompat

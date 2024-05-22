@@ -1,6 +1,5 @@
-package com.phone.module_square.ui
+package com.phone.module_square.function_menu.ui
 
-import android.content.Context
 import android.os.Handler
 import android.os.Message
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +12,7 @@ import com.phone.library_mvvm.BaseMvvmAppRxActivity
 import com.phone.library_network.bean.State
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareActivityKotlinCoroutineBinding
-import com.phone.module_square.view_model.CoroutineViewModel
+import com.phone.module_square.function_menu.view_model.CoroutineViewModel
 import kotlinx.coroutines.*
 
 /**

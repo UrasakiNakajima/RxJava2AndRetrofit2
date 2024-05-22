@@ -97,7 +97,7 @@ class RetrofitManager private constructor() {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     }
 
-    var mCoroutineScope: CoroutineScope? = null
+    private var mCoroutineScope: CoroutineScope? = null
 
     /**
      * 保证只有一个实例

@@ -14,6 +14,7 @@
     <color name="base_color_FFFFC73B">#FFFFC73B</color>
     <color name="base_color_FFD0D6EC">#FFD0D6EC</color>
     <color name="base_color_FFCFE9FF">#FFCFE9FF</color>
+    <color name="base_color_DB0007">#DB0007</color>
 
 
     <color name="base_color_FFFFFFFF">#FFFFFFFF</color>
@@ -23,6 +24,8 @@
     <color name="base_color_FF333333">#FF333333</color>
     <color name="base_color_333333">#333333</color>
     <color name="base_color_2a000000">#2a000000</color>
+    <color name="base_color_000000">#000000</color>
+
 
     <!-- 完全透明色 -->
     <color name="base_color_transparent">#00000000</color>

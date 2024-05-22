@@ -44,6 +44,17 @@ object ImageLoaderManager {
     }
 
     @JvmStatic
+    fun display(context: Context, imageView: ImageView, resourceId: Int?) {
+        resourceId?.let {
+            Glide.with(context).load(it)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.library_picture30)
+                .error(R.mipmap.library_picture26)
+                .into(imageView)
+        }
+    }
+
+    @JvmStatic
     fun displayCenterCrop(context: Context, imageView: ImageView, url: String?) {
         url?.let {
             Glide.with(context).load(it)

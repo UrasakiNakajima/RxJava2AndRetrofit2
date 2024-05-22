@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/base_dp_142"
+            android:layout_marginTop="@dimen/base_dp_100"
+            android:scrollbars="none"
+            tools:ignore="UselessParent">
+
+        <FrameLayout
+                android:id="@+id/layout_barrage"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/base_dp_142" />
+
+    </HorizontalScrollView>
+
+
+    <FrameLayout
+            android:id="@+id/layout_activity_start"
+            android:layout_marginTop="@dimen/base_dp_50"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+</LinearLayout>

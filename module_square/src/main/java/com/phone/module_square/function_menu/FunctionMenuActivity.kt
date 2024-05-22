@@ -1,4 +1,4 @@
-package com.phone.module_square.ui
+package com.phone.module_square.function_menu
 
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -16,7 +16,7 @@ import com.phone.library_network.bean.State
 import com.phone.module_square.BuildConfig
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareActivityFunctionMenuBinding
-import com.phone.module_square.view_model.FunctionMenuViewModelImpl
+import com.phone.module_square.function_menu.view_model.FunctionMenuViewModelImpl
 
 @Route(path = ConstantData.Route.ROUTE_FUNCTION_MENU)
 class FunctionMenuActivity :
@@ -33,8 +33,8 @@ class FunctionMenuActivity :
         ViewModelProvider(this).get(FunctionMenuViewModelImpl::class.java)
 
     override fun initData() {
-        mDatabind?.viewModel = mViewModel
-        mDatabind?.executePendingBindings()
+        mDatabind.viewModel = mViewModel
+        mDatabind.executePendingBindings()
     }
 
     override fun initObservers() {
@@ -175,6 +175,11 @@ class FunctionMenuActivity :
             tevCustomBanner.setOnClickListener {
                 //Jump with parameters
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_CUSTOM_BANNER)
+                    .navigation()
+            }
+            tevActivityStart.setOnClickListener {
+                //Jump with parameters
+                ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_ACTIVITY_START)
                     .navigation()
             }
         }

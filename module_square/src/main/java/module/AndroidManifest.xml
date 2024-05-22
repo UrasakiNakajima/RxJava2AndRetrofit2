@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.phone.module_square">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".SquareApplication"
         android:allowBackup="true"
@@ -19,16 +21,16 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.JsbridgeActivity"
+            android:name=".function_menu.ui.JsbridgeActivity"
             android:exported="false"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.KotlinCoroutineActivity"
+            android:name=".function_menu.ui.KotlinCoroutineActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.CreateUserActivity"
+            android:name=".function_menu.ui.CreateUserActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -48,7 +50,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.EventScheduleActivity"
+            android:name=".function_menu.ui.EventScheduleActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
@@ -58,15 +60,20 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.CustomBannerActivity"
+            android:name=".function_menu.ui.CustomBannerActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.FunctionMenuActivity"
+            android:name=".function_menu.FunctionMenuActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+                android:name=".function_menu.ui.ActivityStartActivity"
+                android:exported="false"
+                android:launchMode="singleTask"
+                android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -83,8 +83,12 @@ open class BasePresenter<T> {
 //            response?.error_code = apiException.errorCode
 //            response?.reason = apiException.errorMessage
 //            response?.error = apiException
-            errorBlock?.let {
-                it(apiException.errorCode, apiException.errorMessage)
+
+            //这里catch之后还是运行在IO线程，需要切成UI线程
+            withContext(Dispatchers.Main) {
+                errorBlock?.let {
+                    it(apiException.errorCode, apiException.errorMessage)
+                }
             }
         }.flowOn(Dispatchers.IO).collect {
             response = it

@@ -47,6 +47,7 @@ object ConstantData {
 
         const val ROUTE_SQUARE = "/module_square/ui/square"
         const val ROUTE_SQUARE_CUSTOM_BANNER = "/module_square/ui/custom_banner"
+        const val ROUTE_SQUARE_ACTIVITY_START = "/module_square/ui/activity_start"
         const val ROUTE_SQUARE_FRAGMENT = "/module_square/fragment/square_fragment"
         const val ROUTE_JSBRIDGE = "/module_square/ui/jsbridge"
         const val ROUTE_CREATE_USER = "/module_square/ui/create_user"

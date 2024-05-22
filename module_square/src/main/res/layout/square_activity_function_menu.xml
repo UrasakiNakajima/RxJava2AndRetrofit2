@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="viewModel"
-            type="com.phone.module_square.view_model.FunctionMenuViewModelImpl" />
+                name="viewModel"
+                type="com.phone.module_square.function_menu.view_model.FunctionMenuViewModelImpl" />
 
         <import type="android.view.View" />
 
@@ -15,266 +15,292 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <View
+                android:id="@+id/view_status_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_dp_25" />
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/base_dp_48"
-            android:background="@color/library_black"
-            android:minHeight="?attr/actionBarSize"
-            android:orientation="vertical"
-            app:contentInsetStart="0dp">
-
-            <TextView
-                android:id="@+id/tev_title"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/base_dp_48"
-                android:gravity="center"
-                android:text="@string/library_square"
-                android:textColor="@color/library_color_FFFFFFFF"
-                android:textSize="@dimen/base_sp_20" />
+                android:background="@color/library_black"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="vertical"
+                app:contentInsetStart="0dp">
+
+            <TextView
+                    android:id="@+id/tev_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_48"
+                    android:gravity="center"
+                    android:text="@string/library_square"
+                    android:textColor="@color/library_color_FFFFFFFF"
+                    android:textSize="@dimen/base_sp_20" />
 
         </androidx.appcompat.widget.Toolbar>
 
 
         <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:fillViewport="true">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tev_create_user"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_create_user"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_create_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_create_user"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_kotlin_coroutine"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_kotlin_coroutine"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_kotlin_coroutine"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_kotlin_coroutine"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_room_insert_book"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_room_insert_book"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_room_insert_book"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_room_insert_book"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_room_query_book"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_room_query_book"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_room_query_book"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_room_query_book"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_event_schedule"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_event_schedule"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_event_schedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_event_schedule"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_mounting"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_mounting"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_mounting"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_mounting"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_jsbridge"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_jsbridge"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_jsbridge"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_jsbridge"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_thread_pool"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_thread_pool"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_thread_pool"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_thread_pool"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_picker_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_three_level_linkage_list"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_picker_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_three_level_linkage_list"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_download_file"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_download_file"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_download_file"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_download_file"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_1"
-                    android:background="@color/library_color_555555" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
 
                 <TextView
-                    android:id="@+id/tev_custom_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_45"
-                    android:layout_gravity="center"
-                    android:background="@color/library_color_FFFFC73B"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:paddingStart="@dimen/base_dp_15"
-                    android:paddingTop="@dimen/base_dp_10"
-                    android:paddingEnd="@dimen/base_dp_15"
-                    android:paddingBottom="@dimen/base_dp_10"
-                    android:text="@string/library_custom_banner"
-                    android:textColor="@color/library_color_FFFFFFFF"
-                    android:textSize="@dimen/base_sp_16" />
+                        android:id="@+id/tev_custom_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_custom_banner"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_1"
+                        android:background="@color/library_color_555555" />
+
+                <TextView
+                        android:id="@+id/tev_activity_start"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_45"
+                        android:layout_gravity="center"
+                        android:background="@color/library_color_FFFFC73B"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/base_dp_15"
+                        android:paddingTop="@dimen/base_dp_10"
+                        android:paddingEnd="@dimen/base_dp_15"
+                        android:paddingBottom="@dimen/base_dp_10"
+                        android:text="@string/library_activity_start"
+                        android:textColor="@color/library_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_16" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
