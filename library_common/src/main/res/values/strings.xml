@@ -118,6 +118,7 @@
     <string name="library_download_file">下載文件</string>
     <string name="library_custom_banner">自定义Banner</string>
     <string name="library_activity_start">活动开始</string>
+    <string name="library_please_click_here">请点击这里</string>
 
     <string name="library_function_to_js">functionToJs</string>
     <string name="library_function_to_js2">functionToJs2</string>

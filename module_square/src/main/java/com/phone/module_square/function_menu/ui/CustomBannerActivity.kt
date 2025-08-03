@@ -1,6 +1,7 @@
 package com.phone.module_square.function_menu.ui
 
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -37,7 +38,7 @@ class CustomBannerActivity : BaseRxAppActivity() {
 
     private var scheduledExecutorService: ScheduledExecutorService? = null
     private var scheduledExecutorService2: ScheduledExecutorService? = null
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
     private var time = 0
     val pictureList = mutableListOf<PictureBean>()
 

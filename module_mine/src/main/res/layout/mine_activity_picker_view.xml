@@ -1,67 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.PickerViewActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".ui.PickerViewActivity">
 
     <data>
 
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/library_color_FFFFFFFF"
-        android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/library_color_FFFFFFFF"
+            android:orientation="vertical">
+
+        <View
+                android:id="@+id/view_status_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_dp_25" />
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/base_dp_73"
-            android:background="@color/library_color_FF198CFF"
-            android:minHeight="?attr/actionBarSize"
-            android:orientation="vertical"
-            app:contentInsetStart="0dp">
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_dp_48"
+                android:background="@color/library_color_FF198CFF"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="vertical"
+                app:contentInsetStart="0dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/base_dp_73"
-                android:orientation="vertical">
-
-                <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_25" />
+                    android:layout_height="@dimen/base_dp_48"
+                    android:orientation="vertical">
 
                 <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/base_dp_48">
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_48">
 
                     <FrameLayout
-                        android:id="@+id/layout_back"
-                        android:layout_width="@dimen/base_dp_36"
-                        android:layout_height="match_parent"
-                        android:gravity="start"
-                        tools:ignore="UselessParent">
+                            android:id="@+id/layout_back"
+                            android:layout_width="@dimen/base_dp_36"
+                            android:layout_height="match_parent"
+                            android:gravity="start"
+                            tools:ignore="UselessParent">
 
                         <ImageView
-                            android:id="@+id/imv_back"
-                            android:layout_width="@dimen/base_dp_9"
-                            android:layout_height="@dimen/base_dp_16"
-                            android:layout_gravity="center"
-                            android:src="@mipmap/library_icon_arrowhead_left"
-                            tools:ignore="ContentDescription" />
+                                android:id="@+id/imv_back"
+                                android:layout_width="@dimen/base_dp_9"
+                                android:layout_height="@dimen/base_dp_16"
+                                android:layout_gravity="center"
+                                android:src="@mipmap/base_icon_arrowhead_left"
+                                tools:ignore="ContentDescription" />
 
                     </FrameLayout>
 
                     <TextView
-                        android:id="@+id/tev_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@string/library_three_level_linkage_list"
-                        android:textColor="@color/library_color_FFFFFFFF"
-                        android:textSize="@dimen/base_sp_20" />
+                            android:id="@+id/tev_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/library_three_level_linkage_list"
+                            android:textColor="@color/library_color_FFFFFFFF"
+                            android:textSize="@dimen/base_sp_20" />
 
                 </FrameLayout>
 
@@ -69,22 +70,23 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+
         <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/base_dp_30" />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_dp_30" />
 
         <TextView
-            android:id="@+id/tev_show"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/base_dp_50"
-            android:layout_marginStart="@dimen/base_dp_20"
-            android:background="@drawable/library_corners_15_color_ff198cff"
-            android:gravity="center"
-            android:paddingStart="@dimen/base_dp_20"
-            android:paddingEnd="@dimen/base_dp_20"
-            android:text="@string/library_show_data"
-            android:textColor="@color/library_white"
-            android:textSize="@dimen/base_sp_18" />
+                android:id="@+id/tev_show"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/base_dp_50"
+                android:layout_marginStart="@dimen/base_dp_20"
+                android:background="@drawable/library_corners_15_color_ff198cff"
+                android:gravity="center"
+                android:paddingStart="@dimen/base_dp_20"
+                android:paddingEnd="@dimen/base_dp_20"
+                android:text="@string/library_show_data"
+                android:textColor="@color/library_white"
+                android:textSize="@dimen/base_sp_18" />
 
     </LinearLayout>
 

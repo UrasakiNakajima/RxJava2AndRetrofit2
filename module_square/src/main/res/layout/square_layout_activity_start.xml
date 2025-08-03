@@ -19,6 +19,18 @@
                 android:layout_marginTop="@dimen/base_dp_64"
                 android:scaleType="fitXY" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tev_center"
+                android:layout_width="@dimen/base_dp_245"
+                android:layout_height="@dimen/base_dp_62"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="@dimen/base_sp_22"
+                android:textStyle="bold"
+                android:textColor="@color/library_red"
+                android:text="@string/library_please_click_here"
+                android:layout_marginTop="@dimen/base_dp_64" />
+
     </FrameLayout>
 
 

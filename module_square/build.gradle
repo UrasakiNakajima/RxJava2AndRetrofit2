@@ -110,7 +110,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     implementation project(path: ':library_common')
     implementation project(path: ':library_network')
     implementation project(path: ':library_login')
@@ -119,6 +119,7 @@ dependencies {
     implementation project(path: ':library_mvvm')
 
     implementation project(path: ':library_base64_and_file')
+//    implementation ("com.github.UrasakiNakajima:base64file-library:1.0.3")
     implementation project(path: ':library_android_and_js')
     implementation project(path: ':library_mounting')
     implementation project(path: ':library_custom_view')

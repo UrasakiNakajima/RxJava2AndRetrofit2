@@ -13,6 +13,7 @@ import android.view.MotionEvent
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ScreenManager
 import com.phone.library_glide.manager.ImageLoaderManager
@@ -29,6 +30,7 @@ class ActivityStartView : FrameLayout {
 
     private val mLayoutActivityStart: FrameLayout by lazy { findViewById<FrameLayout>(R.id.layout_activity_start) }
     private val mImvCenter: AppCompatImageView by lazy { findViewById<AppCompatImageView>(R.id.imv_center) }
+    private val mTevCenter: AppCompatTextView by lazy { findViewById<AppCompatTextView>(R.id.tev_center) }
     private val mLayoutBezierLeft: FrameLayout by lazy { findViewById<FrameLayout>(R.id.layout_bezier_left) }
     private val mLayoutBezierRight: FrameLayout by lazy { findViewById<FrameLayout>(R.id.layout_bezier_right) }
 
@@ -58,7 +60,7 @@ class ActivityStartView : FrameLayout {
         ImageLoaderManager.display(
             mContext, mImvCenter, R.mipmap.library_picture24
         )
-        mImvCenter.setOnClickListener {
+        mTevCenter.setOnClickListener {
             val bezierMoveViewRight = BezierMoveView(
                 mContext,
                 null,

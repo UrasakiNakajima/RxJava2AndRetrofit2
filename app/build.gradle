@@ -45,6 +45,17 @@ android {
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     //android 模块下开启DataBinding（必须添加，即使此module没有用到也要添加）
@@ -111,14 +122,48 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     if (isModule.toBoolean()) {
         //可独立运行的app
         implementation project(path: ':module_main')
     } else {
-        //被依赖的library
-        implementation project(path: ':module_main')
         implementation project(path: ':module_home')
+
+
+
+//        implementation project(path: ':library_common')
+//        implementation project(path: ':library_network')
+//        implementation project(path: ':library_glide')
+//        implementation project(path: ':library_custom_view')
+//        implementation project(path: ':library_login')
+//        implementation project(path: ':library_mvp')
+//        implementation project(path: ':library_binding')
+//        // room
+//        implementation "androidx.room:room-runtime:$BuildVersions.room_version"
+//        annotationProcessor "androidx.room:room-compiler:$BuildVersions.room_version"
+//        implementation "androidx.lifecycle:lifecycle-runtime-ktx:$BuildVersions.lifecycle_runtime_ktx_version"
+//
+////    implementation project(path: ':irecyclerview')
+//
+//        //Android路由（用于不同app之间的跳转）
+//        implementation "com.alibaba:arouter-api:$BuildVersions.arouter_api_version"
+//        kapt "com.alibaba:arouter-compiler:$BuildVersions.arouter_compiler_version"
+//
+////    //播放器框架
+////    implementation 'com.shuyu:GSYVideoPlayer:8.0.0'
+////    implementation 'com.shuyu:gsyVideoPlayer-armv7a:8.0.0'
+////    implementation 'com.shuyu:gsyVideoPlayer-arm64:8.0.0'
+//
+//        //百分比进度条
+//        implementation "cn.bingoogolapple:bga-progressbar:$BuildVersions.bga_progressbar_version"
+//
+//        //定位功能
+////    implementation 'com.amap.api:location:latest.integration'
+//        //这个版本临时不能用了，报错Could not HEAD 'https://repo.maven.apache.org/maven2/com/amap/api/location/maven-metadata.xml'. Received status code 400 from server: Bad Request，
+//        //以前也遇到过，可能是他的latest.integration服务器暂时不能用了，改成最新的数字版本就可以了。
+//        implementation 'com.amap.api:location:6.3.0'
+
+
         implementation project(path: ':module_project')
         implementation project(path: ':module_square')
         implementation project(path: ':module_resource')
