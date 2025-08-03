@@ -1,13 +1,29 @@
 pluginManagement {
 
     repositories {
-//        maven { url 'https://maven.aliyun.com/repository/google' }
-//        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-//        maven { url 'https://maven.aliyun.com/repository/public' }
-//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        flatDir {
+            dirs 'aars' // 指定存放AAR的目录
+        }
+
+//        maven { url 'https://mirrors.tencent.com/nexus/repository/maven-public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
 
 
-//        maven { url "https://kotlin.bintray.com/kotlinx/" }
+//        maven {
+//            name = "GitHubPackages"
+//            url = uri("https://maven.pkg.github.com/UrasakiNakajima/RxJava2AndRetrofit2")
+//            credentials {
+//                username = System.properties['gpr.user'] ?: System.getenv("GPR_USER") ?: ""
+//                password = System.properties['gpr.key'] ?: System.getenv("GITHUB_TOKEN") ?: ""
+//            }
+//        }
+//        maven {
+//            url "https://maven.pkg.github.com/UrasakiNakajima/RxJava2AndRetrofit2"
+//        }
+        maven { url "https://kotlin.bintray.com/kotlinx/" }
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
@@ -28,13 +44,29 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 
     repositories {
-//        maven { url 'https://maven.aliyun.com/repository/google' }
-//        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-//        maven { url 'https://maven.aliyun.com/repository/public' }
-//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        flatDir {
+            dirs 'aars' // 指定存放AAR的目录
+        }
+
+//        maven { url 'https://mirrors.tencent.com/nexus/repository/maven-public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
 
 
-//        maven { url "https://kotlin.bintray.com/kotlinx/" }
+//        maven {
+//            name = "GitHubPackages"
+//            url = uri("https://maven.pkg.github.com/UrasakiNakajima/RxJava2AndRetrofit2")
+//            credentials {
+//                username = System.properties['gpr.user'] ?: System.getenv("GPR_USER") ?: ""
+//                password = System.properties['gpr.key'] ?: System.getenv("GITHUB_TOKEN") ?: ""
+//            }
+//        }
+//        maven {
+//            url "https://maven.pkg.github.com/UrasakiNakajima/RxJava2AndRetrofit2"
+//        }
+        maven { url "https://kotlin.bintray.com/kotlinx/" }
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }

@@ -7,15 +7,18 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.google.gson.Gson
 import com.phone.library_binding.BaseBindingRxAppActivity
 import com.phone.library_base.common.ConstantData
+import com.phone.library_base.manager.StatusBarManager
 import com.phone.library_common.manager.GetJsonDataManager
 import com.phone.library_base.manager.LogManager
 import com.phone.library_base.manager.ResourcesManager
+import com.phone.library_base.manager.ScreenManager
 import com.phone.module_mine.R
 import com.phone.module_mine.bean.ProvincesBean
 import com.phone.module_mine.databinding.MineActivityPickerViewBinding
@@ -54,13 +57,22 @@ class PickerViewActivity : BaseBindingRxAppActivity<MineActivityPickerViewBindin
 
     override fun initViews() {
         setToolbar(false, R.color.library_color_FF198CFF)
-        mDatabind.imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_white))
-        mDatabind.layoutBack.setOnClickListener { view: View? -> finish() }
-        mDatabind.tevShow.setOnClickListener { v: View? ->
-            pvOptions?.show()
+        mDatabind?.apply {
+            imvBack.setColorFilter(ResourcesManager.getColor(R.color.library_white))
+            layoutBack.setOnClickListener { view: View? -> finish() }
+            tevShow.setOnClickListener { v: View? ->
+                pvOptions?.show()
 //            val eventScheduleDialogFragment = EventScheduleDialogFragment()
 //            eventScheduleDialogFragment.show(supportFragmentManager, "FOF")
+            }
+
+            val statusBarHeight = StatusBarManager.getStatusBarHeight()
+            LogManager.i(TAG, "statusBarHeight*****${StatusBarManager.getStatusBarHeight()}")
+            viewStatusBar.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, statusBarHeight)
+            LogManager.i(TAG, "statusBarHeight dp*****${ScreenManager.pxToDp(statusBarHeight.toFloat())}")
         }
+
+
     }
 
     override fun initLoadData() {

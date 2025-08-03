@@ -49,7 +49,7 @@
                             android:layout_width="@dimen/base_dp_9"
                             android:layout_height="@dimen/base_dp_16"
                             android:layout_gravity="center"
-                            android:src="@mipmap/library_icon_arrowhead_left"
+                            android:src="@mipmap/base_icon_arrowhead_left"
                             tools:ignore="ContentDescription" />
 
                     </FrameLayout>

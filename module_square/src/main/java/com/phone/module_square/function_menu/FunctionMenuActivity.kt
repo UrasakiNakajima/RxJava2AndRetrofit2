@@ -1,13 +1,16 @@
 package com.phone.module_square.function_menu
 
+import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.alibaba.fastjson.JSONObject
 import com.phone.library_base.callback.OnCommonSingleParamCallback
 import com.phone.library_base.common.ConstantData
+import com.phone.library_base.manager.StatusBarManager
 import com.phone.library_base.manager.DialogManager
 import com.phone.library_base.manager.LogManager
+import com.phone.library_base.manager.ScreenManager
 import com.phone.library_base.manager.ToastManager
 import com.phone.library_common.bean.BiographyData
 import com.phone.library_mvvm.BaseMvvmAppRxActivity
@@ -182,6 +185,12 @@ class FunctionMenuActivity :
                 ARouter.getInstance().build(ConstantData.Route.ROUTE_SQUARE_ACTIVITY_START)
                     .navigation()
             }
+
+
+            val statusBarHeight = StatusBarManager.getStatusBarHeight()
+            LogManager.i(TAG, "statusBarHeight*****${StatusBarManager.getStatusBarHeight()}")
+            viewStatusBar.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, statusBarHeight)
+            LogManager.i(TAG, "statusBarHeight dp*****${ScreenManager.pxToDp(statusBarHeight.toFloat())}")
         }
     }
 

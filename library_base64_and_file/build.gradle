@@ -5,7 +5,93 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     //ARouter需要用到
     id 'kotlin-kapt'
+    id 'maven-publish'
     id 'com.phone.versionplugin'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = project.findProperty("GROUP_ID")   // 组织标识
+                artifactId = project.findProperty("ARTIFACT_ID")    // 库名称
+                version = project.findProperty("BASE64_LIBRARY_VERSION")           // 版本号
+
+                // 自动关联 release 版 AAR
+//                from components.release
+                // 指定 AAR 文件路径
+                artifact("$rootDir/outputs/aars/${project.name}-release.aar")
+
+                // 添加源码包（可选）
+                artifact(sourcesJar)
+
+
+
+
+                pom {
+                    name = project.findProperty("ARTIFACT_ID")    // 库名称
+                    description = project.findProperty("ARTIFACT_ID")    // 库名称
+                    url = "https://maven.pkg.github.com/UrasakiNakajima/RxJava2AndRetrofit2"
+                    licenses {
+                        license {
+                            name = "Apache-2.0"
+                            url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = project.findProperty("GROUP_ID")   // 组织标识
+                            name = "UrasakiNakajima"
+                            email = "1164688204@qq.com"
+                        }
+                    }
+                    scm {
+                        connection = "scm:git:git://maven.pkg.github.com/UrasakiNakajima/RxJava2AndRetrofit2.git"
+                        developerConnection = "scm:git:ssh://maven.pkg.github.com/UrasakiNakajima/RxJava2AndRetrofit2.git"
+                        url = "https://maven.pkg.github.com/UrasakiNakajima/RxJava2AndRetrofit2"
+                    }
+                }
+
+
+                // 添加依赖传递
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+
+                    // 添加 implementation 依赖
+                    configurations.implementation.allDependencies.each { dep ->
+                        if (dep.group != null && dep.name != null && dep.version != null) {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', dep.group)
+                            dependencyNode.appendNode('artifactId', dep.name)
+                            dependencyNode.appendNode('version', dep.version)
+                            dependencyNode.appendNode('scope', 'runtime') // 或 'compile'
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                // 👇 关键URL格式（替换两个YOUR_）
+                url = uri("https://maven.pkg.github.com/UrasakiNakajima/RxJava2AndRetrofit2")
+                credentials {
+                    username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USER")
+                    password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+                }
+            }
+        }
+    }
+
+//    signing {
+//        sign publishing.publications.release  // 自动签名
+//    }
+}
+
+// 创建源码JAR任务
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier = 'sources'
 }
 
 android {

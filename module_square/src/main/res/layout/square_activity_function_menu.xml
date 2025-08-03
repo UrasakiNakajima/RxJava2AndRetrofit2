@@ -38,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/base_dp_48"
                     android:gravity="center"
-                    android:text="@string/library_square"
+                    android:text="@string/library_function_menu"
                     android:textColor="@color/library_color_FFFFFFFF"
                     android:textSize="@dimen/base_sp_20" />
 

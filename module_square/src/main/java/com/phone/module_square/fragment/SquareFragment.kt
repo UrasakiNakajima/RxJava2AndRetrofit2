@@ -34,6 +34,7 @@ import com.phone.library_network.manager.GsonManager
 import com.phone.module_square.BuildConfig
 import com.phone.module_square.R
 import com.phone.module_square.databinding.SquareFragmentSquareBinding
+import com.phone.module_square.databinding.SquareFragmentSquareBindingImpl
 import com.phone.module_square.view_model.SquareViewModelImpl
 import java.util.concurrent.atomic.AtomicBoolean
 

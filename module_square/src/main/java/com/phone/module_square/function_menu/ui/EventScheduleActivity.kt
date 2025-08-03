@@ -1,7 +1,6 @@
 package com.phone.module_square.function_menu.ui
 
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.phone.library_binding.BaseBindingRxAppActivity
 import com.phone.library_base.callback.OnDialogCallback
@@ -25,33 +24,40 @@ class EventScheduleActivity : BaseBindingRxAppActivity<SquareActivityEventSchedu
     override fun initViews() {
         setToolbar(false, R.color.library_black)
 
-        mDatabind.imvBack.setColorFilter(ContextCompat.getColor(this, R.color.library_white))
-        mDatabind.layoutBack.setOnClickListener {
-            finish()
-        }
-        mDatabind.tevEventSchedule.setOnClickListener {
-            val eventScheduleDialogFragment = EventScheduleDialogFragment()
-            eventScheduleDialogFragment.onDialogCallback = (object : OnDialogCallback<Int> {
-                override fun onDialogClick(view: View, success: Int) {
-                    if (success == 0) {
+        mDatabind.apply {
+//            imvBack.setColorFilter(ContextCompat.getColor(this@EventScheduleActivity, R.color.library_white))
+//            layoutBack.setOnClickListener {
+//                finish()
+//            }
+            tevEventSchedule.setOnClickListener {
+                val eventScheduleDialogFragment = EventScheduleDialogFragment()
+                eventScheduleDialogFragment.onDialogCallback = (object : OnDialogCallback<Int> {
+                    override fun onDialogClick(view: View, success: Int) {
+                        if (success == 0) {
 
-                    } else if (success == 1) {
+                        } else if (success == 1) {
 
-                    } else {
+                        } else {
+
+                        }
+                    }
+
+                    override fun onDialogClick(
+                        view: View,
+                        success: Int,
+                        params: Map<String, String>
+                    ) {
 
                     }
-                }
 
-                override fun onDialogClick(
-                    view: View,
-                    success: Int,
-                    params: Map<String, String>
-                ) {
+                })
+                eventScheduleDialogFragment.show(supportFragmentManager, "FOF")
+            }
 
-                }
-
-            })
-            eventScheduleDialogFragment.show(supportFragmentManager, "FOF")
+//            val statusBarHeight = BarManager.getStatusBarHeight()
+//            LogManager.i(TAG, "statusBarHeight*****${BarManager.getStatusBarHeight()}")
+//            viewStatusBar.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, statusBarHeight)
+//            LogManager.i(TAG, "statusBarHeight dp*****${ScreenManager.pxToDp(statusBarHeight.toFloat())}")
         }
     }
 

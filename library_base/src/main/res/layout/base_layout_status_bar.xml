@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+        <View
+                android:id="@+id/view_status_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_dp_25" />
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/base_dp_48"
+                android:background="@color/base_black"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="vertical"
+                app:contentInsetStart="0dp">
+
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_dp_48">
+
+                <FrameLayout
+                        android:id="@+id/layout_back"
+                        android:layout_width="@dimen/base_dp_36"
+                        android:layout_height="match_parent"
+                        android:gravity="start">
+
+                    <ImageView
+                            android:id="@+id/imv_back"
+                            android:layout_width="@dimen/base_dp_6"
+                            android:layout_height="@dimen/base_dp_11"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/base_icon_arrowhead_left"
+                            tools:ignore="ContentDescription" />
+
+                </FrameLayout>
+
+                <TextView
+                        android:id="@+id/tev_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/base_dp_48"
+                        android:gravity="center"
+                        android:text="@string/base_title"
+                        android:textColor="@color/base_color_FFFFFFFF"
+                        android:textSize="@dimen/base_sp_20" />
+
+            </FrameLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </LinearLayout>
+
+</layout>
