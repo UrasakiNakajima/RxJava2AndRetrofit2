@@ -1,0 +1,12 @@
+Action配置
+
+
+
+jobs:
+  build:
+    steps:
+      - name: Build with Gradle
+        env:
+          GITHUB_USERNAME: ${{ secrets.GH_USER }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: ./gradlew build
